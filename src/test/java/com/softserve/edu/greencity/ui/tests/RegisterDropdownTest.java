@@ -10,36 +10,37 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
 import com.softserve.edu.greencity.ui.pages.common.RegisterDropdown;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 
 /**
  * RegisterDropdownTest class.
+ *
  * @author Serg
  */
-public class RegisterDropdownTest extends GreencityTestRunner {
+public class RegisterDropdownTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] validCredentialUser() {
-        return new Object[][] {
-                { UserRepository.get().defaultUserCredentials() }, };
+        return new Object[][]{
+                {UserRepository.get().defaultUserCredentials()},};
     }
 
     @DataProvider
     public Object[][] validCredentialUser2() {
-        return new Object[][] { { UserRepository.get()
-                .temporaryUserCredentialsForRegistration() }, };
+        return new Object[][]{{UserRepository.get()
+                .temporaryUserCredentialsForRegistration()},};
     }
 
     @DataProvider
     public Object[][] invalidCredentialUser() {
-        return new Object[][] {
-                { UserRepository.get().wrongUserCredentials1() },
-                { UserRepository.get().wrongUserCredentials2() }, };
+        return new Object[][]{
+                {UserRepository.get().wrongUserCredentials1()},
+                {UserRepository.get().wrongUserCredentials2()},};
     }
 
     /**
      * Filling all the fields on the RegisterDropdown window without registering
      * and switch to LoginDropdown.
+     *
      * @param userLoginCredentials
      */
     @Test(dataProvider = "validCredentialUser")
@@ -93,6 +94,7 @@ public class RegisterDropdownTest extends GreencityTestRunner {
     /**
      * Test for registration with temporary email and random other credentials
      * with logging and checking displayed user name in the top of the page.
+     *
      * @param userLoginCredentials
      */
     @Test(dataProvider = "validCredentialUser2")
@@ -122,7 +124,7 @@ public class RegisterDropdownTest extends GreencityTestRunner {
         page.inputEmail(userLoginCredentials.getEmail())
                 .inputPassword(userLoginCredentials.getPassword())
                 .clickLoginButton(); // not always success after one click (need
-                                     // one more click)
+        // one more click)
         presentationSleep(5); // delay only for presentation
         logger.info("get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",

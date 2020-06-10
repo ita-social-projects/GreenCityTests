@@ -4,10 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
 
-public class LoginTest extends GreencityTestRunner {
+public class LoginTest extends GreenCityTestRunner {
     @Test
     public void checkDropdown() { // for debugging
         LoginDropdown dropdown = null;

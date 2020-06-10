@@ -14,7 +14,7 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
  * RegisterPageTest class.
  * @author Serg
  */
-public class RegisterPageTest extends GreencityTestRunner {
+public class RegisterPageTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] validCredentialUser() {

@@ -2,7 +2,6 @@ package com.softserve.edu.greencity.ui.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
@@ -11,8 +10,9 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import org.testng.annotations.Test;
 
-public class SmokeTest extends GreencityTestRunner {
+public class SmokeTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] languages() {
@@ -22,7 +22,7 @@ public class SmokeTest extends GreencityTestRunner {
             };
     }
 
-    //@Test(dataProvider = "languages")
+    @Test(dataProvider = "languages")
     public void checkElements(Languages languages) {
         // Steps
         TipsTricksPage tipstrickspage = loadApplication()
@@ -42,11 +42,11 @@ public class SmokeTest extends GreencityTestRunner {
         */
         //
         tipstrickspage = tipstrickspage
-                .navigateMenuEconews()
-                .navigateMenuTipsTricks()
-                .navigateMenuMap()
-                .navigateMenuMyCabinet()
-                .navigateMenuAbout()
+//                .navigateMenuEconews()
+//                .navigateMenuTipsTricks()
+//                .navigateMenuMap()
+//                .navigateMenuMyCabinet()
+//                .navigateMenuAbout()
                 .navigateMenuTipsTricks();
         //
 //      TopPart tp = tipstrickspage;
