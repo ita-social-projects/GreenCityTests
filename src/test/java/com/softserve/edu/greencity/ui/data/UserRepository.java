@@ -24,7 +24,7 @@ public final class UserRepository {
     }
 
     public User temporary() {
-        return new User("xdknxusqvjeovowpfk@awdrt.com", "Temp", "Temp#001");
+        return new User("tarasmalynovskyy@gmail.com", "!Qwerty123");
     }
     
     /**

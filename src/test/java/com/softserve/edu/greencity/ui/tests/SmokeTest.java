@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsCardsContainer;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 
@@ -61,9 +62,6 @@ public class SmokeTest extends GreenCityTestRunner {
         // Check
 //      Assert.assertEquals(tipstrickspage.getLanguageSwitcherText(),
 //              Languages.UKRAINIAN.toString());
-        //
-        // Return to Previous State
-        presentationSleep();
     }
     
     @DataProvider
@@ -73,23 +71,21 @@ public class SmokeTest extends GreenCityTestRunner {
             };
     }
     
-    //@Test(dataProvider = "users")
+    @Test(dataProvider = "users")
     public void checkLogin(User user) {
-        TipsTricksPage tipstrickspage = loadApplication()
+        MyCabinetPage myCabinetPage = loadApplication()
                 .signin()
                 .successfullyLogin(user);
-        System.out.println("name = " + tipstrickspage.getTopUserName());
-        Assert.assertEquals(tipstrickspage.getTopUserName(),
-                TopPart.PROFILE_NAME);
-                //user.getFirstname());
-        tipstrickspage.signout();
+
+        System.out.println("name = " + myCabinetPage.getTopUserName());
+        Assert.assertEquals(myCabinetPage.getTopUserName(), "Taras Malynovskyi");
+        myCabinetPage.signout();
     }
 
-//    @Test(dataProvider = "users")
+    @Test(dataProvider = "users")
     public void checkCabinet(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
                 .navigateMenuMyCabinet(user);
-        presentationSleep();
         //
         Assert.assertEquals(myCabinetPage.getTopUserName(), TopPart.PROFILE_NAME);
         // user.getFirstname());

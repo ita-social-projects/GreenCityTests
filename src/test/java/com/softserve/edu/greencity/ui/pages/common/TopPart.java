@@ -218,7 +218,7 @@ public abstract class TopPart {
         clickLanguageSwitcher();
         setLanguageSwitcher(language.toString());
     }
-    
+
     protected void scrollDown() {
         //System.out.println("driver.manage().window().getSize()" + driver.manage().window().getSize());
         if (driver.manage().window().getSize().width < WINDOW_WIDTH_TO_SCROLL) {
