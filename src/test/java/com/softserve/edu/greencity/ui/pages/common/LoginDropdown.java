@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -66,9 +67,9 @@ public class LoginDropdown extends LoginPart {
 
 	// Business Logic
 
-	public TipsTricksPage successfullyLogin(User user) {
+	public MyCabinetPage successfullyLogin(User user) {
 		fillFields(user);
 		clickLoginButton();
-		return new TipsTricksPage(driver);
+		return new MyCabinetPage(driver);
 	}
 }

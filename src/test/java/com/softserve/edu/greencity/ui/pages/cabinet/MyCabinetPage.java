@@ -23,7 +23,7 @@ public class MyCabinetPage extends TopPart {
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
-        initElements();
+//        initElements();
     }
 
     private void initElements() {
