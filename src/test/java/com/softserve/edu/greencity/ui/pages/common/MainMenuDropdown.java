@@ -37,13 +37,14 @@ public class MainMenuDropdown {
 		menuEcoNews = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']"));
 		menuTipsTricks = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']"));
 		menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
-		menuMyCabinet = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/habits']"));
+//		menuMyCabinet = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/My habits']"));
+		menuMyCabinet = driver.findElement(By.xpath("//div[@class='navigation-menu-left']/ul/li[5]"));
 		menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
 		//
 		footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
 		footerTipsTricks = driver.findElement(By.xpath("//div[@class='app-footer']//a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
 		footerPlaces = driver.findElement(By.cssSelector("div.app-footer a[href*='/map']"));
-		footerMyCabinet = driver.findElement(By.cssSelector("div.app-footer a[href*='/habits']"));
+//		footerMyCabinet = driver.findElement(By.cssSelector("div.app-footer a[href*='/habits']"));
 		footerAbout = driver.findElement(By.cssSelector("div.app-footer a[href*='/about']"));
 	}
 

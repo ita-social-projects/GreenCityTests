@@ -16,7 +16,7 @@ import java.util.List;
  * Test cases to test EconewsPage
  * @author lv-493
  */
-public class EconewsPageTest extends GreencityTestRunner {
+public class EconewsPageTest extends GreenCityTestRunner {
 	
 	@DataProvider
 	public Object[][] newsTags() {

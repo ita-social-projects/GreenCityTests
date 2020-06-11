@@ -48,7 +48,7 @@ public class TipsTricksPage extends TopPart {
         startHabitTop = driver
                 .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
         startHabitCenter = driver
-                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(2)> div> button"));
+                .findElement(By.xpath(".//*[@id='stat-rows']/app-stat-row[1]/div/div[2]/div/button"));
         startHabitBelow = driver
                 .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
         subscribeOnTipsTricks = driver
@@ -63,9 +63,12 @@ public class TipsTricksPage extends TopPart {
                 By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
         linkCups = driver.findElement(By.xpath(
                 ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
-        mainEcoNewsLink = driver.findElement(By.cssSelector("div#main-event-content > a"));
-        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
-        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
+        mainEcoNewsLink = driver.findElement(By.cssSelector(".navigation-menu-left > ul> li:nth-child(1) > a"));
+
+        //TODO What is this links?
+/*        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
+        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));*/
+
         allNewsLink = driver.findElement(By.cssSelector("div#eco-events > a"));
     }
 

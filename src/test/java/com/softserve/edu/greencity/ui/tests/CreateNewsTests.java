@@ -17,7 +17,7 @@ import org.testng.asserts.SoftAssert;
  *
  * @author lv-493
  */
-public class CreateNewsTests extends GreencityTestRunner {
+public class CreateNewsTests extends GreenCityTestRunner {
 
     @AfterMethod
     public void afterMethod() {
