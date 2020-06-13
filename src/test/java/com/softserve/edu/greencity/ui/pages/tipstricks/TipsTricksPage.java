@@ -10,6 +10,8 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TipsTricksPage extends TopPart {
 
@@ -63,10 +65,10 @@ public class TipsTricksPage extends TopPart {
                 By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
         linkCups = driver.findElement(By.xpath(
                 ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
-        mainEcoNewsLink = driver.findElement(By.cssSelector("div#main-event-content > a"));
-        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
-        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
-        allNewsLink = driver.findElement(By.cssSelector("div#eco-events > a"));
+        mainEcoNewsLink = driver.findElement(By.xpath(".//div[@class='navigation-menu-left'] / ul / li[1]"));
+//        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
+//        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
+        allNewsLink = driver.findElement(By.id("eco-events"));
     }
 
     // Page Object
@@ -77,8 +79,10 @@ public class TipsTricksPage extends TopPart {
         return startHabitTop;
     }
 
-    public void clickStartHabitTop() {
+    public MyCabinetPage clickStartHabitTop() {
         getStartHabitTop().click();
+
+        return new MyCabinetPage(driver);
     }
 
     public boolean isDisplayedStartHabitTop() {
@@ -215,18 +219,19 @@ public class TipsTricksPage extends TopPart {
     }
 
     // link other1EcoNewsLink
-    public WebElement getOther1EcoNewsLink(){
+    public WebElement getOther1EcoNewsLink() {
         return other1EcoNewsLink;
     }
 
     public void clickOther1EcoNewsLink() {
         getOther1EcoNewsLink().click();
     }
-    
+
     // link other2EcoNewsLink
     public WebElement getOther2EcoNewsLink() {
         return other2EcoNewsLink;
     }
+
     public void clickOther2EcoNewsLink() {
         getOther2EcoNewsLink().click();
     }
@@ -235,6 +240,7 @@ public class TipsTricksPage extends TopPart {
     public WebElement getAllNewsLink() {
         return allNewsLink;
     }
+
     public void clickAllNewsLink() {
         getAllNewsLink().click();
     }
@@ -243,7 +249,7 @@ public class TipsTricksPage extends TopPart {
     /**
      * quantityPeople() - reads the text that contains about the number of
      * people
-     * 
+     *
      * @return number People, who signed to GreenCity
      */
     public int quantityPeople() {
@@ -275,7 +281,7 @@ public class TipsTricksPage extends TopPart {
     /**
      * Create habit on page GreenCity using button on top "Start forming a
      * habit"
-     * 
+     *
      * @return open My cabinet
      */
     public MyCabinetPage navigateMyCabinet() {
@@ -309,11 +315,11 @@ public class TipsTricksPage extends TopPart {
         return new MapPage(driver);
 
     }
-    
+
     public EconewsPage moveMainEcoNewsLink() {
         clickMainEcoNewsLink();
         return new EconewsPage(driver);
     }
-    
+
 
 }

@@ -11,10 +11,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 
 public class MyCabinetPage extends TopPart {
-    private String packagesCount;
-    private String glassesCount;
-
-    private WebElement manageGoalsButton;
     private WebElement addNewHabitButton;
 
     private HabitsContainer habitsContainer;
@@ -27,44 +23,17 @@ public class MyCabinetPage extends TopPart {
     }
 
     private void initElements() {
-        packagesCount = driver.findElement(By.cssSelector("img[src*='package'] + h4 span")).getText();
-        glassesCount = driver.findElement(By.cssSelector("img[src*='coffe'] + h4 span")).getText();
+        //TODO make separate lazy methods for this initiation
+//        habitsContainer = new HabitsContainer(driver);
+//        goalsContainer = new MyGoalsContainer(driver);
 
-        manageGoalsButton = driver.findElement(By.cssSelector("div.add-goal-button-container button.add-goal-button"));
-        addNewHabitButton = driver.findElement(By.cssSelector("button.btn.btn-success"));
-
-        //habitsContainer = new HabitsContainer(driver);
-        goalsContainer = new MyGoalsContainer(driver);
+        addNewHabitButton = driver.findElement(By.id("create-button"));
     }
 
     // Page Object
 
-    // packagesCount
-
-    public String getPackagesCount() {
-        return packagesCount;
-    }
-
-    // glassesCount
-
-    public String getGlassesCount() {
-        return glassesCount;
-    }
-
-    // manageGoalsButton
-
-    public WebElement getManageGoalsButton() {
-        return manageGoalsButton;
-    }
-
-    public void clickManageGoalsButton() {
-        getManageGoalsButton().click();
-    }
-
     // habitsContainer
-
     public HabitsContainer getHabitsContainer() {
-        //return habitsContainer;
         return new HabitsContainer(driver);
     }
 
@@ -111,16 +80,8 @@ public class MyCabinetPage extends TopPart {
     // Business Logic
 
     /**
-     * Go to ManageGoalsDropdown.
-     * @return ManageGoalsDropdown
-     */
-    public ManageGoalsDropdown gotoManageGoalsDropdown() {
-        clickManageGoalsButton();
-        return new ManageGoalsDropdown(driver);
-    }
-
-    /**
      * Go to NewHabitDropdown.
+     *
      * @return NewHabitDropdown
      */
     public CreateHabitDropdown gotoCreateHabitDropdown() {
@@ -130,6 +91,7 @@ public class MyCabinetPage extends TopPart {
 
     /**
      * Select goal. Mark as done.
+     *
      * @param goal
      * @return MyCabinetPage
      */
@@ -140,6 +102,7 @@ public class MyCabinetPage extends TopPart {
 
     /**
      * Deselect goal.
+     *
      * @param goal
      * @return MyCabinetPage
      */
@@ -150,6 +113,7 @@ public class MyCabinetPage extends TopPart {
 
     /**
      * Show more goals if it more than 3 one.
+     *
      * @return
      */
     public MyCabinetPage showMoreGoals() {
@@ -159,6 +123,7 @@ public class MyCabinetPage extends TopPart {
 
     /**
      * Show less goals if it less than 3 one.
+     *
      * @return
      */
     public MyCabinetPage showLessGoals() {
@@ -168,6 +133,7 @@ public class MyCabinetPage extends TopPart {
 
     /**
      * Add all info about habit for current day.
+     *
      * @param habit
      * @return MyCabinetPage
      */
@@ -175,8 +141,4 @@ public class MyCabinetPage extends TopPart {
         getHabitsContainer().addHabitInfo(habit);
         return new MyCabinetPage(driver);
     }
-
-
-
-
 }

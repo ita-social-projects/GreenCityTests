@@ -3,7 +3,6 @@ package com.softserve.edu.greencity.ui.pages.common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 public class MainMenuDropdown {
 
@@ -15,19 +14,18 @@ public class MainMenuDropdown {
 	private WebElement menuEcoNews;
 	private WebElement menuTipsTricks;
 	private WebElement menuMap;
-	private WebElement menuMyCabinet;
+	private WebElement menuMyHabits;
 	private WebElement menuAbout;
 	//
 	private WebElement footerEcoNews;
 	private WebElement footerTipsTricks;
 	private WebElement footerPlaces;
-	private WebElement footerMyCabinet;
+	private WebElement footerMyHabits;
 	private WebElement footerAbout;
 	
 	public MainMenuDropdown(WebDriver driver) {
 		this.driver = driver;
 		initElements();
-		//System.out.println("*****Constructor MainMenuDropdown");
 	}
 
 	private void initElements() {
@@ -35,15 +33,15 @@ public class MainMenuDropdown {
 		naviconButton = driver.findElement(By.cssSelector("div.menu-icon"));
 		//menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
 		menuEcoNews = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']"));
-		menuTipsTricks = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']"));
+		menuTipsTricks = driver.findElement(By.cssSelector("div.logo"));
 		menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
-		menuMyCabinet = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/habits']"));
+		menuMyHabits = driver.findElement(By.cssSelector(".navigation-menu-left > ul > li > a[href*='/profile']"));
 		menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
 		//
 		footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
 		footerTipsTricks = driver.findElement(By.xpath("//div[@class='app-footer']//a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
 		footerPlaces = driver.findElement(By.cssSelector("div.app-footer a[href*='/map']"));
-		footerMyCabinet = driver.findElement(By.cssSelector("div.app-footer a[href*='/habits']"));
+		footerMyHabits = driver.findElement(By.cssSelector(".app-footer a[href*='/profile']"));
 		footerAbout = driver.findElement(By.cssSelector("div.app-footer a[href*='/about']"));
 	}
 
@@ -121,6 +119,7 @@ public class MainMenuDropdown {
     	if (!isDisplayedMenuTipsTricks()) {
     		clickNaviconButton();
     	}
+
         return menuTipsTricks;
     }
 
@@ -161,27 +160,27 @@ public class MainMenuDropdown {
 
     // menuMyCabinet
     
-    public WebElement getMenuMyCabinet() {
+    public WebElement getMenuMyHabits() {
     	//System.out.println("isDisplayedMenuMyCabinet() = " + isDisplayedMenuMyCabinet());
     	if (!isDisplayedMenuMyCabinet()) {
     		clickNaviconButton();
     		//System.out.println("clickNaviconButton() DONE");
     	}
     	//System.out.println("isDisplayedMenuMyCabinet() = " + isDisplayedMenuMyCabinet());
-        return menuMyCabinet;
+        return menuMyHabits;
     }
 
     public String getMenuMyCabinetText() {
-        return getMenuMyCabinet().getText();
+        return getMenuMyHabits().getText();
     }
 
     public void clickMenuMyCabinet() {
-    	getMenuMyCabinet().click();
+    	getMenuMyHabits().click();
     }
 
     public boolean isDisplayedMenuMyCabinet() {
         //return getMenuMycabinet().isDisplayed();
-    	return menuMyCabinet.isDisplayed();
+    	return menuMyHabits.isDisplayed();
     }
 
     // menuAbout
@@ -250,16 +249,16 @@ public class MainMenuDropdown {
              
     // footerMyCabinet
 
-	public WebElement getFooterMyCabinet() {
-		return footerMyCabinet;
+	public WebElement getFooterMyHabits() {
+		return footerMyHabits;
 	}
 
 	public String getFooterMyCabinetText() {
-		return getFooterMyCabinet().getText();
+		return getFooterMyHabits().getText();
 	}
 
 	public void clickFooterMyCabinet() {
-		getFooterMyCabinet().click();
+		getFooterMyHabits().click();
 	}                
     
     // footerAbout

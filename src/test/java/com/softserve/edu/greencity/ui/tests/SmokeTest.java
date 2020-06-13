@@ -75,14 +75,14 @@ public class SmokeTest extends GreencityTestRunner {
     
     //@Test(dataProvider = "users")
     public void checkLogin(User user) {
-        TipsTricksPage tipstrickspage = loadApplication()
+        MyCabinetPage myCabinetPage = loadApplication()
                 .signin()
                 .successfullyLogin(user);
-        System.out.println("name = " + tipstrickspage.getTopUserName());
-        Assert.assertEquals(tipstrickspage.getTopUserName(),
+        System.out.println("name = " + myCabinetPage.getTopUserName());
+        Assert.assertEquals(myCabinetPage.getTopUserName(),
                 TopPart.PROFILE_NAME);
                 //user.getFirstname());
-        tipstrickspage.signout();
+        myCabinetPage.signout();
     }
 
 //    @Test(dataProvider = "users")

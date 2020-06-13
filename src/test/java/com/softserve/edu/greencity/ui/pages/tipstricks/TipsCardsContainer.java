@@ -10,8 +10,6 @@ import org.openqa.selenium.WebElement;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 
 public class TipsCardsContainer {
-    
-   
     //
     private WebDriver driver;
     //
@@ -39,16 +37,8 @@ public class TipsCardsContainer {
        // coffeeCup = driver.findElements(By.cssSelector("img[src*='coffee-cup']"));
         waterBottle = driver.findElements(By.cssSelector("img[src*='water-bottle']"));
         spoonKnife = driver.findElements(By.cssSelector("img[src*='spoon-knife']"));
-
         //rightPagination.getLocation().getX();
     }
-//  private void initComponent() {
-//      
-//      itemComponents = new ArrayList<>();
-//      for(WebElement current : driver.findElements(By.xpath("//app-tips-card"))) {
-//          itemComponents.add(new ItemComponent(driver, current));
-//      }
-//  }
 
     // Page Object
     public List<ItemComponent> getItemComponents() {
