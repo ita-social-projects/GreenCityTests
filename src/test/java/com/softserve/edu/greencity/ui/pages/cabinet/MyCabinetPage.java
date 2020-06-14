@@ -1,13 +1,12 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import com.softserve.edu.greencity.ui.data.Goal;
 import com.softserve.edu.greencity.ui.data.Habit;
 import com.softserve.edu.greencity.ui.data.HabitItem;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 
 public class MyCabinetPage extends TopPart {
@@ -19,34 +18,25 @@ public class MyCabinetPage extends TopPart {
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
-        initElements();
-    }
-
-    private void initElements() {
-        //TODO make separate lazy methods for this initiation
-//        habitsContainer = new HabitsContainer(driver);
-//        goalsContainer = new MyGoalsContainer(driver);
-
-        addNewHabitButton = driver.findElement(By.id("create-button"));
     }
 
     // Page Object
 
     // habitsContainer
     public HabitsContainer getHabitsContainer() {
-        return new HabitsContainer(driver);
+        return habitsContainer = new HabitsContainer(driver);
     }
 
     // goalsContainer
 
     public MyGoalsContainer getGoalsContainer() {
-        return goalsContainer;
+        return goalsContainer = new MyGoalsContainer(driver);
     }
 
     // addNewHabitButton
 
     public WebElement getAddNewHabitButton() {
-        return addNewHabitButton;
+        return addNewHabitButton = driver.findElement(By.id("create-button"));
     }
 
     private void clickAddNewHabitButton() {
