@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -31,40 +32,39 @@ public class TipsTricksTest extends GreencityTestRunner {
     }
 
     @Test
-    public void text() {
+    public void checkQuantityPeople() {
         TipsTricksPage tipstrickspage = loadApplication();
-        System.out.println(tipstrickspage.getAmountPeopleText());
-        System.out.println("Amount Bags were used: " + tipstrickspage);
-
+        Assert.assertEquals(tipstrickspage.quantityPeople(), 3);
     }
 
     @Test
-    public void checkGetNumber() {
+    public void checkQuantityBags() {
         TipsTricksPage tipsTricksPage = loadApplication();
-        System.out.println("Amount People: " + tipsTricksPage.quantityPeople());
-        System.out.println("Amount Bags were used: " + tipsTricksPage.quantityBags());
-        System.out.println("Amount Cups were used: " + tipsTricksPage.quantityCups());
-        Assert.assertEquals(tipsTricksPage.quantityPeople(), tipsTricksPage.quantityPeople());
-        Assert.assertEquals(tipsTricksPage.quantityBags(), tipsTricksPage.quantityBags());
-        Assert.assertEquals(tipsTricksPage.quantityCups(), tipsTricksPage.quantityCups());
+        Assert.assertEquals(tipsTricksPage.quantityBags(), 0);
     }
 
-    @Parameters({"email"})
     @Test
-    public void subscribe(String email) throws InterruptedException {
-        TipsTricksPage subscr = loadApplication();
-        subscr.clickEmailTipsTricks();
-        subscr.setEmailTipsTricks(email);
-//     subscr.setEmailTipsTricks("almyyhvxddxxnoczzt@ttirv.com");
-        Thread.sleep(1000);
-        subscr.clickSubscribeOnTipsTricks();
+    public void checkQuantityCups() {
+        TipsTricksPage tipsTricksPage = loadApplication();
+        Assert.assertEquals(tipsTricksPage.quantityCups(), 0);
+    }
+
+    @Test
+    public void subscribe() throws InterruptedException {
+        TipsTricksPage tipsTricksPage = loadApplication();
+        tipsTricksPage.clickEmailTipsTricks();
+        tipsTricksPage.setEmailTipsTricks("almyyhvxddxxnoczzt@ttirv.com");
+        tipsTricksPage.clickSubscribeOnTipsTricks();
+
+        Assert.assertTrue(tipsTricksPage.isDisplayedSubscriptionError());
     }
 
     @Test
     public void mainEcoNews() {
-        TipsTricksPage news = loadApplication();
-        news.moveMainEcoNewsLink();
+        TipsTricksPage tipsTricksPage = loadApplication();
+        EconewsPage econewsPage = tipsTricksPage.moveMainEcoNewsLink();
 
+        Assert.assertTrue(econewsPage.getGridView().isDisplayed());
     }
 }
 

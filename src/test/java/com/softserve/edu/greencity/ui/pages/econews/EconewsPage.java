@@ -50,12 +50,9 @@ public class EconewsPage extends TopPart {
 	}
 
 	private void initElements() {
-		tagsComponent = new TagsComponent(driver);
-		createNewsButton = driver.findElement(By.id("create-button"));
-		itemsContainer = new ItemsContainer(driver);
 		gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
 		listView = driver.findElement(By.cssSelector("div[class*='list-view']"));
-		foundItems = driver.findElement(By.xpath("//p[@class=\"ng-star-inserted\"]"));
+		foundItems = driver.findElement(By.xpath("//p[@class='ng-star-inserted']"));
 	}
 
 	// Page Object
@@ -63,7 +60,7 @@ public class EconewsPage extends TopPart {
 	// tagsComponent
 
 	private TagsComponent getTagsComponent() {
-		return tagsComponent;
+		return tagsComponent = new TagsComponent(driver);
 	}
 
 	// foundItems
@@ -78,7 +75,7 @@ public class EconewsPage extends TopPart {
 
 	// gridViev
 
-	private WebElement getGridView() {
+	public WebElement getGridView() {
 		return gridView;
 	}
 
@@ -113,7 +110,7 @@ public class EconewsPage extends TopPart {
 	// createNewsButton
 
 	private WebElement getCreateNewsButton() {
-		return createNewsButton;
+		return createNewsButton = driver.findElement(By.id("create-button"));
 	}
 
 	private String getCreateNewsButtonText() {
@@ -127,12 +124,12 @@ public class EconewsPage extends TopPart {
 	// itemsContainer
 
 	public ItemsContainer getItemsContainer() {
-		return itemsContainer;
+		return itemsContainer = new ItemsContainer(driver);
 	}
 	
 	/**
 	 * Scroll to WebElement, in case when need to click on it or without scrolling are invisible
-	 * @param WebElement
+	 * @param el
 	 */
 	private void scrollToElement(WebElement el) {
 		
@@ -142,7 +139,7 @@ public class EconewsPage extends TopPart {
 	
 	/**
 	 * Waiting for elements became visible
-	 * @param int
+	 * @param i
 	 */
 	private void waiting(int i) {
 		try {
@@ -165,7 +162,7 @@ public class EconewsPage extends TopPart {
 
 	/**
 	 * Method allows to choose type of news, which will be displayed on the EcoNewsPage 
-	 * @param List<Tag> tags
+	 * @param tags
 	 * @return EconewsPage
 	 */
 	public EconewsPage selectFilters(List<Tag> tags) {
@@ -177,7 +174,7 @@ public class EconewsPage extends TopPart {
 	
 	/**
 	 * Method allows to choose type of news, which will be displayed on the EcoNewsPage 
-	 * @param List<Tag> tags
+	 * @param tags
 	 * @return EconewsPage
 	 */
 	public EconewsPage deselectFilters(List<Tag> tags) {
@@ -189,7 +186,7 @@ public class EconewsPage extends TopPart {
 
 	/**
 	 * Choose language
-	 * @param Languages
+	 * @param language
 	 * @return EconewsPage
 	 */
 	public EconewsPage switchLanguage(Languages language) {
@@ -217,7 +214,7 @@ public class EconewsPage extends TopPart {
 
 	/**
 	 * Open OneNewsPage
-	 * @param int
+	 * @param number
 	 * @return OneNewsPage
 	 */
 	public OneNewsPage switchToOneNewsPagebyNumber(int number) {
@@ -228,7 +225,7 @@ public class EconewsPage extends TopPart {
 
 	/**
 	 * Open OneNewsPage
-	 * @param OneNewsData
+	 * @param news
 	 * @return OneNewsPage
 	 */
 	public OneNewsPage switchToOneNewsPagebyParameters(NewsData news) {

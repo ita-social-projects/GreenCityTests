@@ -23,6 +23,7 @@ public class TipsTricksPage extends TopPart {
 
     // field for email for subscribe
     private WebElement enterEmailTipsTricks;
+    private WebElement subscriptionErrorMessage;
 
     // Text about amountPeople, quantityBags, quantityCups
     private WebElement amountPeople;
@@ -56,6 +57,7 @@ public class TipsTricksPage extends TopPart {
         subscribeOnTipsTricks = driver
                 .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
         enterEmailTipsTricks = driver.findElement(By.xpath("//input[@type='email']"));
+        subscriptionErrorMessage = driver.findElement(By.id("subscription-error"));
         amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
         amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
         amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
@@ -153,6 +155,11 @@ public class TipsTricksPage extends TopPart {
     public void clearEmailTipsTricks() {
         getEmailTipsTricks().clear();
     }
+
+    public boolean isDisplayedSubscriptionError() {
+        return subscriptionErrorMessage.isDisplayed();
+    }
+
 
     // amount People
 
