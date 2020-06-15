@@ -59,7 +59,7 @@ public class RegisterDropdown extends RegisterPart {
         //
         titleField = driver.findElement(By.cssSelector("h1[title-text]"));
         emailField = driver.findElement(By.cssSelector("input[name='email']"));
-        firstNameField = driver
+        userNameField = driver
                 .findElement(By.cssSelector("input[name='fistName']"));
         passwordField = driver.findElement(
                 By.cssSelector("input[name='form-control password']"));
@@ -224,7 +224,7 @@ public class RegisterDropdown extends RegisterPart {
      */
     private RegisterDropdown enterFirstName(String firstName) {
         this.clickFirstName(driver).clearFirstName()
-                .setFirstNameField(firstNameField).inputFirstName(firstName);
+                .setUserNameField(userNameField).inputFirstName(firstName);
         return this;
     }
 
