@@ -1,11 +1,9 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.pages.common.RegisterPart;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
@@ -13,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * RegisterPage class.
+ *
  * @author Serg
  */
 public class RegisterPage extends TopPart {
@@ -34,6 +33,7 @@ public class RegisterPage extends TopPart {
     protected WebElement signUpButton;
     protected WebElement googleSignUpButton;
     protected WebElement signInLink;
+    protected WebElement closeModalButton;
     //
     protected WebElement submitEmailText;
     //
@@ -41,10 +41,12 @@ public class RegisterPage extends TopPart {
     protected WebElement passwordValidator;
     protected WebElement passwordConfirmValidator;
 
+
     private RegisterComponent registerComponent;
 
     /**
      * RegisterPage constructor.
+     *
      * @param driver
      */
     public RegisterPage(WebDriver driver) {
@@ -58,7 +60,7 @@ public class RegisterPage extends TopPart {
         //registerComponent = new RegisterComponent(driver);
     }
 
-    private RegisterComponent createRegisterComponent() {
+    public RegisterComponent createRegisterComponent() {
 
         return new RegisterComponent(driver);
     }
@@ -72,6 +74,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'Email' field.
+     *
      * @param email String
      * @return RegisterPage
      */
@@ -82,6 +85,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'Email' field.
+     *
      * @param firstName String
      * @return RegisterPage
      */
@@ -90,18 +94,10 @@ public class RegisterPage extends TopPart {
         return this;
     }
 
-    /**
-     * Inserting some text on the 'Email' field.
-     * @param lastName String
-     * @return RegisterPage
-     */
-    private RegisterPage enterLastName(String lastName) {
-        this.getRegisterComponent().setLastNameField(lastName);
-        return this;
-    }
 
     /**
      * Inserting some text on the 'Email' field.
+     *
      * @param password String
      * @return RegisterPage
      */
@@ -112,6 +108,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'Email' field.
+     *
      * @param passwordConfirm String
      * @return RegisterPage
      */
@@ -122,6 +119,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'Email' field.
+     *
      * @return RegisterPage
      */
     public RegisterPage clickSignUpButton() {
@@ -139,8 +137,10 @@ public class RegisterPage extends TopPart {
 //    }
 
 //RegistrationError
+
     /**
      * Returns a text which displayed on the 'RegistrationValidator' field.
+     *
      * @return String
      */
     public String getRegistrationErrorText() {
@@ -152,8 +152,10 @@ public class RegisterPage extends TopPart {
     }
 
 //FirstNameError
+
     /**
      * Returns a text which displayed on the 'RegistrationValidator' field.
+     *
      * @return String
      */
     public String getFirstNameErrorText() {
@@ -205,6 +207,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a text which shows after a successful registration.
+     *
      * @return String
      */
     public String getConfirmRegistrationText() {
@@ -233,29 +236,14 @@ public class RegisterPage extends TopPart {
 
     /**
      * Test registration user with existing credentials already.
+     *
      * @param userData User
      */
     public void registrationUser(User userData) {
         enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
-                .enterLastName(userData.getLastName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword())
                 .clickSignUpButton();
-    }
-
-
-
-    /**
-     * Filling all fields on Register page without registration (without click
-     * on SingUp button).
-     * @param userData object with user's credentials
-     * @return RegisterPage page
-     */
-    public void fillFieldsWithoutRegistration(User userData) {
-        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
-                .enterLastName(userData.getLastName())
-                .enterPassword(userData.getPassword())
-                .enterPasswordConfirm(userData.getPassword());
     }
 
 
@@ -266,6 +254,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns the text after a successful registration.
+     *
      * @return String
      */
     public String getSubmitEmailText() {
@@ -273,8 +262,10 @@ public class RegisterPage extends TopPart {
     }
 
     // titleField
+
     /**
      * Taking a WebElement and set it to a private WebElement
+     *
      * @param titleField WebElement
      * @return RegisterPart
      */
@@ -285,6 +276,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a WebElement of the on the top page.
+     *
      * @return WebElement titleField
      */
     protected WebElement getTitleField() {
@@ -293,6 +285,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'Title' field.
+     *
      * @return boolean
      */
     protected boolean isDisplayedTitleField() {
@@ -300,8 +293,10 @@ public class RegisterPage extends TopPart {
     }
 
     // first name field
+
     /**
      * Taking a WebElement and set it to a private WebElement
+     *
      * @param userNameField WebElement
      * @return RegisterPart
      */
@@ -312,6 +307,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a WebElement of the 'FirstName' field.
+     *
      * @return WebElement
      */
     protected WebElement getUserNameField() {
@@ -320,6 +316,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'FirstName' field.
+     *
      * @param String firstName
      * @return RegisterPart
      */
@@ -330,6 +327,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Clearing the 'FirstName' field.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clearFirstName() {
@@ -339,6 +337,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on FirstName field
+     *
      * @param driver WebDriver
      * @return RegisterPart
      */
@@ -354,6 +353,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'FirstName' field.
+     *
      * @return boolean
      */
     protected boolean isDisplayedFirstNameField() {
@@ -361,8 +361,10 @@ public class RegisterPage extends TopPart {
     }
 
     // email field
+
     /**
      * Returns a WebElement of the 'Email' field.
+     *
      * @return WebElement
      */
     protected WebElement getEmailField() {
@@ -371,6 +373,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'Email' field.
+     *
      * @param email String
      * @return RegisterPart
      */
@@ -381,6 +384,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Clearing the 'Email' field.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clearEmailField() {
@@ -390,6 +394,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on Email field
+     *
      * @param driver WebDriver
      * @return RegisterPart
      */
@@ -405,6 +410,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param emailField WebElement
      * @return RegisterPart
      */
@@ -415,6 +421,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'Email' field.
+     *
      * @return boolean
      */
     protected boolean isDisplayedEmailField() {
@@ -422,8 +429,10 @@ public class RegisterPage extends TopPart {
     }
 
     // password field
+
     /**
      * Returns a WebElement of the 'Password' field.
+     *
      * @return WebElement
      */
     protected WebElement getPasswordField() {
@@ -432,6 +441,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'Password' field.
+     *
      * @param password String
      * @return RegisterPart
      */
@@ -442,6 +452,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Clearing the 'Password' field.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clearPasswordField() {
@@ -451,6 +462,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on the 'Password' field.
+     *
      * @param driver WebDriver
      * @return RegisterPart
      */
@@ -466,6 +478,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param passwordField WebElement
      * @return RegisterPart
      */
@@ -476,6 +489,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'Password' field.
+     *
      * @return boolean
      */
     protected boolean isDisplayedPasswordField() {
@@ -483,8 +497,10 @@ public class RegisterPage extends TopPart {
     }
 
     // showPasswordButton
+
     /**
      * Returns a WebElement of the 'ShowPassword' button.
+     *
      * @return WebElement
      */
     protected WebElement getShowPasswordButton() {
@@ -493,6 +509,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on the 'ShowPassword' button.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clickShowPasswordButton() {
@@ -504,6 +521,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param showPasswordButton WebElement
      * @return RegisterPart
      */
@@ -514,6 +532,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'ShowPassword' button.
+     *
      * @return boolean
      */
     protected boolean isDisplayedShowPasswordButton() {
@@ -521,8 +540,10 @@ public class RegisterPage extends TopPart {
     }
 
     // password confirm field
+
     /**
      * Returns a WebElement of the 'PasswordConfirm' field.
+     *
      * @return WebElement
      */
     protected WebElement getPasswordConfirmField() {
@@ -531,6 +552,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Inserting some text on the 'PasswordConfirm' field.
+     *
      * @param passwordConfirm String
      * @return RegisterPart
      */
@@ -541,6 +563,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Clearing the 'PasswordConfirm' field.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clearPasswordConfirmField() {
@@ -550,6 +573,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on the 'PasswordConfirm' field.
+     *
      * @param driver WebDriver
      * @return RegisterPart
      */
@@ -565,6 +589,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param passwordConfirmField WebElement
      * @return RegisterPart
      */
@@ -576,6 +601,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'PasswordConfirm' field.
+     *
      * @return boolean
      */
     protected boolean isDisplayedPasswordConfirmField() {
@@ -583,8 +609,10 @@ public class RegisterPage extends TopPart {
     }
 
     // showPasswordConfirmButton
+
     /**
      * Returns a WebElement of the 'ShowPasswordConfirm' button.
+     *
      * @return WebElement
      */
     protected WebElement getShowPasswordConfirmButton() {
@@ -593,6 +621,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on the 'ShowPasswordConfirm' button.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clickShowPasswordConfirmButton() {
@@ -603,6 +632,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement
+     *
      * @param showPasswordConfirmButton
      * @return RegisterPart
      */
@@ -614,6 +644,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'ShowPasswordConfirm' button.
+     *
      * @return boolean
      */
     protected boolean isDisplayedShowPasswordConfirmButton() {
@@ -621,8 +652,10 @@ public class RegisterPage extends TopPart {
     }
 
     // Sign Up button
+
     /**
      * Returns a WebElement of the 'SignUp' button.
+     *
      * @return WebElement
      */
     protected WebElement getSignUpButton() {
@@ -632,6 +665,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param signUpButton WebElement
      * @return RegisterPart
      */
@@ -642,6 +676,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'SignUp' button.
+     *
      * @return boolean
      */
     protected boolean isDisplayedSignUpButton() {
@@ -650,6 +685,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a text which displayed on the 'SignUp' button.
+     *
      * @return String
      */
     protected String getSignUpButtonText() {
@@ -661,8 +697,10 @@ public class RegisterPage extends TopPart {
 //    }
 
     // Sign Up with Google button
+
     /**
      * Returns a WebElement of the 'GoogleSignUp' button.
+     *
      * @return WebElement
      */
     protected WebElement getGoogleSignUpButton() {
@@ -671,6 +709,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on the 'GoogleSignUp' button.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clickGoogleLoginButton() {
@@ -682,6 +721,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param googleSignUpButton WebElement
      * @return RegisterPart
      */
@@ -692,6 +732,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'GoogleSignUp' button.
+     *
      * @return boolean
      */
     protected boolean isDisplayedGoogleSignUpButton() {
@@ -700,6 +741,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a text which displayed on the 'GoogleSignUp' button.
+     *
      * @return String
      */
     protected String getGoogleSignUpButtonText() {
@@ -708,6 +750,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a WebElement of the 'SignIn' link.
+     *
      * @return WebElement
      */
     protected WebElement getSignInLink() {
@@ -716,6 +759,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns a text which displayed on the 'SignIn' link.
+     *
      * @return String
      */
     protected String getSignInLinkText() {
@@ -724,6 +768,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Click on the 'SignIn' link.
+     *
      * @return RegisterPart
      */
     protected RegisterPage clickSignInLink() {
@@ -735,6 +780,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Taking a WebElement and set it to a private WebElement field.
+     *
      * @param signInLink WebElement
      * @return RegisterPart class
      */
@@ -745,6 +791,7 @@ public class RegisterPage extends TopPart {
 
     /**
      * Returns boolean if displayed the 'SignIn' link.
+     *
      * @return boolean
      */
     protected boolean isDisplayedSignInLink() {

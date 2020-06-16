@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -26,7 +27,7 @@ public class RegisterComponent extends RegisterPage {
     //
     private final String EMAIL_VALIDATOR_SELECTOR = "//input[@name='email']/following-sibling::div/div";
     private final String REGISTRATION_VALIDATOR_SELECTOR = "app-sign-up input#email + div";
-    private final String FIRST_NAME_VALIDATOR_SELECTOR = "div[class='field-wrapper-left'] div[class='ng-star-inserted']";
+    private final String FIRST_NAME_VALIDATOR_SELECTOR = "//input[@name='fistName']/following-sibling::div/div";
     private final String PASSWORD_VALIDATOR_SELECTOR = "//div[@class='main-data-input-password wrong-input']/following-sibling::div/div";
     //    private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "app-sign-up form div#img-confirm + div[class*ss='validation-error'] div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "//*[@class = 'form-content-container']/div[last()-1]";
@@ -66,6 +67,7 @@ public class RegisterComponent extends RegisterPage {
         signInLink = driver.findElement(By.cssSelector("div.exist-account a"));
         googleSignUpButton = driver.findElement(By.cssSelector(
                 "div[class='form-content-container'] button[class*='button-google']"));
+        closeModalButton = driver.findElement(By.cssSelector(".close-btn a"));
 
         this.setEmailField(emailField)
                 .setUserNameField(userNameField)
@@ -95,80 +97,22 @@ public class RegisterComponent extends RegisterPage {
      *
      * @return String
      */
+
+    private void clickCloseRegisterDropdownButton() {
+        closeModalButton.click();
+    }
+
+    public TopPart closeRegisterDropdown() {
+        clickCloseRegisterDropdownButton();
+        return new TopPart(driver) {
+        };
+    }
+
     protected String getVerifyURLText() {
         return this.confirmURL;
     }
 
     // Page Object
-//  lastNameField
-
-    /**
-     * Returns a WebElement of the 'LastName' field.
-     *
-     * @return WebElement
-     */
-    protected WebElement getLastNameField() {
-        return lastNameField;
-    }
-
-    /**
-     * Inserting some text on the 'LastName' field.
-     *
-     * @param lastName String
-     * @return RegisterComponent
-     */
-    public RegisterComponent inputLastName(String lastName) {
-        this.getLastNameField().sendKeys(lastName);
-        return this;
-    }
-
-    /**
-     * Clearing the 'LastName' field.
-     *
-     * @return RegisterComponent
-     */
-    public RegisterComponent clearLastName() {
-        this.getLastNameField().clear();
-        return this;
-    }
-
-    /**
-     * Click on LastName field.
-     *
-     * @param driver WebDriver
-     * @return RegisterComponent
-     */
-    protected RegisterComponent clickLastName(WebDriver driver) {
-        if (isDisplayedFirstNameField()) {
-            this.getLastNameField().click();
-            Actions action = new Actions(driver);
-            action.contextClick(getLastNameField()).sendKeys(Keys.LEFT)
-                    .sendKeys(Keys.RIGHT);
-        }
-        return this;
-    }
-
-    /**
-     * Taking a WebElement and set it to a private WebElement.
-     *
-     * @param lastNameField WebElement
-     * @return RegisterComponent
-     */
-    public RegisterComponent setLastNameField(WebElement lastNameField) {
-        this.lastNameField = lastNameField;
-        return this;
-    }
-
-    /**
-     * Returns boolean if displayed the 'LastName' field.
-     *
-     * @return boolean
-     */
-    protected boolean isDisplayedLastNameField() {
-        return getLastNameField().isDisplayed();
-    }
-
-
 //  firstNameValidator
 
     /**
@@ -190,7 +134,7 @@ public class RegisterComponent extends RegisterPage {
      */
     protected WebElement getFirstNameValidator() {
         firstNameValidator = driver
-                .findElement(By.cssSelector(FIRST_NAME_VALIDATOR_SELECTOR));
+                .findElement(By.xpath(FIRST_NAME_VALIDATOR_SELECTOR));
         return firstNameValidator;
     }
 
@@ -372,20 +316,6 @@ public class RegisterComponent extends RegisterPage {
         return this;
     }
 
-    /**
-     * Inserting some text on the 'LastName' field.
-     *
-     * @param lastName String
-     * @return RegisterComponent
-     */
-    protected RegisterComponent setLastNameField(String lastName) {
-        if (isDisplayedLastNameField()) {
-            clickLastName(driver);
-            clearLastName();
-            inputLastName(lastName);
-        }
-        return this;
-    }
 
     /**
      * Inserting some text on the 'Password' field.
@@ -519,5 +449,17 @@ public class RegisterComponent extends RegisterPage {
                 .setPasswordField(userData.getPassword())
                 .setPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton();
+    }
+    /**
+     * Filling all fields on Register page without registration (without click
+     * on SingUp button).
+     * @param userData object with user's credentials
+     * @return RegisterPage page
+     */
+    public void fillFieldsWithoutRegistration(User userData) {
+        setEmailField(userData.getEmail())
+                .setFirstNameField(userData.getFirstName())
+                .setPasswordField(userData.getPassword())
+                .setPasswordConfirmField(userData.getPassword());
     }
 }

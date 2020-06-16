@@ -156,7 +156,7 @@ public abstract class TopPart {
     }
 
     protected void clickTopGuestSignin() {
-        getTopGuestComponent().clickSigninLink();
+        getTopGuestComponent().clickSignInLink();
         //topGuestComponent = null;
     }
     
@@ -290,9 +290,9 @@ public abstract class TopPart {
     public LoginDropdown signin() {
         logger.debug("start signin()");
         // TODO
-        //getTopGuestComponent().clickSigninLink();
+        //getTopGuestComponent().clickSignInLink();
         logger.trace("click Signin link");
-        createTopGuestComponent().clickSigninLink();
+        createTopGuestComponent().clickSignInLink();
         return new LoginDropdown(driver);
     }
     

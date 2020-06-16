@@ -58,7 +58,7 @@ public final class UserRepository {
      * @return UserData
      */
     public User wrongUserCredentials1() {
-        return new User(" ", " ", "23423sdf", " ", "  ");
+        return new User("", "", "", "", "");
     }
     
     /**
@@ -70,7 +70,7 @@ public final class UserRepository {
      * @return UserData
      */
     public User wrongUserCredentials2() {
-        return new User("Wrong User", "22222222222222", "123asdasd#zxcz.asd", "!A*zxc-", "!A*zxC-");
+            return new User("Wrong User", "22222222222222", "123asdasd#zxcz.asd", "!A*zxc- ", "!A*zxc-");
     }
     
     /**

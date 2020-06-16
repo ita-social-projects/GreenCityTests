@@ -25,9 +25,15 @@ public class LiubaTest extends GreenCityTestRunner {
     }
 
     @DataProvider
-    public Object[][] invalidCredentialUser() {
+    public Object[][] emptyFields() {
         return new Object[][] {
                 { UserRepository.get().wrongUserCredentials1() },
+        };
+    }
+    @DataProvider
+    public Object[][] invalidFields() {
+        return new Object[][] {
+
                 { UserRepository.get().wrongUserCredentials2() }, };
     }
 
@@ -36,23 +42,40 @@ public class LiubaTest extends GreenCityTestRunner {
      * switch to Login page.
      * @param userLoginCredentials
      */
-//    @Test(dataProvider = "validCredentialUser")
-//    public void checkRegisterPage1(User userLoginCredentials) {
+    @Test(dataProvider = "validCredentialUser")
+    public void signUpWithValidUser(User userLoginCredentials) {
 //        logger.info("start test checkRegisterPage1 with user = "
 //                + userLoginCredentials.toString());
-//        loadApplication().navigateMenuMyCabinetGuest();
+        RegisterPage registerPage = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = new RegisterComponent(driver);
 //        logger.info("go to RegisterPage (click on Sign-up link)");
-//        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
-//        //
+        //
 //        logger.info("get a top title text on the page: "
 //                + registerPage.getTitleFieldText());
-//        Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
-//                "you did not go to the page RegisterPage");
+        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+                "you did not go to the page RegisterPage");
 //        logger.info(
 //                "register new User with valid credential without click on Sign-up button");
-//        registerPage.fillFieldsWithoutRegistration(userLoginCredentials);
-//        presentationSleep(2); // delay only for presentation
-//        LoginPage loginPage = registerPage.clickSignInLink();
+        registerComponent.fillFieldsWithoutRegistration(userLoginCredentials);
+
+    }
+
+    @Test
+    public void switchBetweentabs() {
+        logger.info("Starting checkEmptyFieldsValidation ");
+
+        logger.info("Click on Sign up button");
+        RegisterPage registerPage = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = registerPage.createRegisterComponent();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitlePageText());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+                "This is not a register modal:(");
+
+        registerComponent.closeRegisterDropdown();
+        LoginPage loginPage = new TopGuestComponent(driver).clickSignInLink();
 //        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
 //                "you didn't go to Login page");
 //        presentationSleep(2); // delay only for presentation
@@ -63,48 +86,91 @@ public class LiubaTest extends GreenCityTestRunner {
 //        Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
 //                "you did not go to the page RegisterPage");
 //        presentationSleep(2); // delay only for presentation
-//    }
+    }
 
     /**
-     * Filling all the fields on the Register page using the wrong credentials
-     * and reading the error message.
+     * Putting empty values into register form
+     * and reading the validation messages.
      * @param userLoginCredentials
      */
-    @Test(dataProvider = "invalidCredentialUser")
-    public void checkRegisterPage2(User userLoginCredentials) {
-//        logger.info("start test checkRegisterPage1 with user = "
-//                + userLoginCredentials.toString());
+    @Test(dataProvider = "emptyFields")
+    public void checkEmptyFieldsValidation(User userLoginCredentials) {
+        logger.info("Starting checkEmptyFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
         RegisterPage registerPage = new TopGuestComponent(driver).clickSignupLink();
-        RegisterComponent registerComponent = new RegisterComponent(driver);
-//        logger.info("go to RegisterPage (click on Sign-up link)");
+        RegisterComponent registerComponent = registerPage.createRegisterComponent();
 
-//        logger.info("get a top title text on the page: "
-//                + registerPage.getTitleFieldText());
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitlePageText());
+
         Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
-                "you did not go to the page RegisterPage");
+                "This is not a register modal:(");
 
-//        logger.info("register new User with wrong credential");
+        logger.info("Enter empty values into the form: ");
         registerComponent.registrationWrongUser(userLoginCredentials);
 
+        Assert.assertEquals(registerComponent.getFirstNameValidatorText(),
+                "User name is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(registerComponent.getEmailValidatorText(),
+                "Email is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(registerComponent.getPasswordValidatorText(),
+                "Password is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(registerComponent.getPasswordConfirmValidatorText(),
+                "Password is required",
+                "The validation message is not equal to the expected one");
+
+    }
+
+    /**
+     * Putting invalid values into register form
+     * and reading the validation messages.
+     * @param userLoginCredentials
+     */
+    @Test(dataProvider = "invalidFields")
+    public void checkInvalidFieldsValidation(User userLoginCredentials) {
+         logger.info("Starting checkInvalidFieldsValidation. Input values = "
+               + userLoginCredentials.toString());
+
+         logger.info("Click on Sign up button");
+        RegisterPage registerPage = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = registerPage.createRegisterComponent();
+
+         logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitlePageText());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+                "This is not a register modal:(");
+
+         logger.info("Enter invalid values into the form: ");
+        registerComponent.registrationWrongUser(userLoginCredentials);
+
+// Any input in userField is valid now, eve the space - seems like a bug
 //        Assert.assertEquals(registerComponent.getFirstNameValidatorText(),
 //                "First Name error text not found",
-//                "the error message does not equal the expected result");
+//                "The validation message is not equal to the expected one");
 
         Assert.assertEquals(registerComponent.getEmailValidatorText(),
                 "Please check that your e-mail address is indicated correctly",
-                "the error message does not equal the expected result");
+                "The validation message is not equal to the expected one");
 
-//        Assert.assertEquals(registerComponent.getPasswordValidatorText(),
-//                "Password must be at least 8 characters long without spaces",
-//                //OR Password must be at least 8 characters in length
-//                "the error message does not equal the expected result");
+        Assert.assertEquals(registerComponent.getPasswordValidatorText(),
+                "Password must be at least 8 characters long without spaces",
+                //OR Password must be at least 8 characters in length
+                "The validation message is not equal to the expected one");
 
-//        Assert.assertEquals(registerComponent.getPasswordConfirmValidatorText(),
-//                "Passwords do not match",
-//                "the error message does not equal the expected result");
-        //OR Passwords do not match
-        //Password has contain at least one character of Uppercase letter (A-Z),
-        // Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)
-        driver.navigate().refresh();
+        Assert.assertEquals(registerComponent.getPasswordConfirmValidatorText(),
+                "Passwords do not match\n" +
+                        "Password has contain at least one character of Uppercase letter (A-Z), " +
+                        "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
+                "The validation message is not equal to the expected one");
+
     }
 }

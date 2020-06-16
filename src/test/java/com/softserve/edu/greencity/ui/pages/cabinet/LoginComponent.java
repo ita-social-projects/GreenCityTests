@@ -11,10 +11,10 @@ public class LoginComponent extends LoginPart {
 
     private final String EMAIL_ID = "email";
     private final String PASSWORD_ID = "password";
-    private final String LOGIN_BUTTON_XPATH = "//button[@type='submit' and @class='submit primary-global-button']";
-    private final String GOOGLE_LOGIN_BUTTON_CLASS = "google";
+    private final String LOGIN_BUTTON_XPATH = "//button[@type='submit' and @class='primary-global-button']";
+    private final String GOOGLE_LOGIN_BUTTON_CLASS = "google-sign-in";
     private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
-    private final String REGISTRATION_LINK_CLASS = "signup-link";
+    //private final String REGISTRATION_LINK_CLASS = "signup-link";
 
     private final WebDriver driver;
 
@@ -26,7 +26,8 @@ public class LoginComponent extends LoginPart {
     }
 
     private void initElements() {
-        this.setSignUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
+        this
+                //.setSignUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
                 .setEmailField(driver.findElement(By.id(EMAIL_ID)))
                 .setPasswordField(driver.findElement(By.id(PASSWORD_ID)))
                 .setForgotPasswordLink(driver.findElement(By.className(FORGOT_PASSWORD_LINK_CLASS)))
