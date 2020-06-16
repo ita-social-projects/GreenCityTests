@@ -19,13 +19,9 @@ public class HabitComponent {
 
     private String habitTitle;
 
-    private WebElement habitChart;
-
-    private WebElement moreElementsButton;
-
     private List<WebElement> habitItems;
 
-    private List<WebElement> estimationButtons;
+    private List<WebElement> estimationButtons = new ArrayList<>();
 
     public HabitComponent(WebElement habitLayout) {
         this.habitLayout = habitLayout;
@@ -33,21 +29,14 @@ public class HabitComponent {
     }
 
     private void initElements() {
-        habitTitle = habitLayout.findElement(By.cssSelector("app-habit-title h4")).getText();
-
-        habitChart = habitLayout.findElement(By.cssSelector("app-habit-chart"));
-
-        moreElementsButton = habitLayout.findElement(By.cssSelector("app-habit-item-list span"));
-
-        estimationButtons = new ArrayList<WebElement>();
-        habitLayout.findElements(By.cssSelector("button")).forEach(item -> estimationButtons.add(item));
+        habitTitle = habitLayout.findElement(By.className("title")).getText();
 
         initHabitItems();
     }
 
     private void initHabitItems() {
         habitItems = new ArrayList<WebElement>();
-        habitLayout.findElements(By.cssSelector("img")).forEach(item ->  habitItems.add(item));
+        habitLayout.findElements(By.cssSelector(".habits-in-progress > .ng-star-inserted")).forEach(item -> habitItems.add(item));
     }
 
     // Page Object
@@ -62,22 +51,6 @@ public class HabitComponent {
 
     public String getHabitTitle() {
         return habitTitle;
-    }
-
-    // habitChart
-
-    public WebElement getHabitChart() {
-        return habitChart;
-    }
-
-    // moreElementsButton
-
-    public WebElement getMoreElementsButton() {
-        return moreElementsButton;
-    }
-
-    public void clickMoreElementsButton() {
-        getMoreElementsButton().click();
     }
 
     // habitItems
@@ -100,7 +73,7 @@ public class HabitComponent {
     }
 
     public WebElement getHabitItemByNumber(int number) {
-        return getHabitItems().get(number-1);
+        return getHabitItems().get(number - 1);
     }
 
     public boolean isActiveItemElement(WebElement item) {
@@ -114,7 +87,7 @@ public class HabitComponent {
     }
 
     public void selectItems(int number) {
-        if(getSelectedHabitItemsCount() != number) {
+        if (getSelectedHabitItemsCount() != number) {
             getHabitItemByNumber(number).click();
         }
     }
@@ -123,31 +96,10 @@ public class HabitComponent {
     // do not work select estimation
     // do not know how to identify active button
     public Estimation getSelectedEstimation() {
-         return null;
+        return null;
     }
-
-    public void resizeHabitItemsContainer() {
-        clickMoreElementsButton();
-        initHabitItems();
-    }
-
 
     // Business Logic
-
-    /**
-     * Select items count that could not be used.
-     * @param number - items count
-     * @return new HabitComponent
-     */
-    public HabitComponent selectItemsNumber(int number) {
-        if (number > MAX_ITEMS_COUNT_IN_ROW && number < 2 * MAX_ITEMS_COUNT_IN_ROW) {
-            resizeHabitItemsContainer();
-            selectItems(number);
-        } else {
-            selectItems(number);
-        }
-        return new HabitComponent(habitLayout);
-    }
 
     /**
      * Select estimation of day.

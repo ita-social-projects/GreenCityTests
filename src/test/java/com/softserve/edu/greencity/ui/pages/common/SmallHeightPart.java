@@ -26,7 +26,7 @@ public class SmallHeightPart extends TopPart {
 
 	@Override
 	public EconewsPage navigateMenuEconews() {
-		scrollDown();
+		scrollToElementByCoordinates(getCopyright());
 		if (isMenuClickable()) {
 			return super.navigateMenuEconews();
 		}
@@ -37,7 +37,7 @@ public class SmallHeightPart extends TopPart {
 
 	@Override
 	public TipsTricksPage navigateMenuTipsTricks() {
-		scrollDown();
+		scrollToElementByCoordinates(getCopyright());
 		if (isMenuClickable()) {
 			return super.navigateMenuTipsTricks();
 		}
@@ -48,7 +48,7 @@ public class SmallHeightPart extends TopPart {
 
 	@Override
 	public MapPage navigateMenuMap() {
-		scrollDown();
+		scrollToElementByCoordinates(getCopyright());
 		if (isMenuClickable()) {
 			return super.navigateMenuMap();
 		}
@@ -59,7 +59,7 @@ public class SmallHeightPart extends TopPart {
 
 	@Override
 	public MyCabinetPage navigateMenuMyCabinet() {
-		scrollDown();
+		scrollToElementByCoordinates(getCopyright());
 		if (isMenuClickable()) {
 			return super.navigateMenuMyCabinet();
 		}
@@ -72,7 +72,7 @@ public class SmallHeightPart extends TopPart {
 
 	@Override
 	public AboutPage navigateMenuAbout() {
-		scrollDown();
+		scrollToElementByCoordinates(getCopyright());
 		if (isMenuClickable()) {
 			return super.navigateMenuAbout();
 		}
