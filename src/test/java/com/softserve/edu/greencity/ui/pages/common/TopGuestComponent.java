@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -51,9 +51,9 @@ public class TopGuestComponent {
         return getSignupLink().getText();
     }
     
-    public RegisterPage clickSignupLink() {
+    public RegisterComponent clickSignupLink() {
         getSignupLink().click();
-        return new RegisterPage(driver);
+        return new RegisterComponent(driver);
     }
 
 	// Functional

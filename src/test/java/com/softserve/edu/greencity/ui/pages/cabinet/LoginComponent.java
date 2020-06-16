@@ -4,7 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordPart;
 import com.softserve.edu.greencity.ui.pages.common.LoginPart;
 
 public class LoginComponent extends LoginPart {
@@ -40,9 +39,9 @@ public class LoginComponent extends LoginPart {
 //        return null;
 //    }
 
-    public RegisterPage gotoRegisterPage() {
+    public RegisterComponent gotoRegisterPage() {
         getSignUpLink().click();
-        return new RegisterPage(driver);
+        return new RegisterComponent(driver);
     }
 
 }

@@ -60,7 +60,7 @@ public class RegisterDropdownTest extends GreenCityTestRunner {
         logger.info("click Sign-un link and go to RegisterDropdown");
         registerDropdown = loginDropdown.gotoRegisterDropdown();
         Assert.assertEquals(registerDropdown.getTitlePageText(), "Hello!",
-                "you did not go to the page RegisterPage");
+                "you did not go to the page RegisterComponent");
         presentationSleep(2); // delay only for presentation
         logger.info("close RegisterDropdown");
         page = registerDropdown.closeRegisterDropdown();
@@ -105,7 +105,7 @@ public class RegisterDropdownTest extends GreenCityTestRunner {
         logger.info("get a top title text on the page: "
                 + registerDropdown.getTitlePageText());
         Assert.assertEquals(registerDropdown.getTitlePageText(), "Hello!",
-                "you did not go to the page RegisterPage");
+                "you did not go to the page RegisterComponent");
         //
         logger.info(
                 "register new User with random credential and temporary email");
@@ -113,7 +113,7 @@ public class RegisterDropdownTest extends GreenCityTestRunner {
         Assert.assertTrue(
                 registerDropdown.getConfirmRegisterationText()
                         .contains("You have successfully registered"),
-                "you did not go to the page RegisterPage");
+                "you did not go to the page RegisterComponent");
         //
         registerDropdown.closeConfirmRegisterationText();
         //

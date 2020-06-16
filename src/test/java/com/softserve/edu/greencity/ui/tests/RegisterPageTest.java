@@ -7,7 +7,7 @@
 //import com.softserve.edu.greencity.ui.data.User;
 //import com.softserve.edu.greencity.ui.data.UserRepository;
 //import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
-//import com.softserve.edu.greencity.ui.pages.cabinet.RegisterPage;
+//import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 //import com.softserve.edu.greencity.ui.pages.common.TopPart;
 //
 ///**
@@ -17,7 +17,7 @@
 //public class RegisterPageTest extends GreenCityTestRunner {
 //
 //    @DataProvider
-//    public Object[][] validCredentialUser() {
+//    public Object[][] validUserCredentials() {
 //        return new Object[][] {
 //                { UserRepository.get().defaultUserCredentials() }, };
 //    }
@@ -39,18 +39,18 @@
 //     * Filling all the fields on the Register page without registering and
 //     * switch to Login page.
 //     * @param userLoginCredentials
-//     @Test(dataProvider = "validCredentialUser")
+//     @Test(dataProvider = "validUserCredentials")
 //    public void checkRegisterPage1(User userLoginCredentials) {
 //        logger.info("start test checkRegisterPage1 with user = "
 //                + userLoginCredentials.toString());
 //        loadApplication().navigateMenuMyCabinetGuest();
-//        logger.info("go to RegisterPage (click on Sign-up link)");
-//        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
+//        logger.info("go to RegisterComponent (click on Sign-up link)");
+//        RegisterComponent registerPage = new LoginPage(driver).gotoRegisterPage();
 //        //
 //        logger.info("get a top title text on the page: "
 //                + registerPage.getTitleFieldText());
 //        Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
-//                "you did not go to the page RegisterPage");
+//                "you did not go to the page RegisterComponent");
 //        logger.info(
 //                "register new User with valid credential without click on Sign-up button");
 //        registerPage.fillFieldsWithoutRegistration(userLoginCredentials);
@@ -59,12 +59,12 @@
 //        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
 //                "you didn't go to Login page");
 //        presentationSleep(2); // delay only for presentation
-//        logger.info("click on Sign-up link go to RegisterPage");
+//        logger.info("click on Sign-up link go to RegisterComponent");
 //        loginPage.gotoRegisterPage();
 //        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth/sign-up"),
 //                "you didn't go to Register page");
 //        Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
-//                "you did not go to the page RegisterPage");
+//                "you did not go to the page RegisterComponent");
 //        presentationSleep(2); // delay only for presentation
 //    }
 //
@@ -78,12 +78,12 @@
 //        logger.info("start test checkRegisterPage1 with user = "
 //                + userLoginCredentials.toString());
 //        loadApplication().navigateMenuMyCabinetGuest();
-//        logger.info("go to RegisterPage (click on Sign-up link)");
-//        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
+//        logger.info("go to RegisterComponent (click on Sign-up link)");
+//        RegisterComponent registerPage = new LoginPage(driver).gotoRegisterPage();
 //        logger.info("get a top title text on the page: "
 //                + registerPage.getTitleFieldText());
 //        Assert.assertEquals("Hello!", registerPage.getTitleFieldText(),
-//                "you did not go to the page RegisterPage");
+//                "you did not go to the page RegisterComponent");
 //        //
 //        logger.info("register new User with wrong credential");
 //        registerPage.registrationWrongUser(userLoginCredentials);
@@ -109,14 +109,14 @@
 //     * @param userLoginCredentials
 //     */
 //    @Test(dataProvider = "validCredentialUser2")
-//    public void checkRegistation2(User userLoginCredentials) {
+//    public void randomCredsRegistrationLogin(User userLoginCredentials) {
 //        logger.info("start test checkRegistation1 with user = "
 //                + userLoginCredentials.toString());
 //        loadApplication().navigateMenuMyCabinetGuest();
-//        logger.info("go to RegisterPage (click on Sign-up link)");
-//        RegisterPage registerPage = new LoginPage(driver).gotoRegisterPage();
+//        logger.info("go to RegisterComponent (click on Sign-up link)");
+//        RegisterComponent registerPage = new LoginPage(driver).gotoRegisterPage();
 //        Assert.assertEquals(registerPage.getTitleFieldText(), "Hello!",
-//                "you did not go to the page RegisterPage");
+//                "you did not go to the page RegisterComponent");
 //        logger.info("get a top title text on the page: "
 //                + registerPage.getTitleFieldText());
 //        //
@@ -126,7 +126,7 @@
 //        Assert.assertTrue(
 //                registerPage.getConfirmRegistrationText()
 //                        .contains("You have successfully registered"),
-//                "you did not go to the page RegisterPage");
+//                "you did not go to the page RegisterComponent");
 //        //
 //        registerPage.navigateMenuMyCabinetGuest();
 //        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
