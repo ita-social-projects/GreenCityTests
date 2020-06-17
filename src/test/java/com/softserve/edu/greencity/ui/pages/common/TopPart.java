@@ -215,10 +215,10 @@ public abstract class TopPart {
         topUserComponent = null;
     }
 
-    //TODO same method
-    protected void scrollToElementByCoordinates(WebElement element) {
-        Coordinates cor = ((Locatable) element).getCoordinates();
-        cor.inViewPort();
+    protected void scrollToElementByAction(final WebElement element) {
+        final Actions actions = new Actions(driver);
+        actions.moveToElement(element, -1, -1);
+        actions.perform();
     }
 
     // language

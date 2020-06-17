@@ -2,10 +2,11 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
- import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 public class TipsTricksTest extends GreencityTestRunner {
     @DataProvider
@@ -67,4 +68,3 @@ public class TipsTricksTest extends GreencityTestRunner {
         Assert.assertTrue(econewsPage.getGridView().isDisplayed());
     }
 }
-

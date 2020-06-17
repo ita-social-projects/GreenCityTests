@@ -32,7 +32,7 @@ public class MainMenuDropdown {
         naviconButton = driver.findElement(By.cssSelector("div.menu-icon"));
         //menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
         menuEcoNews = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']"));
-        menuTipsTricks = driver.findElement(By.cssSelector("div.logo"));
+        menuTipsTricks = driver.findElement(By.cssSelector(".navigation-menu-left .active-link"));
         menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
         menuMyHabits = driver.findElement(By.cssSelector(".navigation-menu-left > ul > li > a[href*='/profile']"));
         menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
@@ -65,32 +65,6 @@ public class MainMenuDropdown {
     public boolean isDisplayedNaviconButton() {
         return getNaviconButton().isDisplayed();
     }
-    
-    /*-
-    // menuHome
-    
-    public WebElement getMenuHome() {
-    	if (!isDisplayedMenuHome()) {
-    		clickNaviconButton();
-    	}
-        return menuHome;
-    }
-
-    public String getMenuHomeText() {
-        return getMenuHome().getText();
-    }
-
-    public void clickMenuHome() {
-    	getMenuHome().click();
-    }
-
-    public boolean isDisplayedMenuHome() {
-        //return getMenuHome().isDisplayed();
-    	return menuHome.isDisplayed();
-    }
-    */
-
-    // menuEcoNews
 
     public WebElement getMenuEcoNews() {
         if (!isDisplayedMenuEcoNews()) {

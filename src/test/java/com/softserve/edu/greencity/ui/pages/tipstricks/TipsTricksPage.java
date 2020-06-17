@@ -1,17 +1,14 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class TipsTricksPage extends TopPart {
 
@@ -82,6 +79,8 @@ public class TipsTricksPage extends TopPart {
     }
 
     public MyCabinetPage clickStartHabitTop() {
+        scrollToElementByAction(getStartHabitTop());
+
         getStartHabitTop().click();
 
         return new MyCabinetPage(driver);
