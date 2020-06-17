@@ -1,16 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
-/**
- * ManualRegisterComponent class
- *
- * @author Serg
- */
+
 public class ManualRegisterComponent extends RegisterComponent {
 
 
@@ -43,7 +38,6 @@ public class ManualRegisterComponent extends RegisterComponent {
      */
     private void initElements() {
         // init elements
-        titlePage = driver.getTitle();
         userNameField = driver
                 .findElement(By.cssSelector("input[name='fistName']"));
         emailField = driver
@@ -58,9 +52,8 @@ public class ManualRegisterComponent extends RegisterComponent {
                 "//input[@name='form-control password-confirm']/../span/img"));
         signUpButton = driver.findElement(By.cssSelector(
                 "div[class='form-content-container'] button[class*='global-button']"));
-        signInLink = driver.findElement(By.cssSelector("div.exist-account a"));
-        googleSignUpButton = driver.findElement(By.cssSelector(
-                "div[class='form-content-container'] button[class*='button-google']"));
+
+
 
 
         this.setEmailField(emailField)
@@ -97,7 +90,7 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
     /**
-     * Returns a WebElement of the 'FirstName' field.
+     * Returns a WebElement of the 'UserName' field.
      *
      * @return WebElement
      */
@@ -170,7 +163,7 @@ public class ManualRegisterComponent extends RegisterComponent {
      *
      * @return WebElement
      */
-    protected WebElement getFirstNameValidator() {
+    protected WebElement getUserNameValidator() {
         firstNameValidator = driver
                 .findElement(By.xpath(FIRST_NAME_VALIDATOR_SELECTOR));
         return firstNameValidator;
@@ -181,8 +174,8 @@ public class ManualRegisterComponent extends RegisterComponent {
      *
      * @return String
      */
-    public String getFirstNameValidatorText() {
-        return getFirstNameValidator().getText();
+    public String getUserNameValidatorText() {
+        return getUserNameValidator().getText();
     }
 
     /**
@@ -191,7 +184,7 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return boolean
      */
     protected boolean isDisplayedFirstNameValidator() {
-        return getFirstNameValidator().isDisplayed();
+        return getUserNameValidator().isDisplayed();
     }
 
     /**
@@ -584,8 +577,6 @@ public class ManualRegisterComponent extends RegisterComponent {
     /**
      * Taking a WebElement and set it to a private WebElement
      *
-     * @param showPasswordConfirmButton
-     * @return RegisterPart
      */
     public ManualRegisterComponent setShowPasswordConfirmButton(
             WebElement showPasswordConfirmButton) {
@@ -610,6 +601,8 @@ public class ManualRegisterComponent extends RegisterComponent {
 //                        By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR))
 //                .size() != 0;
 //    }
+
+
 
     // Sign Up button
 
@@ -656,6 +649,13 @@ public class ManualRegisterComponent extends RegisterComponent {
 //        return new WebDriverWait().until(ExpectedConditions.elementToBeClickable(getSignUpButton())) != null;
 //    }
 
+    public boolean signUpIsDisabled() {
+        if (getSignUpButton().getAttribute("disabled") == null){
+            return false;
+        }
+        return true;
+
+}
 
 
     // Functional
@@ -742,45 +742,19 @@ public class ManualRegisterComponent extends RegisterComponent {
         GetMail10MinTools tmp = new GetMail10MinTools(driver);
         return tmp.getTempEmail();
     }
-//
-//    @Override
-//    protected GoogleAccountPage clickSignUpGoogleAccountButton() {
-//        String currentTab = driver.getWindowHandle();
-//        clickGoogleLoginButton();
-//        switchToAnotherTab(currentTab);
-//        return new GoogleAccountPage(driver);
-//    }
-//
+
     public ManualRegisterComponent clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
             this.getSignUpButton().click();
         }
         return this;
     }
-//
-//    @Override
-//    protected RegisterComponent clickSignInLink() {
-//        if (isDisplayedSignInLink()) {
-//            this.getSignInLink().click();
-//        }
-//        return this;
-//    }
-//
-//    /**
-//     * Creating LoginPage instance.
-//     * @return LoginPage
-//     */
-//    public LoginPage gotoLoginPage() {
-//        return new LoginPage(driver);
-//    }
-//
 
     protected String getTemporaryEmail() {
         String currentTab = driver.getWindowHandle();
-        String email = "";
         ((JavascriptExecutor)driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
-        email = getTempEmail();
+        String email = getTempEmail();
         logger.info("temporary Email address for registration: " + email);
 //        System.out.println("temporary Email address for registration: " + email);
         driver.switchTo().window(currentTab);
@@ -813,10 +787,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         return setSubmitEmailText(submitEmailText).getSubmitEmailText();
     }
 
-    /**
-     * Test registration user with already wrong credentials.
-     * @param userData
-     */
+
     public void registrationWrongUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getFirstName())
@@ -828,7 +799,6 @@ public class ManualRegisterComponent extends RegisterComponent {
      * Filling all fields on Register page without registration (without click
      * on SingUp button).
      * @param userData object with user's credentials
-     * @return RegisterComponent page
      */
     public void fillFieldsWithoutRegistration(User userData) {
         fillEmailField(userData.getEmail())
@@ -836,11 +806,11 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
     }
+    
     // completion of user registration
     /**
      * Filling all fields on Register page and click on SingUp button.
      * @param userData object with user's credentials
-     * @return RegisterComponent page
      */
     public void registrationNewRandomUser(User userData) {
         userData.setEmail(getTemporaryEmail());
@@ -849,7 +819,8 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
         //
-        clickSignUpButton().verifyTempEmail();
+        clickSignUpButton()
+                .verifyTempEmail();
     }
 
     /**

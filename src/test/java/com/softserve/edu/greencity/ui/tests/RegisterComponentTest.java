@@ -7,11 +7,13 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
-public class LiubaTest extends GreenCityTestRunner {
+public class RegisterComponentTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] validUserCredentials() {
@@ -41,33 +43,37 @@ public class LiubaTest extends GreenCityTestRunner {
     /**
      * Filling all the fields on the Register page without registering and
      * switch to Login page.
-     * @param userLoginCredentials
      */
     @Test(dataProvider = "validUserCredentials")
     public void signUpWithValidUser(User userLoginCredentials) {
         logger.info("Starting signUpWithValidUser. Input values = "
-                + userLoginCredentials.toString());;
+                + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
 
         logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitlePageText());
+                + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
         ManualRegisterComponent manualRegisterComponent = new ManualRegisterComponent(driver);
-//        logger.info("go to RegisterComponent (click on Sign-up link)");
-        //
 
-//        logger.info(
-//                "register new User with valid credential without click on Sign-up button");
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+
+        logger.info(
+                 "Filling out the fields with valid credentials without clicking on Sign up button");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        //sign up is enabled
+        Assert.assertFalse(manualRegisterComponent.signUpIsDisabled());
 
     }
 
+    /**
+     * Opening register modal window, reading its title,
+     * switching to login modal window, reading its title
+     * to make sure the transition has been executed.
+     */
     @Test
     public void switchBetweenTabs() {
         logger.info("Starting switchBetweenTabs");
@@ -76,31 +82,26 @@ public class LiubaTest extends GreenCityTestRunner {
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
 
         logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitlePageText());
+                + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-        ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
+        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+                "This is not a register modal:(");
 
-        registerComponent.closeRegisterComponentModal();
-        LoginPage loginPage = new TopGuestComponent(driver).clickSignInLink();
-//        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
-//                "you didn't go to Login page");
-//        presentationSleep(2); // delay only for presentation
-//        logger.info("click on Sign-up link go to RegisterComponent");
-//        loginPage.gotoRegisterPage();
-//        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth/sign-up"),
-//                "you didn't go to Register page");
-//        Assert.assertEquals("Hello!", registerComponent.getTitleFieldText(),
-//                "you did not go to the page RegisterComponent");
-//        presentationSleep(2); // delay only for presentation
+        LoginComponent loginComponent = registerComponent.clickSignInLink();
+
+        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
+                "This is not a login modal:(");
+
+        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
+                "This is not a login modal:(");
     }
 
     /**
      * Putting empty values into register form
      * and reading the validation messages.
-     * @param userLoginCredentials
      */
     @Test(dataProvider = "emptyFields")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
@@ -111,9 +112,9 @@ public class LiubaTest extends GreenCityTestRunner {
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
 
         logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitlePageText());
+                + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
@@ -121,12 +122,12 @@ public class LiubaTest extends GreenCityTestRunner {
         logger.info("Enter empty values into the form: ");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getFirstNameValidatorText(),
-                "User name is required",
-                "The validation message is not equal to the expected one");
-
         Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "Email is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
+                "User name is required",
                 "The validation message is not equal to the expected one");
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
@@ -142,7 +143,6 @@ public class LiubaTest extends GreenCityTestRunner {
     /**
      * Putting invalid values into register form
      * and reading the validation messages.
-     * @param userLoginCredentials
      */
     @Test(dataProvider = "invalidFields")
     public void checkInvalidFieldsValidation(User userLoginCredentials) {
@@ -153,9 +153,9 @@ public class LiubaTest extends GreenCityTestRunner {
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
 
         logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitlePageText());
+                + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
@@ -163,10 +163,9 @@ public class LiubaTest extends GreenCityTestRunner {
          logger.info("Enter invalid values into the form: ");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
 
-// Any input in userField is valid now, eve the space - seems like a bug
-//        Assert.assertEquals(manualRegisterComponent.getFirstNameValidatorText(),
-//                "First Name error text not found",
-//                "The validation message is not equal to the expected one");
+// Any input in userName field is valid now, even the space - seems like a bug
+//        Assert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
+//                "User name cannot be empty");
 
         Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "Please check that your e-mail address is indicated correctly",
@@ -184,12 +183,14 @@ public class LiubaTest extends GreenCityTestRunner {
                 "The validation message is not equal to the expected one");
 
     }
+
     /**
      //     * Test for registration with temporary email and random other credentials
      //     * with logging and checking displayed user name in the top of the page.
      //     * @param userLoginCredentials
      //     */
-    @Test(dataProvider = "randomValidUserCredentials")
+    @Test(enabled = false)
+    //(dataProvider = "randomValidUserCredentials")
     public void randomCredsRegistrationLogin(User userLoginCredentials) {
         logger.info("Starting randomCredsRegistrationLogin. Input values = "
                 + userLoginCredentials.toString());
@@ -198,9 +199,9 @@ public class LiubaTest extends GreenCityTestRunner {
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
 
         logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitlePageText());
+                + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitlePageText(),
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
@@ -208,28 +209,28 @@ public class LiubaTest extends GreenCityTestRunner {
         logger.info("Enter random credentials and temporary email into the form: ");
         manualRegisterComponent.registrationNewRandomUser(userLoginCredentials);
 //        Assert.assertTrue(
-//                registerPage.getConfirmRegistrationText()
+//                manualRegisterComponent.getConfirmRegistrationText()
 //                        .contains("You have successfully registered"),
 //                "you did not go to the page RegisterComponent");
-        //
+
         registerComponent.closeRegisterComponentModal();
         LoginComponent loginComponent = new LoginComponent(driver);
 
-//        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
-//                "you didn't go to Login page");
-//        presentationSleep(2); // delay only for presentation
-//        LoginPage page = new LoginPage(driver);
-//        logger.info("login with temporary Email and random credential: "
-//                + userLoginCredentials.toString());
-//        page.inputEmail(userLoginCredentials.getEmail())
-//                .inputPassword(userLoginCredentials.getPassword())
-//                .clickLoginButton(); // not always success after one click (need
-//                                     // one more click)
-//        logger.info("get Title curent page: " + driver.getTitle());
-//        Assert.assertEquals(driver.getTitle(), "Home",
-//                "you didn't log in successfully");
-//        logger.info("check TopUserName: " + page.getTopUserName());
-//        Assert.assertEquals(page.getTopUserName(), TopPart.PROFILE_NAME);
+        Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
+                "you didn't go to Login page");
+        presentationSleep(2); // delay only for presentation
+        LoginPage page = new LoginPage(driver);
+        logger.info("login with temporary Email and random credential: "
+                + userLoginCredentials.toString());
+        page.inputEmail(userLoginCredentials.getEmail())
+                .inputPassword(userLoginCredentials.getPassword())
+                .clickLoginButton(); // not always success after one click (need
+                                     // one more click)
+        logger.info("get Title curent page: " + driver.getTitle());
+        Assert.assertEquals(driver.getTitle(), "Home",
+                "you didn't log in successfully");
+        logger.info("check TopUserName: " + page.getTopUserName());
+        Assert.assertEquals(page.getTopUserName(), TopPart.PROFILE_NAME);
 
     }
 }

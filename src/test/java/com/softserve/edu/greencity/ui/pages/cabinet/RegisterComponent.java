@@ -1,26 +1,19 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * RegisterComponent class.
- *
- * @author Serg
- */
+
 public class RegisterComponent extends TopPart {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected String titlePage;
-    protected WebElement titleField;
+    protected WebElement title;
+    protected WebElement subtitle;
     protected WebElement userNameField;
     protected WebElement emailField;
     protected WebElement passwordField;
@@ -30,6 +23,7 @@ public class RegisterComponent extends TopPart {
     protected WebElement signUpButton;
     protected WebElement googleSignUpButton;
     protected WebElement signInLink;
+    protected WebElement signInText;
     protected WebElement closeModalButton;
 
     protected WebElement submitEmailText;
@@ -41,73 +35,51 @@ public class RegisterComponent extends TopPart {
 
     private ManualRegisterComponent manualRegisterComponent;
 
-    /**
-     * RegisterComponent constructor.
-     *
-     * @param driver
-     */
+
     public RegisterComponent(WebDriver driver) {
         super(driver);
-        initElements();
+        //initElements();
     }
 
-
-    private void initElements() {
-        //manualRegisterComponent = new ManualRegisterComponent(driver);
-    }
 
     // titleField
 
-    /**
-     * Taking a WebElement and set it to a private WebElement
-     *
-     * @param titleField WebElement
-     * @return RegisterPart
-     */
-    protected RegisterComponent setTitleField(WebElement titleField) {
-        this.titleField = titleField;
+    protected RegisterComponent setTitle() {
+        this.title = driver
+                .findElement(By.cssSelector("h1[title-text]"));
         return this;
     }
 
-    /**
-     * Returns a WebElement of the on the top page.
-     *
-     * @return WebElement titleField
-     */
-    protected WebElement getTitleField() {
-        return titleField;
-    }
+    protected WebElement getTitle() {
 
-    /**
-     * Returns boolean if displayed the 'Title' field.
-     *
-     * @return boolean
-     */
-    protected boolean isDisplayedTitleField() {
-        return getTitleField().isDisplayed();
-    }
-
-    public WebElement getRegisterComponentTitle() {
-        titleField = driver
-                .findElement(By.cssSelector("h1[title-text]"));
-        this.setTitleField(titleField);
-        return titleField;
+        setTitle();
+        return title;
     }
 
 
-    public String getTitlePageText(){
+    public String getTitleString(){
 
-        return this.getRegisterComponentTitle().getText();
+        return this.getTitle().getText();
     }
 
-    //Register component
-    public ManualRegisterComponent createRegisterComponent() {
+    // subtitle
 
-        return new ManualRegisterComponent(driver);
+    protected RegisterComponent setSubtitle() {
+        this.subtitle = driver
+                .findElement(By.cssSelector(".subtitle-text"));
+        return this;
     }
 
-    private ManualRegisterComponent getManualRegisterComponent() {
-        return manualRegisterComponent;
+
+    protected WebElement getSubtitle() {
+
+        setSubtitle();
+        return subtitle;
+    }
+
+    public String getSubtitleString(){
+
+        return this.getSubtitle().getText();
     }
 
     //Close button
@@ -117,11 +89,23 @@ public class RegisterComponent extends TopPart {
         closeModalButton.click();
     }
 
-//    public TopPart closeRegisterDropdown() {
-//        closeRegisterComponentModal();
-//        return new TopPart(driver) {
-//        };
-//    }
+
+
+    //Register component
+    public ManualRegisterComponent createRegisterComponent() {
+
+        return new ManualRegisterComponent(driver);
+    }
+
+    public ManualRegisterComponent setRegisterComponent() {
+
+        return this.manualRegisterComponent = getManualRegisterComponent();
+    }
+
+    private ManualRegisterComponent getManualRegisterComponent() {
+        return setRegisterComponent();
+    }
+
 
     // Success message???
 
@@ -138,10 +122,6 @@ public class RegisterComponent extends TopPart {
     public String getSubmitEmailText() {
         return submitEmailText.getText();
     }
-
-    //Sign in with Google component
-
-    // ToDo: transfer to GoogleRegisterComponent
 
     // Sign Up with Google button
 
@@ -196,4 +176,18 @@ public class RegisterComponent extends TopPart {
     }
 
 
+    // Sign In button
+    public RegisterComponent setSignInLink() {
+        this.signInLink = driver.findElement(By.cssSelector("div.exist-account a"));
+        return this;
+    }
+    protected WebElement getSignInLink() {
+        setSignInLink();
+        return signInLink;
+    }
+
+    public LoginComponent clickSignInLink() {
+        getSignInLink().click();
+        return new LoginComponent(driver);
+    }
 }

@@ -157,8 +157,11 @@ public final class GetMail10MinTools {
 
 //    verifyEmailButton
     private WebElement getVerifyEmailButton() {
-        verifyEmailButton = driver.findElement(
-                By.cssSelector("[href*='verifyEmail']"));
+       WebElement frameEl = driver.findElement(By.xpath("//div//*[@id='iframeMail']"));
+       // WebElement frameEl = driver.findElement(By.xpath("/html/body/div/div[3]/div/div[2]/div/div/iframe"));
+        WebDriver frame = driver.switchTo().frame(frameEl);
+        verifyEmailButton = frame.findElement(
+                By.xpath("//*[contains(@href,'verifyEmail')]"));
         return verifyEmailButton;
     }
 
@@ -263,7 +266,7 @@ public final class GetMail10MinTools {
         logger.debug("start verifyEmail()");
         logger.trace("click on refresh Mail button and open desired mail");
         openMail();
-//        String verifyEmail = getVerifyURL();
+ //       String verifyEmail = getVerifyURL();
         logger.trace("click on VerifyButton");
         clickVerifyButton();
 //        return verifyEmail;
