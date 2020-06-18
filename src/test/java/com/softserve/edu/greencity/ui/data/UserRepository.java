@@ -36,7 +36,7 @@ public final class UserRepository {
      * @return UserData
      */
     public User defaultUserCredentials() {
-        return new User("John", "Wilson", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*");
+        return new User("John", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*", "A475asd123*");
     }
     
     /**
@@ -58,7 +58,7 @@ public final class UserRepository {
      * @return UserData
      */
     public User wrongUserCredentials1() {
-        return new User("", "", "", "", "");
+        return new User("",  "", "", "");
     }
     
     /**
@@ -70,7 +70,7 @@ public final class UserRepository {
      * @return UserData
      */
     public User wrongUserCredentials2() {
-            return new User("Wrong User", "22222222222222", "123asdasd#zxcz.asd", "!A*zxc- ", "!A*zxc-");
+            return new User("Wrong User", "123asdasd#zxcz.asd", "!A*zxc- ", "!A*zxc-");
     }
     
     /**
@@ -81,7 +81,7 @@ public final class UserRepository {
      * @return
      */
     public User temporaryUserCredentialsForRegistration() {
-        return new User(Randomizer.getRamdomString20Letters(), Randomizer.getRamdomString20Letters(), "", "A475asd123*", "A475asd123*");
+        return new User(Randomizer.getRamdomString20Letters(), "", "A475asd123*", "A475asd123*");
     }
 
 }

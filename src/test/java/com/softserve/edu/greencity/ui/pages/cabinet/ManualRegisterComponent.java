@@ -8,19 +8,37 @@ import org.openqa.selenium.interactions.Actions;
 
 public class ManualRegisterComponent extends RegisterComponent {
 
-
     private WebDriver driver;
+    private WebElement userNameField;
+    private WebElement emailField;
+    private WebElement passwordField;
+    private WebElement showPasswordButton;
+    private WebElement passwordConfirmField;
+    private WebElement showPasswordConfirmButton;
+    private WebElement signUpButton;
 
-    protected WebElement registrationValidator;
+    private WebElement emailValidator;
+    private WebElement passwordValidator;
+    private WebElement passwordConfirmValidator;
+    private WebElement registrationValidator;
     private WebElement firstNameValidator;
-    protected String confirmURL = "";
+    private String confirmURL = "";
+
+    private final String USER_NAME_FIELD_SELECTOR = "input[name='fistName']";
+    private final String EMAIL_FIELD_SELECTOR = "input[name='email']";
+    private final String PASSWORD_FIELD_SELECTOR = "input[name='form-control password']";
+    private final String SHOW_PASSWORD_BUTTON_SELECTOR = "//input[@name='form-control password']/../span/img";
+    private final String PASSWORD_CONFIRM_FIELD_SELECTOR = "input[name='form-control password-confirm']";
+    private final String SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR = "//input[@name='form-control password-confirm']/../span/img";
+    private final String SIGNUP_BUTTON_SELECTOR = "div[class='form-content-container'] button[class*='global-button']";
+
 
     private final String EMAIL_VALIDATOR_SELECTOR = "//input[@name='email']/following-sibling::div/div";
     private final String REGISTRATION_VALIDATOR_SELECTOR = "app-sign-up input#email + div";
     private final String FIRST_NAME_VALIDATOR_SELECTOR = "//input[@name='fistName']/following-sibling::div/div";
     private final String PASSWORD_VALIDATOR_SELECTOR = "//div[@class='main-data-input-password wrong-input']/following-sibling::div/div";
     private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "//*[@class = 'form-content-container']/div[last()-1]";
-    private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
+
 
     /**
      * ManualRegisterComponent constructor.
@@ -30,82 +48,26 @@ public class ManualRegisterComponent extends RegisterComponent {
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
         this.driver = driver;
-        initElements();
-    }
-
-    /**
-     * Initialize web elements
-     */
-    private void initElements() {
-        // init elements
-        userNameField = driver
-                .findElement(By.cssSelector("input[name='fistName']"));
-        emailField = driver
-                .findElement(By.cssSelector("input[name='email']"));
-        passwordField = driver.findElement(
-                By.cssSelector("input[name='form-control password']"));
-        showPasswordButton = driver.findElement(
-                By.xpath("//input[@name='form-control password']/../span/img"));
-        passwordConfirmField = driver.findElement(
-                By.cssSelector("input[name='form-control password-confirm']"));
-        showPasswordConfirmButton = driver.findElement(By.xpath(
-                "//input[@name='form-control password-confirm']/../span/img"));
-        signUpButton = driver.findElement(By.cssSelector(
-                "div[class='form-content-container'] button[class*='global-button']"));
-
-
-
-
-        this.setEmailField(emailField)
-                .setUserNameField(userNameField)
-                .setPasswordConfirmField(passwordConfirmField)
-                .setPasswordField(passwordField)
-                .setShowPasswordButton(showPasswordButton)
-                .setShowPasswordConfirmButton(showPasswordConfirmButton)
-                .setSignUpButton(signUpButton);
     }
 
 
-    /**
-     * Get verify URL from the post in temp mailbox.
-     *
-     * @return String
-     */
+    // user name field
 
-    protected String getVerifyURLText() {
-        return this.confirmURL;
-    }
+      protected WebElement getUserNameField() {
 
-    // first name field
-
-    /**
-     * Taking a WebElement and set it to a private WebElement
-     *
-     * @param userNameField WebElement
-     * @return RegisterPart
-     */
-    public ManualRegisterComponent setUserNameField(WebElement userNameField) {
-        this.userNameField = userNameField;
-        return this;
-    }
-
-    /**
-     * Returns a WebElement of the 'UserName' field.
-     *
-     * @return WebElement
-     */
-    protected WebElement getUserNameField() {
+        this.userNameField = driver
+                .findElement(By.cssSelector(USER_NAME_FIELD_SELECTOR));
         return userNameField;
     }
 
     /**
-     * Inserting some text on the 'FirstName' field.
+     * Inserting some values in the 'FirstName' field.
      *
-     //* @param String firstName
+     * @param userName
      * @return RegisterPart
      */
-    protected ManualRegisterComponent inputFirstName(String firstName) {
-        this.getUserNameField().sendKeys(firstName);
+    protected ManualRegisterComponent inputUserName(String userName) {
+        this.getUserNameField().sendKeys(userName);
         return this;
     }
 
@@ -258,7 +220,9 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     protected WebElement getEmailField() {
-        return emailField;
+        this.emailField = driver
+                .findElement(By.cssSelector(EMAIL_FIELD_SELECTOR));
+    return emailField;
     }
 
     /**
@@ -299,17 +263,6 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
     /**
-     * Taking a WebElement and set it to a private WebElement field.
-     *
-     * @param emailField WebElement
-     * @return RegisterPart
-     */
-    public ManualRegisterComponent setEmailField(WebElement emailField) {
-        this.emailField = emailField;
-        return this;
-    }
-
-    /**
      * Returns boolean if displayed the 'Email' field.
      *
      * @return boolean
@@ -344,7 +297,9 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     protected WebElement getPasswordField() {
-        return passwordField;
+        this.passwordField = driver
+                .findElement(By.cssSelector(PASSWORD_FIELD_SELECTOR));
+                return passwordField;
     }
 
     /**
@@ -412,6 +367,8 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     protected WebElement getShowPasswordButton() {
+        this.showPasswordButton = driver
+                .findElement(By.xpath(SHOW_PASSWORD_BUTTON_SELECTOR));
         return showPasswordButton;
     }
 
@@ -491,7 +448,10 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     protected WebElement getPasswordConfirmField() {
-        return passwordConfirmField;
+
+        this.passwordConfirmField = driver
+                .findElement(By.cssSelector(PASSWORD_CONFIRM_FIELD_SELECTOR));
+    return passwordConfirmField;
     }
 
     /**
@@ -532,18 +492,6 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
     /**
-     * Taking a WebElement and set it to a private WebElement field.
-     *
-     * @param passwordConfirmField WebElement
-     * @return RegisterPart
-     */
-    public ManualRegisterComponent setPasswordConfirmField(
-            WebElement passwordConfirmField) {
-        this.passwordConfirmField = passwordConfirmField;
-        return this;
-    }
-
-    /**
      * Returns boolean if displayed the 'PasswordConfirm' field.
      *
      * @return boolean
@@ -560,7 +508,9 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     protected WebElement getShowPasswordConfirmButton() {
-        return showPasswordConfirmButton;
+        this.showPasswordConfirmButton = driver
+                .findElement(By.xpath(SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR));
+    return showPasswordConfirmButton;
     }
 
     /**
@@ -575,16 +525,6 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
     /**
-     * Taking a WebElement and set it to a private WebElement
-     *
-     */
-    public ManualRegisterComponent setShowPasswordConfirmButton(
-            WebElement showPasswordConfirmButton) {
-        this.showPasswordConfirmButton = showPasswordConfirmButton;
-        return this;
-    }
-
-    /**
      * Returns boolean if displayed the 'ShowPasswordConfirm' button.
      *
      * @return boolean
@@ -593,14 +533,14 @@ public class ManualRegisterComponent extends RegisterComponent {
         return getShowPasswordConfirmButton().isDisplayed();
     }
 
-//
-//    @Override
-//    protected boolean sizePasswordConfirmValidator() {
-//        return driver
-//                .findElements(
-//                        By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR))
-//                .size() != 0;
-//    }
+
+
+    protected boolean sizePasswordConfirmValidator() {
+        return driver
+                .findElements(
+                        By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR))
+                .size() != 0;
+    }
 
 
 
@@ -612,20 +552,12 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     protected WebElement getSignUpButton() {
-        return signUpButton;
+
+        this.signUpButton = driver
+                .findElement(By.cssSelector(SIGNUP_BUTTON_SELECTOR));
+    return signUpButton;
     }
 
-
-    /**
-     * Taking a WebElement and set it to a private WebElement field.
-     *
-     * @param signUpButton WebElement
-     * @return RegisterPart
-     */
-    public ManualRegisterComponent setSignUpButton(WebElement signUpButton) {
-        this.signUpButton = signUpButton;
-        return this;
-    }
 
     /**
      * Returns boolean if displayed the 'SignUp' button.
@@ -650,12 +582,9 @@ public class ManualRegisterComponent extends RegisterComponent {
 //    }
 
     public boolean signUpIsDisabled() {
-        if (getSignUpButton().getAttribute("disabled") == null){
-            return false;
-        }
-        return true;
+        return getSignUpButton().getAttribute("disabled") != null;
 
-}
+    }
 
 
     // Functional
@@ -685,7 +614,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         if (isDisplayedFirstNameField()) {
             clickFirstName(driver);
             clearFirstName();
-            inputFirstName(firstName);
+            inputUserName(firstName);
         }
         return this;
     }
@@ -773,24 +702,12 @@ public class ManualRegisterComponent extends RegisterComponent {
 
     //    Business Logic
 
-    /**
-     * Get text which shows after a successful registration.
-     *
-     * @return String
-     */
-    protected String getConfirmRegisterationText() {
-        logger.debug("start getConfirmRegisterationText()");
-        logger.trace("find WebElement submitEmailText");
-        submitEmailText = driver.findElement(
-                By.cssSelector(SUBMIT_EMAIL_SELECTOR));
-        logger.info("get Confirm Registeration text: " + setSubmitEmailText(submitEmailText).getSubmitEmailText());
-        return setSubmitEmailText(submitEmailText).getSubmitEmailText();
-    }
+
 
 
     public void registrationWrongUser(User userData) {
         fillEmailField(userData.getEmail())
-                .fillUserNameField(userData.getFirstName())
+                .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton();
@@ -802,7 +719,7 @@ public class ManualRegisterComponent extends RegisterComponent {
      */
     public void fillFieldsWithoutRegistration(User userData) {
         fillEmailField(userData.getEmail())
-                .fillUserNameField(userData.getFirstName())
+                .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
     }
@@ -815,7 +732,7 @@ public class ManualRegisterComponent extends RegisterComponent {
     public void registrationNewRandomUser(User userData) {
         userData.setEmail(getTemporaryEmail());
         fillEmailField(userData.getEmail())
-                .fillUserNameField(userData.getFirstName())
+                .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
         //
@@ -830,13 +747,12 @@ public class ManualRegisterComponent extends RegisterComponent {
      */
     public void registrationUser(User userData) {
         fillEmailField(userData.getEmail())
-                .fillUserNameField(userData.getFirstName())
+                .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
         clickSignUpButton();
     }
 
-    //Weird setters
 
 
 }

@@ -11,7 +11,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class RegisterComponentTest extends GreenCityTestRunner {
 
@@ -45,7 +44,8 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * switch to Login page.
      */
     @Test(dataProvider = "validUserCredentials")
-    public void signUpWithValidUser(User userLoginCredentials) {
+        public void signUpWithValidUser(User userLoginCredentials) {
+        loadApplication();
         logger.info("Starting signUpWithValidUser. Input values = "
                 + userLoginCredentials.toString());
 
@@ -76,6 +76,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      */
     @Test
     public void switchBetweenTabs() {
+        loadApplication();
         logger.info("Starting switchBetweenTabs");
 
         logger.info("Click on Sign up button");
@@ -105,6 +106,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      */
     @Test(dataProvider = "emptyFields")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
+        loadApplication();
         logger.info("Starting checkEmptyFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
@@ -146,6 +148,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      */
     @Test(dataProvider = "invalidFields")
     public void checkInvalidFieldsValidation(User userLoginCredentials) {
+        loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                + userLoginCredentials.toString());
 
@@ -189,9 +192,9 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      //     * with logging and checking displayed user name in the top of the page.
      //     * @param userLoginCredentials
      //     */
-    @Test(enabled = false)
-    //(dataProvider = "randomValidUserCredentials")
+    @Test(dataProvider = "randomValidUserCredentials", enabled = false)
     public void randomCredsRegistrationLogin(User userLoginCredentials) {
+        loadApplication();
         logger.info("Starting randomCredsRegistrationLogin. Input values = "
                 + userLoginCredentials.toString());
 
@@ -218,7 +221,6 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
         Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
                 "you didn't go to Login page");
-        presentationSleep(2); // delay only for presentation
         LoginPage page = new LoginPage(driver);
         logger.info("login with temporary Email and random credential: "
                 + userLoginCredentials.toString());

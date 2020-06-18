@@ -185,10 +185,9 @@ public class RegisterDropdown extends RegisterPart {
     @Override
     protected String getTemporaryEmail() {
         String currentTab = driver.getWindowHandle();
-        String email = "";
         ((JavascriptExecutor) driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
-        email = getTempEmail();
+        String email = getTempEmail();
         logger.info("temporary Email address for registration: " + email);
 //        System.out
 //                .println("temporary Email address for registration: " + email);
@@ -369,7 +368,7 @@ public class RegisterDropdown extends RegisterPart {
      */
     public void registrationNewRandomUser(User userData) {
         userData.setEmail(getTemporaryEmail());
-        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+        enterEmail(userData.getEmail()).enterFirstName(userData.getUserName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getConfirmPassword());
         //
@@ -384,7 +383,7 @@ public class RegisterDropdown extends RegisterPart {
      * @return TopPart page
      */
     public TopPart registrationNewUser(User userData) {
-        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+        enterEmail(userData.getEmail()).enterFirstName(userData.getUserName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getConfirmPassword());
         return clickSignupButton();
@@ -396,7 +395,7 @@ public class RegisterDropdown extends RegisterPart {
      * @return TopPart page
      */
     public TopPart registrationNewWrongUser(User userData) {
-        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+        enterEmail(userData.getEmail()).enterFirstName(userData.getUserName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getConfirmPassword());
         return clickSignupButton();
@@ -409,7 +408,7 @@ public class RegisterDropdown extends RegisterPart {
      * @return TopPart page
      */
     public TopPart fillFieldsWithoutRegistration(User userData) {
-        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+        enterEmail(userData.getEmail()).enterFirstName(userData.getUserName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
         //
@@ -423,7 +422,7 @@ public class RegisterDropdown extends RegisterPart {
      * @return LoginPart page
      */
     public LoginPart fillFieldsAndGotoLoginPage(User userData) {
-        enterEmail(userData.getEmail()).enterFirstName(userData.getFirstName())
+        enterEmail(userData.getEmail()).enterFirstName(userData.getUserName())
                 .enterPassword(userData.getPassword())
                 .enterPasswordConfirm(userData.getPassword());
         return gotoLoginDropdownUsingLink();

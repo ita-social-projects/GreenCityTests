@@ -12,72 +12,45 @@ public class RegisterComponent extends TopPart {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected WebElement title;
-    protected WebElement subtitle;
-    protected WebElement userNameField;
-    protected WebElement emailField;
-    protected WebElement passwordField;
-    protected WebElement showPasswordButton;
-    protected WebElement passwordConfirmField;
-    protected WebElement showPasswordConfirmButton;
-    protected WebElement signUpButton;
-    protected WebElement googleSignUpButton;
-    protected WebElement signInLink;
-    protected WebElement signInText;
-    protected WebElement closeModalButton;
-
-    protected WebElement submitEmailText;
-
-    protected WebElement emailValidator;
-    protected WebElement passwordValidator;
-    protected WebElement passwordConfirmValidator;
-
+    private WebElement title;
+    private WebElement subtitle;
+    private WebElement closeModalButton;
 
     private ManualRegisterComponent manualRegisterComponent;
+    private WebElement googleSignUpButton;
 
+    private WebElement signInLink;
+    private WebElement signInText;
+
+    private WebElement submitEmailText;
+    private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
 
     public RegisterComponent(WebDriver driver) {
         super(driver);
-        //initElements();
     }
 
 
-    // titleField
-
-    protected RegisterComponent setTitle() {
+    // title
+    protected WebElement getTitle() {
         this.title = driver
                 .findElement(By.cssSelector("h1[title-text]"));
-        return this;
-    }
-
-    protected WebElement getTitle() {
-
-        setTitle();
         return title;
     }
 
 
-    public String getTitleString(){
+    public String getTitleString() {
 
         return this.getTitle().getText();
     }
 
     // subtitle
-
-    protected RegisterComponent setSubtitle() {
+    protected WebElement getSubtitle() {
         this.subtitle = driver
                 .findElement(By.cssSelector(".subtitle-text"));
-        return this;
-    }
-
-
-    protected WebElement getSubtitle() {
-
-        setSubtitle();
         return subtitle;
     }
 
-    public String getSubtitleString(){
+    public String getSubtitleString() {
 
         return this.getSubtitle().getText();
     }
@@ -90,39 +63,35 @@ public class RegisterComponent extends TopPart {
     }
 
 
-
     //Register component
     public ManualRegisterComponent createRegisterComponent() {
 
-        return new ManualRegisterComponent(driver);
-    }
-
-    public ManualRegisterComponent setRegisterComponent() {
-
-        return this.manualRegisterComponent = getManualRegisterComponent();
-    }
-
-    private ManualRegisterComponent getManualRegisterComponent() {
-        return setRegisterComponent();
+        return manualRegisterComponent = new ManualRegisterComponent(driver);
     }
 
 
     // Success message???
-
     protected RegisterComponent setSubmitEmailText(WebElement submitEmailText) {
         this.submitEmailText = submitEmailText;
         return this;
     }
 
-    /**
-     * Returns the text after a successful registration.
-     *
-     * @return String
-     */
     public String getSubmitEmailText() {
         return submitEmailText.getText();
     }
-
+    /**
+     * Get text which shows after a successful registration.
+     *
+     * @return String
+     */
+    protected String getConfirmRegisterationText() {
+        logger.debug("start getConfirmRegisterationText()");
+        logger.trace("find WebElement submitEmailText");
+        submitEmailText = driver.findElement(
+                By.cssSelector(SUBMIT_EMAIL_SELECTOR));
+        logger.info("get Confirm Registeration text: " + setSubmitEmailText(submitEmailText).getSubmitEmailText());
+        return setSubmitEmailText(submitEmailText).getSubmitEmailText();
+    }
     // Sign Up with Google button
 
     /**
@@ -177,12 +146,9 @@ public class RegisterComponent extends TopPart {
 
 
     // Sign In button
-    public RegisterComponent setSignInLink() {
-        this.signInLink = driver.findElement(By.cssSelector("div.exist-account a"));
-        return this;
-    }
     protected WebElement getSignInLink() {
-        setSignInLink();
+        this.signInLink = driver
+                .findElement(By.cssSelector("div.exist-account a"));
         return signInLink;
     }
 
