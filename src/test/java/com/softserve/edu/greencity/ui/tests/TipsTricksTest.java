@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class TipsTricksTest extends GreencityTestRunner {
+public class TipsTricksTest extends GreenCityTestRunner {
     @DataProvider
     private Object[] getUser() {
         return new Object[]{

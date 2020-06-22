@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoginTest extends GreencityTestRunner {
+public class LoginTest extends GreenCityTestRunner {
     @Test
     public void checkDropdown() {
         LoginDropdown loginDropdown = loadApplication().signin();

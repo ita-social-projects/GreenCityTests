@@ -53,9 +53,6 @@ public abstract class TopPart {
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
-
-    private JavascriptExecutor javascriptExecutor;
-
     //
     //private LoginDropdown loginDropdown;
     //private RegisterDropdown registerDropdown;
@@ -160,7 +157,7 @@ public abstract class TopPart {
     }
 
     protected void clickTopGuestSignin() {
-        getTopGuestComponent().clickSigninLink();
+        getTopGuestComponent().clickSignInLink();
         //topGuestComponent = null;
     }
 
@@ -291,7 +288,7 @@ public abstract class TopPart {
     public LoginDropdown signin() {
         logger.debug("start signin()");
         logger.trace("click Signin link");
-        createTopGuestComponent().clickSigninLink();
+        createTopGuestComponent().clickSignInLink();
         return new LoginDropdown(driver);
     }
 

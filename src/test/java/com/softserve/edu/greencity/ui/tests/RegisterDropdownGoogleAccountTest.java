@@ -14,7 +14,7 @@ import com.softserve.edu.greencity.ui.pages.common.RegisterDropdown;
  * @author Serg
  *
  */
-public class RegisterDropdownGoogleAccountTest extends GreencityTestRunner {
+public class RegisterDropdownGoogleAccountTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] validCredentialGoogleUser() {
