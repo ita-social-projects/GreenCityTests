@@ -9,11 +9,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Coordinates;
-import org.openqa.selenium.interactions.Locatable;
-import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,13 +52,10 @@ public abstract class TopPart {
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
-
-    private JavascriptExecutor javascriptExecutor;
-
     //
     //private LoginDropdown loginDropdown;
     //private RegisterDropdown registerDropdown;
-
+    
     public TopPart(WebDriver driver) {
         this.driver = driver;
 //        closeAlertIfPresent();
@@ -160,7 +156,7 @@ public abstract class TopPart {
     }
 
     protected void clickTopGuestSignin() {
-        getTopGuestComponent().clickSigninLink();
+        getTopGuestComponent().clickSignInLink();
         //topGuestComponent = null;
     }
 
@@ -214,13 +210,7 @@ public abstract class TopPart {
         //clickSearchTopField();
         topUserComponent = null;
     }
-
-    //TODO same method
-    protected void scrollToElementByCoordinates(WebElement element) {
-        Coordinates cor = ((Locatable) element).getCoordinates();
-        cor.inViewPort();
-    }
-
+    
     // language
 
     protected void chooseLanguage(Languages language) {
@@ -291,7 +281,7 @@ public abstract class TopPart {
     public LoginDropdown signin() {
         logger.debug("start signin()");
         logger.trace("click Signin link");
-        createTopGuestComponent().clickSigninLink();
+        createTopGuestComponent().clickSignInLink();
         return new LoginDropdown(driver);
     }
 

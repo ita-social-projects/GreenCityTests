@@ -56,7 +56,7 @@ public class LoginPage extends TopPart{
     }
 
 
-    public RegisterPage gotoRegisterPage(){
+    public RegisterComponent gotoRegisterPage(){
         return getLoginComponent().gotoRegisterPage();
     }
 }

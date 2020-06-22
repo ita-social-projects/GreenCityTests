@@ -23,7 +23,7 @@ public abstract class RegisterPart {
     protected WebElement bottomText; // TODO
     protected WebElement titleField;
     //
-    protected WebElement firstNameField;
+    protected WebElement userNameField;
     protected WebElement emailField;
     protected WebElement passwordField;
     protected WebElement showPasswordButton;
@@ -110,11 +110,11 @@ public abstract class RegisterPart {
     // first name field
     /**
      * Taking a WebElement and set it to a private WebElement
-     * @param firstNameField WebElement
+     * @param userNameField WebElement
      * @return RegisterPart
      */
-    public RegisterPart setFirstNameField(WebElement firstNameField) {
-        this.firstNameField = firstNameField;
+    public RegisterPart setUserNameField(WebElement userNameField) {
+        this.userNameField = userNameField;
         return this;
     }
 
@@ -122,8 +122,8 @@ public abstract class RegisterPart {
      * Returns a WebElement of the 'FirstName' field.
      * @return WebElement
      */
-    protected WebElement getFirstNameField() {
-        return firstNameField;
+    protected WebElement getUserNameField() {
+        return userNameField;
     }
 
     /**
@@ -132,7 +132,7 @@ public abstract class RegisterPart {
      * @return RegisterPart
      */
     protected RegisterPart inputFirstName(String firstName) {
-        this.getFirstNameField().sendKeys(firstName);
+        this.getUserNameField().sendKeys(firstName);
         return this;
     }
 
@@ -141,7 +141,7 @@ public abstract class RegisterPart {
      * @return RegisterPart
      */
     protected RegisterPart clearFirstName() {
-        this.getFirstNameField().clear();
+        this.getUserNameField().clear();
         return this;
     }
 
@@ -152,9 +152,9 @@ public abstract class RegisterPart {
      */
     protected RegisterPart clickFirstName(WebDriver driver) {
         if (isDisplayedFirstNameField()) {
-            this.getFirstNameField().click();
+            this.getUserNameField().click();
             Actions action = new Actions(driver);
-            action.contextClick(getFirstNameField()).sendKeys(Keys.LEFT)
+            action.contextClick(getUserNameField()).sendKeys(Keys.LEFT)
                     .sendKeys(Keys.RIGHT);
         }
         return this;
@@ -165,7 +165,7 @@ public abstract class RegisterPart {
      * @return boolean
      */
     protected boolean isDisplayedFirstNameField() {
-        return getFirstNameField().isDisplayed();
+        return getUserNameField().isDisplayed();
     }
 
     // email field
@@ -700,13 +700,13 @@ public abstract class RegisterPart {
             return "title text not found";
         }
     }
-    
+
     /**
      * In the browser switch to another tab.
      * @param currentTab String
      */
     protected abstract void switchToAnotherTab(String currentTab);
-    
+
     /**
      * Load URL in a new tab and get temporary email.
      * @return String
@@ -730,5 +730,5 @@ public abstract class RegisterPart {
      * Verify a temporary Email and close tab.
      */
     protected abstract RegisterPart verifyTempEmail();
-    
+
 }

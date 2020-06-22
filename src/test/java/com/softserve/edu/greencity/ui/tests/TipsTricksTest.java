@@ -7,7 +7,7 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class TipsTricksTest extends GreencityTestRunner {
+public class TipsTricksTest extends GreenCityTestRunner {
     @DataProvider
     private Object[] getUser() {
         return new Object[]{

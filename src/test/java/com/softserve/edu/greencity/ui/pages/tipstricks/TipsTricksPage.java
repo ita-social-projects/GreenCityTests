@@ -49,9 +49,9 @@ public class TipsTricksPage extends TopPart {
     private void initElements() {
         // init elements
         startHabitTop = driver
-                .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
+                .findElement(By.xpath("//*[@id='header-left']/div/button"));
         startHabitCenter = driver
-                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(2)> div> button"));
+                .findElement(By.xpath(".//*[@id='stat-rows']/app-stat-row[1]/div/div[2]/div/button"));
         startHabitBelow = driver
                 .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
         subscribeOnTipsTricks = driver

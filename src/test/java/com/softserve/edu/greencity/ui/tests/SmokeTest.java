@@ -9,7 +9,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SmokeTest extends GreencityTestRunner {
+public class SmokeTest extends GreenCityTestRunner {
     @DataProvider
     public Object[][] users() {
         return new Object[][]{
