@@ -26,6 +26,7 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 /**
  * Base Abstract Class of Header and Footer.
+ *
  * @author Lv-493.Taqc/Java
  */
 public abstract class TopPart {
@@ -57,11 +58,11 @@ public abstract class TopPart {
     
     public TopPart(WebDriver driver) {
         this.driver = driver;
-        closeAlertIfPresent();
+//        closeAlertIfPresent();
         initElements();
         //initComponents();
     }
-    
+
     private void closeAlertIfPresent() {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         //driver.switchTo().alert().accept();
@@ -73,15 +74,15 @@ public abstract class TopPart {
         Alert alert = null;
         try {
             alert = wait.until(ExpectedConditions.alertIsPresent());
-        } catch(TimeoutException e) {
+        } catch (TimeoutException e) {
         }
-        if(alert != null) {
+        if (alert != null) {
             //driver.switchTo().alert().accept();
             alert.accept();
         }
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
-    
+
     private void initElements() {
         languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
         mainMenuDropdown = new MainMenuDropdown(driver);
@@ -89,14 +90,14 @@ public abstract class TopPart {
     }
 
 //  private void initComponents() {
-        // TODO Develop Application Status Class (Singleton)
+    // TODO Develop Application Status Class (Singleton)
 //      createTopGuestComponent();
 //  }
-    
+
     // Page Object
-    
+
     // languageSwitcher
-    
+
     public Select getLanguageSwitcher() {
         return languageSwitcher;
     }
@@ -130,20 +131,19 @@ public abstract class TopPart {
     public void clickCopyright() {
         getCopyright().click();
     }
-     
+
     // mainMenuDropdown
-    
+
     public MainMenuDropdown getMainMenuDropdown() {
         return mainMenuDropdown;
     }
-    
+
     // Functional
-    
+
     // topGuestComponent;
-    
+
     protected TopGuestComponent getTopGuestComponent() {
-        if (topGuestComponent == null)
-        {
+        if (topGuestComponent == null) {
             // TODO Develop Custom Exception 
             throw new RuntimeException(OPTION_NULL_MESSAGE);
         }
@@ -159,7 +159,7 @@ public abstract class TopPart {
         getTopGuestComponent().clickSignInLink();
         //topGuestComponent = null;
     }
-    
+
     protected void clickTopGuestSignup() {
         getTopGuestComponent().clickSignupLink();
         //topGuestComponent = null;
@@ -169,12 +169,11 @@ public abstract class TopPart {
         //clickSearchTopField();
         topGuestComponent = null;
     }
-    
+
     // topUserComponent
-    
+
     protected TopUserComponent getTopUserComponent() {
-        if (topUserComponent == null)
-        {
+        if (topUserComponent == null) {
             // TODO Develop Custom Exception 
             throw new RuntimeException(OPTION_NULL_MESSAGE);
         }
@@ -185,23 +184,23 @@ public abstract class TopPart {
         topUserComponent = new TopUserComponent(driver);
         return getTopUserComponent();
     }
-    
+
     public String getTopUserName() {
         // TODO
         //getTopUserComponent().getUserNameButtonText();
         return createTopUserComponent().getUserNameButtonText();
     }
-    
+
     protected void clickTopUserFavoritePlaces() {
         getTopUserComponent().clickProfileDropdownFavoritePlaces();
         //topGuestComponent = null;
     }
-    
+
     protected void clickTopUserSettings() {
         getTopUserComponent().clickProfileDropdownUserSettings();
         //topGuestComponent = null;
     }
-    
+
     protected void clickTopUserSignout() {
         getTopUserComponent().clickProfileDropdownSignout();
         //topGuestComponent = null;
@@ -213,47 +212,39 @@ public abstract class TopPart {
     }
     
     // language
-    
+
     protected void chooseLanguage(Languages language) {
         clickLanguageSwitcher();
         setLanguageSwitcher(language.toString());
     }
 
-    protected void scrollDown() {
-        //System.out.println("driver.manage().window().getSize()" + driver.manage().window().getSize());
-        if (driver.manage().window().getSize().width < WINDOW_WIDTH_TO_SCROLL) {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("arguments[0].scrollIntoView(true);", getCopyright());
-        }
-    }
-    
     protected boolean isMenuClickable() {
         return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
     }
-    
+
     // Business Logic
-    
+
     public EconewsPage navigateMenuEconews() {
         logger.debug("go to EcoNews page");
         logger.trace("click MenuEcoNews link");
         getMainMenuDropdown().clickMenuEcoNews();
         return new EconewsPage(driver);
     }
-    
+
     public TipsTricksPage navigateMenuTipsTricks() {
         logger.debug("go to TipsTricks page");
         logger.trace("click TipsTricks link");
         getMainMenuDropdown().clickMenuTipsTricks();
         return new TipsTricksPage(driver);
     }
-    
+
     public MapPage navigateMenuMap() {
         logger.debug("go to Map page");
         logger.trace("click Map link");
         getMainMenuDropdown().clickMenuMap();
         return new MapPage(driver);
     }
-    
+
     // for Loggined
     public MyCabinetPage navigateMenuMyCabinet() {
         logger.debug("go to MyCabinet");
@@ -261,7 +252,7 @@ public abstract class TopPart {
         getMainMenuDropdown().clickMenuMyCabinet();
         return new MyCabinetPage(driver);
     }
-    
+
     // for not Loggined
     public MyCabinetPage navigateMenuMyCabinet(User user) {
         logger.debug("go to MyCabinet as User");
@@ -270,7 +261,7 @@ public abstract class TopPart {
         new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
         return new MyCabinetPage(driver);
     }
-    
+
     // for not Loggined
     public LoginPage navigateMenuMyCabinetGuest() {
         logger.debug("go to Login Page as Guest");
@@ -279,7 +270,7 @@ public abstract class TopPart {
         getMainMenuDropdown().clickMenuMyCabinet();
         return new LoginPage(driver);
     }
-    
+
     public AboutPage navigateMenuAbout() {
         logger.debug("go to About page");
         logger.trace("click About link");
@@ -289,13 +280,11 @@ public abstract class TopPart {
 
     public LoginDropdown signin() {
         logger.debug("start signin()");
-        // TODO
-        //getTopGuestComponent().clickSignInLink();
         logger.trace("click Signin link");
         createTopGuestComponent().clickSignInLink();
         return new LoginDropdown(driver);
     }
-    
+
     public RegisterDropdown signup() {
         logger.debug("start signup()");
         // TODO
@@ -305,7 +294,7 @@ public abstract class TopPart {
         createTopGuestComponent().clickSignupLink();
         return new RegisterDropdown(driver);
     }
-    
+
     public TipsTricksPage signout() {
         logger.debug("start signout()");
         // TODO
@@ -318,5 +307,5 @@ public abstract class TopPart {
         createTopGuestComponent();
         return new TipsTricksPage(driver);
     }
-    
+
 }

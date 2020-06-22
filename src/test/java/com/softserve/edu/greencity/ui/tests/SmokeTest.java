@@ -1,108 +1,58 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsCardsContainer;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SmokeTest extends GreenCityTestRunner {
-
-    @DataProvider
-    public Object[][] languages() {
-        return new Object[][] {
-            //{ SearchItemRepository.getMacItem(), SearchRefineRepository.getPriceDescUsd() },
-            { Languages.UKRAINIAN }
-            };
-    }
-
-    @Test(dataProvider = "languages")
-    public void checkElements(Languages languages) {
-        // Steps
-        TipsTricksPage tipstrickspage = loadApplication()
-                .switchLanguage(languages);
-        presentationSleep();
-        //
-        /*-
-        System.out.println("is menu Home text: " 
-                + homepage.getMainMenuDropdown().getMenuHomeText());
-        //
-        System.out.println("is menu Home: " 
-                + homepage.getMainMenuDropdown().isDisplayedMenuHome());
-        System.out.println("is menu EcoNews: " 
-                + homepage.getMainMenuDropdown().isDisplayedMenuEcoNews());
-        System.out.println("is menu NaviconButton: " 
-                + homepage.getMainMenuDropdown().isDisplayedNaviconButton());
-        */
-        //
-        tipstrickspage = tipstrickspage
-//                .navigateMenuEconews()
-//                .navigateMenuTipsTricks()
-//                .navigateMenuMap()
-//                .navigateMenuMyCabinet()
-//                .navigateMenuAbout()
-                .navigateMenuTipsTricks();
-        //
-//      TopPart tp = tipstrickspage;
-//      tp = tp.navigateMenuEconews();
-//      presentationSleep(2);
-//      tp = tp.navigateMenuTipsTricks();
-//      presentationSleep(2);
-//      tp = tp.navigateMenuMyCabinet();
-//      presentationSleep(2);
-//      tp = tp.navigateMenuMap();
-        //
-        // Check
-//      Assert.assertEquals(tipstrickspage.getLanguageSwitcherText(),
-//              Languages.UKRAINIAN.toString());
-    }
-    
+public class SmokeTest extends GreencityTestRunner {
     @DataProvider
     public Object[][] users() {
-        return new Object[][] {
-            { UserRepository.get().temporary() }
-            };
+        return new Object[][]{
+                {UserRepository.get().temporary()}
+        };
     }
-    
+
+    @Test(dataProvider = "users")
+    public void checkElements(final User user) {
+        TipsTricksPage tipstrickspage = loadApplication()
+                .switchLanguage(Languages.UKRAINIAN)
+                .navigateMenuEconews()
+                .navigateMenuTipsTricks()
+                .navigateMenuMap()
+                .navigateMenuAbout()
+                .navigateMenuMyCabinet(user)
+                .navigateMenuTipsTricks();
+
+        signOut();
+
+        Assert.assertEquals(tipstrickspage.getLanguageSwitcherText(), Languages.UKRAINIAN.toString());
+    }
+
     @Test(dataProvider = "users")
     public void checkLogin(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
+        String userName = loadApplication()
                 .signin()
-                .successfullyLogin(user);
+                .successfullyLogin(user)
+                .getTopUserName();
 
-        System.out.println("name = " + myCabinetPage.getTopUserName());
-        Assert.assertEquals(myCabinetPage.getTopUserName(), "Taras Malynovskyi");
-        myCabinetPage.signout();
+        signOut();
+
+        Assert.assertEquals(userName, "Taras Malynovskyi");
     }
 
     @Test(dataProvider = "users")
     public void checkCabinet(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
-                .navigateMenuMyCabinet(user);
-        //
-        Assert.assertEquals(myCabinetPage.getTopUserName(), TopPart.PROFILE_NAME);
-        // user.getFirstname());
-        presentationSleep();
-        //
-        myCabinetPage = myCabinetPage
+        LoginPage loginPage = loadApplication()
+                .navigateMenuMyCabinet(user)
                 .navigateMenuTipsTricks()
                 .navigateMenuEconews()
-                .navigateMenuMyCabinet();
-        presentationSleep();
-        //
-        TipsTricksPage tipstrickspage = myCabinetPage
-                .signout();
-        presentationSleep();
-        LoginPage loginPage = tipstrickspage
+                .navigateMenuMyCabinet()
+                .signout()
                 .navigateMenuMyCabinetGuest();
-        presentationSleep(4);
     }
-        
 }

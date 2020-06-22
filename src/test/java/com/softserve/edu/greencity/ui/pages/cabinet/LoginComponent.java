@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.softserve.edu.greencity.ui.pages.common.LoginPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,29 +24,21 @@ public class LoginComponent extends LoginPart {
 
     public LoginComponent(WebDriver driver) {
         this.driver = driver;
-        //initElements();
+        initElements();
     }
 
     private void initElements() {
-        this
-                //.setSignUpLink(driver.findElement(By.className(REGISTRATION_LINK_CLASS)))
-                .setEmailField(driver.findElement(By.id(EMAIL_ID)))
+        this.setEmailField(driver.findElement(By.id(EMAIL_ID)))
                 .setPasswordField(driver.findElement(By.id(PASSWORD_ID)))
                 .setForgotPasswordLink(driver.findElement(By.className(FORGOT_PASSWORD_LINK_CLASS)))
                 .setGoogleSignInButton(driver.findElement(By.className(GOOGLE_LOGIN_BUTTON_CLASS)))
                 .setSignInButton(driver.findElement(By.xpath(LOGIN_BUTTON_XPATH)));
     }
 
-//    @Override
-//    public ForgotPasswordPart gotoForgotPassword() {
-//        return null;
-//    }
-
     public RegisterComponent gotoRegisterPage() {
         getSignUpLink().click();
         return new RegisterComponent(driver);
     }
-
 // titleField
 
     /**

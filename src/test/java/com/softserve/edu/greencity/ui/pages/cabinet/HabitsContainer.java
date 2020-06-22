@@ -13,7 +13,7 @@ public class HabitsContainer {
 
     private WebDriver driver;
 
-    private List<HabitComponent> habitComponent;
+    private List<HabitComponent> habitComponents;
 
     public HabitsContainer(WebDriver driver) {
         this.driver = driver;
@@ -21,18 +21,18 @@ public class HabitsContainer {
     }
 
     private void initElements() {
-        habitComponent = new ArrayList<HabitComponent>();
-        driver.findElements(By.cssSelector("app-habit-tracker")).forEach(habit -> habitComponent.add(new HabitComponent(habit)));
+        habitComponents = new ArrayList<>();
+
+        driver.findElements(By.cssSelector(".habits-in-progress > .ng-star-inserted"))
+                .forEach(habit -> habitComponents.add(new HabitComponent(habit)));
     }
 
     // Page Object
 
     //habitComponent
-
     public List<HabitComponent> getHabitComponents() {
-        return habitComponent;
+        return habitComponents;
     }
-
 
     // Functional
 
@@ -51,14 +51,13 @@ public class HabitsContainer {
 
     /**
      * Select unused items count and estimation of day for habit.
+     *
      * @param habit
      * @return HabitsContainer
      */
     public HabitsContainer addHabitInfo(HabitItem habit) {
         findHabitComponent(habit.getHabit())
-            .selectItemsNumber(habit.getItemsCount())
-            .selectEstimation(habit.getEstimation());
+                .selectEstimation(habit.getEstimation());
         return new HabitsContainer(driver);
     }
-
 }
