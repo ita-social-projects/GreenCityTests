@@ -11,7 +11,7 @@ import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class GreencityTestRunner {
+public abstract class GreenCityTestRunner {
     private final Long ONE_SECOND_DELAY = 1000L;
     private final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 //    	private final String BASE_URL = "http://localhost:4200/#/welcome";
