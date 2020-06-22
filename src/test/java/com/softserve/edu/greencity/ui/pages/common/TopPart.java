@@ -217,8 +217,8 @@ public abstract class TopPart {
 
     protected void scrollToElementByAction(final WebElement element) {
         final Actions actions = new Actions(driver);
-        actions.moveToElement(element, -1, -1);
-        actions.perform();
+        actions.moveToElement(element);
+        actions.build().perform();
     }
 
     // language

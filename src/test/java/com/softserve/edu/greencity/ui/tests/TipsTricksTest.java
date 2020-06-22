@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.testng.Assert;
@@ -18,16 +19,15 @@ public class TipsTricksTest extends GreencityTestRunner {
 
     @Test(dataProvider = "getUser")
     public void checkHabitButtonTop(User user) {
-        String newHabitButtonText =
-                loadApplication()
-                        .signin()
-                        .successfullyLogin(user)
-                        .navigateMenuTipsTricks()
-                        .clickStartHabitTop()
-                        .getAddNewHabitButton()
-                        .getText();
+        MyCabinetPage myCabinetPage = loadApplication()
+                .signin()
+                .successfullyLogin(user)
+                .navigateMenuTipsTricks()
+                .clickStartHabitTop();
 
-        signOut();
+        String newHabitButtonText = myCabinetPage
+                .getAddNewHabitButton()
+                .getText();
 
         Assert.assertEquals(newHabitButtonText, "Add new habit");
     }
@@ -35,7 +35,7 @@ public class TipsTricksTest extends GreencityTestRunner {
     @Test
     public void checkQuantityPeople() {
         TipsTricksPage tipstrickspage = loadApplication();
-        Assert.assertEquals(tipstrickspage.quantityPeople(), 3);
+        Assert.assertEquals(tipstrickspage.quantityPeople(), 264);
     }
 
     @Test
@@ -51,13 +51,13 @@ public class TipsTricksTest extends GreencityTestRunner {
     }
 
     @Test
-    public void subscribe() throws InterruptedException {
+    public void subscribeError() {
         TipsTricksPage tipsTricksPage = loadApplication();
         tipsTricksPage.clickEmailTipsTricks();
         tipsTricksPage.setEmailTipsTricks("almyyhvxddxxnoczzt@ttirv.com");
         tipsTricksPage.clickSubscribeOnTipsTricks();
 
-        Assert.assertTrue(tipsTricksPage.isDisplayedSubscriptionError());
+        Assert.assertTrue(tipsTricksPage.isSubscriptionErrorDisplayed());
     }
 
     @Test

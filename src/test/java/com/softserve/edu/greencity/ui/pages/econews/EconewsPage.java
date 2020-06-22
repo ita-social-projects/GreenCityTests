@@ -29,9 +29,8 @@ public class EconewsPage extends TopPart {
 
 	public EconewsPage(WebDriver driver) {
 		super(driver);
-		visualiseElements();
+//		visualiseElements();
 		initElements();
-
 	}
 
 	private void visualiseElements() {

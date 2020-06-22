@@ -3,6 +3,8 @@ package com.softserve.edu.greencity.ui.pages.common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainMenuDropdown {
     private WebDriver driver;
@@ -22,6 +24,8 @@ public class MainMenuDropdown {
     private WebElement footerMyHabits;
     private WebElement footerAbout;
 
+    private WebDriverWait wait;
+
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
         initElements();
@@ -32,7 +36,7 @@ public class MainMenuDropdown {
         naviconButton = driver.findElement(By.cssSelector("div.menu-icon"));
         //menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
         menuEcoNews = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']"));
-        menuTipsTricks = driver.findElement(By.cssSelector(".navigation-menu-left .active-link"));
+        menuTipsTricks = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']"));
         menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
         menuMyHabits = driver.findElement(By.cssSelector(".navigation-menu-left > ul > li > a[href*='/profile']"));
         menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
@@ -97,10 +101,14 @@ public class MainMenuDropdown {
     }
 
     public String getMenuTipsTricksText() {
+        wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']")));
+
         return getMenuTipsTricks().getText();
     }
 
     public void clickMenuTipsTricks() {
+
         getMenuTipsTricks().click();
     }
 
