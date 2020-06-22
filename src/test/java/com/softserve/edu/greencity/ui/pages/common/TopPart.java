@@ -9,10 +9,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.interactions.Coordinates;
+import org.openqa.selenium.interactions.Locatable;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,7 +56,7 @@ public abstract class TopPart {
     //
     //private LoginDropdown loginDropdown;
     //private RegisterDropdown registerDropdown;
-    
+
     public TopPart(WebDriver driver) {
         this.driver = driver;
 //        closeAlertIfPresent();
@@ -210,7 +211,13 @@ public abstract class TopPart {
         //clickSearchTopField();
         topUserComponent = null;
     }
-    
+
+    protected void scrollToElementByAction(final WebElement element) {
+        final Actions actions = new Actions(driver);
+        actions.moveToElement(element);
+        actions.build().perform();
+    }
+
     // language
 
     protected void chooseLanguage(Languages language) {

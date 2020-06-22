@@ -1,20 +1,18 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TipsTricksPage extends TopPart {
-
     // Buttons on the TipsTricksPage
     private WebElement startHabitTop;
     private WebElement startHabitCenter;
@@ -37,9 +35,9 @@ public class TipsTricksPage extends TopPart {
 
     // link to EcoNews
     private WebElement mainEcoNewsLink;
-    private WebElement other1EcoNewsLink;
-    private WebElement other2EcoNewsLink;
     private WebElement allNewsLink;
+
+    private WebDriverWait wait;
 
     public TipsTricksPage(WebDriver driver) {
         super(driver);
@@ -47,30 +45,10 @@ public class TipsTricksPage extends TopPart {
     }
 
     private void initElements() {
-        // init elements
-        startHabitTop = driver
-                .findElement(By.xpath("//*[@id='header-left']/div/button"));
-        startHabitCenter = driver
-                .findElement(By.xpath(".//*[@id='stat-rows']/app-stat-row[1]/div/div[2]/div/button"));
-        startHabitBelow = driver
-                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
-        subscribeOnTipsTricks = driver
-                .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
-        enterEmailTipsTricks = driver.findElement(By.xpath("//input[@type='email']"));
-        subscriptionErrorMessage = driver.findElement(By.id("subscription-error"));
-        amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
-        amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
-        amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
-        // qrCode =
-        // driver.findElement(By.xpath("//div[@id='qr-code-wrapper']/img"));
-        linkBags = driver.findElement(
-                By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
-        linkCups = driver.findElement(By.xpath(
-                ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
-        mainEcoNewsLink = driver.findElement(By.xpath(".//div[@class='navigation-menu-left'] / ul / li[1]"));
-//        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
-//        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
-        allNewsLink = driver.findElement(By.id("eco-events"));
+        wait = new WebDriverWait(driver, 4);
+        WebElement subscriptionError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']")));
+
+        startHabitTop = driver.findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
     }
 
     // Page Object
@@ -78,10 +56,15 @@ public class TipsTricksPage extends TopPart {
     // Button 'Start forming a habit'
 
     public WebElement getStartHabitTop() {
-        return startHabitTop;
+        return startHabitTop = driver
+                .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
     }
 
     public MyCabinetPage clickStartHabitTop() {
+        waiting(2);
+
+        scrollToElementByAction(getStartHabitTop());
+
         getStartHabitTop().click();
 
         return new MyCabinetPage(driver);
@@ -94,7 +77,8 @@ public class TipsTricksPage extends TopPart {
     // ButtonCenter 'Start forming a habit'
 
     public WebElement getStartHabitCenter() {
-        return startHabitCenter;
+        return startHabitCenter = driver
+                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(2)> div> button"));
     }
 
     public void clickStartHabitCenter() {
@@ -108,7 +92,8 @@ public class TipsTricksPage extends TopPart {
     // ButtonBelow 'Start forming a habit'
 
     public WebElement getStartHabitBelow() {
-        return startHabitBelow;
+        return startHabitBelow = driver
+                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
     }
 
     public void clickStartHabitBelow() {
@@ -122,12 +107,21 @@ public class TipsTricksPage extends TopPart {
     // Button 'Subscribe'
 
     public WebElement getSubscribeOnTipsTricks() {
-        return subscribeOnTipsTricks;
+        return subscribeOnTipsTricks = driver
+                .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
     }
 
     public void clickSubscribeOnTipsTricks() {
         getSubscribeOnTipsTricks().click();
 
+    }
+
+    private void waiting(int x) {
+        try {
+            Thread.sleep(x * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isDisplayedSubscribeOnTipsTricks() {
@@ -137,7 +131,7 @@ public class TipsTricksPage extends TopPart {
     // Enter email for Subscribe
 
     public WebElement getEmailTipsTricks() {
-        return enterEmailTipsTricks;
+        return enterEmailTipsTricks = driver.findElement(By.xpath("//input[@type='email']"));
     }
 
     public String getEmailTipsTricksText() {
@@ -156,15 +150,17 @@ public class TipsTricksPage extends TopPart {
         getEmailTipsTricks().clear();
     }
 
-    public boolean isDisplayedSubscriptionError() {
-        return subscriptionErrorMessage.isDisplayed();
-    }
+    public boolean isSubscriptionErrorDisplayed() {
+        wait = new WebDriverWait(driver, 4);
+        WebElement subscriptionError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("subscription-error")));
 
+        return subscriptionError.isDisplayed();
+    }
 
     // amount People
 
     public WebElement getAmountPeople() {
-        return amountPeople;
+        return amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
     }
 
     public String getAmountPeopleText() {
@@ -178,27 +174,28 @@ public class TipsTricksPage extends TopPart {
     // amount Bags
 
     public WebElement getAmountBags() {
-        return amountBags;
+        return amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
     }
 
     public String getAmountBagsText() {
-        return amountBags.getText();
+        return getAmountBags().getText();
     }
 
     // amount Cups
 
     public WebElement getAmountCups() {
-        return amountCups;
+        return amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
     }
 
     public String getAmountCupsText() {
-        return amountCups.getText();
+        return getAmountCups().getText();
     }
 
     // link bellow Bags to MapPage
 
     public WebElement getBagsLink() {
-        return linkBags;
+        return linkBags = driver.findElement(
+                By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
     }
 
     public void clickBagsLink() {
@@ -208,7 +205,8 @@ public class TipsTricksPage extends TopPart {
     // link bellow Cups to MapPage
 
     public WebElement getCupsLink() {
-        return linkCups;
+        return linkCups = driver.findElement(By.xpath(
+                ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
     }
 
     public void clickCupsLink() {
@@ -218,34 +216,16 @@ public class TipsTricksPage extends TopPart {
     // link mainEcoNewsLink
 
     public WebElement getMainEcoNewsLink() {
-        return mainEcoNewsLink;
+        return mainEcoNewsLink = driver.findElement(By.xpath(".//div[@class='navigation-menu-left'] / ul / li[1]"));
     }
 
     public void clickMainEcoNewsLink() {
         getMainEcoNewsLink().click();
     }
 
-    // link other1EcoNewsLink
-    public WebElement getOther1EcoNewsLink() {
-        return other1EcoNewsLink;
-    }
-
-    public void clickOther1EcoNewsLink() {
-        getOther1EcoNewsLink().click();
-    }
-
-    // link other2EcoNewsLink
-    public WebElement getOther2EcoNewsLink() {
-        return other2EcoNewsLink;
-    }
-
-    public void clickOther2EcoNewsLink() {
-        getOther2EcoNewsLink().click();
-    }
-
     // link to allNewsLink
     public WebElement getAllNewsLink() {
-        return allNewsLink;
+        return allNewsLink = driver.findElement(By.id("eco-events"));
     }
 
     public void clickAllNewsLink() {

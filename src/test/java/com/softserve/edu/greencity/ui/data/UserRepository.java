@@ -23,10 +23,11 @@ public final class UserRepository {
         return temporary();
     }
 
+    //    TODO Don`t push credentials
     public User temporary() {
         return new User("tarasmalynovskyy@gmail.com", "!Qwerty123");
     }
-    
+
     /**
      * Default user credentials:
      * firstName "John";
