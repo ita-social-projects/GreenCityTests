@@ -44,9 +44,9 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * switch to Login page.
      */
     @Test(dataProvider = "validUserCredentials")
-        public void signUpWithValidUser(User userLoginCredentials) {
+        public void checkIfSignUpButtonEnabled(User userLoginCredentials) {
         loadApplication();
-        logger.info("Starting signUpWithValidUser. Input values = "
+        logger.info("Starting checkIfSignUpButtonEnabled. Input values = "
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
