@@ -11,7 +11,7 @@ import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
-public abstract class GreencityTestRunner1 {
+public abstract class GreenCityTestRunner {
 	private final Long ONE_SECOND_DELAY = 1000L;
 	//
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());
