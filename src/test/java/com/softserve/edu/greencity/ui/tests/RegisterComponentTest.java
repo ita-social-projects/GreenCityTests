@@ -16,27 +16,28 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] validUserCredentials() {
-        return new Object[][] {
-                { UserRepository.get().defaultUserCredentials() }, };
+        return new Object[][]{
+                {UserRepository.get().defaultUserCredentials()},};
     }
 
     @DataProvider
     public Object[][] randomValidUserCredentials() {
-        return new Object[][] { { UserRepository.get()
-                .temporaryUserCredentialsForRegistration() }, };
+        return new Object[][]{{UserRepository.get()
+                .temporaryUserCredentialsForRegistration()},};
     }
 
     @DataProvider
     public Object[][] emptyFields() {
-        return new Object[][] {
-                { UserRepository.get().wrongUserCredentials1() },
+        return new Object[][]{
+                {UserRepository.get().emptyUserCredentials()},
         };
     }
+
     @DataProvider
     public Object[][] invalidFields() {
-        return new Object[][] {
+        return new Object[][]{
 
-                { UserRepository.get().wrongUserCredentials2() }, };
+                {UserRepository.get().wrongUserCredentials()},};
     }
 
     /**
@@ -44,7 +45,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * switch to Login page.
      */
     @Test(dataProvider = "validUserCredentials")
-        public void checkIfSignUpButtonEnabled(User userLoginCredentials) {
+    public void checkIfSignUpButtonEnabled(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkIfSignUpButtonEnabled. Input values = "
                 + userLoginCredentials.toString());
@@ -62,7 +63,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
 
         logger.info(
-                 "Filling out the fields with valid credentials without clicking on Sign up button");
+                "Filling out the fields with valid credentials without clicking on Sign up button");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertFalse(manualRegisterComponent.signUpIsDisabled());
@@ -150,7 +151,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     public void checkInvalidFieldsValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
-               + userLoginCredentials.toString());
+                + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
@@ -163,7 +164,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
 
-         logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form: ");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
 
 // Any input in userName field is valid now, even the space - seems like a bug
@@ -188,10 +189,11 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     }
 
     /**
-     //     * Test for registration with temporary email and random other credentials
-     //     * with logging and checking displayed user name in the top of the page.
-     //     * @param userLoginCredentials
-     //     */
+     * //     * Test for registration with temporary email and random other credentials
+     * //     * with logging and checking displayed user name in the top of the page.
+     * //     * @param userLoginCredentials
+     * //
+     */
     @Test(dataProvider = "randomValidUserCredentials", enabled = false)
     public void randomCredsRegistrationLogin(User userLoginCredentials) {
         loadApplication();
@@ -227,7 +229,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         page.inputEmail(userLoginCredentials.getEmail())
                 .inputPassword(userLoginCredentials.getPassword())
                 .clickLoginButton(); // not always success after one click (need
-                                     // one more click)
+        // one more click)
         logger.info("get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",
                 "you didn't log in successfully");

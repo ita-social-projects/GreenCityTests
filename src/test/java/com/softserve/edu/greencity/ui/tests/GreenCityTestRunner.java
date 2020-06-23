@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class GreenCityTestRunner {
     private final Long ONE_SECOND_DELAY = 1000L;
     private final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
-//    	private final String BASE_URL = "http://localhost:4200/#/welcome";
+    //    	private final String BASE_URL = "http://localhost:4200/#/welcome";
     //
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
@@ -26,7 +27,7 @@ public abstract class GreenCityTestRunner {
 
     @BeforeClass
     public void setUpBeforeClass() {
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(new ChromeOptions().addArguments("headless"));
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
@@ -35,7 +36,7 @@ public abstract class GreenCityTestRunner {
     }
 
     @AfterClass(alwaysRun = true)
-    public void tearDownAfterClass() throws Exception {
+    public void tearDownAfterClass() {
         presentationSleep(1);
         if (driver != null) {
             driver.quit();
@@ -43,12 +44,12 @@ public abstract class GreenCityTestRunner {
     }
 
     @BeforeMethod
-    public void setUp() throws Exception {
+    public void setUp() {
         driver.get(BASE_URL);
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result) throws Exception {
+    public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
             // System.out.println("Test " + result.getName() + " ERROR");
