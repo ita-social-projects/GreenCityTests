@@ -1,12 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.softserve.edu.greencity.ui.data.Estimation;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import com.softserve.edu.greencity.ui.data.Estimation;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HabitComponent {
@@ -30,43 +29,25 @@ public class HabitComponent {
 
     private void initElements() {
         habitTitle = habitLayout.findElement(By.className("title")).getText();
-
-        initHabitItems();
-    }
-
-    private void initHabitItems() {
-        habitItems = new ArrayList<WebElement>();
+        habitItems = new ArrayList<>();
         habitLayout.findElements(By.cssSelector(".habits-in-progress > .ng-star-inserted")).forEach(item -> habitItems.add(item));
     }
-
-    // Page Object
-
-    //habitLayout
 
     public WebElement getHabitLayout() {
         return habitLayout;
     }
 
-    // habitTitle
-
     public String getHabitTitle() {
         return habitTitle;
     }
-
-    // habitItems
 
     public List<WebElement> getHabitItems() {
         return habitItems;
     }
 
-    // estimationButtons
-
     public List<WebElement> getEstimationButtons() {
         return estimationButtons;
     }
-
-
-    // Functional
 
     public long getHabitItemsCount() {
         return getHabitItems().size();
@@ -92,14 +73,9 @@ public class HabitComponent {
         }
     }
 
-    // TODO
-    // do not work select estimation
-    // do not know how to identify active button
     public Estimation getSelectedEstimation() {
         return null;
     }
-
-    // Business Logic
 
     /**
      * Select estimation of day.
@@ -118,5 +94,3 @@ public class HabitComponent {
         return new HabitComponent(habitLayout);
     }
 }
-
-

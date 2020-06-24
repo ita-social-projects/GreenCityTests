@@ -25,7 +25,7 @@ public class SmokeTest extends GreenCityTestRunner {
                 .navigateMenuTipsTricks()
                 .navigateMenuMap()
                 .navigateMenuAbout()
-                .navigateMenuMyCabinet(user)
+                .loginIn(user)
                 .navigateMenuTipsTricks();
 
         tipstrickspage.signout();
@@ -37,6 +37,7 @@ public class SmokeTest extends GreenCityTestRunner {
     public void checkLogin(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
                 .signin()
+                .getLoginManualComponent()
                 .successfullyLogin(user);
 
         String userName = myCabinetPage.getTopUserName();
@@ -49,7 +50,7 @@ public class SmokeTest extends GreenCityTestRunner {
     @Test(dataProvider = "users")
     public void checkCabinet(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
-                .navigateMenuMyCabinet(user);
+                .loginIn(user);
 
         String newHabitButtonText = myCabinetPage
                 .getAddNewHabitButton()
