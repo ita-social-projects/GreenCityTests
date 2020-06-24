@@ -31,18 +31,17 @@ public final class GetMail10MinTools {
     //
     public String title;
 
-//    public final static String URL = "https://www.minuteinbox.com/";
 //    public final static String URL = "https://10minutemail.net/";
     /**
      * Site URL for temporary email.
      */
-    public final static String URL = "https://temp-mail.org/ru/";
+    public final static String URL = "https://www.minuteinbox.com/";
 
     /**
      * To determine the desired letter, which gets in the mail from GreenCity
      * back-end.
      */
-    private final String MAIL_GEEN_CITY = "mailgreencity1@gmail.com";
+    private final String MAIL_GEEN_CITY = "mail.sender.greencity@gmail.com";
 
     /**
      * Constructor
@@ -56,9 +55,9 @@ public final class GetMail10MinTools {
 
     // init elements
     private void initElements() {
-        logger.debug("start initElements() in GetMail10MinTools");
-        title = driver.getTitle();
-        deleteButton = driver.findElement(By.cssSelector("#click-to-delete"));
+//        logger.debug("start initElements() in GetMail10MinTools");
+//        title = driver.getTitle();
+//        deleteButton = driver.findElement(By.cssSelector("#click-to-delete"));
     }
 
     // Page Object
@@ -71,26 +70,26 @@ public final class GetMail10MinTools {
         return title;
     }
 
-    // deleteButton
-    private WebElement getDeleteButton() {
-        return deleteButton;
-    }
-
-    private void clickDeleteButton() {
-        getDeleteButton().click();
-    }
-
-    private String getDeleteButtonText() {
-        return getTempEmailField().getText();
-    }
-
-    private boolean isDisplayedDeleteButton() {
-        return getDeleteButton().isDisplayed();
-    }
+//    // deleteButton
+//    private WebElement getDeleteButton() {
+//        return deleteButton;
+//    }
+//
+//    private void clickDeleteButton() {
+//        getDeleteButton().click();
+//    }
+//
+//    private String getDeleteButtonText() {
+//        return getTempEmailField().getText();
+//    }
+//
+//    private boolean isDisplayedDeleteButton() {
+//        return getDeleteButton().isDisplayed();
+//    }
 
     // refreshButton
     private WebElement getRefreshButton() {
-        refreshButton = driver.findElement(By.id("click-to-refresh"));
+        refreshButton = driver.findElement(By.cssSelector("[class*='refresh']"));
         return refreshButton;
     }
 
@@ -98,9 +97,9 @@ public final class GetMail10MinTools {
         getRefreshButton().click();
     }
 
-    private String getRefreshButtonText() {
-        return getRefreshButton().getText();
-    }
+//    private String getRefreshButtonText() {
+//        return getRefreshButton().getText();
+//    }
 
     private boolean isDisplayedRefreshButton() {
         return getRefreshButton().isDisplayed();
@@ -109,7 +108,7 @@ public final class GetMail10MinTools {
 //    tempEmailField
     private WebElement getTempEmailField() {
         tempEmailField = driver.findElement(
-                By.cssSelector("div.input-box-col.hidden-xs-sm button"));
+                By.id("email"));
         return tempEmailField;
     }
 
@@ -117,14 +116,13 @@ public final class GetMail10MinTools {
         getTempEmailField().click();
     }
 
-    private String getTempEmailFieldText()
+    private String getTempEmailFieldText(){
+        return getTempEmailField().getText();
+    }
+
+    private String getTempEmailFieldTextOutdated()
             throws Exception, Exception, Exception {
         clickTempEmailField();
-//        System.out.println(
-//                "(String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor): "
-//                        + (String) Toolkit.getDefaultToolkit()
-//                                .getSystemClipboard()
-//                                .getData(DataFlavor.stringFlavor));
         return (String) Toolkit.getDefaultToolkit().getSystemClipboard()
                 .getData(DataFlavor.stringFlavor);
     }
@@ -133,34 +131,37 @@ public final class GetMail10MinTools {
         return getTempEmailField().isDisplayed();
     }
 
-//    emailButton
-    private WebElement getEmailButton() {
+//    open email button //"//*[@id='schranka']/tr[1]/td[2]"
+    private WebElement openEmailButton() {
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//a[text()='Verify your email address']")));
+                By.xpath("//*[text()='Verify your email address']")));
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         //
         emailButton = driver.findElement(
-                By.xpath("//a[text()='Verify your email address']"));
+                By.xpath("//*[text()='Verify your email address']"));
         return emailButton;
     }
 
     private void clickEmailButton() {
-        getEmailButton().click();
+        openEmailButton().click();
     }
 
     private String getEmailButtonText() {
-        return getEmailButton().getText();
+        return openEmailButton().getText();
     }
 
     private boolean isDisplayedEmailButton() {
-        return getEmailButton().isDisplayed();
+        return openEmailButton().isDisplayed();
     }
 
 //    verifyEmailButton
     private WebElement getVerifyEmailButton() {
-        verifyEmailButton = driver.findElement(
-                By.cssSelector("a[href*='greencity.azurewebsites.net']"));
+       WebElement frameEl = driver.findElement(By.xpath("//div//*[@id='iframeMail']"));
+       // WebElement frameEl = driver.findElement(By.xpath("/html/body/div/div[3]/div/div[2]/div/div/iframe"));
+        WebDriver frame = driver.switchTo().frame(frameEl);
+        verifyEmailButton = frame.findElement(
+                By.xpath("//*[contains(@href,'verifyEmail')]"));
         return verifyEmailButton;
     }
 
@@ -205,11 +206,11 @@ public final class GetMail10MinTools {
         return "field mail not found";
     }
 
-    private void getNewMail() {
-        if (isDisplayedDeleteButton()) {
-            clickDeleteButton();
-        }
-    }
+//    private void getNewMail() {
+//        if (isDisplayedDeleteButton()) {
+//            clickDeleteButton();
+//        }
+//    }
 
     private void refreshMail() {
         if (isDisplayedRefreshButton()) {
@@ -249,11 +250,11 @@ public final class GetMail10MinTools {
     public String getTempEmail() {
         logger.debug("start getTempEmail()");
         logger.trace("get teporary New Mail");
-        getNewMail();
+//        getNewMail();
         logger.trace("wait until a teporary New Mail is displayed");
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        wait.until(ExpectedConditions
-                .stalenessOf(driver.findElement(By.cssSelector("#mail"))));
+//        wait.until(ExpectedConditions
+//                .stalenessOf(driver.findElement(By.cssSelector("#mail"))));
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         return getEmail();
     }
@@ -265,7 +266,7 @@ public final class GetMail10MinTools {
         logger.debug("start verifyEmail()");
         logger.trace("click on refresh Mail button and open desired mail");
         openMail();
-//        String verifyEmail = getVerifyURL();
+ //       String verifyEmail = getVerifyURL();
         logger.trace("click on VerifyButton");
         clickVerifyButton();
 //        return verifyEmail;

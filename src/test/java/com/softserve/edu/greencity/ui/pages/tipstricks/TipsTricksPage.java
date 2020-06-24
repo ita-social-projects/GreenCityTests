@@ -10,8 +10,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TipsTricksPage extends TopPart {
 
@@ -23,7 +21,6 @@ public class TipsTricksPage extends TopPart {
 
     // field for email for subscribe
     private WebElement enterEmailTipsTricks;
-    private WebElement subscriptionErrorMessage;
 
     // Text about amountPeople, quantityBags, quantityCups
     private WebElement amountPeople;
@@ -49,15 +46,14 @@ public class TipsTricksPage extends TopPart {
     private void initElements() {
         // init elements
         startHabitTop = driver
-                .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
+                .findElement(By.xpath("//*[@id='header-left']/div/button"));
         startHabitCenter = driver
-                .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(2)> div> button"));
+                .findElement(By.xpath(".//*[@id='stat-rows']/app-stat-row[1]/div/div[2]/div/button"));
         startHabitBelow = driver
                 .findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >button"));
         subscribeOnTipsTricks = driver
                 .findElement(By.xpath("//div[@id='form-wrapper']/button[@class='primary-global-button']"));
         enterEmailTipsTricks = driver.findElement(By.xpath("//input[@type='email']"));
-        subscriptionErrorMessage = driver.findElement(By.id("subscription-error"));
         amountPeople = driver.findElement(By.cssSelector("#stats>h2"));
         amountBags = driver.findElement(By.xpath("//app-stat-row/div/div[2]/div/h3"));
         amountCups = driver.findElement(By.cssSelector(".stat-row-content.ng-star-inserted:nth-child(1) > div >h3"));
@@ -67,10 +63,13 @@ public class TipsTricksPage extends TopPart {
                 By.xpath(".//div[@class='stat-row-image ng-star-inserted']//following-sibling::div/div/div/a"));
         linkCups = driver.findElement(By.xpath(
                 ".//div[@class='stat-row-image ng-star-inserted']//preceding-sibling::div[@class='stat-row-content ng-star-inserted']/div/div/a"));
-        mainEcoNewsLink = driver.findElement(By.xpath(".//div[@class='navigation-menu-left'] / ul / li[1]"));
-//        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
-//        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));
-        allNewsLink = driver.findElement(By.id("eco-events"));
+        mainEcoNewsLink = driver.findElement(By.cssSelector(".navigation-menu-left > ul> li:nth-child(1) > a"));
+
+        //TODO What is this links?
+/*        other1EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(1) > a"));
+        other2EcoNewsLink = driver.findElement(By.cssSelector("div#other-events > div:nth-child(3) > a"));*/
+
+        allNewsLink = driver.findElement(By.cssSelector("div#eco-events > a"));
     }
 
     // Page Object
@@ -81,10 +80,8 @@ public class TipsTricksPage extends TopPart {
         return startHabitTop;
     }
 
-    public MyCabinetPage clickStartHabitTop() {
+    public void clickStartHabitTop() {
         getStartHabitTop().click();
-
-        return new MyCabinetPage(driver);
     }
 
     public boolean isDisplayedStartHabitTop() {
@@ -156,11 +153,6 @@ public class TipsTricksPage extends TopPart {
         getEmailTipsTricks().clear();
     }
 
-    public boolean isDisplayedSubscriptionError() {
-        return subscriptionErrorMessage.isDisplayed();
-    }
-
-
     // amount People
 
     public WebElement getAmountPeople() {
@@ -226,19 +218,18 @@ public class TipsTricksPage extends TopPart {
     }
 
     // link other1EcoNewsLink
-    public WebElement getOther1EcoNewsLink() {
+    public WebElement getOther1EcoNewsLink(){
         return other1EcoNewsLink;
     }
 
     public void clickOther1EcoNewsLink() {
         getOther1EcoNewsLink().click();
     }
-
+    
     // link other2EcoNewsLink
     public WebElement getOther2EcoNewsLink() {
         return other2EcoNewsLink;
     }
-
     public void clickOther2EcoNewsLink() {
         getOther2EcoNewsLink().click();
     }
@@ -247,7 +238,6 @@ public class TipsTricksPage extends TopPart {
     public WebElement getAllNewsLink() {
         return allNewsLink;
     }
-
     public void clickAllNewsLink() {
         getAllNewsLink().click();
     }
@@ -256,7 +246,7 @@ public class TipsTricksPage extends TopPart {
     /**
      * quantityPeople() - reads the text that contains about the number of
      * people
-     *
+     * 
      * @return number People, who signed to GreenCity
      */
     public int quantityPeople() {
@@ -288,7 +278,7 @@ public class TipsTricksPage extends TopPart {
     /**
      * Create habit on page GreenCity using button on top "Start forming a
      * habit"
-     *
+     * 
      * @return open My cabinet
      */
     public MyCabinetPage navigateMyCabinet() {
@@ -322,11 +312,11 @@ public class TipsTricksPage extends TopPart {
         return new MapPage(driver);
 
     }
-
+    
     public EconewsPage moveMainEcoNewsLink() {
         clickMainEcoNewsLink();
         return new EconewsPage(driver);
     }
-
+    
 
 }

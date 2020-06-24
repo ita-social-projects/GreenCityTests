@@ -1,14 +1,21 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
-import org.testng.Assert;
+import java.util.concurrent.TimeUnit;
+
 import org.testng.annotations.Test;
 
-public class LoginTest extends GreencityTestRunner {
-    @Test
-    public void checkDropdown() {
-        LoginDropdown loginDropdown = loadApplication().signin();
+import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
 
-        Assert.assertEquals(loginDropdown.getSignUpLink().getText(), "Sign up");
+public class LoginTest extends GreenCityTestRunner {
+    @Test
+    public void checkDropdown() { // for debugging
+        LoginDropdown dropdown = null;
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void checkPage() { // for debugging
+
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 }

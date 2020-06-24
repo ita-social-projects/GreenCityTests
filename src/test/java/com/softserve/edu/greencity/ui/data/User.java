@@ -6,8 +6,7 @@ package com.softserve.edu.greencity.ui.data;
 public class User {
     //
     private String email;
-    private String firstName;
-    private String lastName;
+    private String userName;
     private String password;
     private String confirmPassword;
     
@@ -18,8 +17,7 @@ public class User {
      */
     public User(String email, String password) {
         this.email = email;
-        this.firstName = "";
-        this.lastName = "";
+        this.userName = "";
         this.password = password;
         this.confirmPassword = "";
     }
@@ -27,45 +25,26 @@ public class User {
     /**
      * Constructor.
      * @param email
-     * @param firstname
+     * @param userName
      * @param password
      */
-    public User(String email, String firstname, String password) {
+    public User(String email, String userName, String password) {
         this.email = email;
-        this.firstName = firstname;
-        this.lastName = "";
+        this.userName = userName;
         this.password = password;
         this.confirmPassword = "";
     }
     
     /**
      * Constructor.
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param password
-     */
-    public User(String firstName, String lastName, String email,
-            String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.confirmPassword = "";
-    }
-    
-    /**
-     * Constructor.
-     * @param firstName
-     * @param lastName
+     * @param userName
      * @param email
      * @param password
      * @param confirmPassword
      */
-    public User(String firstName, String lastName, String email,
-            String password, String confirmPassword) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String userName, String email,
+                String password, String confirmPassword) {
+        this.userName = userName;
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
@@ -77,12 +56,8 @@ public class User {
         this.email = email;
     }
 
-    public void setFirstName(String firstname) {
-        this.firstName = firstname;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUserName(String firstname) {
+        this.userName = firstname;
     }
 
     public void setPassword(String password) {
@@ -99,13 +74,10 @@ public class User {
         return email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
 
     public String getPassword() {
         return password;
@@ -117,9 +89,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [email=" + email + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", password=" + password
-                + ", confirmPassword=" + confirmPassword + "]";
+        return "User [email=" + email + ", firstName=" + userName
+                + ", password=" + password + ", confirmPassword=" + confirmPassword + "]";
     }
 
 }
