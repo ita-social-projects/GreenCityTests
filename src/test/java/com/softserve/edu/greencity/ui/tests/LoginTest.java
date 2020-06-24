@@ -1,14 +1,27 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class LoginTest extends GreenCityTestRunner {
-    @Test
-    public void checkDropdown() {
-        LoginDropdown loginDropdown = loadApplication().signin();
+    @DataProvider
+    private Object[] getTemporaryUser() {
+        return new Object[]{
+                UserRepository.get().temporary()
+        };
+    }
 
-        Assert.assertEquals(loginDropdown.getSignUpLink().getText(), "Sign up");
+    @Test(dataProvider = "getTemporaryUser")
+    public void loginWithValidCredentials(final User user) {
+        String newHabitButton = loadApplication()
+                .signin()
+                .successfullyLogin(user)
+                .getAddNewHabitButton()
+                .getText();
+
+        Assert.assertEquals(newHabitButton, "Add new habit");
     }
 }
