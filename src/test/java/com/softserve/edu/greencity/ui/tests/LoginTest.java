@@ -1,21 +1,27 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import java.util.concurrent.TimeUnit;
-
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
-
 public class LoginTest extends GreenCityTestRunner {
-    @Test
-    public void checkDropdown() { // for debugging
-        LoginDropdown dropdown = null;
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+    @DataProvider
+    private Object[] getTemporaryUser() {
+        return new Object[]{
+                UserRepository.get().temporary()
+        };
     }
 
-    @Test
-    public void checkPage() { // for debugging
+    @Test(dataProvider = "getTemporaryUser")
+    public void loginWithValidCredentials(final User user) {
+        String newHabitButton = loadApplication()
+                .signin()
+                .successfullyLogin(user)
+                .getAddNewHabitButton()
+                .getText();
 
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        Assert.assertEquals(newHabitButton, "Add new habit");
     }
 }
