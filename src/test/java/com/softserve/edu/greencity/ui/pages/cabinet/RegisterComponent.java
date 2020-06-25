@@ -79,6 +79,7 @@ public class RegisterComponent extends TopPart {
     public String getSubmitEmailText() {
         return submitEmailText.getText();
     }
+
     /**
      * Get text which shows after a successful registration.
      *
@@ -152,8 +153,8 @@ public class RegisterComponent extends TopPart {
         return signInLink;
     }
 
-    public LoginComponent clickSignInLink() {
+    public LoginManualComponent clickSignInLink() {
         getSignInLink().click();
-        return new LoginComponent(driver);
+        return new LoginManualComponent(driver);
     }
 }

@@ -16,7 +16,9 @@ public abstract class GreenCityTestRunner {
     private final Long ONE_SECOND_DELAY = 1000L;
     private final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
     //    	private final String BASE_URL = "http://localhost:4200/#/welcome";
-    //
+
+    private final boolean CHROME_HEADLESS_OPTION = false;
+
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
 
@@ -27,7 +29,10 @@ public abstract class GreenCityTestRunner {
 
     @BeforeClass
     public void setUpBeforeClass() {
-        driver = new ChromeDriver(new ChromeOptions().addArguments("headless"));
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setHeadless(CHROME_HEADLESS_OPTION);
+
+        driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
@@ -52,14 +57,8 @@ public abstract class GreenCityTestRunner {
     public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
-            // System.out.println("Test " + result.getName() + " ERROR");
-            // Take Screenshot, save sourceCode, save to log, prepare report, Return to previous state, logout, etc.
-            // TODO Logout
         }
-
         driver.get(BASE_URL);
-
-        // logout, get(urlLogout), delete cookie, delete cache
     }
 
     protected void signOut() {
@@ -71,15 +70,15 @@ public abstract class GreenCityTestRunner {
         return new TipsTricksPage(driver);
     }
 
+    // For Presentation ONLY
     protected void presentationSleep() {
         presentationSleep(1);
     }
 
     protected void presentationSleep(int seconds) {
         try {
-            Thread.sleep(seconds * ONE_SECOND_DELAY); // For Presentation ONLY
+            Thread.sleep(seconds * ONE_SECOND_DELAY);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

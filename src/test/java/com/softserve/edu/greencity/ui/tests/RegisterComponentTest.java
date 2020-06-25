@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginManualComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
@@ -37,7 +37,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     public Object[][] invalidFields() {
         return new Object[][]{
 
-                {UserRepository.get().wrongUserCredentials()},};
+                {UserRepository.get().invalidUserCredentials()},};
     }
 
     /**
@@ -92,12 +92,12 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
-        LoginComponent loginComponent = registerComponent.clickSignInLink();
+        LoginManualComponent loginManualComponent = registerComponent.clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
+        Assert.assertEquals("Welcome back!", loginManualComponent.getTitleString(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
+        Assert.assertEquals("Please enter your details to sign in", loginManualComponent.getSubtitleString(),
                 "This is not a login modal:(");
     }
 
@@ -219,11 +219,11 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 //                "you did not go to the page RegisterComponent");
 
         registerComponent.closeRegisterComponentModal();
-        LoginComponent loginComponent = new LoginComponent(driver);
+        LoginManualComponent loginManualComponent = new LoginManualComponent(driver);
 
         Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
                 "you didn't go to Login page");
-        LoginPage page = new LoginPage(driver);
+        LoginComponent page = new LoginComponent(driver);
         logger.info("login with temporary Email and random credential: "
                 + userLoginCredentials.toString());
         page.inputEmail(userLoginCredentials.getEmail())

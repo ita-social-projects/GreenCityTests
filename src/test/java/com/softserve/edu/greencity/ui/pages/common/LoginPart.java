@@ -1,18 +1,16 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.data.User;
 import org.openqa.selenium.WebElement;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-
 public abstract class LoginPart {
-
     protected WebElement emailField;
     protected WebElement passwordField;
     protected WebElement signInButton;
     protected WebElement googleSigningButton;
     protected WebElement forgotPasswordLink;
     protected WebElement singUpLink;
+
 
     public LoginPart inputEmail(String email) {
         this.getEmailField().sendKeys(email);
@@ -90,14 +88,11 @@ public abstract class LoginPart {
         return this;
     }
 
-    
-    // Functional
-    
     protected void fillFields(User user) {
         inputEmail(user.getEmail())
-            .inputPassword(user.getPassword());
+                .inputPassword(user.getPassword());
     }
-    
+
     protected void fillFieldsSubmit(User user) {
         fillFields(user);
         clickLoginButton();
