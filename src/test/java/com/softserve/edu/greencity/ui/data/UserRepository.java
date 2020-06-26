@@ -64,6 +64,6 @@ public final class UserRepository {
     }
 
     public User temporaryUserCredentialsForRegistration() {
-        return new User(Randomizer.getRamdomString20Letters(), "GCSignUpUser@gmail.com", "A475asd123*", "A475asd123*");
+        return new User(Randomizer.getRamdomString20Letters(), "GCSignUpUser@gmail.com", "!Error911", "!Error911");
     }
 }

@@ -747,8 +747,8 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
         //
-        clickSignUpButton()
-                .verifyRegistration();
+       clickSignUpButton()
+               .verifyRegistration();
     }
 
     /**
