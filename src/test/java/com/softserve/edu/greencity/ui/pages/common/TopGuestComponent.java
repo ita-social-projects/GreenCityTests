@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,9 +36,9 @@ public class TopGuestComponent {
         return getSigninLink().getText();
     }
     
-    public LoginPage clickSignInLink() {
+    public LoginComponent clickSignInLink() {
         getSigninLink().click();
-        return new LoginPage(driver);
+        return new LoginComponent(driver);
     }
     
 	// signupLink

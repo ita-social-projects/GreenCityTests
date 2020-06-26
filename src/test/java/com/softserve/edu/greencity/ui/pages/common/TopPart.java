@@ -5,21 +5,17 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.interactions.Coordinates;
-import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
@@ -265,17 +261,17 @@ public abstract class TopPart {
         logger.debug("go to MyCabinet as User");
         logger.trace("click MyCabinet link as User");
         getMainMenuDropdown().clickMenuMyCabinet();
-        new LoginPage(driver).getLoginComponent().fillFieldsSubmit(user);
+        new LoginComponent(driver).getManualLoginComponent().fillFieldsSubmit(user);
         return new MyCabinetPage(driver);
     }
 
     // for not Loggined
-    public LoginPage navigateMenuMyCabinetGuest() {
+    public LoginComponent navigateMenuMyCabinetGuest() {
         logger.debug("go to Login Page as Guest");
         logger.trace("click MyCabinet link as Guest");
         logger.info("go to Login Page as a Guest");
         getMainMenuDropdown().clickMenuMyCabinet();
-        return new LoginPage(driver);
+        return new LoginComponent(driver);
     }
 
     public AboutPage navigateMenuAbout() {

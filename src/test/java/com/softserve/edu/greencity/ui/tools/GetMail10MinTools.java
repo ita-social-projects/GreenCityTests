@@ -161,7 +161,7 @@ public final class GetMail10MinTools {
        // WebElement frameEl = driver.findElement(By.xpath("/html/body/div/div[3]/div/div[2]/div/div/iframe"));
         WebDriver frame = driver.switchTo().frame(frameEl);
         verifyEmailButton = frame.findElement(
-                By.xpath("//*[contains(@href,'verifyEmail')]"));
+                By.xpath("//*[contains(@href,'openEmailClickLink')]"));
         return verifyEmailButton;
     }
 
@@ -263,13 +263,13 @@ public final class GetMail10MinTools {
      * Finding the desired letter, opening and clicking on the button 'Verify'.
      */
     public void verifyEmail() {
-        logger.debug("start verifyEmail()");
+        logger.debug("start openEmailClickLink()");
         logger.trace("click on refresh Mail button and open desired mail");
         openMail();
- //       String verifyEmail = getVerifyURL();
+ //       String openEmailClickLink = getVerifyURL();
         logger.trace("click on VerifyButton");
         clickVerifyButton();
-//        return verifyEmail;
+//        return openEmailClickLink;
     }
 
 }
