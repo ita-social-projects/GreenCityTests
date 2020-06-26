@@ -27,9 +27,7 @@ public abstract class GreenCityTestRunner {
 
     @BeforeClass
     public void setUpBeforeClass() {
-        driver = new ChromeDriver(
-                //new ChromeOptions().addArguments("headless")
-                );
+        driver = new ChromeDriver(new ChromeOptions().addArguments("headless"));
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
