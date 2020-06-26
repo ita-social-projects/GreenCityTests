@@ -1,21 +1,37 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import java.util.concurrent.TimeUnit;
-
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.ui.pages.common.LoginDropdown;
-
 public class LoginTest extends GreenCityTestRunner {
+
     @Test
-    public void checkDropdown() { // for debugging
-        LoginDropdown dropdown = null;
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+    public void loginWithValidCredentials() {
+        User user = UserRepository.get().temporary();
+
+        String newHabitButton = loadApplication()
+                .signin()
+                .getLoginManualComponent()
+                .successfullyLogin(user)
+                .getAddNewHabitButton()
+                .getText();
+
+        Assert.assertEquals(newHabitButton, "Add new habit");
     }
 
     @Test
-    public void checkPage() { // for debugging
+    public void loginWithUnregisteredCredentials() {
+        User user = UserRepository.get().invalidUserCredentials();
 
-        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        String errorText = loadApplication()
+                .signin()
+                .getLoginManualComponent()
+                .unsuccessfullyLogin(user)
+                .getWrongEmailOrPassError()
+                .getText();
+
+        Assert.assertEquals(errorText, "Bad email or password");
     }
 }

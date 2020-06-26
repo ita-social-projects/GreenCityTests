@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginManualComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
@@ -16,27 +16,28 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] validUserCredentials() {
-        return new Object[][] {
-                { UserRepository.get().defaultUserCredentials() }, };
+        return new Object[][]{
+                {UserRepository.get().defaultUserCredentials()},};
     }
 
     @DataProvider
     public Object[][] randomValidUserCredentials() {
-        return new Object[][] { { UserRepository.get()
-                .temporaryUserCredentialsForRegistration() }, };
+        return new Object[][]{{UserRepository.get()
+                .temporaryUserCredentialsForRegistration()},};
     }
 
     @DataProvider
     public Object[][] emptyFields() {
-        return new Object[][] {
-                { UserRepository.get().wrongUserCredentials1() },
+        return new Object[][]{
+                {UserRepository.get().emptyUserCredentials()},
         };
     }
+
     @DataProvider
     public Object[][] invalidFields() {
-        return new Object[][] {
+        return new Object[][]{
 
-                { UserRepository.get().wrongUserCredentials2() }, };
+                {UserRepository.get().invalidUserCredentials()},};
     }
 
     /**
@@ -44,9 +45,9 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * switch to Login page.
      */
     @Test(dataProvider = "validUserCredentials")
-        public void signUpWithValidUser(User userLoginCredentials) {
+    public void checkIfSignUpButtonEnabled(User userLoginCredentials) {
         loadApplication();
-        logger.info("Starting signUpWithValidUser. Input values = "
+        logger.info("Starting checkIfSignUpButtonEnabled. Input values = "
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
@@ -62,7 +63,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
 
         logger.info(
-                 "Filling out the fields with valid credentials without clicking on Sign up button");
+                "Filling out the fields with valid credentials without clicking on Sign up button");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertFalse(manualRegisterComponent.signUpIsDisabled());
@@ -91,12 +92,12 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
-        LoginComponent loginComponent = registerComponent.clickSignInLink();
+        LoginManualComponent loginManualComponent = registerComponent.clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
+        Assert.assertEquals("Welcome back!", loginManualComponent.getTitleString(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
+        Assert.assertEquals("Please enter your details to sign in", loginManualComponent.getSubtitleString(),
                 "This is not a login modal:(");
     }
 
@@ -150,7 +151,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     public void checkInvalidFieldsValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
-               + userLoginCredentials.toString());
+                + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
@@ -163,7 +164,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
 
-         logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form: ");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
 
 // Any input in userName field is valid now, even the space - seems like a bug
@@ -188,10 +189,11 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     }
 
     /**
-     //     * Test for registration with temporary email and random other credentials
-     //     * with logging and checking displayed user name in the top of the page.
-     //     * @param userLoginCredentials
-     //     */
+     * //     * Test for registration with temporary email and random other credentials
+     * //     * with logging and checking displayed user name in the top of the page.
+     * //     * @param userLoginCredentials
+     * //
+     */
     @Test(dataProvider = "randomValidUserCredentials", enabled = false)
     public void randomCredsRegistrationLogin(User userLoginCredentials) {
         loadApplication();
@@ -217,17 +219,17 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 //                "you did not go to the page RegisterComponent");
 
         registerComponent.closeRegisterComponentModal();
-        LoginComponent loginComponent = new LoginComponent(driver);
+        LoginManualComponent loginManualComponent = new LoginManualComponent(driver);
 
         Assert.assertTrue(driver.getCurrentUrl().contains("#/auth"),
                 "you didn't go to Login page");
-        LoginPage page = new LoginPage(driver);
+        LoginComponent page = new LoginComponent(driver);
         logger.info("login with temporary Email and random credential: "
                 + userLoginCredentials.toString());
         page.inputEmail(userLoginCredentials.getEmail())
                 .inputPassword(userLoginCredentials.getPassword())
                 .clickLoginButton(); // not always success after one click (need
-                                     // one more click)
+        // one more click)
         logger.info("get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",
                 "you didn't log in successfully");
