@@ -37,7 +37,7 @@ public class SmokeTest extends GreenCityTestRunner {
     public void checkLogin(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
                 .signin()
-                .getLoginManualComponent()
+                .getManualLoginComponent()
                 .successfullyLogin(user);
 
         String userName = myCabinetPage.getTopUserName();

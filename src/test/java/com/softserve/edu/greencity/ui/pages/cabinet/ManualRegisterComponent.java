@@ -1,6 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.tools.GMailBox;
+import com.softserve.edu.greencity.ui.tools.GMailLogin;
 import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -665,6 +667,13 @@ public class ManualRegisterComponent extends RegisterComponent {
         }
     }
 
+    public void logInGMail() throws InterruptedException {
+        GMailLogin log = new GMailLogin(driver);
+        GMailBox box = log.GMailDoLogin();
+        String mailHeader = box.readHeader();
+        System.out.println(mailHeader);
+
+    }
 
     protected String getTempEmail() {
         driver.get(GetMail10MinTools.URL);
@@ -683,19 +692,22 @@ public class ManualRegisterComponent extends RegisterComponent {
         String currentTab = driver.getWindowHandle();
         ((JavascriptExecutor)driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
+
         String email = getTempEmail();
+
         logger.info("temporary Email address for registration: " + email);
-//        System.out.println("temporary Email address for registration: " + email);
         driver.switchTo().window(currentTab);
         return email;
     }
 
 
-    protected RegisterComponent verifyTempEmail() {
+    protected RegisterComponent verifyRegistration() throws InterruptedException {
         String currentTab = driver.getWindowHandle();
+        ((JavascriptExecutor)driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
-        GetMail10MinTools tmp = new GetMail10MinTools(driver);
-        tmp.verifyEmail();
+        GMailLogin gmailLogin = new GMailLogin(driver);
+        gmailLogin.GMailDoLogin()
+                .openEmailClickLink();
         driver.switchTo().window(currentTab);
         return this;
     }
@@ -729,15 +741,14 @@ public class ManualRegisterComponent extends RegisterComponent {
      * Filling all fields on Register page and click on SingUp button.
      * @param userData object with user's credentials
      */
-    public void registrationNewRandomUser(User userData) {
-        userData.setEmail(getTemporaryEmail());
+    public void registrationNewRandomUser(User userData) throws InterruptedException {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
         //
         clickSignUpButton()
-                .verifyTempEmail();
+                .verifyRegistration();
     }
 
     /**

@@ -1,57 +1,64 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class LoginComponent extends TopPart {
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import org.openqa.selenium.WebElement;
 
-    private LoginManualComponent loginManualComponent;
+public class LoginComponent extends TopPart{
+
+    protected WebElement title;
+    protected WebElement subtitle;
+    protected WebElement forgotPasswordLink;
+    protected WebElement singUpLink;
+
+    private ManualLoginComponent manualLoginComponent;
+    private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
+    private final String REGISTRATION_LINK_CLASS = "signup-link";
+    private final String GOOGLE_LOGIN_BUTTON_CLASS = "google-sign-in";
 
     public LoginComponent(WebDriver driver) {
         super(driver);
     }
 
-    public LoginManualComponent getLoginManualComponent() {
-        return loginManualComponent = new LoginManualComponent(driver);
+    public ManualLoginComponent getManualLoginComponent() {
+        return manualLoginComponent = new ManualLoginComponent(driver);
     }
 
-    // proxy methods
-
-    public LoginComponent inputEmail(String email) {
-        this.getLoginManualComponent().inputEmail(email);
-        return this;
+    protected WebElement getTitle() {
+        this.title = driver
+                .findElement(By.cssSelector("div.right-side h1"));
+        return title;
     }
 
-    public LoginComponent inputPassword(String password) {
-        this.getLoginManualComponent().inputPassword(password);
-        return this;
-    }
-
-    public LoginComponent clickLoginButton() {
-        this.getLoginManualComponent().clickLoginButton();
-        return this;
-    }
-
-    public LoginComponent clickGoogleLoginButton() {
-        this.getLoginManualComponent().clickGoogleLoginButton();
-        return this;
-    }
-
-    public GoogleAccountPage loginByGoogle() {
-        this.clickGoogleLoginButton();
-        return new GoogleAccountPage(driver);
-    }
-
-    public TopPart login(String email, String password) {
-        this.inputEmail(email)
-                .inputPassword(password)
-                .clickLoginButton();
-        return new TopPart(driver) {
-        };
+    protected boolean isDisplayedTitleField() {
+        return getTitle().isDisplayed();
     }
 
 
-    public RegisterComponent gotoRegisterPage() {
-        return getLoginManualComponent().goToRegisterPage();
+    public String getTitleString(){
+
+        return this.getTitle().getText();
     }
+
+    protected WebElement getSubtitle() {
+        this.subtitle = driver
+                .findElement(By.cssSelector("div.right-side h2"));
+        return subtitle;
+    }
+
+
+    public String getSubtitleString(){
+
+        return this.getSubtitle().getText();
+    }
+
+
+
+
+
+
+
+
 }
