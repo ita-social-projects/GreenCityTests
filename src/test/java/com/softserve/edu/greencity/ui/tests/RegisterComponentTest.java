@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginManualComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
@@ -36,7 +37,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     public Object[][] invalidFields() {
         return new Object[][]{
 
-                {UserRepository.get().wrongUserCredentials()},};
+                {UserRepository.get().invalidUserCredentials()},};
     }
 
     /**
@@ -193,8 +194,8 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * //     * @param userLoginCredentials
      * //
      */
-    @Test(dataProvider = "randomValidUserCredentials")
-    public void randomCredsRegistrationLogin(User userLoginCredentials) throws InterruptedException {
+    @Test(dataProvider = "randomValidUserCredentials", enabled = false)
+    public void randomCredsRegistrationLogin(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting randomCredsRegistrationLogin. Input values = "
                 + userLoginCredentials.toString());

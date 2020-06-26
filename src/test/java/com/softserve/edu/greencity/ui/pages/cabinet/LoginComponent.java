@@ -11,6 +11,7 @@ public class LoginComponent extends TopPart{
     protected WebElement forgotPasswordLink;
     protected WebElement singUpLink;
 
+    private LoginManualComponent loginManualComponent;
     private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
     private final String REGISTRATION_LINK_CLASS = "signup-link";
     private final String GOOGLE_LOGIN_BUTTON_CLASS = "google-sign-in";
@@ -26,6 +27,8 @@ public class LoginComponent extends TopPart{
 
     public ManualLoginComponent getManualLoginComponent() {
         return manualLoginComponent;
+    public LoginManualComponent getLoginManualComponent() {
+        return loginManualComponent = new LoginManualComponent(driver);
     }
 
     // proxy methods
@@ -55,20 +58,6 @@ public class LoginComponent extends TopPart{
         return new GoogleAccountPage(driver);
      }
 
-    public TopPart login(String email, String password) {
-        this.inputEmail(email)
-                .inputPassword(password)
-                .clickLoginButton();
-        return new TopPart(driver) {};
-    }
 
-
-//    public RegisterComponent gotoRegisterPage(){
-//        return getManualLoginComponent().gotoRegisterPage();
-//    }
-//    public RegisterComponent gotoRegisterPage() {
-//        getSignUpLink().click();
-//        return new RegisterComponent(driver);
-//    }
 
 }

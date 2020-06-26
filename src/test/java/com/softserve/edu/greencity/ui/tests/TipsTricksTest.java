@@ -20,8 +20,7 @@ public class TipsTricksTest extends GreenCityTestRunner {
     @Test(dataProvider = "getUser")
     public void checkHabitButtonTop(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
-                .signin()
-                .successfullyLogin(user)
+                .loginIn(user)
                 .navigateMenuTipsTricks()
                 .clickStartHabitTop();
 
