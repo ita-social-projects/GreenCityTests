@@ -153,11 +153,7 @@ public class RegisterComponent extends TopPart {
         return signInLink;
     }
 
-    public LoginManualComponent clickSignInLink() {
-        getSignInLink().click();
-        return new LoginManualComponent(driver);
-    }
-    public ManualLoginComponent clickSignInLink1() {
+    public ManualLoginComponent clickSignInLink() {
         getSignInLink().click();
         return new ManualLoginComponent(driver);
     }

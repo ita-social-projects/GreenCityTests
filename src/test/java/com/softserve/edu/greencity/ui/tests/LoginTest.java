@@ -13,7 +13,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         String newHabitButton = loadApplication()
                 .signin()
-                .getLoginManualComponent()
+                .getManualLoginComponent()
                 .successfullyLogin(user)
                 .getAddNewHabitButton()
                 .getText();
@@ -27,7 +27,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         String errorText = loadApplication()
                 .signin()
-                .getLoginManualComponent()
+                .getManualLoginComponent()
                 .unsuccessfullyLogin(user)
                 .getWrongEmailOrPassError()
                 .getText();

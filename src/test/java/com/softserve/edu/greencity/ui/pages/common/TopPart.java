@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.common;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
@@ -204,12 +205,12 @@ public abstract class TopPart {
         return new LoginComponent(driver);
     }
 
-    public RegisterDropdown signup() {
+    public ManualRegisterComponent signup() {
         logger.debug("start signup()");
         logger.trace("click Signup link");
         logger.info("go to RegisterDropdown");
         createTopGuestComponent().clickSignupLink();
-        return new RegisterDropdown(driver);
+        return new ManualRegisterComponent(driver);
     }
 
     public TipsTricksPage signout() {
@@ -225,7 +226,7 @@ public abstract class TopPart {
 
     public MyCabinetPage loginIn(User user) {
         signin()
-                .getLoginManualComponent()
+                .getManualLoginComponent()
                 .successfullyLogin(user);
 
         return new MyCabinetPage(driver);
