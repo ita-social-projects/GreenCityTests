@@ -3,7 +3,6 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
 import com.softserve.edu.greencity.ui.tools.GMailLogin;
-import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
@@ -675,11 +674,6 @@ public class ManualRegisterComponent extends RegisterComponent {
 
     }
 
-    protected String getTempEmail() {
-        driver.get(GetMail10MinTools.URL);
-        GetMail10MinTools tmp = new GetMail10MinTools(driver);
-        return tmp.getTempEmail();
-    }
 
     public ManualRegisterComponent clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
@@ -688,17 +682,6 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected String getTemporaryEmail() {
-        String currentTab = driver.getWindowHandle();
-        ((JavascriptExecutor)driver).executeScript("window.open()");
-        switchToAnotherTab(currentTab);
-
-        String email = getTempEmail();
-
-        logger.info("temporary Email address for registration: " + email);
-        driver.switchTo().window(currentTab);
-        return email;
-    }
 
 
     protected RegisterComponent verifyRegistration() throws InterruptedException {

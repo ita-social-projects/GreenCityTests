@@ -22,7 +22,6 @@ public class TopUserComponent {
 	}
 
 	private void initElements() {
-		// init elements
 		profileButton = driver.findElement(By.cssSelector("div#user-avatar-wrapper > ul"));
 		userNameButton = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button > a"));
 	}

@@ -7,13 +7,17 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
+import com.softserve.edu.greencity.ui.tools.DBQueries;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.sql.*;
+
 public class RegisterComponentTest extends GreenCityTestRunner {
+
 
     @DataProvider
     public Object[][] validUserCredentials() {
@@ -234,10 +238,12 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
     }
 
-    @AfterTest
-    public void deleteRegisteredUser(){
-        //connection to DB
-        //Delete the letters
+
+    //@AfterTest
+    @Test
+    public void deleteRegisteredUser() throws SQLException {
+        DBQueries queryObj = new DBQueries();
+        queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
     }
 
 }
