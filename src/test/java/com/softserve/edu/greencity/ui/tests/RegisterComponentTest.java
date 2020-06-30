@@ -218,16 +218,15 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
         logger.info("Enter random credentials and temporary email into the form: ");
         manualRegisterComponent.registrationNewRandomUser(userLoginCredentials);
-        Thread.sleep(5000);
+
 
        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
 
 
         manualLoginComponent.inputEmail(userLoginCredentials.getEmail())
-                .inputPassword(userLoginCredentials.getPassword());
-        Thread.sleep(5000);
-        manualLoginComponent.clickLoginButton();
-        Thread.sleep(5000);
+                .inputPassword(userLoginCredentials.getPassword())
+                .clickLoginButton();
+
         logger.info("get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",
                 "you didn't log in successfully");
@@ -238,9 +237,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
     }
 
-
-    //@AfterTest
-    @Test
+    @AfterTest
     public void deleteRegisteredUser() throws SQLException {
         DBQueries queryObj = new DBQueries();
         queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");

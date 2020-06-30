@@ -3,11 +3,14 @@ package com.softserve.edu.greencity.ui.pages.common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class TopUserComponent {
 	protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
 	//
 	private final String TAG_ATTRIBUTE_CLASS = "class";
+	private final String USER_NAME_CSS = "div#user-avatar-wrapper li.tertiary-global-button > a";
 	//
 	private WebDriver driver;
 	//
@@ -22,8 +25,7 @@ public class TopUserComponent {
 	}
 
 	private void initElements() {
-		profileButton = driver.findElement(By.cssSelector("div#user-avatar-wrapper > ul"));
-		userNameButton = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button > a"));
+
 	}
 
 	// Page Object
@@ -31,12 +33,15 @@ public class TopUserComponent {
 	// profileButton
 
 	public WebElement getProfileButton() {
+
+		profileButton = driver.findElement(By.cssSelector("div#user-avatar-wrapper > ul"));
 		return profileButton;
 	}
 
 	// userNameButton
 
 	public WebElement getUserNameButton() {
+		userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
 		return userNameButton;
 	}
 

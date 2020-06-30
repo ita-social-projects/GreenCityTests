@@ -9,41 +9,33 @@ import java.util.Properties;
 
 public class DBQueries {
 
-    private static volatile DBQueries instance = null;
-
     private Properties property = new Properties();
+    private String url;
+    private String userName;
+    private String password;
+    private String driverClass = "org.postgresql.Driver";
 
     public DBQueries() {
         try {
             final FileInputStream fis = new FileInputStream("src/test/resources/credentials.properties");
             property.load(fis);
+            url = property.getProperty("DBProdURL");
+            userName = property.getProperty("DBProdUserName");
+            password = property.getProperty("DBProdUserPassword");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static DBQueries get() {
-        if (instance == null) {
-            synchronized (DBQueries.class) {
-                if (instance == null) {
-                    instance = new DBQueries();
-                }
-            }
-        }
-        return instance;
-    }
-    public final String URL = property.getProperty("DBProdURL");
-    public final String USER_NAME = property.getProperty("DBProdUserName");
-    public final String PASSWORD = property.getProperty("DBProdUserPassword");
-    public final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
 
     public void deleteUserByEmail(String email) throws SQLException {
         Connection connection = null;
         Statement statement = null;
 
         try {
-            Class.forName(DRIVER_CLASS_NAME);
-            connection = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
+            Class.forName(driverClass);
+            connection = DriverManager.getConnection(url, userName, password);
             statement = connection.createStatement();
             statement.executeQuery("DELETE FROM users WHERE email = '"+ email + "'");
 

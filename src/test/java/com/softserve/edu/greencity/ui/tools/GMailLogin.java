@@ -13,10 +13,9 @@ import java.awt.datatransfer.DataFlavor;
 import java.util.concurrent.TimeUnit;
 
 public class GMailLogin {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private WebDriver driver;
 
-    private WebElement goToLoginButton;
     private WebElement loginEmail;
     private WebElement nextButton;
     private WebElement loginPassword;
@@ -24,51 +23,51 @@ public class GMailLogin {
 
 
 
-    public final static String URL = "https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin";
+    public final static String URL = "https://accounts.google.com/signin/v2/identifier?" +
+            "continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1&" +
+            "flowName=GlifWebSignIn&flowEntry=ServiceLogin";
 
 
-    /**
-     * Constructor
-     * @param driver WebDriver
-     */
     public GMailLogin(WebDriver driver) {
+
         this.driver = driver;
+        driver.get(URL);
     }
 
 
-    public void goToLogin() throws InterruptedException {
-        goToLoginButton = driver.findElement(By.cssSelector("[href*='mail.google']"));
-        Thread.sleep(5000);
-        goToLoginButton.click();
-
-
-    }
-   public void enterEmail(){
+   public GMailLogin enterEmail(){
         loginEmail = driver.findElement(By.id("identifierId"));
-       loginEmail.sendKeys("GCSignUpUser@gmail.com");
-
+        loginEmail.sendKeys("GCSignUpUser@gmail.com");
+        return this;
    }
-   public void clickNext(){
+
+   public GMailLogin clickNext(){
        nextButton = driver.findElement(By.id("identifierNext"));
        nextButton.click();
+       return this;
    }
 
-    public void enterPassword(){
-        loginEmail = driver.findElement(By.name("password"));
-        loginEmail.sendKeys("Error911");
-
+    public GMailLogin enterPassword(){
+        loginPassword = driver.findElement(By.name("password"));
+        loginPassword.sendKeys("Error911");
+        return this;
     }
-    public void clickNextPass(){
+
+    /**
+     * Thread.sleep() is used in the following method because of the flow of initialisation of web elements
+     * on the GMailBox page: they are dynamically loaded. It means explicit wait won't work
+     * properly when working with GMailBox elements and that's why the use of Thread.sleep() was needed.
+     */
+    public GMailLogin clickSignInButton(){
         signInButton = driver.findElement(By.id("passwordNext"));
         signInButton.click();
-    }
-    public GMailBox GMailDoLogin() throws InterruptedException {
-         driver.get(URL);
-        enterEmail();
-        clickNext();
-        enterPassword();
-         clickNextPass();
-        return new GMailBox(driver);
 
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return this;
     }
+
 }

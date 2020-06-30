@@ -666,12 +666,13 @@ public class ManualRegisterComponent extends RegisterComponent {
         }
     }
 
-    public void logInGMail() throws InterruptedException {
-        GMailLogin log = new GMailLogin(driver);
-        GMailBox box = log.GMailDoLogin();
-        String mailHeader = box.readHeader();
-        System.out.println(mailHeader);
-
+    public GMailBox logInGMail()  {
+        GMailLogin loginPage = new GMailLogin(driver);
+        loginPage.enterEmail()
+        .clickNext()
+        .enterPassword()
+        .clickSignInButton();
+        return new GMailBox(driver);
     }
 
 
@@ -684,13 +685,14 @@ public class ManualRegisterComponent extends RegisterComponent {
 
 
 
-    protected RegisterComponent verifyRegistration() throws InterruptedException {
+    protected RegisterComponent verifyRegistration() {
         String currentTab = driver.getWindowHandle();
         ((JavascriptExecutor)driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
-        GMailLogin gmailLogin = new GMailLogin(driver);
-        gmailLogin.GMailDoLogin()
+
+        logInGMail()
                 .openEmailClickLink();
+
         driver.switchTo().window(currentTab);
         return this;
     }
@@ -724,13 +726,12 @@ public class ManualRegisterComponent extends RegisterComponent {
      * Filling all fields on Register page and click on SingUp button.
      * @param userData object with user's credentials
      */
-    public void registrationNewRandomUser(User userData) throws InterruptedException {
+    public void registrationNewRandomUser(User userData){
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
-                .fillPasswordConfirmField(userData.getPassword());
-        //
-       clickSignUpButton()
+                .fillPasswordConfirmField(userData.getPassword())
+                .clickSignUpButton()
                .verifyRegistration();
     }
 
