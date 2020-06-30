@@ -10,18 +10,7 @@ public class SmallHeightPart extends TopPart {
 
     public SmallHeightPart(WebDriver driver) {
         super(driver);
-        initElements();
     }
-
-    private void initElements() {
-        // init elements
-    }
-
-    // Page Object
-
-    // Functional
-
-    // Business Logic
 
     @Override
     public EconewsPage navigateMenuEconews() {
@@ -63,8 +52,6 @@ public class SmallHeightPart extends TopPart {
             return super.navigateMenuMyCabinet();
         }
         getMainMenuDropdown().closeNaviconButton();
-        // getMainMenuDropdown().clickFooterMyCabinet();
-        // TODO delete
         driver.get("https://ita-social-projects.github.io/GreenCityClient/#/auth");
         return new MyCabinetPage(driver);
     }
