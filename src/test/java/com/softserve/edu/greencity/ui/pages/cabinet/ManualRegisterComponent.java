@@ -61,33 +61,19 @@ public class ManualRegisterComponent extends RegisterComponent {
         return userNameField;
     }
 
-    /**
-     * Inserting some values in the 'FirstName' field.
-     *
-     * @param userName
-     * @return RegisterPart
-     */
+
     protected ManualRegisterComponent inputUserName(String userName) {
         this.getUserNameField().sendKeys(userName);
         return this;
     }
 
-    /**
-     * Clearing the 'FirstName' field.
-     *
-     * @return RegisterPart
-     */
+
     protected ManualRegisterComponent clearFirstName() {
         this.getUserNameField().clear();
         return this;
     }
 
-    /**
-     * Click on FirstName field
-     *
-     * @param driver WebDriver
-     * @return RegisterPart
-     */
+
     protected ManualRegisterComponent clickFirstName(WebDriver driver) {
         if (isDisplayedFirstNameField()) {
             this.getUserNameField().click();
@@ -98,11 +84,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    /**
-     * Returns boolean if displayed the 'FirstName' field.
-     *
-     * @return boolean
-     */
+
     protected boolean isDisplayedFirstNameField() {
         return getUserNameField().isDisplayed();
     }
@@ -666,14 +648,6 @@ public class ManualRegisterComponent extends RegisterComponent {
         }
     }
 
-    public GMailBox logInGMail()  {
-        GMailLogin loginPage = new GMailLogin(driver);
-        loginPage.enterEmail()
-        .clickNext()
-        .enterPassword()
-        .clickSignInButton();
-        return new GMailBox(driver);
-    }
 
 
     public ManualRegisterComponent clickSignUpButton() {
@@ -690,7 +664,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         ((JavascriptExecutor)driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
 
-        logInGMail()
+        GMailLogin logInGMailPage = new GMailLogin(driver);
+        logInGMailPage.logInGMail()
                 .openEmailClickLink();
 
         driver.switchTo().window(currentTab);
@@ -732,7 +707,7 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword())
                 .clickSignUpButton()
-               .verifyRegistration();
+                .verifyRegistration();
     }
 
     /**

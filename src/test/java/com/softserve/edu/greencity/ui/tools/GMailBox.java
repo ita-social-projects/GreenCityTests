@@ -50,16 +50,14 @@ public class GMailBox {
 
         public void openEmailClickLink() {
 
-        String header = getTopUnreadEmail().findElement(By.className("bqe")).getAttribute("innerText");
+            if (readHeader().equals("Verify your email address")){
 
-            if (header.equals("Verify your email address")){
                 getTopUnreadEmail().click();
 
                 verifyEmailButton = driver.findElement(
                         By.cssSelector("[href*='verifyEmail']"));
 
                 verifyEmailButton.click();
-
 
             }
 

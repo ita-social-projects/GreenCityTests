@@ -8,7 +8,6 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
@@ -28,7 +27,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     @DataProvider
     public Object[][] randomValidUserCredentials() {
         return new Object[][]{{UserRepository.get()
-                .temporaryUserCredentialsForRegistration()},};
+                .userCredentialsForRegistration()},};
     }
 
     @DataProvider
@@ -200,7 +199,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * //
      */
     @Test(dataProvider = "randomValidUserCredentials")
-    public void randomCredsRegistrationLogin(User userLoginCredentials) throws InterruptedException {
+    public void randomCredsRegistrationLogin(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting randomCredsRegistrationLogin. Input values = "
                 + userLoginCredentials.toString());
