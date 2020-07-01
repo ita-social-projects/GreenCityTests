@@ -8,12 +8,15 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
+import com.softserve.edu.greencity.ui.tools.GMailBox;
+import com.softserve.edu.greencity.ui.tools.GMailLogin;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class RegisterComponentTest extends GreenCityTestRunner {
 
@@ -40,7 +43,6 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     @DataProvider
     public Object[][] invalidFields() {
         return new Object[][]{
-
                 {UserRepository.get().invalidUserCredentials()},};
     }
 
@@ -240,6 +242,12 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     public void deleteRegisteredUser() throws SQLException {
         DBQueries queryObj = new DBQueries();
         queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
+
+
+        GMailBox mailBox = new GMailLogin(driver)
+                .logInGMail();
+        ArrayList listOfEmails = mailBox.getAllMails();
+        mailBox.deleteAllMails(listOfEmails);
     }
 
 }

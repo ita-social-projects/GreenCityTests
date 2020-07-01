@@ -3,18 +3,12 @@ package com.softserve.edu.greencity.ui.tools;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GMailBox {
 
@@ -26,11 +20,38 @@ public class GMailBox {
     }
 
     private WebElement mailHeader;
-    private WebElement unreadMail;
+    private WebElement topUnreadMail;
+    private WebElement oneMail;
+    private ArrayList  allMails;
+    private int allMailsNumber;
     private WebElement refreshButton;
+    private ArrayList deleteButtons;
     private WebElement deleteButton;
     private WebElement verifyEmailButton;
-    private Wait wait;
+
+
+    public int getCountOfAllMails(){
+        allMails = (ArrayList) driver.findElements(
+                By.cssSelector(".zA"));
+        allMailsNumber = allMails.size();
+        return allMailsNumber;
+
+    }
+    public ArrayList<WebElement> getAllMails(){
+        allMails = (ArrayList) driver.findElements(
+                By.cssSelector(".zA"));
+        return allMails;
+
+    }
+    public WebElement getTopUnreadEmail(){
+        topUnreadMail = driver.findElement(By.className("zE"));
+        return topUnreadMail;
+
+    }
+    public void openTopUnreadEmail(){
+        getTopUnreadEmail().click();
+
+    }
 
     public WebElement getMailHeader(){
         mailHeader = driver.findElement(By.className("bqe"));
@@ -42,26 +63,50 @@ public class GMailBox {
 
     }
 
-    public WebElement getTopUnreadEmail(){
-        unreadMail = driver.findElement(By.className("zE"));
-        return unreadMail;
+    public WebElement getVerifyEmailButton(){
+        verifyEmailButton = driver.findElement(
+                By.cssSelector("[href*='verifyEmail']"));
+        return verifyEmailButton;
 
     }
 
-        public void openEmailClickLink() {
+    public void clickVerifyEmailButton(){
+        getVerifyEmailButton().click();
 
-            if (readHeader().equals("Verify your email address")){
+    }
 
-                getTopUnreadEmail().click();
+    public ArrayList<WebElement> getDeleteButtons(){
+        deleteButtons = (ArrayList) driver.findElements(
+                By.cssSelector("li.bqX.bru"));
+        return deleteButtons;
 
-                verifyEmailButton = driver.findElement(
-                        By.cssSelector("[href*='verifyEmail']"));
+    }
 
-                verifyEmailButton.click();
 
+    public void openEmailClickLink() {
+
+        if (readHeader().equals("Verify your email address")){
+            openTopUnreadEmail();
+            clickVerifyEmailButton();
+
+        }
+
+    }
+    public void deleteAllMails(ArrayList <WebElement> mails){
+
+        Actions action = new Actions(driver);
+
+        for (WebElement mailRow: mails) {
+            action.moveToElement(mailRow).perform();
+            mailRow.findElement(
+                    By.cssSelector("li.bqX.bru"))
+                    .click();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-
-
+        }
 
     }
 
