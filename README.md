@@ -29,7 +29,24 @@ You need create `credentials.properties` file at `src/test/resources/` and set h
 
 For exemple:
 
-![](docs-photo/credentials-properties-exemple.PNG)
+```
+defaultName = defaultNameValue
+defaultLoginName = defaultLoginNameValue
+defaultPass = defaultPassValue
+defaultConfirmPass = defaultConfirmPassValue
+
+temporaryLoginName = temporaryLoginNameValue
+temporaryPass = temporaryPassValue
+
+invalidName = invalidNameValue
+invalidLoginName = invalidLoginNameValue
+invalidPass = invalidPassValue
+invalidConfirmPass = invalidConfirmPassValue
+
+googleLogin = googleLoginValue
+googlePass = googlePassValue
+```
+
 
 ### Where to find back/front-end part of the project
 
