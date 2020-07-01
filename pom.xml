@@ -121,11 +121,6 @@
 		</dependency>
 
 		<!-- - - - - - DB - - - - - -->
-		<!-- <dependency> -->
-		<!-- <groupId>javax.transaction</groupId> -->
-		<!-- <artifactId>jta</artifactId> -->
-		<!-- <version>${javax.transaction.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
@@ -136,17 +131,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.postgresql</groupId> -->
-		<!-- <artifactId>postgresql</artifactId> -->
-		<!-- <version>${postgresql.connector.version}</version> -->
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <groupId>org.slf4j</groupId> -->
-		<!-- <artifactId>slf4j-simple</artifactId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- </dependency> -->
 
 		<!-- - - - Read from Excel formats, etc. - - - -->
 		<dependency>
@@ -244,14 +228,7 @@
 							<platform>${os.detected.name}</platform>
 							<!-- <platform>windows</platform> -->
 							<bit>32</bit>
-							<!-- <version>74.0.3729.6</version> -->
-							<!-- <url>https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_win32.zip</url> -->
-							<!-- <version>76.0.3809.126</version> -->
-							<!-- <url>https://chromedriver.storage.googleapis.com/76.0.3809.126/chromedriver_win32.zip</url> -->
-							<!-- <url>https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_win32.zip</url> -->
 							<url>https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_win32.zip</url>
-							<!-- <version>79.0.3945.36</version> -->
-							<!-- <version>78.0.3904.105</version> -->
 						</driver>
 					</drivers>
 				</configuration>
@@ -269,33 +246,11 @@
 							${application.password}
 						</surefire.application.password>
 					</systemPropertyVariables>
-					<!-- <includes> -->
-					<!-- <include>**/*.java</include> -->
-					<!-- <include>**/MyData.java</include> -->
-					<!-- <include>**/SimpleTest.java</include> -->
-					<!-- <include>**/FindTest.java</include> -->
-					<!-- </includes> -->
-					<!-- <excludes> -->
-					<!-- <exclude>**/AppTest.java</exclude> -->
-					<!-- </excludes> -->
 					<suiteXmlFiles>
-						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
-						<!-- <suiteXmlFile>testng2.xml</suiteXmlFile> -->
 						<suiteXmlFile>${testng.xml}</suiteXmlFile>
 					</suiteXmlFiles>
 					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
-					<!-- <argLine> -->
-					<!-- -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -->
-					<!-- </argLine> -->
 				</configuration>
-				<!-- <dependencies> -->
-				<!-- <dependency> -->
-				<!-- <groupId>org.aspectj</groupId> -->
-				<!-- <artifactId>aspectjweaver</artifactId> -->
-				<!-- <version>${aspectj.version}</version> -->
-				<!-- <scope>test</scope> -->
-				<!-- </dependency> -->
-				<!-- </dependencies> -->
 			</plugin>
 
 		</plugins>

@@ -22,6 +22,14 @@ For example
 * [maven](https://maven.apache.org/)
 * [Selenium](https://www.selenium.dev/) ver. 3.141.59
 
+### Credentials for login
+All user credentials storing at property file `credentials.properties`.
+
+You need create `credentials.properties` file at `src/test/resources/` and set here your credentials for login and else methods.
+
+For exemple:
+
+![](docs-photo/credentials-properties-exemple.PNG)
 
 ### Where to find back/front-end part of the project
 
