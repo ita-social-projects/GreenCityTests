@@ -6,11 +6,17 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
+import com.softserve.edu.greencity.ui.tools.DBQueries;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.sql.*;
+
 public class RegisterComponentTest extends GreenCityTestRunner {
+
 
     @DataProvider
     public Object[][] validUserCredentials() {
@@ -21,7 +27,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     @DataProvider
     public Object[][] randomValidUserCredentials() {
         return new Object[][]{{UserRepository.get()
-                .temporaryUserCredentialsForRegistration()},};
+                .userCredentialsForRegistration()},};
     }
 
     @DataProvider
@@ -193,7 +199,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * //
      */
     @Test(dataProvider = "randomValidUserCredentials")
-    public void randomCredsRegistrationLogin(User userLoginCredentials) throws InterruptedException {
+    public void randomCredsRegistrationLogin(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting randomCredsRegistrationLogin. Input values = "
                 + userLoginCredentials.toString());
@@ -211,20 +217,29 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
         logger.info("Enter random credentials and temporary email into the form: ");
         manualRegisterComponent.registrationNewRandomUser(userLoginCredentials);
-        //Thread.sleep(5000);
-       registerComponent.closeRegisterComponentModal();
+
+
        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
-        //Thread.sleep(5000);
+
+
         manualLoginComponent.inputEmail(userLoginCredentials.getEmail())
                 .inputPassword(userLoginCredentials.getPassword())
-                .clickLoginButton(); // not always success after one click
-//Thread.sleep(5000);
-//        logger.info("get Title curent page: " + driver.getTitle());
-//        Assert.assertEquals(driver.getTitle(), "Home",
-//                "you didn't log in successfully");
-//        logger.info("check TopUserName: " + page.getTopUserName());
-//        Assert.assertEquals(page.getTopUserName(), TopPart.PROFILE_NAME);
+                .clickLoginButton();
 
+        logger.info("get Title curent page: " + driver.getTitle());
+        Assert.assertEquals(driver.getTitle(), "Home",
+                "you didn't log in successfully");
+
+        TopUserComponent userComponent = new TopUserComponent(driver);
+        logger.info("check TopUserName: " + userComponent.getUserNameButtonText());
+        Assert.assertEquals(userComponent.getUserNameButtonText(), userLoginCredentials.getUserName());
+
+    }
+
+    @AfterTest
+    public void deleteRegisteredUser() throws SQLException {
+        DBQueries queryObj = new DBQueries();
+        queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
     }
 
 }

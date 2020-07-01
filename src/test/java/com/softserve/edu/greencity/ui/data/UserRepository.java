@@ -63,7 +63,8 @@ public final class UserRepository {
                 property.getProperty("invalidConfirmPass"));
     }
 
-    public User temporaryUserCredentialsForRegistration() {
-        return new User(Randomizer.getRamdomString20Letters(), "GCSignUpUser@gmail.com", "A475asd123*", "A475asd123*");
+    public User userCredentialsForRegistration() {
+        return new User(Randomizer.getRamdomString20Letters(), property.getProperty("emailForRegistration"),
+                property.getProperty("passwordForRegistration"), property.getProperty("passwordForRegistration"));
     }
 }

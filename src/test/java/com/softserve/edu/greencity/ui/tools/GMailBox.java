@@ -3,8 +3,18 @@ package com.softserve.edu.greencity.ui.tools;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 public class GMailBox {
 
@@ -16,26 +26,43 @@ public class GMailBox {
     }
 
     private WebElement mailHeader;
+    private WebElement unreadMail;
     private WebElement refreshButton;
     private WebElement deleteButton;
     private WebElement verifyEmailButton;
+    private Wait wait;
 
-    public String readHeader(){
+    public WebElement getMailHeader(){
         mailHeader = driver.findElement(By.className("bqe"));
-        return mailHeader.getAttribute("innerText");
+        return mailHeader;
+
+    }
+    public String readHeader(){
+        return getMailHeader().getAttribute("innerText");
 
     }
 
-    public void openEmailClickLink() {
-        logger.debug("start openEmailClickLink()");
-        if (readHeader() == "Verify your email address"){
-            mailHeader.click();
-            verifyEmailButton = driver.findElement(
-                    By.xpath("//*[contains(@href,'openEmailClickLink')]"));
-        }
-       //refresh
+    public WebElement getTopUnreadEmail(){
+        unreadMail = driver.findElement(By.className("zE"));
+        return unreadMail;
 
-        //click Verify
+    }
+
+        public void openEmailClickLink() {
+
+            if (readHeader().equals("Verify your email address")){
+
+                getTopUnreadEmail().click();
+
+                verifyEmailButton = driver.findElement(
+                        By.cssSelector("[href*='verifyEmail']"));
+
+                verifyEmailButton.click();
+
+            }
+
+
+
     }
 
 }
