@@ -3,7 +3,6 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
 import com.softserve.edu.greencity.ui.tools.GMailLogin;
-import com.softserve.edu.greencity.ui.tools.GetMail10MinTools;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
@@ -62,33 +61,19 @@ public class ManualRegisterComponent extends RegisterComponent {
         return userNameField;
     }
 
-    /**
-     * Inserting some values in the 'FirstName' field.
-     *
-     * @param userName
-     * @return RegisterPart
-     */
+
     protected ManualRegisterComponent inputUserName(String userName) {
         this.getUserNameField().sendKeys(userName);
         return this;
     }
 
-    /**
-     * Clearing the 'FirstName' field.
-     *
-     * @return RegisterPart
-     */
+
     protected ManualRegisterComponent clearFirstName() {
         this.getUserNameField().clear();
         return this;
     }
 
-    /**
-     * Click on FirstName field
-     *
-     * @param driver WebDriver
-     * @return RegisterPart
-     */
+
     protected ManualRegisterComponent clickFirstName(WebDriver driver) {
         if (isDisplayedFirstNameField()) {
             this.getUserNameField().click();
@@ -99,11 +84,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    /**
-     * Returns boolean if displayed the 'FirstName' field.
-     *
-     * @return boolean
-     */
+
     protected boolean isDisplayedFirstNameField() {
         return getUserNameField().isDisplayed();
     }
@@ -667,19 +648,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         }
     }
 
-    public void logInGMail() throws InterruptedException {
-        GMailLogin log = new GMailLogin(driver);
-        GMailBox box = log.GMailDoLogin();
-        String mailHeader = box.readHeader();
-        System.out.println(mailHeader);
 
-    }
-
-    protected String getTempEmail() {
-        driver.get(GetMail10MinTools.URL);
-        GetMail10MinTools tmp = new GetMail10MinTools(driver);
-        return tmp.getTempEmail();
-    }
 
     public ManualRegisterComponent clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
@@ -688,26 +657,17 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected String getTemporaryEmail() {
+
+
+    protected RegisterComponent verifyRegistration() {
         String currentTab = driver.getWindowHandle();
         ((JavascriptExecutor)driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
 
-        String email = getTempEmail();
-
-        logger.info("temporary Email address for registration: " + email);
-        driver.switchTo().window(currentTab);
-        return email;
-    }
-
-
-    protected RegisterComponent verifyRegistration() throws InterruptedException {
-        String currentTab = driver.getWindowHandle();
-        ((JavascriptExecutor)driver).executeScript("window.open()");
-        switchToAnotherTab(currentTab);
-        GMailLogin gmailLogin = new GMailLogin(driver);
-        gmailLogin.GMailDoLogin()
+        GMailLogin logInGMailPage = new GMailLogin(driver);
+        logInGMailPage.logInGMail()
                 .openEmailClickLink();
+
         driver.switchTo().window(currentTab);
         return this;
     }
@@ -741,13 +701,12 @@ public class ManualRegisterComponent extends RegisterComponent {
      * Filling all fields on Register page and click on SingUp button.
      * @param userData object with user's credentials
      */
-    public void registrationNewRandomUser(User userData) throws InterruptedException {
+    public void registrationNewRandomUser(User userData){
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
-                .fillPasswordConfirmField(userData.getPassword());
-        //
-        clickSignUpButton()
+                .fillPasswordConfirmField(userData.getPassword())
+                .clickSignUpButton()
                 .verifyRegistration();
     }
 
