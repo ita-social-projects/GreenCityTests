@@ -12,6 +12,7 @@ public class ManualLoginComponent extends LoginComponent{
     private WebElement passwordField;
     private WebElement signInButton;
     private WebElement wrongEmailOrPassError;
+    private WebElement passwordValidator;
 
 
     private final String EMAIL_ID = "email";
@@ -42,11 +43,15 @@ public class ManualLoginComponent extends LoginComponent{
     }
 
 
-    public WebElement getWrongEmailOrPassError() {
+    public WebElement getWrongCredsError() {
         wait = new WebDriverWait(driver, 4);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(WRONG_EMAIL_OR_PASS_ERROR_CLASS)));
 
         return wrongEmailOrPassError = driver.findElement(By.cssSelector(WRONG_EMAIL_OR_PASS_ERROR_CLASS));
+    }
+
+    public String getWrongCredsErrorText() {
+        return getWrongCredsError().getText();
     }
 
     public ManualLoginComponent inputEmail(String email) {
@@ -58,6 +63,7 @@ public class ManualLoginComponent extends LoginComponent{
         getPasswordField().sendKeys(password);
         return this;
     }
+
 
     public ManualLoginComponent clickLoginButton() {
         getSignInButton().click();
@@ -80,4 +86,5 @@ public class ManualLoginComponent extends LoginComponent{
         clickLoginButton();
         return this;
     }
+
 }

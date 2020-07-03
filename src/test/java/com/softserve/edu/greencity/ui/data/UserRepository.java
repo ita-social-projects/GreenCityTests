@@ -42,7 +42,7 @@ public final class UserRepository {
     public User defaultUserCredentials() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultLoginName"),
+                property.getProperty("defaultEmail"),
                 property.getProperty("defaultPass"),
                 property.getProperty("defaultConfirmPass"));
     }
@@ -58,9 +58,24 @@ public final class UserRepository {
     public User invalidUserCredentials() {
         return new User(
                 property.getProperty("invalidName"),
-                property.getProperty("invalidLoginName"),
+                property.getProperty("invalidEmail"),
                 property.getProperty("invalidPass"),
                 property.getProperty("invalidConfirmPass"));
+    }
+
+    public User invalidEmailUserCredentials() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("invalidEmail"),
+                property.getProperty("defaultPass"),
+                property.getProperty("defaultPass"));
+    }
+    public User invalidConfirmPassCredentials() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("defaultPass")+"!",
+                property.getProperty("defaultConfirmPass"));
     }
 
     public User userCredentialsForRegistration() {

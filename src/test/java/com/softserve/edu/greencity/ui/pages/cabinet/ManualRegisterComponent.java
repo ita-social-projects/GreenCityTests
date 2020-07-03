@@ -2,9 +2,12 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
-import com.softserve.edu.greencity.ui.tools.GMailLogin;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class ManualRegisterComponent extends RegisterComponent {
@@ -635,18 +638,6 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected void switchToAnotherTab(String currentTab) {
-        logger.debug("start switchToAnotherTab()");
-        for (String current : driver.getWindowHandles()) {
-            logger.info("we're in a TAB: " + current);
-//            System.out.println("TAB: " + current);
-            if (!current.equals(currentTab)) {
-                logger.info("and switch to TAB: " + current);
-                driver.switchTo().window(current);
-                break;
-            }
-        }
-    }
 
 
 
@@ -660,21 +651,59 @@ public class ManualRegisterComponent extends RegisterComponent {
 
 
     protected RegisterComponent verifyRegistration() {
-        String currentTab = driver.getWindowHandle();
-        ((JavascriptExecutor)driver).executeScript("window.open()");
-        switchToAnotherTab(currentTab);
+        String initialTab = driver.getWindowHandle();
+        Set<String> allTabs = driver.getWindowHandles();
+        String newlyOpenedTab = openNewTabAndGetId(allTabs);
+        driver.switchTo().window(newlyOpenedTab);
 
-        GMailLogin logInGMailPage = new GMailLogin(driver);
+        GMailBox logInGMailPage = new GMailBox(driver);
         logInGMailPage.logInGMail()
                 .openEmailClickLink();
 
-        driver.switchTo().window(currentTab);
+        driver.switchTo().window(initialTab);
         return this;
     }
 
+    protected RegisterComponent checkVerIfMailReceived() {
+        String initialTab = driver.getWindowHandle();
+        Set<String> allTabs = driver.getWindowHandles();
+        String newlyOpenedTab = openNewTabAndGetId(allTabs);
+        driver.switchTo().window(newlyOpenedTab);
+
+        GMailBox logInGMailPage = new GMailBox(driver);
+        logInGMailPage.logInGMail();
+//        refreshButton = driver.findElement(By.cssSelector(".T-I.J-J5-Ji.nu.T-I-ax7.L3"));
+//        refreshButton.click();
+        WebElement email = logInGMailPage.getTopUnreadEmail();
+        Assert.assertTrue(logInGMailPage.readHeader(email).equals("Verify your email address"));
+        logInGMailPage.openTopUnreadEmail();
+        Assert.assertTrue(logInGMailPage.getVerifyEmailButton().isDisplayed());
+        return this;
+    }
+
+    public String openNewTabAndGetId(Set<String> allTabs) {
+
+        ((JavascriptExecutor) driver).executeScript("window.open()");
+
+        Set<String> allTabsUpdated = driver.getWindowHandles();
+
+        allTabsUpdated.removeAll(allTabs);
+
+        Iterator iter = allTabsUpdated.iterator();
+
+        String newTab = null;
+
+        if (iter.hasNext()){
+            newTab = iter.next().toString();
+        }
+
+        System.out.println(newTab);
+
+        return newTab;
+
+    }
+
     //    Business Logic
-
-
 
 
     public void registrationWrongUser(User userData) {
@@ -693,7 +722,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
-                .fillPasswordConfirmField(userData.getPassword());
+                .fillPasswordConfirmField(userData.getConfirmPassword());
+
     }
     
     // completion of user registration
@@ -701,11 +731,11 @@ public class ManualRegisterComponent extends RegisterComponent {
      * Filling all fields on Register page and click on SingUp button.
      * @param userData object with user's credentials
      */
-    public void registrationNewRandomUser(User userData){
+    public void registrationNewUserVerified(User userData){
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
-                .fillPasswordConfirmField(userData.getPassword())
+                .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
                 .verifyRegistration();
     }
@@ -719,10 +749,18 @@ public class ManualRegisterComponent extends RegisterComponent {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
-                .fillPasswordConfirmField(userData.getPassword());
+                .fillPasswordConfirmField(userData.getConfirmPassword());
         clickSignUpButton();
     }
 
+    public void registerUserCheckIfMailReceived(User userData) {
+        fillEmailField(userData.getEmail())
+                .fillUserNameField(userData.getUserName())
+                .fillPasswordField(userData.getPassword())
+                .fillPasswordConfirmField(userData.getConfirmPassword())
+                .clickSignUpButton()
+                .checkVerIfMailReceived();
+    }
 
 
 }

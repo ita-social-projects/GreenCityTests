@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
@@ -9,9 +10,8 @@ import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
-import com.softserve.edu.greencity.ui.tools.GMailLogin;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -25,12 +25,6 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     public Object[][] validUserCredentials() {
         return new Object[][]{
                 {UserRepository.get().defaultUserCredentials()},};
-    }
-
-    @DataProvider
-    public Object[][] randomValidUserCredentials() {
-        return new Object[][]{{UserRepository.get()
-                .userCredentialsForRegistration()},};
     }
 
     @DataProvider
@@ -57,7 +51,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
@@ -82,12 +76,12 @@ public class RegisterComponentTest extends GreenCityTestRunner {
      * to make sure the transition has been executed.
      */
     @Test
-    public void switchBetweenTabs() {
+    public void navigateFromSignUpToSignIn() {
         loadApplication();
-        logger.info("Starting switchBetweenTabs");
+        logger.info("Starting navigateFromSignUpToSignIn");
 
         logger.info("Click on Sign up button");
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
@@ -98,18 +92,20 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
-        ManualLoginComponent manualLoginComponent = registerComponent.clickSignInLink();
+        logger.info("Click on Sign in button");
+        LoginComponent loginComponent = registerComponent.clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", manualLoginComponent.getTitleString(),
+        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", manualLoginComponent.getSubtitleString(),
+        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
                 "This is not a login modal:(");
     }
 
     /**
      * Putting empty values into register form
      * and reading the validation messages.
+     * GC-502
      */
     @Test(dataProvider = "emptyFields")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
@@ -118,7 +114,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
@@ -126,7 +122,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-        ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
         logger.info("Enter empty values into the form: ");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
@@ -160,7 +156,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
@@ -168,7 +164,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-        ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
         logger.info("Enter invalid values into the form: ");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
@@ -194,60 +190,6 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
     }
 
-    /**
-     * //     * Test for registration with temporary email and random other credentials
-     * //     * with logging and checking displayed user name in the top of the page.
-     * //     * @param userLoginCredentials
-     * //
-     */
-    @Test(dataProvider = "randomValidUserCredentials")
-    public void randomCredsRegistrationLogin(User userLoginCredentials) {
-        loadApplication();
-        logger.info("Starting randomCredsRegistrationLogin. Input values = "
-                + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignupLink();
-
-        logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitleString());
-
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-
-        ManualRegisterComponent manualRegisterComponent = registerComponent.createRegisterComponent();
-
-        logger.info("Enter random credentials and temporary email into the form: ");
-        manualRegisterComponent.registrationNewRandomUser(userLoginCredentials);
-
-
-       ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
-
-
-        manualLoginComponent.inputEmail(userLoginCredentials.getEmail())
-                .inputPassword(userLoginCredentials.getPassword())
-                .clickLoginButton();
-
-        logger.info("get Title curent page: " + driver.getTitle());
-        Assert.assertEquals(driver.getTitle(), "Home",
-                "you didn't log in successfully");
-
-        TopUserComponent userComponent = new TopUserComponent(driver);
-        logger.info("check TopUserName: " + userComponent.getUserNameButtonText());
-        Assert.assertEquals(userComponent.getUserNameButtonText(), userLoginCredentials.getUserName());
-
-    }
-
-    @AfterTest
-    public void deleteRegisteredUser() throws SQLException {
-        DBQueries queryObj = new DBQueries();
-        queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
-
-
-        GMailBox mailBox = new GMailLogin(driver)
-                .logInGMail();
-        ArrayList listOfEmails = mailBox.getAllMails();
-        mailBox.deleteAllMails(listOfEmails);
-    }
 
 }

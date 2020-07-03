@@ -13,17 +13,23 @@ public class RegisterComponent extends TopPart {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private WebElement title;
+    private final String TITLE_CSS = "h1[title-text]";
     private WebElement subtitle;
+    private final String SUBTITLE_CSS = ".subtitle-text";
     private WebElement closeModalButton;
 
     private ManualRegisterComponent manualRegisterComponent;
     private WebElement googleSignUpButton;
 
     private WebElement signInLink;
+    private final String SIGN_IN_LINK_CSS = "div.exist-account a";
     private WebElement signInText;
 
     private WebElement submitEmailText;
     private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
+
+    private WebElement congratsModal;
+    private final String CONGRATS_MODAL_CSS = ".main-container .submit-email";
 
     public RegisterComponent(WebDriver driver) {
         super(driver);
@@ -33,7 +39,7 @@ public class RegisterComponent extends TopPart {
     // title
     protected WebElement getTitle() {
         this.title = driver
-                .findElement(By.cssSelector("h1[title-text]"));
+                .findElement(By.cssSelector(TITLE_CSS));
         return title;
     }
 
@@ -46,7 +52,7 @@ public class RegisterComponent extends TopPart {
     // subtitle
     protected WebElement getSubtitle() {
         this.subtitle = driver
-                .findElement(By.cssSelector(".subtitle-text"));
+                .findElement(By.cssSelector(SUBTITLE_CSS));
         return subtitle;
     }
 
@@ -64,7 +70,7 @@ public class RegisterComponent extends TopPart {
 
 
     //Register component
-    public ManualRegisterComponent createRegisterComponent() {
+    public ManualRegisterComponent getManualRegisterComponent() {
 
         return manualRegisterComponent = new ManualRegisterComponent(driver);
     }
@@ -149,12 +155,18 @@ public class RegisterComponent extends TopPart {
     // Sign In button
     protected WebElement getSignInLink() {
         this.signInLink = driver
-                .findElement(By.cssSelector("div.exist-account a"));
+                .findElement(By.cssSelector(SIGN_IN_LINK_CSS));
         return signInLink;
     }
 
     public ManualLoginComponent clickSignInLink() {
         getSignInLink().click();
         return new ManualLoginComponent(driver);
+    }
+
+    public WebElement getCongratsModal() {
+        this.congratsModal = driver
+                .findElement(By.cssSelector(CONGRATS_MODAL_CSS));
+        return congratsModal;
     }
 }

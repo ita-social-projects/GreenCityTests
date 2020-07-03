@@ -29,8 +29,7 @@ public class LoginTest extends GreenCityTestRunner {
                 .signin()
                 .getManualLoginComponent()
                 .unsuccessfullyLogin(user)
-                .getWrongEmailOrPassError()
-                .getText();
+                .getWrongCredsErrorText();
 
         Assert.assertEquals(errorText, "Bad email or password");
     }

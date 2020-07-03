@@ -101,7 +101,7 @@ public abstract class TopPart {
     }
 
     protected void clickTopGuestSignup() {
-        getTopGuestComponent().clickSignupLink();
+        getTopGuestComponent().clickSignUpLink();
     }
 
     protected void closeTopGuestComponent() {
@@ -209,7 +209,7 @@ public abstract class TopPart {
         logger.debug("start signup()");
         logger.trace("click Signup link");
         logger.info("go to RegisterDropdown");
-        createTopGuestComponent().clickSignupLink();
+        createTopGuestComponent().clickSignUpLink();
         return new ManualRegisterComponent(driver);
     }
 

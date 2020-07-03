@@ -54,6 +54,17 @@ public class LoginComponent extends TopPart{
         return this.getSubtitle().getText();
     }
 
+    protected WebElement getSignUpLink() {
+        this.singUpLink = driver
+                .findElement(By.cssSelector("div.missing-account a"));
+        return singUpLink;
+    }
+
+
+    public RegisterComponent clickSignUpLink(){
+        getSignUpLink().click();
+        return new RegisterComponent(driver);
+    }
 
 
 
