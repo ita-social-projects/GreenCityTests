@@ -678,6 +678,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         Assert.assertTrue(logInGMailPage.readHeader(email).equals("Verify your email address"));
         logInGMailPage.openTopUnreadEmail();
         Assert.assertTrue(logInGMailPage.getVerifyEmailButton().isDisplayed());
+
+        driver.switchTo().window(initialTab);
         return this;
     }
 

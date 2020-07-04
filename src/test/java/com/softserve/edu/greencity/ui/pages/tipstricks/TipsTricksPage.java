@@ -35,15 +35,9 @@ public class TipsTricksPage extends TopPart {
 
     public TipsTricksPage(WebDriver driver) {
         super(driver);
-        initElements();
     }
 
-    private void initElements() {
-        wait = new WebDriverWait(driver, 4);
-        WebElement subscriptionError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']")));
 
-        startHabitTop = driver.findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
-    }
 
     public WebElement getStartHabitTop() {
         return startHabitTop = driver

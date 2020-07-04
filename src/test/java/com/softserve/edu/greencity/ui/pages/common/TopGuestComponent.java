@@ -13,12 +13,6 @@ public class TopGuestComponent {
 
     public TopGuestComponent(WebDriver driver) {
         this.driver = driver;
-        initElements();
-    }
-
-    private void initElements() {
-
-        signupLink = driver.findElement(By.cssSelector("li.sign-up-link.ng-star-inserted div"));
     }
 
     public WebElement getSignInLink() {

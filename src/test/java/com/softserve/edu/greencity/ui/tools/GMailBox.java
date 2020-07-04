@@ -67,28 +67,29 @@ public class GMailBox {
         return this;
     }
 
+
+    private GMailBox submitPassword(){
+        signInButton = driver.findElement(By.id("passwordNext"));
+        signInButton.click();
+        return this;
+    }
+
     /**
      * Thread.sleep() is used in the following method because of the flow of initialisation of web elements
      * on the GMailBox page: they are dynamically loaded. It means explicit wait won't work
      * properly when working with GMailBox elements and that's why the use of Thread.sleep() was needed.
      */
-    private GMailBox submitPassword(){
-        signInButton = driver.findElement(By.id("passwordNext"));
-        signInButton.click();
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
-
     public GMailBox logInGMail()  {
        enterEmailAddress()
                 .submitEmailAddress()
                 .enterPassword()
                 .submitPassword();
+        try {
+            Thread.sleep(6000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return this;
     }
 
@@ -105,6 +106,11 @@ public class GMailBox {
     }
     public void openTopUnreadEmail(){
         getTopUnreadEmail().click();
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -149,7 +155,7 @@ public class GMailBox {
                     By.cssSelector("li.bqX.bru"))
                     .click();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
