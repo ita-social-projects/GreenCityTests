@@ -13,7 +13,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.sql.*;
+import java.sql.SQLException;
 
 public class RegisterComponentTest extends GreenCityTestRunner {
 
@@ -219,12 +219,12 @@ public class RegisterComponentTest extends GreenCityTestRunner {
         manualRegisterComponent.registrationNewRandomUser(userLoginCredentials);
 
 
-       ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
+        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
 
 
         manualLoginComponent.inputEmail(userLoginCredentials.getEmail())
                 .inputPassword(userLoginCredentials.getPassword())
-                .clickLoginButton();
+                .clickSignInButton();
 
         logger.info("get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",
