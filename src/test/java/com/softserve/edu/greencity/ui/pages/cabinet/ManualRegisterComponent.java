@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.tools.GMailBox;
 import com.softserve.edu.greencity.ui.tools.GMailLogin;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -54,7 +53,7 @@ public class ManualRegisterComponent extends RegisterComponent {
 
     // user name field
 
-      protected WebElement getUserNameField() {
+    protected WebElement getUserNameField() {
 
         this.userNameField = driver
                 .findElement(By.cssSelector(USER_NAME_FIELD_SELECTOR));
@@ -205,7 +204,7 @@ public class ManualRegisterComponent extends RegisterComponent {
     protected WebElement getEmailField() {
         this.emailField = driver
                 .findElement(By.cssSelector(EMAIL_FIELD_SELECTOR));
-    return emailField;
+        return emailField;
     }
 
     /**
@@ -282,7 +281,7 @@ public class ManualRegisterComponent extends RegisterComponent {
     protected WebElement getPasswordField() {
         this.passwordField = driver
                 .findElement(By.cssSelector(PASSWORD_FIELD_SELECTOR));
-                return passwordField;
+        return passwordField;
     }
 
     /**
@@ -386,7 +385,8 @@ public class ManualRegisterComponent extends RegisterComponent {
     protected boolean isDisplayedShowPasswordButton() {
         return getShowPasswordButton().isDisplayed();
     }
-//  passwordValidator
+
+    //  passwordValidator
     protected boolean isDisplayedPasswordValidator() {
         return getPasswordValidator().isDisplayed();
     }
@@ -402,7 +402,8 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .findElement(By.xpath(PASSWORD_VALIDATOR_SELECTOR));
         return passwordValidator;
     }
-//
+
+    //
 //    @Override
 //    protected boolean sizePasswordValidator() {
 //        return driver.findElements(By.cssSelector(PASSWORD_VALIDATOR_SELECTOR))
@@ -434,7 +435,7 @@ public class ManualRegisterComponent extends RegisterComponent {
 
         this.passwordConfirmField = driver
                 .findElement(By.cssSelector(PASSWORD_CONFIRM_FIELD_SELECTOR));
-    return passwordConfirmField;
+        return passwordConfirmField;
     }
 
     /**
@@ -493,7 +494,7 @@ public class ManualRegisterComponent extends RegisterComponent {
     protected WebElement getShowPasswordConfirmButton() {
         this.showPasswordConfirmButton = driver
                 .findElement(By.xpath(SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR));
-    return showPasswordConfirmButton;
+        return showPasswordConfirmButton;
     }
 
     /**
@@ -517,14 +518,12 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
 
-
     protected boolean sizePasswordConfirmValidator() {
         return driver
                 .findElements(
                         By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR))
                 .size() != 0;
     }
-
 
 
     // Sign Up button
@@ -534,11 +533,11 @@ public class ManualRegisterComponent extends RegisterComponent {
      *
      * @return WebElement
      */
-    protected WebElement getSignUpButton() {
+    public WebElement getSignUpButton() {
 
         this.signUpButton = driver
                 .findElement(By.cssSelector(SIGNUP_BUTTON_SELECTOR));
-    return signUpButton;
+        return signUpButton;
     }
 
 
@@ -649,7 +648,6 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
 
-
     public ManualRegisterComponent clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
             this.getSignUpButton().click();
@@ -658,10 +656,9 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
 
-
     protected RegisterComponent verifyRegistration() {
         String currentTab = driver.getWindowHandle();
-        ((JavascriptExecutor)driver).executeScript("window.open()");
+        ((JavascriptExecutor) driver).executeScript("window.open()");
         switchToAnotherTab(currentTab);
 
         GMailLogin logInGMailPage = new GMailLogin(driver);
@@ -675,8 +672,6 @@ public class ManualRegisterComponent extends RegisterComponent {
     //    Business Logic
 
 
-
-
     public void registrationWrongUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
@@ -684,9 +679,11 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton();
     }
+
     /**
      * Filling all fields on Register page without registration (without click
      * on SingUp button).
+     *
      * @param userData object with user's credentials
      */
     public void fillFieldsWithoutRegistration(User userData) {
@@ -695,13 +692,15 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordField(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword());
     }
-    
+
     // completion of user registration
+
     /**
      * Filling all fields on Register page and click on SingUp button.
+     *
      * @param userData object with user's credentials
      */
-    public void registrationNewRandomUser(User userData){
+    public void registrationNewRandomUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordField(userData.getPassword())
@@ -722,7 +721,6 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillPasswordConfirmField(userData.getPassword());
         clickSignUpButton();
     }
-
 
 
 }

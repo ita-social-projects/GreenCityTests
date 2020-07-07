@@ -31,19 +31,19 @@ For exemple:
 
 ```
 defaultName = defaultNameValue
-defaultLoginName = defaultLoginNameValue
+defaultEmail = defaultEmailValue
 defaultPass = defaultPassValue
 defaultConfirmPass = defaultConfirmPassValue
 
-temporaryLoginName = temporaryLoginNameValue
+temporaryEmail = temporaryEmailValue
 temporaryPass = temporaryPassValue
 
 invalidName = invalidNameValue
-invalidLoginName = invalidLoginNameValue
+invalidEmail = invalidEmailValue
 invalidPass = invalidPassValue
 invalidConfirmPass = invalidConfirmPassValue
 
-googleLogin = googleLoginValue
+googleEmail = googleEmailValue
 googlePass = googlePassValue
 ```
 

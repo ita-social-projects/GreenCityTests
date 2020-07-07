@@ -1,22 +1,26 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
-import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.WebElement;
 
-public class LoginComponent extends TopPart{
-
-    protected WebElement title;
-    protected WebElement subtitle;
-    protected WebElement forgotPasswordLink;
-    protected WebElement singUpLink;
+public class LoginComponent extends TopPart {
+    private WebElement title;
+    private WebElement subtitle;
+    private WebElement forgotPasswordLink;
+    private WebElement singUpLink;
+    private WebElement singInWithGoogleButton;
+    private WebElement closeFormButton;
 
     private ManualLoginComponent manualLoginComponent;
+
     private final String FORGOT_PASSWORD_LINK_CLASS = "forgot-password";
     private final String REGISTRATION_LINK_CLASS = "signup-link";
-    private final String GOOGLE_LOGIN_BUTTON_CLASS = "google-sign-in";
+    private final String SING_IN_WITH_GOOGLE_BUTTON_CLASS = ".google-sign-in";
+    private final String SIGN_UP_LINK_CLASS = ".missing-account .sign-up-link";
+    private final String CLOSE_BUTTON_CLASS = ".cross-btn";
 
     public LoginComponent(WebDriver driver) {
         super(driver);
@@ -27,38 +31,46 @@ public class LoginComponent extends TopPart{
     }
 
     protected WebElement getTitle() {
-        this.title = driver
-                .findElement(By.cssSelector("div.right-side h1"));
-        return title;
+        return title = driver.findElement(By.cssSelector("div.right-side h1"));
     }
 
     protected boolean isDisplayedTitleField() {
         return getTitle().isDisplayed();
     }
 
-
-    public String getTitleString(){
-
+    public String getTitleString() {
         return this.getTitle().getText();
     }
 
     protected WebElement getSubtitle() {
-        this.subtitle = driver
-                .findElement(By.cssSelector("div.right-side h2"));
-        return subtitle;
+        return subtitle = driver.findElement(By.cssSelector("div.right-side h2"));
     }
 
-
-    public String getSubtitleString(){
-
+    public String getSubtitleString() {
         return this.getSubtitle().getText();
     }
 
+    public WebElement getSingUpLink() {
+        return singUpLink = driver.findElement(By.cssSelector(SIGN_UP_LINK_CLASS));
+    }
 
+    public WebElement getSingInWithGoogleButton() {
+        return singInWithGoogleButton = driver.findElement(By.cssSelector(SING_IN_WITH_GOOGLE_BUTTON_CLASS));
+    }
 
+    public WebElement getCloseFormButton() {
+        return closeFormButton = driver.findElement(By.cssSelector(CLOSE_BUTTON_CLASS));
+    }
 
+    public TipsTricksPage closeLoginComponent() {
+        getCloseFormButton().click();
 
+        return new TipsTricksPage(driver);
+    }
 
+    public ManualRegisterComponent clickSignUpLink() {
+        getSingUpLink().click();
 
-
+        return new ManualRegisterComponent(driver);
+    }
 }
