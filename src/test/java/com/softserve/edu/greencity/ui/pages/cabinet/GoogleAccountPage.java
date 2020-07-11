@@ -20,7 +20,6 @@ public class GoogleAccountPage {
     private WebElement passwordNextButton;
     private WebElement loggedInUser;
 
-
     private final String EMAIL_FIELD_ID = "identifierId";
     private final String EMAIL_NEXT_BUTTON_XPATH = "//*[@id='identifierNext']/div";
 
@@ -80,7 +79,7 @@ public class GoogleAccountPage {
 
         Set<String> windowHandles = driver.getWindowHandles();
         for (String nextWindow : windowHandles) {
-            if(!parentWindow.equalsIgnoreCase(nextWindow)) {
+            if (!parentWindow.equalsIgnoreCase(nextWindow)) {
                 driver.switchTo().window(nextWindow);
 
                 if (isLoginedUser()) {

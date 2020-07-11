@@ -5,8 +5,6 @@ import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.WebElement;
@@ -107,7 +105,18 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertTrue(loginComponent.getSignUpLink().isDisplayed());
         softAssert.assertTrue(loginComponent.getSingInWithGoogleButton().isDisplayed());
 
-        //Not finished all assertions. need to discus with Liubomyr
+        loginComponent.changeWindowWidth(800);
+
+        softAssert.assertEquals(loginComponent.getTitleString(), "Welcome back!");
+        softAssert.assertEquals(loginComponent.getSubtitleString(), "Please enter your details to sign in");
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().getEmailField().isDisplayed());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().getPasswordField().isDisplayed());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().getSignInButton().isDisplayed());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().getForgotPasswordLink().isDisplayed());
+        softAssert.assertTrue(loginComponent.getSignUpLink().isDisplayed());
+        softAssert.assertTrue(loginComponent.getSingInWithGoogleButton().isDisplayed());
+
+        loginComponent.maximizeWindow();
 
         softAssert.assertAll();
     }
@@ -145,14 +154,13 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(titleString, "Hello!");
     }
 
-//    TODO finish this test
     @Test(testName = "GC-497")
     public void signInFormCloseButtonValidation() {
-        TipsTricksPage tipsTricksPage = loadApplication()
+        boolean isLoginComponentClosed = loadApplication()
                 .signIn()
-                .closeLoginComponent();
+                .isLoginComponentClosed();
 
-        Assert.assertTrue(tipsTricksPage.getStartHabitTop().isDisplayed());
+        Assert.assertTrue(isLoginComponentClosed);
     }
 
     @Test(testName = "GC-522")

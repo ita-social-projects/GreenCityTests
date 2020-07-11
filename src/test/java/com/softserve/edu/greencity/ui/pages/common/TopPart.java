@@ -8,18 +8,14 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import org.openqa.selenium.*;
+import com.softserve.edu.greencity.ui.tools.WindowManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.Set;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -238,5 +234,17 @@ public abstract class TopPart {
 
     public void googleAccountSignOut() {
         getGoogleAccountManager().googleAccountSignOut();
+    }
+
+    public void changeWindowWidth(int width) {
+        WindowManager windowManager = new WindowManager(driver);
+
+        windowManager.changeWindowWidth(width);
+    }
+
+    public void maximizeWindow() {
+        WindowManager windowManager = new WindowManager(driver);
+
+        windowManager.maximizeWindow();
     }
 }
