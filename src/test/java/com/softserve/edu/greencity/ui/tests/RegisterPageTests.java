@@ -8,14 +8,14 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SignUpTests extends GreenCityTestRunner {
+public class RegisterPageTests extends GreenCityTestRunner {
 
-    //GC-501
-    @Test
+    @Test(description = "GC-501")
     public void navigateFromSignInToSignUp() {
 
         loadApplication();
@@ -45,8 +45,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    //GC-509
-    @Test(dataProvider = "invalidEmail")
+
+    @Test(dataProvider = "invalidEmail", description = "GC-509")
     public void invalidEmailRegistration(User invalidEmailCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -74,8 +74,7 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidEmailUserCredentials()},};
     }
 
-    //GC-519
-    @Test(dataProvider = "invalidConfirmPass")
+    @Test(dataProvider = "invalidConfirmPass", description = "GC-519")
     public void invalidConfirmPassRegistration(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -109,8 +108,8 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidConfirmPassCredentials()},};
     }
 
-    //Password
-    @Test(dataProvider = "invalidPassUppercaseUserCreds")
+
+    @Test(dataProvider = "invalidPassUppercaseUserCreds", description = "GC-517")
     public void invalidPassUppercaseValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -145,7 +144,7 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidPassUppercaseUserCreds()},};
     }
 
-    @Test(dataProvider = "invalidPassDigitUserCreds")
+    @Test(dataProvider = "invalidPassDigitUserCreds", description = "GC-517")
     public void invalidPassDigitValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -180,7 +179,7 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidPassDigitUserCreds()},};
     }
 
-    @Test(dataProvider = "invalidPassLowercaseUserCreds")
+    @Test(dataProvider = "invalidPassLowercaseUserCreds", description = "GC-517")
     public void invalidPassLowercaseValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -215,7 +214,7 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidPassLowercaseUserCreds()},};
     }
 
-    @Test(dataProvider = "invalidPassSpecCharUserCreds")
+    @Test(dataProvider = "invalidPassSpecCharUserCreds", description = "GC-517")
     public void invalidPassSpecCharValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -253,7 +252,7 @@ public class SignUpTests extends GreenCityTestRunner {
     }
 
     //GC-198
-    @Test(dataProvider = "invalidPassLengthUserCreds")
+    @Test(dataProvider = "invalidPassLengthUserCreds", description = "GC-198, GC-517")
     public void invalidPassLengthValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -287,7 +286,7 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidPassLengthUserCreds()},};
     }
 
-    @Test(dataProvider = "invalidPassSpaceUserCreds")
+    @Test(dataProvider = "invalidPassSpaceUserCreds", description = "GC-517")
     public void invalidPassSpaceValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -321,8 +320,8 @@ public class SignUpTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidPassSpaceUserCreds()},};
     }
 
-    //GC-1214
-    @Test
+
+    @Test(description = "GC-1214")
     public void checkCloseRegisterModalButton() {
         loadApplication();
         logger.info("Starting checkCloseRegisterModalButton:");
@@ -337,13 +336,13 @@ public class SignUpTests extends GreenCityTestRunner {
                 "This is not a register modal:(");
 
         ElementsCustomMethods custMethObj = new ElementsCustomMethods(driver);
-        Boolean isPresent = custMethObj.isElementPresent(By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS));
+        boolean isPresent = custMethObj.isElementPresent(By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS));
 
         Assert.assertTrue(isPresent);
 
         registerComponent.closeRegisterComponentModal();
 
-        Boolean isGone = custMethObj.waitTillElementGone(driver, By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS), 6000, 2000);
+        boolean isGone = custMethObj.waitTillElementGone(driver, By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS), 6000, 2000);
         Assert.assertTrue(isGone);
 
 
@@ -377,8 +376,6 @@ public class SignUpTests extends GreenCityTestRunner {
     }
 
 
-    //GC-205
-    //Verify that user is not registered with too long 'User name'
     //GC-204
     //Verify that Email must be existence and unique while new user registration
     //GC-200
@@ -388,19 +385,52 @@ public class SignUpTests extends GreenCityTestRunner {
    //GC-216
     // Verify 'Sign up' page UI
 
-
-    //GC-485
-    //Verify that background behind the Registration form is dimmed out
-    @Test
+    @Test(description = "GC-485")
     public void checkBackgroundIsDimmed() {
 
         logger.info("Starting checkBackgroundIsDimmed:");
         loadApplication();
         logger.info("Click on Sign up button");
 
-        Assert.assertTrue(driver.findElement(By.id("b_bb_b_dsin")).getAttribute("aria-hidden") == null);
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        Assert.assertTrue(driver.findElement(By.id("b_bb_b_dsin")).getAttribute("aria-hidden") != null);
+
+        Assert.assertTrue(driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
+                .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"));
+    }
+
+
+    @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
+    public void checkUserFieldMaxLength(User userLoginCredentials) {
+        loadApplication();
+        logger.info("Starting checkInvalidFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Entering values into the form: ");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        String userFieldValue = manualRegisterComponent.getUserNameField().getAttribute("value");
+
+        Assert.assertEquals(userFieldValue,
+                "21CharString21CharSt",
+                "The invalid string is not concatenated");
+
+    }
+    @DataProvider
+    public Object[][] invalidNameCredentials() {
+        return new Object[][]{
+                {UserRepository.get().invalidNameCredentials()},};
     }
 
     //GC-487

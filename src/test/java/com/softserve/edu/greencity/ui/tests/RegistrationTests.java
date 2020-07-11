@@ -11,6 +11,7 @@ import com.softserve.edu.greencity.ui.tools.CookiesAndStorageHelper;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -22,7 +23,7 @@ import org.testng.annotations.Test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SignUpFullCycle extends GreenCityTestRunner{
+public class RegistrationTests extends GreenCityTestRunner{
 
     @DataProvider
     public Object[][] successRegistrationUserCreds() {
@@ -31,7 +32,7 @@ public class SignUpFullCycle extends GreenCityTestRunner{
     }
 
     @AfterMethod
-    public void registerUserCleanUp() throws SQLException {
+    public void registerUserCleanUp() {
         CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
         help.cleanGreenCityCookiesAndStorages();
         help.cleanGMailCookiesAndStorages();
@@ -49,21 +50,14 @@ public class SignUpFullCycle extends GreenCityTestRunner{
         GMailBox logInGMailPage = new GMailBox(driver);
         logInGMailPage.logInGMail();
         GMailBox mailBox = new GMailBox(driver);
-        ArrayList listOfEmails = mailBox.getAllMails();
+        ArrayList<WebElement> listOfEmails = mailBox.getAllMails();
         mailBox.deleteAllMails(listOfEmails);
         CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
         help.cleanCookiesAndStorages();
 
     }
 
-
-    /**
-     * //     * Test for registration with temporary email and random other credentials
-     * //     * with logging and checking displayed user name in the top of the page.
-     * //     * @param userLoginCredentials
-     * // GC-199
-     */
-    @Test(dataProvider = "successRegistrationUserCreds")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199")
     public void registrationAndLogin(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting randomCredsRegistrationLogin. Input values = "
@@ -99,11 +93,7 @@ public class SignUpFullCycle extends GreenCityTestRunner{
 
     }
 
-
-
-    // GC-512
-    // Verify that user is not registered if he didn’t confirm email address in the mailbox
-    @Test(dataProvider = "successRegistrationUserCreds")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting registrationWithoutEmaVerfication. Input values = "
@@ -133,14 +123,12 @@ public class SignUpFullCycle extends GreenCityTestRunner{
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
 
-        Assert.assertEquals(manualLoginComponent.getWrongCredsErrorText(),
+        Assert.assertEquals(manualLoginComponent.getWrongEmailOrPassErrorText(),
                 "Bad email or password",
                 "The validation message is not equal to the expected one");
     }
 
-    //GC-513
-    //Verify that user receive a verification email about registration in the application to email address after successfully registration.
-    @Test(dataProvider = "successRegistrationUserCreds")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting registrationCheckIfMailReceived. Input values = "
