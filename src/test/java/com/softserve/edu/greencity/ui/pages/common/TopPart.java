@@ -12,12 +12,16 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Base Abstract Class of Header and Footer.
+ *
  * @author Lv-493.Taqc/Java
  */
 public abstract class TopPart {
@@ -39,17 +43,10 @@ public abstract class TopPart {
 
     public TopPart(WebDriver driver) {
         this.driver = driver;
-        initElements();
-    }
-
-    private void initElements() {
-        languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
-        mainMenuDropdown = new MainMenuDropdown(driver);
-        copyright = driver.findElement(By.cssSelector("div.bottom-part"));
     }
 
     public Select getLanguageSwitcher() {
-        return languageSwitcher;
+        return languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
     }
 
     public WebElement getLanguageSwitcherWebElement() {
@@ -69,7 +66,7 @@ public abstract class TopPart {
     }
 
     public WebElement getCopyright() {
-        return copyright;
+        return copyright = driver.findElement(By.cssSelector("div.bottom-part"));
     }
 
     public String getCopyrightText() {
@@ -81,17 +78,17 @@ public abstract class TopPart {
     }
 
     public MainMenuDropdown getMainMenuDropdown() {
-        return mainMenuDropdown;
+        return mainMenuDropdown = new MainMenuDropdown(driver);
     }
 
-    protected TopGuestComponent getTopGuestComponent() {
+    public TopGuestComponent getTopGuestComponent() {
         if (topGuestComponent == null) {
             throw new RuntimeException(OPTION_NULL_MESSAGE);
         }
         return topGuestComponent;
     }
 
-    protected TopGuestComponent createTopGuestComponent() {
+    public TopGuestComponent createTopGuestComponent() {
         topGuestComponent = new TopGuestComponent(driver);
         return getTopGuestComponent();
     }

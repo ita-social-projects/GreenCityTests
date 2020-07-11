@@ -22,6 +22,31 @@ For example
 * [maven](https://maven.apache.org/)
 * [Selenium](https://www.selenium.dev/) ver. 3.141.59
 
+### Credentials for login
+All user credentials storing at property file `credentials.properties`.
+
+You need create `credentials.properties` file at `src/test/resources/` and set here your credentials for login and else methods.
+
+For exemple:
+
+```
+defaultName = defaultNameValue
+defaultEmail = defaultEmailValue
+defaultPass = defaultPassValue
+defaultConfirmPass = defaultConfirmPassValue
+
+temporaryEmail = temporaryEmailValue
+temporaryPass = temporaryPassValue
+
+invalidName = invalidNameValue
+invalidEmail = invalidEmailValue
+invalidPass = invalidPassValue
+invalidConfirmPass = invalidConfirmPassValue
+
+googleEmail = googleEmailValue
+googlePass = googlePassValue
+```
+
 
 ### Where to find back/front-end part of the project
 

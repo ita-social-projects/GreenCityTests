@@ -79,6 +79,18 @@ public final class UserRepository {
                 property.getProperty("defaultConfirmPass"));
     }
 
+    public User userWithEmptyEmailField() {
+        return new User("", property.getProperty("temporaryPass"));
+    }
+
+    public User userWithEmptyPasswordField() {
+        return new User(property.getProperty("temporaryLoginName"), "");
+    }
+
+    public User userCredentialsWithInvalidPassword() {
+        return new User(property.getProperty("temporaryLoginName"), property.getProperty("invalidPass"));
+    }
+
     public User userCredentialsForRegistration() {
         return new User(Randomizer.getRamdomString20Letters(), property.getProperty("emailForRegistration"),
                 property.getProperty("passwordForRegistration"), property.getProperty("passwordForRegistration"));
