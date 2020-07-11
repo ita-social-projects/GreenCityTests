@@ -70,6 +70,7 @@ public final class UserRepository {
                 property.getProperty("defaultPass"),
                 property.getProperty("defaultPass"));
     }
+
     public User invalidConfirmPassCredentials() {
         return new User(
                 property.getProperty("defaultName"),
@@ -81,5 +82,65 @@ public final class UserRepository {
     public User userCredentialsForRegistration() {
         return new User(Randomizer.getRamdomString20Letters(), property.getProperty("emailForRegistration"),
                 property.getProperty("passwordForRegistration"), property.getProperty("passwordForRegistration"));
+    }
+
+    public User invalidPassUppercaseUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                "liubaliuba1*",
+                "liubaliuba1*");
+                //property.getProperty("defaultPass")+"!",
+                //property.getProperty("defaultConfirmPass"));
+    }
+
+    public User invalidPassDigitUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                "liubaLiuba*",
+                "liubaLiuba*");
+                //property.getProperty("defaultPass")+"!",
+               // property.getProperty("defaultConfirmPass"));
+    }
+
+    public User invalidPassLowercaseUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                "LIUBALIUBA1*",
+                "LIUBALIUBA1*");
+                //property.getProperty("defaultPass")+"!",
+                //property.getProperty("defaultConfirmPass"));
+    }
+
+    public User invalidPassSpecCharUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                "liubaLiuba1",
+                "liubaLiuba1");
+                //property.getProperty("defaultPass")+"!",
+                //property.getProperty("defaultConfirmPass"));
+    }
+
+    public User invalidPassLengthUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                "Liuba1*",
+                "Liuba1*");
+                //property.getProperty("defaultPass")+"!",
+                //property.getProperty("defaultConfirmPass"));
+    }
+
+    public User invalidPassSpaceUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                "liubaLiuba 1*",
+                "liubaLiuba 1*");
+                //property.getProperty("defaultPass")+"!",
+                //property.getProperty("defaultConfirmPass"));
     }
 }

@@ -2,29 +2,25 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
+import com.softserve.edu.greencity.ui.tools.CookiesAndStorageHelper;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class SignUpFullCycle extends GreenCityTestRunner{
 
@@ -34,70 +30,38 @@ public class SignUpFullCycle extends GreenCityTestRunner{
                 .userCredentialsForRegistration()},};
     }
 
-
-//    @BeforeMethod
-//    public void setUp() {
-//
-//        driver = new ChromeDriver();
-//        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-//        driver.manage().window().maximize();
-//        driver.get(BASE_URL);
-//    }
-
     @AfterMethod
     public void registerUserCleanUp() throws SQLException {
-        loadApplication().signout();
+        CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
+        help.cleanGreenCityCookiesAndStorages();
+        help.cleanGMailCookiesAndStorages();
+
 
         DBQueries queryObj = new DBQueries();
         queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
 
 
+    }
+
+    @AfterTest
+    public void mailBoxCleanUp(){
+
+        GMailBox logInGMailPage = new GMailBox(driver);
+        logInGMailPage.logInGMail();
         GMailBox mailBox = new GMailBox(driver);
         ArrayList listOfEmails = mailBox.getAllMails();
         mailBox.deleteAllMails(listOfEmails);
+        CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
+        help.cleanCookiesAndStorages();
 
-
-        driver.manage().deleteAllCookies();
-
-//        Set<String> allTabs = driver.getWindowHandles();
-//
-//       for ( String tab : allTabs){
-//           driver.switchTo().window(tab);
-//           driver.close();
-//       }
-       System.out.println("@AfterMethod registerUserCleanUp");
-        //driver.quit();
     }
 
-
-//    @Test
-//    public void test(){
-//        LoginComponent loginComponent = new TopGuestComponent(driver).clickSignInLink();
-//
-//        ManualLoginComponent manualLoginComponent = loginComponent.getManualLoginComponent();
-//
-//        manualLoginComponent.inputEmail("ilchenkoliuba@ukr.net")
-//                .inputPassword("!Error911")
-//                .clickLoginButton();
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        loadApplication().signout();
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
     /**
      * //     * Test for registration with temporary email and random other credentials
      * //     * with logging and checking displayed user name in the top of the page.
      * //     * @param userLoginCredentials
-     * //
+     * // GC-199
      */
     @Test(dataProvider = "successRegistrationUserCreds")
     public void registrationAndLogin(User userLoginCredentials) {

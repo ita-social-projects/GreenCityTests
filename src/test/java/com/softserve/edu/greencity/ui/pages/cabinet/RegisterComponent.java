@@ -12,6 +12,8 @@ public class RegisterComponent extends TopPart {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private WebElement modalWindow;
+    public static final String MODAL_WINDOW_CSS = "mat-dialog-container";
     private WebElement title;
     private final String TITLE_CSS = "h1[title-text]";
     private WebElement subtitle;
@@ -35,6 +37,13 @@ public class RegisterComponent extends TopPart {
         super(driver);
     }
 
+
+    // modal window
+    public WebElement getModalWindow() {
+        this.modalWindow = driver
+                .findElement(By.cssSelector(MODAL_WINDOW_CSS));
+        return modalWindow;
+    }
 
     // title
     protected WebElement getTitle() {

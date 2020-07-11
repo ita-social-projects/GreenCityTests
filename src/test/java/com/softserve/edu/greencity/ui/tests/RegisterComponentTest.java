@@ -105,7 +105,7 @@ public class RegisterComponentTest extends GreenCityTestRunner {
     /**
      * Putting empty values into register form
      * and reading the validation messages.
-     * GC-502
+     * GC-502, GC-207, GC-208, GC-209, GC-210
      */
     @Test(dataProvider = "emptyFields")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
@@ -179,7 +179,6 @@ public class RegisterComponentTest extends GreenCityTestRunner {
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters long without spaces",
-                //OR Password must be at least 8 characters in length
                 "The validation message is not equal to the expected one");
 
         Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),

@@ -1,23 +1,19 @@
 package com.softserve.edu.greencity.ui.tools;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Properties;
-import java.util.Set;
 
 public class GMailBox {
 
     private WebDriver driver;
-    public final static String URL = "https://accounts.google.com/signin/v2/identifier?" +
+    public final static String GMAIL_URL = "https://accounts.google.com/signin/v2/identifier?" +
             "continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1&" +
             "flowName=GlifWebSignIn&flowEntry=ServiceLogin";
     private Properties property = new Properties();
@@ -27,11 +23,9 @@ public class GMailBox {
     private WebElement loginPassword;
     private WebElement signInButton;
 
-    private WebElement refreshButton;
     private WebElement mailHeader;
     private WebElement topUnreadMail;
-    private ArrayList  allMails;
-    private int allMailsNumber;
+    private ArrayList allMails;
     private ArrayList deleteButtons;
     private WebElement deleteButton;
     private WebElement verifyEmailButton;
@@ -39,7 +33,7 @@ public class GMailBox {
     public GMailBox(WebDriver driver) {
 
         this.driver = driver;
-        driver.get(URL);
+        driver.get(GMAIL_URL);
 
         try {
             final FileInputStream fis = new FileInputStream("src/test/resources/credentials.properties");
@@ -49,26 +43,26 @@ public class GMailBox {
         }
     }
 
-    private GMailBox enterEmailAddress(){
+    private GMailBox enterEmailAddress() {
         loginEmail = driver.findElement(By.id("identifierId"));
         loginEmail.sendKeys(property.getProperty("emailForRegistration"));
         return this;
     }
 
-    private GMailBox submitEmailAddress(){
+    private GMailBox submitEmailAddress() {
         nextButton = driver.findElement(By.id("identifierNext"));
         nextButton.click();
         return this;
     }
 
-    private GMailBox enterPassword(){
+    private GMailBox enterPassword() {
         loginPassword = driver.findElement(By.name("password"));
         loginPassword.sendKeys(property.getProperty("passwordToGmailBox"));
         return this;
     }
 
 
-    private GMailBox submitPassword(){
+    private GMailBox submitPassword() {
         signInButton = driver.findElement(By.id("passwordNext"));
         signInButton.click();
         return this;
@@ -79,8 +73,8 @@ public class GMailBox {
      * on the GMailBox page: they are dynamically loaded. It means explicit wait won't work
      * properly when working with GMailBox elements and that's why the use of Thread.sleep() was needed.
      */
-    public GMailBox logInGMail()  {
-       enterEmailAddress()
+    public GMailBox logInGMail() {
+        enterEmailAddress()
                 .submitEmailAddress()
                 .enterPassword()
                 .submitPassword();
@@ -93,45 +87,47 @@ public class GMailBox {
         return this;
     }
 
-    public ArrayList<WebElement> getAllMails(){
+    public ArrayList<WebElement> getAllMails() {
         allMails = (ArrayList) driver.findElements(
                 By.className("zA"));
         return allMails;
 
     }
-    public WebElement getTopUnreadEmail(){
+
+    public WebElement getTopUnreadEmail() {
         topUnreadMail = driver.findElement(By.className("zE"));
         return topUnreadMail;
 
     }
-    public void openTopUnreadEmail(){
+
+    /**
+     * Thread.sleep() is used in the following method because
+     */
+    public void openTopUnreadEmail() {
         getTopUnreadEmail().click();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ElementsCustomMethods.threadSleep(3000);
 
     }
 
-    public WebElement getMailHeader(WebElement email){
+    public WebElement getMailHeader(WebElement email) {
         mailHeader = email.findElement(By.className("bqe"));
         return mailHeader;
 
     }
-    public String readHeader(WebElement email){
+
+    public String readHeader(WebElement email) {
         return getMailHeader(email).getAttribute("innerText");
 
     }
 
-    public WebElement getVerifyEmailButton(){
+    public WebElement getVerifyEmailButton() {
         verifyEmailButton = driver.findElement(
                 By.cssSelector("[href*='verifyEmail']"));
         return verifyEmailButton;
 
     }
 
-    public void clickVerifyEmailButton(){
+    public void clickVerifyEmailButton() {
         getVerifyEmailButton().click();
 
     }
@@ -139,30 +135,30 @@ public class GMailBox {
 
     public void openEmailClickLink() {
         WebElement email = getTopUnreadEmail();
-        if (readHeader(email).equals("Verify your email address")){
+        if (readHeader(email).equals("Verify your email address")) {
             openTopUnreadEmail();
             clickVerifyEmailButton();
         }
 
     }
-    public void deleteAllMails(ArrayList <WebElement> mails){
+
+    /**
+     * Thread.sleep() is used in the following method because when clicking without pausing, click happens on
+     * a delete button of an already deleted mail, causing a throw of exception.
+     */
+    public void deleteAllMails(ArrayList<WebElement> mails) {
 
         Actions action = new Actions(driver);
 
-        for (WebElement mailRow: mails) {
+        for (WebElement mailRow : mails) {
             action.moveToElement(mailRow).perform();
             mailRow.findElement(
                     By.cssSelector("li.bqX.bru"))
                     .click();
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ElementsCustomMethods.threadSleep(3000);
         }
 
     }
-
 
 
 }
