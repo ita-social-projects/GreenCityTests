@@ -3,18 +3,21 @@ package com.softserve.edu.greencity.ui.pages.common;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -35,6 +38,7 @@ public abstract class TopPart {
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
+    private GoogleAccountManager googleAccountManager;
 
     protected WebDriver driver;
 
@@ -107,6 +111,10 @@ public abstract class TopPart {
             throw new RuntimeException(OPTION_NULL_MESSAGE);
         }
         return topUserComponent;
+    }
+
+    public GoogleAccountManager getGoogleAccountManager() {
+        return googleAccountManager = new GoogleAccountManager(driver);
     }
 
     protected TopUserComponent createTopUserComponent() {
@@ -192,22 +200,22 @@ public abstract class TopPart {
         return new AboutPage(driver);
     }
 
-    public LoginComponent signin() {
+    public LoginComponent signIn() {
         logger.debug("start signin()");
         logger.trace("click Signin link");
         createTopGuestComponent().clickSignInLink();
         return new LoginComponent(driver);
     }
 
-    public ManualRegisterComponent signup() {
+    public RegisterComponent signUp() {
         logger.debug("start signup()");
         logger.trace("click Signup link");
         logger.info("go to RegisterDropdown");
         createTopGuestComponent().clickSignupLink();
-        return new ManualRegisterComponent(driver);
+        return new RegisterComponent(driver);
     }
 
-    public TipsTricksPage signout() {
+    public TipsTricksPage signOut() {
         logger.debug("start signout()");
         logger.trace("click Signout link from ProfileDropdown");
         createTopUserComponent().clickProfileDropdownSignout();
@@ -219,10 +227,14 @@ public abstract class TopPart {
     }
 
     public MyCabinetPage loginIn(User user) {
-        signin()
+        signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
 
         return new MyCabinetPage(driver);
+    }
+
+    public void googleAccountSignOut() {
+        getGoogleAccountManager().googleAccountSignOut();
     }
 }

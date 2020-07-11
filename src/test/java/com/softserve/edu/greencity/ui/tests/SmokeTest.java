@@ -28,7 +28,7 @@ public class SmokeTest extends GreenCityTestRunner {
                 .loginIn(user)
                 .navigateMenuTipsTricks();
 
-        tipstrickspage.signout();
+        tipstrickspage.signOut();
 
         Assert.assertEquals(tipstrickspage.getLanguageSwitcherText(), Languages.UKRAINIAN.toString());
     }
@@ -36,13 +36,13 @@ public class SmokeTest extends GreenCityTestRunner {
     @Test(dataProvider = "users")
     public void checkLogin(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
-                .signin()
+                .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
 
         String userName = myCabinetPage.getTopUserName();
 
-        myCabinetPage.signout();
+        myCabinetPage.signOut();
 
         Assert.assertEquals(userName, "Taras Malynovskyi");
     }
@@ -56,7 +56,7 @@ public class SmokeTest extends GreenCityTestRunner {
                 .getAddNewHabitButton()
                 .getText();
 
-        myCabinetPage.signout();
+        myCabinetPage.signOut();
 
         Assert.assertEquals(newHabitButtonText, "Add new habit");
     }

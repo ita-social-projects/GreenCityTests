@@ -63,6 +63,12 @@ public final class UserRepository {
                 property.getProperty("invalidConfirmPass"));
     }
 
+    public User unregisterUser() {
+        return new User(
+                property.getProperty("validUnregisterEmail"),
+                property.getProperty("temporaryPass"));
+    }
+
     public User userWithEmptyEmailField() {
         return new User("", property.getProperty("temporaryPass"));
     }
@@ -72,7 +78,7 @@ public final class UserRepository {
     }
 
     public User userCredentialsWithInvalidPassword() {
-        return new User(property.getProperty("temporaryLoginName"), property.getProperty("invalidPass"));
+        return new User(property.getProperty("temporaryLoginName"), property.getProperty("validIncorrectPassword"));
     }
 
     public User userCredentialsForRegistration() {

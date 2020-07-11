@@ -4,6 +4,8 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.GMailLogin;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class ManualRegisterComponent extends RegisterComponent {
@@ -431,7 +433,7 @@ public class ManualRegisterComponent extends RegisterComponent {
      *
      * @return WebElement
      */
-    protected WebElement getPasswordConfirmField() {
+    public WebElement getPasswordConfirmField() {
 
         this.passwordConfirmField = driver
                 .findElement(By.cssSelector(PASSWORD_CONFIRM_FIELD_SELECTOR));
@@ -534,9 +536,9 @@ public class ManualRegisterComponent extends RegisterComponent {
      * @return WebElement
      */
     public WebElement getSignUpButton() {
-
-        this.signUpButton = driver
+        signUpButton = driver
                 .findElement(By.cssSelector(SIGNUP_BUTTON_SELECTOR));
+
         return signUpButton;
     }
 

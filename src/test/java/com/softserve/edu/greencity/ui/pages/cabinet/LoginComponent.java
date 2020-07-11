@@ -5,6 +5,8 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginComponent extends TopPart {
     private WebElement title;
@@ -13,6 +15,7 @@ public class LoginComponent extends TopPart {
     private WebElement singUpLink;
     private WebElement singInWithGoogleButton;
     private WebElement closeFormButton;
+    private WebElement googleSignInButton;
 
     private ManualLoginComponent manualLoginComponent;
 
@@ -21,9 +24,19 @@ public class LoginComponent extends TopPart {
     private final String SING_IN_WITH_GOOGLE_BUTTON_CLASS = ".google-sign-in";
     private final String SIGN_UP_LINK_CLASS = ".missing-account .sign-up-link";
     private final String CLOSE_BUTTON_CLASS = ".cross-btn";
+    private final String TITLE_CLASS = ".right-side h1";
+    private final String SUBTITLE_CLASS = ".right-side h2";
+    private final String GOOGLE_SIGN_IN_BUTTON_CLASS = ".google-sign-in";
+
+    private WebDriverWait wait;
 
     public LoginComponent(WebDriver driver) {
         super(driver);
+        init();
+    }
+
+    private void init() {
+        getTitleString();
     }
 
     public ManualLoginComponent getManualLoginComponent() {
@@ -31,7 +44,7 @@ public class LoginComponent extends TopPart {
     }
 
     protected WebElement getTitle() {
-        return title = driver.findElement(By.cssSelector("div.right-side h1"));
+        return title = driver.findElement(By.cssSelector(TITLE_CLASS));
     }
 
     protected boolean isDisplayedTitleField() {
@@ -39,11 +52,14 @@ public class LoginComponent extends TopPart {
     }
 
     public String getTitleString() {
-        return this.getTitle().getText();
+        wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(TITLE_CLASS)));
+
+        return this.getTitle().getText().trim();
     }
 
     protected WebElement getSubtitle() {
-        return subtitle = driver.findElement(By.cssSelector("div.right-side h2"));
+        return subtitle = driver.findElement(By.cssSelector(SUBTITLE_CLASS));
     }
 
     public String getSubtitleString() {
@@ -51,6 +67,9 @@ public class LoginComponent extends TopPart {
     }
 
     public WebElement getSingUpLink() {
+        wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SIGN_UP_LINK_CLASS)));
+
         return singUpLink = driver.findElement(By.cssSelector(SIGN_UP_LINK_CLASS));
     }
 
@@ -68,9 +87,19 @@ public class LoginComponent extends TopPart {
         return new TipsTricksPage(driver);
     }
 
-    public ManualRegisterComponent clickSignUpLink() {
+    public RegisterComponent clickSignUpLink() {
         getSingUpLink().click();
 
-        return new ManualRegisterComponent(driver);
+        return new RegisterComponent(driver);
+    }
+
+    protected WebElement getGoogleSignUpButton() {
+        return googleSignInButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_IN_BUTTON_CLASS));
+    }
+
+    public GoogleAccountPage clickGoogleSignInButton() {
+        getGoogleSignUpButton().click();
+
+        return new GoogleAccountPage(driver);
     }
 }
