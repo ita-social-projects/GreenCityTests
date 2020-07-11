@@ -89,7 +89,7 @@ public class TagsComponent {
      *
      * @param tags
      */
-    protected void selectTags(List<Tag> tags) {
+    public void selectTags(List<Tag> tags) {
         JavascriptExecutor js = ((JavascriptExecutor) driver);
         js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
         for (Tag current : tags) {
@@ -133,11 +133,12 @@ public class TagsComponent {
         }
     }
 
-    protected void deselectTags(List<Tag> tags) {
+    public void deselectTags(List<Tag> tags) {
         for (Tag current : tags) {
             deselectTag(current);
         }
     }
+
 
     // Business Logic
 
