@@ -13,28 +13,21 @@ public class TopGuestComponent {
 
     public TopGuestComponent(WebDriver driver) {
         this.driver = driver;
-        initElements();
     }
 
-    private void initElements() {
+    public WebElement getSignInLink() {
         signinLink = driver.findElement(By.cssSelector("li.sign-in-link.tertiary-global-button a"));
-        signupLink = driver.findElement(By.cssSelector("li.sign-up-link.ng-star-inserted div"));
-    }
-
-    public WebElement getSigninLink() {
         return signinLink;
     }
 
-    public String getSigninLinkText() {
-        return getSigninLink().getText();
-    }
 
     public LoginComponent clickSignInLink() {
-        getSigninLink().click();
+        getSignInLink().click();
         return new LoginComponent(driver);
     }
 
     public WebElement getSignupLink() {
+        signupLink = driver.findElement(By.cssSelector("li.sign-up-link.ng-star-inserted div"));
         return signupLink;
     }
 
@@ -42,7 +35,7 @@ public class TopGuestComponent {
         return getSignupLink().getText();
     }
 
-    public RegisterComponent clickSignupLink() {
+    public RegisterComponent clickSignUpLink() {
         getSignupLink().click();
         return new RegisterComponent(driver);
     }

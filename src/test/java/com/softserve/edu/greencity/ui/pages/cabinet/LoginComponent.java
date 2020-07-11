@@ -50,8 +50,13 @@ public class LoginComponent extends TopPart {
         return this.getSubtitle().getText();
     }
 
-    public WebElement getSingUpLink() {
+    public WebElement getSignUpLink() {
         return singUpLink = driver.findElement(By.cssSelector(SIGN_UP_LINK_CLASS));
+    }
+
+    public RegisterComponent clickSignUpLink(){
+        getSignUpLink().click();
+        return new RegisterComponent(driver);
     }
 
     public WebElement getSingInWithGoogleButton() {
@@ -64,13 +69,7 @@ public class LoginComponent extends TopPart {
 
     public TipsTricksPage closeLoginComponent() {
         getCloseFormButton().click();
-
         return new TipsTricksPage(driver);
     }
 
-    public ManualRegisterComponent clickSignUpLink() {
-        getSingUpLink().click();
-
-        return new ManualRegisterComponent(driver);
-    }
 }
