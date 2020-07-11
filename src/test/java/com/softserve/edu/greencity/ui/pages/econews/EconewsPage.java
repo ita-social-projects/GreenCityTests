@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.tools.CheckPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -26,12 +27,11 @@ public class EconewsPage extends TopPart {
 
     public EconewsPage(WebDriver driver) {
         super(driver);
+        CheckPage.waitForLoading(driver, getGridView());
         visualiseElements();
-        initElements();
     }
 
     private void visualiseElements() {
-
         int i = 0;
         waiting(2);
         scrollToElement(getCopyright()); //  open all news
@@ -56,6 +56,7 @@ public class EconewsPage extends TopPart {
     }
 
     private WebElement getFoundItems() {
+        foundItems = driver.findElement(By.cssSelector("p[class*='ng-star-inserted']"));
         return foundItems;
     }
 
@@ -64,6 +65,7 @@ public class EconewsPage extends TopPart {
     }
 
     public WebElement getGridView() {
+        gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
         return gridView;
     }
 
@@ -79,6 +81,7 @@ public class EconewsPage extends TopPart {
     }
 
     private WebElement getListView() {
+        listView = driver.findElement(By.cssSelector("div[class*='list-view']"));
         return listView;
     }
 

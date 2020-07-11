@@ -31,7 +31,7 @@ public class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.EVENTS);
         tags.add(Tag.NEWS);
-        tags.add(Tag.COURCES);
+        tags.add(Tag.EDUCATION);
         tags.add(Tag.ADS);
         return new NewsData("The loss of any species is devastating. However, the decline or " +
                 "extinction of one species can trigger an avalanche within an ecosystem, wiping out" +
