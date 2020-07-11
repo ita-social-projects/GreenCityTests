@@ -64,8 +64,7 @@ public abstract class GreenCityTestRunner {
     }
 
     protected void signOut() {
-        driver.get(BASE_URL);
-        loadApplication().signout();
+        loadApplication().signOut();
     }
 
     public TipsTricksPage loadApplication() {

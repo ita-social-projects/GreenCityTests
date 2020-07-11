@@ -122,7 +122,6 @@ public class ManualLoginComponent extends LoginComponent {
     private void fillFields(User user) {
         inputEmail(user.getEmail());
         inputPassword(user.getPassword());
-
     }
 
     public MyCabinetPage successfullyLogin(User user) {

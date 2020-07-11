@@ -31,7 +31,7 @@ public class SignUpFullCycle extends GreenCityTestRunner{
     }
 
     @AfterMethod
-    public void registerUserCleanUp() throws SQLException {
+    public void registerUserCleanUp() {
         CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
         help.cleanGreenCityCookiesAndStorages();
         help.cleanGMailCookiesAndStorages();
@@ -133,7 +133,7 @@ public class SignUpFullCycle extends GreenCityTestRunner{
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
 
-        Assert.assertEquals(manualLoginComponent.getWrongCredsErrorText(),
+        Assert.assertEquals(manualLoginComponent.getWrongEmailOrPassErrorText(),
                 "Bad email or password",
                 "The validation message is not equal to the expected one");
     }

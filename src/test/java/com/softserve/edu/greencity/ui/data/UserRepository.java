@@ -63,6 +63,12 @@ public final class UserRepository {
                 property.getProperty("invalidConfirmPass"));
     }
 
+    public User unregisterUser() {
+        return new User(
+                property.getProperty("validUnregisterEmail"),
+                property.getProperty("temporaryPass"));
+    }
+
     public User invalidEmailUserCredentials() {
         return new User(
                 property.getProperty("defaultName"),
@@ -75,7 +81,7 @@ public final class UserRepository {
         return new User(
                 property.getProperty("defaultName"),
                 property.getProperty("defaultEmail"),
-                property.getProperty("defaultPass")+"!",
+                property.getProperty("defaultPass") + "!",
                 property.getProperty("defaultConfirmPass"));
     }
 
@@ -88,7 +94,7 @@ public final class UserRepository {
     }
 
     public User userCredentialsWithInvalidPassword() {
-        return new User(property.getProperty("temporaryLoginName"), property.getProperty("invalidPass"));
+        return new User(property.getProperty("temporaryLoginName"), property.getProperty("validIncorrectPassword"));
     }
 
     public User userCredentialsForRegistration() {
@@ -102,8 +108,8 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 "liubaliuba1*",
                 "liubaliuba1*");
-                //property.getProperty("defaultPass")+"!",
-                //property.getProperty("defaultConfirmPass"));
+        //property.getProperty("defaultPass")+"!",
+        //property.getProperty("defaultConfirmPass"));
     }
 
     public User invalidPassDigitUserCreds() {
@@ -112,8 +118,8 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 "liubaLiuba*",
                 "liubaLiuba*");
-                //property.getProperty("defaultPass")+"!",
-               // property.getProperty("defaultConfirmPass"));
+        //property.getProperty("defaultPass")+"!",
+        // property.getProperty("defaultConfirmPass"));
     }
 
     public User invalidPassLowercaseUserCreds() {
@@ -122,8 +128,8 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 "LIUBALIUBA1*",
                 "LIUBALIUBA1*");
-                //property.getProperty("defaultPass")+"!",
-                //property.getProperty("defaultConfirmPass"));
+        //property.getProperty("defaultPass")+"!",
+        //property.getProperty("defaultConfirmPass"));
     }
 
     public User invalidPassSpecCharUserCreds() {
@@ -132,8 +138,8 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 "liubaLiuba1",
                 "liubaLiuba1");
-                //property.getProperty("defaultPass")+"!",
-                //property.getProperty("defaultConfirmPass"));
+        //property.getProperty("defaultPass")+"!",
+        //property.getProperty("defaultConfirmPass"));
     }
 
     public User invalidPassLengthUserCreds() {
@@ -142,8 +148,8 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 "Liuba1*",
                 "Liuba1*");
-                //property.getProperty("defaultPass")+"!",
-                //property.getProperty("defaultConfirmPass"));
+        //property.getProperty("defaultPass")+"!",
+        //property.getProperty("defaultConfirmPass"));
     }
 
     public User invalidPassSpaceUserCreds() {
@@ -152,7 +158,7 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 "liubaLiuba 1*",
                 "liubaLiuba 1*");
-                //property.getProperty("defaultPass")+"!",
-                //property.getProperty("defaultConfirmPass"));
+        //property.getProperty("defaultPass")+"!",
+        //property.getProperty("defaultConfirmPass"));
     }
 }
