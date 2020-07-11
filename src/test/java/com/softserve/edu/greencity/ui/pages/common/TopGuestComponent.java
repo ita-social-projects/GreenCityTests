@@ -20,9 +20,6 @@ public class TopGuestComponent {
         return signinLink = driver.findElement(By.cssSelector("li.sign-in-link.tertiary-global-button a"));
     }
 
-    public String getSigninLinkText() {
-        return getSigninLink().getText();
-    }
 
     public LoginComponent clickSignInLink() {
         getSigninLink().click();
@@ -37,7 +34,7 @@ public class TopGuestComponent {
         return getSignupLink().getText();
     }
 
-    public RegisterComponent clickSignupLink() {
+    public RegisterComponent clickSignUpLink() {
         getSignupLink().click();
         return new RegisterComponent(driver);
     }

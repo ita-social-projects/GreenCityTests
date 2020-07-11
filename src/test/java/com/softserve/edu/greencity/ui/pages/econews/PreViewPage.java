@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import com.softserve.edu.greencity.ui.tools.CheckPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -39,33 +40,20 @@ public class PreViewPage extends TopPart {
     }
 
     private void initElements() {
-        titleField = driver.findElement(By.cssSelector("div.news-title"));
-        tagsFields = driver.findElements(By.cssSelector("div.tags > div"));
-        contentField = driver.findElement(By.cssSelector("div.news-text"));
-        dateField = driver.findElement(By.cssSelector("div.news-info-date"));
-        authorField = driver.findElement(By.cssSelector("div.news-info-author"));
-        imgFacebookLink = driver.findElement(By.xpath("//img[contains(@src,'facebook.svg')]"));
-        imgLinkedinLink = driver.findElement(By.xpath("//img[contains(@src,'linkedin.svg')]"));
-        imgTwitterLink = driver.findElement(By.xpath("//img[contains(@src,'twitter.svg')]"));
-        backToEditingLink = driver.findElement(By.cssSelector("div.button-text"));
-
-        if (isPublishButtonPresent()){ //TODO shoud create component for Publish button
-            publishButton = driver.findElement(By.cssSelector("button[type='submit']"));
-        }
-        else {
-            publishButton = null;
-        }
+        CheckPage.waitForLoading(driver, getBackToEditingLink());
     }
 
     // Page Object
 
     // tagsFields;
     public List<WebElement> getTagsFields() {
+        tagsFields = driver.findElements(By.cssSelector("div.tags > div"));
         return tagsFields;
     }
 
     //titleField;
     public WebElement getTitleField() {
+        titleField = driver.findElement(By.cssSelector("div.news-title"));
         return titleField;
     }
 
@@ -75,6 +63,7 @@ public class PreViewPage extends TopPart {
 
     //dateField;
     public WebElement getDateField() {
+        dateField = driver.findElement(By.cssSelector("div.news-info-date"));
         return dateField;
     }
 
@@ -84,6 +73,7 @@ public class PreViewPage extends TopPart {
 
     //authorField;
     public WebElement getAuthorField() {
+        authorField = driver.findElement(By.cssSelector("div.news-info-author"));
         return authorField;
     }
 
@@ -93,6 +83,7 @@ public class PreViewPage extends TopPart {
 
     //contentField
     public WebElement getContentField() {
+        contentField = driver.findElement(By.cssSelector("div.news-text-content"));
         return contentField;
     }
 
@@ -102,6 +93,7 @@ public class PreViewPage extends TopPart {
 
     //imgTwitterLink;
     public WebElement getImgTwitterLink() {
+        imgTwitterLink = driver.findElement(By.xpath("//img[contains(@src,'twitter.svg')]"));
         return imgTwitterLink;
     }
 
@@ -111,6 +103,7 @@ public class PreViewPage extends TopPart {
 
     //imgLinkedinLink;
     public WebElement getImgLinkedinLink() {
+        imgLinkedinLink = driver.findElement(By.xpath("//img[contains(@src,'linkedin.svg')]"));
         return imgLinkedinLink;
     }
 
@@ -120,6 +113,7 @@ public class PreViewPage extends TopPart {
 
     //imgFacebookLink;
     public WebElement getImgFacebookLink() {
+        imgFacebookLink = driver.findElement(By.xpath("//img[contains(@src,'facebook.svg')]"));
         return imgFacebookLink;
     }
 
@@ -129,6 +123,7 @@ public class PreViewPage extends TopPart {
 
     //backToEditingLink;
     public WebElement getBackToEditingLink() {
+        backToEditingLink = driver.findElement(By.cssSelector("div.button-text"));
         return backToEditingLink;
     }
 
@@ -138,6 +133,12 @@ public class PreViewPage extends TopPart {
 
     //publishButton
     public WebElement getPublishButton() {
+        List<WebElement> list = driver.findElements(By.cssSelector("button[type='submit']"));
+        if(list.size() > 0) {
+            publishButton = list.get(0);
+        } else {
+            return null;
+        }
         return publishButton;
     }
 

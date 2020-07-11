@@ -4,7 +4,7 @@ public enum Tag {
 
 	NEWS("News"),
 	EVENTS("Events"),
-	COURCES("Courses"),
+	EDUCATION("Education"),
 	INITIATIVES("Initiatives"),
 	ADS("Ads");
 	

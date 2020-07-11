@@ -13,6 +13,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,7 +101,7 @@ public abstract class TopPart {
     }
 
     protected void clickTopGuestSignup() {
-        getTopGuestComponent().clickSignupLink();
+        getTopGuestComponent().clickSignUpLink();
     }
 
     protected void closeTopGuestComponent() {
@@ -211,7 +213,7 @@ public abstract class TopPart {
         logger.debug("start signup()");
         logger.trace("click Signup link");
         logger.info("go to RegisterDropdown");
-        createTopGuestComponent().clickSignupLink();
+        createTopGuestComponent().clickSignUpLink();
         return new RegisterComponent(driver);
     }
 

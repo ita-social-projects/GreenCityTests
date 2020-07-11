@@ -14,6 +14,7 @@ public class ManualLoginComponent extends LoginComponent {
     private WebElement forgotPasswordLink;
     private WebElement signInButton;
     private WebElement wrongEmailOrPassError;
+    private WebElement passwordValidator;
     private WebElement emailValidationError;
     private WebElement passwordValidationError;
 
@@ -68,6 +69,10 @@ public class ManualLoginComponent extends LoginComponent {
         return wrongEmailOrPassError = driver.findElement(By.cssSelector(WRONG_EMAIL_OR_PASS_ERROR_CLASS));
     }
 
+    public String getWrongEmailOrPassErrorText() {
+        return getWrongEmailOrPassError().getText();
+    }
+
     public ManualLoginComponent inputEmail(String email) {
         getEmailField().sendKeys(email);
         return this;
@@ -77,6 +82,7 @@ public class ManualLoginComponent extends LoginComponent {
         getPasswordField().sendKeys(password);
         return this;
     }
+
 
     public ManualLoginComponent clickSignInButton() {
         getSignInButton().click();
@@ -129,4 +135,5 @@ public class ManualLoginComponent extends LoginComponent {
         clickSignInButton();
         return this;
     }
+
 }

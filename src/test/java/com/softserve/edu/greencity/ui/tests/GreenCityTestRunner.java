@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class GreenCityTestRunner {
     private final Long ONE_SECOND_DELAY = 1000L;
-    private final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
+    public static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
     //    	private final String BASE_URL = "http://localhost:4200/#/welcome";
 
     private final boolean CHROME_HEADLESS_OPTION = false;
@@ -58,7 +58,9 @@ public abstract class GreenCityTestRunner {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
-        driver.get(BASE_URL);
+        //driver.get(BASE_URL);
+
+        System.out.println("@AfterMethod tearDown");
     }
 
     protected void signOut() {

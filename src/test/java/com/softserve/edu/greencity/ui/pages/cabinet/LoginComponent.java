@@ -55,7 +55,7 @@ public class LoginComponent extends TopPart {
         wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(TITLE_CLASS)));
 
-        return this.getTitle().getText().trim();
+        return this.getTitle().getText();
     }
 
     protected WebElement getSubtitle() {
@@ -66,11 +66,17 @@ public class LoginComponent extends TopPart {
         return this.getSubtitle().getText();
     }
 
-    public WebElement getSingUpLink() {
+    public WebElement getSignUpLink() {
         wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(SIGN_UP_LINK_CLASS)));
 
         return singUpLink = driver.findElement(By.cssSelector(SIGN_UP_LINK_CLASS));
+    }
+
+    public RegisterComponent clickSignUpLink() {
+        getSignUpLink().click();
+
+        return new RegisterComponent(driver);
     }
 
     public WebElement getSingInWithGoogleButton() {
@@ -83,14 +89,7 @@ public class LoginComponent extends TopPart {
 
     public TipsTricksPage closeLoginComponent() {
         getCloseFormButton().click();
-
         return new TipsTricksPage(driver);
-    }
-
-    public RegisterComponent clickSignUpLink() {
-        getSingUpLink().click();
-
-        return new RegisterComponent(driver);
     }
 
     protected WebElement getGoogleSignUpButton() {

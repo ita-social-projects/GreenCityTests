@@ -5,6 +5,8 @@ import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.WebElement;
@@ -50,8 +52,7 @@ public class LoginTest extends GreenCityTestRunner {
                 .signIn()
                 .getManualLoginComponent()
                 .unsuccessfullyLogin(user)
-                .getWrongEmailOrPassError()
-                .getText();
+                .getWrongEmailOrPassErrorText();
 
         Assert.assertEquals(errorText, "Bad email or password");
     }
@@ -103,7 +104,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertTrue(loginComponent.getManualLoginComponent().getPasswordField().isDisplayed());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().getSignInButton().isDisplayed());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().getForgotPasswordLink().isDisplayed());
-        softAssert.assertTrue(loginComponent.getSingUpLink().isDisplayed());
+        softAssert.assertTrue(loginComponent.getSignUpLink().isDisplayed());
         softAssert.assertTrue(loginComponent.getSingInWithGoogleButton().isDisplayed());
 
         //Not finished all assertions. need to discus with Liubomyr

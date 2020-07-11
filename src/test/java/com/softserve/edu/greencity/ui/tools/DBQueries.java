@@ -1,10 +1,11 @@
 package com.softserve.edu.greencity.ui.tools;
 
-import com.softserve.edu.greencity.ui.data.UserRepository;
-
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class DBQueries {
@@ -29,24 +30,20 @@ public class DBQueries {
     }
 
 
-    public void deleteUserByEmail(String email) throws SQLException {
-        Connection connection = null;
-        Statement statement = null;
+    public void deleteUserByEmail(String email) {
 
         try {
             Class.forName(driverClass);
-            connection = DriverManager.getConnection(url, userName, password);
-            statement = connection.createStatement();
-            statement.executeQuery("DELETE FROM users WHERE email = '"+ email + "'");
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            Statement statement = connection.createStatement();
+            statement.executeQuery("DELETE FROM users WHERE email = '" + email + "'");
 
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            statement.close();
-            connection.close();
         }
+
     }
+
+
 }
