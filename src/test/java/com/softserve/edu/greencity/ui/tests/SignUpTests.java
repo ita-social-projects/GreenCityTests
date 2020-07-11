@@ -349,8 +349,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    //GC-527
-    @Test
+    @Test(description = "GC-527")
     public void checkPasswordIsHidden() {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation:");
