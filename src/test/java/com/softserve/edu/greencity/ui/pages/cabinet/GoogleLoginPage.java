@@ -2,15 +2,16 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import org.openqa.selenium.*;
+import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.Set;
+import java.util.ArrayList;
 
-public class GoogleAccountPage {
+public class GoogleLoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -27,9 +28,7 @@ public class GoogleAccountPage {
     private final String PASSWORD_NEXT_BUTTON_XPATH = "//*[@id='passwordNext']/div";
     private final String LOGGED_IN_USER_CLASS = ".lCoei";
 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public GoogleAccountPage(WebDriver driver) {
+    public GoogleLoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -63,43 +62,38 @@ public class GoogleAccountPage {
     }
 
     private boolean isLoginedUser() {
-        try {
-            getLoggedInUser();
-            return true;
-        } catch (NoSuchElementException | TimeoutException e) {
-            return false;
-        }
+        ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
+
+        return elementsCustomMethods.isElementPresent(By.cssSelector(LOGGED_IN_USER_CLASS));
     }
 
     public TipsTricksPage successfulLoginByGoogle(User user) {
         String parentWindow = driver.getWindowHandle();
 
-        wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
-        Set<String> windowHandles = driver.getWindowHandles();
-        for (String nextWindow : windowHandles) {
-            if (!parentWindow.equalsIgnoreCase(nextWindow)) {
-                driver.switchTo().window(nextWindow);
+        ArrayList<String> windowHandles = new ArrayList();
+        windowHandles.addAll(driver.getWindowHandles());
 
-                if (isLoginedUser()) {
-                    getLoggedInUser().click();
-                    getPasswordField().sendKeys(user.getPassword());
-                    getPasswordNextButton().click();
+        driver.switchTo().window(windowHandles.get(1));
 
-                    driver.switchTo().window(parentWindow);
-                    return new TipsTricksPage(driver);
-                }
+        if (isLoginedUser()) {
+            getLoggedInUser().click();
+            getPasswordField().sendKeys(user.getPassword());
+            getPasswordNextButton().click();
 
-                getEmailField().sendKeys(user.getEmail());
-                getEmailNextButton().click();
-
-                getPasswordField().sendKeys(user.getPassword());
-                getPasswordNextButton().click();
-
-                driver.switchTo().window(parentWindow);
-            }
+            driver.switchTo().window(parentWindow);
+            return new TipsTricksPage(driver);
         }
+
+        getEmailField().sendKeys(user.getEmail());
+        getEmailNextButton().click();
+
+        getPasswordField().sendKeys(user.getPassword());
+        getPasswordNextButton().click();
+
+        driver.switchTo().window(parentWindow);
 
         return new TipsTricksPage(driver);
     }

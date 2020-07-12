@@ -4,7 +4,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -92,10 +91,10 @@ public class RegisterComponent extends TopPart {
         return manualRegisterComponent = new ManualRegisterComponent(driver);
     }
 
-    public GoogleAccountPage clickGoogleSignUpButton() {
+    public GoogleLoginPage clickGoogleSignUpButton() {
         getGoogleSignUpButton().click();
 
-        return new GoogleAccountPage(driver);
+        return new GoogleLoginPage(driver);
     }
 
     protected RegisterComponent setSubmitEmailText(WebElement submitEmailText) {

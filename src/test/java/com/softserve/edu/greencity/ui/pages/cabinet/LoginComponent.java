@@ -92,16 +92,16 @@ public class LoginComponent extends TopPart {
         closeLoginComponent();
 
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
-        return elementsCustomMethods.isElementPresent(By.cssSelector(LOGIN_COMPONENT_OVERLAY_CLASS));
+        return elementsCustomMethods.waitTillElementGone(driver, By.cssSelector(LOGIN_COMPONENT_OVERLAY_CLASS), 6000, 2000);
     }
 
     protected WebElement getGoogleSignUpButton() {
         return googleSignInButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_IN_BUTTON_CLASS));
     }
 
-    public GoogleAccountPage clickGoogleSignInButton() {
+    public GoogleLoginPage clickGoogleSignInButton() {
         getGoogleSignUpButton().click();
 
-        return new GoogleAccountPage(driver);
+        return new GoogleLoginPage(driver);
     }
 }
