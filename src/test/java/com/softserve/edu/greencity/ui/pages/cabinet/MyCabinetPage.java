@@ -16,8 +16,8 @@ public class MyCabinetPage extends TopPart {
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
-        Wait<WebDriver> wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfAllElements(getAddNewHabitButton()));
+//        Wait<WebDriver> wait = new WebDriverWait(driver, 5);
+//        wait.until(ExpectedConditions.visibilityOfAllElements(getAddNewHabitButton()));
     }
 
     public HabitsContainer getHabitsContainer() {

@@ -52,7 +52,6 @@ public class ManualRegisterComponent extends RegisterComponent {
         this.driver = driver;
     }
 
-
     public WebElement getUserNameField() {
 
         this.userNameField = driver
@@ -449,6 +448,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         logInGMailPage.openTopUnreadEmail();
         Assert.assertTrue(logInGMailPage.getVerifyEmailButton().isDisplayed());
 
+        driver.close();
         driver.switchTo().window(initialTab);
         return this;
     }
@@ -463,6 +463,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         logInGMailPage.logInGMail()
                 .openEmailClickLink();
 
+        driver.close();
         driver.switchTo().window(initialTab);
         return this;
     }

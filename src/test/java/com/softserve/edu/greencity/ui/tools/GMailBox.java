@@ -25,9 +25,7 @@ public class GMailBox {
 
     private WebElement mailHeader;
     private WebElement topUnreadMail;
-    private ArrayList allMails;
-    private ArrayList deleteButtons;
-    private WebElement deleteButton;
+    private ArrayList<WebElement> allMails;
     private WebElement verifyEmailButton;
 
     public GMailBox(WebDriver driver) {
@@ -88,7 +86,7 @@ public class GMailBox {
     }
 
     public ArrayList<WebElement> getAllMails() {
-        allMails = (ArrayList) driver.findElements(
+        allMails = (ArrayList<WebElement>) driver.findElements(
                 By.className("zA"));
         return allMails;
 
@@ -155,7 +153,7 @@ public class GMailBox {
             mailRow.findElement(
                     By.cssSelector("li.bqX.bru"))
                     .click();
-            ElementsCustomMethods.threadSleep(3000);
+            ElementsCustomMethods.threadSleep(5000);
         }
 
     }

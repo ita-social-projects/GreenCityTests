@@ -4,14 +4,19 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.function.Function;
 
 
 public class RegisterComponent extends TopPart {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    WebDriverWait wait;
     private WebElement modalWindow;
     public static final String MODAL_WINDOW_CSS = "mat-dialog-container";
     private WebElement title;
@@ -34,12 +39,21 @@ public class RegisterComponent extends TopPart {
     private final String CONGRATS_MODAL_CSS = ".main-container .submit-email";
 
     public RegisterComponent(WebDriver driver) {
+
         super(driver);
+        init();
+    }
+
+    public void init(){
+        wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOf(getTitle()));
+
     }
 
 
+
     // modal window
-    public WebElement getModalWindow() {
+    public WebElement getRegisterModalWindow() {
         this.modalWindow = driver
                 .findElement(By.cssSelector(MODAL_WINDOW_CSS));
         return modalWindow;
@@ -49,13 +63,13 @@ public class RegisterComponent extends TopPart {
     protected WebElement getTitle() {
         this.title = driver
                 .findElement(By.cssSelector(TITLE_CSS));
+
         return title;
     }
 
 
     public String getTitleString() {
-
-        return this.getTitle().getText();
+               return this.getTitle().getText();
     }
 
     // subtitle

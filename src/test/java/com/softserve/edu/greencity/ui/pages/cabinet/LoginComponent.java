@@ -5,8 +5,16 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginComponent extends TopPart {
+
+    WebDriverWait wait;
+
+    private WebElement modalWindow;
+    public static final String MODAL_WINDOW_CSS = "app-sign-in div";
+
     private WebElement title;
     private WebElement subtitle;
     private WebElement forgotPasswordLink;
@@ -24,10 +32,24 @@ public class LoginComponent extends TopPart {
 
     public LoginComponent(WebDriver driver) {
         super(driver);
+        init();
+    }
+
+    public void init(){
+        wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOf(getTitle()));
+
     }
 
     public ManualLoginComponent getManualLoginComponent() {
         return manualLoginComponent = new ManualLoginComponent(driver);
+    }
+
+    protected WebElement getLoginModalWindow(){
+        this.modalWindow = driver
+                .findElement(By.cssSelector(MODAL_WINDOW_CSS));
+        return modalWindow;
+
     }
 
     protected WebElement getTitle() {

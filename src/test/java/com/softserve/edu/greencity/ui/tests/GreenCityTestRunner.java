@@ -58,9 +58,6 @@ public abstract class GreenCityTestRunner {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
-        //driver.get(BASE_URL);
-
-        System.out.println("@AfterMethod tearDown");
     }
 
     protected void signOut() {
