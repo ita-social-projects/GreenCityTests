@@ -10,6 +10,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -27,7 +29,8 @@ public class EconewsPage extends TopPart {
 
     public EconewsPage(WebDriver driver) {
         super(driver);
-        CheckPage.waitForLoading(driver, getGridView());
+        new WebDriverWait(driver, 20)
+                .until(ExpectedConditions.visibilityOf(getCreateNewsButton()));
         visualiseElements();
     }
 
@@ -65,7 +68,7 @@ public class EconewsPage extends TopPart {
     }
 
     public WebElement getGridView() {
-        gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
+        gridView = driver.findElement(By.cssSelector("div.gallery-view"));
         return gridView;
     }
 

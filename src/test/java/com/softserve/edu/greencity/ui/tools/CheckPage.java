@@ -9,11 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckPage {
     public static void waitForLoading(WebDriver driver, WebElement...elements) {
-        Wait<WebDriver> wait = new WebDriverWait(driver, 7);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-    }
-    public static void waitForLoading(WebDriver driver, By path, int numberOfElements) {
-        Wait<WebDriver> wait = new WebDriverWait(driver, 7);
-        wait.until(ExpectedConditions.numberOfElementsToBe(path, numberOfElements));
     }
 }

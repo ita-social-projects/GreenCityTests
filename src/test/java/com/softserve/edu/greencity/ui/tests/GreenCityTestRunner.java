@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -82,5 +83,11 @@ public abstract class GreenCityTestRunner {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isLoginingNow() {
+        return driver
+                .findElements(By.cssSelector("li.sign-in-link a"))
+                .size() == 0;
     }
 }
