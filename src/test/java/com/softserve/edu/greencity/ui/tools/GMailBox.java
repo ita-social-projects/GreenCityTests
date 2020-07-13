@@ -99,11 +99,13 @@ public class GMailBox {
     }
 
     /**
-     * Thread.sleep() is used in the following method because
+     * Thread.sleep() is used in the following method because of the flow of initialisation of web elements
+     * on the GMailBox page: they are dynamically loaded. It means explicit wait won't work
+     * properly when working with GMailBox elements and that's why the use of Thread.sleep() was needed.
      */
     public void openTopUnreadEmail() {
         getTopUnreadEmail().click();
-        ElementsCustomMethods.threadSleep(3000);
+        ElementsCustomMethods.threadSleep(5000);
 
     }
 
@@ -149,11 +151,11 @@ public class GMailBox {
         Actions action = new Actions(driver);
 
         for (WebElement mailRow : mails) {
+            ElementsCustomMethods.threadSleep(5000);
             action.moveToElement(mailRow).perform();
             mailRow.findElement(
                     By.cssSelector("li.bqX.bru"))
                     .click();
-            ElementsCustomMethods.threadSleep(5000);
         }
 
     }
