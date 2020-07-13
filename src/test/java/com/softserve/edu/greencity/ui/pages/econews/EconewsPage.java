@@ -29,8 +29,14 @@ public class EconewsPage extends TopPart {
 
     public EconewsPage(WebDriver driver) {
         super(driver);
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.visibilityOf(getCreateNewsButton()));
+        if(driver.findElements(By.cssSelector(".sign-up-link .create-button")).size() == 0) {
+            new WebDriverWait(driver, 10)
+                    .until(ExpectedConditions.visibilityOf(getCreateNewsButton()));
+        } else {
+            new WebDriverWait(driver, 10)
+                    .until(ExpectedConditions.visibilityOf(getGridView()));
+        }
+
         visualiseElements();
     }
 

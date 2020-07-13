@@ -87,7 +87,7 @@ public abstract class GreenCityTestRunner {
 
     public boolean isLoginingNow() {
         return driver
-                .findElements(By.cssSelector("li.sign-in-link a"))
+                .findElements(By.cssSelector(".sign-up-link .create-button"))
                 .size() == 0;
     }
 }

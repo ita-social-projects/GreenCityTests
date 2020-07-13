@@ -47,6 +47,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     public TagsComponent getTagsComponent() {
+        tagsComponent = new TagsComponent(driver);
         return tagsComponent;
     }
 
