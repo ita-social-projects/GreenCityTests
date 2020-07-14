@@ -89,13 +89,14 @@ public class TagsComponent {
      *
      * @param tags
      */
-    protected void selectTags(List<Tag> tags) {
+    public void selectTags(List<Tag> tags) {
         JavascriptExecutor js = ((JavascriptExecutor) driver);
         js.executeScript("window.scrollTo(0, -document.body.scrollHeight);");
         for (Tag current : tags) {
             selectTag(current);
         }
     }
+
 
     /**
      * Check is some WebElement are choosen(clicked first time)
@@ -115,7 +116,7 @@ public class TagsComponent {
      * @param newsfilter
      * @return boolean
      */
-    protected void selectTag(Tag newsfilter) {
+    public void selectTag(Tag newsfilter) {
         if (!isTagActive(newsfilter)) {
             getWebElementByTagName(newsfilter).click();
         }
@@ -127,17 +128,18 @@ public class TagsComponent {
      * @param tag
      * @return boolean
      */
-    protected void deselectTag(Tag tag) {
+    public void deselectTag(Tag tag) {
         if (isTagActive(tag)) {
             getWebElementByTagName(tag).click();
         }
     }
 
-    protected void deselectTags(List<Tag> tags) {
+    public void deselectTags(List<Tag> tags) {
         for (Tag current : tags) {
             deselectTag(current);
         }
     }
+
 
     // Business Logic
 

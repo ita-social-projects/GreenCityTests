@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true"
+          parallel="methods"
+          thread-count="10"
 
-<suite name="Suite1">
+          name="/home/m/Desktop/GreenCityTests/src/test/java/com/softserve/edu/greencity/ui/tests/Create_News_Test.java">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.Create_News_Test">
 
-	<test name="Test01a">
-		<classes>
-		</classes>
-	</test> <!-- Test -->
-
-</suite> <!-- Suite -->
+            </class>
+        </classes>
+    </test>
+</suite>

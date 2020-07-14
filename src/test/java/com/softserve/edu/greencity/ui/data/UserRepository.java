@@ -2,10 +2,22 @@ package com.softserve.edu.greencity.ui.data;
 
 import com.softserve.edu.greencity.ui.tools.Randomizer;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public final class UserRepository {
     private static volatile UserRepository instance = null;
 
+    private Properties property = new Properties();
+
     private UserRepository() {
+        try {
+            final FileInputStream fis = new FileInputStream("src/test/resources/credentials.properties");
+            property.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static UserRepository get() {
@@ -19,69 +31,125 @@ public final class UserRepository {
         return instance;
     }
 
-    public User getDefault() {
-        return temporary();
-    }
-
     public User temporary() {
-        return new User("tarasmalynovskyy@gmail.com", "!Qwerty123");
-    }
-    
-    /**
-     * Default user credentials:
-     * firstName "John";
-     * lastName "Wilson";
-     * email "rjjztqsiayuieydfuy@awdrt.org";
-     * password "A475asd123*".
-     * @return UserData
-     */
-    public User defaultUserCredentials() {
-        return new User("John", "rjjztqsiayuieydfuy@awdrt.org", "A475asd123*", "A475asd123*");
-    }
-    
-    /**
-     * GoogleUserCredentials:
-     * email "sergtaqc@gmail.com";
-     * password "123456".
-     * @return UserData
-     */
-    public User googleUserCredentials() {
-        return new User("sergii.taqc@gmail.com", "A475asd123*");
-    }
-    
-    /**
-     * WrongUserCredentials1:
-     * firstName "Asdfqwe";
-     * lastName "Qwerzxc";
-     * email "123asd@zxc";
-     * password "123Adff890*".
-     * @return UserData
-     */
-    public User wrongUserCredentials1() {
-        return new User("",  "", "", "");
-    }
-    
-    /**
-     * WrongUserCredentials2:
-     * firstName "A.";
-     * lastName "22222222222222";
-     * email "asdsd.1312";
-     * password "".
-     * @return UserData
-     */
-    public User wrongUserCredentials2() {
-            return new User("Wrong User", "123asdasd#zxcz.asd", "!A*zxc- ", "!A*zxc-");
-    }
-    
-    /**
-     * Gives random credentials:
-     * first name - random 20 letters;
-     * last name - random 20 letters;
-     * 
-     * @return
-     */
-    public User temporaryUserCredentialsForRegistration() {
-        return new User(Randomizer.getRamdomString20Letters(), "", "A475asd123*", "A475asd123*");
+        return new User(property.getProperty("temporaryLoginName"), property.getProperty("temporaryPass"));
     }
 
+    public User defaultUserCredentials() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("defaultPass"),
+                property.getProperty("defaultPass"));
+    }
+
+    public User googleUserCredentials() {
+        return new User(property.getProperty("googleEmail"), property.getProperty("googlePass"));
+    }
+
+    public User emptyUserCredentials() {
+        return new User("", "", "", "");
+    }
+
+    public User invalidUserCredentials() {
+        return new User(
+                property.getProperty("invalidName"),
+                property.getProperty("invalidEmail"),
+                property.getProperty("invalidPass"),
+                property.getProperty("invalidPass"));
+    }
+    public User invalidNameCredentials() {
+        return new User(
+                property.getProperty("invalidName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("defaultPass"),
+                property.getProperty("defaultPass"));
+    }
+
+    public User unregisterUser() {
+        return new User(
+                property.getProperty("validUnregisterEmail"),
+                property.getProperty("temporaryPass"));
+    }
+
+    public User invalidEmailUserCredentials() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("invalidEmail"),
+                property.getProperty("defaultPass"),
+                property.getProperty("defaultPass"));
+    }
+
+    public User invalidConfirmPassCredentials() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("defaultPass")+"!",
+                property.getProperty("defaultPass"));
+    }
+
+    public User userWithEmptyEmailField() {
+        return new User("", property.getProperty("temporaryPass"));
+    }
+
+    public User userWithEmptyPasswordField() {
+        return new User(property.getProperty("temporaryLoginName"), "");
+    }
+
+    public User userCredentialsWithInvalidPassword() {
+        return new User(property.getProperty("temporaryLoginName"), property.getProperty("validIncorrectPassword"));
+    }
+
+    public User userCredentialsForRegistration() {
+        return new User(Randomizer.getRamdomString20Letters(), property.getProperty("emailForRegistration"),
+                property.getProperty("passwordForRegistration"), property.getProperty("passwordForRegistration"));
+    }
+
+    public User invalidPassUppercaseUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassUppercase"),
+                property.getProperty("invalidPassUppercase"));
+    }
+
+    public User invalidPassDigitUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassDigit"),
+                property.getProperty("invalidPassDigit"));
+    }
+
+    public User invalidPassLowercaseUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassLowercase"),
+                property.getProperty("invalidPassLowercase"));
+    }
+
+    public User invalidPassSpecCharUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassSpecChar"),
+                property.getProperty("invalidPassSpecChar"));
+    }
+
+    public User invalidPassLengthUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassLength"),
+                property.getProperty("invalidPassLength"));
+    }
+
+    public User invalidPassSpaceUserCreds() {
+        return new User(
+                property.getProperty("defaultName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassSpace"),
+                property.getProperty("invalidPassSpace"));
+    }
 }

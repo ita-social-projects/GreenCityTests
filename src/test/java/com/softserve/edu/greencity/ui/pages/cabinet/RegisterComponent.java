@@ -4,49 +4,78 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.function.Function;
 
 
 public class RegisterComponent extends TopPart {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    WebDriverWait wait;
+    private WebElement modalWindow;
+    public static final String MODAL_WINDOW_CSS = "mat-dialog-container";
     private WebElement title;
+    private final String TITLE_CSS = "h1[title-text]";
     private WebElement subtitle;
+    private final String SUBTITLE_CSS = ".subtitle-text";
     private WebElement closeModalButton;
 
     private ManualRegisterComponent manualRegisterComponent;
+
     private WebElement googleSignUpButton;
 
     private WebElement signInLink;
+    private final String SIGN_IN_LINK_CSS = "div.exist-account a";
     private WebElement signInText;
 
     private WebElement submitEmailText;
     private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
+    private final String GOOGLE_SIGN_UP_BUTTON_CLASS = ".cta-button-google";
+
+    private WebElement congratsModal;
+    private final String CONGRATS_MODAL_CSS = ".main-container .submit-email";
 
     public RegisterComponent(WebDriver driver) {
+
         super(driver);
+        init();
     }
 
+    public void init(){
+        wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOf(getTitle()));
+
+    }
+
+
+    // modal window
+    public WebElement getRegisterModalWindow() {
+        this.modalWindow = driver
+                .findElement(By.cssSelector(MODAL_WINDOW_CSS));
+        return modalWindow;
+    }
 
     // title
     protected WebElement getTitle() {
         this.title = driver
-                .findElement(By.cssSelector("h1[title-text]"));
+                .findElement(By.cssSelector(TITLE_CSS));
         return title;
     }
 
-
     public String getTitleString() {
-
-        return this.getTitle().getText();
+              return this.getTitle().getText();
     }
 
-    // subtitle
     protected WebElement getSubtitle() {
         this.subtitle = driver
-                .findElement(By.cssSelector(".subtitle-text"));
+                .findElement(By.cssSelector(SUBTITLE_CSS));
         return subtitle;
     }
 
@@ -55,7 +84,6 @@ public class RegisterComponent extends TopPart {
         return this.getSubtitle().getText();
     }
 
-    //Close button
     public void closeRegisterComponentModal() {
         closeModalButton = driver.findElement
                 (By.cssSelector(".close-btn a"));
@@ -64,13 +92,17 @@ public class RegisterComponent extends TopPart {
 
 
     //Register component
-    public ManualRegisterComponent createRegisterComponent() {
+    public ManualRegisterComponent getManualRegisterComponent() {
 
         return manualRegisterComponent = new ManualRegisterComponent(driver);
     }
 
+    public GoogleLoginPage clickGoogleSignUpButton() {
+        getGoogleSignUpButton().click();
 
-    // Success message???
+        return new GoogleLoginPage(driver);
+    }
+
     protected RegisterComponent setSubmitEmailText(WebElement submitEmailText) {
         this.submitEmailText = submitEmailText;
         return this;
@@ -79,6 +111,7 @@ public class RegisterComponent extends TopPart {
     public String getSubmitEmailText() {
         return submitEmailText.getText();
     }
+
     /**
      * Get text which shows after a successful registration.
      *
@@ -92,7 +125,6 @@ public class RegisterComponent extends TopPart {
         logger.info("get Confirm Registeration text: " + setSubmitEmailText(submitEmailText).getSubmitEmailText());
         return setSubmitEmailText(submitEmailText).getSubmitEmailText();
     }
-    // Sign Up with Google button
 
     /**
      * Returns a WebElement of the 'GoogleSignUp' button.
@@ -100,60 +132,23 @@ public class RegisterComponent extends TopPart {
      * @return WebElement
      */
     protected WebElement getGoogleSignUpButton() {
-        return googleSignUpButton;
+        return googleSignUpButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_UP_BUTTON_CLASS));
     }
 
-    /**
-     * Click on the 'GoogleSignUp' button.
-     *
-     * @return RegisterPart
-     */
-    protected RegisterComponent clickGoogleLoginButton() {
-        if (isDisplayedGoogleSignUpButton()) {
-            this.getGoogleSignUpButton().click();
-        }
-        return this;
-    }
-
-    /**
-     * Taking a WebElement and set it to a private WebElement field.
-     *
-     * @param googleSignUpButton WebElement
-     * @return RegisterPart
-     */
-    public RegisterComponent setGoogleSignUpButton(WebElement googleSignUpButton) {
-        this.googleSignUpButton = googleSignUpButton;
-        return this;
-    }
-
-    /**
-     * Returns boolean if displayed the 'GoogleSignUp' button.
-     *
-     * @return boolean
-     */
-    protected boolean isDisplayedGoogleSignUpButton() {
-        return getGoogleSignUpButton().isDisplayed();
-    }
-
-    /**
-     * Returns a text which displayed on the 'GoogleSignUp' button.
-     *
-     * @return String
-     */
-    protected String getGoogleSignUpButtonText() {
-        return getGoogleSignUpButton().getText();
-    }
-
-
-    // Sign In button
     protected WebElement getSignInLink() {
         this.signInLink = driver
-                .findElement(By.cssSelector("div.exist-account a"));
+                .findElement(By.cssSelector(SIGN_IN_LINK_CSS));
         return signInLink;
     }
 
-    public LoginComponent clickSignInLink() {
+    public ManualLoginComponent clickSignInLink() {
         getSignInLink().click();
-        return new LoginComponent(driver);
+        return new ManualLoginComponent(driver);
+    }
+
+    public WebElement getCongratsModal() {
+        this.congratsModal = driver
+                .findElement(By.cssSelector(CONGRATS_MODAL_CSS));
+        return congratsModal;
     }
 }
