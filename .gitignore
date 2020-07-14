@@ -114,3 +114,8 @@ hs_err_pid*
 # npm
 /node_modules/
 /**/node_modules/
+/package-lock.json
+
+
+# properties files
+credentials.properties

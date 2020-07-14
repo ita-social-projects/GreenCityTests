@@ -136,18 +136,11 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>${mysql.connector.version}</version>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.postgresql</groupId> -->
-		<!-- <artifactId>postgresql</artifactId> -->
-		<!-- <version>${postgresql.connector.version}</version> -->
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <groupId>org.slf4j</groupId> -->
-		<!-- <artifactId>slf4j-simple</artifactId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- </dependency> -->
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.12</version>
+		</dependency>
 		<!-- - - - Read from Excel formats, etc. - - - -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
