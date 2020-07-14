@@ -5,7 +5,6 @@
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.RegistrationTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.RegisterPageTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.RegisterComponentTest"/>
         </classes>
     </test>
 </suite>

@@ -30,7 +30,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class Create_News_Test extends GreenCityTestRunner {
+public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     @BeforeMethod
     public void logoutBeforeTest() {
