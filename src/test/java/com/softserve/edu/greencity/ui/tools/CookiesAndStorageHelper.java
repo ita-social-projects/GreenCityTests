@@ -41,6 +41,7 @@ public class CookiesAndStorageHelper {
         webStorage.getLocalStorage().clear();
 
 
+
     }
 
     public void cleanGMailCookiesAndStorages() {

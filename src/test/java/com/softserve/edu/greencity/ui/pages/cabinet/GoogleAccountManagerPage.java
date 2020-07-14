@@ -28,7 +28,7 @@ public class GoogleAccountManagerPage {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
-        ArrayList<String> windowHandles = new ArrayList();
+        ArrayList<String> windowHandles = new ArrayList<String>();
         windowHandles.addAll(driver.getWindowHandles());
 
         driver.switchTo().window(windowHandles.get(1));

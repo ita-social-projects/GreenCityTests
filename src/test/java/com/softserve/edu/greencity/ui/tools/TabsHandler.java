@@ -11,21 +11,14 @@ public class TabsHandler {
     public static String openNewTabAndGetId(WebDriver driver, Set<String> allTabs) {
 
         ((JavascriptExecutor) driver).executeScript("window.open()");
-
         Set<String> allTabsUpdated = driver.getWindowHandles();
-
         allTabsUpdated.removeAll(allTabs);
-
         Iterator iter = allTabsUpdated.iterator();
-
         String newTab = null;
 
         if (iter.hasNext()) {
             newTab = iter.next().toString();
         }
-
-        System.out.println(newTab);
-
         return newTab;
 
     }

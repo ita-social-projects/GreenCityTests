@@ -52,8 +52,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         this.driver = driver;
     }
 
-
-    protected WebElement getUserNameField() {
+    public WebElement getUserNameField() {
 
         this.userNameField = driver
                 .findElement(By.cssSelector(USER_NAME_FIELD_SELECTOR));
@@ -445,10 +444,11 @@ public class ManualRegisterComponent extends RegisterComponent {
         GMailBox logInGMailPage = new GMailBox(driver);
         logInGMailPage.logInGMail();
         WebElement email = logInGMailPage.getTopUnreadEmail();
-        Assert.assertTrue(logInGMailPage.readHeader(email).equals("Verify your email address"));
+        Assert.assertEquals(logInGMailPage.readHeader(email),"Verify your email address");
         logInGMailPage.openTopUnreadEmail();
         Assert.assertTrue(logInGMailPage.getVerifyEmailButton().isDisplayed());
 
+        driver.close();
         driver.switchTo().window(initialTab);
         return this;
     }
@@ -463,6 +463,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         logInGMailPage.logInGMail()
                 .openEmailClickLink();
 
+        driver.close();
         driver.switchTo().window(initialTab);
         return this;
     }

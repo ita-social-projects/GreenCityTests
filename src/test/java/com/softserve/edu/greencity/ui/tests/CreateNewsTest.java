@@ -42,11 +42,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 .navigateMenuTipsTricks();
     }
 
-    /**
-     * Create news test after clicking Cancel button and then Continue creating.*
-     * @param newsData
-     * @author lv-493
-     */
+
     @Test(dataProvider = "newsDataProvider")
     public void createNewsTest(NewsData newsData) {
         logger.info("createNewsTest starts with parameters: " + newsData.toString());

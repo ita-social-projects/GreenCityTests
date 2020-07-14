@@ -40,7 +40,7 @@ public final class UserRepository {
                 property.getProperty("defaultName"),
                 property.getProperty("defaultEmail"),
                 property.getProperty("defaultPass"),
-                property.getProperty("defaultConfirmPass"));
+                property.getProperty("defaultPass"));
     }
 
     public User googleUserCredentials() {
@@ -56,7 +56,14 @@ public final class UserRepository {
                 property.getProperty("invalidName"),
                 property.getProperty("invalidEmail"),
                 property.getProperty("invalidPass"),
-                property.getProperty("invalidConfirmPass"));
+                property.getProperty("invalidPass"));
+    }
+    public User invalidNameCredentials() {
+        return new User(
+                property.getProperty("invalidName"),
+                property.getProperty("defaultEmail"),
+                property.getProperty("defaultPass"),
+                property.getProperty("defaultPass"));
     }
 
     public User unregisterUser() {
@@ -77,8 +84,8 @@ public final class UserRepository {
         return new User(
                 property.getProperty("defaultName"),
                 property.getProperty("defaultEmail"),
-                property.getProperty("defaultPass") + "!",
-                property.getProperty("defaultConfirmPass"));
+                property.getProperty("defaultPass")+"!",
+                property.getProperty("defaultPass"));
     }
 
     public User userWithEmptyEmailField() {
@@ -101,36 +108,48 @@ public final class UserRepository {
     public User invalidPassUppercaseUserCreds() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"));
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassUppercase"),
+                property.getProperty("invalidPassUppercase"));
     }
 
     public User invalidPassDigitUserCreds() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"));
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassDigit"),
+                property.getProperty("invalidPassDigit"));
     }
 
     public User invalidPassLowercaseUserCreds() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"));
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassLowercase"),
+                property.getProperty("invalidPassLowercase"));
     }
 
     public User invalidPassSpecCharUserCreds() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"));
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassSpecChar"),
+                property.getProperty("invalidPassSpecChar"));
     }
 
     public User invalidPassLengthUserCreds() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"));
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassLength"),
+                property.getProperty("invalidPassLength"));
     }
 
     public User invalidPassSpaceUserCreds() {
         return new User(
                 property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"));
+                property.getProperty("defaultEmail"),
+                property.getProperty("invalidPassSpace"),
+                property.getProperty("invalidPassSpace"));
     }
 }

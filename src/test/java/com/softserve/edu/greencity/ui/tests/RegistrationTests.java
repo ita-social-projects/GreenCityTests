@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
@@ -11,18 +12,18 @@ import com.softserve.edu.greencity.ui.tools.CookiesAndStorageHelper;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class SignUpFullCycle extends GreenCityTestRunner{
+public class RegistrationTests extends GreenCityTestRunner{
 
     @DataProvider
     public Object[][] successRegistrationUserCreds() {
@@ -40,33 +41,26 @@ public class SignUpFullCycle extends GreenCityTestRunner{
         DBQueries queryObj = new DBQueries();
         queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
 
-
     }
 
-    @AfterTest
+    @AfterClass
     public void mailBoxCleanUp(){
 
         GMailBox logInGMailPage = new GMailBox(driver);
         logInGMailPage.logInGMail();
         GMailBox mailBox = new GMailBox(driver);
-        ArrayList listOfEmails = mailBox.getAllMails();
+        ArrayList<WebElement> listOfEmails = mailBox.getAllMails();
         mailBox.deleteAllMails(listOfEmails);
         CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
         help.cleanCookiesAndStorages();
 
+        System.out.println("@AfterClass mailBoxCleanUp");
     }
 
-
-    /**
-     * //     * Test for registration with temporary email and random other credentials
-     * //     * with logging and checking displayed user name in the top of the page.
-     * //     * @param userLoginCredentials
-     * // GC-199
-     */
-    @Test(dataProvider = "successRegistrationUserCreds")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
     public void registrationAndLogin(User userLoginCredentials) {
         loadApplication();
-        logger.info("Starting randomCredsRegistrationLogin. Input values = "
+        logger.info("Starting registrationAndLogin. Input values = "
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
@@ -80,33 +74,28 @@ public class SignUpFullCycle extends GreenCityTestRunner{
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter random credentials and temporary email into the form: ");
+        logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
-
 
         ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
 
-
         manualLoginComponent.successfullyLogin(userLoginCredentials);
 
-        logger.info("get Title curent page: " + driver.getTitle());
+        logger.info("Get Title curent page: " + driver.getTitle());
         Assert.assertEquals(driver.getTitle(), "Home",
                 "you didn't log in successfully");
 
         TopUserComponent userComponent = new TopUserComponent(driver);
-        logger.info("check TopUserName: " + userComponent.getUserNameButtonText());
+
+        logger.info("Check TopUserName: " + userComponent.getUserNameButtonText());
         Assert.assertEquals(userComponent.getUserNameButtonText(), userLoginCredentials.getUserName());
 
     }
 
-
-
-    // GC-512
-    // Verify that user is not registered if he didn’t confirm email address in the mailbox
-    @Test(dataProvider = "successRegistrationUserCreds")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         loadApplication();
-        logger.info("Starting registrationWithoutEmaVerfication. Input values = "
+        logger.info("Starting registrationWithoutMailVerif. Input values = "
                 + userLoginCredentials.toString());
 
         logger.info("Click on Sign up button");
@@ -121,13 +110,15 @@ public class SignUpFullCycle extends GreenCityTestRunner{
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter random credentials and temporary email into the form: ");
+        logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationUser(userLoginCredentials);
 
+        WebDriverWait wait = new WebDriverWait(driver,6);
+
+        wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
         Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
-        WebDriverWait wait = new WebDriverWait(driver,6);
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector(("app-sign-in div"))));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));
 
         ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
 
@@ -138,9 +129,7 @@ public class SignUpFullCycle extends GreenCityTestRunner{
                 "The validation message is not equal to the expected one");
     }
 
-    //GC-513
-    //Verify that user receive a verification email about registration in the application to email address after successfully registration.
-    @Test(dataProvider = "successRegistrationUserCreds")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting registrationCheckIfMailReceived. Input values = "
@@ -157,7 +146,7 @@ public class SignUpFullCycle extends GreenCityTestRunner{
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter random credentials and temporary email into the form: ");
+        logger.info("Enter random credentials and temporary email into the form ");
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
 
     }
