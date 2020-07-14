@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.util.List;
@@ -45,6 +47,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     public TagsComponent getTagsComponent() {
+        tagsComponent = new TagsComponent(driver);
         return tagsComponent;
     }
 
@@ -290,7 +293,16 @@ public class CreateNewsPage extends TopPart {
      * @return EconewsPage
      */
     public EconewsPage publishNews() {  //FIXME return type should be changed to EconewsPage
-        clickPublishButton(); // Button doesn't work
+        clickPublishButton();
+        try {
+            new WebDriverWait(driver, 20)
+                    .until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
+            new WebDriverWait(driver, 20)
+                    .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
+        } catch(Exception e) {
+            System.out.println("Publish Button(((((");
+            e.printStackTrace();
+        }
         return new EconewsPage(driver);
     }
 

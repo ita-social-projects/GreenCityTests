@@ -97,6 +97,7 @@ public class TagsComponent {
         }
     }
 
+
     /**
      * Check is some WebElement are choosen(clicked first time)
      *
@@ -115,7 +116,7 @@ public class TagsComponent {
      * @param newsfilter
      * @return boolean
      */
-    protected void selectTag(Tag newsfilter) {
+    public void selectTag(Tag newsfilter) {
         if (!isTagActive(newsfilter)) {
             getWebElementByTagName(newsfilter).click();
         }
@@ -127,7 +128,7 @@ public class TagsComponent {
      * @param tag
      * @return boolean
      */
-    protected void deselectTag(Tag tag) {
+    public void deselectTag(Tag tag) {
         if (isTagActive(tag)) {
             getWebElementByTagName(tag).click();
         }
