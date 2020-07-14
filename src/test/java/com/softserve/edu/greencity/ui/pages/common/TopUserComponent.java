@@ -41,8 +41,10 @@ public class TopUserComponent {
 	// userNameButton
 
 	public WebElement getUserNameButton() {
-		userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
-		return userNameButton;
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(USER_NAME_CSS)));
+
+		return userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
 	}
 
 	public String getUserNameButtonText() {

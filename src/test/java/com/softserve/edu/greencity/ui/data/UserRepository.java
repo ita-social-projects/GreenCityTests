@@ -31,10 +31,6 @@ public final class UserRepository {
         return instance;
     }
 
-    public User getDefault() {
-        return temporary();
-    }
-
     public User temporary() {
         return new User(property.getProperty("temporaryLoginName"), property.getProperty("temporaryPass"));
     }
@@ -48,7 +44,7 @@ public final class UserRepository {
     }
 
     public User googleUserCredentials() {
-        return new User(property.getProperty("googleLogin"), property.getProperty("googlePass"));
+        return new User(property.getProperty("googleEmail"), property.getProperty("googlePass"));
     }
 
     public User emptyUserCredentials() {
@@ -68,6 +64,12 @@ public final class UserRepository {
                 property.getProperty("defaultEmail"),
                 property.getProperty("defaultPass"),
                 property.getProperty("defaultPass"));
+    }
+
+    public User unregisterUser() {
+        return new User(
+                property.getProperty("validUnregisterEmail"),
+                property.getProperty("temporaryPass"));
     }
 
     public User invalidEmailUserCredentials() {
@@ -95,7 +97,7 @@ public final class UserRepository {
     }
 
     public User userCredentialsWithInvalidPassword() {
-        return new User(property.getProperty("temporaryLoginName"), property.getProperty("invalidPass"));
+        return new User(property.getProperty("temporaryLoginName"), property.getProperty("validIncorrectPassword"));
     }
 
     public User userCredentialsForRegistration() {

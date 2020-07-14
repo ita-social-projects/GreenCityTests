@@ -42,11 +42,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 .navigateMenuTipsTricks();
     }
 
-    /**
-     * Create news test after clicking Cancel button and then Continue creating.*
-     * @param newsData
-     * @author lv-493
-     */
+
     @Test(dataProvider = "newsDataProvider")
     public void createNewsTest(NewsData newsData) {
         logger.info("createNewsTest starts with parameters: " + newsData.toString());
@@ -73,7 +69,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         createNewsPage.publishNews();
         econewsPage = createNewsPage.navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
-        econewsPage.signout();
+        econewsPage.signOut();
     }
 
     /**
@@ -102,7 +98,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 "Tags don't match with input data");
         econewsPage = preViewPage.publishNews();
         softAssert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
-        econewsPage.signout();
+        econewsPage.signOut();
         softAssert.assertAll();
     }
 
@@ -150,7 +146,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         softAssert.assertAll();
         econewsPage = createNewsPage.publishNews().navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
-        econewsPage.signout();
+        econewsPage.signOut();
     }
 
     /**
@@ -167,7 +163,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 .cancelNewsCreating();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount);
         Assert.assertEquals(driver.getTitle(), "Eco news");
-        econewsPage.signout();
+        econewsPage.signOut();
     }
     /**
      * Create news negative test
@@ -200,7 +196,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         createNewsPage.getTagsComponent().deselectTags(newsData.getTags());
         PreViewPage preViewPage = createNewsPage.goToPreViewPage();
         Assert.assertFalse(preViewPage.isPublishButtonPresent());
-        preViewPage.signout();
+        preViewPage.signOut();
     }
     @DataProvider
     public Object[] newsDataProvider() {

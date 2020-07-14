@@ -17,7 +17,7 @@ public class TipsTricksTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(dataProvider = "getUser")
+    @Test(dataProvider = "getUser", invocationCount = 10)
     public void checkHabitButtonTop(User user) {
         MyCabinetPage myCabinetPage = loadApplication()
                 .loginIn(user)
@@ -27,6 +27,8 @@ public class TipsTricksTest extends GreenCityTestRunner {
         String newHabitButtonText = myCabinetPage
                 .getAddNewHabitButton()
                 .getText();
+
+        myCabinetPage.signOut();
 
         Assert.assertEquals(newHabitButtonText, "Add new habit");
     }

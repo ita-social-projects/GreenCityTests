@@ -4,9 +4,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class MyCabinetPage extends TopPart {
@@ -16,8 +13,6 @@ public class MyCabinetPage extends TopPart {
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
-//        Wait<WebDriver> wait = new WebDriverWait(driver, 5);
-//        wait.until(ExpectedConditions.visibilityOfAllElements(getAddNewHabitButton()));
     }
 
     public HabitsContainer getHabitsContainer() {

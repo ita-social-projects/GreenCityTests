@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +28,7 @@ public class RegisterComponent extends TopPart {
     private WebElement closeModalButton;
 
     private ManualRegisterComponent manualRegisterComponent;
+
     private WebElement googleSignUpButton;
 
     private WebElement signInLink;
@@ -34,6 +37,7 @@ public class RegisterComponent extends TopPart {
 
     private WebElement submitEmailText;
     private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
+    private final String GOOGLE_SIGN_UP_BUTTON_CLASS = ".cta-button-google";
 
     private WebElement congratsModal;
     private final String CONGRATS_MODAL_CSS = ".main-container .submit-email";
@@ -51,7 +55,6 @@ public class RegisterComponent extends TopPart {
     }
 
 
-
     // modal window
     public WebElement getRegisterModalWindow() {
         this.modalWindow = driver
@@ -63,16 +66,13 @@ public class RegisterComponent extends TopPart {
     protected WebElement getTitle() {
         this.title = driver
                 .findElement(By.cssSelector(TITLE_CSS));
-
         return title;
     }
 
-
     public String getTitleString() {
-               return this.getTitle().getText();
+              return this.getTitle().getText();
     }
 
-    // subtitle
     protected WebElement getSubtitle() {
         this.subtitle = driver
                 .findElement(By.cssSelector(SUBTITLE_CSS));
@@ -84,7 +84,6 @@ public class RegisterComponent extends TopPart {
         return this.getSubtitle().getText();
     }
 
-    //Close button
     public void closeRegisterComponentModal() {
         closeModalButton = driver.findElement
                 (By.cssSelector(".close-btn a"));
@@ -98,8 +97,12 @@ public class RegisterComponent extends TopPart {
         return manualRegisterComponent = new ManualRegisterComponent(driver);
     }
 
+    public GoogleLoginPage clickGoogleSignUpButton() {
+        getGoogleSignUpButton().click();
 
-    // Success message???
+        return new GoogleLoginPage(driver);
+    }
+
     protected RegisterComponent setSubmitEmailText(WebElement submitEmailText) {
         this.submitEmailText = submitEmailText;
         return this;
@@ -122,7 +125,6 @@ public class RegisterComponent extends TopPart {
         logger.info("get Confirm Registeration text: " + setSubmitEmailText(submitEmailText).getSubmitEmailText());
         return setSubmitEmailText(submitEmailText).getSubmitEmailText();
     }
-    // Sign Up with Google button
 
     /**
      * Returns a WebElement of the 'GoogleSignUp' button.
@@ -130,52 +132,9 @@ public class RegisterComponent extends TopPart {
      * @return WebElement
      */
     protected WebElement getGoogleSignUpButton() {
-        return googleSignUpButton;
+        return googleSignUpButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_UP_BUTTON_CLASS));
     }
 
-    /**
-     * Click on the 'GoogleSignUp' button.
-     *
-     * @return RegisterPart
-     */
-    protected RegisterComponent clickGoogleLoginButton() {
-        if (isDisplayedGoogleSignUpButton()) {
-            this.getGoogleSignUpButton().click();
-        }
-        return this;
-    }
-
-    /**
-     * Taking a WebElement and set it to a private WebElement field.
-     *
-     * @param googleSignUpButton WebElement
-     * @return RegisterPart
-     */
-    public RegisterComponent setGoogleSignUpButton(WebElement googleSignUpButton) {
-        this.googleSignUpButton = googleSignUpButton;
-        return this;
-    }
-
-    /**
-     * Returns boolean if displayed the 'GoogleSignUp' button.
-     *
-     * @return boolean
-     */
-    protected boolean isDisplayedGoogleSignUpButton() {
-        return getGoogleSignUpButton().isDisplayed();
-    }
-
-    /**
-     * Returns a text which displayed on the 'GoogleSignUp' button.
-     *
-     * @return String
-     */
-    protected String getGoogleSignUpButtonText() {
-        return getGoogleSignUpButton().getText();
-    }
-
-
-    // Sign In button
     protected WebElement getSignInLink() {
         this.signInLink = driver
                 .findElement(By.cssSelector(SIGN_IN_LINK_CSS));

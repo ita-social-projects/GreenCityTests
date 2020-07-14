@@ -15,20 +15,19 @@ public class TopGuestComponent {
         this.driver = driver;
     }
 
-    public WebElement getSignInLink() {
-        signinLink = driver.findElement(By.cssSelector("li.sign-in-link.tertiary-global-button a"));
-        return signinLink;
+
+    public WebElement getSigninLink() {
+        return signinLink = driver.findElement(By.cssSelector("li.sign-in-link.tertiary-global-button a"));
     }
 
 
     public LoginComponent clickSignInLink() {
-        getSignInLink().click();
+        getSigninLink().click();
         return new LoginComponent(driver);
     }
 
     public WebElement getSignupLink() {
-        signupLink = driver.findElement(By.cssSelector("li.sign-up-link.ng-star-inserted div"));
-        return signupLink;
+        return signupLink = driver.findElement(By.cssSelector("li.sign-up-link.ng-star-inserted div"));
     }
 
     public String getSignupLinkText() {
