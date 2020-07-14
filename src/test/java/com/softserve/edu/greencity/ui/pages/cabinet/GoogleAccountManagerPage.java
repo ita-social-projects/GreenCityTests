@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.pages.common;
+package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -8,14 +8,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 
-public class GoogleAccountManager {
+public class GoogleAccountManagerPage {
     private WebDriver driver;
 
     private static String ACCOUNT_TOP_RIGHT_BUTTON_CLASS = ".gb_Ta";
     private static String SIGN_OUT_BUTTON_ID = "gb_71";
     private static String GOOGLE_ACCOUNT_MANAGE_URL = "https://myaccount.google.com/";
 
-    public GoogleAccountManager(WebDriver driver) {
+    public GoogleAccountManagerPage(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -27,6 +27,7 @@ public class GoogleAccountManager {
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
         ArrayList<String> windowHandles = new ArrayList();
         windowHandles.addAll(driver.getWindowHandles());
 

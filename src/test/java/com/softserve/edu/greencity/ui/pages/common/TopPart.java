@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
@@ -36,7 +37,7 @@ public abstract class TopPart {
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
-    private GoogleAccountManager googleAccountManager;
+    private GoogleAccountManagerPage googleAccountManagerPage;
 
     protected WebDriver driver;
 
@@ -111,8 +112,8 @@ public abstract class TopPart {
         return topUserComponent;
     }
 
-    public GoogleAccountManager getGoogleAccountManager() {
-        return googleAccountManager = new GoogleAccountManager(driver);
+    public GoogleAccountManagerPage getGoogleAccountManagerPage() {
+        return googleAccountManagerPage = new GoogleAccountManagerPage(driver);
     }
 
     protected TopUserComponent createTopUserComponent() {
@@ -233,7 +234,7 @@ public abstract class TopPart {
     }
 
     public void googleAccountSignOut() {
-        getGoogleAccountManager().googleAccountSignOut();
+        getGoogleAccountManagerPage().googleAccountSignOut();
     }
 
     public void changeWindowWidth(int width) {
