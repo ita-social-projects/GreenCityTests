@@ -6,14 +6,14 @@ import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -21,7 +21,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -58,8 +60,7 @@ public class Create_News_Test extends GreenCityTestRunner {
     }
 
     /**
-     * @ID=GC-397
-     * 1. In description query example to Data Base has little mistake with "*" character
+     * @ID=GC-397 1. In description query example to Data Base has little mistake with "*" character
      */
     @Test
     public void checkImpossibleToCreateNewsWithoutFillingMandatoryFields() throws SQLException {
@@ -109,8 +110,7 @@ public class Create_News_Test extends GreenCityTestRunner {
     }
 
     /**
-     * @ID=GC-623
-     * 1. At once max selected tags amount is 4, so this test description need little correct
+     * @ID=GC-623 1. At once max selected tags amount is 4, so this test description need little correct
      */
     @Test
     public void verifySelectAndDeselectPossibilityOfTags() {
@@ -147,9 +147,7 @@ public class Create_News_Test extends GreenCityTestRunner {
      */
 
     /**
-     * @ID=GC-401
-     *
-     * 1. Second example string has 171 characters but should 170
+     * @ID=GC-401 1. Second example string has 171 characters but should 170
      * 2. "'" character in "it's" dangerous because of query to Data Base
      * 3. In description query example to Data Base has little mistake with "*" character
      */
@@ -199,13 +197,13 @@ public class Create_News_Test extends GreenCityTestRunner {
         int news = econewsPage.getNumberOfItemComponent();
         System.out.println(news);
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
-        for(WebElement e : elements) {
-            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
+        for (WebElement e : elements) {
+            if (e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
                 List<WebElement> findingTags = e.findElements(By.cssSelector(".filter-tag div"));
-                for(WebElement e2 : findingTags) {
+                for (WebElement e2 : findingTags) {
                     boolean assertTags = false;
-                    for(Tag tag : tags) {
-                        if(tag.name().equalsIgnoreCase(e2.getText())) {
+                    for (Tag tag : tags) {
+                        if (tag.name().equalsIgnoreCase(e2.getText())) {
                             assertTags = true;
                             break;
                         }
@@ -221,18 +219,18 @@ public class Create_News_Test extends GreenCityTestRunner {
     @DataProvider
     public Object[] getTagsList() {
         return new Object[]{
-                new ArrayList<Tag>(){
+                new ArrayList<Tag>() {
                     {
                         add(Tag.NEWS);
                     }
                 },
-                new ArrayList<Tag>(){
+                new ArrayList<Tag>() {
                     {
                         add(Tag.NEWS);
                         add(Tag.EVENTS);
                     }
                 },
-                new ArrayList<Tag>(){
+                new ArrayList<Tag>() {
                     {
                         add(Tag.EVENTS);
                         add(Tag.NEWS);
@@ -255,8 +253,7 @@ public class Create_News_Test extends GreenCityTestRunner {
      */
 
     /**
-     * @ID=GC-588
-     * 1. Change expected title to "Download PNG or JPG only. File size should be less than 10MB"
+     * @ID=GC-588 1. Change expected title to "Download PNG or JPG only. File size should be less than 10MB"
      */
     @Test
     public void verifyImpossibilityOfUploadingTooLargeImage() {
@@ -394,7 +391,7 @@ public class Create_News_Test extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         List<Tag> tags = new ArrayList<>();
-        for(Tag tag : Tag.values()) {
+        for (Tag tag : Tag.values()) {
             tags.add(tag);
         }
         createNewsPage.getTagsComponent().deselectTags(tags);
@@ -440,7 +437,7 @@ public class Create_News_Test extends GreenCityTestRunner {
         String title = "checking tags";
         createNewsPage.setTitleField(title);
         List<Tag> tags = new ArrayList<>();
-        for(Tag tag : Tag.values()) {
+        for (Tag tag : Tag.values()) {
             tags.add(tag);
         }
         createNewsPage.getTagsComponent().deselectTags(tags);
@@ -456,8 +453,8 @@ public class Create_News_Test extends GreenCityTestRunner {
         EconewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
-        for(WebElement e : elements) {
-            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
+        for (WebElement e : elements) {
+            if (e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
                 isPresent = true;
                 int tagsCount = e.findElements(By.cssSelector(".filter-tag div")).size();
                 softAssert.assertTrue(tagsCount == 3);
@@ -483,7 +480,7 @@ public class Create_News_Test extends GreenCityTestRunner {
         String title = "public void verifyImpossibilityToSelectOneTagTwice() {";
         createNewsPage.setTitleField(title);
         List<Tag> tags = new ArrayList<>();
-        for(Tag tag : Tag.values()) {
+        for (Tag tag : Tag.values()) {
             tags.add(tag);
         }
         createNewsPage.getTagsComponent().deselectTags(tags);
@@ -494,8 +491,8 @@ public class Create_News_Test extends GreenCityTestRunner {
         EconewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
-        for(WebElement e : elements) {
-            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
+        for (WebElement e : elements) {
+            if (e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
                 isPresent = true;
                 int tagsCount = e.findElements(By.cssSelector(".filter-tag div")).size();
                 Assert.assertTrue(tagsCount == 1);
@@ -527,7 +524,7 @@ public class Create_News_Test extends GreenCityTestRunner {
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
-                createNewsPage.fillFields(newsData);
+        createNewsPage.fillFields(newsData);
         createNewsPage.clearTitleField();
         String title = "simple test very similary for previous";
         createNewsPage.setTitleField(title);
@@ -535,8 +532,8 @@ public class Create_News_Test extends GreenCityTestRunner {
         EconewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
-        for(WebElement e : elements) {
-            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
+        for (WebElement e : elements) {
+            if (e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
                 isPresent = true;
                 int tagsCount = e.findElements(By.cssSelector(".filter-tag div")).size();
                 Assert.assertTrue(tagsCount == newsData.getTags().size());
@@ -583,8 +580,8 @@ public class Create_News_Test extends GreenCityTestRunner {
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
         WebElement myNews;
-        for(WebElement e : elements) {
-            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(newsData.getTitle())) {
+        for (WebElement e : elements) {
+            if (e.findElement(By.cssSelector(".title-list p")).getText().equals(newsData.getTitle())) {
                 isPresent = true;
                 e.findElement(By.cssSelector(".list-image img")).click();
                 break;
@@ -605,7 +602,7 @@ public class Create_News_Test extends GreenCityTestRunner {
 
 
     /**
-     *Additional methods, tools, helpers for these tests
+     * Additional methods, tools, helpers for these tests
      * ===========================================================================================================================================================
      */
     public String getCredential(String key) {
@@ -613,7 +610,7 @@ public class Create_News_Test extends GreenCityTestRunner {
         try {
             properties
                     .load(new BufferedReader(new FileReader("src/test/resources/credentials.properties")));
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return properties.getProperty(key);
@@ -660,7 +657,7 @@ public class Create_News_Test extends GreenCityTestRunner {
     }
 
     public void cleanDataBase(String title, boolean waiting) throws SQLException, InterruptedException {
-        if(waiting) {
+        if (waiting) {
             Thread.sleep(15000);
         }
         Connection connection = connectToJDBC();
@@ -678,7 +675,5 @@ public class Create_News_Test extends GreenCityTestRunner {
                 .prepareStatement("DELETE FROM public.eco_news * WHERE id = " + id)
                 .execute();
     }
-
-
 
 }
