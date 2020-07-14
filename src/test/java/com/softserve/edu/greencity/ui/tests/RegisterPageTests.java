@@ -8,14 +8,230 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SignUpTests extends GreenCityTestRunner {
+public class RegisterPageTests extends GreenCityTestRunner {
 
-    //GC-501
+    @DataProvider
+    public Object[][] validUserCredentials() {
+        return new Object[][]{
+                {UserRepository.get().defaultUserCredentials()},};
+    }
+
+    @DataProvider
+    public Object[][] emptyFields() {
+        return new Object[][]{
+                {UserRepository.get().emptyUserCredentials()},
+        };
+    }
+
+    @DataProvider
+    public Object[][] invalidFields() {
+        return new Object[][]{
+                {UserRepository.get().invalidUserCredentials()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidEmail() {
+        return new Object[][]{
+                {UserRepository.get().invalidEmailUserCredentials()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassUppercaseUserCreds() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassUppercaseUserCreds()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassDigitUserCreds() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassDigitUserCreds()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassLowercaseUserCreds() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassLowercaseUserCreds()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassSpecCharUserCreds() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassSpecCharUserCreds()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassLengthUserCreds() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassLengthUserCreds()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassSpaceUserCreds() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassSpaceUserCreds()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidNameCredentials() {
+        return new Object[][]{
+                {UserRepository.get().invalidNameCredentials()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidConfirmPass() {
+        return new Object[][]{
+                {UserRepository.get().invalidConfirmPassCredentials()},};
+    }
+    /**
+     * Filling all the fields on the Register page without registering and
+     * switch to Login page.
+     */
+    @Test(dataProvider = "validUserCredentials")
+    public void checkIfSignUpButtonEnabled(User userLoginCredentials) {
+        loadApplication();
+        logger.info("Starting checkIfSignUpButtonEnabled. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+        ManualRegisterComponent manualRegisterComponent = new ManualRegisterComponent(driver);
+
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+
+        logger.info(
+                "Filling out the fields with valid credentials without clicking on Sign up button");
+        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
+
+        Assert.assertFalse(manualRegisterComponent.signUpIsDisabled());
+
+    }
+
+    /**
+     * Opening register modal window, reading its title,
+     * switching to login modal window, reading its title
+     * to make sure the transition has been executed.
+     */
     @Test
+    public void navigateFromSignUpToSignIn() {
+        loadApplication();
+        logger.info("Starting navigateFromSignUpToSignIn");
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+                "This is not a register modal:(");
+
+        logger.info("Click on Sign in button");
+        LoginComponent loginComponent = registerComponent.clickSignInLink();
+
+        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
+                "This is not a login modal:(");
+
+        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
+                "This is not a login modal:(");
+    }
+
+    /**
+     * Putting empty values into register form
+     * and reading the validation messages.
+     */
+    @Test(dataProvider = "emptyFields", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    public void checkEmptyFieldsValidation(User userLoginCredentials) {
+        loadApplication();
+        logger.info("Starting checkEmptyFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter empty values into the form");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+                "Email is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
+                "User name is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+                "Password is required",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
+                "Password is required",
+                "The validation message is not equal to the expected one");
+
+    }
+
+    /**
+     * Putting invalid values into register form
+     * and reading the validation messages.
+     */
+    @Test(dataProvider = "invalidFields")
+    public void checkInvalidFieldsValidation(User userLoginCredentials) {
+        loadApplication();
+        logger.info("Starting checkInvalidFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter invalid values into the form");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+                "Please check that your e-mail address is indicated correctly",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+                "Password must be at least 8 characters in length",
+                "The validation message is not equal to the expected one");
+
+        Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
+                "Password has contain at least one character of Uppercase letter (A-Z), " +
+                        "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
+                "The validation message is not equal to the expected one");
+
+    }
+
+
+    @Test(description = "GC-501")
     public void navigateFromSignInToSignUp() {
 
         loadApplication();
@@ -45,8 +261,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    //GC-509
-    @Test(dataProvider = "invalidEmail")
+
+    @Test(dataProvider = "invalidEmail", description = "GC-509")
     public void invalidEmailRegistration(User invalidEmailCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -57,7 +273,7 @@ public class SignUpTests extends GreenCityTestRunner {
                 .clickSignUpLink()
                 .getManualRegisterComponent();
 
-        logger.info("Enter invalid email and valid name and password into the form: ");
+        logger.info("Enter invalid email and valid name and password into the form");
         manualRegisterComponent.fillFieldsWithoutRegistration(invalidEmailCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
@@ -68,14 +284,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidEmail() {
-        return new Object[][]{
-                {UserRepository.get().invalidEmailUserCredentials()},};
-    }
 
-    //GC-519
-    @Test(dataProvider = "invalidConfirmPass")
+    @Test(dataProvider = "invalidConfirmPass", description = "GC-519")
     public void invalidConfirmPassRegistration(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -92,7 +302,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
@@ -103,14 +313,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidConfirmPass() {
-        return new Object[][]{
-                {UserRepository.get().invalidConfirmPassCredentials()},};
-    }
 
-    //Password
-    @Test(dataProvider = "invalidPassUppercaseUserCreds")
+    @Test(dataProvider = "invalidPassUppercaseUserCreds", description = "GC-517")
     public void invalidPassUppercaseValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -127,7 +331,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
@@ -139,13 +343,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidPassUppercaseUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassUppercaseUserCreds()},};
-    }
 
-    @Test(dataProvider = "invalidPassDigitUserCreds")
+    @Test(dataProvider = "invalidPassDigitUserCreds", description = "GC-517")
     public void invalidPassDigitValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -162,7 +361,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
@@ -174,13 +373,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidPassDigitUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassDigitUserCreds()},};
-    }
-
-    @Test(dataProvider = "invalidPassLowercaseUserCreds")
+    @Test(dataProvider = "invalidPassLowercaseUserCreds", description = "GC-517")
     public void invalidPassLowercaseValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -197,7 +390,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
@@ -209,13 +402,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidPassLowercaseUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassLowercaseUserCreds()},};
-    }
 
-    @Test(dataProvider = "invalidPassSpecCharUserCreds")
+    @Test(dataProvider = "invalidPassSpecCharUserCreds", description = "GC-517")
     public void invalidPassSpecCharValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -232,7 +420,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
 
@@ -246,14 +434,9 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidPassSpecCharUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassSpecCharUserCreds()},};
-    }
 
-    //GC-198
-    @Test(dataProvider = "invalidPassLengthUserCreds")
+
+    @Test(dataProvider = "invalidPassLengthUserCreds", description = "GC-198, GC-517")
     public void invalidPassLengthValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -270,7 +453,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
@@ -281,13 +464,8 @@ public class SignUpTests extends GreenCityTestRunner {
 
     }
 
-    @DataProvider
-    public Object[][] invalidPassLengthUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassLengthUserCreds()},};
-    }
 
-    @Test(dataProvider = "invalidPassSpaceUserCreds")
+    @Test(dataProvider = "invalidPassSpaceUserCreds", description = "GC-517")
     public void invalidPassSpaceValidation(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -304,25 +482,18 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
         Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters long without spaces",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertFalse(manualRegisterComponent.signUpIsDisabled());
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
 
     }
 
-    @DataProvider
-    public Object[][] invalidPassSpaceUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassSpaceUserCreds()},};
-    }
-
-    //GC-1214
-    @Test
+    @Test(description = "GC-499")
     public void checkCloseRegisterModalButton() {
         loadApplication();
         logger.info("Starting checkCloseRegisterModalButton:");
@@ -337,13 +508,13 @@ public class SignUpTests extends GreenCityTestRunner {
                 "This is not a register modal:(");
 
         ElementsCustomMethods custMethObj = new ElementsCustomMethods(driver);
-        Boolean isPresent = custMethObj.isElementPresent(By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS));
+        boolean isPresent = custMethObj.isElementPresent(By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS));
 
         Assert.assertTrue(isPresent);
 
         registerComponent.closeRegisterComponentModal();
 
-        Boolean isGone = custMethObj.waitTillElementGone(driver, By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS), 6000, 2000);
+        boolean isGone = custMethObj.waitTillElementGone(driver, By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS), 6000, 2000);
         Assert.assertTrue(isGone);
 
 
@@ -365,7 +536,7 @@ public class SignUpTests extends GreenCityTestRunner {
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter invalid values into the form: ");
+        logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillPasswordFieldPassHidden("Valid!1");
 
         Assert.assertEquals(manualRegisterComponent.getPasswordField().getAttribute("type"),
@@ -377,32 +548,58 @@ public class SignUpTests extends GreenCityTestRunner {
     }
 
 
-    //GC-205
-    //Verify that user is not registered with too long 'User name'
-    //GC-204
-    //Verify that Email must be existence and unique while new user registration
-    //GC-200
-    //Verify that unregistered user sees popup window 'Sign up' after clicking on the “My habits” button
-    //GC-203
-    //Verify that User is redirected to My habits as a Registered User after he has entered valid credentials
-   //GC-216
-    // Verify 'Sign up' page UI
-
-
-    //GC-485
-    //Verify that background behind the Registration form is dimmed out
-    @Test
+    @Test(description = "GC-485")
     public void checkBackgroundIsDimmed() {
 
         logger.info("Starting checkBackgroundIsDimmed:");
         loadApplication();
         logger.info("Click on Sign up button");
 
-        Assert.assertTrue(driver.findElement(By.id("b_bb_b_dsin")).getAttribute("aria-hidden") == null);
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        Assert.assertTrue(driver.findElement(By.id("b_bb_b_dsin")).getAttribute("aria-hidden") != null);
+
+        Assert.assertTrue(driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
+                .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"));
     }
 
+
+        @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
+    public void checkUserFieldMaxLength(User userLoginCredentials) {
+        loadApplication();
+        logger.info("Starting checkInvalidFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Entering values into the form ");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        String userFieldValue = manualRegisterComponent.getUserNameField().getAttribute("value");
+
+        Assert.assertEquals(userFieldValue,
+                "21CharString21CharSt",
+                "The invalid string is not concatenated");
+
+    }
+
+
+    //GC-204
+    //Verify that Email must be existence and unique while new user registration
+    //GC-200
+    //Verify that unregistered user sees popup window 'Sign up' after clicking on the “My habits” button
+    //GC-203
+    //Verify that User is redirected to My habits as a Registered User after he has entered valid credentials
+    //GC-216
+    // Verify 'Sign up' page UI
     //GC-487
     //Verify UI of the Registration form on different screen resolutions
 

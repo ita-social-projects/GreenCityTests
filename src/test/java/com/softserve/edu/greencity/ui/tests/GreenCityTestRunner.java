@@ -14,11 +14,11 @@ import org.testng.annotations.*;
 import java.util.concurrent.TimeUnit;
 
 public abstract class GreenCityTestRunner {
-    private final Long ONE_SECOND_DELAY = 1000L;
     public static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
-    //    	private final String BASE_URL = "http://localhost:4200/#/welcome";
+//    public static final String BASE_URL = "http://localhost:4200/#/welcome";
 
     private final boolean CHROME_HEADLESS_OPTION = false;
+    private final String CHROME_LANGUAGE_OPTION = "en";
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
@@ -32,18 +32,15 @@ public abstract class GreenCityTestRunner {
     public void setUpBeforeClass() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(CHROME_HEADLESS_OPTION);
+        chromeOptions.addArguments("--lang=" + CHROME_LANGUAGE_OPTION);
 
         driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-
-        //driver.manage().window().setSize(new Dimension(640, 480));
-        //driver.manage().window().setSize(new Dimension(480, 640));
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDownAfterClass() {
-        presentationSleep(1);
         if (driver != null) {
             driver.quit();
         }
@@ -59,30 +56,12 @@ public abstract class GreenCityTestRunner {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
-        //driver.get(BASE_URL);
 
         System.out.println("@AfterMethod tearDown");
     }
 
-    protected void signOut() {
-        loadApplication().signOut();
-    }
-
     public TipsTricksPage loadApplication() {
         return new TipsTricksPage(driver);
-    }
-
-    // For Presentation ONLY
-    protected void presentationSleep() {
-        presentationSleep(1);
-    }
-
-    protected void presentationSleep(int seconds) {
-        try {
-            Thread.sleep(seconds * ONE_SECOND_DELAY);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean isLoginingNow() {

@@ -9,6 +9,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginComponent extends TopPart {
+    private WebDriverWait wait;
+
+    private WebElement modalWindow;
+    public static final String MODAL_WINDOW_CSS = "app-sign-in div";
+
     private WebElement title;
     private WebElement subtitle;
     private WebElement forgotPasswordLink;
@@ -29,19 +34,28 @@ public class LoginComponent extends TopPart {
     private final String GOOGLE_SIGN_IN_BUTTON_CLASS = ".google-sign-in";
     private final String LOGIN_COMPONENT_OVERLAY_CLASS = ".cdk-overlay-pane";
 
-    private WebDriverWait wait;
+
 
     public LoginComponent(WebDriver driver) {
         super(driver);
         init();
     }
 
-    private void init() {
-        getTitleString();
+    public void init(){
+        wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOf(getTitle()));
+
     }
 
     public ManualLoginComponent getManualLoginComponent() {
         return manualLoginComponent = new ManualLoginComponent(driver);
+    }
+
+    protected WebElement getLoginModalWindow(){
+        this.modalWindow = driver
+                .findElement(By.cssSelector(MODAL_WINDOW_CSS));
+        return modalWindow;
+
     }
 
     protected WebElement getTitle() {
@@ -92,16 +106,16 @@ public class LoginComponent extends TopPart {
         closeLoginComponent();
 
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
-        return elementsCustomMethods.isElementPresent(By.cssSelector(LOGIN_COMPONENT_OVERLAY_CLASS));
+        return elementsCustomMethods.waitTillElementGone(driver, By.cssSelector(LOGIN_COMPONENT_OVERLAY_CLASS), 6000, 2000);
     }
 
     protected WebElement getGoogleSignUpButton() {
         return googleSignInButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_IN_BUTTON_CLASS));
     }
 
-    public GoogleAccountPage clickGoogleSignInButton() {
+    public GoogleLoginPage clickGoogleSignInButton() {
         getGoogleSignUpButton().click();
 
-        return new GoogleAccountPage(driver);
+        return new GoogleLoginPage(driver);
     }
 }

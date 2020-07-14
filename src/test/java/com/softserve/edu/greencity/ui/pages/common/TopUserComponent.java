@@ -48,7 +48,7 @@ public class TopUserComponent {
 	}
 
 	public String getUserNameButtonText() {
-		return getUserNameButton().getText().trim();
+		return getUserNameButton().getText();
 	}
 
 	public void clickUserNameButton() {

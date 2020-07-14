@@ -23,7 +23,6 @@ public class ManualLoginComponent extends LoginComponent {
     private boolean successfulPasswordValidation;
     private boolean unsuccessfulPasswordValidation;
 
-
     private final String EMAIL_ID = "email";
     private final String PASSWORD_ID = "password";
     private final String PASSWORD_FIELD_WRAPPER_CLASS = ".password-input-btn-show-hide";
