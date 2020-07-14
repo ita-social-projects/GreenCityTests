@@ -48,6 +48,21 @@ validIncorrectPassword = validIncorrectPasswordValue
 
 googleEmail = googleEmailValue
 googlePass = googlePassValue
+
+DBProdURL = DBProdURL
+DBProdUserName = DBProdUserName
+DBProdUserPassword = DBProdUserPassword
+
+emailForRegistration = emailForRegistration
+passwordForRegistration = passwordForRegistration
+passwordToGmailBox = passwordToGmailBox
+
+invalidPassUppercase = invalidPassUppercase
+invalidPassDigit = invalidPassDigit
+invalidPassLowercase = invalidPassLowercase
+invalidPassSpecChar = invalidPassSpecChar
+invalidPassLength = invalidPassLength
+invalidPassSpace = invalidPassSpace
 ```
 
 
