@@ -364,21 +364,23 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * @ID=GC-638
      * TODO don't know why, but this test fail in automating perfomance
      */
-//    @Test
-//    public void verifyImpossibilityOfCreatingNewsWithoutContent() throws InterruptedException {
-//        CreateNewsPage createNewsPage = loadApplication()
-//                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
-//                .navigateMenuEconews()
-//                .gotoCreateNewsPage()
-//                .fillFields(NewsDataRepository.getRequiredFieldsNews());
-//        createNewsPage.clearContentField();
-//        SoftAssert softAssert = new SoftAssert();
-//        boolean isDisabled = driver.findElement(By.cssSelector(".submit-buttons button+button+button")).isEnabled();
-//        softAssert.assertFalse(isDisabled);
-//        softAssert.assertTrue(driver.findElement(By.cssSelector(".textarea-wrapper p")).getText().equals("Must be minimum 20 symbols"));
-//        softAssert.assertAll();
-//        createNewsPage.signOut();
-//    }
+    @Test
+    public void verifyImpossibilityOfCreatingNewsWithoutContent() throws InterruptedException {
+        NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
+        newsData.setContent("");
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .navigateMenuEconews()
+                .gotoCreateNewsPage()
+                .fillFields(newsData);
+        Thread.sleep(4000);
+        SoftAssert softAssert = new SoftAssert();
+        boolean isDisabled = driver.findElement(By.cssSelector(".submit-buttons button+button+button")).isEnabled();
+        softAssert.assertFalse(isDisabled);
+        softAssert.assertTrue(driver.findElement(By.cssSelector(".textarea-wrapper p")).getText().equals("Must be minimum 20 symbols"));
+        softAssert.assertAll();
+        createNewsPage.signOut();
+    }
 
     /**
      * @ID=GC-642
