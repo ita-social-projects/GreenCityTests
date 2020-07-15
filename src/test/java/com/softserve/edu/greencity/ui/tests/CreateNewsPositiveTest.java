@@ -361,8 +361,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     /**
-     * @ID=GC-638
-     * TODO don't know why, but this test fail in automating perfomance
+     * @gc1290
+     * @ID=GC-638git
      */
     @Test
     public void verifyImpossibilityOfCreatingNewsWithoutContent() throws InterruptedException {
