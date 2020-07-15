@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
@@ -581,6 +582,23 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 DateUtil.getCurrentDate("MMM dd, yyyy"));
         driver.findElement(By.cssSelector("a[href='#/welcome'")).click();
         new TipsTricksPage(driver).signOut();
+        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+    }
+
+    /**
+     * @ID=GC-618
+     * @1296
+     */
+    @Test
+    public void checkAutoFillingAuthorInCreatedNews() {
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(UserRepository.get().defaultUserCredentials())
+                .navigateMenuEconews()
+                .gotoCreateNewsPage();
+        NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
+        EconewsPage econewsPage = createNewsPage.fillFields(newsData).publishNews();
+        OneNewsPage oneNewsPage = econewsPage.switchToOneNewsPageByParameters(newsData);
+        Assert.assertTrue(oneNewsPage.getAuthorText().contains(oneNewsPage.getTopUserName()));
         new DBQueries().deleteNewsByTitle(newsData.getTitle());
     }
 

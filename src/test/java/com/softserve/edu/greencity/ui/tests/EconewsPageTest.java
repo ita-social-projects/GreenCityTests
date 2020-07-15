@@ -40,7 +40,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		
 		TipsTricksPage page = loadApplication();
 		page.navigateMenuEconews()
-		.switchToOneNewsPagebyParameters(news)
+		.switchToOneNewsPageByParameters(news)
 		.switchToNextOneNewsPage()
 		.switchToEconewsPageBack();
 		
@@ -55,7 +55,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		
 		OneNewsPage findedeconewspage = loadApplication()
 				.navigateMenuEconews()
-				.switchToOneNewsPagebyParameters(news);
+				.switchToOneNewsPageByParameters(news);
 		
 		// check if is appropriate page
 		

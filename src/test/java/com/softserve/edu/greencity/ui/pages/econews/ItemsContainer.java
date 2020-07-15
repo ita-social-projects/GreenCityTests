@@ -17,9 +17,7 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
  * @author lv-493
  */
 public class ItemsContainer {
-	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
-	 
 	private WebDriver driver;
 	private List<ItemComponent> itemComponents;
 	
@@ -29,24 +27,17 @@ public class ItemsContainer {
 	}
 
 	private void initElements() {
-		
 		itemComponents = new ArrayList<>();
 		 for (WebElement current : driver
-				 .findElements(By.xpath("//div[@class=\"container\"]//ul[contains(@class, \"list\")]/li"))) {
+				 .findElements(By.cssSelector(".list-gallery-content"))) {
 			 itemComponents.add(new ItemComponent(driver, current));
 	        }
 	}
-	
-	// Page Object
-	
-    //itemComponents
 	
 	private List<ItemComponent> getItemComponents() {
     	return itemComponents;
     }
 
-	// Functional
-    
     /**
      * In this method we get how many ItemComponent is displayed
      * @return int 
@@ -62,7 +53,7 @@ public class ItemsContainer {
     private List<String> getItemComponentsHeader() {  
         List<String> itemComponentsHeader = new ArrayList<>();
         for(ItemComponent cur : getItemComponents()) {
-        	itemComponentsHeader.add(cur.getIitleText());
+        	itemComponentsHeader.add(cur.getTitleText());
         }
         return itemComponentsHeader;
     }
@@ -75,7 +66,7 @@ public class ItemsContainer {
     protected ItemComponent getItemComponentByHeader(String headerName){
     	ItemComponent result = null;
         for (ItemComponent cur : getItemComponents()) {
-            if (cur.getIitleText().toLowerCase()
+            if (cur.getTitleText().toLowerCase()
                     .contains(headerName.toLowerCase())) {
                 result = cur;
                 break;
@@ -90,24 +81,21 @@ public class ItemsContainer {
     
     /**
      * Open new page with news given by title, tags, content
-     * @param OneNewsData one
+     * @param NewsData one
      */
     protected void clickItemComponentOpenPage(NewsData news) {
-//   	getItemComponentByHeader(news.getTitle()).clickContent();
-    	findItemComponentByParameters(news).getIitle().click();
-    	
+    	findItemComponentByParameters(news).getTitle().click();
     }
-    
     
     /**
      * Find appropriate news by its parameters: title, list tags & content
-     * @param  OneNewsData 
+     * @param  NewsData news
      * @return ItemComponent
      */
     protected ItemComponent findItemComponentByParameters(NewsData news) {
     	ItemComponent result = null;
     	for(ItemComponent cur : getItemComponents() ) {
-    		if(cur.getIitleText().toLowerCase().equals(news.getTitle().toLowerCase()) 
+    		if(cur.getTitleText().toLowerCase().equals(news.getTitle().toLowerCase())
     				&& cur.getTagsText().equals(news.getTagsName())
     				&& news.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
     					result = cur;
@@ -128,6 +116,5 @@ public class ItemsContainer {
  	protected ItemComponent chooseNewsByNumber(int number) {
  				return getItemComponents().get(number);
 	}
-    
-	// Business Logic
- 	}
+
+}

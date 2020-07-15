@@ -1,19 +1,19 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import java.util.List;
+
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.CheckPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.List;
 
 /**
  * @author lv-493 Taqc/Java
@@ -38,6 +38,7 @@ public class EconewsPage extends TopPart {
         }
 
         visualiseElements();
+        initElements();
     }
 
     private void visualiseElements() {
@@ -58,6 +59,7 @@ public class EconewsPage extends TopPart {
         gridView = driver.findElement(By.cssSelector("div[class*='gallery-view']"));
         listView = driver.findElement(By.cssSelector("div[class*='list-view']"));
         foundItems = driver.findElement(By.cssSelector("p[class*='ng-star-inserted']"));
+        itemsContainer = getItemsContainer();
     }
 
     private TagsComponent getTagsComponent() {
@@ -162,7 +164,6 @@ public class EconewsPage extends TopPart {
      * @return EconewsPage
      */
     public EconewsPage selectFilters(List<Tag> tags) {
-
         scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().selectTags(tags);
         return new EconewsPage(driver);
@@ -203,7 +204,7 @@ public class EconewsPage extends TopPart {
     }
 
     /**
-     * News are displaeyd as list
+     * News are displayed as list
      *
      * @return EconewsPage
      */
@@ -219,7 +220,7 @@ public class EconewsPage extends TopPart {
      * @return OneNewsPage
      */
     public OneNewsPage switchToOneNewsPagebyNumber(int number) {
-        scrollToElement(itemsContainer.chooseNewsByNumber(number).getIitle());
+        scrollToElement(itemsContainer.chooseNewsByNumber(number).getTitle());
         itemsContainer.chooseNewsByNumber(number).clickTitle();
         return new OneNewsPage(driver);
     }
@@ -230,9 +231,8 @@ public class EconewsPage extends TopPart {
      * @param news
      * @return OneNewsPage
      */
-    public OneNewsPage switchToOneNewsPagebyParameters(NewsData news) {
-
-        scrollToElement(itemsContainer.findItemComponentByParameters(news).getIitle());
+    public OneNewsPage switchToOneNewsPageByParameters(NewsData news) {
+        scrollToElement(itemsContainer.findItemComponentByParameters(news).getTitle());
         itemsContainer.clickItemComponentOpenPage(news);
         return new OneNewsPage(driver);
     }

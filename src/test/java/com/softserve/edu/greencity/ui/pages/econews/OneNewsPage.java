@@ -28,7 +28,6 @@ public class OneNewsPage extends TopPart {
 	}
 
 	private void initElements() {
-		
 		goToNews = driver.findElement(By.cssSelector("div.back-button"));
 		tagsList = driver.findElements(By.cssSelector("div.tags > div"));
 		title = driver.findElement(By.cssSelector("div.news-title"));
@@ -38,11 +37,7 @@ public class OneNewsPage extends TopPart {
 		content = driver.findElement(By.cssSelector("div.news-text"));
 		itemsContainer  = new ItemsContainer(driver);
 	}
-	
-	//Page Object
-	
-	//goToNews 
-	
+
 	private WebElement getGoToNews () {
         return goToNews ;
     }
@@ -54,25 +49,19 @@ public class OneNewsPage extends TopPart {
 	private void clickGoToNewsButton() {
         getGoToNews().click();
     }
-    
-    //filtersList
-    
+
 	private List<WebElement> getTagsList() {
         return tagsList;
     }
 
-   //title
-    
 	private WebElement getTitle() {
         return title;
     }
 
     public String getTitleText() {
-        return getTitle().getText().trim();   //should we use trim?
+        return getTitle().getText().trim();
     }
-    
-    //data
-    
+
     private WebElement getData() {
         return data;
     }
@@ -80,18 +69,14 @@ public class OneNewsPage extends TopPart {
     private String getDataText() {
         return getData().getText();
     }
-    
-    //author
-    
+
     private WebElement getAuthor() {
         return author;
     }
 
-    private String getAuthorText() {
+    public String getAuthorText() {
         return getAuthor().getText();
     }
-    
-    //content
     
     private WebElement getContent() {
         return content;
@@ -100,8 +85,6 @@ public class OneNewsPage extends TopPart {
     private String getContentText() {
         return getContent().getText();
     }
-    
-    //Business logic
     
     /**
      * Go to next OneNewsPage
@@ -115,7 +98,6 @@ public class OneNewsPage extends TopPart {
     
     /**
      * Go to next OneNewsPage
-     * @param number
      * @return OneNewsPage
      */
     public OneNewsPage switchToNextOneNewsPage() {

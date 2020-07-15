@@ -4,17 +4,14 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public final class ItemComponent {
 
@@ -33,56 +30,46 @@ public final class ItemComponent {
 	}
 
 	private void initElements() {
-	
-		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
-		title = newsItem.findElement(By.cssSelector("div.title-list p"));
-		content = newsItem.findElement(By.cssSelector("div.list-text p"));
-		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
-		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
-//		makeElPresent();
+		makeElPresent();
 	}
 
 	private void makeElPresent() {
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		Duration duration = Duration.ofMillis(20L);
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
-//		WebDriverWait wait = new WebDriverWait(myDriver, 15);
-//		wait.until(webDriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete"));
-		wait.until(ExpectedConditions.visibilityOfAllElements( title, content, dateOfCreation, author));
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		wait.until(ExpectedConditions
+				.visibilityOfAllElements(
+						getTitle(),
+						getContent(),
+						getDateOfCreation(),
+						getAuthor()));
+		System.out.println("makeElPresent()");
 	}
 
-	// Page Object
-
-	// typeOfNews
-
 	private List<WebElement> getTags() {
+		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
 		return tags;
 	}
 
-	// container
 
 	private WebElement getNewsItem() {
 		return newsItem;
 	}
 
-	// title
-
-	protected WebElement getIitle() {
+	protected WebElement getTitle() {
+		title = newsItem.findElement(By.cssSelector("div.title-list p"));
 		return title;
 	}
 
-	protected String getIitleText() {
-		return getIitle().getText();
+	protected String getTitleText() {
+		return getTitle().getText();
 	}
 
 	protected void clickTitle() {
-		getIitle().click();
+		getTitle().click();
 	}
 
-	// content
-
 	private WebElement getContent() {
+		content = newsItem.findElement(By.cssSelector("div.list-text p"));
 		return content;
 	}
 
@@ -94,9 +81,8 @@ public final class ItemComponent {
 		getContent().click();
 	}
 
-	// dateOfCreation
-
 	private WebElement getDateOfCreation() {
+		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
 		return dateOfCreation;
 	}
 
@@ -104,9 +90,8 @@ public final class ItemComponent {
 		return getDateOfCreation().getText();
 	}
 
-	// author
-
 	private WebElement getAuthor() {
+		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
 		return author;
 	}
 
@@ -114,8 +99,6 @@ public final class ItemComponent {
 		return getAuthor().getText();
 	}
 
-	// Functional
-	
 	/**
 	 * List with names of Tags
 	 * @return List<String>
@@ -129,5 +112,4 @@ public final class ItemComponent {
 		return str;
 	}
 
-	// Business Logic
 }
