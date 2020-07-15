@@ -1,11 +1,10 @@
 package com.softserve.edu.greencity.ui.tools;
 
+import org.testng.Assert;
+
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 public class DBQueries {
@@ -29,21 +28,44 @@ public class DBQueries {
         }
     }
 
-
-    public void deleteUserByEmail(String email) {
-
+    public Connection getConnectionToGreenCityDB() {
         try {
             Class.forName(driverClass);
-            Connection connection = DriverManager.getConnection(url, userName, password);
-            Statement statement = connection.createStatement();
-            statement.executeQuery("DELETE FROM users WHERE email = '" + email + "'");
-
-
+            return DriverManager.getConnection(url, userName, password);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+            return null;
         }
-
     }
 
 
+    public void deleteUserByEmail(String email) {
+        try {
+            Connection connection = getConnectionToGreenCityDB();
+            Statement statement = connection.createStatement();
+            statement.executeQuery("DELETE FROM users WHERE email = '" + email + "'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteNewsByTitle(String title) {
+        try {
+            Connection connection = getConnectionToGreenCityDB();
+            String titleInDataBase = title;
+            ResultSet queryResponse = connection
+                    .createStatement()
+                    .executeQuery("SELECT * FROM public.eco_news WHERE title = '" + titleInDataBase + "'");
+            Assert.assertTrue(queryResponse.next());
+            int id = queryResponse.getInt("id");
+            connection
+                    .prepareStatement("DELETE FROM public.eco_news_tags * WHERE eco_news_id = " + id)
+                    .execute();
+            connection
+                    .prepareStatement("DELETE FROM public.eco_news * WHERE id = " + id)
+                    .execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

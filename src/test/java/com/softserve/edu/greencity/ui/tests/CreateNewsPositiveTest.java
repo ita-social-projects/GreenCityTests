@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
@@ -8,10 +8,9 @@ import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -20,13 +19,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -47,7 +39,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void checkThatUserOnCreateNewsForm() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         WebElement createNewsMainTitle = driver.findElement(By.cssSelector(".title h2"));
@@ -60,30 +52,21 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     /**
-     * @ID=GC-397 1. In description query example to Data Base has little mistake with "*" character
+     * @ID=GC-397
      */
     @Test
-    public void checkImpossibleToCreateNewsWithoutFillingMandatoryFields() throws SQLException {
+    public void checkPossibilityToCreateNewsAfterFillingMandatoryFields() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
-        createNewsPage.setTitleField("Be eco! Be cool!");
+        String title = "Be eco! Be cool!";
+        createNewsPage.setTitleField(title);
         createNewsPage.getTagsComponent().selectTag(Tag.NEWS);
         createNewsPage.setContentField("It's so healthy, fun and cool to bring eco habits in everyday life");
         createNewsPage.clickPublishButton();
-        Connection connection = connectToJDBC();
-        ResultSet findNews = connection
-                .createStatement()
-                .executeQuery("SELECT * FROM eco_news WHERE title = 'Be eco! Be cool!'");
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertTrue(findNews.next());
-        int id = findNews.getInt("id");
-        connection.prepareStatement("DELETE FROM public.eco_news_tags * WHERE eco_news_id = " + id).execute();
-        connection.prepareStatement("DELETE FROM public.eco_news * WHERE id = " + id).execute();
-        softAssert.assertFalse(connection.createStatement().executeQuery("SELECT * FROM eco_news WHERE title = 'Be eco! Be cool!'").next());
+        new DBQueries().deleteNewsByTitle(title);
         createNewsPage.signOut();
-        softAssert.assertAll();
     }
 
     /**
@@ -92,8 +75,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {
         EconewsPage econewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com",
-                        "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews();
         Assert.assertTrue(driver.findElements(By.cssSelector("#create-button")).size() == 1);
         econewsPage.signOut();
@@ -115,7 +97,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifySelectAndDeselectPossibilityOfTags() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         Map<String, WebElement> ourTags = new HashMap<>();
@@ -152,16 +134,16 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * 3. In description query example to Data Base has little mistake with "*" character
      */
     @Test(dataProvider = "getStringForTitle")
-    public void fillTitleFieldFromMinToMax(String title) throws SQLException, InterruptedException {
+    public void fillTitleFieldFromMinToMax(String title) {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearTitleField();
         createNewsPage.setTitleField(title);
         createNewsPage.publishNews().signOut();
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
     }
 
     @DataProvider
@@ -180,9 +162,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * @ID=GC-628
      */
     @Test(dataProvider = "getTagsList")
-    public void checkCreateNewsWithOneToThreeTags(List<Tag> tags) throws SQLException, InterruptedException {
+    public void checkCreateNewsWithOneToThreeTags(List<Tag> tags) {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         createNewsPage.clearTitleField();
@@ -193,7 +175,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 " takes place the most important event for professionals and funs of natural food and healthy life");
         createNewsPage.getTagsComponent().selectTags(tags);
         EconewsPage econewsPage = createNewsPage.publishNews();
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
         int news = econewsPage.getNumberOfItemComponent();
         System.out.println(news);
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
@@ -258,7 +240,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifyImpossibilityOfUploadingTooLargeImage() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -274,9 +256,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * TODO in practice the behavior of the site is different with test description...
      */
     @Test
-    public void verifyThatWithInvalidImgFormatNewsWillPublishWithDefaultImg() throws SQLException, InterruptedException {
+    public void verifyThatWithInvalidImgFormatNewsWillPublishWithDefaultImg() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -296,7 +278,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
             }
         }
         Assert.assertTrue(isPresent);
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
         econewsPage.signOut();
     }
 
@@ -306,7 +288,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifyImpossibilityOFCreatingNewsWithTooShortContent() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -329,7 +311,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifyImpossibilityOfCreatingTestWithUncorrectUrlInSourceField() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -352,7 +334,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifyImpossibilityOfCreatingNewsWithEmptyFields() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         boolean isDisabled = driver.findElement(By.cssSelector(".submit-buttons button+button+button")).isEnabled();
@@ -369,7 +351,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
         newsData.setContent("");
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData);
@@ -388,7 +370,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verriyImpossibilityOfCreatingNewsWithoutAnyTags() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -409,7 +391,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifyImpossibilityCreateNewsWithEmptyTitle() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         createNewsPage.setContentField("March 4 – 7, 2020, International Exhibition Center," +
@@ -429,9 +411,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * @ID=GC-643
      */
     @Test
-    public void verifyPossibilityOfMaxThreeTagsWhenCreateNews() throws SQLException, InterruptedException {
+    public void verifyPossibilityOfMaxThreeTagsWhenCreateNews() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -465,16 +447,16 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
             softAssert.assertTrue(isPresent);
         }
         econewsPage.signOut();
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
     }
 
     /**
      * @ID=GC-654
      */
     @Test
-    public void verifyImpossibilityToSelectOneTagTwice() throws SQLException, InterruptedException {
+    public void verifyImpossibilityToSelectOneTagTwice() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
@@ -503,7 +485,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
             Assert.assertTrue(isPresent);
         }
         econewsPage.signOut();
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
     }
 
     /**
@@ -520,9 +502,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * @ID=GC-613
      */
     @Test
-    public void creatNewsWithSourceField() throws SQLException, InterruptedException {
+    public void creatNewsWithSourceField() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
@@ -544,16 +526,16 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
             Assert.assertTrue(isPresent);
         }
         econewsPage.signOut();
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
     }
 
     /**
      * @ID=GC-616
      */
     @Test
-    public void createNewsWithContentLengthMoreThen20() throws SQLException, InterruptedException {
+    public void createNewsWithContentLengthMoreThen20() {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
@@ -564,7 +546,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         String title = "very simple test like previous. verify contentType filed with more than 20 characters";
         createNewsPage.setTitleField(title);
         createNewsPage.publishNews().signOut();
-        cleanDataBase(title);
+        new DBQueries().deleteNewsByTitle(title);
     }
 
     /**
@@ -573,7 +555,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     @Test
     public void verifingAutoFillingDataWhenCreateNews() throws InterruptedException, SQLException {
         CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuEconews()
                 .gotoCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
@@ -599,83 +581,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 DateUtil.getCurrentDate("MMM dd, yyyy"));
         driver.findElement(By.cssSelector("a[href='#/welcome'")).click();
         new TipsTricksPage(driver).signOut();
-        cleanDataBase(newsData.getTitle());
-    }
-
-
-    /**
-     * Additional methods, tools, helpers for these tests
-     * ===========================================================================================================================================================
-     */
-    public String getCredential(String key) {
-        Properties properties = new Properties();
-        try {
-            properties
-                    .load(new BufferedReader(new FileReader("src/test/resources/credentials.properties")));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return properties.getProperty(key);
-    }
-
-    public User getSpecialUser(String emailKey, String passKey) {
-        String email = getCredential(emailKey);
-        String pass = getCredential(passKey);
-        return new User(email, pass);
-    }
-
-    public Connection connectToJDBC() {
-        try {
-
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Where is your PostgreSQL JDBC Driver? "
-                    + "Include in your library path!");
-            e.printStackTrace();
-            return null;
-        }
-        Connection connection = null;
-
-        try {
-            connection = DriverManager.getConnection(
-                    getCredential("JDBC_url"),
-                    getCredential("JDBC_user"),
-                    getCredential("JDBC_password"));
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return null;
-        }
-        if (connection != null) {
-            System.out.println("You made it, take control your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
-        }
-        return connection;
-    }
-
-    public void cleanDataBase(String title) throws SQLException, InterruptedException {
-        cleanDataBase(title, false);
-    }
-
-    public void cleanDataBase(String title, boolean waiting) throws SQLException, InterruptedException {
-        if (waiting) {
-            Thread.sleep(15000);
-        }
-        Connection connection = connectToJDBC();
-//
-        String titleInDataBase = title;
-        ResultSet queryResponse = connection
-                .createStatement()
-                .executeQuery("SELECT * FROM public.eco_news WHERE title = '" + titleInDataBase + "'");
-        Assert.assertTrue(queryResponse.next());
-        int id = queryResponse.getInt("id");
-        connection
-                .prepareStatement("DELETE FROM public.eco_news_tags * WHERE eco_news_id = " + id)
-                .execute();
-        connection
-                .prepareStatement("DELETE FROM public.eco_news * WHERE id = " + id)
-                .execute();
+        new DBQueries().deleteNewsByTitle(newsData.getTitle());
     }
 
 }
