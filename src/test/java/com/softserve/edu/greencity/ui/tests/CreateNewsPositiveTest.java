@@ -273,32 +273,32 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      * TODO add checking that news has default image
      * TODO in practice the behavior of the site is different with test description...
      */
-//    @Test
-//    public void verifyThatWithInvalidImgFormatNewsWillPublishWithDefaultImg() throws SQLException {
-//        CreateNewsPage createNewsPage = loadApplication()
-//                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
-//                .navigateMenuEconews()
-//                .gotoCreateNewsPage()
-//                .fillFields(NewsDataRepository.getRequiredFieldsNews());
-//        createNewsPage.clearTitleField();
-//        String title = "Hello, World! How are you doing?";
-//        createNewsPage.setTitleField(title);
-//        createNewsPage.uploadFile(createNewsPage.getDropArea(), "src/test/resources/credentials.properties");
-//        String warning = driver.findElement(By.cssSelector(".dropzone+.warning")).getText();
-//        Assert.assertEquals(warning, "Download PNG or JPG only. File size should be less than 10MB");
-//        EconewsPage econewsPage = createNewsPage.publishNews();
-//        List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
-//        boolean isPresent = false;
-//        for(WebElement e : elements) {
-//            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
-//                isPresent = true;
-//                break;
-//            }
-//        }
-//        Assert.assertTrue(isPresent);
-//        cleanDataBase(title);
-//        econewsPage.signOut();
-//    }
+    @Test
+    public void verifyThatWithInvalidImgFormatNewsWillPublishWithDefaultImg() throws SQLException, InterruptedException {
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com", "PassFor_green.city.test2@gmail.com"))
+                .navigateMenuEconews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.getRequiredFieldsNews());
+        createNewsPage.clearTitleField();
+        String title = "Hello, World! How are you doing?";
+        createNewsPage.setTitleField(title);
+        createNewsPage.uploadFile(createNewsPage.getDropArea(), "src/test/resources/credentials.properties");
+        String warning = driver.findElement(By.cssSelector(".dropzone+.warning")).getText();
+        Assert.assertEquals(warning, "Download PNG or JPG only. File size should be less than 10MB");
+        EconewsPage econewsPage = createNewsPage.publishNews();
+        List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
+        boolean isPresent = false;
+        for(WebElement e : elements) {
+            if(e.findElement(By.cssSelector(".title-list p")).getText().equals(title)) {
+                isPresent = true;
+                break;
+            }
+        }
+        Assert.assertTrue(isPresent);
+        cleanDataBase(title);
+        econewsPage.signOut();
+    }
 
     /**
      * @ID=GC-592
