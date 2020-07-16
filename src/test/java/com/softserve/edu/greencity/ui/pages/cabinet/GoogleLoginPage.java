@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import com.softserve.edu.greencity.ui.tools.CookiesAndStorageHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +19,6 @@ public class GoogleLoginPage {
     private WebElement emailNextButton;
     private WebElement passwordField;
     private WebElement passwordNextButton;
-    private WebElement loggedInUser;
 
     private final String EMAIL_FIELD_ID = "identifierId";
     private final String EMAIL_NEXT_BUTTON_XPATH = "//*[@id='identifierNext']/div";
@@ -27,6 +26,8 @@ public class GoogleLoginPage {
     private final String PASSWORD_FIELD_XPATH = ".//*[@id='password']/div[1]/div/div[1]/input";
     private final String PASSWORD_NEXT_BUTTON_XPATH = "//*[@id='passwordNext']/div";
     private final String LOGGED_IN_USER_CLASS = ".lCoei";
+
+    public final static String GOOGLE_LOGIN_PAGE_URL = "https://accounts.google.com/signin/oauth";
 
     public GoogleLoginPage(WebDriver driver) {
         this.driver = driver;
@@ -57,16 +58,6 @@ public class GoogleLoginPage {
         return passwordNextButton = driver.findElement(By.xpath(PASSWORD_NEXT_BUTTON_XPATH));
     }
 
-    public WebElement getLoggedInUser() {
-        return loggedInUser = driver.findElement(By.cssSelector(LOGGED_IN_USER_CLASS));
-    }
-
-    private boolean isLoginedUser() {
-        ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
-
-        return elementsCustomMethods.isElementPresent(By.cssSelector(LOGGED_IN_USER_CLASS));
-    }
-
     public TipsTricksPage successfulLoginByGoogle(User user) {
         String parentWindow = driver.getWindowHandle();
 
@@ -78,15 +69,6 @@ public class GoogleLoginPage {
 
         driver.switchTo().window(windowHandles.get(1));
 
-        if (isLoginedUser()) {
-            getLoggedInUser().click();
-            getPasswordField().sendKeys(user.getPassword());
-            getPasswordNextButton().click();
-
-            driver.switchTo().window(parentWindow);
-            return new TipsTricksPage(driver);
-        }
-
         getEmailField().sendKeys(user.getEmail());
         getEmailNextButton().click();
 
@@ -96,5 +78,10 @@ public class GoogleLoginPage {
         driver.switchTo().window(parentWindow);
 
         return new TipsTricksPage(driver);
+    }
+
+    public void clearCookies() {
+        CookiesAndStorageHelper cookiesAndStorageHelper = new CookiesAndStorageHelper(driver);
+        cookiesAndStorageHelper.cleanGoogleAuthCookiesAndStorages();
     }
 }

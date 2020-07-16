@@ -272,8 +272,6 @@
 					<!-- <exclude>**/AppTest.java</exclude> -->
 					<!-- </excludes> -->
 					<suiteXmlFiles>
-						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
-						<!-- <suiteXmlFile>testng2.xml</suiteXmlFile> -->
 						<suiteXmlFile>${testng.xml}</suiteXmlFile>
 					</suiteXmlFiles>
 					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
