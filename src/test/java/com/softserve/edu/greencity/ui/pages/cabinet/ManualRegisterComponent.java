@@ -1,7 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.google.api.services.gmail.Gmail;
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.tools.GMailAPILogin;
 import com.softserve.edu.greencity.ui.tools.GMailBox;
+import com.softserve.edu.greencity.ui.tools.GMailVerification;
 import com.softserve.edu.greencity.ui.tools.TabsHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -10,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Set;
 
 
@@ -453,17 +458,25 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected RegisterComponent verifyRegistration() {
+    public RegisterComponent verifyRegistration() {
         String initialTab = driver.getWindowHandle();
+
+
+        String verifLink = null;
+        try {
+            Gmail service = GMailAPILogin.getService();
+            verifLink = GMailVerification.getVerifLink(service);
+        } catch (GeneralSecurityException|IOException e) {
+            e.printStackTrace();
+        }
+
         Set<String> allTabs = driver.getWindowHandles();
-        String newlyOpenedTab = TabsHandler.openNewTabAndGetId(driver, allTabs);
-        driver.switchTo().window(newlyOpenedTab);
-
-        GMailBox logInGMailPage = new GMailBox(driver);
-        logInGMailPage.logInGMail()
-                .openEmailClickLink();
-
+        String verificationTab = TabsHandler.openNewTabAndGetId(driver, allTabs);
         driver.close();
+        driver.switchTo().window(verificationTab);
+        driver.get(verifLink);
+        driver.close();
+
         driver.switchTo().window(initialTab);
         return this;
     }
@@ -489,8 +502,8 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
-                .clickSignUpButton()
-                .verifyRegistration();
+                .clickSignUpButton();
+               // .verifyRegistration();
     }
 
     public void registrationUser(User userData) {
