@@ -63,6 +63,10 @@ public class NewsData {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     /**
      * Method to convert list of Tags to sorted list of Strings
      * @return List<String>
