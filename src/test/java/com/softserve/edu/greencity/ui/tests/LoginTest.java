@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.GoogleLoginPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
@@ -348,16 +349,21 @@ public class LoginTest extends GreenCityTestRunner {
         User user = UserRepository.get().googleUserCredentials();
 
         TipsTricksPage tipsTricksPage = loadApplication();
-        tipsTricksPage
+        GoogleLoginPage googleLoginPage = tipsTricksPage
                 .signUp()
-                .clickGoogleSignUpButton()
+                .clickGoogleSignUpButton();
+
+        googleLoginPage
                 .successfulLoginByGoogle(user);
 
         String topUserName = tipsTricksPage.getTopUserName();
 
-        tipsTricksPage.signOut().googleAccountSignOut();
+        tipsTricksPage.signOut();
+
 
         Assert.assertEquals(topUserName, "Taras Malynovskyi");
+
+        googleLoginPage.clearCookies();
     }
 
     @Test(testName = "GC-220")
@@ -365,31 +371,39 @@ public class LoginTest extends GreenCityTestRunner {
         User user = UserRepository.get().googleUserCredentials();
 
         TipsTricksPage tipsTricksPage = loadApplication();
-        tipsTricksPage
+
+        GoogleLoginPage googleLoginPage = tipsTricksPage
                 .signIn()
-                .clickGoogleSignInButton()
+                .clickGoogleSignInButton();
+
+        googleLoginPage
                 .successfulLoginByGoogle(user);
 
         String topUserName = tipsTricksPage.getTopUserName();
 
-        tipsTricksPage.signOut().googleAccountSignOut();
+        tipsTricksPage.signOut();
 
         Assert.assertEquals(topUserName, "Taras Malynovskyi");
+
+        googleLoginPage.clearCookies();
     }
 
     @Test(testName = "GC-234")
     public void signInByGoogleCredentialsOnManualSignInPopUp() {
         User user = UserRepository.get().googleUserCredentials();
         SoftAssert softAssert = new SoftAssert();
+        TipsTricksPage tipsTricksPage = loadApplication();
 
-        TipsTricksPage tipsTricksPage = loadApplication()
+        GoogleLoginPage googleLoginPage = tipsTricksPage
                 .signUp()
-                .clickGoogleSignUpButton()
+                .clickGoogleSignUpButton();
+
+        googleLoginPage
                 .successfulLoginByGoogle(user);
 
         softAssert.assertEquals(tipsTricksPage.getTopUserName(), "Taras Malynovskyi");
 
-        tipsTricksPage.signOut().googleAccountSignOut();
+        tipsTricksPage.signOut();
 
         WebElement wrongEmailOrPasswordError = loadApplication()
                 .signIn()
@@ -399,5 +413,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         softAssert.assertTrue(wrongEmailOrPasswordError.isDisplayed());
         softAssert.assertAll();
+
+        googleLoginPage.clearCookies();
     }
 }
