@@ -1,53 +1,60 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.createNewsTests;
 
-import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreViewPage;
 import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
-
-/**
- * Tests to verify "Create News" functional
- * @author lv-493
- */
-public class CreateNewsTest extends GreenCityTestRunner {
-    User defaultUser;
-
-    @BeforeClass
-    public void readCredentials() {
-        Properties properties = new Properties();
-        try {
-            properties
-                    .load(new BufferedReader(new FileReader("src/test/resources/credentials.properties")));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        defaultUser = new User(properties.getProperty("temporaryEmail"), properties.getProperty("temporaryPass"));
-    }
+public class CNSmokeTests extends GreenCityTestRunner {
 
     @BeforeMethod
     public void login() {
         if(isLoginingNow()) return;
         loadApplication()
-                .loginIn(defaultUser)
+                .loginIn(UserRepository.get().defaultUserCredentials())
                 .navigateMenuTipsTricks();
     }
 
+    /**
+     * @ID=GC-591
+     */
+    @Test
+    public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {
+        EconewsPage econewsPage = loadApplication()
+                .navigateMenuEconews();
+        Assert.assertTrue(driver.findElements(By.cssSelector("#create-button")).size() == 1);
+    }
+
+    /**
+     * @ID=GC-595
+     */
+    @Test
+    public void checkThatUserOnCreateNewsForm() {
+        CreateNewsPage createNewsPage = loadApplication()
+                .navigateMenuEconews()
+                .gotoCreateNewsPage();
+        WebElement createNewsMainTitle = driver.findElement(By.cssSelector(".title h2"));
+        int numberOfButtons = driver.findElements(By.cssSelector(".submit-buttons button")).size();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createNewsMainTitle.getText(), "Create news");
+        softAssert.assertTrue(numberOfButtons == 3);
+        softAssert.assertAll();
+    }
 
     @Test(dataProvider = "newsDataProvider")
-    public void createNewsTest(NewsData newsData) {
+    public void createNewsWithContinueCreating(NewsData newsData) {
         logger.info("createNewsTest starts with parameters: " + newsData.toString());
         EconewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
@@ -73,6 +80,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         econewsPage = createNewsPage.navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
+        new DBQueries().deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -81,7 +89,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      * @param newsData
      */
     @Test(dataProvider = "newsDataProvider")
-    public void createNewsFromPreViewTest(NewsData newsData) {
+    public void createNewsFromPreView(NewsData newsData) {
         logger.info("createNewsFromPreViewTest starts with parameters: " + newsData.toString());
         EconewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
@@ -103,6 +111,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         softAssert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
         softAssert.assertAll();
+        new DBQueries().deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -111,7 +120,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      * @param newsData
      */
     @Test(dataProvider = "newsDataProvider")
-    public void createNewsAfterPreViewTest(NewsData newsData) {
+    public void createNewsAfterPreView(NewsData newsData) {
         logger.info("createNewsAfterPreViewTest starts with parameters: " + newsData.toString());
         EconewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
@@ -143,63 +152,11 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 "Text in Date field doesn't match with input data");
         softAssert.assertEquals(createNewsPage.getSourceFieldValue(), newsData.getSource(),
                 "Text in Source field doesn't match with input data");
-//        if (newsData.getFilePath() != "") {
-//            softAssert.assertTrue(createNewsPage.isPictureUploaded(), "Picture is not uploaded");
-//        }TODO this assertion fail because of bug in the developers side. They should fix this place.
         softAssert.assertAll();
         econewsPage = createNewsPage.publishNews().navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-    }
-
-    /**
-     * Cancel news creation test.
-     * @author lv-493
-     */
-    @Test
-    public void cancelNewsCreatingTest() {
-        logger.info("cancelNewsCreatingTest starts");
-        EconewsPage econewsPage = loadApplication()
-                .navigateMenuEconews();
-        int expectedCount = econewsPage.getNumberOfItemComponent();
-        econewsPage = econewsPage.gotoCreateNewsPage()
-                .cancelNewsCreating();
-        Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount);
-        Assert.assertEquals(driver.getTitle(), "Eco news");
-        econewsPage.signOut();
-    }
-    /**
-     * Create news negative test
-     *@author lv-493
-     * @param newsData
-     */
-    @Test(dataProvider = "newsInvalidDataProvider", invocationCount = 4)
-    public void createNewsNegativeTest(NewsData newsData) {
-        logger.info("createNewsNegativeTest starts with parameters: " + newsData.toString());
-        SoftAssert softAssert = new SoftAssert();
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
-        createNewsPage.clearSourceField();
-        createNewsPage.setSourceField(newsData.getSource());
-        createNewsPage.clearTitleField();
-        createNewsPage.setTitleField(newsData.getTitle());
-        createNewsPage.clearContentField();
-        createNewsPage.setContentField(newsData.getContent());
-        createNewsPage.uploadFile(createNewsPage.getDropArea(), newsData.getFilePath());
-        softAssert.assertTrue(createNewsPage.isTitleDescriptionWarning(), "Title warning is not present");
-        softAssert.assertTrue(createNewsPage.isContentDescriptionWarning(), "Content warning is not present");
-        softAssert.assertTrue(createNewsPage.isPictureDescriptionWarning(), "Picture warning is not present");
-        softAssert.assertTrue(createNewsPage.isSourceDescriptionWarning(), "Source warning is not present");
-        softAssert.assertFalse(createNewsPage.isPublishButtonClickable(), "Publish button should not be clickable");
-        createNewsPage.getTagsComponent().deselectTags(newsData.getTags());
-        createNewsPage.getTagsComponent().selectTags(newsData.getTags());
-        softAssert.assertTrue(createNewsPage.isTagsDescriptionWarning(), "Tags warning is not present");
-        softAssert.assertAll();
-        createNewsPage.getTagsComponent().deselectTags(newsData.getTags());
-        PreViewPage preViewPage = createNewsPage.goToPreViewPage();
-        Assert.assertFalse(preViewPage.isPublishButtonPresent());
-        preViewPage.signOut();
+        new DBQueries().deleteNewsByTitle(newsData.getTitle());
     }
 
     @DataProvider
@@ -209,18 +166,6 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 NewsDataRepository.getRequiredFieldsNews(),
                 NewsDataRepository.getAllFieldsNews()
         };
-    }
-
-    @DataProvider
-    public Object[] newsInvalidDataProvider() {
-        return new Object[]{
-                NewsDataRepository.getInvalidData()
-        };
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        driver.manage().deleteAllCookies();
     }
 
 }
