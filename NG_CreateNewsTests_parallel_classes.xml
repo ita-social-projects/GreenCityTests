@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="All Test Suite">
+
+    <test
+            parallel="classes"
+            thread-count="4"
+            name="/home/m/GreenCityTests/src/test/java/com/softserve/edu/greencity/ui/tests/createNewsTests/CNFunctionalityTests.java">
+
+        <classes>
+
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CNFunctionalityTests"/>
+
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CNNegativeTests"/>
+
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CNPositiveTests"/>
+
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CNSmokeTests"/>
+
+        </classes>
+
+    </test>
+
+</suite>

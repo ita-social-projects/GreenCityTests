@@ -18,7 +18,6 @@ public class SmallHeightPart extends TopPart {
         if (isMenuClickable()) {
             return super.navigateMenuEconews();
         }
-        getMainMenuDropdown().closeNaviconButton();
         getMainMenuDropdown().clickFooterEcoNews();
         return new EconewsPage(driver);
     }
@@ -29,7 +28,6 @@ public class SmallHeightPart extends TopPart {
         if (isMenuClickable()) {
             return super.navigateMenuTipsTricks();
         }
-        getMainMenuDropdown().closeNaviconButton();
         getMainMenuDropdown().clickFooterTipsTricks();
         return new TipsTricksPage(driver);
     }
@@ -40,7 +38,7 @@ public class SmallHeightPart extends TopPart {
         if (isMenuClickable()) {
             return super.navigateMenuMap();
         }
-        getMainMenuDropdown().closeNaviconButton();
+
         getMainMenuDropdown().clickFooterPlaces();
         return new MapPage(driver);
     }
@@ -51,7 +49,7 @@ public class SmallHeightPart extends TopPart {
         if (isMenuClickable()) {
             return super.navigateMenuMyCabinet();
         }
-        getMainMenuDropdown().closeNaviconButton();
+
         driver.get("https://ita-social-projects.github.io/GreenCityClient/#/auth");
         return new MyCabinetPage(driver);
     }
@@ -62,7 +60,6 @@ public class SmallHeightPart extends TopPart {
         if (isMenuClickable()) {
             return super.navigateMenuAbout();
         }
-        getMainMenuDropdown().closeNaviconButton();
         getMainMenuDropdown().clickFooterAbout();
         return new AboutPage(driver);
     }
