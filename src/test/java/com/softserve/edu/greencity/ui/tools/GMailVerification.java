@@ -52,6 +52,7 @@ public class GMailVerification {
 
         if (m.find()) {
             verifLink = content.substring(m.start(), m.end());
+            verifLink = verifLink.replace("&amp;", "&");
         }
         System.out.println(verifLink);
         return verifLink;
