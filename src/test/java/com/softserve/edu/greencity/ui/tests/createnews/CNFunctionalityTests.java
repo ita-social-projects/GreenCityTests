@@ -236,4 +236,25 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
         new DBQueries().deleteNewsByTitle(newsData.getTitle());
     }
 
+    /**
+     * @ID=405-1304
+     * @return
+     */
+    @Test
+    public void checkThatNewsWillCreate() {
+        NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
+        String title = "Test 'checkThatNewsWillCreate'";
+        newsData.setTitle(title);
+        loadCreateNewsPage()
+                .fillFields(newsData)
+                .publishNews();
+        new DBQueries().deleteNewsByTitle(title);
+    }
+
+    public CreateNewsPage loadCreateNewsPage() {
+        return loadApplication()
+                .navigateMenuEconews()
+                .gotoCreateNewsPage();
+    }
+
 }
