@@ -26,6 +26,13 @@ public class WindowManager {
         driver.manage().window().maximize();
     }
 
+    /**
+     * This method makes a screenshot at that step where it called.
+     *
+     * @param driver
+     * @param pathToStore this is path to where to store the screenshot. As example:
+     *                    C:\Users\User\IdeaProjects\YourProject\src\screenshotName.png
+     */
     public static void takeScreenshot(WebDriver driver, String pathToStore) {
         TakesScreenshot scrShot = ((TakesScreenshot) driver);
         File SrcFile = scrShot.getScreenshotAs(OutputType.FILE);

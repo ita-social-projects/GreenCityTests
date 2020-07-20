@@ -17,7 +17,7 @@ public abstract class GreenCityTestRunner {
     public static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 //    public static final String BASE_URL = "http://localhost:4200/#/welcome";
 
-    public static final boolean CHROME_HEADLESS_OPTION = false;
+    public static final boolean CHROME_HEADLESS_OPTION = true;
     private final String CHROME_LANGUAGE_OPTION = "en";
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -33,7 +33,6 @@ public abstract class GreenCityTestRunner {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(CHROME_HEADLESS_OPTION);
         chromeOptions.addArguments("--lang=" + CHROME_LANGUAGE_OPTION);
-        chromeOptions.addArguments("--start-maximized");
 
         driver = new ChromeDriver(chromeOptions);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);

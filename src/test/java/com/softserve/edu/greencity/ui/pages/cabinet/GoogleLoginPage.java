@@ -42,56 +42,33 @@ public class GoogleLoginPage {
     }
 
     public WebElement getEmailField() {
-        if (GreenCityTestRunner.CHROME_HEADLESS_OPTION) {
-            wait = new WebDriverWait(driver, 5);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(EMAIL_FIELD_ID_HEADLESS)));
-
-            return emailField = driver.findElement(By.id(EMAIL_FIELD_ID_HEADLESS));
-        }
+        String locator = GreenCityTestRunner.CHROME_HEADLESS_OPTION ? EMAIL_FIELD_ID_HEADLESS : EMAIL_FIELD_ID;
 
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(EMAIL_FIELD_ID)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(locator)));
 
-        return emailField = driver.findElement(By.id(EMAIL_FIELD_ID));
+        return emailField = driver.findElement(By.id(locator));
     }
 
     public WebElement getEmailNextButton() {
-        if (GreenCityTestRunner.CHROME_HEADLESS_OPTION) {
-            wait = new WebDriverWait(driver, 5);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(EMAIL_NEXT_BUTTON_ID_HEADLESS)));
+        By locator = GreenCityTestRunner.CHROME_HEADLESS_OPTION ? By.id(EMAIL_NEXT_BUTTON_ID_HEADLESS) : By.xpath(EMAIL_NEXT_BUTTON_XPATH);
 
-            return emailField = driver.findElement(By.id(EMAIL_NEXT_BUTTON_ID_HEADLESS));
-        }
-
-        wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(EMAIL_NEXT_BUTTON_XPATH)));
-
-        return emailNextButton = driver.findElement(By.xpath(EMAIL_NEXT_BUTTON_XPATH));
+        return emailNextButton = driver.findElement(locator);
     }
 
     public WebElement getPasswordField() {
-        if (GreenCityTestRunner.CHROME_HEADLESS_OPTION) {
-            wait = new WebDriverWait(driver, 5);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(PASSWORD_FIELD_ID_HEADLESS)));
-
-            return emailField = driver.findElement(By.id(PASSWORD_FIELD_ID_HEADLESS));
-        }
+        By locator = GreenCityTestRunner.CHROME_HEADLESS_OPTION ? By.id(PASSWORD_FIELD_ID_HEADLESS) : By.xpath(PASSWORD_FIELD_XPATH);
 
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PASSWORD_FIELD_XPATH)));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 
-        return passwordField = driver.findElement(By.xpath(PASSWORD_FIELD_XPATH));
+        return passwordField = driver.findElement(locator);
     }
 
     public WebElement getPasswordNextButton() {
-        if (GreenCityTestRunner.CHROME_HEADLESS_OPTION) {
-            wait = new WebDriverWait(driver, 5);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(PASSWORD_NEXT_BUTTON_ID_HEADLESS)));
+        By locator = GreenCityTestRunner.CHROME_HEADLESS_OPTION ? By.id(PASSWORD_NEXT_BUTTON_ID_HEADLESS) : By.xpath(PASSWORD_NEXT_BUTTON_XPATH);
 
-            return emailField = driver.findElement(By.id(PASSWORD_NEXT_BUTTON_ID_HEADLESS));
-        }
-
-        return passwordNextButton = driver.findElement(By.xpath(PASSWORD_NEXT_BUTTON_XPATH));
+        return passwordNextButton = driver.findElement(locator);
     }
 
     public TipsTricksPage successfulLoginByGoogle(User user) {
