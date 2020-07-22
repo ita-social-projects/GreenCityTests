@@ -4,11 +4,16 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -562,7 +567,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
     }
 
 
-        @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
+    @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
     public void checkUserFieldMaxLength(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -588,6 +593,25 @@ public class RegisterPageTests extends GreenCityTestRunner {
         Assert.assertEquals(userFieldValue,
                 "21CharString21CharSt",
                 "The invalid string is not concatenated");
+
+    }
+
+    @Test(description = "GC-200")
+    public void checkSignUpModalWhenReachingHabitsPage() {
+        logger.info("Starting checkReachingHabitsPage:");
+        logger.info("Go to habits page");
+
+        LoginComponent loginComp = loadApplication()
+                .navigateMenuMyCabinetGuest();
+
+        Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
+    }
+
+
+
+    @Test
+    public void test() {
+
 
     }
 
