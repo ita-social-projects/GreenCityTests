@@ -591,16 +591,4 @@ public class RegisterPageTests extends GreenCityTestRunner {
 
     }
 
-
-    //GC-204
-    //Verify that Email must be existence and unique while new user registration
-    //GC-200
-    //Verify that unregistered user sees popup window 'Sign up' after clicking on the “My habits” button
-    //GC-203
-    //Verify that User is redirected to My habits as a Registered User after he has entered valid credentials
-    //GC-216
-    // Verify 'Sign up' page UI
-    //GC-487
-    //Verify UI of the Registration form on different screen resolutions
-
 }

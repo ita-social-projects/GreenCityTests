@@ -77,6 +77,16 @@ public class RegistrationTests extends GreenCityTestRunner{
 
         logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
+
+        WebDriverWait wait = new WebDriverWait(driver,10);
+
+        wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
+        Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
+
+        LoginComponent loginComp = new LoginComponent(driver);
+        wait.until(ExpectedConditions.visibilityOf(loginComp.getLoginModalWindow()));
+        Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
+
         manualRegisterComponent.verifyRegistration();
 
         ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
@@ -120,7 +130,9 @@ public class RegistrationTests extends GreenCityTestRunner{
         wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
         Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));
+        LoginComponent loginComp = new LoginComponent(driver);
+        wait.until(ExpectedConditions.visibilityOf(loginComp.getLoginModalWindow()));
+        Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
 
         ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
 

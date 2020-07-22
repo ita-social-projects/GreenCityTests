@@ -472,7 +472,7 @@ public class ManualRegisterComponent extends RegisterComponent {
 
         Set<String> allTabs = driver.getWindowHandles();
         String verificationTab = TabsHandler.openNewTabAndGetId(driver, allTabs);
-        driver.close();
+
         driver.switchTo().window(verificationTab);
         driver.get(verifLink);
         driver.close();

@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class LoginComponent extends TopPart {
     private WebDriverWait wait;
 
@@ -43,15 +45,14 @@ public class LoginComponent extends TopPart {
 
     public void init(){
         wait = new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.visibilityOf(getTitle()));
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(MODAL_WINDOW_CSS)));
     }
 
     public ManualLoginComponent getManualLoginComponent() {
         return manualLoginComponent = new ManualLoginComponent(driver);
     }
 
-    protected WebElement getLoginModalWindow(){
+    public WebElement getLoginModalWindow(){
         this.modalWindow = driver
                 .findElement(By.cssSelector(MODAL_WINDOW_CSS));
         return modalWindow;
