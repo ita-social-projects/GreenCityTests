@@ -591,4 +591,5 @@ public class RegisterPageTests extends GreenCityTestRunner {
 
     }
 
+
 }

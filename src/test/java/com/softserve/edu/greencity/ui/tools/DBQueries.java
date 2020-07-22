@@ -5,6 +5,7 @@ import org.testng.Assert;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class DBQueries {
@@ -68,4 +69,23 @@ public class DBQueries {
             e.printStackTrace();
         }
     }
+
+
+    public Boolean isUserEmailDuplicated(String email) {
+        ArrayList<String> array = new ArrayList<>();
+
+        try {
+            Connection connection = getConnectionToGreenCityDB();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE email = '" + email + "'");
+            while (resultSet.next()) {
+                array.add(resultSet.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return array.size() > 1;
+    }
+
+
 }
