@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.CheckPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author lv-493 Taqc/Java
@@ -41,16 +43,12 @@ public class EconewsPage extends TopPart {
     }
 
     private void visualiseElements() {
-        int i = 0;
-        waiting(2);
-        scrollToElement(getCopyright()); //  open all news
-        waiting(2);
-        List<WebElement> listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
-        while (i < listElements.size()) {
-            waiting(2);
-            scrollToElement(listElements.get(i));
-            i++;
-            listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
+        int totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
+                .getText())
+                .nextInt();
+        while(driver.findElements(By.cssSelector(".list-gallery-content")).size() < totalNews) {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
         }
     }
 
