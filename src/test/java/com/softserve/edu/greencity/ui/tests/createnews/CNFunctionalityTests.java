@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class CNFunctionalityTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
 
     @BeforeMethod
     public void login() {
@@ -62,7 +63,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
         createNewsPage.getTagsComponent().selectTag(Tag.NEWS);
         createNewsPage.setContentField("It's so healthy, fun and cool to bring eco habits in everyday life");
         createNewsPage.clickPublishButton();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -140,7 +141,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
             }
         }
         Assert.assertTrue(isPresent);
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -188,7 +189,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
             softAssert.assertTrue(isPresent);
         }
 
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -233,7 +234,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
                 DateUtil.getCurrentDate("MMM dd, yyyy"));
         driver.findElement(By.cssSelector("a[href='#/welcome'")).click();
         new TipsTricksPage(driver);
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -248,7 +249,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
         loadCreateNewsPage()
                 .fillFields(newsData)
                 .publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     public CreateNewsPage loadCreateNewsPage() {

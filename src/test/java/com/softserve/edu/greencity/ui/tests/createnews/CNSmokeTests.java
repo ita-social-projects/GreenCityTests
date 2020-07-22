@@ -19,6 +19,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class CNSmokeTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
 
     private final String CREATE_NEWS_URL = "https://ita-social-projects.github.io/GreenCityClient/#/news/create-news";
 
@@ -83,7 +84,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         econewsPage = createNewsPage.navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -114,7 +115,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         softAssert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
         softAssert.assertAll();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -159,7 +160,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         econewsPage = createNewsPage.publishNews().navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     @DataProvider
