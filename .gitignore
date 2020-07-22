@@ -119,3 +119,6 @@ hs_err_pid*
 
 # properties files
 credentials.properties
+
+# GMAil API credentials
+credentials.json

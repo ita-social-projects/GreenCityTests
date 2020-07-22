@@ -39,7 +39,6 @@ public class GMailBatchDelete {
 
         Gmail.Users.Messages.BatchDelete batchDelete = service.users().messages().batchDelete("gcsignupuser@gmail.com", batchRequ);
 
-        //What kind of responce??
         batchDelete.execute();
     }
 }

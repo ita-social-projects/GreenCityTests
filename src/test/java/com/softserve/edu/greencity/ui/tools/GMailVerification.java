@@ -44,7 +44,6 @@ public class GMailVerification {
         Message getMess = service.users().messages().get("gcsignupuser@gmail.com", zeroId).setFormat("FULL").execute();
 
         String content = StringUtils.newStringUtf8(Base64.decodeBase64(getMess.getPayload().getBody().getData()));
-        //System.out.println(content);
 
         Pattern p = Pattern.compile("https(.)+user_id=[0-9]+");
         Matcher m = p.matcher(content);

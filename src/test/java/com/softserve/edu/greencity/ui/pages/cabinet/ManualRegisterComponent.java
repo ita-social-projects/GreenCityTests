@@ -502,8 +502,8 @@ public class ManualRegisterComponent extends RegisterComponent {
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
-                .clickSignUpButton();
-               // .verifyRegistration();
+                .clickSignUpButton()
+                .verifyRegistration();
     }
 
     public void registrationUser(User userData) {

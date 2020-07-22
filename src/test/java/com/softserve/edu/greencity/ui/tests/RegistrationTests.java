@@ -77,7 +77,7 @@ public class RegistrationTests extends GreenCityTestRunner{
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
         logger.info("Enter credentials into the form");
-        manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
+        manualRegisterComponent.registrationUser(userLoginCredentials);
 
         WebDriverWait wait = new WebDriverWait(driver,10);
 
