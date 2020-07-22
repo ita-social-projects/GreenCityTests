@@ -43,24 +43,18 @@ public class EconewsPage extends TopPart {
     }
 
     private void visualiseElements() {
-        int totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
-                .getText())
-                .nextInt();
+        int totalNews = getNumberOfItemComponent();
         if(totalNews == 0) {
             waiting(2);
-            totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
-                    .getText())
-                    .nextInt();
+            totalNews = getNumberOfItemComponent();
         }
         int findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
-        while(findingNews < totalNews) {
+        while(findingNews != totalNews) {
             scrollToElement(getCopyright());
             new WebDriverWait(driver, 2)
                     .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".list-gallery-content"), findingNews - 1));
             findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
-            totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
-                    .getText())
-                    .nextInt();
+            totalNews = getNumberOfItemComponent();
         }
     }
 
@@ -75,7 +69,7 @@ public class EconewsPage extends TopPart {
     }
 
     private WebElement getFoundItems() {
-        foundItems = driver.findElement(By.cssSelector("p[class*='ng-star-inserted']"));
+        foundItems = driver.findElement(By.cssSelector("p.ng-star-inserted"));
         return foundItems;
     }
 
