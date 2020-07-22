@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CNPositiveTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
+
     @BeforeMethod
     public void login() {
         if(isLoginingNow()) return;
@@ -41,7 +43,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
         createNewsPage.clearTitleField();
         createNewsPage.setTitleField(title);
         createNewsPage.publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     @DataProvider
@@ -82,7 +84,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
             }
             Assert.assertTrue(isPresent);
         }
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -101,7 +103,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
         String title = "very simple test like previous. verify contentType filed with more than 20 characters";
         createNewsPage.setTitleField(title);
         createNewsPage.publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -120,7 +122,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
                 " takes place the most important event for professionals and funs of natural food and healthy life");
         createNewsPage.getTagsComponent().selectTags(tags);
         EconewsPage econewsPage = createNewsPage.publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
         int news = econewsPage.getNumberOfItemComponent();
         System.out.println(news);
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));

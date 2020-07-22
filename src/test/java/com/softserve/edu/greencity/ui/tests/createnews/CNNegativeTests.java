@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CNNegativeTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
 
     @BeforeMethod
     public void login() {
@@ -168,7 +169,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
             }
             Assert.assertTrue(isPresent);
         }
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**

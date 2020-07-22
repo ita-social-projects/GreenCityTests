@@ -9,6 +9,7 @@ import java.util.Properties;
 
 public class DBQueries {
 
+    private Connection connection;
     private Properties property = new Properties();
     private String url;
     private String userName;
@@ -29,13 +30,15 @@ public class DBQueries {
     }
 
     public Connection getConnectionToGreenCityDB() {
-        try {
-            Class.forName(driverClass);
-            return DriverManager.getConnection(url, userName, password);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            return null;
+        if(connection == null) {
+            try {
+                Class.forName(driverClass);
+                connection =  DriverManager.getConnection(url, userName, password);
+            } catch (SQLException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+        return connection;
     }
 
 
