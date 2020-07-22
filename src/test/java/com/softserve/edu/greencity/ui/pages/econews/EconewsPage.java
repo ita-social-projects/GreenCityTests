@@ -46,9 +46,18 @@ public class EconewsPage extends TopPart {
         int totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
                 .getText())
                 .nextInt();
-        while(driver.findElements(By.cssSelector(".list-gallery-content")).size() < totalNews) {
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+        if(totalNews == 0) {
+            waiting(2);
+            totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
+                    .getText())
+                    .nextInt();
+        }
+        int findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
+        while(findingNews < totalNews) {
+            scrollToElement(getCopyright());
+            new WebDriverWait(driver, 2)
+                    .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".list-gallery-content"), findingNews - 1));
+            findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
         }
     }
 
