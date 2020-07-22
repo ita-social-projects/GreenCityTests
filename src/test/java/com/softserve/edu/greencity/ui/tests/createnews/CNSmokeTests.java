@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -18,6 +19,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class CNSmokeTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
 
     private final String CREATE_NEWS_URL = "https://ita-social-projects.github.io/GreenCityClient/#/news/create-news";
 
@@ -82,7 +84,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         econewsPage = createNewsPage.navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -113,7 +115,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         softAssert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
         softAssert.assertAll();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -158,7 +160,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         econewsPage = createNewsPage.publishNews().navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     @DataProvider
@@ -189,4 +191,29 @@ public class CNSmokeTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+    /**
+     * @ID=403-1303
+     */
+    @Test
+    public void fillCreateNewsPreviewGoBackEcoNewsCreateCheckEmptyFields() {
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
+                .fillFields(NewsDataRepository.getRequiredFieldsNews())
+                .goToPreViewPage()
+                .backToCreateNewsPage()
+                .cancelNewsCreating()
+                .gotoCreateNewsPage();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createNewsPage.getTitleFieldText(), "");
+        softAssert.assertEquals(createNewsPage.getSourceFieldText(), "");
+        softAssert.assertEquals(createNewsPage.getContentFieldText(), "");
+        softAssert.assertEquals(createNewsPage.getSelectedTagsNames().size(), 0);
+        softAssert.assertAll();
+    }
+
+    public CreateNewsPage loadCreateNewsPage() {
+        return loadApplication()
+                .navigateMenuEconews()
+                .gotoCreateNewsPage();
+    }
 }
+

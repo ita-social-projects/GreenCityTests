@@ -17,7 +17,7 @@ public abstract class GreenCityTestRunner {
     public static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 //    public static final String BASE_URL = "http://localhost:4200/#/welcome";
 
-    private final boolean CHROME_HEADLESS_OPTION = false;
+    public static final boolean CHROME_HEADLESS_OPTION = true;
     private final String CHROME_LANGUAGE_OPTION = "en";
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
