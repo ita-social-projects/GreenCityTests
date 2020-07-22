@@ -58,6 +58,9 @@ public class EconewsPage extends TopPart {
             new WebDriverWait(driver, 2)
                     .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".list-gallery-content"), findingNews - 1));
             findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
+            totalNews = new Scanner(driver.findElement(By.cssSelector("p.ng-star-inserted"))
+                    .getText())
+                    .nextInt();
         }
     }
 
