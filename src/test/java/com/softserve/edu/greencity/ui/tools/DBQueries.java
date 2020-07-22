@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class DBQueries {
 
-    private static Connection connection;
+    private Connection connection;
     private Properties property = new Properties();
     private String url;
     private String userName;
