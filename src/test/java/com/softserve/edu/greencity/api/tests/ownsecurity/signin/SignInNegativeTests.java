@@ -2,10 +2,10 @@ package com.softserve.edu.greencity.api.tests.ownsecurity.signin;
 
 import com.softserve.edu.greencity.api.assertions.BaseAssertions;
 import com.softserve.edu.greencity.api.assertions.OwnSecurityAssertions;
+import com.softserve.edu.greencity.api.builders.userbuilder.SignInUserBuilderImpl;
+import com.softserve.edu.greencity.api.builders.userbuilder.SignInUserDirector;
 import com.softserve.edu.greencity.api.client.OwnSecurityClient;
 import com.softserve.edu.greencity.api.model.APIResponseBody;
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -16,21 +16,21 @@ import java.util.List;
 
 public class SignInNegativeTests {
     OwnSecurityClient ownSecurityClient;
-    User userWithEmptyCredentials;
-    User userWithEmptyEmail;
-    User userWithEmptyPassword;
+    SignInUserDirector signInUserDirector;
+    SignInUserBuilderImpl signInUserBuilder;
 
     @BeforeClass
     public void beforeClass() {
         ownSecurityClient = new OwnSecurityClient();
-        userWithEmptyCredentials = UserRepository.get().emptyUserCredentials();
-        userWithEmptyEmail = UserRepository.get().userWithEmptyEmailField();
-        userWithEmptyPassword = UserRepository.get().userWithEmptyPasswordField();
+        signInUserDirector = new SignInUserDirector();
+        signInUserBuilder = new SignInUserBuilderImpl();
     }
 
     @Test
     public void signInWithEmptyCredentials() {
-        Response response = ownSecurityClient.signIn(userWithEmptyCredentials);
+        signInUserDirector.constructSignInUserWithEmptyCreds(signInUserBuilder);
+
+        Response response = ownSecurityClient.signIn(signInUserBuilder.getResult());
         List<APIResponseBody> apiResponseBodies = Arrays.asList(response.getBody().as(APIResponseBody[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
@@ -40,7 +40,9 @@ public class SignInNegativeTests {
 
     @Test
     public void signInWithEmptyEmailField() {
-        Response response = ownSecurityClient.signIn(userWithEmptyEmail);
+        signInUserDirector.constructSignInUserWithEmptyEmail(signInUserBuilder);
+
+        Response response = ownSecurityClient.signIn(signInUserBuilder.getResult());
         List<APIResponseBody> apiResponseBodies = Arrays.asList(response.getBody().as(APIResponseBody[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
@@ -49,7 +51,9 @@ public class SignInNegativeTests {
 
     @Test
     public void signInWithEmptyPasswordField() {
-        Response response = ownSecurityClient.signIn(userWithEmptyPassword);
+        signInUserDirector.constructSignInUserWithEmptyPassword(signInUserBuilder);
+
+        Response response = ownSecurityClient.signIn(signInUserBuilder.getResult());
         List<APIResponseBody> apiResponseBodies = Arrays.asList(response.getBody().as(APIResponseBody[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
