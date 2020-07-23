@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.CheckPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author lv-493 Taqc/Java
@@ -41,16 +43,19 @@ public class EconewsPage extends TopPart {
     }
 
     private void visualiseElements() {
-        int i = 0;
-        waiting(2);
-        scrollToElement(getCopyright()); //  open all news
-        waiting(2);
-        List<WebElement> listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
-        while (i < listElements.size()) {
+        int totalNews = getNumberOfItemComponent();
+
+        if(totalNews == 0) {
             waiting(2);
-            scrollToElement(listElements.get(i));
-            i++;
-            listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
+            totalNews = getNumberOfItemComponent();
+        }
+        int findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
+        while(findingNews != totalNews) {
+            scrollToElement(getCopyright());
+            new WebDriverWait(driver, 2)
+                    .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector(".list-gallery-content"), findingNews - 1));
+            findingNews = driver.findElements(By.cssSelector(".list-gallery-content")).size();
+            totalNews = getNumberOfItemComponent();
         }
     }
 
@@ -65,7 +70,7 @@ public class EconewsPage extends TopPart {
     }
 
     private WebElement getFoundItems() {
-        foundItems = driver.findElement(By.cssSelector("p[class*='ng-star-inserted']"));
+        foundItems = driver.findElement(By.cssSelector("p.ng-star-inserted"));
         return foundItems;
     }
 

@@ -67,6 +67,10 @@ public class NewsData {
         this.content = content;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     /**
      * Method to convert list of Tags to sorted list of Strings
      * @return List<String>
