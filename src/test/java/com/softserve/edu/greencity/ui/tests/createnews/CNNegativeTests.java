@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CNNegativeTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
+    String createNewsUrl = BASE_URL.substring(0, BASE_URL.indexOf('#')) + "#/news/create-news";
 
     @BeforeMethod
     public void login() {
@@ -32,9 +34,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verifyImpossibilityOFCreatingNewsWithTooShortContent() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearTitleField();
         createNewsPage.clearContentField();
@@ -48,9 +48,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verifyImpossibilityOfCreatingTestWithUncorrectUrlInSourceField() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearSourceField();
         createNewsPage.setSourceField("www.greenmatch.co.uk/blog/how-to-be-more-eco-friendly");
@@ -69,9 +67,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verifyImpossibilityOfCreatingNewsWithEmptyFields() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         boolean isDisabled = driver.findElement(By.cssSelector(".submit-buttons button+button+button")).isEnabled();
         Assert.assertFalse(isDisabled);
     }
@@ -84,9 +80,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingNewsWithoutContent() throws InterruptedException {
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
         newsData.setContent("");
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(newsData);
         Thread.sleep(4000);
         SoftAssert softAssert = new SoftAssert();
@@ -101,9 +95,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verriyImpossibilityOfCreatingNewsWithoutAnyTags() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         List<Tag> tags = new ArrayList<>();
         for (Tag tag : Tag.values()) {
@@ -120,9 +112,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verifyImpossibilityCreateNewsWithEmptyTitle() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         createNewsPage.setContentField("March 4 – 7, 2020, International Exhibition Center," +
                 " Kyiv, 15 Brovarsky Ave.," +
                 " takes place the most important event for professionals and funs of natural food and healthy life");
@@ -140,9 +130,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verifyImpossibilityToSelectOneTagTwice() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearTitleField();
         String title = "public void verifyImpossibilityToSelectOneTagTwice() {";
@@ -168,7 +156,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
             }
             Assert.assertTrue(isPresent);
         }
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -176,9 +164,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
      */
     @Test
     public void verifyImpossibilityOfUploadingTooLargeImage() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.uploadFile(createNewsPage.getDropArea(), "src/test/resources/invalid.gif");
         String warning = driver.findElement(By.cssSelector(".dropzone+.warning")).getText();
@@ -204,9 +190,7 @@ public class CNNegativeTests extends GreenCityTestRunner {
     public void checkWarningsWhenCreateNewsWithInvalidData(NewsData newsData) {
         logger.info("createNewsNegativeTest starts with parameters: " + newsData.toString());
         SoftAssert softAssert = new SoftAssert();
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         createNewsPage.clearSourceField();
         createNewsPage.setSourceField(newsData.getSource());
         createNewsPage.clearTitleField();
@@ -236,4 +220,8 @@ public class CNNegativeTests extends GreenCityTestRunner {
         };
     }
 
+    public CreateNewsPage loadCreateNewsPage() {
+        driver.navigate().to(createNewsUrl);
+        return new CreateNewsPage(driver);
+    }
 }

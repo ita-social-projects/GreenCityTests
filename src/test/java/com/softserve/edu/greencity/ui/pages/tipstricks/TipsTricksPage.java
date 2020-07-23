@@ -40,9 +40,9 @@ public class TipsTricksPage extends TopPart {
 
     private void initElements() {
         wait = new WebDriverWait(driver, 10);
-        WebElement subscriptionError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']")));
+        WebElement subscriptionError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#header .primary-global-button")));
 
-        startHabitTop = driver.findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
+        startHabitTop = driver.findElement(By.cssSelector("#header .primary-global-button"));
     }
 
     public WebElement getStartHabitTop() {

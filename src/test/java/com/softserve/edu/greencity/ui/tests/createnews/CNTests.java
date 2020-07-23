@@ -17,7 +17,10 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CNPositiveTests extends GreenCityTestRunner {
+public class CNTests extends GreenCityTestRunner {
+    DBQueries dataBase = new DBQueries();
+    String createNewsUrl = BASE_URL.substring(0, BASE_URL.indexOf('#')) + "#/news/create-news";
+
     @BeforeMethod
     public void login() {
         if(isLoginingNow()) return;
@@ -34,14 +37,12 @@ public class CNPositiveTests extends GreenCityTestRunner {
 
     @Test(dataProvider = "getStringForTitle")
     public void fillTitleFieldFromMinToMax(String title) {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearTitleField();
         createNewsPage.setTitleField(title);
         createNewsPage.publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     @DataProvider
@@ -61,9 +62,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
      */
     @Test
     public void createNewsWithSourceField() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
         createNewsPage.fillFields(newsData);
         createNewsPage.clearTitleField();
@@ -82,7 +81,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
             }
             Assert.assertTrue(isPresent);
         }
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -90,9 +89,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
      */
     @Test
     public void createNewsWithContentLengthMoreThen20() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
         createNewsPage.fillFields(newsData);
         createNewsPage.clearContentField();
@@ -101,7 +98,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
         String title = "very simple test like previous. verify contentType filed with more than 20 characters";
         createNewsPage.setTitleField(title);
         createNewsPage.publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
     }
 
     /**
@@ -109,9 +106,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
      */
     @Test(dataProvider = "getTagsList")
     public void checkCreateNewsWithOneToThreeTags(List<Tag> tags) {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         createNewsPage.clearTitleField();
         String title = "XVI International specialized exhibition of ecologic products for the daily life";
         createNewsPage.setTitleField(title);
@@ -120,7 +115,7 @@ public class CNPositiveTests extends GreenCityTestRunner {
                 " takes place the most important event for professionals and funs of natural food and healthy life");
         createNewsPage.getTagsComponent().selectTags(tags);
         EconewsPage econewsPage = createNewsPage.publishNews();
-        new DBQueries().deleteNewsByTitle(title);
+        dataBase.deleteNewsByTitle(title);
         int news = econewsPage.getNumberOfItemComponent();
         System.out.println(news);
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
@@ -164,6 +159,11 @@ public class CNPositiveTests extends GreenCityTestRunner {
                     }
                 }
         };
+    }
+
+    public CreateNewsPage loadCreateNewsPage() {
+        driver.navigate().to(createNewsUrl);
+        return new CreateNewsPage(driver);
     }
 
 }

@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -18,8 +19,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class CNSmokeTests extends GreenCityTestRunner {
-
-    private final String CREATE_NEWS_URL = "https://ita-social-projects.github.io/GreenCityClient/#/news/create-news";
+    DBQueries dataBase = new DBQueries();
+    String createNewsUrl = BASE_URL.substring(0, BASE_URL.indexOf('#')) + "#/news/create-news";
 
     @BeforeMethod
     public void login() {
@@ -44,9 +45,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
      */
     @Test
     public void checkThatUserOnCreateNewsForm() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         WebElement createNewsMainTitle = driver.findElement(By.cssSelector(".title h2"));
         int numberOfButtons = driver.findElements(By.cssSelector(".submit-buttons button")).size();
         SoftAssert softAssert = new SoftAssert();
@@ -82,7 +81,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         econewsPage = createNewsPage.navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -113,7 +112,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         softAssert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
         softAssert.assertAll();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     /**
@@ -158,7 +157,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
         econewsPage = createNewsPage.publishNews().navigateMenuEconews();
         Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount + 1);
         econewsPage.signOut();
-        new DBQueries().deleteNewsByTitle(newsData.getTitle());
+        dataBase.deleteNewsByTitle(newsData.getTitle());
     }
 
     @DataProvider
@@ -175,8 +174,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
      */
     @Test
     public void checkPreviewPage() {
-        driver.navigate().to(CREATE_NEWS_URL);
-        CreateNewsPage createNewsPage = new CreateNewsPage(driver);
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         PreViewPage preViewPage = createNewsPage
                 .fillFields(NewsDataRepository.getRequiredFieldsNews())
                 .goToPreViewPage();
@@ -189,4 +187,28 @@ public class CNSmokeTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+    /**
+     * @ID=403-1303
+     */
+    @Test
+    public void fillCreateNewsPreviewGoBackEcoNewsCreateCheckEmptyFields() {
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
+                .fillFields(NewsDataRepository.getRequiredFieldsNews())
+                .goToPreViewPage()
+                .backToCreateNewsPage()
+                .cancelNewsCreating()
+                .gotoCreateNewsPage();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(createNewsPage.getTitleFieldText(), "");
+        softAssert.assertEquals(createNewsPage.getSourceFieldText(), "");
+        softAssert.assertEquals(createNewsPage.getContentFieldText(), "");
+        softAssert.assertEquals(createNewsPage.getSelectedTagsNames().size(), 0);
+        softAssert.assertAll();
+    }
+
+    public CreateNewsPage loadCreateNewsPage() {
+        driver.navigate().to(createNewsUrl);
+        return new CreateNewsPage(driver);
+    }
 }
+
