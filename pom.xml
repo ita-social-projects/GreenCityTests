@@ -122,11 +122,6 @@
 		</dependency>
 
 		<!-- - - - - - DB - - - - - -->
-		<!-- <dependency> -->
-		<!-- <groupId>javax.transaction</groupId> -->
-		<!-- <artifactId>jta</artifactId> -->
-		<!-- <version>${javax.transaction.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
@@ -176,6 +171,28 @@
 			<version>${aspectj.version}</version>
 			<!-- <scope>test</scope> -->
 		</dependency>
+
+
+		<!-- <GMail API> -->
+		<dependency>
+			<groupId>com.google.api-client</groupId>
+			<artifactId>google-api-client</artifactId>
+			<version>1.30.10</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.oauth-client</groupId>
+			<artifactId>google-oauth-client-jetty</artifactId>
+			<version>1.31.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-gmail</artifactId>
+			<version>v1-rev110-1.25.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.auth</groupId>
+			<artifactId>google-auth-library-oauth2-http</artifactId>
+			<version>0.21.1</version>
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
