@@ -24,6 +24,9 @@ import java.util.*;
 
 public class CNFunctionalityTests extends GreenCityTestRunner {
     DBQueries dataBase = new DBQueries();
+    String createNewsUrl = BASE_URL.substring(0, BASE_URL.indexOf('#')) + "#/news/create-news";
+
+
 
     @BeforeMethod
     public void login() {
@@ -55,9 +58,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
      */
     @Test
     public void checkPossibilityToCreateNewsAfterFillingMandatoryFields() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         String title = "Be eco! Be cool!";
         createNewsPage.setTitleField(title);
         createNewsPage.getTagsComponent().selectTag(Tag.NEWS);
@@ -71,9 +72,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
      */
     @Test
     public void verifySelectAndDeselectPossibilityOfTags() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         Map<String, WebElement> ourTags = new HashMap<>();
         TagsComponent tagsComponent = createNewsPage.getTagsComponent();
         SoftAssert softAssert = new SoftAssert();
@@ -121,9 +120,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
 
     @Test
     public void verifyThatWithInvalidImgFormatNewsWillPublishWithDefaultImg() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearTitleField();
         String title = "Hello, World! How are you doing?";
@@ -155,9 +152,7 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
 
     @Test
     public void verifyPossibilityOfMaxThreeTagsWhenCreateNews() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage()
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews());
         createNewsPage.clearTitleField();
         String title = "checking tags";
@@ -208,23 +203,20 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
 
     @Test
     public void verifingAutoFillingDataWhenCreateNews() throws InterruptedException, SQLException {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
         createNewsPage.fillFields(newsData);
         EconewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
-        WebElement myNews;
         for (WebElement e : elements) {
             if (e.findElement(By.cssSelector(".title-list p")).getText().equals(newsData.getTitle())) {
                 isPresent = true;
                 e.findElement(By.cssSelector(".list-image img")).click();
                 break;
             }
-            Assert.assertTrue(isPresent);
         }
+        Assert.assertTrue(isPresent);
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions
                         .visibilityOf(driver
@@ -253,9 +245,8 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
     }
 
     public CreateNewsPage loadCreateNewsPage() {
-        return loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        driver.navigate().to(createNewsUrl);
+        return new CreateNewsPage(driver);
     }
 
 }
