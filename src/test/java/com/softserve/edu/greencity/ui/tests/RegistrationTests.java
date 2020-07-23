@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class RegistrationTests extends GreenCityTestRunner{
@@ -76,7 +77,7 @@ public class RegistrationTests extends GreenCityTestRunner{
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
         logger.info("Enter credentials into the form");
-        manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
+        manualRegisterComponent.registrationUser(userLoginCredentials);
 
         WebDriverWait wait = new WebDriverWait(driver,10);
 
@@ -164,6 +165,63 @@ public class RegistrationTests extends GreenCityTestRunner{
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
 
     }
+
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
+    public void registrationWithTakenEmail(User userLoginCredentials) {
+        loadApplication();
+        logger.info("Starting registrationWithoutMailVerif. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter credentials into the form");
+        manualRegisterComponent.registrationUser(userLoginCredentials);
+
+        WebDriverWait wait = new WebDriverWait(driver,6);
+
+        wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
+        Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
+
+        LoginComponent loginComp = new LoginComponent(driver);
+        wait.until(ExpectedConditions.visibilityOf(loginComp.getLoginModalWindow()));
+        Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
+
+        logger.info("Close login pop-up");
+        loginComp.closeLoginComponent();
+
+        logger.info("Click on Sign up button");
+        registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+
+        manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter already used credentials into the form");
+        manualRegisterComponent.registrationUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+                "The user already exists by this email",
+                "The validation message is not equal to the expected one");
+
+        DBQueries db = new DBQueries();
+        Assert.assertFalse(db.isUserEmailDuplicated("GCSignUpUser@gmail.com"));
+    }
+
 
 }
 

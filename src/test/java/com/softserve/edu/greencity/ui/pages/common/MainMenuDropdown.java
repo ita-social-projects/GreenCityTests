@@ -8,16 +8,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MainMenuDropdown {
     private WebDriver driver;
-    //
+
     private WebElement naviconButton;
-    //
-    //private WebElement menuHome;
+
     private WebElement menuEcoNews;
     private WebElement menuTipsTricks;
     private WebElement menuMap;
     private WebElement menuMyHabits;
     private WebElement menuAbout;
-    //
+
     private WebElement footerEcoNews;
     private WebElement footerTipsTricks;
     private WebElement footerPlaces;
@@ -28,31 +27,10 @@ public class MainMenuDropdown {
 
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
-        new WebDriverWait(driver, 3)
-                .until(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector("form [type='submit'"), 1));
-        initElements();
     }
-
-    private void initElements() {
-        menuEcoNews = driver.findElement(By.cssSelector(".navigation-menu a[href*='/news']"));
-        menuTipsTricks = driver.findElement(By.cssSelector(".navigation-menu a[href*='/welcome']"));
-        menuMap = driver.findElement(By.cssSelector(".navigation-menu a[href*='/map']"));
-        menuMyHabits = driver.findElement(By.cssSelector(".navigation-menu a[href*='/profile']"));
-        menuAbout = driver.findElement(By.cssSelector(".navigation-menu-left a[href*='/about']"));
-        //
-        footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
-        footerTipsTricks = driver.findElement(By.cssSelector(".router-links[href='']"));
-        footerPlaces = driver.findElement(By.cssSelector(".app-footer a[href*='/map']"));
-        footerMyHabits = driver.findElement(By.cssSelector(".app-footer a[href*='/profile']"));
-        footerAbout = driver.findElement(By.cssSelector(".app-footer a[href*='/about']"));
-    }
-
-    // Page Object
-
-
-
 
     public WebElement getMenuEcoNews() {
+        menuEcoNews = driver.findElement(By.cssSelector(".navigation-menu a[href*='/news']"));
         return menuEcoNews;
     }
 
@@ -68,9 +46,8 @@ public class MainMenuDropdown {
         return menuEcoNews.isDisplayed();
     }
 
-    // menuTipsTricks
-
     public WebElement getMenuTipsTricks() {
+        menuTipsTricks = driver.findElement(By.cssSelector(".navigation-menu a[href*='/welcome']"));
         return menuTipsTricks;
     }
 
@@ -87,13 +64,11 @@ public class MainMenuDropdown {
     }
 
     public boolean isDisplayedMenuTipsTricks() {
-        //return getMenuTipsTricks().isDisplayed();
-        return menuTipsTricks.isDisplayed();
+        return getMenuTipsTricks().isDisplayed();
     }
 
-    // menuMap
-
     public WebElement getMenuMap() {
+        menuMap = driver.findElement(By.cssSelector(".navigation-menu a[href*='/map']"));
         return menuMap;
     }
 
@@ -106,14 +81,12 @@ public class MainMenuDropdown {
     }
 
     public boolean isDisplayedMenuMap() {
-        //return getMenuMap().isDisplayed();
-        return menuMap.isDisplayed();
+        return getMenuMap().isDisplayed();
     }
 
-    // menuMyCabinet
 
     public WebElement getMenuMyHabits() {
-
+        menuMyHabits = driver.findElement(By.cssSelector(".navigation-menu a[href*='/profile']"));
         return menuMyHabits;
     }
 
@@ -130,10 +103,8 @@ public class MainMenuDropdown {
         return menuMyHabits.isDisplayed();
     }
 
-    // menuAbout
-
     public WebElement getMenuAbout() {
-
+        menuAbout = driver.findElement(By.cssSelector(".navigation-menu-left a[href*='/about']"));
         return menuAbout;
     }
 
@@ -146,13 +117,11 @@ public class MainMenuDropdown {
     }
 
     public boolean isDisplayedMenuAbout() {
-        //return getMenuAbout().isDisplayed();
-        return menuAbout.isDisplayed();
+        return getMenuAbout().isDisplayed();
     }
 
-    // footerEcoNews
-
     public WebElement getFooterEcoNews() {
+        footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
         return footerEcoNews;
     }
 
@@ -164,9 +133,8 @@ public class MainMenuDropdown {
         getFooterEcoNews().click();
     }
 
-    // footerTipsTricks
-
     public WebElement getFooterTipsTricks() {
+        footerTipsTricks = driver.findElement(By.cssSelector(".router-links[href='']"));
         return footerTipsTricks;
     }
 
@@ -178,9 +146,8 @@ public class MainMenuDropdown {
         getFooterTipsTricks().click();
     }
 
-    // footerMap
-
     public WebElement getFooterPlaces() {
+        footerPlaces = driver.findElement(By.cssSelector(".app-footer a[href*='/map']"));
         return footerPlaces;
     }
 
@@ -192,9 +159,8 @@ public class MainMenuDropdown {
         getFooterPlaces().click();
     }
 
-    // footerMyCabinet
-
     public WebElement getFooterMyHabits() {
+        footerMyHabits = driver.findElement(By.cssSelector(".app-footer a[href*='/profile']"));
         return footerMyHabits;
     }
 
@@ -206,9 +172,8 @@ public class MainMenuDropdown {
         getFooterMyHabits().click();
     }
 
-    // footerAbout
-
     public WebElement getFooterAbout() {
+        footerAbout = driver.findElement(By.cssSelector(".app-footer a[href*='/about']"));
         return footerAbout;
     }
 
@@ -219,7 +184,4 @@ public class MainMenuDropdown {
     public void clickFooterAbout() {
         getFooterAbout().click();
     }
-
-    // Functional
-    // Business Logic
 }

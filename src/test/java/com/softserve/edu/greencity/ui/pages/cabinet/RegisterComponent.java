@@ -140,7 +140,10 @@ public class RegisterComponent extends TopPart {
      *
      * @return WebElement
      */
-    public WebElement getGoogleSignUpButton() {
+    protected WebElement getGoogleSignUpButton() {
+        wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(GOOGLE_SIGN_UP_BUTTON_CLASS)));
+
         return googleSignUpButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_UP_BUTTON_CLASS));
     }
 
