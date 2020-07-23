@@ -44,6 +44,7 @@ public class EconewsPage extends TopPart {
 
     private void visualiseElements() {
         int totalNews = getNumberOfItemComponent();
+
         if(totalNews == 0) {
             waiting(2);
             totalNews = getNumberOfItemComponent();

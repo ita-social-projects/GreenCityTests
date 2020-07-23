@@ -28,7 +28,7 @@ public class MainMenuDropdown {
 
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
-        new WebDriverWait(driver, 3)
+        new WebDriverWait(driver, 5)
                 .until(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector("form [type='submit'"), 1));
         initElements();
     }

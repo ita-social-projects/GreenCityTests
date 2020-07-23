@@ -20,8 +20,7 @@ import org.testng.asserts.SoftAssert;
 
 public class CNSmokeTests extends GreenCityTestRunner {
     DBQueries dataBase = new DBQueries();
-
-    private final String CREATE_NEWS_URL = "https://ita-social-projects.github.io/GreenCityClient/#/news/create-news";
+    String createNewsUrl = BASE_URL.substring(0, BASE_URL.indexOf('#')) + "#/news/create-news";
 
     @BeforeMethod
     public void login() {
@@ -46,9 +45,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
      */
     @Test
     public void checkThatUserOnCreateNewsForm() {
-        CreateNewsPage createNewsPage = loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         WebElement createNewsMainTitle = driver.findElement(By.cssSelector(".title h2"));
         int numberOfButtons = driver.findElements(By.cssSelector(".submit-buttons button")).size();
         SoftAssert softAssert = new SoftAssert();
@@ -177,8 +174,7 @@ public class CNSmokeTests extends GreenCityTestRunner {
      */
     @Test
     public void checkPreviewPage() {
-        driver.navigate().to(CREATE_NEWS_URL);
-        CreateNewsPage createNewsPage = new CreateNewsPage(driver);
+        CreateNewsPage createNewsPage = loadCreateNewsPage();
         PreViewPage preViewPage = createNewsPage
                 .fillFields(NewsDataRepository.getRequiredFieldsNews())
                 .goToPreViewPage();
@@ -211,9 +207,8 @@ public class CNSmokeTests extends GreenCityTestRunner {
     }
 
     public CreateNewsPage loadCreateNewsPage() {
-        return loadApplication()
-                .navigateMenuEconews()
-                .gotoCreateNewsPage();
+        driver.navigate().to(createNewsUrl);
+        return new CreateNewsPage(driver);
     }
 }
 
