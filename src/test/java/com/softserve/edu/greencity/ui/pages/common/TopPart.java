@@ -238,4 +238,5 @@ public abstract class TopPart {
 
         windowManager.maximizeWindow();
     }
+
 }

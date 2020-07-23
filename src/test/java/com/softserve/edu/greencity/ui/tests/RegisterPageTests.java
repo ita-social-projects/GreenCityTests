@@ -624,6 +624,10 @@ public class RegisterPageTests extends GreenCityTestRunner {
         softAssert.assertTrue(registerComponent.getModalImage().isDisplayed());
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         softAssert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
+        softAssert.assertTrue(manualRegisterComponent.getEmailField().isDisplayed());
+        softAssert.assertTrue(manualRegisterComponent.getUserNameField().isDisplayed());
+        softAssert.assertTrue(manualRegisterComponent.getPasswordField().isDisplayed());
+        softAssert.assertTrue(manualRegisterComponent.getPasswordConfirmField().isDisplayed());
         softAssert.assertAll();
 
     }
