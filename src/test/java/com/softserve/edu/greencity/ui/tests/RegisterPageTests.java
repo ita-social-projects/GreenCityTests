@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class RegisterPageTests extends GreenCityTestRunner {
 
@@ -591,4 +592,39 @@ public class RegisterPageTests extends GreenCityTestRunner {
 
     }
 
+    @Test(description = "GC-216")
+    public void checkSignUpModalUI() {
+        logger.info("Starting checkSignUpModalUI: ");
+        loadApplication();
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        logger.info("Get a subtitle text of the modal window: "
+                + registerComponent.getSubtitleString());
+
+        softAssert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+                "This is not a register modal:(");
+
+        logger.info("Get a text for registered users: "
+                + registerComponent.getSignInLinkText());
+        softAssert.assertEquals(registerComponent.getSignInLinkText(), "Do you already have an account? Sign in");
+
+        logger.info("Checking if the rest of the page elements are displayed ");
+        softAssert.assertTrue(registerComponent.getRegisterComponentModal().isDisplayed());
+        softAssert.assertTrue(registerComponent.getSignInLink().isDisplayed());
+        softAssert.assertTrue(registerComponent.getGoogleSignUpButton().isDisplayed());
+        softAssert.assertTrue(registerComponent.getModalImage().isDisplayed());
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+        softAssert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
+        softAssert.assertAll();
+
+    }
 }

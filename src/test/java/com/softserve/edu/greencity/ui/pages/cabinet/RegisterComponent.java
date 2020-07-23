@@ -26,6 +26,7 @@ public class RegisterComponent extends TopPart {
     private WebElement subtitle;
     private final String SUBTITLE_CSS = ".subtitle-text";
     private WebElement closeModalButton;
+    private final String CLOSE_MODAL_CSS = ".close-btn a";
 
     private ManualRegisterComponent manualRegisterComponent;
 
@@ -34,10 +35,14 @@ public class RegisterComponent extends TopPart {
     private WebElement signInLink;
     private final String SIGN_IN_LINK_CSS = "div.exist-account a";
     private WebElement signInText;
+    private final String SIGN_IN_TEXT_CSS = ".exist-account span";
 
     private WebElement submitEmailText;
     private final String SUBMIT_EMAIL_SELECTOR = "app-submit-email div.submit-email";
     private final String GOOGLE_SIGN_UP_BUTTON_CLASS = ".cta-button-google";
+
+    private WebElement modalImage;
+    private final String MODAL_IMAGE_CSS =".main-image img";
 
     private WebElement congratsModal;
     private final String CONGRATS_MODAL_CSS = ".main-container .submit-email";
@@ -84,10 +89,14 @@ public class RegisterComponent extends TopPart {
         return this.getSubtitle().getText();
     }
 
+    public WebElement getRegisterComponentModal() {
+        return closeModalButton = driver.findElement
+                (By.cssSelector(CLOSE_MODAL_CSS));
+
+    }
+
     public void closeRegisterComponentModal() {
-        closeModalButton = driver.findElement
-                (By.cssSelector(".close-btn a"));
-        closeModalButton.click();
+        getRegisterComponentModal().click();
     }
 
 
@@ -131,11 +140,11 @@ public class RegisterComponent extends TopPart {
      *
      * @return WebElement
      */
-    protected WebElement getGoogleSignUpButton() {
+    public WebElement getGoogleSignUpButton() {
         return googleSignUpButton = driver.findElement(By.cssSelector(GOOGLE_SIGN_UP_BUTTON_CLASS));
     }
 
-    protected WebElement getSignInLink() {
+    public WebElement getSignInLink() {
         this.signInLink = driver
                 .findElement(By.cssSelector(SIGN_IN_LINK_CSS));
         return signInLink;
@@ -144,6 +153,17 @@ public class RegisterComponent extends TopPart {
     public ManualLoginComponent clickSignInLink() {
         getSignInLink().click();
         return new ManualLoginComponent(driver);
+    }
+    public String getSignInLinkText() {
+         signInText = driver
+                .findElement(By.cssSelector(SIGN_IN_TEXT_CSS));
+        return signInText.getText();
+    }
+
+    public WebElement getModalImage() {
+        signInText = driver
+                .findElement(By.cssSelector(MODAL_IMAGE_CSS));
+        return signInText;
     }
 
     public WebElement getCongratsModal() {
