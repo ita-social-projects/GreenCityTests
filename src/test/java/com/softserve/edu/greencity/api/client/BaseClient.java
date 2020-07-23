@@ -5,7 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 public class BaseClient {
-    private final String BASE_URL = "https://greencity.azurewebsites.net/";
+    private final String BASE_URL = "https://greencity.azurewebsites.net";
 
     protected final RequestSpecification baseRequestSpecification(final ContentType contentType) {
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder();
