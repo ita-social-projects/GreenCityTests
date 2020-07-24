@@ -1,8 +1,10 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import com.softserve.edu.greencity.ui.tools.WindowManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -62,6 +64,11 @@ public abstract class GreenCityTestRunner {
 
     public TipsTricksPage loadApplication() {
         return new TipsTricksPage(driver);
+    }
+
+    public void changeWindowSize(Dimension screenSize) {
+        WindowManager winMan = new WindowManager(driver);
+        winMan.changeWindowSize(screenSize);
     }
 
     public boolean isLoginingNow() {
