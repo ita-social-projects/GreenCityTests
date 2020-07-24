@@ -151,7 +151,7 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
 
-    protected WebElement getEmailField() {
+    public WebElement getEmailField() {
         this.emailField = driver
                 .findElement(By.cssSelector(EMAIL_FIELD_SELECTOR));
         return emailField;
@@ -304,7 +304,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         return passwordConfirmValidator;
     }
 
-    protected WebElement getPasswordConfirmField() {
+    public WebElement getPasswordConfirmField() {
 
         this.passwordConfirmField = driver
                 .findElement(By.cssSelector(PASSWORD_CONFIRM_FIELD_SELECTOR));

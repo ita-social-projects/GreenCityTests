@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.tools;
 
 import org.apache.commons.io.FileUtils;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -8,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
+
 
 public class WindowManager {
     private WebDriver driver;
@@ -20,6 +22,10 @@ public class WindowManager {
         Dimension size = driver.manage().window().getSize();
 
         driver.manage().window().setSize(new Dimension(width, size.getHeight()));
+    }
+
+    public void changeWindowSize(Dimension size) {
+        driver.manage().window().setSize(size);
     }
 
     public void maximizeWindow() {
