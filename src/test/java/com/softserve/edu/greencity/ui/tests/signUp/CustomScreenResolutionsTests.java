@@ -1,8 +1,9 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.signUp;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import org.openqa.selenium.Dimension;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
