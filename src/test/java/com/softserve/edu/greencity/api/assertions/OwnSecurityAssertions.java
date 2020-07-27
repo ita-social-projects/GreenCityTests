@@ -17,5 +17,4 @@ public class OwnSecurityAssertions {
         softAssert.assertEquals(apiResponseBody.getMessage(), expectedMessage);
         softAssert.assertAll();
     }
-
 }
