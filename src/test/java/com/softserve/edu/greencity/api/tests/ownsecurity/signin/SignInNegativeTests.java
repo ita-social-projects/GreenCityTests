@@ -59,4 +59,15 @@ public class SignInNegativeTests {
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
         OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(0), "password", "must not be blank");
     }
+
+    @Test
+    public void signInWithIncorrectPasswordField() {
+        signInUserDirector.constructSignInUserWithIncorrectPassword(signInUserBuilder);
+
+        Response response = ownSecurityClient.signIn(signInUserBuilder.getResult());
+        APIResponseBody apiResponseBody = response.getBody().as(APIResponseBody.class);
+
+        BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
+        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBody, "Bad password");
+    }
 }

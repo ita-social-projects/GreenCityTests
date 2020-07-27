@@ -31,9 +31,13 @@ public class SignInUserDirector {
         signInUserBuilder.setPassword("");
     }
 
+    public void constructSignInUserWithIncorrectPassword(final SignInUserBuilder signInUserBuilder) {
+        signInUserBuilder.setEmail(properties.getProperty("temporaryEmail"));
+        signInUserBuilder.setPassword(properties.getProperty("validUnregisterPassword"));
+    }
+
     public void constructSignInUserValid(final SignInUserBuilder signInUserBuilder) {
         signInUserBuilder.setEmail(properties.getProperty("temporaryEmail"));
         signInUserBuilder.setPassword(properties.getProperty("temporaryPass"));
     }
-
 }
