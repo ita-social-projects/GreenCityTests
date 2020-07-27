@@ -46,6 +46,8 @@ invalidConfirmPass = invalidConfirmPassValue
 validUnregisterEmail = validUnregisterEmailValue
 validIncorrectPassword = validIncorrectPasswordValue
 
+incorrectFormatEmail = incorrectFormatEmailValue
+
 googleEmail = googleEmailValue
 googlePass = googlePassValue
 

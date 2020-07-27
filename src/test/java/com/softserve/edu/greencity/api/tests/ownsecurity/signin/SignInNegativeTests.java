@@ -70,4 +70,26 @@ public class SignInNegativeTests {
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
         OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBody, "Bad password");
     }
+
+    @Test
+    public void signInWithIncorrectEmail() {
+        signInUserDirector.constructSignInUserWithIncorrectEmail(signInUserBuilder);
+
+        Response response = ownSecurityClient.signIn(signInUserBuilder.getResult());
+        List<APIResponseBody> apiResponseBodies = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+
+        BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
+        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(0), "email", "The email is invalid");
+    }
+
+    @Test
+    public void signInWithUnregisteredCredentials() {
+        signInUserDirector.constructSignInUserWithUnregisteredCreds(signInUserBuilder);
+
+        Response response = ownSecurityClient.signIn(signInUserBuilder.getResult());
+        APIResponseBody apiResponseBody = response.as(APIResponseBody.class);
+
+        BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
+        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBody, "Bad email or password: ");
+    }
 }
