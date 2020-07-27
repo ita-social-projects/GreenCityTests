@@ -34,6 +34,7 @@ public abstract class GreenCityTestRunner {
     public void setUpBeforeClass() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(CHROME_HEADLESS_OPTION);
+        chromeOptions.addArguments("--window-size=1024,760");
         chromeOptions.addArguments("--lang=" + CHROME_LANGUAGE_OPTION);
 
         driver = new ChromeDriver(chromeOptions);

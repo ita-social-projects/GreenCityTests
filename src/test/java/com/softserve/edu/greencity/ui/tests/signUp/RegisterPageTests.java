@@ -8,11 +8,13 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import com.softserve.edu.greencity.ui.tools.WindowManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class RegisterPageTests extends GreenCityTestRunner {
 
@@ -592,85 +594,53 @@ public class RegisterPageTests extends GreenCityTestRunner {
 
     }
 
-//    @Test(description = "GC-216")
-//    public void checkSignUpModalUI() {
-//        logger.info("Starting checkSignUpModalUI: ");
-//        loadApplication();
-//
-//        logger.info("Click on Sign up button");
-//        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-//
-//        logger.info("Get a title text of the modal window: "
-//                + registerComponent.getTitleString());
-//
-//        SoftAssert softAssert = new SoftAssert();
-//        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
-//                "This is not a register modal:(");
-//
-//        logger.info("Get a subtitle text of the modal window: "
-//                + registerComponent.getSubtitleString());
-//
-//        softAssert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
-//                "This is not a register modal:(");
-//
-//        logger.info("Get a text for registered users: "
-//                + registerComponent.getSignInLinkText());
-//        softAssert.assertEquals(registerComponent.getSignInLinkText(), "Do you already have an account? Sign in");
-//
-//        logger.info("Checking if the rest of the page elements are displayed ");
-//        softAssert.assertTrue(registerComponent.getRegisterComponentModal().isDisplayed());
-//        softAssert.assertTrue(registerComponent.getSignInLink().isDisplayed());
-//        softAssert.assertTrue(registerComponent.getGoogleSignUpButton().isDisplayed());
-//        softAssert.assertTrue(registerComponent.getModalImage().isDisplayed());
-//        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-//        softAssert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
-//        softAssert.assertTrue(manualRegisterComponent.getEmailField().isDisplayed());
-//        softAssert.assertTrue(manualRegisterComponent.getUserNameField().isDisplayed());
-//        softAssert.assertTrue(manualRegisterComponent.getPasswordField().isDisplayed());
-//        softAssert.assertTrue(manualRegisterComponent.getPasswordConfirmField().isDisplayed());
-//        softAssert.assertAll();
-//
-//    }
-
     @Test(description = "GC-216")
     public void checkSignUpModalUI() {
         logger.info("Starting checkSignUpModalUI: ");
         loadApplication();
 
-
-      //   changeWindowSize(new Dimension(1024, 760));
-
+        SoftAssert softAssert = new SoftAssert();
 
         logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         logger.info("Get a subtitle text of the modal window: "
                 + registerComponent.getSubtitleString());
-
-        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+        softAssert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
         logger.info("Get a text for registered users: "
                 + registerComponent.getSignInLinkText());
-        Assert.assertEquals(registerComponent.getSignInLinkText(), "Do you already have an account? Sign in");
+        softAssert.assertEquals(registerComponent.getSignInLinkText(), "Do you already have an account? Sign in",
+                "Sign In text is not displayed");
 
         logger.info("Checking if the rest of the page elements are displayed ");
-        Assert.assertTrue(registerComponent.getRegisterComponentModal().isDisplayed());
-        Assert.assertTrue(registerComponent.getSignInLink().isDisplayed());
-        Assert.assertTrue(registerComponent.getGoogleSignUpButton().isDisplayed());
-        Assert.assertTrue(registerComponent.getModalImage().isDisplayed());
+        softAssert.assertTrue(registerComponent.getRegisterComponentModal().isDisplayed(),
+                "Register modal is not displayed");
+        softAssert.assertTrue(registerComponent.getSignInLink().isDisplayed(),
+                "Sign in link is not displayed");
+        softAssert.assertTrue(registerComponent.getGoogleSignUpButton().isDisplayed(),
+                "Google Sign Up button is not displayed");
+        softAssert.assertTrue(registerComponent.getModalImage().isDisplayed(),
+                "Image is not displayed");
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        Assert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
-        Assert.assertTrue(manualRegisterComponent.getEmailField().isDisplayed());
-        Assert.assertTrue(manualRegisterComponent.getUserNameField().isDisplayed());
-        Assert.assertTrue(manualRegisterComponent.getPasswordField().isDisplayed());
-        Assert.assertTrue(manualRegisterComponent.getPasswordConfirmField().isDisplayed());
+        softAssert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed(),
+                "Sign Up button is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getEmailField().isDisplayed(),
+                "Email field is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getUserNameField().isDisplayed(),
+                "User Name field is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getPasswordField().isDisplayed(),
+                "Password field is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getPasswordConfirmField().isDisplayed(),
+                "Confirm Password field is not displayed");
+        softAssert.assertAll();
 
     }
+
 }
