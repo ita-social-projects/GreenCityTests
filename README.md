@@ -35,7 +35,7 @@ defaultEmail = defaultEmailValue
 defaultPass = defaultPassValue
 defaultConfirmPass = defaultConfirmPassValue
 
-temporaryLoginName = temporaryLoginNameValue
+temporaryEmail = temporaryEmailValue
 temporaryPass = temporaryPassValue
 
 invalidName = invalidNameValue
@@ -45,6 +45,8 @@ invalidConfirmPass = invalidConfirmPassValue
 
 validUnregisterEmail = validUnregisterEmailValue
 validIncorrectPassword = validIncorrectPasswordValue
+
+incorrectFormatEmail = incorrectFormatEmailValue
 
 googleEmail = googleEmailValue
 googlePass = googlePassValue

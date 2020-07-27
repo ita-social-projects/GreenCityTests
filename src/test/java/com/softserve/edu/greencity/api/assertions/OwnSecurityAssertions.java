@@ -12,4 +12,9 @@ public class OwnSecurityAssertions {
         softAssert.assertAll();
     }
 
+    public static void checkInvalidSignInResponse(final APIResponseBody apiResponseBody, final String expectedMessage) {
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(apiResponseBody.getMessage(), expectedMessage);
+        softAssert.assertAll();
+    }
 }
