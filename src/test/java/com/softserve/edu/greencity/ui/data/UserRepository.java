@@ -98,7 +98,7 @@ public final class UserRepository {
     }
 
     public User userCredentialsWithInvalidPassword() {
-        return new User(property.getProperty("temporaryEmail"), property.getProperty("validIncorrectPassword"));
+        return new User(property.getProperty("temporaryEmail"), property.getProperty("validUnregisterPassword"));
     }
 
     public User userCredentialsForRegistration() {

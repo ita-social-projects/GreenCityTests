@@ -44,7 +44,9 @@ invalidPass = invalidPassValue
 invalidConfirmPass = invalidConfirmPassValue
 
 validUnregisterEmail = validUnregisterEmailValue
-validIncorrectPassword = validIncorrectPasswordValue
+validUnregisterPassword = validIncorrectPasswordValue
+
+incorrectFormatEmail = incorrectFormatEmailValue
 
 googleEmail = googleEmailValue
 googlePass = googlePassValue
