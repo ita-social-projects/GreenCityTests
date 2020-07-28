@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.signUp;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
@@ -6,9 +6,11 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import com.softserve.edu.greencity.ui.tools.WindowManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -88,6 +90,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
         return new Object[][]{
                 {UserRepository.get().invalidConfirmPassCredentials()},};
     }
+
     /**
      * Filling all the fields on the Register page without registering and
      * switch to Login page.
@@ -436,7 +439,6 @@ public class RegisterPageTests extends GreenCityTestRunner {
     }
 
 
-
     @Test(dataProvider = "invalidPassLengthUserCreds", description = "GC-198, GC-517")
     public void invalidPassLengthValidation(User userLoginCredentials) {
         loadApplication();
@@ -563,7 +565,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
     }
 
 
-        @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
+    @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
     public void checkUserFieldMaxLength(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -597,38 +599,48 @@ public class RegisterPageTests extends GreenCityTestRunner {
         logger.info("Starting checkSignUpModalUI: ");
         loadApplication();
 
+        SoftAssert softAssert = new SoftAssert();
+
         logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
-        SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         logger.info("Get a subtitle text of the modal window: "
                 + registerComponent.getSubtitleString());
-
         softAssert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
         logger.info("Get a text for registered users: "
                 + registerComponent.getSignInLinkText());
-        softAssert.assertEquals(registerComponent.getSignInLinkText(), "Do you already have an account? Sign in");
+        softAssert.assertEquals(registerComponent.getSignInLinkText(), "Do you already have an account? Sign in",
+                "Sign In text is not displayed");
 
         logger.info("Checking if the rest of the page elements are displayed ");
-        softAssert.assertTrue(registerComponent.getRegisterComponentModal().isDisplayed());
-        softAssert.assertTrue(registerComponent.getSignInLink().isDisplayed());
-        softAssert.assertTrue(registerComponent.getGoogleSignUpButton().isDisplayed());
-        softAssert.assertTrue(registerComponent.getModalImage().isDisplayed());
+        softAssert.assertTrue(registerComponent.getRegisterComponentModal().isDisplayed(),
+                "Register modal is not displayed");
+        softAssert.assertTrue(registerComponent.getSignInLink().isDisplayed(),
+                "Sign in link is not displayed");
+        softAssert.assertTrue(registerComponent.getGoogleSignUpButton().isDisplayed(),
+                "Google Sign Up button is not displayed");
+        softAssert.assertTrue(registerComponent.getModalImage().isDisplayed(),
+                "Image is not displayed");
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        softAssert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
-        softAssert.assertTrue(manualRegisterComponent.getEmailField().isDisplayed());
-        softAssert.assertTrue(manualRegisterComponent.getUserNameField().isDisplayed());
-        softAssert.assertTrue(manualRegisterComponent.getPasswordField().isDisplayed());
-        softAssert.assertTrue(manualRegisterComponent.getPasswordConfirmField().isDisplayed());
+        softAssert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed(),
+                "Sign Up button is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getEmailField().isDisplayed(),
+                "Email field is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getUserNameField().isDisplayed(),
+                "User Name field is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getPasswordField().isDisplayed(),
+                "Password field is not displayed");
+        softAssert.assertTrue(manualRegisterComponent.getPasswordConfirmField().isDisplayed(),
+                "Confirm Password field is not displayed");
         softAssert.assertAll();
 
     }
+
 }

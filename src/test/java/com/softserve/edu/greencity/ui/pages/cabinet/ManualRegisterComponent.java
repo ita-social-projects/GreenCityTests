@@ -440,22 +440,19 @@ public class ManualRegisterComponent extends RegisterComponent {
     }
 
 
-    protected RegisterComponent checkVerIfMailReceived() {
-        String initialTab = driver.getWindowHandle();
-        Set<String> allTabs = driver.getWindowHandles();
-        String newlyOpenedTab = TabsHandler.openNewTabAndGetId(driver, allTabs);
-        driver.switchTo().window(newlyOpenedTab);
+    public boolean checkVerIfMailReceived() {
 
-        GMailBox logInGMailPage = new GMailBox(driver);
-        logInGMailPage.logInGMail();
-        WebElement email = logInGMailPage.getTopUnreadEmail();
-        Assert.assertEquals(logInGMailPage.readHeader(email),"Verify your email address");
-        logInGMailPage.openTopUnreadEmail();
-        Assert.assertTrue(logInGMailPage.getVerifyEmailButton().isDisplayed());
-
-        driver.close();
-        driver.switchTo().window(initialTab);
-        return this;
+        boolean received = false;
+        try {
+            Gmail service = GMailAPILogin.getService();
+            String verifLink = GMailVerification.getVerifLink(service);
+            if (verifLink != null){
+                received = true;
+            }
+        } catch (GeneralSecurityException|IOException e) {
+            e.printStackTrace();
+        }
+        return received;
     }
 
     public RegisterComponent verifyRegistration() {
@@ -481,41 +478,45 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    public void registrationWrongUser(User userData) {
+    public ManualRegisterComponent registrationWrongUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton();
+        return this;
     }
 
-    public void fillFieldsWithoutRegistration(User userData) {
+    public ManualRegisterComponent fillFieldsWithoutRegistration(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword());
+        return this;
 
     }
 
-    public void registrationNewUserVerified(User userData) {
+    public ManualRegisterComponent registrationNewUserVerified(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
                 .verifyRegistration();
+        return this;
     }
 
-    public void registrationUser(User userData) {
+    public ManualRegisterComponent registrationUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
-                .fillPasswordConfirmField(userData.getConfirmPassword());
-        clickSignUpButton();
+                .fillPasswordConfirmField(userData.getConfirmPassword())
+                .clickSignUpButton();
+        return this;
     }
 
-    public void registerUserCheckIfMailReceived(User userData) {
-        fillEmailField(userData.getEmail())
+    public boolean registerUserCheckIfMailReceived(User userData) {
+        return  fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())

@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.signUp;
 
 import com.google.api.services.gmail.Gmail;
 import com.softserve.edu.greencity.ui.data.User;
@@ -9,6 +9,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
+import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -25,7 +26,7 @@ import java.security.GeneralSecurityException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public class RegistrationTests extends GreenCityTestRunner{
+public class RegistrationTests extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] successRegistrationUserCreds() {
@@ -161,8 +162,11 @@ public class RegistrationTests extends GreenCityTestRunner{
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
-        logger.info("Enter random credentials and temporary email into the form ");
-        manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
+        logger.info("Enter random credentials and temporary email into the form");
+        manualRegisterComponent.registrationUser(userLoginCredentials);
+
+        logger.info("Check if the mail with verification link is received");
+        Assert.assertTrue(manualRegisterComponent.checkVerIfMailReceived());
 
     }
 
