@@ -36,7 +36,6 @@ public class GMailVerification {
 
         for (Message message : messages) {
             stringMessages.add(message.getId());
-            System.out.println(message.getId());
         }
 
         String zeroId = stringMessages.get(0);
