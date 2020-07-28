@@ -51,4 +51,11 @@ public class UserDirector {
         userBuilder.setPassword(properties.getProperty("temporaryPass"));
     }
 
+    public void constructDefaultSignUpUser(final UserBuilder userBuilder) {
+        userBuilder.setEmail("a@b");
+        userBuilder.setName("Liuba");
+        userBuilder.setPassword("!Error911");
+    }
+
+
 }
