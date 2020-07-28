@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.model;
 
-public class APIResponseBody {
+public class APIResponseOwnSecurityModel {
     private String name;
     private String message;
 

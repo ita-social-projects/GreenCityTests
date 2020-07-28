@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.builders.userbuilder;
 
-public interface SignInUserBuilder {
+public interface UserBuilder {
     void setEmail(final String email);
     void setPassword(final String password);
 }
