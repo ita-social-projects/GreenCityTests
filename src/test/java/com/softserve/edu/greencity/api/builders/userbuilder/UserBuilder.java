@@ -1,22 +1,25 @@
 package com.softserve.edu.greencity.api.builders.userbuilder;
 
-import com.softserve.edu.greencity.api.model.SignInUser;
+import com.softserve.edu.greencity.api.model.UserModel;
 
-public class SignInUserBuilderImpl implements SignInUserBuilder {
+public class UserBuilder {
     private String email;
+    private String name;
     private String password;
 
-    @Override
     public void setEmail(String email) {
         this.email = email;
     }
 
-    @Override
+    public void setName(String name){
+        this.name = name;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public SignInUser getResult() {
-        return new SignInUser(email, password);
+    public UserModel getResult() {
+        return new UserModel(email, name, password);
     }
 }

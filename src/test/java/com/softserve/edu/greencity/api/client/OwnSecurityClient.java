@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.api.client;
 
-import com.softserve.edu.greencity.api.model.SignInUser;
-import com.softserve.edu.greencity.api.model.SignUpRequest;
+import com.softserve.edu.greencity.api.model.UserModel;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -12,13 +11,13 @@ public class OwnSecurityClient extends BaseClient {
     private final String SIGN_IN_URL = OWN_SECURITY + "/signIn";
     private final String SIGN_UP_URL = OWN_SECURITY + "/signUp";
 
-    public Response signIn(final SignInUser user) {
+    public Response signIn(final UserModel user) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .body(user)
                 .post(SIGN_IN_URL);
     }
 
-    public Response signUp(final SignUpRequest creds) {
+    public Response signUp(final UserModel creds) {
         return given(baseRequestSpecification(ContentType.JSON))
                 .body(creds)
                 .post(SIGN_UP_URL);

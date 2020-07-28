@@ -1,11 +1,11 @@
 package com.softserve.edu.greencity.api.tests.ownsecurity.signin;
 
 import com.softserve.edu.greencity.api.assertions.OwnSecurityAssertions;
-import com.softserve.edu.greencity.api.builders.userbuilder.SignUpBuilder;
+import com.softserve.edu.greencity.api.builders.userbuilder.UserBuilder;
+import com.softserve.edu.greencity.api.builders.userbuilder.UserDirector;
 import com.softserve.edu.greencity.api.client.OwnSecurityClient;
-import com.softserve.edu.greencity.api.model.APIResponseBody;
-import com.softserve.edu.greencity.api.model.SignUpRequest;
-import com.softserve.edu.greencity.api.model.SuccessfulSignUp;
+import com.softserve.edu.greencity.api.model.InvalidInputResponseOwnSecurity;
+import com.softserve.edu.greencity.api.model.UserModel;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterMethod;
@@ -17,15 +17,14 @@ import java.util.List;
 
 public class SignUpTests {
     OwnSecurityClient client = new OwnSecurityClient();
-    SignUpRequest model = new SignUpRequest();
+    UserModel model;
+    UserDirector userDir = new UserDirector();
+    UserBuilder userBuild = new UserBuilder();
 
     @BeforeMethod
     public void createModel() {
-        SignUpBuilder builder = new SignUpBuilder();
-        model = builder.setEmail("a@b")
-                .setName("Liuba")
-                .setPassword("!Error911")
-                .build();
+        userDir.constructDefaultSignUpUser(userBuild);
+        model = userBuild.getResult();
     }
 
     @AfterMethod
@@ -38,7 +37,7 @@ public class SignUpTests {
     public void successfulRegistration() {
         Response response = client.signUp(model);
         response.prettyPrint();
-        SuccessfulSignUp apiResp = response.as(SuccessfulSignUp.class);
+        UserModel apiResp = response.as(UserModel.class);
         OwnSecurityAssertions.checkValidSignUpResponse(apiResp, model);
     }
 
@@ -46,7 +45,7 @@ public class SignUpTests {
     public void checkDuplicateUserIsNotCreated() {
         client.signUp(model);
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkDuplicateEmailResponse(responseObjects.get(0));
     }
 
@@ -54,7 +53,7 @@ public class SignUpTests {
     public void checkInvalidPassRegistration() {
         model.setPassword("pass");
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkInvalidPassResponse(responseObjects.get(0));
     }
 
@@ -62,7 +61,7 @@ public class SignUpTests {
     public void checkInvalidEmailRegistration() {
         model.setEmail("email");
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkInvalidEmailResponse(responseObjects.get(0));
     }
 
@@ -73,7 +72,7 @@ public class SignUpTests {
         model.setName("");
         model.setPassword("");
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkEmptyFieldsRegistration(responseObjects);
     }
 
@@ -81,7 +80,7 @@ public class SignUpTests {
     public void checkEmptyEmailRegistration() {
         model.setEmail("");
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkEmptyEmailResponse(responseObjects.get(0));
     }
 
@@ -89,7 +88,7 @@ public class SignUpTests {
     public void checkEmptyPassRegistration() {
         model.setPassword("");
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkEmptyPassResponse(responseObjects.get(0));
     }
 
@@ -98,7 +97,7 @@ public class SignUpTests {
     public void checkTooLongNameRegistration() {
         model.setName("21charstring21charstr");
         Response response = client.signUp(model);
-        List<APIResponseBody> responseObjects = Arrays.asList(response.getBody().as(APIResponseBody[].class));
+        List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkTooLongNameResponse(responseObjects.get(0));
     }
 }
