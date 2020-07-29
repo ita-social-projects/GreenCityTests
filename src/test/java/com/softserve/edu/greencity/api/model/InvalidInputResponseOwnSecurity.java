@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.model;
 
-public class APIResponseOwnSecurityModel {
+public class InvalidInputResponseOwnSecurity {
     private String name;
     private String message;
 

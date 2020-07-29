@@ -8,23 +8,15 @@ public class UserModel {
     private String refreshToken;
     private int userId;
     private boolean ownRegistrations;
+    private String username;
 
     public UserModel() {
 
     }
 
-    public UserModel(String email, String password, String accessToken, String name, String refreshToken, int userId, boolean ownRegistrations) {
+    public UserModel(String email, String name, String password) {
         this.email = email;
-        this.password = password;
-        this.accessToken = accessToken;
         this.name = name;
-        this.refreshToken = refreshToken;
-        this.userId = userId;
-        this.ownRegistrations = ownRegistrations;
-    }
-
-    public UserModel(String email, String password) {
-        this.email = email;
         this.password = password;
     }
 
@@ -82,5 +74,13 @@ public class UserModel {
 
     public void setOwnRegistrations(boolean ownRegistrations) {
         this.ownRegistrations = ownRegistrations;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public void setUsername(){
+        this.username = username;
     }
 }
