@@ -5,16 +5,19 @@ import com.softserve.edu.greencity.api.assertions.OwnSecurityAssertions;
 import com.softserve.edu.greencity.api.builders.userbuilder.UserBuilderImpl;
 import com.softserve.edu.greencity.api.builders.userbuilder.UserDirector;
 import com.softserve.edu.greencity.api.client.OwnSecurityClient;
+import com.softserve.edu.greencity.api.listeners.LogListener;
 import com.softserve.edu.greencity.api.model.APIResponseOwnSecurityModel;
 import com.softserve.edu.greencity.api.model.UserModel;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.List;
 
+@Listeners(LogListener.class)
 public class SignInTests {
     OwnSecurityClient ownSecurityClient;
     UserDirector userDirector;
