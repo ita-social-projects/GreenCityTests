@@ -1,325 +1,343 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.softserve.edu</groupId>
-	<artifactId>GreenCityTests</artifactId>
-	<version>1.0</version>
+    <groupId>com.softserve.edu</groupId>
+    <artifactId>GreenCityTests</artifactId>
+    <version>1.0</version>
 
-	<packaging>jar</packaging>
+    <packaging>jar</packaging>
 
-	<name>${project.artifactId}</name>
-	<url>http://maven.apache.org</url>
+    <name>${project.artifactId}</name>
+    <url>http://maven.apache.org</url>
 
-	<properties>
-		<!-- - - - - - Credentionals - - - - - -->
-		<application.password>null123</application.password>
-		<!-- - - - - - Encoding - - - - - -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
-		<!-- - - - - - Java - - - - - -->
-		<jdk.source.version>1.8</jdk.source.version>
-		<jdk.compiler.version>1.8</jdk.compiler.version>
-		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-		<!-- - - - - - Test - - - - - -->
-		<testng.xml>testng.xml</testng.xml>
-		<org.junit.version>4.13</org.junit.version>
-		<!-- <org.testng.version>7.1.0</org.testng.version> -->
-		<org.testng.version>6.14.3</org.testng.version>
-		<!-- <org.testng.version>7.0.0</org.testng.version> -->
-		<maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
-		<!-- - - - - - Automation - - - - - -->
-		<org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
-		<org.seleniumhq.selenium.htmlunit-driver>2.36.0</org.seleniumhq.selenium.htmlunit-driver>
-		<apache.commons.io.version>2.6</apache.commons.io.version>
-		<io.github.bonigarcia.version>3.8.1</io.github.bonigarcia.version>
-		<com.codeborne.phantomjsdriver.version>1.4.4</com.codeborne.phantomjsdriver.version>
-		<maven.os-maven-plugin.version>1.6.2</maven.os-maven-plugin.version>
-		<maven.webdriverextensions-maven-plugin.version>3.2.0</maven.webdriverextensions-maven-plugin.version>
-		<!-- - - - - - Reports - - - - - -->
-		<testng.reports.directory>./target/surefire-reports/test-output</testng.reports.directory>
-		<allure.version>2.13.1</allure.version>
-		<aspectj.version>1.9.5</aspectj.version>
-		<!-- - - - - - Mocks - - - - - -->
-		<org.mockito.version>1.10.19</org.mockito.version>
-		<org.powermock.version>1.7.4</org.powermock.version>
-		<!-- - - - - - Logging - - - - - -->
-		<org.slf4j.version>1.7.30</org.slf4j.version>
-		<!-- - - - - - DB - - - - - -->
-		<net.sourceforge.jtds.version>1.3.1</net.sourceforge.jtds.version>
-		<mysql.connector.version>5.1.47</mysql.connector.version>
-		<postgresql.connector.version>9.4-1206-jdbc41</postgresql.connector.version>
-		<!-- - - - - - Utils - - - - - -->
-		<org.apache.poi.version>4.1.1</org.apache.poi.version>
-		<!-- - - - - - JSON - - - - - -->
-		<jackson.core.version>2.9.8</jackson.core.version>
-		<google.gson.version>2.8.6</google.gson.version>
-		<rest-assured.version>4.3.0</rest-assured.version>
-	</properties>
+    <properties>
+        <!-- - - - - - Credentionals - - - - - -->
+        <application.password>null123</application.password>
+        <!-- - - - - - Encoding - - - - - -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
+        <!-- - - - - - Java - - - - - -->
+        <jdk.source.version>1.8</jdk.source.version>
+        <jdk.compiler.version>1.8</jdk.compiler.version>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <!-- - - - - - Test - - - - - -->
+        <testng.xml>testng.xml</testng.xml>
+        <org.junit.version>4.13</org.junit.version>
+        <!-- <org.testng.version>7.1.0</org.testng.version> -->
+        <org.testng.version>6.14.3</org.testng.version>
+        <!-- <org.testng.version>7.0.0</org.testng.version> -->
+        <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+        <!-- - - - - - Automation - - - - - -->
+        <org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
+        <org.seleniumhq.selenium.htmlunit-driver>2.36.0</org.seleniumhq.selenium.htmlunit-driver>
+        <apache.commons.io.version>2.6</apache.commons.io.version>
+        <io.github.bonigarcia.version>3.8.1</io.github.bonigarcia.version>
+        <com.codeborne.phantomjsdriver.version>1.4.4</com.codeborne.phantomjsdriver.version>
+        <maven.os-maven-plugin.version>1.6.2</maven.os-maven-plugin.version>
+        <maven.webdriverextensions-maven-plugin.version>3.2.0</maven.webdriverextensions-maven-plugin.version>
+        <!-- - - - - - Reports - - - - - -->
+        <testng.reports.directory>./target/surefire-reports/test-output</testng.reports.directory>
+        <allure.version>2.13.1</allure.version>
+        <aspectj.version>1.9.5</aspectj.version>
+        <!-- - - - - - Mocks - - - - - -->
+        <org.mockito.version>1.10.19</org.mockito.version>
+        <org.powermock.version>1.7.4</org.powermock.version>
+        <!-- - - - - - Logging - - - - - -->
+        <org.slf4j.version>1.7.30</org.slf4j.version>
+        <!-- - - - - - DB - - - - - -->
+        <net.sourceforge.jtds.version>1.3.1</net.sourceforge.jtds.version>
+        <mysql.connector.version>5.1.47</mysql.connector.version>
+        <postgresql.connector.version>9.4-1206-jdbc41</postgresql.connector.version>
+        <!-- - - - - - Utils - - - - - -->
+        <org.apache.poi.version>4.1.1</org.apache.poi.version>
+        <!-- - - - - - JSON - - - - - -->
+        <jackson.core.version>2.9.8</jackson.core.version>
+        <google.gson.version>2.8.6</google.gson.version>
+        <rest-assured.version>4.2.0</rest-assured.version>
+    </properties>
 
-	<dependencies>
+    <dependencies>
 
-		<!-- - - - - - Test - - - - - -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${org.junit.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <!-- - - - - - Test - - - - - -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${org.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${org.testng.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${org.testng.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<!-- - - - - - Automation - - - - - -->
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-server</artifactId>
-			<version>${org.seleniumhq.selenium.version}</version>
-		</dependency>
+        <!-- - - - - - Automation - - - - - -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-server</artifactId>
+            <version>${org.seleniumhq.selenium.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>htmlunit-driver</artifactId>
-			<version>${org.seleniumhq.selenium.htmlunit-driver}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>htmlunit-driver</artifactId>
+            <version>${org.seleniumhq.selenium.htmlunit-driver}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.codeborne</groupId>
-			<artifactId>phantomjsdriver</artifactId>
-			<version>${com.codeborne.phantomjsdriver.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.codeborne</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>${com.codeborne.phantomjsdriver.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>io.github.bonigarcia</groupId>
-			<artifactId>webdrivermanager</artifactId>
-			<version>${io.github.bonigarcia.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${io.github.bonigarcia.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>${apache.commons.io.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${apache.commons.io.version}</version>
+        </dependency>
 
-		<!-- - - - Logger - - - -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j.version}</version>
-			<scope>compile</scope>
-		</dependency>
+        <!-- - - - Logger - - - -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
 
-		<!-- - - - - - DB - - - - - -->
-		<dependency>
-			<groupId>net.sourceforge.jtds</groupId>
-			<artifactId>jtds</artifactId>
-			<version>${net.sourceforge.jtds.version}</version>
-		</dependency>
+        <!-- - - - - - DB - - - - - -->
+        <dependency>
+            <groupId>net.sourceforge.jtds</groupId>
+            <artifactId>jtds</artifactId>
+            <version>${net.sourceforge.jtds.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.2.12</version>
-		</dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.12</version>
+        </dependency>
 
-		<!-- - - - Read from Excel formats, etc. - - - -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>${org.apache.poi.version}</version>
-		</dependency>
+        <!-- - - - Read from Excel formats, etc. - - - -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${org.apache.poi.version}</version>
+        </dependency>
 
-		<!-- - - - - - JSON - - - - - -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson.core.version}</version>
-		</dependency>
+        <!-- - - - - - JSON - - - - - -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.core.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${google.gson.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${google.gson.version}</version>
+        </dependency>
 
-		<!-- - - - Reports - - - -->
-		<dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-testng</artifactId>
-			<version>${allure.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <!-- - - - Reports - - - -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${aspectj.version}</version>
-			<!-- <scope>test</scope> -->
-		</dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <!-- <scope>test</scope> -->
+        </dependency>
 
-		<!-- <GMail API> -->
-		<dependency>
-			<groupId>com.google.api-client</groupId>
-			<artifactId>google-api-client</artifactId>
-			<version>1.30.10</version>
-		</dependency>
+        <!-- <GMail API> -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.30.10</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.oauth-client</groupId>
-			<artifactId>google-oauth-client-jetty</artifactId>
-			<version>1.31.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>1.31.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.apis</groupId>
-			<artifactId>google-api-services-gmail</artifactId>
-			<version>v1-rev110-1.25.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-gmail</artifactId>
+            <version>v1-rev110-1.25.0</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.auth</groupId>
-			<artifactId>google-auth-library-oauth2-http</artifactId>
-			<version>0.21.1</version>
-		</dependency>
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>0.21.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>${rest-assured.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
-	<build>
-		<extensions>
-			<extension>
-				<groupId>kr.motd.maven</groupId>
-				<artifactId>os-maven-plugin</artifactId>
-				<version>${maven.os-maven-plugin.version}</version>
-			</extension>
-		</extensions>
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.9</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
-		<plugins>
+    <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${maven.os-maven-plugin.version}</version>
+            </extension>
+        </extensions>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>${maven.resources.plugin.version}</version>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
+        <plugins>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
-				<configuration>
-					<source>${jdk.source.version}</source>
-					<target>${jdk.compiler.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin.version}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>com.github.webdriverextensions</groupId>
-				<artifactId>webdriverextensions-maven-plugin</artifactId>
-				<version>${maven.webdriverextensions-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>pre-test</id>
-						<goals>
-							<goal>install-drivers</goal>
-						</goals>
-						<!-- Uncomment for download automatically -->
-						<phase>test-compile</phase>
-						<!-- <phase>process-test-classes</phase> -->
-						<!-- <phase>test</phase> -->
-					</execution>
-				</executions>
-				<configuration>
-					<installationDirectory>${project.build.directory}/test-classes</installationDirectory>
-					<!-- <installationDirectory>${project.basedir}/src/test/resources</installationDirectory> -->
-					<keepDownloadedWebdrivers>true</keepDownloadedWebdrivers>
-					<drivers>
-						<driver>
-							<name>chromedriver</name>
-							<!--suppress UnresolvedMavenProperty -->
-							<platform>${os.detected.name}</platform>
-							<!-- <platform>windows</platform> -->
-							<bit>32</bit>
-							<!-- <version>74.0.3729.6</version> -->
-							<!-- <url>https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_win32.zip</url> -->
-							<!-- <version>76.0.3809.126</version> -->
-							<!-- <url>https://chromedriver.storage.googleapis.com/76.0.3809.126/chromedriver_win32.zip</url> -->
-							<!-- <url>https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_win32.zip</url> -->
-							<url>https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_win32.zip</url>
-							<!-- <version>79.0.3945.36</version> -->
-							<!-- <version>78.0.3904.105</version> -->
-						</driver>
-					</drivers>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${jdk.source.version}</source>
+                    <target>${jdk.compiler.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven.surefire.plugin.version}</version>
-				<configuration>
-					<argLine>-Xms512m -Xmx1024m</argLine>
-					<skipTests>false</skipTests>
-					<systemPropertyVariables>
-						<surefire.application.password>
-							${application.password}
-						</surefire.application.password>
-					</systemPropertyVariables>
-					<!-- <includes> -->
-					<!-- <include>**/*.java</include> -->
-					<!-- <include>**/MyData.java</include> -->
-					<!-- <include>**/SimpleTest.java</include> -->
-					<!-- <include>**/FindTest.java</include> -->
-					<!-- </includes> -->
-					<!-- <excludes> -->
-					<!-- <exclude>**/AppTest.java</exclude> -->
-					<!-- </excludes> -->
-					<suiteXmlFiles>
-						<suiteXmlFile>${testng.xml}</suiteXmlFile>
-					</suiteXmlFiles>
-					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
-					<!-- <argLine> -->
-					<!-- -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -->
-					<!-- </argLine> -->
-				</configuration>
-				<!-- <dependencies> -->
-				<!-- <dependency> -->
-				<!-- <groupId>org.aspectj</groupId> -->
-				<!-- <artifactId>aspectjweaver</artifactId> -->
-				<!-- <version>${aspectj.version}</version> -->
-				<!-- <scope>test</scope> -->
-				<!-- </dependency> -->
-				<!-- </dependencies> -->
-			</plugin>
+            <plugin>
+                <groupId>com.github.webdriverextensions</groupId>
+                <artifactId>webdriverextensions-maven-plugin</artifactId>
+                <version>${maven.webdriverextensions-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>pre-test</id>
+                        <goals>
+                            <goal>install-drivers</goal>
+                        </goals>
+                        <!-- Uncomment for download automatically -->
+                        <phase>test-compile</phase>
+                        <!-- <phase>process-test-classes</phase> -->
+                        <!-- <phase>test</phase> -->
+                    </execution>
+                </executions>
+                <configuration>
+                    <installationDirectory>${project.build.directory}/test-classes</installationDirectory>
+                    <!-- <installationDirectory>${project.basedir}/src/test/resources</installationDirectory> -->
+                    <keepDownloadedWebdrivers>true</keepDownloadedWebdrivers>
+                    <drivers>
+                        <driver>
+                            <name>chromedriver</name>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <platform>${os.detected.name}</platform>
+                            <!-- <platform>windows</platform> -->
+                            <bit>32</bit>
+                            <!-- <version>74.0.3729.6</version> -->
+                            <!-- <url>https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_win32.zip</url> -->
+                            <!-- <version>76.0.3809.126</version> -->
+                            <!-- <url>https://chromedriver.storage.googleapis.com/76.0.3809.126/chromedriver_win32.zip</url> -->
+                            <!-- <url>https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_win32.zip</url> -->
+                            <url>https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_win32.zip</url>
+                            <!-- <version>79.0.3945.36</version> -->
+                            <!-- <version>78.0.3904.105</version> -->
+                        </driver>
+                    </drivers>
+                </configuration>
+            </plugin>
 
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
+                    <skipTests>false</skipTests>
+                    <systemPropertyVariables>
+                        <surefire.application.password>
+                            ${application.password}
+                        </surefire.application.password>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
+                    <!-- <includes> -->
+                    <!-- <include>**/*.java</include> -->
+                    <!-- <include>**/MyData.java</include> -->
+                    <!-- <include>**/SimpleTest.java</include> -->
+                    <!-- <include>**/FindTest.java</include> -->
+                    <!-- </includes> -->
+                    <!-- <excludes> -->
+                    <!-- <exclude>**/AppTest.java</exclude> -->
+                    <!-- </excludes> -->
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${testng.xml}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <reportsDirectory>${testng.reports.directory}</reportsDirectory>
+                    <!-- <argLine> -->
+                    <!-- -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -->
+                    <!-- </argLine> -->
+                </configuration>
+                <!-- <dependencies> -->
+                <!-- <dependency> -->
+                <!-- <groupId>org.aspectj</groupId> -->
+                <!-- <artifactId>aspectjweaver</artifactId> -->
+                <!-- <version>${aspectj.version}</version> -->
+                <!-- <scope>test</scope> -->
+                <!-- </dependency> -->
+                <!-- </dependencies> -->
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
