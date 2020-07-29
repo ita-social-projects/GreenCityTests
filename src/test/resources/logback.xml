@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="SIFTER" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>testName</key>
+            <defaultValue>ALL</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${testName}" class="ch.qos.logback.core.FileAppender">
+                <file>target/logback-logs/${testName}.log</file>
+                <encoder>
+                    <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="SIFTER"/>
+    </root>
+</configuration>
