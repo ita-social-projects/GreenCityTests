@@ -35,7 +35,7 @@ public class GoogleLoginPage {
     private final String PASSWORD_NEXT_BUTTON_XPATH = "//*[@id='passwordNext']/div";
     private final String PASSWORD_NEXT_BUTTON_ID_HEADLESS = "submit";
 
-    public final static String GOOGLE_LOGIN_PAGE_URL = "https://accounts.google.com/";
+    public final static String GOOGLE_LOGIN_PAGE_URL = "https://accounts.google.com/signin/oauth/";
 
     public GoogleLoginPage(WebDriver driver) {
         this.driver = driver;
