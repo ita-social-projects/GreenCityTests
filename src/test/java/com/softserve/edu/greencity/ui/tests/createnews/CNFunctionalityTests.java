@@ -306,6 +306,13 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
     }
 
 
+    @Test
+    public void verifyThatUserCanCanselCreatingNews() {
+        EconewsPage econewsPage = loadCreateNewsPage()
+                .fillFields(NewsDataRepository.getRequiredFieldsNews())
+                .cancelNewsCreating();
+        Assert.assertFalse(driver.findElement(By.cssSelector("app-header a[href='#/news']")).isEnabled());
+    }
 
 
 
