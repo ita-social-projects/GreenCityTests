@@ -8,9 +8,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
-import com.softserve.edu.greencity.ui.tools.WindowManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -91,10 +89,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
                 {UserRepository.get().invalidConfirmPassCredentials()},};
     }
 
-    /**
-     * Filling all the fields on the Register page without registering and
-     * switch to Login page.
-     */
+
     @Test(dataProvider = "validUserCredentials")
     public void checkIfSignUpButtonEnabled(User userLoginCredentials) {
         loadApplication();
@@ -153,10 +148,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
                 "This is not a login modal:(");
     }
 
-    /**
-     * Putting empty values into register form
-     * and reading the validation messages.
-     */
+
     @Test(dataProvider = "emptyFields", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
         loadApplication();
@@ -550,7 +542,6 @@ public class RegisterPageTests extends GreenCityTestRunner {
 
     }
 
-
     @Test(description = "GC-485")
     public void checkBackgroundIsDimmed() {
 
@@ -641,6 +632,114 @@ public class RegisterPageTests extends GreenCityTestRunner {
                 "Confirm Password field is not displayed");
         softAssert.assertAll();
 
+    }
+
+    @Test(dataProvider = "validUserCredentials", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    public void checkEmptyEmailValidation(User userLoginCredentials) {
+        userLoginCredentials.setEmail("");
+        loadApplication();
+        logger.info("Starting checkEmptyFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter empty values into the form");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+                "Email is required",
+                "The validation message is not equal to the expected one");
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+    }
+
+    @Test(dataProvider = "emptyFields", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    public void checkEmptyNameValidation(User userLoginCredentials) {
+        userLoginCredentials.setUserName("");
+        loadApplication();
+        logger.info("Starting checkEmptyFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter empty values into the form");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
+                "User name is required",
+                "The validation message is not equal to the expected one");
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+
+    }
+    @Test(dataProvider = "emptyFields", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    public void checkEmptyPassValidation(User userLoginCredentials) {
+        userLoginCredentials.setPassword("");
+        loadApplication();
+        logger.info("Starting checkEmptyFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter empty values into the form");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+                "Password is required",
+                "The validation message is not equal to the expected one");
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+
+    }
+    @Test(dataProvider = "emptyFields", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    public void checkEmptyConfirmPassValidation(User userLoginCredentials) {
+        userLoginCredentials.setConfirmPassword("");
+        loadApplication();
+        logger.info("Starting checkEmptyFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+
+        logger.info("Click on Sign up button");
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
+
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+
+        logger.info("Enter empty values into the form");
+        manualRegisterComponent.registrationWrongUser(userLoginCredentials);
+
+        Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
+                "Password is required",
+                "The validation message is not equal to the expected one");
+        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
     }
 
 }
