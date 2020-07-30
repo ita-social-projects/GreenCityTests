@@ -10,11 +10,9 @@ import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -88,6 +86,20 @@ public class CNSmokeTests extends GreenCityTestRunner {
         softAssert.assertEquals(createNewsPage.getSourceFieldText(), "");
         softAssert.assertEquals(createNewsPage.getContentFieldText(), "");
         softAssert.assertEquals(createNewsPage.getSelectedTagsNames().size(), 0);
+        softAssert.assertAll();
+    }
+
+    /**
+     * @ID=633-1387
+     * @return
+     */
+    @Test
+    public void checkPreviewOption() {
+        NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
+        PreViewPage preViewPage = loadCreateNewsPage().fillFields(newsData).goToPreViewPage();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(newsData.getContent(), preViewPage.getContentFieldText());
+        softAssert.assertEquals(newsData.getTitle(), preViewPage.getTitleFieldText());
         softAssert.assertAll();
     }
 

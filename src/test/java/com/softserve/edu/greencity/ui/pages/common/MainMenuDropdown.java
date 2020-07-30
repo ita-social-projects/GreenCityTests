@@ -59,7 +59,13 @@ public class MainMenuDropdown {
     }
 
     public void clickMenuTipsTricks() {
-
+        try {
+            WebElement signInButton = driver.findElement(By.cssSelector("form .primary-global-button"));
+            new WebDriverWait(driver, 4)
+                    .until(ExpectedConditions.invisibilityOf(signInButton));
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
         getMenuTipsTricks().click();
     }
 
