@@ -5,8 +5,20 @@ import com.softserve.edu.greencity.api.model.UserModel;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OwnSecurityAssertions {
+
+    public static void checkInvalidSignInResponse(final List<InvalidInputResponseOwnSecurity> list, final String expectedName, final String expectedMessage) {
+        InvalidInputResponseOwnSecurity responseJsonObject = list.stream()
+                .filter(e -> e.getName().contains(expectedName))
+                .collect(Collectors.toList())
+                .get(0);
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(responseJsonObject.getMessage(), expectedMessage);
+        softAssert.assertEquals(responseJsonObject.getName(), expectedName);
+        softAssert.assertAll();
+    }
 
     public static void checkInvalidSignInResponse(final InvalidInputResponseOwnSecurity invalidInputResponseOwnSecurity, final String expectedName, final String expectedMessage) {
         SoftAssert softAssert = new SoftAssert();

@@ -32,8 +32,8 @@ public class LogListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        String testName = "ThreadId_" + Thread.currentThread().getId() + "_" + result.getName() + result.getStartMillis();
-        MDC.put("testName", testName);
+        String logFileName = "ThreadId_" + Thread.currentThread().getId() + "_" + result.getName() + result.getStartMillis();
+        MDC.put("logFileName", logFileName);
 
         logger.debug(result.getName() + ":\n" + request.toString() + "\n" + response.toString());
 

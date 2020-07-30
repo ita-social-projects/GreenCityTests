@@ -39,6 +39,11 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
                 .navigateMenuTipsTricks();
     }
 
+    @Test
+    public void test() {
+        Assert.assertTrue(false);
+    }
+
     /**
      * Cancel news creation test.
      * @author lv-493
