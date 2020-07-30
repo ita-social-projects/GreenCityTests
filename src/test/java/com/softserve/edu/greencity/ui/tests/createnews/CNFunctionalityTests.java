@@ -1,17 +1,20 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
+import com.google.api.services.gmail.Gmail;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.PreViewPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.DBQueries;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -248,6 +251,102 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
                 .publishNews();
         dataBase.deleteNewsByTitle(title);
     }
+
+
+    /**
+     * @ID=657-1388
+     */
+    @Test
+    public void verifyHowTitleAndContentWillDisplayOnPreviewPage() {
+        PreViewPage preViewPage = loadCreateNewsPage()
+                .fillFields(NewsDataRepository.getRequiredFieldsNews())
+                .goToPreViewPage();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert.assertEquals(preViewPage.getTitleField().getCssValue("text-align"), "center");
+        driver.manage().window().setSize(new Dimension(300, 500));
+        softAssert.assertEquals(preViewPage.getTitleField().getCssValue("text-align"), "center");
+        softAssert.assertAll();
+        driver.manage().window().maximize();
+    }
+
+
+    /**
+     * @ID=597-1389
+     */
+    @Test
+    public void verifyMessageWhileNewsIsLoading() {
+        NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
+        String title = "verifyMessageWhileNewsIsLoading";
+        newsData.setTitle(title);
+        loadCreateNewsPage().fillFields(newsData).getPublishButton().click();
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.container div.people-img + span")).getText(), "Please wait while loading...");
+        dataBase.deleteNewsByTitle(title);
+    }
+
+
+    /**
+     * @ID=606-1390
+     */
+    @Test
+    public void verifyCancelButtonFunctionality() {
+        NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
+        newsData.setTitle("verifyCancelButtonunctionality");
+        CreateNewsPage createNewsPage = loadCreateNewsPage()
+                .fillFields(newsData);
+        createNewsPage.clickCancelButton();
+        Assert.assertTrue(driver.findElements(By.cssSelector("app-create-news-cancel")).size() == 1);
+        driver.findElement(By.cssSelector("app-create-news-cancel .secondary-global-button")).click();
+        SoftAssert softAssert = new SoftAssert();
+        softAssert
+                .assertEquals(
+                        newsData.getTitle(),
+                        driver.findElement(By.cssSelector("input[formcontrolname='title']")).getAttribute("value"));
+        softAssert.assertEquals(newsData.getContent(), driver.findElement(By.cssSelector("textarea")).getAttribute("value"));
+        softAssert.assertAll();
+    }
+
+
+    /**
+     * @ID=607
+     */
+    @Test
+    public void verifyThatUserCanCanselCreatingNews() {
+        EconewsPage econewsPage = loadCreateNewsPage()
+                .fillFields(NewsDataRepository.getRequiredFieldsNews())
+                .cancelNewsCreating();
+        Assert.assertTrue(driver.findElements(By.cssSelector("app-remaining-count p")).size() > 0);
+    }
+
+
+    /**
+     * @ID=608
+     */
+    @Test
+    public void checkPopUpAfterCancelCreatingNews() {
+        loadCreateNewsPage().clickCancelButton();
+        SoftAssert softAssert = new SoftAssert();
+        WebElement warningPopup = driver.findElement(By.cssSelector("app-create-news-cancel"));
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".warning-title")).getText(), "All created content will be lost.");
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".warning-subtitle")).getText(), "Do you still want to cancel news creating?");
+        softAssert.assertTrue(warningPopup.findElements(By.cssSelector(".cta-buttons")).size() > 0);
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".secondary-global-button")).getText(), "Continue editing");
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".primary-global-button")).getText(), "Yes, cancel");
+        softAssert.assertAll();
+    }
+
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     * @return
+     */
 
     public CreateNewsPage loadCreateNewsPage() {
         driver.navigate().to(createNewsUrl);
