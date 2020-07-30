@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.tests.ownsecurity.signin;
+package com.softserve.edu.greencity.api.tests.ownsecurity.signup;
 
 import com.softserve.edu.greencity.api.assertions.OwnSecurityAssertions;
 import com.softserve.edu.greencity.api.builders.userbuilder.UserBuilder;
