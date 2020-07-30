@@ -11,8 +11,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
 import com.softserve.edu.greencity.ui.tests.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -23,8 +21,6 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.sql.Connection;
-import java.util.ArrayList;
 
 public class RegistrationTests extends GreenCityTestRunner {
 
@@ -41,26 +37,29 @@ public class RegistrationTests extends GreenCityTestRunner {
         help.cleanGreenCityCookiesAndStorages();
         help.cleanGMailCookiesAndStorages();
 
-
         DBQueries queryObj = new DBQueries();
-        queryObj.deleteUserByEmail("GCSignUpUser@gmail.com");
+        User user = UserRepository.get().gMailUserCredentials();
+        String email = user.getEmail();
+        queryObj.deleteUserByEmail(email);
 
     }
 
     @AfterClass(alwaysRun = true)
-    public void mailBoxCleanUp(){
+    public void mailBoxCleanUp() {
 
         try {
             Gmail service = GMailAPILogin.getService();
-            GMailBatchDelete.batchDelete(service);
-        } catch (GeneralSecurityException|IOException e) {
+            GMailMethods gmailDo = new GMailMethods();
+            gmailDo.batchDelete(service);
+        } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
         }
         CookiesAndStorageHelper help = new CookiesAndStorageHelper(driver);
         help.cleanCookiesAndStorages();
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds",retryAnalyzer = RetryAnalyzer.class,
+            description = "GC-199, GC-206")
     public void registrationAndLogin(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting registrationAndLogin. Input values = "
@@ -71,28 +70,30 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-
         logger.info("Enter credentials into the form");
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registrationUser(userLoginCredentials);
 
-        WebDriverWait wait = new WebDriverWait(driver,10);
-
+        logger.info("Wait till success message is displayed");
+        WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
         Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
+        logger.info("Wait till login window is displayed");
         LoginComponent loginComp = new LoginComponent(driver);
         wait.until(ExpectedConditions.visibilityOf(loginComp.getLoginModalWindow()));
         Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
+        Assert.assertEquals("Welcome back!", loginComp.getTitleString(),
+                "This is not a login modal:(");
 
+        logger.info("Verify registration");
         manualRegisterComponent.verifyRegistration();
 
+        logger.info("Enter credentials in login window and click Sign Up");
         ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
-
         manualLoginComponent.successfullyLogin(userLoginCredentials);
 
         logger.info("Get Title curent page: " + driver.getTitle());
@@ -100,7 +101,6 @@ public class RegistrationTests extends GreenCityTestRunner {
                 "you didn't log in successfully");
 
         TopUserComponent userComponent = new TopUserComponent(driver);
-
         logger.info("Check TopUserName: " + userComponent.getUserNameButtonText());
         Assert.assertEquals(userComponent.getUserNameButtonText(), userLoginCredentials.getUserName());
 
@@ -117,29 +117,26 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-
         logger.info("Enter credentials into the form");
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registrationUser(userLoginCredentials);
 
-        WebDriverWait wait = new WebDriverWait(driver,6);
-
+        logger.info("Wait till the success message is shown");
+        WebDriverWait wait = new WebDriverWait(driver, 6);
         wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
         Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
+        logger.info("Wait till the login window is shown");
         LoginComponent loginComp = new LoginComponent(driver);
         wait.until(ExpectedConditions.visibilityOf(loginComp.getLoginModalWindow()));
         Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
 
+        logger.info("Enter credentials into login form");
         ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
-
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
-
         Assert.assertEquals(manualLoginComponent.getWrongEmailOrPassErrorText(),
                 "Bad email or password",
                 "The validation message is not equal to the expected one");
@@ -156,13 +153,11 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
+        logger.info("Enter credentials into the form");
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-
-        logger.info("Enter random credentials and temporary email into the form");
         manualRegisterComponent.registrationUser(userLoginCredentials);
 
         logger.info("Check if the mail with verification link is received");
@@ -181,21 +176,19 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-
         logger.info("Enter credentials into the form");
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registrationUser(userLoginCredentials);
 
-        WebDriverWait wait = new WebDriverWait(driver,6);
-
+        logger.info("Wait till the success message is shown");
+        WebDriverWait wait = new WebDriverWait(driver, 6);
         wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
         Assert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
+        logger.info("Wait till the login window is shown");
         LoginComponent loginComp = new LoginComponent(driver);
         wait.until(ExpectedConditions.visibilityOf(loginComp.getLoginModalWindow()));
         Assert.assertTrue(loginComp.getLoginModalWindow().isDisplayed());
@@ -205,25 +198,23 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Click on Sign up button");
         registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
-
         Assert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-
-        manualRegisterComponent = registerComponent.getManualRegisterComponent();
-
         logger.info("Enter already used credentials into the form");
+        manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registrationUser(userLoginCredentials);
-
         Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "The user already exists by this email",
                 "The validation message is not equal to the expected one");
 
+        logger.info("Check dublicated user is not created");
         DBQueries db = new DBQueries();
-        Assert.assertFalse(db.isUserEmailDuplicated("GCSignUpUser@gmail.com"));
+        User user = UserRepository.get().gMailUserCredentials();
+        String email = user.getEmail();
+        Assert.assertFalse(db.isUserEmailDuplicated(email));
     }
 
 

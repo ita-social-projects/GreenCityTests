@@ -3,15 +3,13 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 import com.google.api.services.gmail.Gmail;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.GMailAPILogin;
-import com.softserve.edu.greencity.ui.tools.GMailBox;
-import com.softserve.edu.greencity.ui.tools.GMailVerification;
+import com.softserve.edu.greencity.ui.tools.GMailMethods;
 import com.softserve.edu.greencity.ui.tools.TabsHandler;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -445,7 +443,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         boolean received = false;
         try {
             Gmail service = GMailAPILogin.getService();
-            String verifLink = GMailVerification.getVerifLink(service);
+            GMailMethods gmailDo = new GMailMethods();
+            String verifLink = gmailDo.getVerifLink(service);
             if (verifLink != null){
                 received = true;
             }
@@ -462,7 +461,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         String verifLink = null;
         try {
             Gmail service = GMailAPILogin.getService();
-            verifLink = GMailVerification.getVerifLink(service);
+            GMailMethods gmailDo = new GMailMethods();
+            verifLink = gmailDo.getVerifLink(service);
         } catch (GeneralSecurityException|IOException e) {
             e.printStackTrace();
         }

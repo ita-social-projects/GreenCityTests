@@ -52,9 +52,14 @@ public class UserDirector {
     }
 
     public void constructDefaultSignUpUser(final UserBuilder userBuilder) {
-        userBuilder.setEmail("a@b");
+        userBuilder.setEmail("user@ukr.net");
         userBuilder.setName("Liuba");
         userBuilder.setPassword("!Error911");
+    }
+    public void constructEmptySignUpUser(final UserBuilder userBuilder) {
+        userBuilder.setEmail("");
+        userBuilder.setName("");
+        userBuilder.setPassword("");
     }
 
 
