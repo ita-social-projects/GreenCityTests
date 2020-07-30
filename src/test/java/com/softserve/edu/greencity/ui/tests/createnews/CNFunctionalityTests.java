@@ -306,12 +306,32 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
     }
 
 
+    /**
+     * @ID=607
+     */
     @Test
     public void verifyThatUserCanCanselCreatingNews() {
         EconewsPage econewsPage = loadCreateNewsPage()
                 .fillFields(NewsDataRepository.getRequiredFieldsNews())
                 .cancelNewsCreating();
-        Assert.assertFalse(driver.findElement(By.cssSelector("app-header a[href='#/news']")).isEnabled());
+        Assert.assertTrue(driver.findElements(By.cssSelector("app-remaining-count p")).size() > 0);
+    }
+
+
+    /**
+     * @ID=608
+     */
+    @Test
+    public void checkPopUpAfterCancelCreatingNews() {
+        loadCreateNewsPage().clickCancelButton();
+        SoftAssert softAssert = new SoftAssert();
+        WebElement warningPopup = driver.findElement(By.cssSelector("app-create-news-cancel"));
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".warning-title")).getText(), "All created content will be lost.");
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".warning-subtitle")).getText(), "Do you still want to cancel news creating?");
+        softAssert.assertTrue(warningPopup.findElements(By.cssSelector(".cta-buttons")).size() > 0);
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".secondary-global-button")).getText(), "Continue editing");
+        softAssert.assertEquals(warningPopup.findElement(By.cssSelector(".primary-global-button")).getText(), "Yes, cancel");
+        softAssert.assertAll();
     }
 
 
