@@ -279,8 +279,9 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
     }
 
 
-
-
+    /**
+     * @ID=606-1390
+     */
     @Test
     public void verifyCancelButtonFunctionality() {
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
@@ -294,8 +295,8 @@ public class CNFunctionalityTests extends GreenCityTestRunner {
         softAssert
                 .assertEquals(
                         newsData.getTitle(),
-                        driver.findElement(By.cssSelector("input[formcontrolname='title']")).getText());
-        softAssert.assertEquals(newsData.getContent(), createNewsPage.getContentFieldText());
+                        driver.findElement(By.cssSelector("input[formcontrolname='title']")).getAttribute("value"));
+        softAssert.assertEquals(newsData.getContent(), driver.findElement(By.cssSelector("textarea")).getAttribute("value"));
         softAssert.assertAll();
     }
 
