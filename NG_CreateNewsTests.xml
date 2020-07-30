@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="All Test Suite">
+<suite name="All CreateNewsTests Suite">
 
-    <test
+    <test name="Parallel_UI_tests"
             parallel="classes"
-            thread-count="4"
-            name="/home/m/GreenCityTests/src/test/java/com/softserve/edu/greencity/ui/tests/createNewsTests/CNFunctionalityTests.java">
+            thread-count="4">
 
         <classes>
 
@@ -17,6 +16,27 @@
             <class name="com.softserve.edu.greencity.ui.tests.createnews.CNTests"/>
 
             <class name="com.softserve.edu.greencity.ui.tests.createnews.CNSmokeTests"/>
+
+        </classes>
+
+    </test>
+
+    <test name="No_parallel_UI_tests">
+
+        <classes>
+
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CNUnparallelTests"></class>
+
+        </classes>
+
+    </test>
+
+
+    <test name="API_tests"
+            parallel="methods"
+            thread-count="10">
+
+        <classes>
 
         </classes>
 

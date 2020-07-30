@@ -5,16 +5,19 @@ import com.softserve.edu.greencity.api.assertions.OwnSecurityAssertions;
 import com.softserve.edu.greencity.api.builders.userbuilder.UserBuilder;
 import com.softserve.edu.greencity.api.builders.userbuilder.UserDirector;
 import com.softserve.edu.greencity.api.client.OwnSecurityClient;
+import com.softserve.edu.greencity.api.listeners.LogListener;
 import com.softserve.edu.greencity.api.model.InvalidInputResponseOwnSecurity;
 import com.softserve.edu.greencity.api.model.UserModel;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 import java.util.List;
 
+@Listeners(LogListener.class)
 public class SignInTests {
     OwnSecurityClient ownSecurityClient;
     UserDirector userDirector;
@@ -32,11 +35,11 @@ public class SignInTests {
         userDirector.constructUserWithEmptyCreds(userBuilder);
 
         Response response = ownSecurityClient.signIn(userBuilder.getResult());
-        List<InvalidInputResponseOwnSecurity> apiResponseBodies = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
+        List<InvalidInputResponseOwnSecurity> invalidInputResponseOwnSecurities = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
-        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(0), "password", "must not be blank");
-        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(1), "email", "must not be blank");
+        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "email", "must not be blank");
+        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "password", "must not be blank");
     }
 
     @Test(testName = "GC-490")
@@ -44,10 +47,10 @@ public class SignInTests {
         userDirector.constructUserWithEmptyEmail(userBuilder);
 
         Response response = ownSecurityClient.signIn(userBuilder.getResult());
-        List<InvalidInputResponseOwnSecurity> apiResponseBodies = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
+        List<InvalidInputResponseOwnSecurity> invalidInputResponseOwnSecurities = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
-        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(0), "email", "must not be blank");
+        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "email", "must not be blank");
     }
 
     @Test(testName = "GC-490")
@@ -55,10 +58,10 @@ public class SignInTests {
         userDirector.constructUserWithEmptyPassword(userBuilder);
 
         Response response = ownSecurityClient.signIn(userBuilder.getResult());
-        List<InvalidInputResponseOwnSecurity> apiResponseBodies = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
+        List<InvalidInputResponseOwnSecurity> invalidInputResponseOwnSecurities = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
-        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(0), "password", "must not be blank");
+        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "password", "must not be blank");
     }
 
     @Test(testName = "GC-495")
@@ -77,10 +80,10 @@ public class SignInTests {
         userDirector.constructUserWithIncorrectEmail(userBuilder);
 
         Response response = ownSecurityClient.signIn(userBuilder.getResult());
-        List<InvalidInputResponseOwnSecurity> apiResponseBodies = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
+        List<InvalidInputResponseOwnSecurity> invalidInputResponseOwnSecurities = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
-        OwnSecurityAssertions.checkInvalidSignInResponse(apiResponseBodies.get(0), "email", "The email is invalid");
+        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "email", "The email is invalid");
     }
 
     @Test(testName = "GC-493")

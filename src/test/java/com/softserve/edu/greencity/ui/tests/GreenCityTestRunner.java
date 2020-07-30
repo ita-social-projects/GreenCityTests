@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import com.softserve.edu.greencity.ui.tools.UIListener;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
@@ -15,11 +16,15 @@ import org.testng.annotations.*;
 
 import java.util.concurrent.TimeUnit;
 
+@Listeners(UIListener.class)
 public abstract class GreenCityTestRunner {
     public static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 //    public static final String BASE_URL = "http://localhost:4200/#/welcome";
+    public WebDriver getDriver() {
+        return driver;
+    }
 
-    public static final boolean CHROME_HEADLESS_OPTION = true;
+    public static final boolean CHROME_HEADLESS_OPTION = false;
     private final String CHROME_LANGUAGE_OPTION = "en";
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
