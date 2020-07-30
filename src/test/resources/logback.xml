@@ -2,12 +2,12 @@
 <configuration>
     <appender name="SIFTER" class="ch.qos.logback.classic.sift.SiftingAppender">
         <discriminator>
-            <key>testName</key>
+            <key>logFileName</key>
             <defaultValue>ALL</defaultValue>
         </discriminator>
         <sift>
             <appender name="FILE-${testName}" class="ch.qos.logback.core.FileAppender">
-                <file>target/logback-logs/${testName}.log</file>
+                <file>target/logback-logs/${logFileName}.log</file>
                 <encoder>
                     <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
                 </encoder>
