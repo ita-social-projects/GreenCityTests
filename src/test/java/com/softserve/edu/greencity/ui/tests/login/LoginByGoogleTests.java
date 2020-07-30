@@ -27,7 +27,6 @@ public class LoginByGoogleTests extends GreenCityTestRunner {
 
         tipsTricksPage.signOut();
 
-
         Assert.assertEquals(topUserName, "Taras Malynovskyi");
 
         googleLoginPage.clearCookies();
