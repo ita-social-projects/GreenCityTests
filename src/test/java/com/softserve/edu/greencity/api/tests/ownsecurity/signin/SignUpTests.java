@@ -36,7 +36,6 @@ public class SignUpTests {
     @Test
     public void successfulRegistration() {
         Response response = client.signUp(model);
-        response.prettyPrint();
         UserModel apiResp = response.as(UserModel.class);
         OwnSecurityAssertions.checkValidSignUpResponse(apiResp, model);
     }
@@ -68,10 +67,11 @@ public class SignUpTests {
 
     @Test
     public void checkEmptyFieldsRegistration() {
-        model.setEmail("");
-        model.setName("");
-        model.setPassword("");
+        userDir.constructEmptySignUpUser(userBuild);
+        model = userBuild.getResult();
         Response response = client.signUp(model);
+        System.out.println(model.toString());
+        response.prettyPrint();
         List<InvalidInputResponseOwnSecurity> responseObjects = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
         OwnSecurityAssertions.checkEmptyFieldsRegistration(responseObjects);
     }

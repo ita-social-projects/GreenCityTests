@@ -69,7 +69,9 @@ public class OwnSecurityAssertions {
     public static void checkEmptyEmailResponse(final InvalidInputResponseOwnSecurity response) {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(response.getName(), "email");
-        softAssert.assertEquals(response.getMessage(), "The email field can not be empty");
+        boolean assertContains = response.getMessage().contains("The email field can not be empty")
+                || response.getMessage().contains("The email is invalid");
+        softAssert.assertTrue(assertContains);
         softAssert.assertAll();
     }
 

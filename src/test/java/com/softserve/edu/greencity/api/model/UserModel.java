@@ -20,6 +20,13 @@ public class UserModel {
         this.password = password;
     }
 
+    @Override
+    public String toString(){
+            return "{email=" + email +",\n" +
+                    "name=" + name + ",\n" +
+                    "password=" + password + ",\n" +
+                    "}";
+    }
     public String getEmail() {
         return email;
     }
