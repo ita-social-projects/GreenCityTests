@@ -24,7 +24,7 @@ public abstract class GreenCityTestRunner {
         return driver;
     }
 
-    public static final boolean CHROME_HEADLESS_OPTION = false;
+    public static final boolean CHROME_HEADLESS_OPTION = true;
     private final String CHROME_LANGUAGE_OPTION = "en";
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
