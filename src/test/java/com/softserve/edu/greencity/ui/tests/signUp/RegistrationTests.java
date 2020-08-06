@@ -38,7 +38,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         help.cleanGMailCookiesAndStorages();
 
         DBQueries queryObj = new DBQueries();
-        User user = UserRepository.get().gMailUserCredentials();
+        User user = UserRepository.get().userCredentialsForRegistration();
         String email = user.getEmail();
         queryObj.deleteUserByEmail(email);
 
@@ -212,7 +212,7 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Check dublicated user is not created");
         DBQueries db = new DBQueries();
-        User user = UserRepository.get().gMailUserCredentials();
+        User user = UserRepository.get().userCredentialsForRegistration();
         String email = user.getEmail();
         Assert.assertFalse(db.isUserEmailDuplicated(email));
     }

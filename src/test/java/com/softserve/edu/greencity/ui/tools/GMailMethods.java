@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class GMailMethods {
 
-    User gmail = UserRepository.get().gMailUserCredentials();
+    User gmail = UserRepository.get().userCredentialsForRegistration();
     String user = gmail.getEmail();
 
     public static List<String> getIdsOfLettersNeeded(Gmail service, String user, ListMessagesResponse messageList) throws IOException {

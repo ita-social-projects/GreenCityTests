@@ -22,7 +22,7 @@ public class RegisterComponent extends TopPart {
     private WebElement modalWindow;
     public static final String MODAL_WINDOW_CSS = "mat-dialog-container";
     private WebElement title;
-    private final String TITLE_CSS = "h1[title-text]";
+    private final String TITLE_CSS = ".title-text";
     private WebElement subtitle;
     private final String SUBTITLE_CSS = ".subtitle-text";
     private WebElement closeModalButton;
