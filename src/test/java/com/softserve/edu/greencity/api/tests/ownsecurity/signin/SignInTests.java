@@ -83,7 +83,7 @@ public class SignInTests {
         List<InvalidInputResponseOwnSecurity> invalidInputResponseOwnSecurities = Arrays.asList(response.getBody().as(InvalidInputResponseOwnSecurity[].class));
 
         BaseAssertions.checkResponse(response, HttpURLConnection.HTTP_BAD_REQUEST);
-        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "email", "The email is invalid");
+        OwnSecurityAssertions.checkInvalidSignInResponse(invalidInputResponseOwnSecurities, "email", "must not be blank");
     }
 
     @Test(testName = "GC-493")

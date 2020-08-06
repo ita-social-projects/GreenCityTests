@@ -319,9 +319,6 @@
                     <!-- <excludes> -->
                     <!-- <exclude>**/AppTest.java</exclude> -->
                     <!-- </excludes> -->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>${testng.xml}</suiteXmlFile>
-                    </suiteXmlFiles>
                     <reportsDirectory>${testng.reports.directory}</reportsDirectory>
                     <!-- <argLine> -->
                     <!-- -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar" -->
