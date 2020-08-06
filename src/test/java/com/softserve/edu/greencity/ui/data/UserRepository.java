@@ -43,9 +43,10 @@ public final class UserRepository {
                 property.getProperty("defaultPass"));
     }
 
-    public User gMailUserCredentials() {
-        return new User(property.getProperty("gMailAddress"), property.getProperty("gMailPass"));
+    public User gMailUserCredentialsSignIn() {
+        return new User(property.getProperty("gMailAddressSignIn"), property.getProperty("gMailPassSignIn"));
     }
+
 
     public User emptyUserCredentials() {
         return new User("", "", "", "");
@@ -102,7 +103,7 @@ public final class UserRepository {
     }
 
     public User userCredentialsForRegistration() {
-        return new User(Randomizer.getRamdomString20Letters(), property.getProperty("gMailAddress"),
+        return new User(Randomizer.getRamdomString20Letters(), property.getProperty("gMailAddressSignUP"),
                 property.getProperty("passwordForRegistration"), property.getProperty("passwordForRegistration"));
     }
 

@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 public class GMailMethods {
 
-    User gmail = UserRepository.get().gMailUserCredentials();
+    User gmail = UserRepository.get().userCredentialsForRegistration();
     String user = gmail.getEmail();
 
     public static List<String> getIdsOfLettersNeeded(Gmail service, String user, ListMessagesResponse messageList) throws IOException {
@@ -36,10 +36,8 @@ public class GMailMethods {
                 break;
             }
         }
-
         for (Message message : messages) {
             messagesIds.add(message.getId());
-
         }
         return messagesIds;
     }
@@ -56,7 +54,7 @@ public class GMailMethods {
     public String getVerifLink(Gmail service) throws IOException {
         String query = "from:mailgreencity1@gmail.com subject:Verify your email address  is:unread  ";
 
-        ListMessagesResponse response = service.users().messages().list("gcsignupuser@gmail.com").setQ(query).execute();
+        ListMessagesResponse response = service.users().messages().list(user).setQ(query).execute();
         List<String> stringMessages = getIdsOfLettersNeeded(service, user, response);
 
         String zeroId = stringMessages.get(0);
