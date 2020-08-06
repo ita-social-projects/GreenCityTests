@@ -6,12 +6,12 @@ Automation tests for GreenCity project
 Run `mvn test-compile` to download dependencies and build the project.
 
 
-### Running UI tests
-Run `mvn test -Dtestng.xml=*.xml` to execute the automation UI tests via [maven](https://maven.apache.org/).
+### Running tests
+Run `mvn clean test -Dsurefire.suiteXmlFiles=*.xml` to execute the automation tests via [maven](https://maven.apache.org/).
 
 For example
 
-* `mvn test -Dtestng.xml=econews.xml` to running the UI tests of Eco news page
+* `mvn clean test -Dsurefire.suiteXmlFiles=UI_Tests.xml` to running the UI tests of Eco news page
 
 
 ### Required to install
@@ -33,38 +33,38 @@ For exemple:
 defaultName = defaultNameValue
 defaultEmail = defaultEmailValue
 defaultPass = defaultPassValue
-defaultConfirmPass = defaultConfirmPassValue
 
 temporaryEmail = temporaryEmailValue
 temporaryPass = temporaryPassValue
 
+validUnregisterEmail = validUnregisterEmailValue
+validUnregisterPassword = validUnregisterPasswordValue
+
 invalidName = invalidNameValue
 invalidEmail = invalidEmailValue
 invalidPass = invalidPassValue
-invalidConfirmPass = invalidConfirmPassValue
 
-validUnregisterEmail = validUnregisterEmailValue
-validIncorrectPassword = validIncorrectPasswordValue
+gMailAddressSignIn = gMailAddressSignInValue
+gMailPassSignIn = gMailPassSignInValue
 
-incorrectFormatEmail = incorrectFormatEmailValue
+gMailAddressSignUP = gMailAddressSignUPValue
 
-googleEmail = googleEmailValue
-googlePass = googlePassValue
+Password below is not used in the tests themselves, but might be needed to manage the account,
+used in Gmail API helper
+gMailPassSignUP = gMailPassSignUPValue
 
-DBProdURL = DBProdURL
-DBProdUserName = DBProdUserName
-DBProdUserPassword = DBProdUserPassword
+DBProdURL = DBProdURLValue
+DBProdUserName = DBProdUserNameValue
+DBProdUserPassword = DBProdUserPasswordValue
 
-emailForRegistration = emailForRegistration
-passwordForRegistration = passwordForRegistration
-passwordToGmailBox = passwordToGmailBox
+invalidPassUppercase = invalidPassUppercaseValue
+invalidPassDigit = invalidPassDigitValue
+invalidPassLowercase = invalidPassLowercaseValue
+invalidPassSpecChar = invalidPassSpecCharValue
+invalidPassLength = invalidPassLengthValue
+invalidPassSpace = invalidPassSpaceValue
 
-invalidPassUppercase = invalidPassUppercase
-invalidPassDigit = invalidPassDigit
-invalidPassLowercase = invalidPassLowercase
-invalidPassSpecChar = invalidPassSpecChar
-invalidPassLength = invalidPassLength
-invalidPassSpace = invalidPassSpace
+passwordForRegistration = passwordForRegistrationValue
 ```
 
 
