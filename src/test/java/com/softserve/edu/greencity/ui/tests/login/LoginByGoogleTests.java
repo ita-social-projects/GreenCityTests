@@ -13,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 public class LoginByGoogleTests extends GreenCityTestRunner {
     @Test(testName = "GC-218")
     public void signUpByGoogle() {
-        User user = UserRepository.get().userCredentialsForRegistration();
+        User user = UserRepository.get().gMailUserCredentialsSignIn();
 
         TipsTricksPage tipsTricksPage = loadApplication();
         GoogleLoginPage googleLoginPage = tipsTricksPage
@@ -34,7 +34,7 @@ public class LoginByGoogleTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-220")
     public void signInByGoogle() {
-        User user = UserRepository.get().userCredentialsForRegistration();
+        User user = UserRepository.get().gMailUserCredentialsSignIn();
 
         TipsTricksPage tipsTricksPage = loadApplication();
 
@@ -56,7 +56,7 @@ public class LoginByGoogleTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-234")
     public void signInByGoogleCredentialsOnManualSignInPopUp() {
-        User user = UserRepository.get().userCredentialsForRegistration();
+        User user = UserRepository.get().gMailUserCredentialsSignIn();
         SoftAssert softAssert = new SoftAssert();
         TipsTricksPage tipsTricksPage = loadApplication();
 
