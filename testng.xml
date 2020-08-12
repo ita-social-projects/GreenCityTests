@@ -4,11 +4,9 @@
     <test verbose="2" preserve-order="true"
           parallel="methods"
           thread-count="10"
-
-          name="/home/m/Desktop/GreenCityTests/src/test/java/com/softserve/edu/greencity/ui/tests/Create_News_Test.java">
+          name="Create_News_Test.java">
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.CreateNewsTest">
-
             </class>
         </classes>
     </test>
