@@ -38,11 +38,11 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		logger.info("econewsSmokeTest starts with parameters: " + news.toString());
 		// go to EconewsPage -> OneNewsPage -> next OneNewsPage -> return to EconewsPage 
 		
-		TipsTricksPage page = loadApplication();
-		page.navigateMenuEconews()
-		.switchToOneNewsPagebyParameters(news)
-		.switchToNextOneNewsPage()
-		.switchToEconewsPageBack();
+        TipsTricksPage page = loadApplication();
+        page.navigateMenuEconews()
+                .switchToOneNewsPagebyParameters(news)
+                .switchToNextOneNewsPage()
+                .switchToEconewsPageBack();
 		
 	}
 	
