@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -9,9 +9,15 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
-import java.util.concurrent.TimeUnit;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public abstract class GreenCityTestRunner {
     public static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
@@ -56,12 +62,11 @@ public abstract class GreenCityTestRunner {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
-
-        System.out.println("@AfterMethod tearDown");
+        //System.out.println("@AfterMethod tearDown");
     }
 
-    public TipsTricksPage loadApplication() {
-        return new TipsTricksPage(driver);
+    public WelcomePage loadApplication() {
+        return new WelcomePage(driver);
     }
 
     public boolean isLoginingNow() {

@@ -1,16 +1,17 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
-import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
-import com.softserve.edu.greencity.ui.data.econews.Tag;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 
 /**
  * Test cases to test EconewsPage
@@ -38,7 +39,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		logger.info("econewsSmokeTest starts with parameters: " + news.toString());
 		// go to EconewsPage -> OneNewsPage -> next OneNewsPage -> return to EconewsPage 
 		
-        TipsTricksPage page = loadApplication();
+        WelcomePage page = loadApplication();
         page.navigateMenuEconews()
                 .switchToOneNewsPagebyParameters(news)
                 .switchToNextOneNewsPage()

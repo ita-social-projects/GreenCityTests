@@ -118,4 +118,4 @@ hs_err_pid*
 
 
 # properties files
-credentials.properties
+# credentials.properties
