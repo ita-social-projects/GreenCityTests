@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-public class OneNewsPage extends TopPart {
+public class SingleNewsPage extends TopPart {
 	
 	//there will be also functionality follow us & search - is not implemented
 	//private WebElement editNewsButton;  // isn't working yet tags
@@ -22,7 +22,7 @@ public class OneNewsPage extends TopPart {
 	private WebElement content;
 	private ItemsContainer itemsContainer;
 
-	public OneNewsPage(WebDriver driver) {
+	public SingleNewsPage(WebDriver driver) {
 		super(driver);
 		initElements();
 	}
@@ -108,9 +108,9 @@ public class OneNewsPage extends TopPart {
      * @param number
      * @return OneNewsPage
      */
-    public OneNewsPage switchToNextOneNewsPagebyNumber(int number) {
+    public SingleNewsPage switchToNextOneNewsPagebyNumber(int number) {
 		itemsContainer.chooseNewsByNumber(number).clickTitle();
-		return new OneNewsPage(driver);
+		return new SingleNewsPage(driver);
     }
     
     /**
@@ -118,17 +118,17 @@ public class OneNewsPage extends TopPart {
      * @param number
      * @return OneNewsPage
      */
-    public OneNewsPage switchToNextOneNewsPage() {
+    public SingleNewsPage switchToNextOneNewsPage() {
     	switchToNextOneNewsPagebyNumber(1);
-		return new OneNewsPage(driver);
+		return new SingleNewsPage(driver);
     }
     
     /**
      * Return to EconewsPage
      * @return EconewsPage
      */
-    public EconewsPage switchToEconewsPageBack() {
+    public EcoNewsPage switchToEconewsPageBack() {
     	clickGoToNewsButton();
-		return new EconewsPage(driver);
+		return new EcoNewsPage(driver);
     }
 }

@@ -5,7 +5,7 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
@@ -91,7 +91,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      */
     @Test
     public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {
-        EconewsPage econewsPage = loadApplication()
+        EcoNewsPage econewsPage = loadApplication()
                 .loginIn(getSpecialUser("EmailFor_green.city.test2@gmail.com",
                         "PassFor_green.city.test2@gmail.com"))
                 .navigateMenuEconews();
@@ -104,7 +104,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
      */
     @Test
     public void checkUnvisibilityOfCreateNewsButtonForGuest() {
-        EconewsPage econewsPage = loadApplication()
+        EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
         Assert.assertTrue(driver.findElements(By.cssSelector("#create-button")).size() == 0);
     }
@@ -192,7 +192,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.setContentField("March 4 – 7, 2020, International Exhibition Center, Kyiv, 15 Brovarsky Ave.," +
                 " takes place the most important event for professionals and funs of natural food and healthy life");
         createNewsPage.getTagsComponent().selectTags(tags);
-        EconewsPage econewsPage = createNewsPage.publishNews();
+        EcoNewsPage econewsPage = createNewsPage.publishNews();
         cleanDataBase(title);
         int news = econewsPage.getNumberOfItemComponent();
         System.out.println(news);
@@ -450,7 +450,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.getTagsComponent().selectTags(tags);
         softAssert.assertTrue(driver.findElement(By.cssSelector(".tags p")).getAttribute("class").contains("warning"));
         softAssert.assertTrue(driver.findElement(By.cssSelector(".tags p")).getText().equals("Only 3 tags can be added"));
-        EconewsPage econewsPage = createNewsPage.publishNews();
+        EcoNewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
         for (WebElement e : elements) {
@@ -488,7 +488,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.goToPreViewPage().backToCreateNewsPage();
         createNewsPage.getTagsComponent().deselectTag(Tag.NEWS);
         createNewsPage.getTagsComponent().selectTag(Tag.NEWS);
-        EconewsPage econewsPage = createNewsPage.publishNews();
+        EcoNewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
         for (WebElement e : elements) {
@@ -529,7 +529,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         String title = "simple test very similary for previous";
         createNewsPage.setTitleField(title);
         createNewsPage.setSourceField("https://google.com");
-        EconewsPage econewsPage = createNewsPage.publishNews();
+        EcoNewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
         for (WebElement e : elements) {
@@ -576,7 +576,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage();
         NewsData newsData = NewsDataRepository.getRequiredFieldsNews();
         createNewsPage.fillFields(newsData);
-        EconewsPage econewsPage = createNewsPage.publishNews();
+        EcoNewsPage econewsPage = createNewsPage.publishNews();
         List<WebElement> elements = driver.findElements(By.cssSelector("div.list-gallery-content"));
         boolean isPresent = false;
         WebElement myNews;

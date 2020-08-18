@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.pages.cabinet;
+package com.softserve.edu.greencity.ui.pages.myhabits;
 
 import com.softserve.edu.greencity.ui.data.User;
 import org.openqa.selenium.By;

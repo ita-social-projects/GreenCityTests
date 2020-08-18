@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.pages.map;
+package com.softserve.edu.greencity.ui.pages.places;
 
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;

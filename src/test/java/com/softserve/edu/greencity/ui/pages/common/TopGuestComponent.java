@@ -1,10 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.softserve.edu.greencity.ui.pages.myhabits.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.myhabits.RegisterComponent;
 
 public class TopGuestComponent {
     private WebDriver driver;

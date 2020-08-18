@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * @author lv-493 Taqc/Java
  */
-public class EconewsPage extends TopPart {
+public class EcoNewsPage extends TopPart {
 
     private TagsComponent tagsComponent;
     private WebElement createNewsButton;
@@ -27,7 +27,7 @@ public class EconewsPage extends TopPart {
     private ItemsContainer itemsContainer;
     private WebElement foundItems;
 
-    public EconewsPage(WebDriver driver) {
+    public EcoNewsPage(WebDriver driver) {
         super(driver);
         if(driver.findElements(By.cssSelector(".sign-up-link .create-button")).size() == 0) {
             new WebDriverWait(driver, 10)
@@ -161,11 +161,11 @@ public class EconewsPage extends TopPart {
      * @param tags
      * @return EconewsPage
      */
-    public EconewsPage selectFilters(List<Tag> tags) {
+    public EcoNewsPage selectFilters(List<Tag> tags) {
 
         scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().selectTags(tags);
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     /**
@@ -174,11 +174,11 @@ public class EconewsPage extends TopPart {
      * @param tags
      * @return EconewsPage
      */
-    public EconewsPage deselectFilters(List<Tag> tags) {
+    public EcoNewsPage deselectFilters(List<Tag> tags) {
 
         scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().deselectTags(tags);
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     /**
@@ -187,9 +187,9 @@ public class EconewsPage extends TopPart {
      * @param language
      * @return EconewsPage
      */
-    public EconewsPage switchLanguage(Languages language) {
+    public EcoNewsPage switchLanguage(Languages language) {
         chooseLanguage(language);
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     /**
@@ -197,9 +197,9 @@ public class EconewsPage extends TopPart {
      *
      * @return EconewsPage
      */
-    public EconewsPage switchToGridViev() {
+    public EcoNewsPage switchToGridViev() {
         clickGridView();
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     /**
@@ -207,9 +207,9 @@ public class EconewsPage extends TopPart {
      *
      * @return EconewsPage
      */
-    public EconewsPage switchToListViev() {
+    public EcoNewsPage switchToListViev() {
         clickListView();
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     /**
@@ -218,10 +218,10 @@ public class EconewsPage extends TopPart {
      * @param number
      * @return OneNewsPage
      */
-    public OneNewsPage switchToOneNewsPagebyNumber(int number) {
+    public SingleNewsPage switchToOneNewsPagebyNumber(int number) {
         scrollToElement(itemsContainer.chooseNewsByNumber(number).getIitle());
         itemsContainer.chooseNewsByNumber(number).clickTitle();
-        return new OneNewsPage(driver);
+        return new SingleNewsPage(driver);
     }
 
     /**
@@ -230,11 +230,11 @@ public class EconewsPage extends TopPart {
      * @param news
      * @return OneNewsPage
      */
-    public OneNewsPage switchToOneNewsPagebyParameters(NewsData news) {
+    public SingleNewsPage switchToOneNewsPagebyParameters(NewsData news) {
 
         scrollToElement(itemsContainer.findItemComponentByParameters(news).getIitle());
         itemsContainer.clickItemComponentOpenPage(news);
-        return new OneNewsPage(driver);
+        return new SingleNewsPage(driver);
     }
 
     /**

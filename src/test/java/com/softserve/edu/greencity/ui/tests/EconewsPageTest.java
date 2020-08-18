@@ -10,8 +10,8 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 
 /**
  * Test cases to test EconewsPage
@@ -54,7 +54,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		
 		//open onenewspage
 		
-		OneNewsPage findedeconewspage = loadApplication()
+		SingleNewsPage findedeconewspage = loadApplication()
 				.navigateMenuEconews()
 				.switchToOneNewsPagebyParameters(news);
 		
@@ -73,7 +73,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		
 		//open onenewspage
 
-		EconewsPage page = loadApplication().navigateMenuEconews().selectFilters(tags);
+		EcoNewsPage page = loadApplication().navigateMenuEconews().selectFilters(tags);
 
 		// check if is appropriate numbers of news items
 		
@@ -90,7 +90,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		
 		//open onenewspage
 
-		EconewsPage page = loadApplication()
+		EcoNewsPage page = loadApplication()
 				.navigateMenuEconews()
 				.selectFilters(tags) 
 				.deselectFilters(tags);
@@ -109,7 +109,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		logger.info("selectListView starts");
 		// open onenewspage
 
-		EconewsPage page = loadApplication()
+		EcoNewsPage page = loadApplication()
 				.navigateMenuEconews()
 				.switchToListViev();
 
@@ -125,7 +125,7 @@ public class EconewsPageTest extends GreenCityTestRunner {
 		logger.info("selectListView starts");
 		// open onenewspage
 
-		EconewsPage page = loadApplication()
+		EcoNewsPage page = loadApplication()
 				.navigateMenuEconews()
 				.switchToListViev()
 				.switchToGridViev();

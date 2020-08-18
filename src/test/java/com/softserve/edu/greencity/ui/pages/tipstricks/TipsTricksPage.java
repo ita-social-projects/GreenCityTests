@@ -1,10 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
+import com.softserve.edu.greencity.ui.pages.myhabits.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.places.MapPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -259,8 +259,8 @@ public class TipsTricksPage extends TopPart {
 
     }
 
-    public EconewsPage moveMainEcoNewsLink() {
+    public EcoNewsPage moveMainEcoNewsLink() {
         clickMainEcoNewsLink();
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 }

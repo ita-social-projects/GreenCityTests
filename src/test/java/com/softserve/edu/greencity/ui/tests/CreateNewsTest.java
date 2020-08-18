@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreViewPage;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.openqa.selenium.By;
@@ -48,7 +48,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
     @Test(dataProvider = "newsDataProvider")
     public void createNewsTest(NewsData newsData) {
         logger.info("createNewsTest starts with parameters: " + newsData.toString());
-        EconewsPage econewsPage = loadApplication()
+        EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
         int expectedCount = econewsPage.getNumberOfItemComponent();
         CreateNewsPage createNewsPage = econewsPage.gotoCreateNewsPage()
@@ -82,7 +82,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
     @Test(dataProvider = "newsDataProvider")
     public void createNewsFromPreViewTest(NewsData newsData) {
         logger.info("createNewsFromPreViewTest starts with parameters: " + newsData.toString());
-        EconewsPage econewsPage = loadApplication()
+        EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
         int expectedCount = econewsPage.getNumberOfItemComponent();
         PreViewPage preViewPage = econewsPage
@@ -112,7 +112,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
     @Test(dataProvider = "newsDataProvider")
     public void createNewsAfterPreViewTest(NewsData newsData) {
         logger.info("createNewsAfterPreViewTest starts with parameters: " + newsData.toString());
-        EconewsPage econewsPage = loadApplication()
+        EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
         int expectedCount = econewsPage.getNumberOfItemComponent();
         PreViewPage preViewPage = econewsPage.gotoCreateNewsPage()
@@ -158,7 +158,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
     @Test
     public void cancelNewsCreatingTest() {
         logger.info("cancelNewsCreatingTest starts");
-        EconewsPage econewsPage = loadApplication()
+        EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEconews();
         int expectedCount = econewsPage.getNumberOfItemComponent();
         econewsPage = econewsPage.gotoCreateNewsPage()

@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.pages.cabinet;
+package com.softserve.edu.greencity.ui.pages.myhabits;
 
 import java.util.ArrayList;
 

@@ -185,8 +185,8 @@ public class PreViewPage extends TopPart {
      * Method to publish news
      * @return EconewsPage
      */
-    public EconewsPage publishNews() {
+    public EcoNewsPage publishNews() {
         clickPublishButton();  // Button doesn't work
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 }

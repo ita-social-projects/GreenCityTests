@@ -2,12 +2,12 @@ package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.map.MapPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
+import com.softserve.edu.greencity.ui.pages.myhabits.GoogleAccountManagerPage;
+import com.softserve.edu.greencity.ui.pages.myhabits.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.myhabits.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.myhabits.RegisterComponent;
+import com.softserve.edu.greencity.ui.pages.places.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import org.openqa.selenium.By;
@@ -156,11 +156,11 @@ public abstract class TopPart {
         return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
     }
 
-    public EconewsPage navigateMenuEconews() {
+    public EcoNewsPage navigateMenuEconews() {
         logger.debug("go to EcoNews page");
         logger.trace("click MenuEcoNews link");
         getMainMenuDropdown().clickMenuEcoNews();
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     public TipsTricksPage navigateMenuTipsTricks() {

@@ -292,7 +292,7 @@ public class CreateNewsPage extends TopPart {
      *
      * @return EconewsPage
      */
-    public EconewsPage publishNews() {  //FIXME return type should be changed to EconewsPage
+    public EcoNewsPage publishNews() {  //FIXME return type should be changed to EconewsPage
         clickPublishButton();
         try {
             new WebDriverWait(driver, 20)
@@ -303,7 +303,7 @@ public class CreateNewsPage extends TopPart {
             System.out.println("Publish Button(((((");
             e.printStackTrace();
         }
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     /**
@@ -312,7 +312,7 @@ public class CreateNewsPage extends TopPart {
      *
      * @return EconewsPage
      */
-    public EconewsPage cancelNewsCreating() {
+    public EcoNewsPage cancelNewsCreating() {
         clickCancelButton();
         CancelFrame cancelFrame = new CancelFrame(driver);
         return cancelFrame.clickCancelEditingButton();
@@ -376,9 +376,9 @@ public class CreateNewsPage extends TopPart {
          *
          * @return EconewsPage
          */
-        public EconewsPage clickCancelEditingButton() {
+        public EcoNewsPage clickCancelEditingButton() {
             getCancelEditingButton().click();
-            return new EconewsPage(driver);
+            return new EcoNewsPage(driver);
         }
     }
 

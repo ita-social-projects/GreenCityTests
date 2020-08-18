@@ -9,11 +9,11 @@ import org.testng.asserts.SoftAssert;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.pages.myhabits.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.myhabits.ManualLoginComponent;
+import com.softserve.edu.greencity.ui.pages.myhabits.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class LoginTest extends GreenCityTestRunner {

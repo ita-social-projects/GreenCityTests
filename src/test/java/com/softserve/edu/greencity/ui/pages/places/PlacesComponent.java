@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.pages.map;
+package com.softserve.edu.greencity.ui.pages.places;
 
 import org.openqa.selenium.WebDriver;
 
