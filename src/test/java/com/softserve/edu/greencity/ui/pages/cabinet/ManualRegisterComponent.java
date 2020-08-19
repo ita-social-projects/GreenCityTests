@@ -1,16 +1,14 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.tools.GMailBox;
-import com.softserve.edu.greencity.ui.tools.TabsHandler;
+import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-
-import java.util.Set;
 
 
 public class ManualRegisterComponent extends RegisterComponent {
@@ -434,39 +432,19 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-
+    @Step
+    private void getConfirmURL() {
+        confirmURL = new GoogleMailAPI().getconfirmURL(10);}
+    @Step
     protected RegisterComponent checkVerIfMailReceived() {
-        String initialTab = driver.getWindowHandle();
-        Set<String> allTabs = driver.getWindowHandles();
-        String newlyOpenedTab = TabsHandler.openNewTabAndGetId(driver, allTabs);
-        driver.switchTo().window(newlyOpenedTab);
+        if (confirmURL == null) getConfirmURL();
+        Assert.assertNotNull(confirmURL);
+        return this;}
 
-        GMailBox logInGMailPage = new GMailBox(driver);
-        logInGMailPage.logInGMail();
-        WebElement email = logInGMailPage.getTopUnreadEmail();
-        Assert.assertEquals(logInGMailPage.readHeader(email),"Verify your email address");
-        logInGMailPage.openTopUnreadEmail();
-        Assert.assertTrue(logInGMailPage.getVerifyEmailButton().isDisplayed());
-
-        driver.close();
-        driver.switchTo().window(initialTab);
-        return this;
-    }
-
-    protected RegisterComponent verifyRegistration() {
-        String initialTab = driver.getWindowHandle();
-        Set<String> allTabs = driver.getWindowHandles();
-        String newlyOpenedTab = TabsHandler.openNewTabAndGetId(driver, allTabs);
-        driver.switchTo().window(newlyOpenedTab);
-
-        GMailBox logInGMailPage = new GMailBox(driver);
-        logInGMailPage.logInGMail()
-                .openEmailClickLink();
-
-        driver.close();
-        driver.switchTo().window(initialTab);
-        return this;
-    }
+    @Step
+    public RegisterComponent verifyRegistration() {
+        driver.get(new GoogleMailAPI().getconfirmURL(10));
+        return this;}
 
     public void registrationWrongUser(User userData) {
         fillEmailField(userData.getEmail())
