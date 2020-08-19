@@ -29,6 +29,7 @@
 		<org.testng.version>6.14.3</org.testng.version>
 		<!-- <org.testng.version>7.0.0</org.testng.version> -->
 		<maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
+		<maven.jar.plugin.version>3.2.0</maven.jar.plugin.version>
 		<!-- - - - - - Automation - - - - - -->
 		<org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
 		<org.seleniumhq.selenium.htmlunit-driver>2.36.0</org.seleniumhq.selenium.htmlunit-driver>
@@ -86,7 +87,7 @@
 			<artifactId>htmlunit-driver</artifactId>
 			<version>${org.seleniumhq.selenium.htmlunit-driver}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.codeborne</groupId>
 			<artifactId>phantomjsdriver</artifactId>
@@ -274,7 +275,7 @@
 					<suiteXmlFiles>
 						<!-- <suiteXmlFile>testng.xml</suiteXmlFile> -->
 						<!-- <suiteXmlFile>testng2.xml</suiteXmlFile> -->
-						<suiteXmlFile>${testng.xml}</suiteXmlFile>
+						<suiteXmlFile>testng.xml</suiteXmlFile>
 					</suiteXmlFiles>
 					<reportsDirectory>${testng.reports.directory}</reportsDirectory>
 					<!-- <argLine> -->
@@ -291,6 +292,19 @@
 				<!-- </dependencies> -->
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${maven.jar.plugin.version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 	</build>
 

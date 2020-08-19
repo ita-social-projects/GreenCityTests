@@ -79,7 +79,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      *@author lv-493
      * @param newsData
      */
-    @Test(dataProvider = "newsDataProvider")
+    //@Test(dataProvider = "newsDataProvider")
     public void createNewsFromPreViewTest(NewsData newsData) {
         logger.info("createNewsFromPreViewTest starts with parameters: " + newsData.toString());
         EcoNewsPage econewsPage = loadApplication()
@@ -109,7 +109,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      *@author lv-493
      * @param newsData
      */
-    @Test(dataProvider = "newsDataProvider")
+    //@Test(dataProvider = "newsDataProvider")
     public void createNewsAfterPreViewTest(NewsData newsData) {
         logger.info("createNewsAfterPreViewTest starts with parameters: " + newsData.toString());
         EcoNewsPage econewsPage = loadApplication()
@@ -155,7 +155,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      * Cancel news creation test.
      * @author lv-493
      */
-    @Test
+    //@Test
     public void cancelNewsCreatingTest() {
         logger.info("cancelNewsCreatingTest starts");
         EcoNewsPage econewsPage = loadApplication()
@@ -172,7 +172,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      *@author lv-493
      * @param newsData
      */
-    @Test(dataProvider = "newsInvalidDataProvider", invocationCount = 4)
+    //@Test(dataProvider = "newsInvalidDataProvider", invocationCount = 4)
     public void createNewsNegativeTest(NewsData newsData) {
         logger.info("createNewsNegativeTest starts with parameters: " + newsData.toString());
         SoftAssert softAssert = new SoftAssert();
