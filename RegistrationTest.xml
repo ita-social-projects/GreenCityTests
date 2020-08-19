@@ -6,6 +6,7 @@
 	<test name="Test01a">
 		<classes>
 			<class name="com.softserve.edu.greencity.ui.tests.RegisterDropdownGoogleAccountTest" />
+            			<class name="com.softserve.edu.greencity.ui.tests.RegisterDropdownGoogleAccountTest" />
 		</classes>
 	</test> <!-- Test -->
 
