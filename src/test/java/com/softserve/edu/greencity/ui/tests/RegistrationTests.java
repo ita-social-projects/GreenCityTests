@@ -2,12 +2,11 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.pages.common.TopUserComponent;
+import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
+import io.qameta.allure.Step;
+import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,47 +17,29 @@ import org.testng.annotations.Test;
 public class RegistrationTests extends GreenCityTestRunner{
 
     @DataProvider
+    @Step("DataProvider get user Credentials For Registration")
     public Object[][] successRegistrationUserCreds() {
         return new Object[][]{{UserRepository.get()
                 .userCredentialsForRegistration()},};
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "registration And Login \t GC-199, GC-206")
+    @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
+        GoogleMailAPI.clearMail();
         loadApplication();
-        logger.info("Starting registrationAndLogin. Input values = "
-                + userLoginCredentials.toString());
-
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-
-        logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitleString());
-
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-
-        logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
 
-        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
-
-        manualLoginComponent.successfullyLogin(userLoginCredentials);
-
-        logger.info("Get Title curent page: " + driver.getTitle());
-        Assert.assertEquals(driver.getTitle(), "Home",
-                "you didn't log in successfully");
-
-        TopUserComponent userComponent = new TopUserComponent(driver);
-
-        logger.info("Check TopUserName: " + userComponent.getUserNameButtonText());
-        Assert.assertEquals(userComponent.getUserNameButtonText(), userLoginCredentials.getUserName());
-
+        loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(userLoginCredentials);
+        Assert.assertTrue(isLogInNow());
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "registration Without Mail Verifying \t GC-512")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting registrationWithoutMailVerif. Input values = "
@@ -95,7 +76,7 @@ public class RegistrationTests extends GreenCityTestRunner{
                 "The validation message is not equal to the expected one");
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "registration Check If Mail Received \t GC-513")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting registrationCheckIfMailReceived. Input values = "

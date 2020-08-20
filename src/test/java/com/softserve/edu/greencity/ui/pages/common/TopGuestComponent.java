@@ -28,7 +28,10 @@ public class TopGuestComponent implements StableWebElementSearch {
     public WebElement getSignInLink() {
         return searchElementByCss(signInLink);
     }
-
+    @Step
+    public boolean isDisplayedSignInLink() {
+        return getSignInLink().isDisplayed();
+    }
     @Step
     public LoginComponent clickSignInLink() {
         getSignInLink().click();
@@ -40,7 +43,14 @@ public class TopGuestComponent implements StableWebElementSearch {
     public WebElement getSignUpLink() {
         return searchElementByCss(signUpLink);
     }
-
+    @Step
+    public boolean isDisplayedSignUpLink() {
+        return getSignUpLink().isDisplayed();
+    }
+    @Step
+    public String getSignUpLinkText() {
+        return getSignUpLink().getText();
+    }
     @Step
     public RegisterComponent clickSignUpLink() {
         getSignUpLink().click();

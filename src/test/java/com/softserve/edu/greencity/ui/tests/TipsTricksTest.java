@@ -1,13 +1,14 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 public class TipsTricksTest extends GreenCityTestRunner {
     @DataProvider
@@ -35,25 +36,29 @@ public class TipsTricksTest extends GreenCityTestRunner {
 
     @Test
     public void checkQuantityPeople() {
-        TipsTricksPage tipstrickspage = loadApplication();
+        TipsTricksPage tipstrickspage = loadApplication()
+                .navigateMenuTipsTricks();
         Assert.assertEquals(tipstrickspage.quantityPeople(), 264);
     }
 
     @Test
     public void checkQuantityBags() {
-        TipsTricksPage tipsTricksPage = loadApplication();
+        TipsTricksPage tipsTricksPage = loadApplication()
+                .navigateMenuTipsTricks();
         Assert.assertEquals(tipsTricksPage.quantityBags(), 0);
     }
 
     @Test
     public void checkQuantityCups() {
-        TipsTricksPage tipsTricksPage = loadApplication();
+        TipsTricksPage tipsTricksPage = loadApplication()
+                .navigateMenuTipsTricks();
         Assert.assertEquals(tipsTricksPage.quantityCups(), 0);
     }
 
     @Test
     public void subscribeError() {
-        TipsTricksPage tipsTricksPage = loadApplication();
+        TipsTricksPage tipsTricksPage = loadApplication()
+                .navigateMenuTipsTricks();
         tipsTricksPage.clickEmailTipsTricks();
         tipsTricksPage.setEmailTipsTricks("almyyhvxddxxnoczzt@ttirv.com");
         tipsTricksPage.clickSubscribeOnTipsTricks();
@@ -63,7 +68,8 @@ public class TipsTricksTest extends GreenCityTestRunner {
 
     @Test
     public void mainEcoNews() {
-        TipsTricksPage tipsTricksPage = loadApplication();
+        TipsTricksPage tipsTricksPage = loadApplication()
+                .navigateMenuTipsTricks();
         EconewsPage econewsPage = tipsTricksPage.moveMainEcoNewsLink();
 
         Assert.assertTrue(econewsPage.getGridView().isDisplayed());

@@ -26,7 +26,6 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
 
     public RegisterComponent(WebDriver driver) {
         super(driver);
-        init();
     }
 
     @Step

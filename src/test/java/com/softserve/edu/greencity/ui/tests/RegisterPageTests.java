@@ -7,21 +7,26 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class RegisterPageTests extends GreenCityTestRunner {
+public class RegisterPageTests extends GreenCityTestRunner implements StableWebElementSearch {
 
     @DataProvider
+    @Step
     public Object[][] validUserCredentials() {
         return new Object[][]{
                 {UserRepository.get().defaultUserCredentials()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] emptyFields() {
         return new Object[][]{
                 {UserRepository.get().emptyUserCredentials()},
@@ -29,48 +34,56 @@ public class RegisterPageTests extends GreenCityTestRunner {
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidFields() {
         return new Object[][]{
                 {UserRepository.get().invalidUserCredentials()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidEmail() {
         return new Object[][]{
                 {UserRepository.get().invalidEmailUserCredentials()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidPassUppercaseUserCreds() {
         return new Object[][]{
                 {UserRepository.get().invalidPassUppercaseUserCreds()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidPassDigitUserCreds() {
         return new Object[][]{
                 {UserRepository.get().invalidPassDigitUserCreds()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidPassLowercaseUserCreds() {
         return new Object[][]{
                 {UserRepository.get().invalidPassLowercaseUserCreds()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidPassSpecCharUserCreds() {
         return new Object[][]{
                 {UserRepository.get().invalidPassSpecCharUserCreds()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidPassLengthUserCreds() {
         return new Object[][]{
                 {UserRepository.get().invalidPassLengthUserCreds()},};
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidPassSpaceUserCreds() {
         return new Object[][]{
                 {UserRepository.get().invalidPassSpaceUserCreds()},};
@@ -83,6 +96,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
     }
 
     @DataProvider
+    @Step
     public Object[][] invalidConfirmPass() {
         return new Object[][]{
                 {UserRepository.get().invalidConfirmPassCredentials()},};
@@ -142,10 +156,10 @@ public class RegisterPageTests extends GreenCityTestRunner {
         logger.info("Click on Sign in button");
         LoginComponent loginComponent = registerComponent.clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
+        Assert.assertEquals("Welcome back!", loginComponent.getTitleText(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
+        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleText(),
                 "This is not a login modal:(");
     }
 
@@ -240,10 +254,10 @@ public class RegisterPageTests extends GreenCityTestRunner {
         logger.info("Click on Sign in button");
         LoginComponent loginComponent = new TopGuestComponent(driver).clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", loginComponent.getTitleString(),
+        Assert.assertEquals("Welcome back!", loginComponent.getTitleText(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleString(),
+        Assert.assertEquals("Please enter your details to sign in", loginComponent.getTitleText(),
                 "This is not a login modal:(");
 
 
@@ -508,13 +522,13 @@ public class RegisterPageTests extends GreenCityTestRunner {
                 "This is not a register modal:(");
 
         ElementsCustomMethods custMethObj = new ElementsCustomMethods(driver);
-        boolean isPresent = custMethObj.isElementPresent(By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS));
+        boolean isPresent = custMethObj.isElementPresent((RegisterComponent.MODAL_WINDOW_CSS));
 
         Assert.assertTrue(isPresent);
 
         registerComponent.closeRegisterComponentModal();
 
-        boolean isGone = custMethObj.waitTillElementGone(driver, By.cssSelector(RegisterComponent.MODAL_WINDOW_CSS), 6000, 2000);
+        boolean isGone = custMethObj.waitTillElementGone(driver, RegisterComponent.MODAL_WINDOW_CSS, 6000);
         Assert.assertTrue(isGone);
 
 
@@ -562,7 +576,7 @@ public class RegisterPageTests extends GreenCityTestRunner {
     }
 
 
-        @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
+    @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
     public void checkUserFieldMaxLength(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -602,5 +616,8 @@ public class RegisterPageTests extends GreenCityTestRunner {
     // Verify 'Sign up' page UI
     //GC-487
     //Verify UI of the Registration form on different screen resolutions
-
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
+    }
 }

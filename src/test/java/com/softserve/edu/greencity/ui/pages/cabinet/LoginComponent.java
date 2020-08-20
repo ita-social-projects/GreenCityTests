@@ -1,5 +1,4 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
-
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
@@ -86,6 +85,11 @@ public class LoginComponent extends TopPart implements StableWebElementSearch {
     public boolean isDisplayedSingInWithGoogleButton() {
         return getSingInWithGoogleButton().isDisplayed();
     }
+    @Step
+    public GoogleLoginPage clickSingInWithGoogleButton() {
+        getSingInWithGoogleButton().click();
+        return new GoogleLoginPage(driver);
+    }
 
     //Sign up link
     @Step
@@ -119,7 +123,6 @@ public class LoginComponent extends TopPart implements StableWebElementSearch {
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
         return elementsCustomMethods.waitTillElementGone(driver, loginComponent, 6000);
     }
-
 
     @Override
     public WebDriver setDriver() {

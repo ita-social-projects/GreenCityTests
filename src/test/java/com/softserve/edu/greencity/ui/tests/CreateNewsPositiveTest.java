@@ -9,9 +9,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -34,7 +32,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     @BeforeMethod
     public void logoutBeforeTest() {
-        if (isLoginingNow()) {
+        if (isLogInNow()) {
             System.out.println("May be you forgot to logout???");
             driver.findElement(By.cssSelector("a[href='#/welcome'")).click();
             new TipsTricksPage(driver).signOut();

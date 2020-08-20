@@ -9,7 +9,7 @@ public class User {
     private String userName;
     private String password;
     private String confirmPassword;
-    
+
     /**
      * Constructor.
      * @param email
@@ -34,7 +34,7 @@ public class User {
         this.password = password;
         this.confirmPassword = "";
     }
-    
+
     /**
      * Constructor.
      * @param userName
@@ -67,7 +67,7 @@ public class User {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-    
+
     // getters
 
     public String getEmail() {

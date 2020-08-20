@@ -1,18 +1,21 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class LoginTest extends GreenCityTestRunner {
     String cssBorderColorProperty;
@@ -24,14 +27,15 @@ public class LoginTest extends GreenCityTestRunner {
         expectedBorderColorRBG = "rgb(240, 49, 39)";
     }
 
-    @Test(testName = "GC-224")
-    public void signInWithValidCredentials() {
+    //@Test(testName = "GC-224")
+    @Description("Verify that user can sign in with valid credentials")
+    public void signInWithValidCredentials() throws InterruptedException {
         User user = UserRepository.get().temporary();
-
         MyCabinetPage myCabinetPage = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
+
 
         String newHabitButton = myCabinetPage
                 .getAddNewHabitButton()
@@ -42,7 +46,8 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(newHabitButton, "Add new habit");
     }
 
-    @Test(testName = "GC-225")
+    //@Test(testName = "GC-225")
+    @Description("Verify that user can't sign in with unregistered credentials")
     public void signInWithUnregisteredCredentials() {
         User user = UserRepository.get().unregisterUser();
 
@@ -55,7 +60,8 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(errorText, "Bad email or password");
     }
 
-    @Test(testName = "GC-30")
+    //@Test(testName = "GC-30")
+    @Description("Verify that user can't sign in with invalid password")
     public void signInWithInvalidPassword() {
         User user = UserRepository.get().userCredentialsWithInvalidPassword();
 
@@ -63,13 +69,13 @@ public class LoginTest extends GreenCityTestRunner {
                 .signIn()
                 .getManualLoginComponent()
                 .unsuccessfullyLogin(user)
-                .getWrongEmailOrPassError()
-                .getText();
+                .getWrongEmailOrPassErrorText();
 
         Assert.assertEquals(errorText, "Bad email or password");
     }
 
-    @Test(testName = "GC-35")
+    //@Test(testName = "GC-35")
+    @Description("Verify that user can sign out")
     public void signOutValidation() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -82,50 +88,49 @@ public class LoginTest extends GreenCityTestRunner {
                 .signOut()
                 .createTopGuestComponent();
 
-        boolean signInDisplayed = topGuestComponent.getSigninLink().isDisplayed();
-        boolean signUpDisplayed = topGuestComponent.getSignupLink().isDisplayed();
-
-        softAssert.assertTrue(signInDisplayed);
-        softAssert.assertTrue(signUpDisplayed);
+        softAssert.assertTrue(topGuestComponent.isDisplayedSignInLink());
+        softAssert.assertTrue(topGuestComponent.isDisplayedSignUpLink());
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-228")
-    public void signInFormValidation() {
+    //@Test(testName = "GC-228")
+    @Description("Verify 'Sign in' form UI")
+    public void signInFormValidation() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
 
         LoginComponent loginComponent = loadApplication().signIn();
-
-        softAssert.assertEquals(loginComponent.getTitleString(), "Welcome back!");
-        softAssert.assertEquals(loginComponent.getSubtitleString(), "Please enter your details to sign in");
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getEmailField().isDisplayed());
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getPasswordField().isDisplayed());
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getSignInButton().isDisplayed());
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getForgotPasswordLink().isDisplayed());
-        softAssert.assertTrue(loginComponent.getSignUpLink().isDisplayed());
-        softAssert.assertTrue(loginComponent.getSingInWithGoogleButton().isDisplayed());
+        softAssert.assertEquals(loginComponent.getTitleText(), "Welcome back!");
+        softAssert.assertEquals(loginComponent.getSubtitleText(), "Please enter your details to sign in");
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
+        softAssert.assertTrue(loginComponent.isDisplayedForgotPasswordLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSignUpLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSingInWithGoogleButton());
 
         loginComponent.changeWindowWidth(800);
 
-        softAssert.assertEquals(loginComponent.getTitleString(), "Welcome back!");
-        softAssert.assertEquals(loginComponent.getSubtitleString(), "Please enter your details to sign in");
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getEmailField().isDisplayed());
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getPasswordField().isDisplayed());
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getSignInButton().isDisplayed());
-        softAssert.assertTrue(loginComponent.getManualLoginComponent().getForgotPasswordLink().isDisplayed());
-        softAssert.assertTrue(loginComponent.getSignUpLink().isDisplayed());
-        softAssert.assertTrue(loginComponent.getSingInWithGoogleButton().isDisplayed());
+        softAssert.assertEquals(loginComponent.getTitleText(), "Welcome back!");
+        softAssert.assertEquals(loginComponent.getSubtitleText(), "Please enter your details to sign in");
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedForgotPasswordLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSignUpLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSingInWithGoogleButton());
 
         loginComponent.maximizeWindow();
 
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-229")
+    //@Test(testName = "GC-229")
+    @Description("Verify that user can't sign in leaving required fields empty #616")
     public void singInWithEmptyRequiredFields() {
         SoftAssert softAssert = new SoftAssert();
 
         User user = UserRepository.get().emptyUserCredentials();
+
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -138,13 +143,14 @@ public class LoginTest extends GreenCityTestRunner {
 
         softAssert.assertEquals(emailBorderColor, expectedBorderColorRBG);
         softAssert.assertEquals(passwordBorderColor, expectedBorderColorRBG);
-        softAssert.assertTrue(manualLoginComponent.getEmailValidationError().isDisplayed());
-        softAssert.assertTrue(manualLoginComponent.getPasswordValidationError().isDisplayed());
-        softAssert.assertFalse(manualLoginComponent.getSignInButton().isEnabled());
+        softAssert.assertTrue(manualLoginComponent.IsDisplayedEmailValidationError());
+        softAssert.assertTrue(manualLoginComponent.IsPasswordValidationError());
+        softAssert.assertFalse(manualLoginComponent.isEnabledSignInButton());
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-492")
+    //@Test(testName = "GC-492")
+    @Description("Verify that 'Sign-up' form appears after click on ‘Sign-up’ link at the bottom of the 'Sign in' form")
     public void signUpLinkValidation() {
         String titleString = loadApplication()
                 .signIn()
@@ -154,7 +160,8 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(titleString, "Hello!");
     }
 
-    @Test(testName = "GC-497")
+    //@Test(testName = "GC-497")
+    @Description("Verify 'Close' button functionality of the 'Sign in' form")
     public void signInFormCloseButtonValidation() {
         boolean isLoginComponentClosed = loadApplication()
                 .signIn()
@@ -163,7 +170,8 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertTrue(isLoginComponentClosed);
     }
 
-    @Test(testName = "GC-522")
+    //@Test(testName = "GC-522")
+    @Description("Verify that user can't sign in leaving 'Email' field empty")
     public void signInWithEmptyEmailFieldValidation() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -173,13 +181,16 @@ public class LoginTest extends GreenCityTestRunner {
                 .signIn()
                 .getManualLoginComponent()
                 .unsuccessfullyLogin(user);
+
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-        softAssert.assertFalse(manualLoginComponent.getSignInButton().isEnabled());
+        softAssert.assertFalse(manualLoginComponent.isEnabledSignInButton());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-523")
+    @Description("Verify that user can't sign in leaving 'Password' field empty")
     public void signInWithEmptyPasswordFieldValidation() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -195,9 +206,10 @@ public class LoginTest extends GreenCityTestRunner {
 
         softAssert.assertEquals(passwordFieldBorderColor, expectedBorderColorRBG);
         softAssert.assertFalse(manualLoginComponent.getSignInButton().isEnabled());
+        softAssert.assertAll();
     }
 
-    @Test(testName = "GC-524")
+    //@Test(testName = "GC-524")
     public void signInWithIncorrectCredentials() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -221,7 +233,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "getCorrectEmails", testName = "GC-525")
+    //@Test(dataProvider = "getCorrectEmails", testName = "GC-525")
     public void correctEmailValidation(String correctEmail) {
         SoftAssert softAssert = new SoftAssert();
 
@@ -248,7 +260,7 @@ public class LoginTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(dataProvider = "getIncorrectEmails", testName = "GC-525")
+    //@Test(dataProvider = "getIncorrectEmails", testName = "GC-525")
     public void incorrectEmailValidation(String incorrectEmail) {
         SoftAssert softAssert = new SoftAssert();
 
@@ -293,7 +305,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-526")
+    //@Test(testName = "GC-526")
     public void correctPasswordValidation() {
         SoftAssert softAssert = new SoftAssert();
 
@@ -310,7 +322,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "getIncorrectPasswords", testName = "GC-526")
+    //@Test(dataProvider = "getIncorrectPasswords", testName = "GC-526")
     public void incorrectPasswordValidation(String incorrectPassword) {
         SoftAssert softAssert = new SoftAssert();
 
@@ -335,19 +347,19 @@ public class LoginTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(testName = "GC-211")
+    //@Test(testName = "GC-211")
     public void signInModalValidation() {
         String titleString = loadApplication()
-                .signIn().getTitleString();
+                .signIn().getTitleText();
 
         Assert.assertEquals(titleString, "Welcome back!");
     }
 
-    @Test(testName = "GC-218")
+    //@Test(testName = "GC-218")
     public void signUpByGoogle() {
         User user = UserRepository.get().googleUserCredentials();
 
-        TipsTricksPage tipsTricksPage = loadApplication();
+        WelcomePage tipsTricksPage = loadApplication();
         tipsTricksPage
                 .signUp()
                 .clickGoogleSignUpButton()
@@ -360,14 +372,14 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(topUserName, "Taras Malynovskyi");
     }
 
-    @Test(testName = "GC-220")
+    //@Test(testName = "GC-220")
     public void signInByGoogle() {
         User user = UserRepository.get().googleUserCredentials();
 
-        TipsTricksPage tipsTricksPage = loadApplication();
+        WelcomePage tipsTricksPage = loadApplication();
         tipsTricksPage
                 .signIn()
-                .clickGoogleSignInButton()
+                .clickSingInWithGoogleButton()
                 .successfulLoginByGoogle(user);
 
         String topUserName = tipsTricksPage.getTopUserName();
@@ -377,7 +389,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(topUserName, "Taras Malynovskyi");
     }
 
-    @Test(testName = "GC-234")
+    //@Test(testName = "GC-234")
     public void signInByGoogleCredentialsOnManualSignInPopUp() {
         User user = UserRepository.get().googleUserCredentials();
         SoftAssert softAssert = new SoftAssert();

@@ -1,13 +1,14 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
 public class SmokeTest extends GreenCityTestRunner {
     @DataProvider
@@ -20,6 +21,7 @@ public class SmokeTest extends GreenCityTestRunner {
     @Test(dataProvider = "users")
     public void checkElements(final User user) {
         TipsTricksPage tipstrickspage = loadApplication()
+                .navigateMenuTipsTricks()
                 .switchLanguage(Languages.UKRAINIAN)
                 .navigateMenuEconews()
                 .navigateMenuTipsTricks()

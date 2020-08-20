@@ -7,7 +7,6 @@ import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreViewPage;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -38,7 +37,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
 
     @BeforeMethod
     public void login() {
-        if(isLoginingNow()) return;
+        if(isLogInNow()) return;
         loadApplication()
                 .loginIn(defaultUser)
                 .navigateMenuTipsTricks();
