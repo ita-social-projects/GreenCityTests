@@ -1,138 +1,169 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ManualLoginComponent extends LoginComponent {
-    private WebElement emailField;
-    private WebElement passwordField;
-    private WebElement passwordFieldWrapper;
-    private WebElement forgotPasswordLink;
-    private WebElement signInButton;
-    private WebElement wrongEmailOrPassError;
-    private WebElement passwordValidator;
-    private WebElement emailValidationError;
-    private WebElement passwordValidationError;
+public class ManualLoginComponent extends LoginComponent implements StableWebElementSearch {
+    private By emailField = By.cssSelector("#email");
+    private By passwordField = By.cssSelector("#password");
 
-    private boolean successfulEmailValidation;
-    private boolean unsuccessfulEmailValidation;
-    private boolean successfulPasswordValidation;
-    private boolean unsuccessfulPasswordValidation;
+    private By signInButton = By.xpath("//button[@type='submit' and @class='primary-global-button']");
 
-    private final String EMAIL_ID = "email";
-    private final String PASSWORD_ID = "password";
-    private final String PASSWORD_FIELD_WRAPPER_CLASS = ".password-input-btn-show-hide";
+    private By emailValidationError = By.cssSelector(".validation-email-error");
+    private By passwordValidationError = By.cssSelector(".validation-password-error");
+    private By wrongEmailOrPassError = By.cssSelector(".alert-general-error.ng-star-inserted");
 
-    private final String SIGN_IN_BUTTON_XPATH = "//button[@type='submit' and @class='primary-global-button']";
-    private final String WRONG_EMAIL_OR_PASS_ERROR_CLASS = ".alert-general-error.ng-star-inserted";
-    private final String FORGOT_PASSWORD_LINK_CLASS = ".forgot-password";
-    private final String EMAIL_VALIDATION_ERROR_CLASS = ".validation-email-error";
-    private final String PASSWORD_IS_REQUIRED_ERROR_CLASS = ".validation-password-error";
-    private final String SUCCESSFUL_EMAIL_VALIDATION_CLASS = ".successful-email-validation";
-    private final String UNSUCCESSFUL_EMAIL_VALIDATION_CLASS = ".alert-email-validation";
-    private final String SUCCESSFUL_PASSWORD_VALIDATION_CLASS = ".successful-password-validation";
-    private final String UNSUCCESSFUL_PASSWORD_VALIDATION_CLASS = ".alert-password-validation";
+    private By passwordFieldWrapper = By.cssSelector(".password-input-btn-show-hide");
+    private By successEmailValidation = By.cssSelector(".successful-email-validation");
+    private By unSuccessEmailValidation = By.cssSelector(".alert-email-validation");
+    private By successfulPasswordValidation = By.cssSelector(".successful-password-validation");
+    private By unSuccessPasswordValidation = By.cssSelector(".alert-password-validation");
 
-    private WebDriver driver;
     private WebDriverWait wait;
 
     public ManualLoginComponent(WebDriver driver) {
         super(driver);
-        this.driver = driver;
     }
 
+    //Email Field
+    @Step
     public WebElement getEmailField() {
-        return emailField = driver.findElement(By.id(EMAIL_ID));
+        return searchElementByCss(emailField);
+    }
+    @Step
+    public boolean isDisplayedEmailField() {
+        return getEmailField().isDisplayed();
+    }
+    @Step
+    public void clickEmailField(){
+        getEmailField().click();
     }
 
+    //Password field
+    @Step
     public WebElement getPasswordField() {
-        return passwordField = driver.findElement(By.id(PASSWORD_ID));
+        return searchElementByCss(passwordField);
     }
-
+    @Step
+    public boolean isDisplayedPasswordField() {
+        return getPasswordField().isDisplayed();
+    }
+    @Step
     public WebElement getPasswordFieldWrapper() {
-        return passwordFieldWrapper = driver.findElement(By.cssSelector(PASSWORD_FIELD_WRAPPER_CLASS));
+        return searchElementByCss(passwordFieldWrapper);
     }
 
+    //Sign in button
+    @Step
     public WebElement getSignInButton() {
-        return signInButton = driver.findElement(By.xpath(SIGN_IN_BUTTON_XPATH));
+        return searchElementByXpath(signInButton);
     }
-
-    public WebElement getWrongEmailOrPassError() {
-        wait = new WebDriverWait(driver, 4);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(WRONG_EMAIL_OR_PASS_ERROR_CLASS)));
-
-        return wrongEmailOrPassError = driver.findElement(By.cssSelector(WRONG_EMAIL_OR_PASS_ERROR_CLASS));
+    @Step
+    public boolean isDisplayedSignInButton() {
+        return getSignInButton().isDisplayed();
     }
-
-    public String getWrongEmailOrPassErrorText() {
-        return getWrongEmailOrPassError().getText();
+    @Step
+    public boolean isEnabledSignInButton() {
+        return getSignInButton().isEnabled();
     }
-
-    public ManualLoginComponent inputEmail(String email) {
-        getEmailField().sendKeys(email);
-        return this;
-    }
-
-    public ManualLoginComponent inputPassword(String password) {
-        getPasswordField().sendKeys(password);
-        return this;
-    }
-
-
+    @Step
     public ManualLoginComponent clickSignInButton() {
         getSignInButton().click();
         return this;
     }
 
-    public WebElement getForgotPasswordLink() {
-        return forgotPasswordLink = driver.findElement(By.cssSelector(FORGOT_PASSWORD_LINK_CLASS));
+    //Email Or Password Error
+    @Step
+    public WebElement getWrongEmailOrPassError() {
+        wait = new WebDriverWait(driver, 4);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(wrongEmailOrPassError));
+        return searchElementByCss(wrongEmailOrPassError);
+    }
+    @Step
+    public String getWrongEmailOrPassErrorText() {
+        return getWrongEmailOrPassError().getText();
     }
 
+
+    //Email Validator
+    @Step
     public WebElement getEmailValidationError() {
-        return emailValidationError = driver.findElement(By.cssSelector(EMAIL_VALIDATION_ERROR_CLASS));
+        return searchElementByCss(emailValidationError);
     }
-
+    @Step
+    public boolean IsDisplayedEmailValidationError() {
+        return getEmailValidationError().isDisplayed();
+    }
+    @Step
     public boolean isSuccessfulEmailValidation() {
-        return successfulEmailValidation =
-                driver.findElement(By.cssSelector(SUCCESSFUL_EMAIL_VALIDATION_CLASS))
-                        .isDisplayed();
+        return searchElementByCss(successEmailValidation).isDisplayed();
     }
-
+    @Step
     public boolean isUnsuccessfulEmailValidation() {
-        return unsuccessfulEmailValidation =
-                driver.findElement(By.cssSelector(UNSUCCESSFUL_EMAIL_VALIDATION_CLASS))
-                        .isDisplayed();
+        return searchElementByCss(unSuccessEmailValidation).isDisplayed();
     }
 
+    //Password Validator
+    @Step
     public WebElement getPasswordValidationError() {
-        return passwordValidationError = driver.findElement(By.cssSelector(PASSWORD_IS_REQUIRED_ERROR_CLASS));
+        return searchElementByCss(passwordValidationError);
     }
-
+    @Step
+    public boolean IsPasswordValidationError() {
+        return getPasswordValidationError().isDisplayed();
+    }
+    @Step
     public boolean isSuccessfulPasswordValidation() {
-        return successfulPasswordValidation =
-                driver.findElement(By.cssSelector(SUCCESSFUL_PASSWORD_VALIDATION_CLASS))
-                        .isDisplayed();
+        return searchElementByCss(successfulPasswordValidation).isDisplayed();
+    }
+    @Step
+    public boolean isUnsuccessfulPasswordValidation() {
+        return searchElementByCss(unSuccessPasswordValidation).isDisplayed();
     }
 
+    //Fill email field
+    @Step
+    public ManualLoginComponent inputEmail(String email) {
+        getEmailField().sendKeys(email);
+        return this;
+    }
+
+    //Fill email field
+    @Step
+    public ManualLoginComponent inputPassword(String password) {
+        getPasswordField().sendKeys(password);
+        return this;
+    }
+
+    //Fill email and password fields
+    @Step
     private void fillFields(User user) {
         inputEmail(user.getEmail());
         inputPassword(user.getPassword());
     }
 
+    //Login???? which page return?
+    @Step
     public MyCabinetPage successfullyLogin(User user) {
         fillFields(user);
         clickSignInButton();
         return new MyCabinetPage(driver);
     }
-
+    @Step
     public ManualLoginComponent unsuccessfullyLogin(User user) {
         fillFields(user);
         clickSignInButton();
         return this;
     }
 
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
+    }
 }

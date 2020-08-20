@@ -13,7 +13,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.softserve.edu.greencity.ui.data.HabitCard;
 
-
 public class HabitCardsContainer {
 
     private final String CHOSEN_HABIT_CARD_CONTAINER_SELECTOR = "div.already-chosen-list";
@@ -38,30 +37,25 @@ public class HabitCardsContainer {
     private void initElements() {
         chosenHabitCardComponents = new ArrayList<HabitCardComponent>();
         driver.findElements(By.cssSelector("div.already-chosen-habits app-habit-card"))
-            .forEach(card -> chosenHabitCardComponents.add(new HabitCardComponent(card)));
+                .forEach(card -> chosenHabitCardComponents.add(new HabitCardComponent(card)));
 
         availableHabitCardComponents = new ArrayList<HabitCardComponent>();
         driver.findElements(By.cssSelector("div.available-to-choose app-habit-card"))
-            .forEach(card -> availableHabitCardComponents.add(new HabitCardComponent(card)));
+                .forEach(card -> availableHabitCardComponents.add(new HabitCardComponent(card)));
     }
 
-
     // Page Object
-
     // availableHabitCardComponents
-
     public List<HabitCardComponent> getAvailableHabitCardComponents() {
         return availableHabitCardComponents;
     }
 
     // chosenHabitCardComponents
-
     public List<HabitCardComponent> getChosenHabitCardComponents() {
         return chosenHabitCardComponents;
     }
 
     // deleteWarning
-
     public WebElement getDeleteWarning() {
         return driver.findElement(By.cssSelector(".deletion-hint"));
     }
@@ -70,9 +64,7 @@ public class HabitCardsContainer {
         return getDeleteWarning().isDisplayed();
     }
 
-
     // Functional
-
     public int getAvailableHabitCardCount() {
         return getAvailableHabitCardComponents().size();
     }
@@ -83,14 +75,14 @@ public class HabitCardsContainer {
 
     public  HabitCardComponent findChosenHabitCard(HabitCard card) {
         return getChosenHabitCardComponents().stream()
-                 .filter(item -> item.getHabitCardTitle().contains(card.getHabit().toString()))
-                 .findAny().orElse(null);
+                .filter(item -> item.getHabitCardTitle().contains(card.getHabit().toString()))
+                .findAny().orElse(null);
     }
 
     public  HabitCardComponent findAvailableHabitCard(HabitCard card) {
         return getAvailableHabitCardComponents().stream()
-                 .filter(item -> item.getHabitCardTitle().contains(card.getHabit().toString()))
-                 .findAny().orElse(null);
+                .filter(item -> item.getHabitCardTitle().contains(card.getHabit().toString()))
+                .findAny().orElse(null);
     }
 
     public  HabitCardComponent getAloneHabitCard() {
@@ -110,9 +102,7 @@ public class HabitCardsContainer {
                 .build().perform();
     }
 
-
     // Business Logic
-
     /**
      * Delete and confirm deleting habit card from chosen cards.
      * @param card
@@ -151,7 +141,4 @@ public class HabitCardsContainer {
         }
         return new HabitCardsContainer(driver);
     }
-
-
-
 }

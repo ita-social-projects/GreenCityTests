@@ -61,8 +61,8 @@ public class HabitCardComponent {
     // Functional
 
     public DeleteCard delete() {
-       clickDeleteButton();
-       return new DeleteCard();
+        clickDeleteButton();
+        return new DeleteCard();
     }
 
 

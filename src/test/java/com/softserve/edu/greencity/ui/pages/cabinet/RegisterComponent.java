@@ -8,13 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class RegisterComponent extends TopPart implements StableWebElementSearch {
 
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     WebDriverWait wait;
 
     private By closeModalButton = By.cssSelector(".close-btn a");
@@ -27,7 +24,6 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
     private final By SIGN_IN_LINK_CSS = By.cssSelector("div.exist-account a");
     private ManualRegisterComponent manualRegisterComponent;
 
-
     public RegisterComponent(WebDriver driver) {
         super(driver);
         init();
@@ -39,17 +35,10 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
         wait.until(ExpectedConditions.visibilityOf(getTitle()));
     }
 
-
-    // modal window
-    @Step
-    public WebElement getRegisterModalWindow() {
-        return SearchElementByCss(MODAL_WINDOW_CSS);
-    }
-
     // title
     @Step
     protected WebElement getTitle() {
-        return SearchElementByCss(TITLE_CSS);
+        return searchElementByCss(TITLE_CSS);
     }
 
     @Step
@@ -59,7 +48,7 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
 
     @Step
     protected WebElement getSubtitle() {
-        return SearchElementByCss(SUBTITLE_CSS);
+        return searchElementByCss(SUBTITLE_CSS);
     }
 
     @Step
@@ -70,7 +59,7 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
 
     @Step
     public void closeRegisterComponentModal() {
-        SearchElementByCss(closeModalButton).click();
+        searchElementByCss(closeModalButton).click();
     }
 
 
@@ -96,12 +85,12 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
      */
     @Step
     protected WebElement getGoogleSignUpButton() {
-        return SearchElementByCss(GOOGLE_SIGN_UP_BUTTON_CLASS);
+        return searchElementByCss(GOOGLE_SIGN_UP_BUTTON_CLASS);
     }
 
     @Step
     protected WebElement getSignInLink() {
-        return SearchElementByCss(SIGN_IN_LINK_CSS);
+        return searchElementByCss(SIGN_IN_LINK_CSS);
     }
 
     @Step
@@ -112,7 +101,7 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
 
     @Step
     public WebElement getCongratsModal() {
-        return SearchElementByCss(CONGRATS_MODAL_CSS);
+        return searchElementByCss(CONGRATS_MODAL_CSS);
     }
 
     @Override

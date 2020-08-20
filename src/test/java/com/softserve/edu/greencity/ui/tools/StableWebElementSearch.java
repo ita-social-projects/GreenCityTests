@@ -22,13 +22,13 @@ public interface StableWebElementSearch {
      */
     WebDriver setDriver();
     @Description("Find element By CSS")
-    default public WebElement SearchElementByCss(By locator){
+    default public WebElement searchElementByCss(By locator){
         return explicitSearch(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
     @Step
     @Description("Find element By xpath")
-    default public WebElement SearchElementByXpath(By xPath){
+    default public WebElement searchElementByXpath(By xPath){
         return explicitSearch(ExpectedConditions.visibilityOfElementLocated(xPath));
     }
 

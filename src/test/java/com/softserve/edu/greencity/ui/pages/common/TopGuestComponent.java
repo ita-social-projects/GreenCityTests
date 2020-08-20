@@ -6,36 +6,48 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class TopGuestComponent {
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
+import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class TopGuestComponent implements StableWebElementSearch {
     private WebDriver driver;
-    private WebElement signinLink;
-    private WebElement signupLink;
+    private By signInLink = By.cssSelector("li.sign-in-link.tertiary-global-button a");
+    private By signUpLink = By.cssSelector("li.sign-up-link.ng-star-inserted div");
 
     public TopGuestComponent(WebDriver driver) {
         this.driver = driver;
     }
 
-
-    public WebElement getSigninLink() {
-        return signinLink = driver.findElement(By.cssSelector("li.sign-in-link.tertiary-global-button a"));
+    //Sign In link
+    @Step
+    public WebElement getSignInLink() {
+        return searchElementByCss(signInLink);
     }
 
-
+    @Step
     public LoginComponent clickSignInLink() {
-        getSigninLink().click();
+        getSignInLink().click();
         return new LoginComponent(driver);
     }
 
-    public WebElement getSignupLink() {
-        return signupLink = driver.findElement(By.cssSelector("li.sign-up-link.ng-star-inserted div"));
+    //Sign Up link
+    @Step
+    public WebElement getSignUpLink() {
+        return searchElementByCss(signUpLink);
     }
 
-    public String getSignupLinkText() {
-        return getSignupLink().getText();
-    }
-
+    @Step
     public RegisterComponent clickSignUpLink() {
-        getSignupLink().click();
+        getSignUpLink().click();
         return new RegisterComponent(driver);
+    }
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
     }
 }

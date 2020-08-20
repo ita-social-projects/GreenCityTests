@@ -37,7 +37,7 @@ public class ElementsCustomMethods implements StableWebElementSearch{
 
     public boolean isElementPresent(By locator) {
         try {
-            SearchElementByCss(locator);
+            searchElementByCss(locator);
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;

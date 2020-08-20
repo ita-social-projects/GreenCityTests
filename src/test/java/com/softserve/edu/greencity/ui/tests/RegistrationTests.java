@@ -23,9 +23,6 @@ public class RegistrationTests extends GreenCityTestRunner{
                 .userCredentialsForRegistration()},};
     }
 
-
-
-
     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
     public void registrationAndLogin(User userLoginCredentials) {
         loadApplication();

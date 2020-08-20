@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
 import org.openqa.selenium.WebDriver;
 
 import com.google.common.collect.Streams;
 import com.softserve.edu.greencity.ui.data.Goal;
 
-public abstract class GoalsContainerPart {
+public abstract class GoalsContainerPart implements StableWebElementSearch {
 
     protected WebDriver driver;
 
@@ -59,7 +60,10 @@ public abstract class GoalsContainerPart {
         return  Streams.findLast(getGoalComponents().stream()).get();
 
     }
-
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
+    }
     // Business Logic
 
 

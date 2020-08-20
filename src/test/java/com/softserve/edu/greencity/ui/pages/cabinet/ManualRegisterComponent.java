@@ -2,47 +2,35 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
+import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-public class ManualRegisterComponent extends RegisterComponent {
+
+public class ManualRegisterComponent extends RegisterComponent implements StableWebElementSearch {
 
     private WebDriver driver;
-    private WebElement userNameField;
-    private WebElement emailField;
-    private WebElement passwordField;
-    private WebElement showPasswordButton;
-    private WebElement passwordConfirmField;
-    private WebElement showPasswordConfirmButton;
-    private WebElement signUpButton;
-
-    private WebElement emailValidator;
-    private WebElement passwordValidator;
-    private WebElement passwordConfirmValidator;
-    private WebElement registrationValidator;
-    private WebElement firstNameValidator;
-    private String confirmURL = "";
-
-    private final String USER_NAME_FIELD_SELECTOR = "input[name='fistName']";
-    private final String EMAIL_FIELD_SELECTOR = "input[name='email']";
-    private final String PASSWORD_FIELD_SELECTOR = "input[name='form-control password']";
-    private final String SHOW_PASSWORD_BUTTON_SELECTOR = "//input[@name='form-control password']/../span/img";
-    private final String PASSWORD_CONFIRM_FIELD_SELECTOR = "input[name='form-control password-confirm']";
-    private final String SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR = "//input[@name='form-control password-confirm']/../span/img";
-    private final String SIGNUP_BUTTON_SELECTOR = "div[class='form-content-container'] button[class*='global-button']";
-
-
-    private final String EMAIL_VALIDATOR_SELECTOR = "//input[@name='email']/following-sibling::div/div";
-    private final String REGISTRATION_VALIDATOR_SELECTOR = "app-sign-up input#email + div";
-    private final String FIRST_NAME_VALIDATOR_SELECTOR = "//input[@name='fistName']/following-sibling::div/div";
-    private final String PASSWORD_VALIDATOR_SELECTOR = "//*[@name = 'form-control password']//parent::div//following-sibling::div";
-    private final String PASSWORD_CONFIRM_VALIDATOR_SELECTOR = "//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div";
+    private String confirmURL = null;
+    private By EMAIL_FIELD_SELECTOR = By.cssSelector("input[name='email']");
+    private By USER_NAME_FIELD_SELECTOR = By.cssSelector("input[name='fistName']");
+    private By PASSWORD_FIELD_SELECTOR = By.cssSelector("input[name='form-control password']");
+    private By PASSWORD_CONFIRM_FIELD_SELECTOR = By.cssSelector("input[name='form-control password-confirm");
+    private By SIGN_BUTTON_SELECTOR = By.cssSelector("app-sign-up button.primary-global-button");
+    private By EMAIL_VALIDATOR_SELECTOR = By.xpath("//input[@name='email']/following-sibling::div/div");
+    private By FIRST_NAME_VALIDATOR_SELECTOR = By.xpath("//input[@name='fistName']/following-sibling::div/div");
+    private By PASSWORD_VALIDATOR_SELECTOR = By.xpath("//*[@name = 'form-control password']//parent::div//following-sibling::div");
+    private By SHOW_PASSWORD_BUTTON_SELECTOR = By.xpath("//input[@name='form-control password']/../span/img");
+    private By SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR = By.xpath("//input[@name='form-control password-confirm']/../span/img");
+    private By PASSWORD_CONFIRM_VALIDATOR_SELECTOR = By.xpath("//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div");
 
 
     public ManualRegisterComponent(WebDriver driver) {
@@ -50,27 +38,25 @@ public class ManualRegisterComponent extends RegisterComponent {
         this.driver = driver;
     }
 
+    @Step
     public WebElement getUserNameField() {
-
-        this.userNameField = driver
-                .findElement(By.cssSelector(USER_NAME_FIELD_SELECTOR));
-        return userNameField;
+        return searchElementByCss(USER_NAME_FIELD_SELECTOR);
     }
 
-
-    protected ManualRegisterComponent inputUserName(String userName) {
+    @Step
+    private ManualRegisterComponent inputUserName(String userName) {
         this.getUserNameField().sendKeys(userName);
         return this;
     }
 
-
-    protected ManualRegisterComponent clearFirstName() {
+    @Step
+    private ManualRegisterComponent clearFirstName() {
         this.getUserNameField().clear();
         return this;
     }
 
-
-    protected ManualRegisterComponent clickFirstName(WebDriver driver) {
+    @Step
+    private ManualRegisterComponent clickFirstName(WebDriver driver) {
         if (isDisplayedFirstNameField()) {
             this.getUserNameField().click();
             Actions action = new Actions(driver);
@@ -80,90 +66,41 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-
-    protected boolean isDisplayedFirstNameField() {
+    @Step
+    private boolean isDisplayedFirstNameField() {
         return getUserNameField().isDisplayed();
     }
 
 
-    protected RegisterComponent setFirstNameValidator(
-            WebElement firstNameValidator) {
-        this.firstNameValidator = firstNameValidator;
-        return this;
+    @Step
+    private WebElement getUserNameValidator() {
+        return searchElementByCss(FIRST_NAME_VALIDATOR_SELECTOR);
     }
 
-
-    protected WebElement getUserNameValidator() {
-        firstNameValidator = driver
-                .findElement(By.xpath(FIRST_NAME_VALIDATOR_SELECTOR));
-        return firstNameValidator;
-    }
-
-
+    @Step
     public String getUserNameValidatorText() {
         return getUserNameValidator().getText();
     }
 
-
-    protected boolean isDisplayedFirstNameValidator() {
-        return getUserNameValidator().isDisplayed();
+    @Step
+    private WebElement getEmailField() {
+        return searchElementByCss(EMAIL_FIELD_SELECTOR);
     }
 
-
-    protected boolean sizeFirstNameValidator() {
-        return driver
-                .findElements(By.cssSelector(FIRST_NAME_VALIDATOR_SELECTOR))
-                .size() != 0;
-    }
-
-
-    protected RegisterComponent setRegistrationValidator(WebElement registrationValidator) {
-        this.registrationValidator = registrationValidator;
-        return this;
-    }
-
-
-    protected WebElement getRegistrationValidator() {
-        registrationValidator = driver.findElement(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR));
-        return registrationValidator;
-    }
-
-
-    public String getRegistrationValidatorText() {
-        return getRegistrationValidator().getText();
-    }
-
-
-    public boolean isDisplayedRegistrationValidator() {
-        return getRegistrationValidator().isDisplayed();
-    }
-
-    protected boolean sizeRegistrationValidator() {
-        return driver.findElements(By.cssSelector(REGISTRATION_VALIDATOR_SELECTOR))
-                .size() != 0;
-    }
-
-
-    protected WebElement getEmailField() {
-        this.emailField = driver
-                .findElement(By.cssSelector(EMAIL_FIELD_SELECTOR));
-        return emailField;
-    }
-
-
-    protected RegisterComponent inputEmailField(String email) {
+    @Step
+    private RegisterComponent inputEmailField(String email) {
         this.getEmailField().sendKeys(email);
         return this;
     }
 
-
-    protected RegisterComponent clearEmailField() {
+    @Step
+    private RegisterComponent clearEmailField() {
         this.getEmailField().clear();
         return this;
     }
 
-
-    public RegisterComponent clickEmailField(WebDriver driver) {
+    @Step
+    private RegisterComponent clickEmailField(WebDriver driver) {
         if (isDisplayedEmailField()) {
             this.getEmailField().click();
             Actions action = new Actions(driver);
@@ -173,49 +110,40 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-
-    protected boolean isDisplayedEmailField() {
+    @Step
+    private boolean isDisplayedEmailField() {
         return getEmailField().isDisplayed();
     }
 
-
+    @Step
     public String getEmailValidatorText() {
         return getEmailValidator().getText();
     }
 
-
-    protected WebElement getEmailValidator() {
-        emailValidator = driver.findElement(By.xpath(EMAIL_VALIDATOR_SELECTOR));
-        return emailValidator;
+    @Step
+    private WebElement getEmailValidator() {
+        return searchElementByCss(EMAIL_VALIDATOR_SELECTOR);
     }
 
-
-    protected boolean sizeEmailValidator() {
-        return driver.findElements(By.xpath(EMAIL_VALIDATOR_SELECTOR))
-                .size() != 0;
-    }
-
-
+    @Step
     public WebElement getPasswordField() {
-        this.passwordField = driver
-                .findElement(By.cssSelector(PASSWORD_FIELD_SELECTOR));
-        return passwordField;
+        return searchElementByCss(PASSWORD_FIELD_SELECTOR);
     }
 
-
-    protected RegisterComponent inputPassword(String password) {
+    @Step
+    private RegisterComponent inputPassword(String password) {
         this.getPasswordField().sendKeys(password);
         return this;
     }
 
-
-    protected RegisterComponent clearPasswordField() {
+    @Step
+    private RegisterComponent clearPasswordField() {
         this.getPasswordField().clear();
         return this;
     }
 
-
-    protected RegisterComponent clickPasswordField(WebDriver driver) {
+    @Step
+    private RegisterComponent clickPasswordField(WebDriver driver) {
         if (isDisplayedPasswordField()) {
             this.getPasswordField().click();
             Actions action = new Actions(driver);
@@ -225,99 +153,69 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-
-    public ManualRegisterComponent setPasswordField(WebElement passwordField) {
-        this.passwordField = passwordField;
-        return this;
-    }
-
-
-    protected boolean isDisplayedPasswordField() {
+    @Step
+    private boolean isDisplayedPasswordField() {
         return getPasswordField().isDisplayed();
     }
 
-    protected WebElement getShowPasswordButton() {
-        this.showPasswordButton = driver
-                .findElement(By.xpath(SHOW_PASSWORD_BUTTON_SELECTOR));
-        return showPasswordButton;
+    @Step
+    private WebElement getShowPasswordButton() {
+        return searchElementByXpath(SHOW_PASSWORD_BUTTON_SELECTOR);
     }
 
-    protected RegisterComponent clickShowPasswordButton() {
+    @Step
+    private RegisterComponent clickShowPasswordButton() {
         if (isDisplayedShowPasswordButton()) {
             this.getShowPasswordButton().click();
         }
         return this;
     }
 
-    public ManualRegisterComponent setShowPasswordButton(WebElement showPasswordButton) {
-        this.showPasswordButton = showPasswordButton;
-        return this;
-    }
 
-
-    protected boolean isDisplayedShowPasswordButton() {
+    @Step
+    private boolean isDisplayedShowPasswordButton() {
         return getShowPasswordButton().isDisplayed();
     }
 
-
-    protected boolean isDisplayedPasswordValidator() {
-        return getPasswordValidator().isDisplayed();
-    }
-
-
+    @Step
     public String getPasswordValidatorText() {
         return getPasswordValidator().getText();
     }
 
-
-    protected WebElement getPasswordValidator() {
-        passwordValidator = driver
-                .findElement(By.xpath(PASSWORD_VALIDATOR_SELECTOR));
-        return passwordValidator;
+    @Step
+    private WebElement getPasswordValidator() {
+        return searchElementByXpath(PASSWORD_VALIDATOR_SELECTOR);
     }
 
-
-    protected boolean sizePasswordValidator() {
-        return driver.findElements(By.cssSelector(PASSWORD_VALIDATOR_SELECTOR))
-                .size() != 0;
-    }
-
-
-    protected boolean isDisplayedPasswordConfirmValidator() {
-        return getPasswordConfirmValidator().isDisplayed();
-    }
-
+    @Step
     public String getPasswordConfirmValidatorText() {
         return getPasswordConfirmValidator().getText().trim();
     }
 
-    protected WebElement getPasswordConfirmValidator() {
-        passwordConfirmValidator = driver.findElement(
-                By.xpath(PASSWORD_CONFIRM_VALIDATOR_SELECTOR));
-        return passwordConfirmValidator;
+    @Step
+    private WebElement getPasswordConfirmValidator() {
+        return searchElementByXpath(PASSWORD_CONFIRM_VALIDATOR_SELECTOR);
     }
 
-    protected WebElement getPasswordConfirmField() {
-
-        this.passwordConfirmField = driver
-                .findElement(By.cssSelector(PASSWORD_CONFIRM_FIELD_SELECTOR));
-        return passwordConfirmField;
+    @Step
+    private WebElement getPasswordConfirmField() {
+        return searchElementByCss(PASSWORD_CONFIRM_FIELD_SELECTOR);
     }
 
-
-    protected RegisterComponent inputPasswordConfirm(String passwordConfirm) {
+    @Step
+    private RegisterComponent inputPasswordConfirm(String passwordConfirm) {
         this.getPasswordConfirmField().sendKeys(passwordConfirm);
         return this;
     }
 
-
-    protected RegisterComponent clearPasswordConfirmField() {
+    @Step
+    private RegisterComponent clearPasswordConfirmField() {
         this.getPasswordConfirmField().clear();
         return this;
     }
 
-
-    protected RegisterComponent clickPasswordConfirmField(WebDriver driver) {
+    @Step
+    private RegisterComponent clickPasswordConfirmField(WebDriver driver) {
         if (isDisplayedPasswordConfirmField()) {
             this.getPasswordConfirmField().click();
             Actions action = new Actions(driver);
@@ -327,57 +225,46 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-
-    protected boolean isDisplayedPasswordConfirmField() {
+    @Step
+    private boolean isDisplayedPasswordConfirmField() {
         return getPasswordConfirmField().isDisplayed();
     }
 
-
-    protected WebElement getShowPasswordConfirmButton() {
-        this.showPasswordConfirmButton = driver
-                .findElement(By.xpath(SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR));
-        return showPasswordConfirmButton;
+    @Step
+    private WebElement getShowPasswordConfirmButton() {
+        return searchElementByXpath(SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR);
     }
 
-    protected RegisterComponent clickShowPasswordConfirmButton() {
+    @Step
+    private RegisterComponent clickShowPasswordConfirmButton() {
         if (isDisplayedShowPasswordConfirmButton())
             this.getShowPasswordConfirmButton().click();
         return this;
     }
 
-    protected boolean isDisplayedShowPasswordConfirmButton() {
+    @Step
+    private boolean isDisplayedShowPasswordConfirmButton() {
         return getShowPasswordConfirmButton().isDisplayed();
     }
 
-
-    protected boolean sizePasswordConfirmValidator() {
-        return driver
-                .findElements(
-                        By.cssSelector(PASSWORD_CONFIRM_VALIDATOR_SELECTOR))
-                .size() != 0;
+    @Step
+    private WebElement getSignUpButton() {
+        return searchElementByCss(SIGN_BUTTON_SELECTOR);
     }
 
-    public WebElement getSignUpButton() {
-
-        this.signUpButton = driver
-                .findElement(By.cssSelector(SIGNUP_BUTTON_SELECTOR));
-        return signUpButton;
-    }
-
-    protected boolean isDisplayedSignUpButton() {
+    @Step
+    private boolean isDisplayedSignUpButton() {
         return getSignUpButton().isDisplayed();
     }
 
-    protected String getSignUpButtonText() {
-        return getSignUpButton().getText();
-    }
-
+    @Step
     public boolean signUpIsDisabled() {
         return getSignUpButton().getAttribute("disabled") != null;
 
     }
 
-    protected ManualRegisterComponent fillEmailField(String email) {
+    @Step
+    private ManualRegisterComponent fillEmailField(String email) {
         if (isDisplayedEmailField()) {
             clickEmailField(driver);
             clearEmailField();
@@ -386,7 +273,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected ManualRegisterComponent fillUserNameField(String firstName) {
+    @Step
+    private ManualRegisterComponent fillUserNameField(String firstName) {
         if (isDisplayedFirstNameField()) {
             clickFirstName(driver);
             clearFirstName();
@@ -395,7 +283,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected ManualRegisterComponent fillPasswordFieldPassShown(String password) {
+    @Step
+    private ManualRegisterComponent fillPasswordFieldPassShown(String password) {
         if (isDisplayedPasswordField()) {
             clickPasswordField(driver);
             clearPasswordField();
@@ -405,6 +294,7 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
+    @Step
     public ManualRegisterComponent fillPasswordFieldPassHidden(String password) {
         if (isDisplayedPasswordField()) {
             clickPasswordField(driver);
@@ -414,7 +304,8 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-    protected ManualRegisterComponent fillPasswordConfirmField(String passwordConfirm) {
+    @Step
+    private ManualRegisterComponent fillPasswordConfirmField(String passwordConfirm) {
         if (isDisplayedPasswordConfirmField()) {
             clickPasswordConfirmField(driver);
             clearPasswordConfirmField();
@@ -424,36 +315,32 @@ public class ManualRegisterComponent extends RegisterComponent {
         return this;
     }
 
-
-    public ManualRegisterComponent clickSignUpButton() {
+    @Step
+    private ManualRegisterComponent clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
             this.getSignUpButton().click();
         }
         return this;
     }
-
     @Step
     private void getConfirmURL() {
         confirmURL = new GoogleMailAPI().getconfirmURL(10);}
     @Step
-    protected RegisterComponent checkVerIfMailReceived() {
+    private RegisterComponent checkVerIfMailReceived() {
         if (confirmURL == null) getConfirmURL();
         Assert.assertNotNull(confirmURL);
         return this;}
-
     @Step
-    public RegisterComponent verifyRegistration() {
+    private RegisterComponent verifyRegistration() {
         driver.get(new GoogleMailAPI().getconfirmURL(10));
         return this;}
 
+    @Step
     public void registrationWrongUser(User userData) {
-        fillEmailField(userData.getEmail())
-                .fillUserNameField(userData.getUserName())
-                .fillPasswordFieldPassShown(userData.getPassword())
-                .fillPasswordConfirmField(userData.getConfirmPassword())
-                .clickSignUpButton();
+        driver.get(confirmURL);
     }
 
+    @Step
     public void fillFieldsWithoutRegistration(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
@@ -462,15 +349,19 @@ public class ManualRegisterComponent extends RegisterComponent {
 
     }
 
+    @Step
     public void registrationNewUserVerified(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
+                .waitSuccessfullRegistrationPopUp()
+                .waitSuccessfullRegistrationPopUpDisappear()
                 .verifyRegistration();
     }
 
+    @Step
     public void registrationUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
@@ -479,14 +370,30 @@ public class ManualRegisterComponent extends RegisterComponent {
         clickSignUpButton();
     }
 
+    @Step
     public void registerUserCheckIfMailReceived(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
+                .waitSuccessfullRegistrationPopUp()
+                .waitSuccessfullRegistrationPopUpDisappear()
                 .checkVerIfMailReceived();
     }
 
+    private ManualRegisterComponent waitSuccessfullRegistrationPopUp() {
+        new WebDriverWait(driver, 10).until(visibilityOfElementLocated(By.id("mat-dialog-1")));
+        return this;
+    }
 
+    private ManualRegisterComponent waitSuccessfullRegistrationPopUpDisappear() {
+        new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(By.id("mat-dialog-1")));
+        return this;
+    }
+
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
+    }
 }
