@@ -22,17 +22,11 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
     private final By SUBTITLE_CSS = By.cssSelector(".subtitle-text");
     private final By CONGRATS_MODAL_CSS = By.cssSelector(".main-container .submit-email");
     private final By SIGN_IN_LINK_CSS = By.cssSelector("div.exist-account a");
-    private ManualRegisterComponent manualRegisterComponent;
 
     public RegisterComponent(WebDriver driver) {
         super(driver);
     }
 
-    @Step
-    public void init() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getTitle()));
-    }
 
     // title
     @Step
@@ -66,7 +60,8 @@ public class RegisterComponent extends TopPart implements StableWebElementSearch
     @Step
     public ManualRegisterComponent getManualRegisterComponent() {
 
-        return manualRegisterComponent = new ManualRegisterComponent(driver);
+        ManualRegisterComponent manualRegisterComponent;
+        return new ManualRegisterComponent(driver);
     }
 
     @Step

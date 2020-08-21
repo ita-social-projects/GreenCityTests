@@ -36,7 +36,6 @@ public abstract class GreenCityTestRunner {
     protected WebDriver driver;
 
     @BeforeSuite
-    @Step
     public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
         new CredentialProperties().checkCredentialsExist();
@@ -44,7 +43,6 @@ public abstract class GreenCityTestRunner {
 
     @SneakyThrows
     @BeforeClass
-    @Step
     public void setUpBeforeClass() {
         DesiredCapabilities capability = DesiredCapabilities.chrome();
         driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
@@ -52,7 +50,6 @@ public abstract class GreenCityTestRunner {
         driver.manage().window().maximize();
     }
     @AfterClass(alwaysRun = true)
-    @Step
     public void tearDownAfterClass() {
         if (driver != null) {
             driver.quit();
@@ -60,13 +57,11 @@ public abstract class GreenCityTestRunner {
     }
 
     @BeforeMethod
-    @Step
     public void setUp() {
         driver.get(BASE_URL);
     }
 
     @AfterMethod
-    @Step
     public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
@@ -75,7 +70,7 @@ public abstract class GreenCityTestRunner {
             signOutByStorage();}
         //System.out.println("@AfterMethod tearDown");
     }
-    @Step("loadApplication")
+
     WelcomePage loadApplication() {
         return new WelcomePage(driver);
     }
@@ -97,7 +92,6 @@ public abstract class GreenCityTestRunner {
      * sing out using storage
      * @return
      */
-    @Step("signOut by clear storage")
     private void signOutByStorage(){
         RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);

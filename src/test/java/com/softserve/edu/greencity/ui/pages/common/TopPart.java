@@ -68,50 +68,50 @@ public abstract class TopPart {
     public TopPart(WebDriver driver) {
         this.driver = driver;
     }
-    @Step("get Language Switcher WebElement (return Select)")
+
     public Select getLanguageSwitcher() {
         return languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
     }
-    @Step("get Language Switcher WebElement")
+
     public WebElement getLanguageSwitcherWebElement() {
         return getLanguageSwitcher().getWrappedElement();
     }
-    @Step("get Language Switcher Text")
+
     public String getLanguageSwitcherText() {
         return getLanguageSwitcher().getFirstSelectedOption().getText();
     }
-    @Step("set Language Switcher")
+
     protected void setLanguageSwitcher(String text) {
         getLanguageSwitcher().selectByVisibleText(text);
     }
-    @Step("click Language Switcher")
+
     protected void clickLanguageSwitcher() {
         getLanguageSwitcherWebElement().click();
     }
-    @Step("get Copyright WebElement")
+
     public WebElement getCopyright() {
         return copyright = driver.findElement(By.cssSelector("div.bottom-part"));
     }
-    @Step("get Copyright Text")
+
     public String getCopyrightText() {
         return getCopyright().getText();
     }
-    @Step("click Copyright")
+
     public void clickCopyright() {
         getCopyright().click();
     }
-    @Step("get Main Menu Dropdown")
+
     public MainMenuDropdown getMainMenuDropdown() {
         return mainMenuDropdown = new MainMenuDropdown(driver);
     }
-    @Step("get TopGuest Component")
+
     public TopGuestComponent getTopGuestComponent() {
         if (topGuestComponent == null) {
             throw new RuntimeException(OPTION_NULL_MESSAGE);
         }
         return topGuestComponent;
     }
-    @Step("create Top Guest Component")
+
     public TopGuestComponent createTopGuestComponent() {
         topGuestComponent = new TopGuestComponent(driver);
         return getTopGuestComponent();
@@ -120,15 +120,15 @@ public abstract class TopPart {
     protected void clickTopGuestSignin() {
         getTopGuestComponent().clickSignInLink();
     }
-    @Step("click Top Guest Signup")
+
     protected void clickTopGuestSignup() {
         getTopGuestComponent().clickSignUpLink();
     }
-    @Step("close Top Guest Component (topGuestComponent = null)")
+
     protected void closeTopGuestComponent() {
         topGuestComponent = null;
     }
-    @Step("get Top User Component")
+
     protected TopUserComponent getTopUserComponent() {
         if (topUserComponent == null) {
             throw new RuntimeException(OPTION_NULL_MESSAGE);
@@ -136,16 +136,16 @@ public abstract class TopPart {
         return topUserComponent;
     }
 
-    @Step("get Google Account ManagerPage")
+
     public GoogleAccountManagerPage getGoogleAccountManagerPage() {
         return googleAccountManagerPage = new GoogleAccountManagerPage(driver);
     }
-    @Step("create Top User Component")
+
     protected TopUserComponent createTopUserComponent() {
         topUserComponent = new TopUserComponent(driver);
         return getTopUserComponent();
     }
-    @Step("get Top User Name")
+
     public String getTopUserName() {
         return createTopUserComponent().getUserNameButtonText();
     }

@@ -17,15 +17,15 @@ import org.testng.annotations.Test;
 public class RegistrationTests extends GreenCityTestRunner{
 
     @DataProvider
-    @Step("DataProvider get user Credentials For Registration")
     public Object[][] successRegistrationUserCreds() {
         return new Object[][]{{UserRepository.get()
                 .userCredentialsForRegistration()},};
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "registration And Login \t GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "Registration and login \t GC-199, GC-206")
     @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
+        logger.info("Start test registration and login");
         GoogleMailAPI.clearMail();
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
@@ -39,8 +39,9 @@ public class RegistrationTests extends GreenCityTestRunner{
         Assert.assertTrue(isLogInNow());
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "registration Without Mail Verifying \t GC-512")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "Registration without mail verifying \t GC-512")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
+        logger.info("Start test registration without mail verifying");
         loadApplication();
         logger.info("Starting registrationWithoutMailVerif. Input values = "
                 + userLoginCredentials.toString());
@@ -76,8 +77,9 @@ public class RegistrationTests extends GreenCityTestRunner{
                 "The validation message is not equal to the expected one");
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "registration Check If Mail Received \t GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "Registration check if mail received \t GC-513")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
+        logger.info("Start test registration check if mail received");
         loadApplication();
         logger.info("Starting registrationCheckIfMailReceived. Input values = "
                 + userLoginCredentials.toString());

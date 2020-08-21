@@ -21,6 +21,7 @@ public interface StableWebElementSearch {
      * @return WebDriver
      */
     WebDriver setDriver();
+    @Step
     @Description("Find element By CSS")
     default public WebElement searchElementByCss(By locator){
         return explicitSearch(ExpectedConditions.visibilityOfElementLocated(locator));
