@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -97,5 +96,12 @@ public class RegisterComponent extends TopPart  {
         return searchElementByCss(CONGRATS_MODAL_CSS);
     }
 
+    @Step
+    public boolean isBackgroundIsDimmed(){
+        boolean isDimmed = driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
+                .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing");
+        logger.info("Background is dimmed: " + isDimmed);
+        return isDimmed;
+    };
 
 }

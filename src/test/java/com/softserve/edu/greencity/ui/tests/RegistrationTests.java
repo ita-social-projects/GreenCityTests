@@ -46,7 +46,6 @@ public class RegistrationTests extends GreenCityTestRunner{
         logger.info("Starting registrationWithoutMailVerif. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -84,7 +83,6 @@ public class RegistrationTests extends GreenCityTestRunner{
         logger.info("Starting registrationCheckIfMailReceived. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "

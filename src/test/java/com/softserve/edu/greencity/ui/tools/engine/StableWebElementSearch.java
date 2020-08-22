@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +23,7 @@ public interface StableWebElementSearch {
      * @return WebDriver
      */
     WebDriver setDriver();
+
     @Step
     @Description("Find element By CSS")
     default public WebElement searchElementByCss(By locator){
@@ -41,5 +44,6 @@ public interface StableWebElementSearch {
         setDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return element;
     }
+
 }
 

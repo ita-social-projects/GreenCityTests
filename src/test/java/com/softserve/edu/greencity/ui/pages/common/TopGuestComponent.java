@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import io.qameta.allure.Step;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TopGuestComponent implements StableWebElementSearch {
     private WebDriver driver;
@@ -17,7 +19,7 @@ public class TopGuestComponent implements StableWebElementSearch {
     public TopGuestComponent(WebDriver driver) {
         this.driver = driver;
     }
-
+    private Logger log = LoggerFactory.getLogger(this.getClass());
     //Sign In link
     @Step
     public WebElement getSignInLink() {
@@ -48,6 +50,7 @@ public class TopGuestComponent implements StableWebElementSearch {
     }
     @Step
     public RegisterComponent clickSignUpLink() {
+        log.info("Click on Sign up button");
         getSignUpLink().click();
         return new RegisterComponent(driver);
     }

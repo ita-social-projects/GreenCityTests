@@ -9,6 +9,7 @@ import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -98,7 +99,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkIfSignUpButtonEnabled. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -128,7 +128,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         loadApplication();
         logger.info("Starting navigateFromSignUpToSignIn");
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -160,7 +159,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkEmptyFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -202,7 +200,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -269,7 +266,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + invalidEmailCredentials.toString());
 
-        logger.info("Click on Sign up button");
         ManualRegisterComponent manualRegisterComponent = new TopGuestComponent(driver)
                 .clickSignUpLink()
                 .getManualRegisterComponent();
@@ -292,7 +288,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -321,7 +316,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
+
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -351,7 +346,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -379,7 +373,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -409,7 +402,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -441,7 +433,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -470,7 +461,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -497,7 +487,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         loadApplication();
         logger.info("Starting checkCloseRegisterModalButton:");
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -524,7 +513,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation:");
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -551,9 +539,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
 
         logger.info("Starting checkBackgroundIsDimmed:");
         loadApplication();
-        logger.info("Click on Sign up button");
 
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        new TopGuestComponent(driver).clickSignUpLink();
 
         Assert.assertTrue(driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
                 .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"));
@@ -566,7 +553,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
 
-        logger.info("Click on Sign up button");
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
 
         logger.info("Get a title text of the modal window: "
@@ -588,7 +574,22 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "The invalid string is not concatenated");
 
     }
+    @Test
+    public void checkResponsiveSingUp(){
+        driver.manage().window().setSize(new Dimension(1024, 768));
+        loadApplication();
+        logger.info("Starting checkResponsiveSingUp " + driver.manage().window().getSize());
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        Assert.assertTrue(registerComponent.isBackgroundIsDimmed());
+        logger.info("Get a title text of the modal window: "
+                + registerComponent.getTitleString());
 
+        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+                "This is not a register modal:(");
+        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+                "This is not a register modal:(");
+
+    }
 
     //GC-204
     //Verify that Email must be existence and unique while new user registration

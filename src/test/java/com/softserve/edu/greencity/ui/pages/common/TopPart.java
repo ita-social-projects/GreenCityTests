@@ -234,7 +234,6 @@ public abstract class TopPart implements StableWebElementSearch {
     @Step("signUp")
     public RegisterComponent signUp() {
         logger.debug("start signup()");
-        logger.trace("click Signup link");
         logger.info("go to RegisterDropdown");
         createTopGuestComponent().clickSignUpLink();
         return new RegisterComponent(driver);
