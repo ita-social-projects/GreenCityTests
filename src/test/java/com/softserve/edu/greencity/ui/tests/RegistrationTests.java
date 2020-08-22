@@ -22,7 +22,7 @@ public class RegistrationTests extends GreenCityTestRunner{
                 .userCredentialsForRegistration()},};
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "Registration and login \t GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
     @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
         logger.info("Start test registration and login");
@@ -39,7 +39,7 @@ public class RegistrationTests extends GreenCityTestRunner{
         Assert.assertTrue(isLogInNow());
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "Registration without mail verifying \t GC-512")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         logger.info("Start test registration without mail verifying");
         loadApplication();
@@ -77,7 +77,7 @@ public class RegistrationTests extends GreenCityTestRunner{
                 "The validation message is not equal to the expected one");
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "Registration check if mail received \t GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         logger.info("Start test registration check if mail received");
         loadApplication();
