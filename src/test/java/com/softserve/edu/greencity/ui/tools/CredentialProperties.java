@@ -25,7 +25,7 @@ public class CredentialProperties {
         properties.setProperty("defaultPass","bRDYBhAs3z48Y5H-");
         properties.setProperty("temporaryPass","bRDYBhAs3z48Y5H-");
         properties.setProperty("comfTemporaryPass","bRDYBhAs3z48Y5H-");
-        properties.setProperty("invalidName","s");
+        properties.setProperty("invalidName","21CharString21CharSt");
         properties.setProperty("invalidPassLowercase","qwertyasdfg-");
         properties.setProperty("invalidPass","as2f");
         properties.setProperty("invalidPassSpecChar","bRDYBhAs3 z48Y5H-");
