@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
-import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,12 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginComponent extends TopPart implements StableWebElementSearch {
+public class LoginComponent extends TopPart  {
     public static final String MODAL_WINDOW_CSS = "app-sign-in div";
     protected WebDriverWait wait;
 
     private By modalWindow = By.cssSelector(".wrapper");
     private By title = By.cssSelector(".right-side h1");
+    private By singInH1 = By.cssSelector("app-sign-in h1");
+    private By singInH2 = By.cssSelector("app-sign-in h2");
     private By subtitle = By.cssSelector(".right-side h2");
     private By forgotPasswordLink = By.cssSelector(".forgot-password");
     private By singInWithGoogleButton = By.cssSelector(".google-sign-in");
@@ -55,7 +56,16 @@ public class LoginComponent extends TopPart implements StableWebElementSearch {
         wait.until(ExpectedConditions.visibilityOfElementLocated(title));
         return getTitle().getText();
     }
-
+    @Step
+    public String getSingInH1() {
+        System.out.println(searchElementByCss(singInH1).getText());
+        return searchElementByCss(singInH1).getText();
+    }
+    @Step
+    public String getSingInH2() {
+        System.out.println(searchElementByCss(singInH2).getText());
+        return searchElementByCss(singInH2).getText();
+    }
     //SubTitle
     @Step
     protected WebElement getSubtitle() {
@@ -124,8 +134,5 @@ public class LoginComponent extends TopPart implements StableWebElementSearch {
         return elementsCustomMethods.waitTillElementGone(driver, loginComponent, 6000);
     }
 
-    @Override
-    public WebDriver setDriver() {
-        return this.driver;
-    }
+
 }

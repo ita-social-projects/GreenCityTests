@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,7 +48,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lv-493.Taqc/Java
  */
-public abstract class TopPart {
+public abstract class TopPart implements StableWebElementSearch {
     public static final String PROFILE_NAME = "Nadiia Steblivets";
 
     private final int WINDOW_WIDTH_TO_SCROLL = 1024;
@@ -272,5 +273,9 @@ public abstract class TopPart {
         WindowManager windowManager = new WindowManager(driver);
 
         windowManager.maximizeWindow();
+    }
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.WebDriver;
 
 import com.google.common.collect.Streams;

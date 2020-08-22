@@ -4,7 +4,7 @@
     <test name="registrationAndLogin">
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.RegistrationTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.LoginTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.RegisterPageTests"/>
         </classes>
     </test>
 </suite>

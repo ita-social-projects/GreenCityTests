@@ -1,12 +1,13 @@
 package com.softserve.edu.greencity.ui.tools;
 
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class ElementsCustomMethods implements StableWebElementSearch{
+public class ElementsCustomMethods implements StableWebElementSearch {
 
 
     private WebDriver driver;

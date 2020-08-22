@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
-import com.softserve.edu.greencity.ui.tools.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
+import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
@@ -31,8 +33,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By SHOW_PASSWORD_BUTTON_SELECTOR = By.xpath("//input[@name='form-control password']/../span/img");
     private By SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR = By.xpath("//input[@name='form-control password-confirm']/../span/img");
     private By PASSWORD_CONFIRM_VALIDATOR_SELECTOR = By.xpath("//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div");
-
-
+    private By errorMessages = By.cssSelector("div.error-message");
+    private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -186,7 +188,22 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private WebElement getPasswordValidator() {
         return searchElementByXpath(PASSWORD_VALIDATOR_SELECTOR);
     }
-
+    @Step
+    public String getSingInErrorsMsg(int errorNumber){
+        return driver.findElements(errorMessages).get(errorNumber-1).getText();
+    }
+    @Step
+    public List<WebElement> getSingInErrorsMessages(int errorNumber){
+        return driver.findElements(errorMessages);
+    }
+    @Step
+    public List<WebElement> getSignUpErrorsMessages(int errorNumber){
+        return driver.findElements(signUpErrorsMsg);
+    }
+    @Step
+    public String getSignUpErrorsMsg(int errorNumber){
+        return driver.findElements(signUpErrorsMsg).get(errorNumber-1).getText();
+    }
     @Step
     public String getPasswordConfirmValidatorText() {
         return getPasswordConfirmValidator().getText().trim();
@@ -337,7 +354,11 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     public void registrationWrongUser(User userData) {
-        driver.get(confirmURL);
+        fillEmailField(userData.getEmail())
+                .fillUserNameField(userData.getUserName())
+                .fillPasswordFieldPassShown(userData.getPassword())
+                .fillPasswordConfirmField(userData.getConfirmPassword())
+                .clickSignUpButton();
     }
 
     @Step
