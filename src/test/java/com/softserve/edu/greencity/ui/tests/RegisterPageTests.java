@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.By;
@@ -640,11 +641,17 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         assertEquals("Please enter your details to sign in", loginComponent.getSubtitleText(),
                 "This is not a login modal:(");
     }
+    @Test(description = "GC-498")
+    public void myHabitsExistForUnsignedUser(){
+        assertEquals(new WelcomePage(driver)
+                .clickMyHabitsUnsignedLink()
+                .getSubtitleText(), "Please enter your details to sign in");
+    }
     //GC-204
     //Verify that Email must be existence and unique while new user registration
     //GC-200
     //Verify that unregistered user sees popup window 'Sign up' after clicking on the “My habits” button
-    //GC-203
+    //GC-203 clickMyHabitsUnsignedLink
     //Verify that User is redirected to My habits as a Registered User after he has entered valid credentials
     //GC-216
     // Verify 'Sign up' page UI
