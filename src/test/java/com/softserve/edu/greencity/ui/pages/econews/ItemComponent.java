@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,12 +18,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public final class ItemComponent {
 
 	private WebDriver driver;
+	protected WebDriverWait wait;
+
 	private WebElement newsItem;
-	private List<WebElement> tags;
 	private WebElement title;
 	private WebElement content;
 	private WebElement dateOfCreation;
 	private WebElement author;
+	private List<WebElement> tags;
 
 	public ItemComponent(WebDriver driver, WebElement newsItem) {
 		this.driver = driver;
@@ -33,7 +34,6 @@ public final class ItemComponent {
 	}
 
 	private void initElements() {
-	
 		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
 		title = newsItem.findElement(By.cssSelector("div.title-list p"));
 		content = newsItem.findElement(By.cssSelector("div.list-text p"));
@@ -48,39 +48,29 @@ public final class ItemComponent {
 		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
 //		WebDriverWait wait = new WebDriverWait(myDriver, 15);
 //		wait.until(webDriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete"));
-		wait.until(ExpectedConditions.visibilityOfAllElements( title, content, dateOfCreation, author));
+		wait.until(ExpectedConditions.visibilityOfAllElements(title, content, dateOfCreation, author));
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
-
-	// Page Object
-
-	// typeOfNews
 
 	private List<WebElement> getTags() {
 		return tags;
 	}
 
-	// container
-
 	private WebElement getNewsItem() {
 		return newsItem;
 	}
 
-	// title
-
-	protected WebElement getIitle() {
+	protected WebElement getTitle() {
 		return title;
 	}
 
-	protected String getIitleText() {
-		return getIitle().getText();
+	protected String getTitleText() {
+		return getTitle().getText();
 	}
 
 	protected void clickTitle() {
-		getIitle().click();
+		getTitle().click();
 	}
-
-	// content
 
 	private WebElement getContent() {
 		return content;
@@ -94,8 +84,6 @@ public final class ItemComponent {
 		getContent().click();
 	}
 
-	// dateOfCreation
-
 	private WebElement getDateOfCreation() {
 		return dateOfCreation;
 	}
@@ -103,8 +91,6 @@ public final class ItemComponent {
 	private String getDateOfCreationText() {
 		return getDateOfCreation().getText();
 	}
-
-	// author
 
 	private WebElement getAuthor() {
 		return author;
@@ -114,10 +100,9 @@ public final class ItemComponent {
 		return getAuthor().getText();
 	}
 
-	// Functional
-	
 	/**
 	 * List with names of Tags
+	 *
 	 * @return List<String>
 	 */
 	protected List<String> getTagsText() {
@@ -128,6 +113,4 @@ public final class ItemComponent {
 		Collections.sort(str);
 		return str;
 	}
-
-	// Business Logic
 }

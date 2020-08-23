@@ -17,7 +17,7 @@ public class GoogleMailAPI {
 
     @Step("Gmail sing In")
     @SneakyThrows(Exception.class)
-    private static void connectToEmail() {
+    public static void connectToEmail() {
         emailUtils = new BaseMailAPI("greencitypavel@gmail.com", "1234qwerTY-", "smtp.gmail.com", BaseMailAPI.EmailFolder.INBOX);
     }
 

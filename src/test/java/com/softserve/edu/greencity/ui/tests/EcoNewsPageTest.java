@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.ui.tests;
 
 import java.util.List;
 
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,72 +12,57 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.OneNewsPage;
 
 /**
- * Test cases to test EconewsPage
+ * Test cases to test EcoNewsPage
+ *
  * @author lv-493
  */
-public class EconewsPageTest extends GreenCityTestRunner {
+public class EcoNewsPageTest extends GreenCityTestRunner {
 
 	@DataProvider
 	public Object[][] newsTags() {
-		return new Object[][] {
-				{  NewsDataRepository.getNewsByTags() }
+		return new Object[][]{
+				{NewsDataRepository.getNewsByTags()}
 		};
 	}
 
 	@DataProvider
 	public Object[][] newsData() {
-		return new Object[][] {
-				{  NewsDataRepository.getExistingNews() }
+		return new Object[][]{
+				{NewsDataRepository.getExistingNews()}
 		};
 	}
 
-	@Test(dataProvider = "newsData")
-	public void econewsSmokeTest(NewsData news) {
-
-		logger.info("econewsSmokeTest starts with parameters: " + news.toString());
-		// go to EconewsPage -> OneNewsPage -> next OneNewsPage -> return to EconewsPage
+	//    @Test(dataProvider = "newsData")
+	public void ecoNewsSmokeTest(NewsData news) {
+		logger.info("ecoNewsSmokeTest starts with parameters: " + news.toString());
 
 		WelcomePage page = loadApplication();
-		page.navigateMenuEconews()
-				.switchToOneNewsPagebyParameters(news)
-				.switchToNextOneNewsPage()
-				.switchToEconewsPageBack();
-
+		page.navigateMenuEcoNews()
+				.switchToSingleNewsPageByParameters(news)
+				.switchToNextSingleNewsPage()
+				.switchToEcoNewsPageBack();
 	}
 
-	@Test(dataProvider = "newsData")
+	//	@Test(dataProvider = "newsData")
 	public void openNewsTest(NewsData news) {
-
 		logger.info("openNewsTest starts with parameters: " + news.toString());
 
-		//open onenewspage
-
-		OneNewsPage findedeconewspage = loadApplication()
-				.navigateMenuEconews()
-				.switchToOneNewsPagebyParameters(news);
-
-		// check if is appropriate page
+		SingleNewsPage findedeconewspage = loadApplication()
+				.navigateMenuEcoNews()
+				.switchToSingleNewsPageByParameters(news);
 
 		Assert.assertEquals(news.getTitle(), findedeconewspage.getTitleText(),
 				"titles of news does not match:");
 
 	}
 
-	@Test(dataProvider = "newsTags")
+	//	@Test(dataProvider = "newsTags")
 	public void chooseTags(List<Tag> tags) {
-
 		logger.info("chooseTags starts with parameters: " + tags.toString());
 
-
-		//open onenewspage
-
-		EconewsPage page = loadApplication().navigateMenuEconews().selectFilters(tags);
-
-		// check if is appropriate numbers of news items
+		EcoNewsPage page = loadApplication().navigateMenuEcoNews().selectFilters(tags);
 
 		Assert.assertEquals(page.getItemsContainer().getItemComponentsCount(),
 				page.getNumberOfItemComponent(),
@@ -83,57 +70,40 @@ public class EconewsPageTest extends GreenCityTestRunner {
 
 	}
 
-	@Test(dataProvider = "newsTags")
+	//    @Test(dataProvider = "newsTags")
 	public void deselectTags(List<Tag> tags) {
-
 		logger.info("deselectTags starts with parameters: " + tags.toString());
 
-		//open onenewspage
-
-		EconewsPage page = loadApplication()
-				.navigateMenuEconews()
+		EcoNewsPage page = loadApplication()
+				.navigateMenuEcoNews()
 				.selectFilters(tags)
 				.deselectFilters(tags);
-
-		// check if is appropriate numbers of news items
 
 		Assert.assertEquals(page.getItemsContainer().getItemComponentsCount(),
 				page.getNumberOfItemComponent(),
 				"Number of news items does not match to required:");
-
 	}
 
 	@Test
 	public void selectListView() {
-
 		logger.info("selectListView starts");
-		// open onenewspage
 
-		EconewsPage page = loadApplication()
-				.navigateMenuEconews()
-				.switchToListViev();
-
-		// check if it  is appropriate view
+		EcoNewsPage page = loadApplication()
+				.navigateMenuEcoNews()
+				.switchToListView();
 
 		Assert.assertTrue(page.isActiveListView(), "List view is not active:");
-
 	}
 
 	@Test
 	public void selectGridView() {
-
 		logger.info("selectListView starts");
-		// open onenewspage
 
-		EconewsPage page = loadApplication()
-				.navigateMenuEconews()
-				.switchToListViev()
-				.switchToGridViev();
-
-		// check if it  is appropriate view
+		EcoNewsPage page = loadApplication()
+				.navigateMenuEcoNews()
+				.switchToListView()
+				.switchToGridView();
 
 		Assert.assertTrue(page.isActiveGridView(), "Grid view is not active:");
-
 	}
-
 }

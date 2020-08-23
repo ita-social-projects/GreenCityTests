@@ -1,8 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.softserve.edu.greencity.ui.data.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,12 +13,34 @@ import java.util.ArrayList;
 public class GoogleAccountManagerPage {
     private WebDriver driver;
 
-    private static String ACCOUNT_TOP_RIGHT_BUTTON_CLASS = ".gb_Ta";
-    private static String SIGN_OUT_BUTTON_ID = "gb_71";
+    private WebDriverWait wait;
+
     private static String GOOGLE_ACCOUNT_MANAGE_URL = "https://myaccount.google.com/";
+    private static String GOOGLE_MAIL_URL = "https://mail.google.com/mail/";
+
+    private By accountButton = By.cssSelector(".gb_La");
+    private By signOutButton = By.id("gb_71");
 
     public GoogleAccountManagerPage(WebDriver driver) {
         this.driver = driver;
+    }
+
+    //Account Button
+    public WebElement getAccountButton() {
+        return driver.findElement(accountButton);
+    }
+
+    public void clickAccountButton() {
+        getAccountButton().click();
+    }
+
+    //Sign out Button
+    public WebElement getSignOutButton() {
+        return driver.findElement(signOutButton);
+    }
+
+    public void clickSignOutButton() {
+        getSignOutButton().click();
     }
 
     public void googleAccountSignOut() {
@@ -33,8 +57,8 @@ public class GoogleAccountManagerPage {
 
         driver.switchTo().window(windowHandles.get(1));
 
-        driver.findElement(By.cssSelector(ACCOUNT_TOP_RIGHT_BUTTON_CLASS)).click();
-        driver.findElement(By.id(SIGN_OUT_BUTTON_ID)).click();
+        clickAccountButton();
+        clickSignOutButton();
 
         driver.close();
         driver.switchTo().window(parentWindow);

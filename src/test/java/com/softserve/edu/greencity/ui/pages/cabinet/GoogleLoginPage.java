@@ -1,11 +1,14 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,18 +18,11 @@ public class GoogleLoginPage {
     private WebDriver driver;
     private WebDriverWait wait;
 
-    private WebElement emailField;
-    private WebElement emailNextButton;
-    private WebElement passwordField;
-    private WebElement passwordNextButton;
-    private WebElement loggedInUser;
-
-    private final String EMAIL_FIELD_ID = "identifierId";
-    private final String EMAIL_NEXT_BUTTON_XPATH = "//*[@id='identifierNext']/div";
-
-    private final String PASSWORD_FIELD_XPATH = ".//*[@id='password']/div[1]/div/div[1]/input";
-    private final String PASSWORD_NEXT_BUTTON_XPATH = "//*[@id='passwordNext']/div";
-    private final String LOGGED_IN_USER_CLASS = ".lCoei";
+    private By emailField = By.id("identifierId");
+    private By emailNextButton = By.xpath("//*[@id='identifierNext']/div");
+    private By passwordField = By.xpath(".//*[@id='password']/div[1]/div/div[1]/input");
+    private By passwordNextButton = By.xpath("//*[@id='passwordNext']/div");
+    private By loggedInUser = By.cssSelector(".lCoei");
 
     public GoogleLoginPage(WebDriver driver) {
         this.driver = driver;
@@ -34,40 +30,70 @@ public class GoogleLoginPage {
 
     public WebElement getEmailField() {
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(EMAIL_FIELD_ID)));
-
-        return emailField = driver.findElement(By.id(EMAIL_FIELD_ID));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(emailField));
+        return driver.findElement(emailField);
     }
 
     public WebElement getEmailNextButton() {
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(EMAIL_NEXT_BUTTON_XPATH)));
+        wait.until(ExpectedConditions.elementToBeClickable(emailNextButton));
+        return driver.findElement(emailNextButton);
+    }
 
-        return emailNextButton = driver.findElement(By.xpath(EMAIL_NEXT_BUTTON_XPATH));
+    public void clickEmailNextButton() {
+        getEmailNextButton().click();
     }
 
     public WebElement getPasswordField() {
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(PASSWORD_FIELD_XPATH)));
-
-        return passwordField = driver.findElement(By.xpath(PASSWORD_FIELD_XPATH));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordField));
+        return driver.findElement(passwordField);
     }
 
     public WebElement getPasswordNextButton() {
-        return passwordNextButton = driver.findElement(By.xpath(PASSWORD_NEXT_BUTTON_XPATH));
+        wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.elementToBeClickable(passwordNextButton));
+        return driver.findElement(passwordNextButton);
+    }
+
+    public void clickPasswordNextButton() {
+        getPasswordNextButton().click();
+    }
+
+    //Fill email field
+    public GoogleLoginPage fillEmail(User user) {
+        getEmailField().sendKeys(user.getEmail());
+        clickEmailNextButton();
+        return this;
+    }
+
+    //Fill password field
+    public GoogleLoginPage fillPassword(User user) {
+        getPasswordField().sendKeys(user.getPassword());
+        clickPasswordNextButton();
+        return this;
+    }
+
+    //Fill email and password fields
+    public void fillFields(User user) {
+        fillEmail(user);
+        fillPassword(user);
     }
 
     public WebElement getLoggedInUser() {
-        return loggedInUser = driver.findElement(By.cssSelector(LOGGED_IN_USER_CLASS));
+        return driver.findElement(loggedInUser);
+    }
+
+    public void clickLoggedInUser() {
+        getLoggedInUser().click();
     }
 
     private boolean isLoginedUser() {
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
-
-        return elementsCustomMethods.isElementPresent(By.cssSelector(LOGGED_IN_USER_CLASS));
+        return elementsCustomMethods.isElementPresent(loggedInUser);
     }
 
-    public TipsTricksPage successfulLoginByGoogle(User user) {
+    public WelcomePage successfulLoginByGoogle(User user) {
         String parentWindow = driver.getWindowHandle();
 
         WebDriverWait wait = new WebDriverWait(driver, 5);
@@ -79,22 +105,15 @@ public class GoogleLoginPage {
         driver.switchTo().window(windowHandles.get(1));
 
         if (isLoginedUser()) {
-            getLoggedInUser().click();
-            getPasswordField().sendKeys(user.getPassword());
-            getPasswordNextButton().click();
+            clickLoggedInUser();
+            fillEmail(user);
 
             driver.switchTo().window(parentWindow);
-            return new TipsTricksPage(driver);
+            return new WelcomePage(driver);
         }
-
-        getEmailField().sendKeys(user.getEmail());
-        getEmailNextButton().click();
-
-        getPasswordField().sendKeys(user.getPassword());
-        getPasswordNextButton().click();
+        fillFields(user);
 
         driver.switchTo().window(parentWindow);
-
-        return new TipsTricksPage(driver);
+        return new WelcomePage(driver);
     }
 }

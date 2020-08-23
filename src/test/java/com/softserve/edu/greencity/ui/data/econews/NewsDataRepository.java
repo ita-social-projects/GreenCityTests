@@ -42,7 +42,7 @@ public class NewsDataRepository {
     public static NewsData getExistingNews() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "test title", "test content test content");
+        return new NewsData(tags, " Test  ", " Test Test Test Test Test Test Test  ");
     }
 
     public static List<Tag> getNewsByTags() {

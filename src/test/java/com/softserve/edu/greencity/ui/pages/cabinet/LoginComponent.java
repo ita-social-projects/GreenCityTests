@@ -1,4 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
+import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import io.qameta.allure.Step;
@@ -13,10 +14,8 @@ public class LoginComponent extends TopPart  {
     protected WebDriverWait wait;
 
     private By modalWindow = By.cssSelector(".wrapper");
-    private By title = By.cssSelector(".right-side h1");
-    private By singInH1 = By.cssSelector("app-sign-in h1");
-    private By singInH2 = By.cssSelector("app-sign-in h2");
-    private By subtitle = By.cssSelector(".right-side h2");
+    private By title = By.cssSelector("app-sign-in h1");
+    private By subtitle = By.cssSelector("app-sign-in h2");
     private By forgotPasswordLink = By.cssSelector(".forgot-password");
     private By singInWithGoogleButton = By.cssSelector(".google-sign-in");
     private By singUpLink = By.cssSelector(".missing-account .sign-up-link");
@@ -24,6 +23,11 @@ public class LoginComponent extends TopPart  {
     protected By loginComponent = By.cssSelector(".cdk-overlay-pane");
 
     private ManualLoginComponent manualLoginComponent;
+
+    public ForgotPasswordComponent clickForgotPasswordLink(){
+        getForgotPasswordLink().click();
+        return new ForgotPasswordComponent(driver);
+    }
 
     public LoginComponent(WebDriver driver) {
         super(driver);
@@ -58,13 +62,11 @@ public class LoginComponent extends TopPart  {
     }
     @Step
     public String getSingInH1() {
-        System.out.println(searchElementByCss(singInH1).getText());
-        return searchElementByCss(singInH1).getText();
+        return searchElementByCss(title).getText();
     }
     @Step
     public String getSingInH2() {
-        System.out.println(searchElementByCss(singInH2).getText());
-        return searchElementByCss(singInH2).getText();
+        return searchElementByCss(subtitle).getText();
     }
     //SubTitle
     @Step

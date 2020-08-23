@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class TipsTricksTest extends GreenCityTestRunner {
@@ -70,7 +70,7 @@ public class TipsTricksTest extends GreenCityTestRunner {
     public void mainEcoNews() {
         TipsTricksPage tipsTricksPage = loadApplication()
                 .navigateMenuTipsTricks();
-        EconewsPage econewsPage = tipsTricksPage.moveMainEcoNewsLink();
+        EcoNewsPage econewsPage = tipsTricksPage.moveMainEcoNewsLink();
 
         Assert.assertTrue(econewsPage.getGridView().isDisplayed());
     }

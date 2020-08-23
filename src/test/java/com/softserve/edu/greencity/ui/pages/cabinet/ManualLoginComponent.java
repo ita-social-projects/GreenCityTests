@@ -111,6 +111,14 @@ public class ManualLoginComponent extends LoginComponent implements StableWebEle
 
     //Password Validator
     @Step
+    public String getEmailValidationErrorText() {
+        return getEmailValidationError().getText();
+    }
+    @Step
+    public String getPasswordValidationErrorText() {
+        return getPasswordValidationError().getText();
+    }
+    @Step
     public WebElement getPasswordValidationError() {
         return searchElementByCss(passwordValidationError);
     }

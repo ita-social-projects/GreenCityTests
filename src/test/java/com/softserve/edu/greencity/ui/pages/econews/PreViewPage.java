@@ -1,140 +1,122 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import com.softserve.edu.greencity.ui.tools.CheckPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.*;
 
 /**
  * PreViewPage class
+ *
  * @author lv-493 Taqc/Java
  */
-public class PreViewPage extends TopPart {
+public class PreViewPage extends TopPart  {
 
-    // news fields
-    private List<WebElement> tagsFields;
-    private WebElement titleField;
-    private WebElement dateField;
-    private WebElement authorField;
-    private WebElement contentField;
+    protected WebDriverWait wait;
 
-    //img to share news
-    private WebElement imgTwitterLink;
-    private WebElement imgLinkedinLink;
-    private WebElement imgFacebookLink;
-
-    private WebElement backToEditingLink;
+    private By titleField = By.cssSelector("div.news-title");
+    private By dateField = By.cssSelector("div.news-info-date");
+    private By authorField = By.cssSelector("div.news-info-author");
+    private By contentField = By.cssSelector("div.news-text-content");
+    private By imgTwitterLink = By.xpath("//img[contains(@src,'twitter.svg')]");
+    private By imgLinkedInLink = By.xpath("//img[contains(@src,'linkedin.svg')]");
+    private By imgFacebookLink = By.xpath("//img[contains(@src,'facebook.svg')]");
+    private By backToEditingLink = By.cssSelector("div.button-text");
     private WebElement publishButton;
+    private List<WebElement> tagsFields;
 
     /**
      * Constructor PreViewPage
+     *
      * @param driver
      */
     public PreViewPage(WebDriver driver) {
         super(driver);
-        initElements();
+        checkElements();
     }
 
-    private void initElements() {
-        CheckPage.waitForLoading(driver, getBackToEditingLink());
+    private void checkElements() {
+        wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(getBackToEditingLink()));
     }
 
-    // Page Object
-
-    // tagsFields;
     public List<WebElement> getTagsFields() {
         tagsFields = driver.findElements(By.cssSelector("div.tags > div"));
         return tagsFields;
     }
 
-    //titleField;
     public WebElement getTitleField() {
-        titleField = driver.findElement(By.cssSelector("div.news-title"));
-        return titleField;
+        return searchElementByCss(titleField);
     }
 
     public String getTitleFieldText() {
         return getTitleField().getText();
     }
 
-    //dateField;
     public WebElement getDateField() {
-        dateField = driver.findElement(By.cssSelector("div.news-info-date"));
-        return dateField;
+        return searchElementByCss(dateField);
     }
 
     public String getDateFieldText() {
         return getDateField().getText();
     }
 
-    //authorField;
     public WebElement getAuthorField() {
-        authorField = driver.findElement(By.cssSelector("div.news-info-author"));
-        return authorField;
+        return searchElementByCss(authorField);
     }
 
     public String getAuthorFieldText() {
         return getAuthorField().getText();
     }
 
-    //contentField
     public WebElement getContentField() {
-        contentField = driver.findElement(By.cssSelector("div.news-text-content"));
-        return contentField;
+        return searchElementByCss(contentField);
     }
 
     public String getContentFieldText() {
         return getContentField().getText();
     }
 
-    //imgTwitterLink;
     public WebElement getImgTwitterLink() {
-        imgTwitterLink = driver.findElement(By.xpath("//img[contains(@src,'twitter.svg')]"));
-        return imgTwitterLink;
+        return searchElementByXpath(imgTwitterLink);
     }
 
     public void clickImgTwitterLink() {
         getImgTwitterLink().click();
     }
 
-    //imgLinkedinLink;
-    public WebElement getImgLinkedinLink() {
-        imgLinkedinLink = driver.findElement(By.xpath("//img[contains(@src,'linkedin.svg')]"));
-        return imgLinkedinLink;
+    public WebElement getImgLinkedInLink() {
+        return searchElementByXpath(imgLinkedInLink);
     }
 
-    public void clickImgLinkedinLink() {
-        getImgLinkedinLink().click();
+    public void clickImgLinkedInLink() {
+        getImgLinkedInLink().click();
     }
 
-    //imgFacebookLink;
     public WebElement getImgFacebookLink() {
-        imgFacebookLink = driver.findElement(By.xpath("//img[contains(@src,'facebook.svg')]"));
-        return imgFacebookLink;
+        return searchElementByXpath(imgFacebookLink);
     }
 
     public void clickImgFacebookLink() {
         getImgFacebookLink().click();
     }
 
-    //backToEditingLink;
     public WebElement getBackToEditingLink() {
-        backToEditingLink = driver.findElement(By.cssSelector("div.button-text"));
-        return backToEditingLink;
+        return searchElementByCss(backToEditingLink);
     }
 
     public void clickBackToEditingLink() {
         getBackToEditingLink().click();
     }
 
-    //publishButton
     public WebElement getPublishButton() {
         List<WebElement> list = driver.findElements(By.cssSelector("button[type='submit']"));
-        if(list.size() > 0) {
+        if (list.size() > 0) {
             publishButton = list.get(0);
         } else {
             return null;
@@ -147,18 +129,16 @@ public class PreViewPage extends TopPart {
     }
 
     private void clickPublishButton() {
-        if (isPublishButtonPresent()){
+        if (isPublishButtonPresent()) {
             getPublishButton().click();
-        }
-        else {
+        } else {
             logger.info("Element Publish button does not exist.");
         }
     }
 
-    // Functional
-
     /**
      * Get sorted list of Strings with tags names
+     *
      * @return List<String>
      */
     public List<String> getTagsNames() {
@@ -170,10 +150,9 @@ public class PreViewPage extends TopPart {
         return tagsNames;
     }
 
-    // Business Logic
-
     /**
      * Method to back to CreateNewsPage from PreViewPage
+     *
      * @return CreateNewsPage
      */
     public CreateNewsPage backToCreateNewsPage() {
@@ -183,10 +162,16 @@ public class PreViewPage extends TopPart {
 
     /**
      * Method to publish news
-     * @return EconewsPage
+     *
+     * @return EcoNewsPage
      */
-    public EconewsPage publishNews() {
-        clickPublishButton();  // Button doesn't work
-        return new EconewsPage(driver);
+    public EcoNewsPage publishNews() {
+        clickPublishButton();
+        return new EcoNewsPage(driver);
+    }
+
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
     }
 }

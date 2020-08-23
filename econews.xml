@@ -3,7 +3,7 @@
 <suite name="Suite">
   <test thread-count="5" name="Test">
     <classes>
-      <class name="com.softserve.edu.greencity.ui.tests.EconewsPageTest"/>
+      <class name="com.softserve.edu.greencity.ui.tests.EcoNewsPageTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

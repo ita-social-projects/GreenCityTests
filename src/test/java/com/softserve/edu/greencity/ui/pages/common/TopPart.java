@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
@@ -24,24 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Lv-493.Taqc/Java
  */
-import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
-import com.softserve.edu.greencity.ui.pages.map.MapPage;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
-import com.softserve.edu.greencity.ui.tools.WindowManager;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -182,11 +165,11 @@ public abstract class TopPart implements StableWebElementSearch {
         return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
     }
     @Step("navigate to MenuEconews")
-    public EconewsPage navigateMenuEconews() {
+    public EcoNewsPage navigateMenuEcoNews() {
         logger.debug("go to EcoNews page");
         logger.trace("click MenuEcoNews link");
         getMainMenuDropdown().clickMenuEcoNews();
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
     @Step("navigate to Menu TipsTricks")
     public TipsTricksPage navigateMenuTipsTricks() {

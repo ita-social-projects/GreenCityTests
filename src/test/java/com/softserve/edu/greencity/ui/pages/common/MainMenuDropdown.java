@@ -1,260 +1,203 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class MainMenuDropdown {
-    private WebDriver driver;
-    //
-    private WebElement naviconButton;
-    //
-    //private WebElement menuHome;
-    private WebElement menuEcoNews;
-    private WebElement menuTipsTricks;
-    private WebElement menuMap;
-    private WebElement menuMyHabits;
-    private WebElement menuAbout;
-    //
-    private WebElement footerEcoNews;
-    private WebElement footerTipsTricks;
-    private WebElement footerPlaces;
-    private WebElement footerMyHabits;
-    private WebElement footerAbout;
+public class MainMenuDropdown implements StableWebElementSearch {
 
-    private WebDriverWait wait;
+    private WebDriver driver;
+    protected WebDriverWait wait;
+    private By naviconButton = By.cssSelector("div.menu-icon");
+    private By menuEcoNews = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']");
+    private By menuTipsTricks = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/tips']");
+    private By menuMap = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']");
+    private By menuAbout = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']");
+    private By menuMyHabits = By.cssSelector(".navigation-menu-left > ul > li > a[href*='/profile']");
+    private By footerEcoNews = By.cssSelector("app-footer a[href*='/news']");
+    private By footerTipsTricks = By.xpath("//div[@class = 'links']//a[contains(text(),'Tips & Tricks')]");
+    private By footerPlaces = By.cssSelector("app-footer a[href*='/map']");
+    private By footerMyHabits = By.cssSelector("app-footer a[href*='/profile']");
+    private By footerAbout = By.cssSelector("app-footer a[href*='/about']");
 
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
-        initElements();
+        checkElements();
     }
-
-    private void initElements() {
-        // init elements
-        naviconButton = driver.findElement(By.cssSelector("div.menu-icon"));
-        //menuHome = driver.findElement(By.cssSelector("ul.menu > li:first-child > a[href*='/welcome']"));
-        menuEcoNews = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']"));
-        menuTipsTricks = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']"));
-        menuMap = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']"));
-        menuMyHabits = driver.findElement(By.cssSelector(".navigation-menu-left > ul > li > a[href*='/profile']"));
-        menuAbout = driver.findElement(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']"));
-        //
-        footerEcoNews = driver.findElement(By.cssSelector("div.app-footer a[href*='/news']"));
-        footerTipsTricks = driver.findElement(By.xpath("//div[@class='app-footer']//a[contains(@href, '/news')]/../following-sibling::li/a[@href='']"));
-        footerPlaces = driver.findElement(By.cssSelector("div.app-footer a[href*='/map']"));
-        footerMyHabits = driver.findElement(By.cssSelector(".app-footer a[href*='/profile']"));
-        footerAbout = driver.findElement(By.cssSelector("div.app-footer a[href*='/about']"));
+    @Step
+    private void checkElements() {
+        wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(getMenuEcoNews()));
     }
-
-    // Page Object
-
-    // naviconButton
-
+    @Step
     public WebElement getNaviconButton() {
-        return naviconButton;
+        return searchElementByCss(naviconButton);
     }
-
+    @Step
     public String getNaviconButtonText() {
         return getNaviconButton().getText();
     }
-
+    @Step
     public void clickNaviconButton() {
         if (isDisplayedNaviconButton()) {
             getNaviconButton().click();
         }
     }
-
+    @Step
     public boolean isDisplayedNaviconButton() {
         return getNaviconButton().isDisplayed();
     }
-
+    @Step
     public WebElement getMenuEcoNews() {
-        if (!isDisplayedMenuEcoNews()) {
-            clickNaviconButton();
-        }
-        return menuEcoNews;
+        return searchElementByCss(menuEcoNews);
     }
-
+    @Step
     public String getMenuEcoNewsText() {
         return getMenuEcoNews().getText();
     }
-
+    @Step
     public void clickMenuEcoNews() {
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']")));
         getMenuEcoNews().click();
     }
-
+    @Step
     public boolean isDisplayedMenuEcoNews() {
-        //return getMenuEcoNews().isDisplayed();
-        return menuEcoNews.isDisplayed();
+        return getMenuEcoNews().isDisplayed();
     }
-
-    // menuTipsTricks
-
+    @Step
     public WebElement getMenuTipsTricks() {
-        if (!isDisplayedMenuTipsTricks()) {
-            clickNaviconButton();
-        }
-
-        return menuTipsTricks;
+        return searchElementByCss(menuTipsTricks);
     }
-
+    @Step
     public String getMenuTipsTricksText() {
-        wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/welcome']")));
-
         return getMenuTipsTricks().getText();
     }
-
+    @Step
     public void clickMenuTipsTricks() {
 
         getMenuTipsTricks().click();
     }
-
+    @Step
     public boolean isDisplayedMenuTipsTricks() {
-        //return getMenuTipsTricks().isDisplayed();
-        return menuTipsTricks.isDisplayed();
+        return getMenuTipsTricks().isDisplayed();
     }
-
-    // menuMap
-
+    @Step
     public WebElement getMenuMap() {
-        if (!isDisplayedMenuMap()) {
-            clickNaviconButton();
-        }
-        return menuMap;
+        return searchElementByCss(menuMap);
     }
-
+    @Step
     public String getMenuMapText() {
         return getMenuMap().getText();
     }
-
+    @Step
     public void clickMenuMap() {
         getMenuMap().click();
     }
-
+    @Step
     public boolean isDisplayedMenuMap() {
-        //return getMenuMap().isDisplayed();
-        return menuMap.isDisplayed();
+        return getMenuMap().isDisplayed();
     }
-
-    // menuMyCabinet
-
+    @Step
     public WebElement getMenuMyHabits() {
         if (!isDisplayedMenuMyCabinet()) {
             clickNaviconButton();
         }
-        return menuMyHabits;
+        return searchElementByCss(menuMyHabits);
     }
-
+    @Step
     public String getMenuMyCabinetText() {
         return getMenuMyHabits().getText();
     }
-
+    @Step
     public void clickMenuMyCabinet() {
         getMenuMyHabits().click();
     }
-
+    @Step
     public boolean isDisplayedMenuMyCabinet() {
-        //return getMenuMycabinet().isDisplayed();
-        return menuMyHabits.isDisplayed();
+        return getMenuMyHabits().isDisplayed();
     }
-
-    // menuAbout
-
+    @Step
     public WebElement getMenuAbout() {
-        if (!isDisplayedMenuAbout()) {
-            clickNaviconButton();
-        }
-        return menuAbout;
+        return searchElementByCss(menuAbout);
     }
-
+    @Step
     public String getMenuAboutText() {
         return getMenuAbout().getText();
     }
-
+    @Step
     public void clickMenuAbout() {
         getMenuAbout().click();
     }
-
+    @Step
     public boolean isDisplayedMenuAbout() {
-        //return getMenuAbout().isDisplayed();
-        return menuAbout.isDisplayed();
+        return getMenuAbout().isDisplayed();
     }
-
-    // footerEcoNews
-
+    @Step
     public WebElement getFooterEcoNews() {
-        return footerEcoNews;
+        return searchElementByCss(footerEcoNews);
     }
-
+    @Step
     public String getFooterEcoNewsText() {
         return getFooterEcoNews().getText();
     }
-
+    @Step
     public void clickFooterEcoNews() {
         getFooterEcoNews().click();
     }
-
-    // footerTipsTricks
-
+    @Step
     public WebElement getFooterTipsTricks() {
-        return footerTipsTricks;
+        return searchElementByCss(footerTipsTricks);
     }
-
+    @Step
     public String getFooterTipsTricksText() {
         return getFooterTipsTricks().getText();
     }
-
+    @Step
     public void clickFooterTipsTricks() {
         getFooterTipsTricks().click();
     }
-
-    // footerMap
-
+    @Step
     public WebElement getFooterPlaces() {
-        return footerPlaces;
+        return searchElementByCss(footerPlaces);
     }
-
+    @Step
     public String getFooterPlacesText() {
         return getFooterPlaces().getText();
     }
-
+    @Step
     public void clickFooterPlaces() {
         getFooterPlaces().click();
     }
-
-    // footerMyCabinet
-
+    @Step
     public WebElement getFooterMyHabits() {
-        return footerMyHabits;
+        return searchElementByCss(footerMyHabits);
     }
-
+    @Step
     public String getFooterMyCabinetText() {
         return getFooterMyHabits().getText();
     }
-
+    @Step
     public void clickFooterMyCabinet() {
         getFooterMyHabits().click();
     }
-
-    // footerAbout
-
+    @Step
     public WebElement getFooterAbout() {
-        return footerAbout;
+        return searchElementByCss(footerAbout);
     }
-
+    @Step
     public String getFooterAboutText() {
         return getFooterAbout().getText();
     }
-
+    @Step
     public void clickFooterAbout() {
         getFooterAbout().click();
     }
-
-    // Functional
-
+    @Step
     public void closeNaviconButton() {
         if (isDisplayedNaviconButton()
                 && (isDisplayedMenuEcoNews() || isDisplayedMenuTipsTricks())) {
@@ -262,5 +205,9 @@ public class MainMenuDropdown {
         }
     }
 
-    // Business Logic
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
+    }
+
 }

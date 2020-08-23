@@ -23,7 +23,7 @@ public class SmokeTest extends GreenCityTestRunner {
         TipsTricksPage tipstrickspage = loadApplication()
                 .navigateMenuTipsTricks()
                 .switchLanguage(Languages.UKRAINIAN)
-                .navigateMenuEconews()
+                .navigateMenuEcoNews()
                 .navigateMenuTipsTricks()
                 .navigateMenuMap()
                 .navigateMenuAbout()

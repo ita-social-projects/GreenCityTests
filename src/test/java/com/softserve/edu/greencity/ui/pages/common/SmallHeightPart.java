@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
-import com.softserve.edu.greencity.ui.pages.econews.EconewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.WebDriver;
@@ -13,14 +13,14 @@ public class SmallHeightPart extends TopPart {
     }
 
     @Override
-    public EconewsPage navigateMenuEconews() {
+    public EcoNewsPage navigateMenuEcoNews() {
         scrollToElementByAction(getCopyright());
         if (isMenuClickable()) {
-            return super.navigateMenuEconews();
+            return super.navigateMenuEcoNews();
         }
         getMainMenuDropdown().closeNaviconButton();
         getMainMenuDropdown().clickFooterEcoNews();
-        return new EconewsPage(driver);
+        return new EcoNewsPage(driver);
     }
 
     @Override

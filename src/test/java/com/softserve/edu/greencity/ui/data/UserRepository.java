@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.data;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
+//TODO replace personal data getter to System.getenv
 public final class UserRepository {
     private static volatile UserRepository instance = null;
 
