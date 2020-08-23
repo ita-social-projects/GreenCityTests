@@ -29,13 +29,21 @@ public interface StableWebElementSearch {
     default public WebElement searchElementByCss(By locator){
         return explicitSearch(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
+    @Step
+    @Description("Find element By CSS")
+    default public WebElement searchElementByCss(String locator){
+        return explicitSearch(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(locator)));
+    }
     @Step
     @Description("Find element By xpath")
     default public WebElement searchElementByXpath(By xPath){
         return explicitSearch(ExpectedConditions.visibilityOfElementLocated(xPath));
     }
-
+    @Step
+    @Description("Find element By xpath")
+    default public WebElement searchElementByXpath(String xPath){
+        return explicitSearch(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(xPath)));
+    }
     @Step
     @Description("short explicit wait visibility Of element")
     default public <V> V explicitSearch(Function<? super WebDriver, V> condition){

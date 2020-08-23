@@ -10,10 +10,12 @@ import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.*;
 
 public class RegisterPageTests extends GreenCityTestRunner implements StableWebElementSearch {
 
@@ -104,17 +106,17 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
         ManualRegisterComponent manualRegisterComponent = new ManualRegisterComponent(driver);
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
         logger.info(
                 "Filling out the fields with valid credentials without clicking on Sign up button");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        Assert.assertFalse(manualRegisterComponent.signUpIsDisabled());
+        assertFalse(manualRegisterComponent.signUpIsDisabled());
 
     }
 
@@ -133,19 +135,19 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+        assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
         logger.info("Click on Sign in button");
         LoginComponent loginComponent = registerComponent.clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", loginComponent.getTitleText(),
+        assertEquals("Welcome back!", loginComponent.getTitleText(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSubtitleText(),
+        assertEquals("Please enter your details to sign in", loginComponent.getSubtitleText(),
                 "This is not a login modal:(");
     }
 
@@ -164,7 +166,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -172,19 +174,19 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter empty values into the form");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+        assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "Email is required",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
+        assertEquals(manualRegisterComponent.getUserNameValidatorText(),
                 "User name is required",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password is required",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
                 "Password is required",
                 "The validation message is not equal to the expected one");
 
@@ -205,7 +207,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -213,15 +215,15 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+        assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "Please check that your e-mail address is indicated correctly",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters in length",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
                 "Password has contain at least one character of Uppercase letter (A-Z), " +
                         "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
                 "The validation message is not equal to the expected one");
@@ -238,10 +240,10 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Click on Sign in button");
         LoginComponent loginComponent = new TopGuestComponent(driver).clickSignInLink();
 
-        Assert.assertEquals("Welcome back!", loginComponent.getSingInH1(),
+        assertEquals("Welcome back!", loginComponent.getSingInH1(),
                 "This is not a login modal:(");
 
-        Assert.assertEquals("Please enter your details to sign in", loginComponent.getSingInH2(),
+        assertEquals("Please enter your details to sign in", loginComponent.getSingInH2(),
                 "This is not a login modal:(");
 
 
@@ -251,10 +253,10 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
-        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+        assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
 
     }
@@ -273,11 +275,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid email and valid name and password into the form");
         manualRegisterComponent.fillFieldsWithoutRegistration(invalidEmailCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
+        assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "Please check that your e-mail address is indicated correctly",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
     }
 
@@ -293,7 +295,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -301,11 +303,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
                 "Passwords do not match",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
     }
 
@@ -322,7 +324,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -330,7 +332,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getSignUpErrorsMsg(1),
+        assertEquals(manualRegisterComponent.getSignUpErrorsMsg(1),
                 "Password has contain at least one character of Uppercase letter (A-Z), " +
                         "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
                 "The validation message is not equal to the expected one");
@@ -351,14 +353,14 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
 
         logger.info("Enter invalid values into the form");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        Assert.assertEquals(manualRegisterComponent.getSingInErrorsMsg(4),
+        assertEquals(manualRegisterComponent.getSingInErrorsMsg(4),
                 "Password has contain at least one character of Uppercase letter (A-Z), " +
                         "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
                 "The validation message is not equal to the expected one");
@@ -378,7 +380,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -386,7 +388,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getSingInErrorsMsg(4),
+        assertEquals(manualRegisterComponent.getSingInErrorsMsg(4),
                 "Password has contain at least one character of Uppercase letter (A-Z), " +
                         "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
                 "The validation message is not equal to the expected one");
@@ -407,7 +409,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -416,11 +418,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
 
-        Assert.assertEquals(manualRegisterComponent.getSignUpErrorsMsg(1),
+        assertEquals(manualRegisterComponent.getSignUpErrorsMsg(1),
                 "Password must be at least 8 characters long without spaces",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
 
     }
@@ -438,7 +440,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -446,11 +448,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters in length",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
     }
 
@@ -466,7 +468,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -474,11 +476,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+        assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters long without spaces",
                 "The validation message is not equal to the expected one");
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
     }
 
@@ -492,18 +494,18 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ElementsCustomMethods custMethObj = new ElementsCustomMethods(driver);
         boolean isPresent = custMethObj.isElementPresent((RegisterComponent.MODAL_WINDOW_CSS));
 
-        Assert.assertTrue(isPresent);
+        assertTrue(isPresent);
 
         registerComponent.closeRegisterComponentModal();
 
         boolean isGone = custMethObj.waitTillElementGone(driver, RegisterComponent.MODAL_WINDOW_CSS, 6000);
-        Assert.assertTrue(isGone);
+        assertTrue(isGone);
 
 
     }
@@ -518,7 +520,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -526,11 +528,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter invalid values into the form ");
         manualRegisterComponent.fillPasswordFieldPassHidden("Valid!1");
 
-        Assert.assertEquals(manualRegisterComponent.getPasswordField().getAttribute("type"),
+        assertEquals(manualRegisterComponent.getPasswordField().getAttribute("type"),
                 "password",
                 "The password is not hidden.");
 
-        Assert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        assertTrue(manualRegisterComponent.signUpIsDisabled());
 
     }
 
@@ -542,7 +544,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
 
         new TopGuestComponent(driver).clickSignUpLink();
 
-        Assert.assertTrue(driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
+        assertTrue(driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
                 .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"));
     }
 
@@ -558,7 +560,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
 
@@ -569,26 +571,56 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
 
         String userFieldValue = manualRegisterComponent.getUserNameField().getAttribute("value");
 
-        Assert.assertEquals(userFieldValue,
+        assertEquals(userFieldValue,
                 "21CharString21CharSt",
                 "The invalid string is not concatenated");
 
     }
-    @Test
-    public void checkResponsiveSingUp(){
+
+    //TODO ask some one info about expected params
+    @Test(dataProvider = "validUserCredentials", description = "GC-487")
+    public void checkResponsiveSingUp(User userLoginCredentials){
         driver.manage().window().setSize(new Dimension(1024, 768));
         loadApplication();
         logger.info("Starting checkResponsiveSingUp " + driver.manage().window().getSize());
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        Assert.assertTrue(registerComponent.isBackgroundIsDimmed());
-        logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitleString());
-
-        Assert.assertEquals("Hello!", registerComponent.getTitleString(),
+        assertEquals(registerComponent.getEmailFieldAttribute("placeholder"),
+                "example@email.com", "wrong placeholder");
+        assertEquals(registerComponent.getUserNameFieldAttribute("placeholder"),
+                "User name is required", "wrong placeholder");
+        assertEquals(registerComponent.getPasswordFieldAttribute("placeholder"),
+                "Password", "wrong placeholder");
+        assertEquals(registerComponent.getConfirmPasswordFieldAttribute("placeholder"),
+                "Password", "wrong placeholder");
+        assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
-        Assert.assertEquals("Please enter your details to sign up", registerComponent.getSubtitleString(),
+        assertEquals("Please enter your details to sign up",
+                registerComponent.getSubtitleString(),
                 "This is not a register modal:(");
+        ManualRegisterComponent manualRegisterComponent = new ManualRegisterComponent(driver);
+        assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
+        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
+        assertEquals(userLoginCredentials.getEmail(),
+                manualRegisterComponent.getEmailField().getAttribute("value"),
+                "the entered email does not match dataProvider email");
+        assertEquals(userLoginCredentials.getUserName(),
+                manualRegisterComponent.getUserNameField().getAttribute("value"),
+                "the entered email does not match dataProvider email");
+        assertEquals(userLoginCredentials.getPassword(),
+                manualRegisterComponent.getPasswordField().getAttribute("value"),
+                "the entered email does not match dataProvider email");
+        assertEquals(userLoginCredentials.getConfirmPassword(),
+                manualRegisterComponent.getPasswordConfirmField().getAttribute("value"),
+                "the entered email does not match dataProvider email");
 
+         assertEquals(searchElementByCss("div.main-image").getSize().getHeight(),760);
+         assertEquals(searchElementByCss("div.main-image").getSize().getWidth(),480);
+         assertTrue(manualRegisterComponent.getSignUpButton().isEnabled());
+         assertTrue(searchElementByCss("app-sign-up div.exist-account a.exist-sign-in").isEnabled());
+        assertEquals (searchElementByCss("app-sign-up div.exist-account span").getText().trim(),
+                "Do you already have an account? Sign in");
+         manualRegisterComponent.getPasswordConfirmField().sendKeys(Keys.TAB,Keys.TAB);
+        assertTrue(driver.switchTo().activeElement().isEnabled());
     }
 
     //GC-204

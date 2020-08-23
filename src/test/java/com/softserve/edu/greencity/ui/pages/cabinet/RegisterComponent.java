@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class RegisterComponent extends TopPart  {
+public class RegisterComponent extends TopPart {
 
     WebDriverWait wait;
 
@@ -20,7 +20,10 @@ public class RegisterComponent extends TopPart  {
     private final By SUBTITLE_CSS = By.cssSelector(".subtitle-text");
     private final By CONGRATS_MODAL_CSS = By.cssSelector(".main-container .submit-email");
     private final By SIGN_IN_LINK_CSS = By.cssSelector("div.exist-account a");
-
+    private By emailFieldSelector = By.cssSelector("input[name='email']");
+    private By userNameFieldSelector = By.cssSelector("input[name='fistName']");
+    private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
+    private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
     public RegisterComponent(WebDriver driver) {
         super(driver);
     }
@@ -34,7 +37,9 @@ public class RegisterComponent extends TopPart  {
 
     @Step
     public String getTitleString() {
-        return this.getTitle().getText();
+        String titleString = this.getTitle().getText();
+        logger.info("Get a title text of the modal window: " + titleString);
+        return titleString;
     }
 
     @Step
@@ -44,8 +49,9 @@ public class RegisterComponent extends TopPart  {
 
     @Step
     public String getSubtitleString() {
-
-        return this.getSubtitle().getText();
+        String subtitleString = this.getSubtitle().getText();
+        logger.info("Get a subtitle text of the modal window: " + subtitleString);
+        return subtitleString;
     }
 
     @Step
@@ -97,11 +103,35 @@ public class RegisterComponent extends TopPart  {
     }
 
     @Step
-    public boolean isBackgroundIsDimmed(){
+    public boolean isBackgroundDimmed() {
         boolean isDimmed = driver.findElement(By.cssSelector(".cdk-overlay-backdrop"))
                 .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing");
         logger.info("Background is dimmed: " + isDimmed);
         return isDimmed;
-    };
+    }
 
+    @Step
+    public String getEmailFieldAttribute(String attribute) {
+        String attributeValue = searchElementByCss(emailFieldSelector).getAttribute(attribute);
+        logger.info("get email field " + attribute + "," + attribute +" = " + attributeValue);
+        return attributeValue;
+    }
+    @Step
+    public String getUserNameFieldAttribute(String attribute) {
+        String attributeValue = searchElementByCss(userNameFieldSelector).getAttribute(attribute);
+        logger.info("get userName field " + attribute + "," + attribute + " = " + attributeValue);
+        return attributeValue;
+    }
+    @Step
+    public String getPasswordFieldAttribute(String attribute) {
+        String attributeValue = searchElementByCss(passwordFieldSelector).getAttribute(attribute);
+        logger.info("get password field "  + attribute + "," + attribute + " = " + attributeValue);
+        return attributeValue;
+    }
+    @Step
+    public String getConfirmPasswordFieldAttribute(String attribute) {
+        String attributeValue = searchElementByCss(passwordConfirmFieldSelector).getAttribute(attribute);
+        logger.info("get confirm password field " + attribute + "," + attribute + " = " + attributeValue);
+        return attributeValue;
+    }
 }

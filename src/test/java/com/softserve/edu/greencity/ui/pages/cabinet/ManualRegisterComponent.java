@@ -39,10 +39,24 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         super(driver);
         this.driver = driver;
     }
+    @Step
+    public WebElement getEmailField() {
+        return searchElementByCss(EMAIL_FIELD_SELECTOR);
+    }
 
     @Step
     public WebElement getUserNameField() {
         return searchElementByCss(USER_NAME_FIELD_SELECTOR);
+    }
+
+    @Step
+    public WebElement getPasswordField() {
+        return searchElementByCss(PASSWORD_FIELD_SELECTOR);
+    }
+
+    @Step
+    public WebElement getPasswordConfirmField() {
+        return searchElementByCss(PASSWORD_CONFIRM_FIELD_SELECTOR);
     }
 
     @Step
@@ -84,10 +98,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         return getUserNameValidator().getText();
     }
 
-    @Step
-    private WebElement getEmailField() {
-        return searchElementByCss(EMAIL_FIELD_SELECTOR);
-    }
+
 
     @Step
     private RegisterComponent inputEmailField(String email) {
@@ -127,10 +138,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         return searchElementByCss(EMAIL_VALIDATOR_SELECTOR);
     }
 
-    @Step
-    public WebElement getPasswordField() {
-        return searchElementByCss(PASSWORD_FIELD_SELECTOR);
-    }
+
 
     @Step
     private RegisterComponent inputPassword(String password) {
@@ -215,11 +223,6 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    private WebElement getPasswordConfirmField() {
-        return searchElementByCss(PASSWORD_CONFIRM_FIELD_SELECTOR);
-    }
-
-    @Step
     private RegisterComponent inputPasswordConfirm(String passwordConfirm) {
         this.getPasswordConfirmField().sendKeys(passwordConfirm);
         return this;
@@ -265,7 +268,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    private WebElement getSignUpButton() {
+    public WebElement getSignUpButton() {
         return searchElementByCss(SIGN_BUTTON_SELECTOR);
     }
 
@@ -367,7 +370,6 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword());
-
     }
 
     @Step
