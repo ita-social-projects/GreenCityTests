@@ -630,6 +630,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         registerComponent.closeSingUpForm();
     }
 
+    @Test(description = "GC-500")
+    public void singUpButtonExist(){
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        assertTrue(registerComponent.getManualRegisterComponent().getSignUpButton().isDisplayed());
+    }
     //GC-204
     //Verify that Email must be existence and unique while new user registration
     //GC-200

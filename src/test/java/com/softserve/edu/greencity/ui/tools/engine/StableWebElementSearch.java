@@ -44,7 +44,7 @@ public interface StableWebElementSearch {
     @Step
     @Description("Find element By xpath")
     default public WebElement searchElementByXpath(String xPath){
-        return explicitSearch(visibilityOfElementLocated(By.cssSelector(xPath)));
+        return explicitSearch(visibilityOfElementLocated(By.xpath(xPath)));
     }
     @Step
     @Description("short explicit wait visibility Of element")
