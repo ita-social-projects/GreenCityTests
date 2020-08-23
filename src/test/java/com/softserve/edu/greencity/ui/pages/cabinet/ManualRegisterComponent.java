@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -17,22 +18,22 @@ import java.util.List;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-
+@Getter
 public class ManualRegisterComponent extends RegisterComponent implements StableWebElementSearch {
 
     private WebDriver driver;
     private String confirmURL = null;
-    private By EMAIL_FIELD_SELECTOR = By.cssSelector("input[name='email']");
-    private By USER_NAME_FIELD_SELECTOR = By.cssSelector("input[name='fistName']");
-    private By PASSWORD_FIELD_SELECTOR = By.cssSelector("input[name='form-control password']");
-    private By PASSWORD_CONFIRM_FIELD_SELECTOR = By.cssSelector("input[name='form-control password-confirm");
-    private By SIGN_BUTTON_SELECTOR = By.cssSelector("app-sign-up button.primary-global-button");
-    private By EMAIL_VALIDATOR_SELECTOR = By.xpath("//input[@name='email']/following-sibling::div/div");
-    private By FIRST_NAME_VALIDATOR_SELECTOR = By.xpath("//input[@name='fistName']/following-sibling::div/div");
-    private By PASSWORD_VALIDATOR_SELECTOR = By.xpath("//*[@name = 'form-control password']//parent::div//following-sibling::div");
-    private By SHOW_PASSWORD_BUTTON_SELECTOR = By.xpath("//input[@name='form-control password']/../span/img");
-    private By SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR = By.xpath("//input[@name='form-control password-confirm']/../span/img");
-    private By PASSWORD_CONFIRM_VALIDATOR_SELECTOR = By.xpath("//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div");
+    private By email_field_selector = By.cssSelector("input[name='email']");
+    private By userNameFieldSelector = By.cssSelector("input[name='fistName']");
+    private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
+    private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
+    private By signButtonSelector = By.cssSelector("app-sign-up button.primary-global-button");
+    private By emailValidatorSelector = By.xpath("//input[@name='email']/following-sibling::div/div");
+    private By firstNameValidatorSelector = By.xpath("//input[@name='fistName']/following-sibling::div/div");
+    private By passwordValidatorSelector = By.xpath("//*[@name = 'form-control password']//parent::div//following-sibling::div");
+    private By showPasswordButtonSelector = By.xpath("//input[@name='form-control password']/../span/img");
+    private By showPasswordConfirmButtonSelector = By.xpath("//input[@name='form-control password-confirm']/../span/img");
+    private By passwordConfirmValidatorSelector = By.xpath("//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div");
     private By errorMessages = By.cssSelector("div.error-message");
     private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
     public ManualRegisterComponent(WebDriver driver) {
@@ -41,22 +42,22 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
     @Step
     public WebElement getEmailField() {
-        return searchElementByCss(EMAIL_FIELD_SELECTOR);
+        return searchElementByCss(email_field_selector);
     }
 
     @Step
     public WebElement getUserNameField() {
-        return searchElementByCss(USER_NAME_FIELD_SELECTOR);
+        return searchElementByCss(userNameFieldSelector);
     }
 
     @Step
     public WebElement getPasswordField() {
-        return searchElementByCss(PASSWORD_FIELD_SELECTOR);
+        return searchElementByCss(passwordFieldSelector);
     }
 
     @Step
     public WebElement getPasswordConfirmField() {
-        return searchElementByCss(PASSWORD_CONFIRM_FIELD_SELECTOR);
+        return searchElementByCss(passwordConfirmFieldSelector);
     }
 
     @Step
@@ -90,7 +91,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getUserNameValidator() {
-        return searchElementByCss(FIRST_NAME_VALIDATOR_SELECTOR);
+        return searchElementByCss(firstNameValidatorSelector);
     }
 
     @Step
@@ -135,7 +136,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getEmailValidator() {
-        return searchElementByCss(EMAIL_VALIDATOR_SELECTOR);
+        return searchElementByCss(emailValidatorSelector);
     }
 
 
@@ -170,7 +171,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getShowPasswordButton() {
-        return searchElementByXpath(SHOW_PASSWORD_BUTTON_SELECTOR);
+        return searchElementByXpath(showPasswordButtonSelector);
     }
 
     @Step
@@ -194,7 +195,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getPasswordValidator() {
-        return searchElementByXpath(PASSWORD_VALIDATOR_SELECTOR);
+        return searchElementByXpath(passwordValidatorSelector);
     }
     @Step
     public String getSingInErrorsMsg(int errorNumber){
@@ -219,7 +220,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getPasswordConfirmValidator() {
-        return searchElementByXpath(PASSWORD_CONFIRM_VALIDATOR_SELECTOR);
+        return searchElementByXpath(passwordConfirmValidatorSelector);
     }
 
     @Step
@@ -252,7 +253,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getShowPasswordConfirmButton() {
-        return searchElementByXpath(SHOW_PASSWORD_CONFIRM_BUTTON_SELECTOR);
+        return searchElementByXpath(showPasswordConfirmButtonSelector);
     }
 
     @Step
@@ -269,7 +270,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     public WebElement getSignUpButton() {
-        return searchElementByCss(SIGN_BUTTON_SELECTOR);
+        return searchElementByCss(signButtonSelector);
     }
 
     @Step

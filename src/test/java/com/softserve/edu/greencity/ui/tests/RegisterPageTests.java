@@ -498,13 +498,13 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "This is not a register modal:(");
 
         ElementsCustomMethods custMethObj = new ElementsCustomMethods(driver);
-        boolean isPresent = custMethObj.isElementPresent((RegisterComponent.MODAL_WINDOW_CSS));
+        boolean isPresent = custMethObj.isElementPresent((RegisterComponent.modal_window_css));
 
         assertTrue(isPresent);
 
         registerComponent.closeRegisterComponentModal();
 
-        boolean isGone = custMethObj.waitTillElementGone(driver, RegisterComponent.MODAL_WINDOW_CSS, 6000);
+        boolean isGone = custMethObj.waitTillElementGone(driver, RegisterComponent.modal_window_css, 6000);
         assertTrue(isGone);
 
 
@@ -614,10 +614,10 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "the entered email does not match dataProvider email");
 
          assertEquals(manualRegisterComponent.getSingUpImg().getSize().getHeight(),760);
-         assertEquals(searchElementByCss("div.main-image").getSize().getWidth(),480);
+         assertEquals(searchElementByCss(manualRegisterComponent.getSignUpImg()).getSize().getWidth(),480);
          assertTrue(manualRegisterComponent.getSignUpButton().isEnabled());
-         assertTrue(searchElementByCss("app-sign-up div.exist-account a.exist-sign-in").isEnabled());
-        assertEquals (searchElementByCss("app-sign-up div.exist-account span").getText().trim(),
+         assertTrue(searchElementByCss(registerComponent.getSignInLinkCss()).isEnabled());
+        assertEquals (searchElementByCss(registerComponent.getProposeSwitchToSingInText()).getText().trim(),
                 "Do you already have an account? Sign in");
          manualRegisterComponent.getPasswordConfirmField().sendKeys(Keys.TAB,Keys.TAB);
         assertTrue(driver.switchTo().activeElement().isEnabled());
@@ -632,8 +632,13 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
 
     @Test(description = "GC-500")
     public void singUpButtonExist(){
+        loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        assertTrue(registerComponent.getManualRegisterComponent().getSignUpButton().isDisplayed());
+        LoginComponent loginComponent = registerComponent.clickSignInLink();
+        assertEquals("Welcome back!", loginComponent.getTitleText(),
+                "This is not a login modal:(");
+        assertEquals("Please enter your details to sign in", loginComponent.getSubtitleText(),
+                "This is not a login modal:(");
     }
     //GC-204
     //Verify that Email must be existence and unique while new user registration

@@ -2,28 +2,25 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import io.qameta.allure.Step;
+import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
-
-
+@Getter
 public class RegisterComponent extends TopPart {
 
     WebDriverWait wait;
 
     private By closeModalButton = By.cssSelector(".close-btn a");
-    public static final By MODAL_WINDOW_CSS = By.cssSelector("mat-dialog-container");
-    private final By SUBMIT_EMAIL_SELECTOR = By.cssSelector("app-submit-email div.submit-email");
-    private final By GOOGLE_SIGN_UP_BUTTON_CLASS = By.cssSelector(".cta-button-google");
-    private final By TITLE_CSS = By.cssSelector("app-sign-up h1.title-text");
-    private final By SUBTITLE_CSS = By.cssSelector(".subtitle-text");
-    private final By CONGRATS_MODAL_CSS = By.cssSelector(".main-container .submit-email");
-    private final By SIGN_IN_LINK_CSS = By.cssSelector("div.exist-account a");
+    public static final By modal_window_css = By.cssSelector("mat-dialog-container");
+    private By submit_email_selector = By.cssSelector("app-submit-email div.submit-email");
+    private By googleSignUpButtonClass = By.cssSelector(".cta-button-google");
+    private By titleCss = By.cssSelector("app-sign-up h1.title-text");
+    private By subtitleCss = By.cssSelector(".subtitle-text");
+    private By congratsModalCss = By.cssSelector(".main-container .submit-email");
+    private By signInLinkCss = By.cssSelector("div.exist-account a");
     private By emailFieldSelector = By.cssSelector("input[name='email']");
     private By userNameFieldSelector = By.cssSelector("input[name='fistName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
@@ -31,7 +28,8 @@ public class RegisterComponent extends TopPart {
     private By closeSingUpButton = By.cssSelector("app-sign-up div.close-btn-img");
     private By signUpImg = By.cssSelector("div.main-image");
     private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
-
+    private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
+    private By SingUpImage = By.cssSelector("div.main-image");
     public RegisterComponent(WebDriver driver) {
         super(driver);
     }
@@ -40,7 +38,7 @@ public class RegisterComponent extends TopPart {
     // title
     @Step
     protected WebElement getTitle() {
-        return searchElementByCss(TITLE_CSS);
+        return searchElementByCss(titleCss);
     }
 
     @Step
@@ -52,7 +50,7 @@ public class RegisterComponent extends TopPart {
 
     @Step
     protected WebElement getSubtitle() {
-        return searchElementByCss(SUBTITLE_CSS);
+        return searchElementByCss(subtitleCss);
     }
 
     @Step
@@ -91,12 +89,12 @@ public class RegisterComponent extends TopPart {
      */
     @Step
     protected WebElement getGoogleSignUpButton() {
-        return searchElementByCss(GOOGLE_SIGN_UP_BUTTON_CLASS);
+        return searchElementByCss(googleSignUpButtonClass);
     }
 
     @Step
     protected WebElement getSignInLink() {
-        return searchElementByCss(SIGN_IN_LINK_CSS);
+        return searchElementByCss(signInLinkCss);
     }
 
     @Step
@@ -107,7 +105,7 @@ public class RegisterComponent extends TopPart {
 
     @Step
     public WebElement getCongratsModal() {
-        return searchElementByCss(CONGRATS_MODAL_CSS);
+        return searchElementByCss(congratsModalCss);
     }
 
     @Step
