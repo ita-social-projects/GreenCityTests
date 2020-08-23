@@ -613,7 +613,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 manualRegisterComponent.getPasswordConfirmField().getAttribute("value"),
                 "the entered email does not match dataProvider email");
 
-         assertEquals(searchElementByCss("div.main-image").getSize().getHeight(),760);
+         assertEquals(manualRegisterComponent.getSingUpImg().getSize().getHeight(),760);
          assertEquals(searchElementByCss("div.main-image").getSize().getWidth(),480);
          assertTrue(manualRegisterComponent.getSignUpButton().isEnabled());
          assertTrue(searchElementByCss("app-sign-up div.exist-account a.exist-sign-in").isEnabled());
@@ -621,6 +621,13 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "Do you already have an account? Sign in");
          manualRegisterComponent.getPasswordConfirmField().sendKeys(Keys.TAB,Keys.TAB);
         assertTrue(driver.switchTo().activeElement().isEnabled());
+    }
+
+    @Test(description = "GC-482")
+    public void checkThatUserCanCloseSingUp(){
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        registerComponent.closeSingUpForm();
     }
 
     //GC-204

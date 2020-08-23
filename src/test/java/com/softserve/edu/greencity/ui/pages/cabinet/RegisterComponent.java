@@ -5,7 +5,11 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 
 public class RegisterComponent extends TopPart {
@@ -24,6 +28,10 @@ public class RegisterComponent extends TopPart {
     private By userNameFieldSelector = By.cssSelector("input[name='fistName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
+    private By closeSingUpButton = By.cssSelector("app-sign-up div.close-btn-img");
+    private By signUpImg = By.cssSelector("div.main-image");
+    private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
+
     public RegisterComponent(WebDriver driver) {
         super(driver);
     }
@@ -133,5 +141,14 @@ public class RegisterComponent extends TopPart {
         String attributeValue = searchElementByCss(passwordConfirmFieldSelector).getAttribute(attribute);
         logger.info("get confirm password field " + attribute + "," + attribute + " = " + attributeValue);
         return attributeValue;
+    }
+    @Step
+    public WebElement getSingUpImg(){
+        return searchElementByCss(signUpImg);
+    }
+    @Step
+    public void closeSingUpForm(){
+        logger.info("close SingUp form");
+        searchElementByCss(closeSingUpButton).click();
     }
 }

@@ -54,6 +54,7 @@ public class TopGuestComponent implements StableWebElementSearch {
         getSignUpLink().click();
         return new RegisterComponent(driver);
     }
+
     @Override
     public WebDriver setDriver() {
         return this.driver;
