@@ -25,6 +25,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         return new Object[][]{
                 {UserRepository.get().defaultUserCredentials()},};
     }
+    @DataProvider
+    public Object[][] unregisterCredentials() {
+        return new Object[][]{
+                {UserRepository.get().unregisterUser()},};
+    }
 
     @DataProvider
     public Object[][] emptyFields() {
@@ -412,7 +417,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     }
 
     //TODO ask some one info about expected params
-    @Test(dataProvider = "validUserCredentials", description = "GC-487")
+    @Test(dataProvider = "validUserCredentials", description = "GC-487, GC-216")
     public void checkResponsiveSingUp(User userLoginCredentials) {
         driver.manage().window().setSize(new Dimension(1024, 768));
         loadApplication();
@@ -534,6 +539,52 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getSubtitleText(), "Please enter your details to sign in");
     }
 
+    @Test(description = "GC-213", dataProvider = "unregisterCredentials")
+    public void  successRegistrationPopUpDisplayed(User userLoginCredentials){
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        registerComponent.getManualRegisterComponent().registerUser(userLoginCredentials);
+        assertTrue(
+                registerComponent
+                        .getManualRegisterComponent()
+                        .GetSackfulRegistrationPopUp()
+                        .isDisplayed());
+    }
+
+    @Test(description = "GC-212")
+    public void  registrationFormIsDisplayed(){
+        logger.info("Starting registration form is displayed");
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        assertEquals(
+                registerComponent
+                        .getEmailFieldAttribute("placeholder"),
+                "example@email.com",
+                "wrong placeholder");
+        assertEquals(
+                registerComponent
+                        .getUserNameFieldAttribute("placeholder"),
+                "User name is required",
+                "wrong placeholder");
+        assertEquals(
+                registerComponent
+                        .getPasswordFieldAttribute("placeholder"),
+                "Password",
+                "wrong placeholder");
+        assertEquals(
+                registerComponent
+                        .getConfirmPasswordFieldAttribute("placeholder"),
+                "Password",
+                "wrong placeholder");
+        assertEquals(registerComponent.getTitleString(),
+                "Hello!",
+                "This is not a register modal:(");
+        assertEquals(
+                registerComponent
+                        .getSubtitleString(),
+                "Please enter your details to sign up",
+                "This is not a register modal:(");
+    }
     //GC-204
     //Verify that Email must be existence and unique while new user registration
     //GC-200

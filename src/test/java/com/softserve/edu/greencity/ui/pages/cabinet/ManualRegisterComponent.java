@@ -36,6 +36,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By passwordConfirmValidatorSelector = By.xpath("//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div");
     private By errorMessages = By.cssSelector("div.error-message");
     private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
+    private By sackfulRegistrationPopUp = By.id("mat-dialog-1");
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -224,6 +225,10 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
+    public WebElement GetSackfulRegistrationPopUp() {
+        return searchElementByCss(sackfulRegistrationPopUp);
+    }
+    @Step
     private RegisterComponent inputPasswordConfirm(String passwordConfirm) {
         this.getPasswordConfirmField().sendKeys(passwordConfirm);
         return this;
@@ -380,8 +385,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
-                .waitSuccessfullRegistrationPopUp()
-                .waitSuccessfullRegistrationPopUpDisappear()
+                .waitSuccessfulRegistrationPopUp()
+                .waitSuccessfulRegistrationPopUpDisappear()
                 .verifyRegistration();
     }
 
@@ -401,18 +406,26 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
-                .waitSuccessfullRegistrationPopUp()
-                .waitSuccessfullRegistrationPopUpDisappear()
+                .waitSuccessfulRegistrationPopUp()
+                .waitSuccessfulRegistrationPopUpDisappear()
                 .checkVerIfMailReceived();
     }
-
-    private ManualRegisterComponent waitSuccessfullRegistrationPopUp() {
-        new WebDriverWait(driver, 10).until(visibilityOfElementLocated(By.id("mat-dialog-1")));
+    @Step
+    public void registerUser(User userData) {
+        fillEmailField(userData.getEmail())
+                .fillUserNameField(userData.getUserName())
+                .fillPasswordFieldPassShown(userData.getPassword())
+                .fillPasswordConfirmField(userData.getConfirmPassword())
+                .clickSignUpButton()
+                .waitSuccessfulRegistrationPopUp();
+    }
+    private ManualRegisterComponent waitSuccessfulRegistrationPopUp() {
+        new WebDriverWait(driver, 10).until(visibilityOfElementLocated(sackfulRegistrationPopUp));
         return this;
     }
 
-    private ManualRegisterComponent waitSuccessfullRegistrationPopUpDisappear() {
-        new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(By.id("mat-dialog-1")));
+    private ManualRegisterComponent waitSuccessfulRegistrationPopUpDisappear() {
+        new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(sackfulRegistrationPopUp));
         return this;
     }
 
