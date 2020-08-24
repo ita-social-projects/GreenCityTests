@@ -22,6 +22,17 @@ public class RegistrationTests extends GreenCityTestRunner{
                 .userCredentialsForRegistration()},};
     }
 
+    @DataProvider
+    public Object[][] invalidPasswordDataProvider() {
+        return new Object[][]{
+                {UserRepository.get().invalidPassLowercaseUserCreds()},
+                {UserRepository.get().invalidPassLowercaseUserCreds()},
+                {UserRepository.get().invalidPassDigitUserCreds()},
+                {UserRepository.get().invalidPassSpecCharUserCreds()},
+                {UserRepository.get().invalidPassSpaceUserCreds()},
+        };
+    }
+
     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
     @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
@@ -99,7 +110,7 @@ public class RegistrationTests extends GreenCityTestRunner{
 
     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
     public void existingUserRegistration(User userLoginCredentials){
-        logger.info("Start test existing user registration");
+        logger.info("Start test existing user registration" + userLoginCredentials.toString());
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -118,5 +129,14 @@ public class RegistrationTests extends GreenCityTestRunner{
         //The user already exists by this email
     }
 
+    @Test(dataProvider = "invalidPasswordDataProvider", description = "GC-204")
+    public void invalidPasswordRegistration(User userLoginCredentials){
+        logger.info("Start test invalid password registration"  + userLoginCredentials.toString());
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+        manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
+        Assert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
+    }
 }
 
