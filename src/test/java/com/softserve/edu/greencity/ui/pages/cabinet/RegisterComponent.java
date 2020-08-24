@@ -29,7 +29,6 @@ public class RegisterComponent extends TopPart {
     private By signUpImg = By.cssSelector("div.main-image");
     private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
     private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
-    private By SingUpImage = By.cssSelector("div.main-image");
     public RegisterComponent(WebDriver driver) {
         super(driver);
     }
@@ -93,7 +92,7 @@ public class RegisterComponent extends TopPart {
     }
 
     @Step
-    protected WebElement getSignInLink() {
+    public WebElement getSignInLink() {
         return searchElementByCss(signInLinkCss);
     }
 
@@ -141,12 +140,15 @@ public class RegisterComponent extends TopPart {
         return attributeValue;
     }
     @Step
-    public WebElement getSingUpImg(){
+    public WebElement getSingUpImage(){
         return searchElementByCss(signUpImg);
     }
     @Step
     public void closeSingUpForm(){
         logger.info("close SingUp form");
         searchElementByCss(closeSingUpButton).click();
+    }
+    public WebElement getProposeSwitchToSingInText(){
+        return searchElementByCss(proposeSwitchToSingInText);
     }
 }
