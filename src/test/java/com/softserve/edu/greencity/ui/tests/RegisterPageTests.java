@@ -585,6 +585,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "Please enter your details to sign up",
                 "This is not a register modal:(");
     }
+
+
     //GC-204
     //Verify that Email must be existence and unique while new user registration
     //GC-200

@@ -92,7 +92,7 @@ public abstract class GreenCityTestRunner {
      * sing out using storage
      * @return
      */
-    private void signOutByStorage(){
+    protected void signOutByStorage(){
         RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         webStorage.getLocalStorage().clear();

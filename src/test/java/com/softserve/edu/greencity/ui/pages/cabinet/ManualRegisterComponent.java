@@ -342,7 +342,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    private ManualRegisterComponent clickSignUpButton() {
+    public ManualRegisterComponent clickSignUpButton() {
         if (isDisplayedSignUpButton()) {
             this.getSignUpButton().click();
         }
@@ -418,6 +418,13 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
                 .waitSuccessfulRegistrationPopUp();
+    }
+    public void enterDataToSingUpFields(User userData){
+        fillEmailField(userData.getEmail())
+                .fillUserNameField(userData.getUserName())
+                .fillPasswordFieldPassShown(userData.getPassword())
+                .fillPasswordConfirmField(userData.getConfirmPassword())
+                .clickSignUpButton();
     }
     private ManualRegisterComponent waitSuccessfulRegistrationPopUp() {
         new WebDriverWait(driver, 10).until(visibilityOfElementLocated(sackfulRegistrationPopUp));

@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+//TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner{
 
     @DataProvider
@@ -95,7 +95,27 @@ public class RegistrationTests extends GreenCityTestRunner{
 
         logger.info("Enter random credentials and temporary email into the form ");
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
+    }
 
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
+    public void existingUserRegistration(User userLoginCredentials){
+        logger.info("Start test existing user registration");
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+        manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
+        signOutByStorage();
+        driver.navigate().refresh();
+        new TopGuestComponent(driver).clickSignUpLink();
+        manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
+        manualRegisterComponent.clickSignUpButton();
+        Assert.assertEquals(
+                manualRegisterComponent
+                        .getSignUpErrorsMsg(1),
+                "The user already exists by this email",
+                "error msg mismatch"
+        );
+        //The user already exists by this email
     }
 
 }
