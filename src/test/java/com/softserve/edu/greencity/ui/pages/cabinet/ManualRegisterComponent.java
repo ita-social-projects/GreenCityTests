@@ -415,7 +415,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
-                .fillPasswordConfirmField(userData.getConfirmPassword())
+                .fillPasswordConfirmField(userData.getPassword())
                 .clickSignUpButton()
                 .waitSuccessfulRegistrationPopUp();
     }

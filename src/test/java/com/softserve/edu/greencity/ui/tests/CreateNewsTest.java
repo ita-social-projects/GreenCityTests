@@ -22,7 +22,7 @@ import java.util.Properties;
  */
 public class CreateNewsTest extends GreenCityTestRunner {
     User defaultUser;
-
+    private Properties property = new Properties();
     @BeforeClass
     public void readCredentials() {
         Properties properties = new Properties();
@@ -32,7 +32,8 @@ public class CreateNewsTest extends GreenCityTestRunner {
         } catch(IOException e) {
             e.printStackTrace();
         }
-        defaultUser = new User(properties.getProperty("temporaryEmail"), properties.getProperty("temporaryPass"));
+
+        defaultUser = new User(properties.getProperty("temporaryEmail"), System.getenv().get(property.getProperty("temporaryPass")));
     }
 
     @BeforeMethod

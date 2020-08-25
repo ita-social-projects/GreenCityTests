@@ -18,27 +18,27 @@ public class CredentialProperties {
     private void setCredentialsProperties() {
 
 
-        properties.setProperty("invalidPassDigit","12345678-");
-        properties.setProperty("defaultName","Pavel");
-        properties.setProperty("nameForRegistration","greencitypavel");
-        properties.setProperty("emailForRegistration","greencitypavel@gmail.com");
-        properties.setProperty("defaultPass","bRDYBhAs3z48Y5H-");
-        properties.setProperty("temporaryPass","bRDYBhAs3z48Y5H-");
-        properties.setProperty("comfTemporaryPass","bRDYBhAs3z48Y5H-");
-        properties.setProperty("invalidName","21CharString21CharSt");
-        properties.setProperty("invalidPassLowercase","qwertyasdfg-");
+        properties.setProperty("invalidPassDigit","-");
+        properties.setProperty("defaultName","");
+        properties.setProperty("nameForRegistration","");
+        properties.setProperty("emailForRegistration","");
+        properties.setProperty("defaultPass","");
+        properties.setProperty("temporaryPass","");
+        properties.setProperty("comfTemporaryPass","");
+        properties.setProperty("invalidName","");
+        properties.setProperty("invalidPassLowercase","-");
         properties.setProperty("invalidPass","as2f");
-        properties.setProperty("invalidPassSpecChar","bRDYBhAs3 z48Y5H-");
-        properties.setProperty("invalidPassSpace","\\               ");
-        properties.setProperty("invalidPassLength","aA-");
-        properties.setProperty("invalidPassUppercase","QWERTYASDFG-");
-        properties.setProperty("validIncorrectPassword","As3z48Y5H-bRDYBh");
-        properties.setProperty("temporaryLoginName","greencitypavel@gmail.com");
-        properties.setProperty("defaultEmail","greencitypavel@gmail.com");
-        properties.setProperty("validUnregisterEmail","greencitypavel@gmail.com");
+        properties.setProperty("invalidPassSpecChar","-");
+        properties.setProperty("invalidPassSpace","");
+        properties.setProperty("invalidPassLength","");
+        properties.setProperty("invalidPassUppercase","");
+        properties.setProperty("validIncorrectPassword","");
+        properties.setProperty("temporaryLoginName","");
+        properties.setProperty("defaultEmail","");
+        properties.setProperty("validUnregisterEmail","");
         properties.setProperty("invalidEmail"," asd ");
-        properties.setProperty("passwordForRegistration","bRDYBhAs3z48Y5H-");
-        properties.setProperty("validUnregisterEmail","greencitypavel@gmail.com");
+        properties.setProperty("passwordForRegistration","");
+        properties.setProperty("validUnregisterEmail","");
 
         FileOutputStream out = new FileOutputStream("src/test/resources/credentials.properties");
         properties.store(out,"comment");   }
