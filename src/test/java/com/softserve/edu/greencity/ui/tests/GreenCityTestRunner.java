@@ -41,6 +41,14 @@ public abstract class GreenCityTestRunner {
         new CredentialProperties().checkCredentialsExist();
     }
 
+  /*  DesiredCapabilities desiredCap = DesiredCapabilities.Chrome();
+desiredCap.SetCapability("headless", true);
+desiredCap.SetCapability("platform", "LINUX");
+desiredCap.SetCapability("version", "latest");
+
+    driver = new RemoteWebDriver(
+  new Uri("https://hub.testingbot.com/wd/hub/"), desiredCap
+);*/
     @SneakyThrows
     @BeforeClass
     public void setUpBeforeClass() {
