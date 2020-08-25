@@ -14,34 +14,19 @@ import java.util.regex.Pattern;
  */
 public class GoogleMailAPI {
     private static BaseMailAPI emailUtils;
-
-    @Step("Gmail sing In")
-    @SneakyThrows(Exception.class)
-    public static void connectToEmail() {
-        emailUtils = new BaseMailAPI("greencitypavel@gmail.com", "1234qwerTY-", "smtp.gmail.com", BaseMailAPI.EmailFolder.INBOX);
-    }
-
     @SneakyThrows(Exception.class)
     @Step
     public  GoogleMailAPI connectToEmail(String mail, String pass) {
-        emailUtils = new BaseMailAPI("greencitypavel@gmail.com", "1234qwerTY-", "smtp.gmail.com", BaseMailAPI.EmailFolder.INBOX);
+        emailUtils = new BaseMailAPI(mail, pass, "smtp.gmail.com", BaseMailAPI.EmailFolder.INBOX);
         return this;
-    }
-    @SneakyThrows(Exception.class)
-    public String getMailBySubject(String mail,String password, String subject){
-        connectToEmail(mail, password);
-        String mailContent = "";
-        Message[] email = emailUtils.getMessagesBySubject(subject, true, 5);
-        mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
-        return mailContent;
     }
 
     //TODO: split logic to small methods,
     //TODO: split Matcher to another class as individual functional
     @Step("get green city auth confirm link from first mail")
     @SneakyThrows(Exception.class)
-    public String getconfirmURL(int maxTries) {
-        connectToEmail();
+    public String getconfirmURL(String mail, String pass,int maxTries) {
+        connectToEmail(mail,pass);
         String link = "";
         int count = 0;
         //!!!!
@@ -63,14 +48,11 @@ public class GoogleMailAPI {
             return link;
         }
     }
-    @Test
-    public void gmailTest(){
-        System.out.println(new GoogleMailAPI().getconfirmURL(10));
-    }
+
     @SneakyThrows
     @Step("get Messages By Subject")
-    public static void clearMail() {
-        connectToEmail();
+    public  void clearMail(String mail, String pass) {
+        connectToEmail(mail,pass);
         Message[] msg = emailUtils.getAllMessages();
         for (Message message :msg) {
             message.setFlag(FLAGS.Flag.DELETED, true);

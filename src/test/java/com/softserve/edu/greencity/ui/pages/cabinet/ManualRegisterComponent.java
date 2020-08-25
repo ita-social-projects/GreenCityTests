@@ -348,17 +348,10 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         }
         return this;
     }
+
     @Step
-    private void getConfirmURL() {
-        confirmURL = new GoogleMailAPI().getconfirmURL(10);}
-    @Step
-    private RegisterComponent checkVerIfMailReceived() {
-        if (confirmURL == null) getConfirmURL();
-        Assert.assertNotNull(confirmURL);
-        return this;}
-    @Step
-    private RegisterComponent verifyRegistration() {
-        driver.get(new GoogleMailAPI().getconfirmURL(10));
+    private RegisterComponent verifyRegistration(User user) {
+        driver.get( new GoogleMailAPI().getconfirmURL(user.getEmail(),user.getPassword(), 20));
         return this;}
 
     @Step
@@ -387,7 +380,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .clickSignUpButton()
                 .waitSuccessfulRegistrationPopUp()
                 .waitSuccessfulRegistrationPopUpDisappear()
-                .verifyRegistration();
+                .verifyRegistration(userData);
     }
 
     @Step
@@ -407,8 +400,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
                 .waitSuccessfulRegistrationPopUp()
-                .waitSuccessfulRegistrationPopUpDisappear()
-                .checkVerIfMailReceived();
+                .waitSuccessfulRegistrationPopUpDisappear();
     }
     @Step
     public void registerUser(User userData) {

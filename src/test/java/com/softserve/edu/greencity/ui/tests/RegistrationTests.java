@@ -37,7 +37,7 @@ public class RegistrationTests extends GreenCityTestRunner{
     @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
         logger.info("Start test registration and login");
-        GoogleMailAPI.clearMail();
+       new  GoogleMailAPI().clearMail(userLoginCredentials.getEmail(),userLoginCredentials.getPassword());
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
@@ -109,12 +109,14 @@ public class RegistrationTests extends GreenCityTestRunner{
     }
 
     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
-    public void existingUserRegistration(User userLoginCredentials){
+        public void existingUserRegistration(User userLoginCredentials){
+        new  GoogleMailAPI().clearMail(userLoginCredentials.getEmail(),userLoginCredentials.getPassword());
         logger.info("Start test existing user registration" + userLoginCredentials.toString());
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
+        Assert.assertNotNull(new GoogleMailAPI().getconfirmURL(userLoginCredentials.getEmail(),userLoginCredentials.getPassword(),20));
         signOutByStorage();
         driver.navigate().refresh();
         new TopGuestComponent(driver).clickSignUpLink();

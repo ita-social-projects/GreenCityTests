@@ -22,8 +22,8 @@ public class CredentialProperties {
         properties.setProperty("defaultName","");
         properties.setProperty("nameForRegistration","");
         properties.setProperty("emailForRegistration","");
-        properties.setProperty("defaultPass","");
-        properties.setProperty("temporaryPass","");
+        properties.setProperty("DEFAULT_PASS","");
+        properties.setProperty("DEFAULT_PASS","");
         properties.setProperty("comfTemporaryPass","");
         properties.setProperty("invalidName","");
         properties.setProperty("invalidPassLowercase","-");
