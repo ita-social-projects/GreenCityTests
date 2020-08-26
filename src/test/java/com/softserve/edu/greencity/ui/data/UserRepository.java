@@ -73,7 +73,7 @@ public final class UserRepository {
         return new User(
                 property.getProperty("defaultName"),
                 property.getProperty("validUnregisterEmail").replace("@",getRandom()+"@"),
-                System.getenv().get(property.getProperty("temporaryPass")),
+                property.getProperty("temporaryPass"),
                 property.getProperty("comfTemporaryPass"));
     }
 
@@ -94,7 +94,7 @@ public final class UserRepository {
     }
 
     public User userWithEmptyEmailField() {
-        return new User("", System.getenv().get(property.getProperty("temporaryPass")));
+        return new User("", property.getProperty("temporaryPass"));
     }
 
     public User userWithEmptyPasswordField() {

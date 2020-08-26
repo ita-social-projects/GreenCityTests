@@ -1,6 +1,9 @@
 package com.softserve.edu.greencity.ui.tools.api.mail;
 
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.sun.mail.imap.protocol.FLAGS;
+import com.sun.mail.imap.protocol.UIDSet;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 
@@ -25,7 +28,6 @@ public class GoogleMailAPI {
     public Message[] getMassagesBySubject(String subject, boolean unread, int maxToSearch){
         return emailUtils.getMessagesBySubject(subject, unread,  maxToSearch);
     }
-
     @SneakyThrows
     @Step("get Messages By Subject")
     public  void clearMail(String mail, String pass) {
@@ -87,5 +89,20 @@ public class GoogleMailAPI {
             return link;
         }
     }
+
+    @SneakyThrows
+    public int getNumberMailsBySubject(String mail, String password, String subject, int maxTries) {
+        connectToEmail(mail, password);
+        int count = 0;
+        while (true) {
+            Message[] emails = emailUtils.getMessagesBySubject(subject, true, 5);
+            int num = emails.length;
+            if (++count == maxTries) {
+                return 0;
+            }
+            return num;
+        }
+    }
+
 }
 
