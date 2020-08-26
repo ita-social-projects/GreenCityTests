@@ -9,11 +9,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfEl
 
 public class ElementsCustomMethods implements StableWebElementSearch {
 
-
     private WebDriver driver;
 
     public ElementsCustomMethods(WebDriver driver) {
-
         this.driver = driver;
     }
 
@@ -23,7 +21,6 @@ public class ElementsCustomMethods implements StableWebElementSearch {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
 
     public boolean waitTillElementGone(WebDriver driver, By locator, int wait) {
@@ -35,10 +32,19 @@ public class ElementsCustomMethods implements StableWebElementSearch {
         }
     }
 
-
     public boolean isElementPresent(By locator) {
         try {
             searchElementByCss(locator);
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+
+    }
+
+    public boolean isGoogleElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;

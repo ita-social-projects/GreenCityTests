@@ -22,29 +22,33 @@ public class CredentialProperties {
     private Properties properties = new Properties();
     @SneakyThrows(IOException.class)
     private void setCredentialsProperties() {
-
-
-        properties.setProperty("invalidPassDigit","  ");
-        properties.setProperty("defaultName","  ");
         properties.setProperty("nameForRegistration","  ");
         properties.setProperty("emailForRegistration","  ");
+
+        properties.setProperty("defaultName","  ");
+        properties.setProperty("defaultEmail","  ");
         properties.setProperty("DEFAULT_PASS","  ");
         properties.setProperty("DEFAULT_PASS","  ");
         properties.setProperty("comfTemporaryPass","  ");
+
         properties.setProperty("invalidName","  ");
+        properties.setProperty("invalidEmail","  ");
         properties.setProperty("invalidPassLowercase","  ");
         properties.setProperty("invalidPass","  ");
+        properties.setProperty("invalidPassDigit","  ");
         properties.setProperty("invalidPassSpecChar","  ");
         properties.setProperty("invalidPassSpace","  ");
         properties.setProperty("invalidPassLength","  ");
         properties.setProperty("invalidPassUppercase","  ");
-        properties.setProperty("validIncorrectPassword","  ");
-        properties.setProperty("temporaryLoginName","  ");
-        properties.setProperty("defaultEmail","  ");
+
+        properties.setProperty("temporaryLoginName","xdknxusqvjeovowpfk@awdrt.com");
+        properties.setProperty("temporaryPass","Temp#001");
+
         properties.setProperty("validUnregisterEmail","  ");
-        properties.setProperty("invalidEmail","  ");
         properties.setProperty("passwordForRegistration","  ");
-        properties.setProperty("validUnregisterEmail","  ");
+
+        properties.setProperty("googleEmail","  ");
+        properties.setProperty("passwordForRegistration","DEFAULT_PASS ");
 
         FileOutputStream out = new FileOutputStream("src/test/resources/credentials.properties");
         properties.store(out,"Please setup credentials");   }

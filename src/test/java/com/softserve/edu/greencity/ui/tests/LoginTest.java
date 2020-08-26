@@ -1,7 +1,11 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import io.qameta.allure.Description;
+import lombok.SneakyThrows;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteExecuteMethod;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.html5.RemoteWebStorage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -26,7 +30,7 @@ public class LoginTest extends GreenCityTestRunner {
     private final String SIGN_IN_EMAIL_VALIDATION_ERROR = "Please check that your e-mail address is indicated correctly";
     private final String SIGN_IN_PASSWORD_VALIDATION_ERROR = "Password must be at least 8 characters long";
     private final String WRONG_EMAIL_OR_PASS_ERROR = "Bad email or password";
-    private final String TOP_USER_NAME = "Iryna Polihas";
+    private final String TOP_USER_NAME = "nagrebetski";
 
     @BeforeClass
     public void beforeClass() {
@@ -403,6 +407,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         Assert.assertEquals(topUserName, TOP_USER_NAME);
     }
+
     //TODO auth in google via api before clickSingInWithGoogleButton()
     @Test(testName = "GC-234")
     @Description("Verify that user can't sign in with Google Account credentials on 'Sign in' pop-up window")

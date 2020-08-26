@@ -34,7 +34,7 @@ public final class UserRepository {
     public User temporary() {
         return new User(
                 property.getProperty("temporaryLoginName"),
-                System.getenv().get(property.getProperty("temporaryPass")));
+                property.getProperty("temporaryPass"));
     }
 
     public User defaultUserCredentials() {
@@ -46,7 +46,7 @@ public final class UserRepository {
     }
 
     public User googleUserCredentials() {
-        return new User(property.getProperty("googleEmail"), property.getProperty("googlePass"));
+        return new User(property.getProperty("googleEmail"), System.getenv().get(property.getProperty("googlePass")));
     }
 
     public User emptyUserCredentials() {

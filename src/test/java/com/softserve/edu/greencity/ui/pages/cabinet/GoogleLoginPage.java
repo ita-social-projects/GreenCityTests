@@ -90,7 +90,7 @@ public class GoogleLoginPage {
 
     private boolean isLoginedUser() {
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
-        return elementsCustomMethods.isElementPresent(loggedInUser);
+        return elementsCustomMethods.isGoogleElementPresent(loggedInUser);
     }
 
     public WelcomePage successfulLoginByGoogle(User user) {
