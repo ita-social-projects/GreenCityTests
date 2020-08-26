@@ -106,7 +106,7 @@ public class GoogleLoginPage {
 
         if (isLoginedUser()) {
             clickLoggedInUser();
-            fillEmail(user);
+            fillPassword(user);
 
             driver.switchTo().window(parentWindow);
             return new WelcomePage(driver);
