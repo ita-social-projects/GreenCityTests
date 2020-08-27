@@ -122,5 +122,3 @@ StoredCredential
 **/StoredCredential/**
 credentials.properties
 /allure-report/
-/tokens/
-/tokens/StoredCredential
