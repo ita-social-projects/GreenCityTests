@@ -118,7 +118,5 @@ hs_err_pid*
 
 
 # properties files
-StoredCredential
-**/StoredCredential/**
 credentials.properties
 /allure-report/
