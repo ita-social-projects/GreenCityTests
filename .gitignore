@@ -120,7 +120,6 @@ hs_err_pid*
 # properties files
 StoredCredential
 **/StoredCredential/**
-client_secret.json
 credentials.properties
 /allure-report/
 /tokens/
