@@ -27,6 +27,8 @@ public class GoogleSheet {
 
     private static Credential authorize() throws IOException, GeneralSecurityException{
         java.util.logging.Logger.getLogger("com.google.api.**").setLevel(Level.OFF);
+        java.util.logging.Logger.getLogger("com.google.api.client.util.store.FileDataStoreFactory").setLevel(Level.OFF);
+
         InputStream in = GoogleSheet.class.getResourceAsStream("/sheetsApi.json");
         GoogleClientSecrets clientSecrets =  GoogleClientSecrets.load (
                 JacksonFactory.getDefaultInstance(), new InputStreamReader(in)
