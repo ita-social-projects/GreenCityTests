@@ -378,8 +378,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
-                .waitSuccessfulRegistrationPopUp()
-                .waitSuccessfulRegistrationPopUpDisappear()
+                .waitForConfirmationEmail()
                 .verifyRegistration(userData);
     }
 
@@ -399,8 +398,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
-                .waitSuccessfulRegistrationPopUp()
-                .waitSuccessfulRegistrationPopUpDisappear();
+                .waitForConfirmationEmail();
     }
     @Step
     public void registerUser(User userData) {
@@ -425,6 +423,11 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     private ManualRegisterComponent waitSuccessfulRegistrationPopUpDisappear() {
         new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(sackfulRegistrationPopUp));
+        return this;
+    }
+
+    private ManualRegisterComponent waitForConfirmationEmail() {
+        new GoogleMailAPI().waitFroMassagesWithSubject("Verify your email address",true,5,20);
         return this;
     }
 

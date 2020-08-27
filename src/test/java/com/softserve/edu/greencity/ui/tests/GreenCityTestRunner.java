@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.tests;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CommandLine;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
+import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -52,8 +53,9 @@ desiredCap.SetCapability("version", "latest");
     @SneakyThrows
     @BeforeClass
     public void setUpBeforeClass() {
+        String ip = String.valueOf(new ValueProvider().getGridIp());
         DesiredCapabilities capability = DesiredCapabilities.chrome();
-        driver = new RemoteWebDriver(new URL("http://192.168.1.7:4444/wd/hub"), capability);
+        driver = new RemoteWebDriver(new URL(ip), capability);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }

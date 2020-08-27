@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * Class use gmail api to be and take 1st unread msg to be continue
  */
-public class GoogleMailAPI {
+public class GoogleMailAPI  {
     private static BaseMailAPI emailUtils;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     @SneakyThrows(Exception.class)
@@ -110,18 +110,23 @@ public class GoogleMailAPI {
             return num;
         }
     }
+
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
-    public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWait){
+    public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds){
         logger.info("Wait for email with subject" + subject);
+        User user = UserRepository.get().googleUserCredentials();
+        connectToEmail(user.getEmail(),user.getPassword());
         long start = System.nanoTime()/ 1000000000;
-        long end = start + ((long) timeToWait);
-        while (true) {
+        long end = start + ((long) timeToWaitInSeconds);
+        boolean isWaiting = true;
+        while (isWaiting) {
            int a = emailUtils.getMessagesBySubject(subject, unread,  maxToSearch).length ;
             if (a > 0
-            || System.nanoTime()/1000000000 - end == 0 )
-            {logger.info("emails with subject founds: " + a);
-            break;
+                    || System.nanoTime()/1000000000 - end == 0 ) {
+                logger.info("emails with subject founds: " + a);
+                isWaiting = false;
+                //break;
             }
         }
     }
@@ -141,7 +146,5 @@ public class GoogleMailAPI {
                 break;
             }
         }
-
     }
 }
-

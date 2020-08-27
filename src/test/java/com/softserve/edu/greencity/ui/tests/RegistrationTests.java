@@ -4,8 +4,8 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
+import com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet;
 import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
-import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +13,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.util.List;
+
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner{
 
@@ -139,6 +144,11 @@ public class RegistrationTests extends GreenCityTestRunner{
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
         Assert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
+    }
+    @Test
+    public void ApiTest() throws IOException, GeneralSecurityException {
+        List<List<Object>> a = GoogleSheet.values();
+        System.out.println(a.get(0).get(2));
     }
 }
 
