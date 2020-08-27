@@ -145,10 +145,5 @@ public class RegistrationTests extends GreenCityTestRunner{
         manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
         Assert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
     }
-    @Test
-    public void ApiTest() throws IOException, GeneralSecurityException {
-        List<List<Object>> a = GoogleSheet.values();
-        System.out.println(a.get(0).get(2));
-    }
 }
 
