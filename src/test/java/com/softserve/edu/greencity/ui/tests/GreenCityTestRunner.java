@@ -1,16 +1,13 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.tools.CommandLine;
-import com.softserve.edu.greencity.ui.tools.CredentialProperties;
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
+import com.softserve.edu.greencity.ui.tools.jenkins.Jenkins;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.html5.RemoteWebStorage;
@@ -30,32 +27,29 @@ public abstract class GreenCityTestRunner {
     private static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 //    public static final String BASE_URL = "http://localhost:4200/#/welcome";
 
-    private final boolean CHROME_HEADLESS_OPTION = false;
+    private boolean chromeHeadlessOption = false;
     private final String CHROME_LANGUAGE_OPTION = "en";
-
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
+
+    private void headless(){
+        if (Jenkins.isItYou())
+               chromeHeadlessOption = true;
+    }
 
     @BeforeSuite
     public void beforeSuite() {
         WebDriverManager.chromedriver().setup();
-        new CredentialProperties().checkCredentialsExist();
     }
-
-  /*  DesiredCapabilities desiredCap = DesiredCapabilities.Chrome();
-desiredCap.SetCapability("headless", true);
-desiredCap.SetCapability("platform", "LINUX");
-desiredCap.SetCapability("version", "latest");
-
-    driver = new RemoteWebDriver(
-  new Uri("https://hub.testingbot.com/wd/hub/"), desiredCap
-);*/
-    @SneakyThrows
+@SneakyThrows
     @BeforeClass
     public void setUpBeforeClass() {
-        String ip = String.valueOf(new ValueProvider().getGridIp());
-        DesiredCapabilities capability = DesiredCapabilities.chrome();
-        driver = new RemoteWebDriver(new URL(ip), capability);
+        headless();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setHeadless(chromeHeadlessOption);
+        chromeOptions.addArguments("--lang=" + CHROME_LANGUAGE_OPTION);
+
+        driver = new RemoteWebDriver(new URL("http://192.168.1.7:4444/wd/hub"), chromeOptions);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
     }
