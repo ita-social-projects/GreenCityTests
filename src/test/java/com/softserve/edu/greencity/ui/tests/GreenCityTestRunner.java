@@ -35,6 +35,7 @@ public abstract class GreenCityTestRunner {
     private void headless(){
         if (Jenkins.isItYou())
                chromeHeadlessOption = true;
+        logger.info("Run in headless mode");
     }
 
     @BeforeSuite
