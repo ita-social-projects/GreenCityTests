@@ -114,7 +114,7 @@ public class GoogleMailAPI  {
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
     public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds){
-        logger.info("Wait for email with subject" + subject);
+        logger.info("Wait for email with subject: " + subject);
         User user = UserRepository.get().googleUserCredentials();
         connectToEmail(user.getEmail(),user.getPassword());
         long start = System.nanoTime()/ 1000000000;
