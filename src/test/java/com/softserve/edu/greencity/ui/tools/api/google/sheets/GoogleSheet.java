@@ -19,6 +19,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import org.testng.annotations.BeforeMethod;
 
 public class GoogleSheet {
     private static Sheets sheetsService;
@@ -26,8 +27,15 @@ public class GoogleSheet {
     private static String SPREADSHEET_ID = "165DiBh-2TKxIHPtfBTDJ_GBq8kgal4Ac5vRlbaUC6O4";
 
     private static Credential authorize() throws IOException, GeneralSecurityException{
-        java.util.logging.Logger.getLogger("com.google.api.**").setLevel(Level.OFF);
-        java.util.logging.Logger.getLogger("com.google.api.client.util.store.FileDataStoreFactory").setLevel(Level.OFF);
+        java.util.logging.Logger
+                .getLogger("com.google.api.**")
+                .setLevel(Level.OFF);
+        java.util.logging.Logger
+                .getLogger("com.google.api.client.util.store.FileDataStoreFactory")
+                .setLevel(Level.OFF);
+        java.util.logging.Logger.
+                getLogger("com.google.api.client.util.store.FileDataStoreFactory setPermissionsToOwnerOnly")
+                .setLevel(Level.OFF);
 
         InputStream in = GoogleSheet.class.getResourceAsStream("/sheetsApi.json");
         GoogleClientSecrets clientSecrets =  GoogleClientSecrets.load (

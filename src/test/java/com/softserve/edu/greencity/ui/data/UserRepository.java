@@ -1,12 +1,18 @@
 package com.softserve.edu.greencity.ui.data;
+import lombok.SneakyThrows;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+
+import static com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet.getRow;
+import static com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-//TODO replace personal data getter to System.getenv
+import java.util.logging.Level;
+
 public final class UserRepository {
     private static volatile UserRepository instance = null;
-
     private Properties property = new Properties();
 
     private UserRepository() {
@@ -31,136 +37,154 @@ public final class UserRepository {
 
     //replace System.getenv().get(property.getProperty("temporaryPass"))); to property.getProperty("temporaryPass"));
 
+    @SneakyThrows
     public User temporary() {
         return new User(
-                property.getProperty("temporaryLoginName"),
-                property.getProperty("temporaryPass"));
+                (String) gettemporaryLoginName(),
+                (String) gettemporaryPass());
     }
 
+    @SneakyThrows
     public User defaultUserCredentials() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                System.getenv().get(property.getProperty("defaultPass")),
-                System.getenv().get(property.getProperty("defaultPass")));
+                (String) getdefaultName(),
+                (String) getdefaultEmail(),
+                (String) getdefaultPass(),
+                (String) getdefaultPass());
     }
 
+    @SneakyThrows
     public User googleUserCredentials() {
-        return new User(property.getProperty("googleEmail"), System.getenv().get(property.getProperty("googlePass")));
+        return new User((String) getgoogleEmail(), (String) getgooglePass());
     }
 
     public User emptyUserCredentials() {
         return new User("", "", "", "");
     }
 
+    @SneakyThrows
     public User invalidUserCredentials() {
         return new User(
-                property.getProperty("invalidName"),
-                property.getProperty("invalidEmail"),
-                property.getProperty("invalidPass"),
-                property.getProperty("invalidPass"));
+                getinvalidName(),
+                getinvalidEmail(),
+                getinvalidPass(),
+                getinvalidPass());
     }
 
+    @SneakyThrows
     public User invalidNameCredentials() {
         return new User(
-                property.getProperty("invalidName"),
-                property.getProperty("defaultEmail"),
-                System.getenv().get(property.getProperty("defaultPass")),
-                System.getenv().get(property.getProperty("defaultPass")));
+                getinvalidName(),
+                getdefaultEmail(),
+                getdefaultPass(),
+                getdefaultPass());
     }
 
+    @SneakyThrows
     public User unregisterUser() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("validUnregisterEmail").replace("@",getRandom()+"@"),
-                property.getProperty("temporaryPass"),
-                property.getProperty("comfTemporaryPass"));
+                getdefaultName(),
+                getvalidUnregisterEmail().replace("@", getRandom() + "@"),
+                gettemporaryPass(),
+                getcomfTemporaryPass());
     }
 
+    @SneakyThrows
     public User invalidEmailUserCredentials() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("invalidEmail"),
-                System.getenv().get(property.getProperty("defaultPass")),
-                System.getenv().get(property.getProperty("defaultPass")));
+                getdefaultName(),
+                getinvalidEmail(),
+                getdefaultPass(),
+                getdefaultPass());
     }
 
+    @SneakyThrows
     public User invalidConfirmPassCredentials() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                System.getenv().get(property.getProperty("defaultPass")) + "!",
-                System.getenv().get(property.getProperty("defaultPass")));
+                getdefaultName(),
+                getdefaultEmail(),
+                getdefaultPass() + "!",
+                getdefaultPass());
     }
 
+    @SneakyThrows
     public User userWithEmptyEmailField() {
-        return new User("", property.getProperty("temporaryPass"));
+        return new User("", (String) gettemporaryPass());
     }
 
+    @SneakyThrows
     public User userWithEmptyPasswordField() {
-        return new User(property.getProperty("temporaryLoginName"), "");
+        return new User(gettemporaryLoginName(), "");
     }
 
+    @SneakyThrows
     public User userCredentialsWithInvalidPassword() {
         return new User(
-                property.getProperty("temporaryLoginName"),
-                property.getProperty("validIncorrectPassword"));
+                gettemporaryLoginName(),
+                getvalidIncorrectPassword());
     }
 
+    @SneakyThrows
     public User userCredentialsForRegistration() {
         return new User(
-                property.getProperty("nameForRegistration"),
-                property.getProperty("emailForRegistration").replace("@", getRandom() + "@"),
-                System.getenv().get(property.getProperty("passwordForRegistration")),
-                System.getenv().get(property.getProperty("passwordForRegistration")));
+                getnameForRegistration(),
+                getemailForRegistration().replace("@", getRandom() + "@"),
+                getpasswordForRegistration(),
+                getpasswordForRegistration());
     }
 
+    @SneakyThrows
     public User invalidPassUppercaseUserCreds() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                property.getProperty("invalidPassUppercase"),
-                property.getProperty("invalidPassUppercase"));
+                getdefaultName(),
+                getdefaultEmail(),
+                getinvalidPassUppercase(),
+                getinvalidPassUppercase());
     }
 
+    @SneakyThrows
     public User invalidPassDigitUserCreds() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                property.getProperty("invalidPassDigit"),
-                property.getProperty("invalidPassDigit"));
+                getdefaultName(),
+                getdefaultEmail(),
+                getinvalidPassDigit(),
+                getinvalidPassDigit());
     }
 
+    @SneakyThrows
     public User invalidPassLowercaseUserCreds() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                property.getProperty("invalidPassLowercase"),
-                property.getProperty("invalidPassLowercase"));
+                getdefaultName(),
+                getdefaultEmail(),
+                getinvalidPassLowercase(),
+                getinvalidPassLowercase());
     }
 
+    @SneakyThrows
     public User invalidPassSpecCharUserCreds() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                property.getProperty("invalidPassSpecChar"),
-                property.getProperty("invalidPassSpecChar"));
+                getdefaultName(),
+                getdefaultEmail(),
+                getinvalidPassSpecChar(),
+                getinvalidPassSpecChar());
     }
 
+    @SneakyThrows
     public User invalidPassLengthUserCreds() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                property.getProperty("invalidPassLength"),
-                property.getProperty("invalidPassLength"));
+                getdefaultName(),
+                getdefaultEmail(),
+                getinvalidPassLength(),
+                getinvalidPassLength());
     }
 
+    @SneakyThrows
     public User invalidPassSpaceUserCreds() {
         return new User(
-                property.getProperty("defaultName"),
-                property.getProperty("defaultEmail"),
-                property.getProperty("invalidPassSpace"),
-                property.getProperty("invalidPassSpace"));
+                getdefaultName(),
+                getdefaultEmail(),
+                getinvalidPassSpace(),
+                getinvalidPassSpace());
     }
 
     private String getRandom() {

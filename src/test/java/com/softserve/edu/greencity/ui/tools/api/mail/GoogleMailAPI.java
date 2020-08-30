@@ -8,8 +8,10 @@ import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeMethod;
 
 import javax.mail.Message;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,18 @@ import java.util.regex.Pattern;
  * Class use gmail api to be and take 1st unread msg to be continue
  */
 public class GoogleMailAPI  {
+    @BeforeMethod
+   private void offUnnecessary(){
+        java.util.logging.Logger
+                .getLogger("com.google.api.**")
+                .setLevel(Level.OFF);
+        java.util.logging.Logger
+                .getLogger("com.google.api.client.util.store.FileDataStoreFactory")
+                .setLevel(Level.OFF);
+        java.util.logging.Logger.
+                getLogger("com.google.api.client.util.store.FileDataStoreFactory")
+                .setLevel(Level.OFF);
+    }
     private static BaseMailAPI emailUtils;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     @SneakyThrows(Exception.class)

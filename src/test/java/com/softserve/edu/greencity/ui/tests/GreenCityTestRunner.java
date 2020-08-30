@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -41,6 +42,7 @@ public abstract class GreenCityTestRunner {
 
     @BeforeSuite
     public void beforeSuite() {
+
         WebDriverManager.chromedriver().setup();
     }
 @SneakyThrows
@@ -63,18 +65,21 @@ public abstract class GreenCityTestRunner {
     }
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp(Method method) {
+        logger.info("\n<==============================>\n");
+        logger.info("Method  "+ method.getName()+ " started in thread\t"  + Thread.currentThread().getId());
         driver.get(BASE_URL);
     }
 
     @AfterMethod
-    public void tearDown(ITestResult result) {
+    public void tearDown(ITestResult result,Method method) {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
         if (isLogInNow()){
             signOutByStorage();}
         //System.out.println("@AfterMethod tearDown");
+        logger.info("Method  "+ method.getName()+ " :\t "  + Thread.currentThread().getId());
     }
 
     WelcomePage loadApplication() {

@@ -1,22 +1,42 @@
 pipeline {
-    agent any
-stages {
-    stage('compile') {
+  agent any
+   options {
+        copyArtifactPermission('GCLocalPipeLine');
+    }
+
+  stages {
+
+    stage('Compile') {
         steps {
             bat 'mvn --batch-mode test-compile'
-            }
         }
-stage('clean') {
+    }
+
+    stage('Clean before install') {
         steps {
             bat 'mvn --batch-mode clean'
-            }
         }
-stage('test') {
+    }
+
+    stage('Install') {
         steps {
-            bat 'mvn --batch-mode test'
-            }
+            bat 'mvn --batch-mode install -Dmaven.test.skip=true'
         }
-stage('allure') {
+    }
+
+    stage('Clean before tests') {
+        steps {
+            bat 'mvn --batch-mode clean'
+        }
+    }
+
+    stage('Run tests') {
+        steps {
+            bat 'mvn --batch-mode test -Dtestng.xml=testng.xml'
+        }
+    }
+
+    stage('Generate allure report') {
         steps {
             allure([
             includeProperties: false,
@@ -25,12 +45,34 @@ stage('allure') {
             reportBuildPolicy: 'ALWAYS',
             results: [[path: 'target/allure-results']]
                 ])
-            }
         }
-stage('sonar') {
+    }
+
+    stage('HTML report') {
         steps {
-            bat 'mvn --batch-mode sonar:sonar -Dsonar.sources=src -Dsonar.test.inclusions=src/test/java/**'
-            }
+            publishHTML (target : [allowMissing: false,
+             alwaysLinkToLastBuild: true,
+             keepAll: true,
+             reportDir: 'target/surefire-reports/test-output',
+             reportFiles: 'emailable-report.html',
+             reportName: 'short report',
+             reportTitles: 'Report'])
+        }
+    }
+
+  }
+
+      post {
+        always {
+            archiveArtifacts artifacts: 'TestLogs.log', onlyIfSuccessful: true
+
+            echo 'I will always say Hello again!'
+
+            emailext attachLog: true, attachmentsPattern: 'generatedFile.txt',
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                recipientProviders: [developers(), requestor()],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+
         }
     }
 }
