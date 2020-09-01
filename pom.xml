@@ -299,6 +299,7 @@
 						<surefire.application.password>
 							${application.password}
 						</surefire.application.password>
+						<outputdir>${project.build.directory}</outputdir>
 					</systemPropertyVariables>
 					<suiteXmlFiles>
 						<suiteXmlFile>${testng.xml}</suiteXmlFile>
@@ -311,6 +312,8 @@
 						<property>
 							<name>allure.results.directory</name>
 							<value>${project.build.directory}/allure-results</value>
+							<name>listener</name>
+							<value>com.softserve.edu.greencity.ui.tools.logs.GroupedLoggingAppender</value>
 						</property>
 					</systemProperties>
 

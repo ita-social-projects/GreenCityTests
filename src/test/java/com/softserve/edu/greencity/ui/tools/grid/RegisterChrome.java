@@ -11,7 +11,6 @@ public class RegisterChrome {
                     "http://localhost:4444/grid/register", "-browser",
                     "browserName=chrome", "-port", "5555"});
         } catch (Exception e) {e.printStackTrace();}
-
     }
 
     public static void startNode(String port) {

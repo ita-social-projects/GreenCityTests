@@ -84,6 +84,5 @@ public interface StableWebElementSearch {
         return element;
     }
 
-
 }
 

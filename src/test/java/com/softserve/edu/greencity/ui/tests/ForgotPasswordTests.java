@@ -6,10 +6,7 @@ import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordComponent;
 import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 public class ForgotPasswordTests extends GreenCityTestRunner {
@@ -34,6 +31,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
     private SoftAssert assertSoftly(){
         return new  SoftAssert();
     }
+
 
     @Test(testName = "GC-503")
     @Description("Verify that user can sign in with valid credentials")
@@ -128,5 +126,9 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         forgotPasswordComponent.maximizeWindow();
 
         assertSoftly().assertAll();
+
     }
+
 }
+
+

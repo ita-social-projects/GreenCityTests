@@ -9,7 +9,6 @@ public class GridHub {
         try {
             GridLauncherV3.main(new String[]{"-role", "hub", "-port", "4444"});
         } catch (Exception e) {e.printStackTrace();}
-
     }
 
     public static void startLocally(String port) {
@@ -23,5 +22,4 @@ public class GridHub {
             GridLauncherV3.main(new String[]{"-role", "hub", "-port", String.valueOf(port)});
         } catch (Exception e) {e.printStackTrace();}
     }
-
 }

@@ -75,10 +75,7 @@ public abstract class GreenCityTestRunner {
     public void setUp() {
         driver.get(BASE_URL);
     }
-@AfterTest
-public void separetaeTests(){
-    logger.info("\n<========================================================================\n");
-}
+
     @AfterMethod
     public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
@@ -87,6 +84,7 @@ public void separetaeTests(){
         if (isLogInNow()){
             signOutByStorage();}
         //System.out.println("@AfterMethod tearDown");
+        loggerTest(result);
     }
 
     WelcomePage loadApplication() {
@@ -125,6 +123,10 @@ public void separetaeTests(){
         WebDriverManager.phantomjs().setup();
         WebDriverManager.iedriver().setup();
         WebDriverManager.chromiumdriver().setup();
+    }
+    public void loggerTest(ITestResult result){
+        logger.info("\n<=================== result.getMethod().getMethodName() ====================>\n\n");
+        logger.info("logging from thread " + Thread.currentThread().getId());
     }
 }
 
