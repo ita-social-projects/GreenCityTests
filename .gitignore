@@ -120,3 +120,6 @@ hs_err_pid*
 # properties files
 credentials.properties
 /allure-report/
+!.gitignore
+!testngperf.iml
+!*/testngperf.iml
