@@ -1,16 +1,16 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.tools.CommandLine;
+import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.grid.GridHub;
 import com.softserve.edu.greencity.ui.tools.grid.RegisterChrome;
-import com.softserve.edu.greencity.ui.tools.grid.RegisterFirefox;
-import com.softserve.edu.greencity.ui.tools.jenkins.Jenkins;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -21,9 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
-import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -33,55 +31,39 @@ public abstract class GreenCityTestRunner {
     private static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 //    public static final String BASE_URL = "http://localhost:4200/#/welcome";
 
-
-    private boolean chromeHeadlessOption = false;
+    private final boolean CHROME_HEADLESS_OPTION = false;
     private final String CHROME_LANGUAGE_OPTION = "en";
+
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver driver;
 
-    private void headless(){
-        System.out.println(Jenkins.isItYou());
-        if (Jenkins.isItYou()){
-               chromeHeadlessOption = true;
-        logger.info("Run in headless mode");}
-        else {logger.info("Run in normal mode");}
-    }
-
+@SneakyThrows
     @BeforeSuite
     public void beforeSuite() {
-
         WebDriverManager.chromedriver().setup();
+        GridHub.startLocally();
+        RegisterChrome.startNode(5551);
+        RegisterChrome.startNode(5552);
+        RegisterChrome.startNode(5553);
+        RegisterChrome.startNode(5554);
     }
 
+    /*  DesiredCapabilities desiredCap = DesiredCapabilities.Chrome();
+  desiredCap.SetCapability("headless", true);
+  desiredCap.SetCapability("platform", "LINUX");
+  desiredCap.SetCapability("version", "latest");
 
-@SneakyThrows
+      driver = new RemoteWebDriver(
+    new Uri("https://hub.testingbot.com/wd/hub/"), desiredCap
+  );*/
+    @SneakyThrows
     @BeforeClass
     public void setUpBeforeClass() {
-        if ( chromeHeadlessOption ){
-        headless();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.setHeadless(chromeHeadlessOption);
-        chromeOptions.addArguments("--lang=" + CHROME_LANGUAGE_OPTION);
-
-        driver = new RemoteWebDriver(new URL("http://192.168.1.7:4444/wd/hub"), chromeOptions);
+        DesiredCapabilities capability = DesiredCapabilities.chrome();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capability);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        } else {
-        GridHub.startLocally();
-            RegisterChrome.startNode();
-            RegisterChrome.startNode("8081");
-            RegisterFirefox.startNode(8082);
-
-            ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.setHeadless(chromeHeadlessOption);
-            driver = new RemoteWebDriver(
-                    new URL("http://localhost:4444/wd/hub"), chromeOptions);
-
-            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            driver.manage().window().maximize();
-     }
     }
-
     @AfterClass(alwaysRun = true)
     public void tearDownAfterClass() {
         if (driver != null) {
@@ -90,21 +72,21 @@ public abstract class GreenCityTestRunner {
     }
 
     @BeforeMethod
-    public void setUp(Method method) {
-        logger.info("\n<==============================>\n");
-        logger.info("Method  "+ method.getName()+ " started in thread\t"  + Thread.currentThread().getId());
+    public void setUp() {
         driver.get(BASE_URL);
     }
-
+@AfterTest
+public void separetaeTests(){
+    logger.info("\n<========================================================================\n");
+}
     @AfterMethod
-    public void tearDown(ITestResult result,Method method) {
+    public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
         if (isLogInNow()){
             signOutByStorage();}
         //System.out.println("@AfterMethod tearDown");
-        logger.info("Method  "+ method.getName()+ " :\t "  + Thread.currentThread().getId());
     }
 
     WelcomePage loadApplication() {
@@ -145,3 +127,4 @@ public abstract class GreenCityTestRunner {
         WebDriverManager.chromiumdriver().setup();
     }
 }
+
