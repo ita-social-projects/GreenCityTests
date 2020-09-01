@@ -84,7 +84,7 @@ public abstract class GreenCityTestRunner {
         if (isLogInNow()){
             signOutByStorage();}
         //System.out.println("@AfterMethod tearDown");
-        loggerTest(result);
+        loggerTest();
     }
 
     WelcomePage loadApplication() {
@@ -124,9 +124,9 @@ public abstract class GreenCityTestRunner {
         WebDriverManager.iedriver().setup();
         WebDriverManager.chromiumdriver().setup();
     }
-    public void loggerTest(ITestResult result){
-        logger.info("\n<=================== result.getMethod().getMethodName() ====================>\n\n");
+    public void loggerTest(){
         logger.info("logging from thread " + Thread.currentThread().getId());
+        logger.info("\n----------------------------------------------------------------------------\n");
     }
 }
 
