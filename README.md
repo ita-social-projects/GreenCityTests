@@ -16,7 +16,7 @@ for example port -port 5555 to -port 5556
 
 Jenkins primitive usage:
  Manage Jenkins -> plugin manager -> available -> download Selenium plugin
- - Download the [latest stable Jenkins WAR file](http://mirrors.jenkins.io/war-stable/latest/jenkins.war) to an appropriate directory on your machine.
+ - Download the [latest stable Jenkins WAR file](http://mirrors.jenkins.io/war-stable/latest/jenkins.war) to an appropriate directory on your machine.
  - run java -jar jenkins.war go to http://localhost:8080 and follow advised by Jenkins steps
  - [Create job](https://dl.dropboxusercontent.com/s/y06thpciqfxtvk0/shot_200821_200455.png)
  - [Add description](https://dl.dropboxusercontent.com/s/8xbw5l23e7gpsz6/shot_200821_200719.png)
