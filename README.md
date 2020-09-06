@@ -46,12 +46,12 @@ Jenkins primitive usage:
  - [Run](https://dl.dropboxusercontent.com/s/32byliz8hoytbkb/shot_200821_201323.png)
  
 ### Build
-Run `mvn test-compile` to download dependencies and build the project.
-
+* First run, mvn install -Dmaven.test.skip=true
+* Run `mvn test-compile` to download dependencies and build the project.
 
 ### Running UI tests
 Run `mvn test -Dtestng.xml=*.xml` to execute the automation UI tests via [maven](https://maven.apache.org/).
-* First run, mvn install -Dmaven.test.skip=true
+
 * Run localy: set in google sheet remote false
 * Run remotely: set in google sheet remote true
 * selenid UI http://35.198.124.146:8080/#/
