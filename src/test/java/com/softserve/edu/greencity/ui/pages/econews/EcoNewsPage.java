@@ -39,6 +39,10 @@ public class EcoNewsPage extends TopPart  {
         wait.until(ExpectedConditions.visibilityOf(getGridView()));
         wait.until(ExpectedConditions.visibilityOf(getListView()));
     }
+    public List<WebElement>  getTopicsInPage(){
+        logger.info("Find all displayed topics");
+        return searchElementsByXpath(foundItems);
+    }
 
     private void visualiseElements() {
         int i = 0;

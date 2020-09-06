@@ -51,7 +51,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         Assert.assertTrue(isLogInNow());
     }
 
-    // @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
+     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         logger.info("Start test registration without mail verifying");
         loadApplication();
@@ -88,7 +88,7 @@ public class RegistrationTests extends GreenCityTestRunner {
                 "The validation message is not equal to the expected one");
     }
 
-    //   @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         logger.info("Start test registration check if mail received");
         loadApplication();
@@ -109,7 +109,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
     }
 
-    //   @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
+    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
         public void existingUserRegistration(User userLoginCredentials){
         new  GoogleMailAPI().clearMail(userLoginCredentials.getEmail(),userLoginCredentials.getPassword());
         logger.info("Start test existing user registration" + userLoginCredentials.toString());
@@ -132,7 +132,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         //The user already exists by this email
     }
 
-  //  @Test(dataProvider = "invalidPasswordDataProvider", description = "GC-204")
+   @Test(dataProvider = "invalidPasswordDataProvider", description = "GC-204")
     public void invalidPasswordRegistration(User userLoginCredentials){
         logger.info("Start test invalid password registration"  + userLoginCredentials.toString());
         loadApplication();
