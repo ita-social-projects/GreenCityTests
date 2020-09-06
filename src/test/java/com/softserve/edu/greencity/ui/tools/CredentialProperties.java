@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.tools;
 
 
+import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,33 +23,32 @@ public class CredentialProperties {
     private Properties properties = new Properties();
     @SneakyThrows(IOException.class)
     private void setCredentialsProperties() {
-        properties.setProperty("nameForRegistration","  ");
-        properties.setProperty("emailForRegistration","  ");
+        properties.setProperty("nameForRegistration", ValueProvider.getnameForRegistration());
+        properties.setProperty("emailForRegistration",ValueProvider.getemailForRegistration());
 
-        properties.setProperty("defaultName","  ");
-        properties.setProperty("defaultEmail","  ");
-        properties.setProperty("DEFAULT_PASS","  ");
-        properties.setProperty("DEFAULT_PASS","  ");
-        properties.setProperty("comfTemporaryPass","  ");
+        properties.setProperty("defaultName",ValueProvider.getdefaultName());
+        properties.setProperty("defaultEmail",ValueProvider.getdefaultEmail());
+        properties.setProperty("DEFAULT_PASS",ValueProvider.getdefaultPass());
+        properties.setProperty("comfTemporaryPass",ValueProvider.getcomfTemporaryPass());
 
-        properties.setProperty("invalidName","  ");
-        properties.setProperty("invalidEmail","  ");
-        properties.setProperty("invalidPassLowercase","  ");
-        properties.setProperty("invalidPass","  ");
-        properties.setProperty("invalidPassDigit","  ");
-        properties.setProperty("invalidPassSpecChar","  ");
-        properties.setProperty("invalidPassSpace","  ");
-        properties.setProperty("invalidPassLength","  ");
-        properties.setProperty("invalidPassUppercase","  ");
+        properties.setProperty("invalidName",ValueProvider.getinvalidName());
+        properties.setProperty("invalidEmail",ValueProvider.getinvalidEmail());
+        properties.setProperty("invalidPassLowercase",ValueProvider.getinvalidPassLowercase());
+        properties.setProperty("invalidPass",ValueProvider.getinvalidPass());
+        properties.setProperty("invalidPassDigit",ValueProvider.getinvalidPassDigit());
+        properties.setProperty("invalidPassSpecChar",ValueProvider.getinvalidPassSpecChar());
+        properties.setProperty("invalidPassSpace",ValueProvider.getinvalidPassSpace());
+        properties.setProperty("invalidPassLength",ValueProvider.getinvalidPassLength());
+        properties.setProperty("invalidPassUppercase",ValueProvider.getinvalidPassUppercase());
 
         properties.setProperty("temporaryLoginName","xdknxusqvjeovowpfk@awdrt.com");
         properties.setProperty("temporaryPass","Temp#001");
 
-        properties.setProperty("validUnregisterEmail","  ");
-        properties.setProperty("passwordForRegistration","  ");
+        properties.setProperty("validUnregisterEmail",ValueProvider.getvalidUnregisterEmail());
+        properties.setProperty("passwordForRegistration",ValueProvider.getpasswordForRegistration());
 
-        properties.setProperty("googleEmail","  ");
-        properties.setProperty("passwordForRegistration","DEFAULT_PASS ");
+        properties.setProperty("googleEmail",ValueProvider.getgoogleEmail());
+        properties.setProperty("passwordForRegistration",ValueProvider.getdefaultPass());
 
         FileOutputStream out = new FileOutputStream("src/test/resources/credentials.properties");
         properties.store(out,"Please setup credentials");   }

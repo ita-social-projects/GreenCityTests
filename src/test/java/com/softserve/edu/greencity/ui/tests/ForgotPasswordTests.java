@@ -1,9 +1,7 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordComponent;
-import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;

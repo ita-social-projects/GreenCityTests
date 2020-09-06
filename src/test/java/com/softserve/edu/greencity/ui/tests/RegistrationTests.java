@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
@@ -14,12 +14,8 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.List;
-
 //TODO add DB check
-public class RegistrationTests extends GreenCityTestRunner{
+public class RegistrationTests extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] successRegistrationUserCreds() {

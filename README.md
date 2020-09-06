@@ -2,18 +2,37 @@
 Automation tests for GreenCity project
 
 ### environment
-Local
-- download  ([GridEzzyRun](https://github.com/ita-social-projects/GreenCityTests/blob/fixExistingTests/src/test/resources/GridEzzyRun.rar).
-- unzip it
-- run downloadChrome.bat to download Chrome driver
-- run downloadChrome.bat to download Firefox driver
-- run hub.bat
-- run node1.bat
-- run node1.bat etc so many as you need
-open http://localhost:4444/grid/console you should see your nodes.
-if you need more than 4, just copy one of them and using note pad change parameter port for next one.
-for example port -port 5555 to -port 5556
+com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner.setUpBeforeClass
+ChromeOptions options = new ChromeOptions();
+* options.addArguments("--disable-gpu");
+* options.addArguments("--disable-popup-blocking");
+* options.addArguments("--allow-failed-policy-fetch-for-test");
+* options.addArguments("--disable-browser-side-navigation");
+* options.addArguments("--incognito");
+* options.addArguments("--disable-notifications");
+* options.addArguments("--window-size=1920,1080", "--no-sandbox", "'--disable-dev-shm-usage");
+            
+com.softserve.edu.greencity.ui.tests.runner.DriverSetup.optionsArguments
+DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+* capabilities.setBrowserName("chrome");
+* capabilities.setVersion("84.0");
+* capabilities.setCapability("enableVNC", true);
+* capabilities.setCapability("enableVideo", false);
+* capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
+Local:
+* GridHub.startLocally(4444);
+* RegisterChrome.startNode(5551);
+* RegisterChrome.startNode(5552);
+* RegisterChrome.startNode(5553);
+* RegisterChrome.startNode(5554);
+* driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
+
+Remote:
+* driver = new RemoteWebDriver(
+                    URI.create("http://35.198.124.146:4444/wd/hub").toURL(),
+                    capabilities);
+                    
 Jenkins primitive usage:
  Manage Jenkins -> plugin manager -> available -> download Selenium plugin
  - Download the [latest stable Jenkins WAR file](http://mirrors.jenkins.io/war-stable/latest/jenkins.war) to an appropriate directory on your machine.
@@ -25,16 +44,20 @@ Jenkins primitive usage:
  - [Save](https://dl.dropboxusercontent.com/s/dc3v0gpvkm84yc3/shot_200821_201047.png)
  - Now you should see your [job](http://localhost:8080/)
  - [Run](https://dl.dropboxusercontent.com/s/32byliz8hoytbkb/shot_200821_201323.png)
-- 
+ 
 ### Build
 Run `mvn test-compile` to download dependencies and build the project.
 
 
 ### Running UI tests
 Run `mvn test -Dtestng.xml=*.xml` to execute the automation UI tests via [maven](https://maven.apache.org/).
+* First run, mvn install -Dmaven.test.skip=true
+* Run localy: set in google sheet remote false
+* Run remotely: set in google sheet remote true
+* selenid UI http://35.198.124.146:8080/#/
+* selenid connect http://35.198.124.146:4444
 
 For example
-
 * `mvn test -Dtestng.xml=testng.xml` to running the UI tests of Eco news page
 
 
@@ -42,51 +65,45 @@ For example
 
 * Java 8
 * Google [Chrome](https://www.google.com/chrome/) Browser
-* Mozilla [Firefox](https://www.mozilla.org/en-US/firefox/new/) Browser
 * [maven](https://maven.apache.org/)
-* [Selenium](https://www.selenium.dev/) ver. 3.141.59
 
-### Credentials for login
-All user credentials storing at property file `credentials.properties`.
+### Credentials 
+All user credentials storing at google sheets.
+You should :
+* Create  google sheet, add Share with people and groups.
+* Allow API https://developers.google.com/sheets/api/quickstart/java
+* Add key to com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet
+* SPREADSHEET_ID = THIS_IS_KEY_THAT_YOU_NEED
+* docs.google.com/spreadsheets/d/ THIS_IS_KEY_THAT_YOU_NEED  /edit...
 
-You need create `credentials.properties` file at `src/test/resources/` and set here your credentials for login and else methods.
-
-For exemple:
+  
+set variables, for example:
 
 ```
-defaultName = defaultNameValue
-defaultEmail = defaultEmailValue
-defaultPass = defaultPassValue
-defaultConfirmPass = defaultConfirmPassValue
-
-temporaryLoginName = temporaryLoginNameValue
-temporaryPass = temporaryPassValue
-
-invalidName = invalidNameValue
-invalidEmail = invalidEmailValue
-invalidPass = invalidPassValue
-invalidConfirmPass = invalidConfirmPassValue
-
-validUnregisterEmail = validUnregisterEmailValue
-validIncorrectPassword = validIncorrectPasswordValue
-
-googleEmail = googleEmailValue
-googlePass = googlePassValue
-
-DBProdURL = DBProdURL
-DBProdUserName = DBProdUserName
-DBProdUserPassword = DBProdUserPassword
-
-emailForRegistration = emailForRegistration
-passwordForRegistration = passwordForRegistration
-passwordToGmailBox = passwordToGmailBox
-
-invalidPassUppercase = invalidPassUppercase
-invalidPassDigit = invalidPassDigit
-invalidPassLowercase = invalidPassLowercase
-invalidPassSpecChar = invalidPassSpecChar
-invalidPassLength = invalidPassLength
-invalidPassSpace = invalidPassSpace
+Name of value	value
+invalidPassDigit	12345678-
+defaultName	Pavel
+emailForRegistration	greencitypavel@gmail.com
+defaultPass	1234qwerTY-
+temporaryPass	Temp#001
+invalidName	21CharString21CharSt
+invalidPassLowercase	qwertyasdfg-
+nameForRegistration	greencitypavel
+invalidPass	as2f
+invalidPassSpecChar	bRDYBhAs3 z48Y5H-
+invalidPassSpace	                                         
+invalidPassLength	aA-
+comfTemporaryPass	1234qwerTY-
+googleEmail	greencitypavel@gmail.com
+googlePass	1234qwerTY-
+invalidPassUppercase	QWERTYASDFG-
+validIncorrectPassword	As3z48Y5H-bRDYBh
+temporaryLoginName	xdknxusqvjeovowpfk@awdrt.com
+defaultEmail	greencitypavel@gmail.com
+invalidEmail	\ asd 
+passwordForRegistration	1234qwerTY-
+validUnregisterEmail	greencitypavel@gmail.com
+remote	TRUE
 ```
 
 

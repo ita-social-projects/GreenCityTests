@@ -16,12 +16,7 @@ public final class UserRepository {
     private Properties property = new Properties();
 
     private UserRepository() {
-        try {
-            final FileInputStream fis = new FileInputStream("src/test/resources/credentials.properties");
-            property.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static UserRepository get() {

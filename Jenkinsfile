@@ -8,31 +8,31 @@ pipeline {
 
     stage('Compile') {
         steps {
-            bat 'mvn --batch-mode test-compile'
+            sh 'mvn --batch-mode test-compile'
         }
     }
 
     stage('Clean before install') {
         steps {
-            bat 'mvn --batch-mode clean'
+            sh 'mvn --batch-mode clean'
         }
     }
 
     stage('Install') {
         steps {
-            bat 'mvn --batch-mode install -Dmaven.test.skip=true'
+            sh 'mvn --batch-mode install -Dmaven.test.skip=true'
         }
     }
 
     stage('Clean before tests') {
         steps {
-            bat 'mvn --batch-mode clean'
+            sh 'mvn --batch-mode clean'
         }
     }
 
     stage('Run tests') {
         steps {
-            bat 'mvn --batch-mode test -Dtestng.xml=testng.xml'
+            sh 'mvn --batch-mode test -Dtestng.xml=testng.xml'
         }
     }
 

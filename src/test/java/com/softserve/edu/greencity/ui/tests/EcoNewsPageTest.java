@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

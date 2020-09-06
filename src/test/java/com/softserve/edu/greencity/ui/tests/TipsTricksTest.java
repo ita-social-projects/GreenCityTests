@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

@@ -9,77 +9,77 @@ import java.security.GeneralSecurityException;
 import static com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet.getRow;
 
 public class ValueProvider {
+    @SneakyThrows
+    public static String getinvalidPassDigit() {return (String) getRow(1).get(1);}
 
-    public static String getinvalidPassDigit() throws IOException, GeneralSecurityException {
-        return (String) getRow(1).get(1);
+    @SneakyThrows
+    public static String getdefaultName() {return (String) getRow(2).get(1);}
+
+    @SneakyThrows
+    public static String getemailForRegistration() {return (String) getRow(3).get(1);}
+
+    @SneakyThrows
+    public static String getdefaultPass() {return (String) getRow(4).get(1); }
+
+    @SneakyThrows
+    public static String gettemporaryPass() {return (String) getRow(5).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidName() {return (String) getRow(6).get(1);}
+    @SneakyThrows
+    public static String getinvalidPassLowercase() {return (String) getRow(7).get(1);}
+
+    @SneakyThrows
+    public static String getnameForRegistration() {return (String) getRow(8).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidPass() {return (String) getRow(9).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidPassSpecChar() {return (String) getRow(10).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidPassSpace() {return (String) getRow(11).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidPassLength() {return (String) getRow(12).get(1);}
+
+    @SneakyThrows
+    public static String getcomfTemporaryPass() {return (String) getRow(13).get(1);}
+
+    @SneakyThrows
+    public static String getgoogleEmail() {return (String) getRow(14).get(1);}
+
+    @SneakyThrows
+    @NonNull
+    public static String getgooglePass() {return (String) getRow(15).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidPassUppercase() {return (String) getRow(16).get(1);}
+
+    @SneakyThrows
+    public static String getvalidIncorrectPassword() {return (String) getRow(17).get(1);}
+
+    @SneakyThrows
+    public static String gettemporaryLoginName() {return (String) getRow(18).get(1);}
+
+    @SneakyThrows
+    public static String getdefaultEmail() {return (String) getRow(19).get(1);}
+
+    @SneakyThrows
+    public static String getinvalidEmail() {return (String) getRow(20).get(1);}
+
+    @SneakyThrows
+    public static String getpasswordForRegistration() {return (String) getRow(21).get(1);}
+
+    @SneakyThrows
+    public static String getvalidUnregisterEmail() {return (String) getRow(22).get(1);}
+
+    @SneakyThrows
+    public static Boolean remote() {
+        return Boolean.valueOf((String) getRow(23).get(1));
     }
-    public static String getdefaultName() throws IOException, GeneralSecurityException {
-        return (String) getRow(2).get(1);
-    }
-    public static String getemailForRegistration() throws IOException, GeneralSecurityException {
-        return (String) getRow(3).get(1);
-    }
-    public static String getdefaultPass () throws IOException, GeneralSecurityException {
-        return (String) getRow(4).get(1);
-    }
-    public static String gettemporaryPass() throws IOException, GeneralSecurityException {
-        return (String) getRow(5).get(1);
-    }
-    public static String getinvalidName() throws IOException, GeneralSecurityException {
-        return (String) getRow(6).get(1);
-    }
-    public static String getinvalidPassLowercase() throws IOException, GeneralSecurityException {
-        return (String) getRow(7).get(1);
-    }
-    public static String getnameForRegistration() throws IOException, GeneralSecurityException {
-        return (String) getRow(8).get(1);
-    }
-    public static String getinvalidPass() throws IOException, GeneralSecurityException {
-        return (String) getRow(9).get(1);
-    }
-    public static String getinvalidPassSpecChar() throws IOException, GeneralSecurityException {
-        return (String) getRow(10).get(1);
-    }
-    public static String getinvalidPassSpace() throws IOException, GeneralSecurityException {
-        return (String) getRow(11).get(1);
-    }
-    public static String getinvalidPassLength() throws IOException, GeneralSecurityException {
-        return (String) getRow(12).get(1);
-    }
-    public static String getcomfTemporaryPass() throws IOException, GeneralSecurityException {
-        return (String) getRow(13).get(1);
-    }
-    public static String getgoogleEmail() throws IOException, GeneralSecurityException {
-        return (String) getRow(14).get(1);
-    }
-   @NonNull
-   public static String getgooglePass () throws IOException, GeneralSecurityException {
-        return (String) getRow(15).get(1);
-    }
-    public static String getinvalidPassUppercase() throws IOException, GeneralSecurityException {
-        return (String) getRow(16).get(1);
-    }
-    public static String getvalidIncorrectPassword() throws IOException, GeneralSecurityException {
-        return (String) getRow(17).get(1);
-    }
-    public static String gettemporaryLoginName() throws IOException, GeneralSecurityException {
-        return (String) getRow(18).get(1);
-    }
-    public static String getdefaultEmail() throws IOException, GeneralSecurityException {
-        return (String) getRow(19).get(1);
-    }
-    public static String getinvalidEmail() throws IOException, GeneralSecurityException {
-        return (String) getRow(20).get(1);
-    }
-    public static String getpasswordForRegistration() throws IOException, GeneralSecurityException {
-        return (String) getRow(21).get(1);
-    }
-    public static String getvalidUnregisterEmail() throws IOException, GeneralSecurityException {
-        return (String) getRow(22).get(1);
-    }
-    public static String getGridIp() throws IOException, GeneralSecurityException {
-        return (String) getRow(23).get(1);
-    }
+
     @SneakyThrows
     public static void main(String[] args) {
         System.out.println("<===============================================================>");
@@ -127,7 +127,7 @@ public class ValueProvider {
         System.out.println("<===============================================================>");
         System.out.println(getvalidUnregisterEmail());
         System.out.println("<===============================================================>");
-        System.out.println(getGridIp());
+        System.out.println(remote());
         System.out.println("<===============================================================>");
     }
 }
