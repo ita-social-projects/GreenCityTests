@@ -93,7 +93,7 @@ remote	TRUE
 </details>
 
 # Options and capabilites example:
-Set test variables, for example:
+
 <details><summary>Example</summary>
 <p>
 
