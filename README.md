@@ -60,7 +60,6 @@ If you wana create personal file with credentials, you should :
 </p>
 </details>
 
-Set test variables, for example:
 <details><summary>Example</summary>
 <p>
 
@@ -152,7 +151,7 @@ Remote:
 
 Lets go step by step.
 
-#### VM instances
+#### 1 step VM instances
 <details><summary>Steps</summary>
 <p>
 
@@ -169,7 +168,7 @@ Lets go step by step.
 </p>
 </details>
 
-#### Docker
+#### 2 step Docker
 <details><summary>Long version</summary>
 <p>
 
@@ -395,7 +394,7 @@ docker push sammy/ubuntu-nodejs
 </p>
 </details>
 
-#### Selenoid
+#### 3 step Selenoid
 <details><summary>Steps</summary>
 <p>
 
