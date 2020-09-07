@@ -199,9 +199,5 @@ public class EcoNewsPageTest extends GreenCityTestRunner {
 		assertSoftly().assertAll();
 	}
 
-	@Test(description = "GC-337")
-	//TODO: check or this is correct version for automation, cose in db dat not in chrono
-	public void readAllNews() {
-	}
 	/*<======================================Grid View==========================================>*/
 }
