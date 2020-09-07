@@ -149,10 +149,12 @@ DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 ### Google console
 <details><summary>Steps</summary>
 <p>
+  
 * Requirement: google account
 * Go to [Google console](https://console.cloud.google.com/)
 * Click [Activate](https://dl.dropboxusercontent.com/s/51d90wwa3rtaxpu/shot_200908_005037.png)
 * Follow steps recommended in page to activate trial:  $300 credit to explore Google Cloud products, 3 month for now, check actual information when you start.
+
 </p>
 </details>
 
