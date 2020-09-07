@@ -94,7 +94,7 @@ remote	TRUE
 
 # Options and capabilites example:
 
-<details><summary>Example</summary>
+<details><summary>Options</summary>
 <p>
 
 ```
@@ -107,7 +107,15 @@ ChromeOptions options = new ChromeOptions();
 * options.addArguments("--incognito");
 * options.addArguments("--disable-notifications");
 * options.addArguments("--window-size=1920,1080", "--no-sandbox", "'--disable-dev-shm-usage");
-            
+```
+
+</p>
+</details>
+
+<details><summary>Capabilities</summary>
+<p>
+
+```            
 com.softserve.edu.greencity.ui.tests.runner.DriverSetup.optionsArguments
 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 * capabilities.setBrowserName("chrome");
