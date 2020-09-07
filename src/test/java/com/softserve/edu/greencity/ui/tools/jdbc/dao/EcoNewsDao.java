@@ -60,7 +60,21 @@ public class EcoNewsDao {
         ManagerDao.closeStatement(statement);
         return EcoNewsEntity.getListEcoNewsEntity(rows);
     }
-
+    public List<EcoNewsEntity> selectAllOrderByDate() {
+        Statement statement = ManagerDao.get().getStatement();
+        List<List<String>> rows = null;
+        try {
+            ResultSet resultSet = statement.executeQuery(EcoNewsEntity.SELECT_ALL_ORDER_BY_DATE);
+            rows = ManagerDao.get().parseResultSet(resultSet);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+        //
+        ManagerDao.closeStatement(statement);
+        return EcoNewsEntity.getListEcoNewsEntity(rows);
+    }
     public void update(EcoNewsEntity ecoNewsEntity) {
         Statement statement = ManagerDao.get().getStatement();
         // TODO

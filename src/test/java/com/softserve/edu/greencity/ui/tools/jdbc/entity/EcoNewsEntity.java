@@ -24,9 +24,10 @@ enum EcoNewsEntityFields {
 
 public class EcoNewsEntity {
     public static final String SELECT_ALL = "SELECT * FROM eco_news;";
+    public static final String SELECT_ALL_ORDER_BY_DATE = "SELECT * FROM eco_news ORDER BY creation_date DESC;";
     public static final String SELECT_BY_FIELD = "SELECT * FROM eco_news WHERE %s='%s';";
     public static final String DELETE_BY_ID = "DELETE FROM eco_news WHERE id=%s;";
-    //
+    //Use the following query in a Data Base: "SELECT * FROM eco_news ORDER BY creation_date DESC;
     private long id;
     private String creationDate;
     private String imagePath;
