@@ -116,6 +116,7 @@ ChromeOptions options = new ChromeOptions();
 <p>
 
 ```            
+<=================================Common=================================>
 com.softserve.edu.greencity.ui.tests.runner.DriverSetup.optionsArguments
 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 * capabilities.setBrowserName("chrome");
@@ -123,20 +124,24 @@ DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 * capabilities.setCapability("enableVNC", true);
 * capabilities.setCapability("enableVideo", false);
 * capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+<=================================Common=================================>
 
-Local:
+<=================================Local=================================>
 * GridHub.startLocally(4444);
 * RegisterChrome.startNode(5551);
 * RegisterChrome.startNode(5552);
 * RegisterChrome.startNode(5553);
 * RegisterChrome.startNode(5554);
 * driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),options);
+<=================================Local=================================>
 
-Remote:
+<=================================Remote=================================>
 * driver = new RemoteWebDriver(
                     URI.create("http://35.198.124.146:4444/wd/hub").toURL(),
                     capabilities);
+<=================================Remote=================================>
 ```
+
 </p>
 </details>
 
