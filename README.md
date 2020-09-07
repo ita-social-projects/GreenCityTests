@@ -9,7 +9,7 @@ Automation tests for GreenCity project
 
 # Links
 * selenoid UI http://35.198.124.146:8080/#/  - GUI to watch remote test run
-* selenid driver connect http://35.198.124.146:4444
+* selenoid driver connect http://35.198.124.146:4444
 * local driver connect http://localhots:4444
 
 # Environment                   
