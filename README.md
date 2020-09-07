@@ -166,10 +166,10 @@ Lets go step by step.
 * [set OS parameters](https://dl.dropboxusercontent.com/s/2m7eqn5w9vlrwk6/shot_200908_010213.png)
 * [allow api, http and https](https://dl.dropboxusercontent.com/s/hy6mtmf2gyghszw/shot_200908_010333.png) actually you need only http, so up to you
 * [You are awesome](https://dl.dropboxusercontent.com/s/vponrk0qbct1r3i/shot_200908_011231.png)
-#### Docker
 </p>
 </details>
 
+#### Docker
 <details><summary>Long version</summary>
 <p>
 
