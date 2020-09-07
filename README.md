@@ -38,6 +38,10 @@ Value of `remote` credential  transferred to com.softserve.edu.greencity.ui.test
 ,do what you wana do.
 
 ### New personal file
+Set test variables, for example:
+<details><summary>Steps</summary>
+<p>
+
 All user credentials storing at google sheets.
 If you wana create personal file with credentials, you should :
 * Create  [google sheet](https://docs.google.com/spreadsheets)
@@ -53,7 +57,13 @@ If you wana create personal file with credentials, you should :
 ([Key looks like this](https://dl.dropboxusercontent.com/s/j3hzw7u8frlhpf8/shot_200908_000657.png))
 *  `SPREADSHEET_ID = YOUR_KEY_FROM_GOOGLE_SHEET`
 
+</p>
+</details>
+
 Set test variables, for example:
+<details><summary>Example</summary>
+<p>
+
 ```
 Name of value	value
 invalidPassDigit	12345678-
@@ -80,8 +90,14 @@ passwordForRegistration	1234qwerTY-
 validUnregisterEmail	greencitypavel@gmail.com
 remote	TRUE
 ```
+</p>
+</details>
 
 # Options and capabilites example:
+Set test variables, for example:
+<details><summary>Example</summary>
+<p>
+
 ```
 com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner.setUpBeforeClass
 ChromeOptions options = new ChromeOptions();
@@ -114,13 +130,20 @@ Remote:
                     URI.create("http://35.198.124.146:4444/wd/hub").toURL(),
                     capabilities);
 ```
+</p>
+</details>
 
 # Create your personal remote environment
 ### Google console
+<details><summary>Steps</summary>
+<p>
 * Requirement: google account
 * Go to [Google console](https://console.cloud.google.com/)
 * Click [Activate](https://dl.dropboxusercontent.com/s/51d90wwa3rtaxpu/shot_200908_005037.png)
 * Follow steps recommended in page to activate trial:  $300 credit to explore Google Cloud products, 3 month for now, check actual information when you start.
+</p>
+</details>
+
 ### Selenoid
 3 Steps: 
 - Create VM instances (virtual machine instance)
@@ -130,6 +153,9 @@ Remote:
 Lets go step by step.
 
 #### VM instances
+<details><summary>Steps</summary>
+<p>
+
 * [open menu](https://dl.dropboxusercontent.com/s/bhkp05a6yv3ol2a/shot_200908_005832.png)
 * [go to vm instance page](https://dl.dropboxusercontent.com/s/bce5oi4jdymofo2/shot_200908_005907.png)
 * [click create instance](https://dl.dropboxusercontent.com/s/u3e6hptkh890ws9/shot_200908_005933.png) (if you doesnt have any instances, you will see only one button in the middle of the page)
@@ -141,6 +167,8 @@ Lets go step by step.
 * [allow api, http and https](https://dl.dropboxusercontent.com/s/hy6mtmf2gyghszw/shot_200908_010333.png) actually you need only http, so up to you
 * [You are awesome](https://dl.dropboxusercontent.com/s/vponrk0qbct1r3i/shot_200908_011231.png)
 #### Docker
+</p>
+</details>
 
 <details><summary>Long version</summary>
 <p>
@@ -319,6 +347,68 @@ CONTAINER ID        IMAGE                         COMMAND                  CREAT
 * [Here we are again.  You are great](https://dl.dropboxusercontent.com/s/ds7886rrg0r8vgc/shot_200908_021245.png)
 </p>
 </details>
+
+<details><summary>Short version</summary>
+<p>
+
+```
+if smth went wrong just repeat without sudo
+```
+```sh
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt update
+sudo apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker
+docker: Cannot connect to the Docker daemon. Is the docker daemon running on this host?. - its ok
+docker [option] [command] [arguments] - base syntax
+sudo docker
+sudo docker docker-subcommand --help
+sudo docker info
+sudo docker run hello-world
+sudo docker search ubuntu
+sudo docker pull ubuntu
+sudo docker images
+sudo docker run -it ubuntu
+root@d9b100f2f636:/#
+apt update
+apt install nodejs
+node -v
+docker ps
+CTRL+C
+docker ps -a
+docker start 1c08a7a0d0e4
+docker stop quizzical_mcnulty
+docker rm youthful_curie
+docker commit -m "What you did to the image" -a "Author Name" container_id repository/new_image_name
+docker commit -m "added Node.js" -a "sammy" d9b100f2f636 sammy/ubuntu-nodejs
+docker images
+docker login -u docker-registry-username
+docker tag sammy/ubuntu-nodejs docker-registry-username/ubuntu-nodejs
+docker push docker-registry-username/docker-image-name
+docker push sammy/ubuntu-nodejs
+```
+
+</p>
+</details>
+
+#### Selenoid
+<details><summary>Steps</summary>
+<p>
+
+* `wget -O cm https://github.com/aerokube/cm/releases/download/1.7.2/cm_linux_amd64`
+* $ `chmod +x cm`
+* `curl -s https://aerokube.com/cm/bash | bash`
+* $ `./cm selenoid start --vnc`
+* $ `./cm selenoid-ui start`
+
+</p>
+</details>
+
+
 
 # Where to find back/front-end part of the project
 Here is the back-end part of our project: https://github.com/ita-social-projects/GreenCity
