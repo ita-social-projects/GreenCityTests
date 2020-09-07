@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public abstract class GreenCityTestRunner {
+    // TODO read from External file
     private static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());

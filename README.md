@@ -46,7 +46,7 @@ Jenkins primitive usage:
  - [Run](https://dl.dropboxusercontent.com/s/32byliz8hoytbkb/shot_200821_201323.png)
  
 ### Build
-* First run, mvn install -Dmaven.test.skip=true
+* First run, `mvn install -Dmaven.test.skip=true`
 * Run `mvn test-compile` to download dependencies and build the project.
 
 ### Running UI tests
@@ -71,7 +71,7 @@ For example
 All user credentials storing at google sheets.
 You should :
 * Create  google sheet, add Share with people and groups.
-* Allow API https://developers.google.com/sheets/api/quickstart/java
+* [Allow API](https://developers.google.com/sheets/api/quickstart/java)
 * Add key to com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet
 * SPREADSHEET_ID = THIS_IS_KEY_THAT_YOU_NEED
 * docs.google.com/spreadsheets/d/ THIS_IS_KEY_THAT_YOU_NEED  /edit...
