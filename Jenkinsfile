@@ -7,9 +7,9 @@ node () {
 	}
 	stage ('GreenCityTest - Build') {
 
-withEnv(["JAVA_HOME=${ tool '"+JDK+"' }", "PATH=${env.JAVA_HOME}/bin"]) {
+withEnv(["JAVA_HOME=${ tool '"+jdk8+"' }", "PATH=${env.JAVA_HOME}/bin"]) {
 		// Maven build step
-	withMaven(jdk: '', maven: 'Maven-3.6.0') {
+	withMaven(jdk8: '', maven: 'Maven-3.6.0') {
  			if(isUnix()) {
  				sh "mvn install -Dmaven.test.skip=true "
 			} else {
