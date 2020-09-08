@@ -92,7 +92,7 @@ remote	TRUE
 </p>
 </details>
 
-# Options and capabilites example:
+# Options and capabilities example:
 
 <details><summary>Options</summary>
 <p>
@@ -179,7 +179,17 @@ Lets go step by step.
 * [choose OS](https://dl.dropboxusercontent.com/s/lr0kt8x4xg2awuh/shot_200908_010123.png) we will work with ubuntu, but be free to experiment
 * [set OS parameters](https://dl.dropboxusercontent.com/s/2m7eqn5w9vlrwk6/shot_200908_010213.png)
 * [allow api, http and https](https://dl.dropboxusercontent.com/s/hy6mtmf2gyghszw/shot_200908_010333.png) actually you need only http, so up to you
+* [open google sh console](https://dl.dropboxusercontent.com/s/xu2j9ulmx9889uo/shot_200908_031331.png)
+* add firewall rules to allow use ports 8080, 4444 etc, !!!  be careful 20,22 etc used by google, so dont tuch it !!!
+```$sh
+gcloud compute firewall-rules create rule-allow-tcp-8080 --source-ranges 0.0.0.0/0 --target-tags allow-tcp-8080 --allow tcp:8080
+gcloud compute firewall-rules create rule-allow-tcp-4444 --source-ranges 0.0.0.0/0 --target-tags allow-tcp-4444 --allow tcp:4444
+```
+* [open your VM](https://dl.dropboxusercontent.com/s/teonyajd3pu4lca/shot_200908_031546.png)
+* [click Edit](https://dl.dropboxusercontent.com/s/eel40tef0k25d1k/shot_200908_031640.png)
+* [Add firewall rules to your VM](https://dl.dropboxusercontent.com/s/zuva5goxygur5a0/shot_200908_031924.png)
 * [You are awesome](https://dl.dropboxusercontent.com/s/vponrk0qbct1r3i/shot_200908_011231.png)
+
 </p>
 </details>
 
@@ -425,6 +435,291 @@ docker push sammy/ubuntu-nodejs
 </p>
 </details>
 
+### Jenkins
+
+<details><summary>Steps</summary>
+<p>
+
+* create VM as you do it before, don't forget allow ports
+* open vm console
+* install java 8:
+```sh
+sudo apt update
+sudo apt search openjdk
+sudo apt install openjdk-8-jdk
+sudo apt install openjdk-8-jdk
+java -version
+
+readlink -f $(which java)
+echo $JAVA_HOME
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+```
+* install maven 
+```sh
+sudo apt update
+sudo apt install maven
+```
+* install allure
+```sh
+curl -o allure-2.6.0.tgz -Ls https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.
+6.0/allure-2.6.0.tgz
+sudo tar -zxvf allure-2.6.0.tgz -C /opt/
+sudo ln -s /opt/allure-2.6.0/bin/allure /usr/bin/allure
+allure --version
+``` 
+* install jenkins
+```sh
+wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian binary/ > \
+    /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get update
+sudo apt-get install jenkins
+```
+* `sudo service jenkins status` - status, you should see smth like this:
+```
+● jenkins.service - LSB: Start Jenkins at boot time
+   Loaded: loaded (/etc/init.d/jenkins; generated)
+   Active: active (exited) since Sun 2020-09-06 01:35:43 UTC; 1 day 22h ag
+     Docs: man:systemd-sysv-generator(8)
+    Tasks: 0 (limit: 4671)
+   CGroup: /system.slice/jenkins.service
+Sep 06 01:35:38 jenkins systemd[1]: Starting LSB: Start Jenkins at boot ti
+Sep 06 01:35:41 jenkins jenkins[1096]: Correct java version found
+Sep 06 01:35:42 jenkins jenkins[1096]:  * Starting Jenkins Automation Serv
+Sep 06 01:35:43 jenkins jenkins[1096]:    ...done.
+Sep 06 01:35:43 jenkins systemd[1]: Started LSB: Start Jenkins at boot tim
+```
+* go to your [ip](https://dl.dropboxusercontent.com/s/zdxt7z3303y4125/shot_200908_033309.png):8080 
+* from console copy initial password `sudo cat /var/lib/jenkins/secrets/initialAdminPassword` 
+* finish registration
+
+</p>
+</details>
+
+<details><summary>Jenkins usage</summary>
+<p>
+
+GUI
+
+* Base setup yourIP:8080/configureTools/
+* [JDK](https://dl.dropboxusercontent.com/s/y7l3u6zgg6jc4y8/shot_200908_034512.png)
+* [MAVEN](https://dl.dropboxusercontent.com/s/tprzgiqj0czi998/shot_200908_034530.png)
+* [Allure](https://dl.dropboxusercontent.com/s/qe36i2ny73fy6oo/shot_200908_034544.png)
+* [Create job](https://dl.dropboxusercontent.com/s/6wy9avvqqar8aoj/shot_200908_033529.png) 1
+* [Create job](https://dl.dropboxusercontent.com/s/ui2e8268zres63v/shot_200908_033612.png) 2
+* [Git setup](https://dl.dropboxusercontent.com/s/82i9xrss7nc7vdp/shot_200908_033943.png)
+* [Build](https://dl.dropboxusercontent.com/s/jmu1w8gk4xkdwsx/shot_200908_034238.png)
+* [Allure report](https://dl.dropboxusercontent.com/s/4604au7qqilvgxa/shot_200908_034353.png)
+
+
+Base pipeline
+ 
+```
+pipeline {
+  agent any
+  
+  stages {
+
+	stage ('GreenCityTest - Build') {
+	    steps {
+ 			sh "mvn install -Dmaven.test.skip=true "
+        }
+    }
+
+	stage ('Tests') {
+	    steps {
+        	sh "mvn test"
+        }
+    }
+    
+    stage('Generate allure report') {
+        steps {
+            allure([
+            includeProperties: false,
+            jdk: '',
+            properties: [],
+            reportBuildPolicy: 'ALWAYS',
+            results: [[path: 'target/allure-results']]
+                ])
+        }
+    }
+
+
+    }
+}
+
+```
+
+</p>
+</details>
+
+<details><summary>My plugins</summary>
+<p>
+
+There is alot useless, that i used just to check what i can do. So choose what you need. Git, mvn, allure, pipeline, sh plugin recommended to install.
+```
+Name  ↓    Version           Enabled   
+ace-editor	1.1             	true
+allure-jenkins-plugin	2.28.1	true
+ansible	1.0                 	true
+ant	1.11	                    true
+antisamy-markup-formatter	2.1	true
+apache-httpcomponents-client-4-api	4.5.10-2.0	true
+artifactory	3.8.1	            true
+authentication-tokens	1.4	true
+blueocean	1.23.2	true
+blueocean-autofavorite	1.2.4	true
+blueocean-bitbucket-pipeline	1.23.2	true
+blueocean-commons	1.23.2	true
+blueocean-config	1.23.2	true
+blueocean-core-js	1.23.2	true
+blueocean-dashboard	1.23.2	true
+blueocean-display-url	2.4.0	true
+blueocean-events	1.23.2	true
+blueocean-executor-info	1.23.2	true
+blueocean-git-pipeline	1.23.2	true
+blueocean-github-pipeline	1.23.2	true
+blueocean-i18n	1.23.2	true
+blueocean-jira	1.23.2	true
+blueocean-jwt	1.23.2	true
+blueocean-personalization	1.23.2	true
+blueocean-pipeline-api-impl	1.23.2	true
+blueocean-pipeline-editor	1.23.2	true
+blueocean-pipeline-scm-api	1.23.2	true
+blueocean-rest	1.23.2	true
+blueocean-rest-impl	1.23.2	true
+blueocean-web	1.23.2	true
+bouncycastle-api	2.18	true
+branch-api	2.6.0	true
+build-name-setter	2.1.0	true
+build-timeout	1.20	true
+cloudbees-bitbucket-branch-source	2.9.2	true
+cloudbees-credentials	3.3	true
+cloudbees-folder	6.14	true
+command-launcher	1.4	true
+conditional-buildstep	1.3.6	true
+config-file-provider	3.6.3	true
+convert-to-pipeline	1.0	true
+credentials	2.3.13	true
+credentials-binding	1.23	true
+dark-theme	0.0.7	true
+dashboard-view	2.13	true
+delivery-pipeline-plugin	1.4.2	true
+display-url-api	2.3.3	true
+docker-commons	1.17	true
+docker-workflow	1.24	true
+durable-task	1.35	true
+ec2-deployment-dashboard	1.0.10	true
+echarts-api	4.8.0-2	true
+email-ext	2.75	true
+environment-dashboard	1.1.7	true
+external-monitor-job	1.7	true
+extra-columns	1.22	true
+favorite	2.3.2	true
+git	4.4.1	true
+git-client	3.4.2	true
+git-parameter	0.9.13	true
+git-server	1.9	true
+github	1.31.0	true
+github-api	1.116	true
+github-branch-source	2.9.0	true
+google-cloud-backup	0.6	true
+google-cloudbuild	0.2.2 (2018-10-17T19:01:41Z)	true
+google-compute-engine	4.3.2	true
+google-deployment-manager	0.1	true
+google-metadata-plugin	0.3.1	true
+google-oauth-plugin	1.0.2	true
+google-source-plugin	0.4	true
+google-storage-plugin	1.5.2	true
+gradle	1.36	true
+greenballs	1.15	true
+h2-api	1.4.199	true
+handlebars	1.1.1	true
+handy-uri-templates-2-api	2.1.8-1.0	true
+htmlpublisher	1.23	true
+ivy	2.1	true
+jackson2-api	2.11.2	true
+javadoc	1.6	true
+jdk-tool	1.4	true
+jenkins-design-language	1.23.2	true
+jira	3.1.1	true
+jquery	1.12.4-1	true
+jquery-detached	1.2.1	true
+jquery3-api	3.5.1-1	true
+jsch	0.1.55.2	true
+junit	1.34	true
+keyboard-shortcuts-plugin	1.4	true
+ldap	1.24	true
+locale	1.4	true
+lockable-resources	2.8	true
+mailer	1.32	true
+matrix-auth	2.6.2	true
+matrix-project	1.17	true
+maven-plugin	3.7	true
+mercurial	2.10	true
+momentjs	1.1.1	true
+oauth-credentials	0.4	true
+okhttp-api	3.14.9	true
+pam-auth	1.6	true
+parameterized-trigger	2.37	true
+pipeline-aggregator-view	1.11	true
+pipeline-build-step	2.13	true
+pipeline-github	2.7	true
+pipeline-github-lib	1.0	true
+pipeline-graph-analysis	1.10	true
+pipeline-input-step	2.12	true
+pipeline-maven	3.9.2	true
+pipeline-milestone-step	1.3.1	true
+pipeline-model-api	1.7.2	true
+pipeline-model-definition	1.7.2	true
+pipeline-model-extensions	1.7.2	true
+pipeline-multibranch-defaults	2.1	true
+pipeline-npm	0.9.2	true
+pipeline-rest-api	2.14	true
+pipeline-stage-step	2.5	true
+pipeline-stage-tags-metadata	1.7.2	true
+pipeline-stage-view	2.14	true
+pipeline-utility-steps	2.6.1	true
+plain-credentials	1.7	true
+plugin-util-api	1.2.5	true
+project-build-times	1.2.1	true
+project-stats-plugin	0.4	true
+pubsub-light	1.13	true
+resource-disposer	0.14	true
+run-condition	1.3	true
+scm-api	2.6.3	true
+script-security	1.74	true
+snakeyaml-api	1.26.4	true
+sse-gateway	1.23	true
+ssh	2.6.1	true
+ssh-agent	1.20	true
+ssh-credentials	1.18.1	true
+ssh-slaves	1.31.2	true
+ssh-steps	2.0.0	true
+structs	1.20	true
+theme-manager	0.5	true
+timestamper	1.11.5	true
+token-macro	2.12	true
+trilead-api	1.0.10	true
+variant	1.3	true
+windows-slaves	1.6	true
+workflow-aggregator	2.6	true
+workflow-api	2.40	true
+workflow-basic-steps	2.20	true
+workflow-cps	2.83	true
+workflow-cps-global-lib	2.17	true
+workflow-durable-task-step	2.36	true
+workflow-job	2.40	true
+workflow-multibranch	2.22	true
+workflow-remote-loader	1.5	true
+workflow-scm-step	2.11	true
+workflow-step-api	2.22	true
+workflow-support	3.5	true
+ws-cleanup	0.38	true
+```
+
+</p>
+</details>
 
 
 # Where to find back/front-end part of the project
