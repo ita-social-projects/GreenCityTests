@@ -437,7 +437,7 @@ docker push sammy/ubuntu-nodejs
 
 ### Jenkins
 
-<details><summary>Steps</summary>
+<details><summary>Install</summary>
 <p>
 
 * create VM as you do it before, don't forget allow ports
