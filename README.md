@@ -419,6 +419,7 @@ docker push sammy/ubuntu-nodejs
 * `curl -s https://aerokube.com/cm/bash | bash`
 * $ `./cm selenoid start --vnc`
 * $ `./cm selenoid-ui start`
+
 [Congratulations](https://dl.dropboxusercontent.com/s/qt825224diesqo7/shot_200908_030334.png)
 
 </p>
