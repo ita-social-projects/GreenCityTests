@@ -1,17 +1,12 @@
 package com.softserve.edu.greencity.ui.tests.runner;
 
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.tools.CommandLine;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
-import com.softserve.edu.greencity.ui.tools.grid.GridHub;
-import com.softserve.edu.greencity.ui.tools.grid.RegisterChrome;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
@@ -26,12 +21,11 @@ import org.testng.annotations.*;
 import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public abstract class GreenCityTestRunner {
-    private static final String BASE_URL = "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
+    private static final String BASE_URL = ValueProvider.getBaseUrl();
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
