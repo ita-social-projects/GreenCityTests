@@ -721,6 +721,13 @@ ws-cleanup	0.38	true
 </p>
 </details>
 
+<details><summary></summary>
+<p>
+
+[Well done](https://dl.dropboxusercontent.com/s/4ixanrtqz3aocs0/shot_200908_040205.png)
+
+</p>
+</details>
 
 # Where to find back/front-end part of the project
 Here is the back-end part of our project: https://github.com/ita-social-projects/GreenCity
