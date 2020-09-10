@@ -8,8 +8,10 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
@@ -540,7 +542,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getSubtitleText(), "Please enter your details to sign in");
     }
 
-    @Test(description = "GC-213", dataProvider = "unregisterCredentials")
+    @Test(dataProvider = "unregisterCredentials",retryAnalyzer= RetryAnalyzerImpl.class)
+    @Description("GC-213")
     public void  successRegistrationPopUpDisplayed(User userLoginCredentials){
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();

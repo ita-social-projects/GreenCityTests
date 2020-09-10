@@ -417,17 +417,17 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .clickSignUpButton();
     }
     private ManualRegisterComponent waitSuccessfulRegistrationPopUp() {
-        new WebDriverWait(driver, 10).until(visibilityOfElementLocated(sackfulRegistrationPopUp));
+        new WebDriverWait(driver, 20).until(visibilityOfElementLocated(sackfulRegistrationPopUp));
         return this;
     }
 
     private ManualRegisterComponent waitSuccessfulRegistrationPopUpDisappear() {
-        new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(sackfulRegistrationPopUp));
+        new WebDriverWait(driver, 20).until(invisibilityOfElementLocated(sackfulRegistrationPopUp));
         return this;
     }
 
     private ManualRegisterComponent waitForConfirmationEmail() {
-        new GoogleMailAPI().waitFroMassagesWithSubject("Verify your email address",true,5,20);
+        new GoogleMailAPI().waitFroMassagesWithSubject("Verify your email address",true,5,30);
         return this;
     }
 

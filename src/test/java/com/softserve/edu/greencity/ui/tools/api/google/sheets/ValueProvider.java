@@ -2,14 +2,24 @@ package com.softserve.edu.greencity.ui.tools.api.google.sheets;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeMethod;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.lang.reflect.Method;
 
 import static com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet.getRow;
 
 public class ValueProvider {
+    protected static final Logger logger = LoggerFactory.getLogger(ValueProvider.class);
+
+    @BeforeMethod
+    private void logGetterInfo(Method method){
+        logger.info( method.getName()  );
+    }
+
     @SneakyThrows
+
     public static String getinvalidPassDigit() {return (String) getRow(1).get(1);}
 
     @SneakyThrows
@@ -77,7 +87,22 @@ public class ValueProvider {
 
     @SneakyThrows
     public static Boolean remote() {
+        try {
+            logger.info("remote: " + Boolean.valueOf((String) getRow(23).get(1)));
         return Boolean.valueOf((String) getRow(23).get(1));
+        }catch (NullPointerException e){
+            throw new Exception("Please add remote: TRUE/FALSE credential to google sheet");
+        }
+    }
+
+    @SneakyThrows
+    public static String getBaseUrl() {
+        try {
+            return (String) getRow(24).get(1);
+        }catch (NullPointerException e){
+            logger.error("Fail to get link from google sheet, used hardcode link");
+            return "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
+        }
     }
 
     @SneakyThrows
@@ -128,6 +153,8 @@ public class ValueProvider {
         System.out.println(getvalidUnregisterEmail());
         System.out.println("<===============================================================>");
         System.out.println(remote());
+        System.out.println("<===============================================================>");
+        System.out.println(getBaseUrl());
         System.out.println("<===============================================================>");
     }
 }
