@@ -12,6 +12,8 @@ Automation tests for GreenCity project
 * [selenoid driver connect](http://35.198.124.146:4444)
 * [local driver connect](http://localhots:4444)
 * [selenoid logs](http://35.198.124.146:4444/logs)
+* [Jenkins](http://35.198.90.20:8080/)
+
 
 # Environment                   
 ### Build

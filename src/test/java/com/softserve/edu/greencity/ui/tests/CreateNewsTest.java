@@ -205,16 +205,16 @@ public class CreateNewsTest extends GreenCityTestRunner {
     @DataProvider
     public Object[] newsDataProvider() {
         return new Object[]{
-                NewsDataRepository.getAllFieldsNews(),
-                NewsDataRepository.getRequiredFieldsNews(),
-                NewsDataRepository.getAllFieldsNews()
+                NewsDataRepository.get().getAllFieldsNews(),
+                NewsDataRepository.get().getRequiredFieldsNews(),
+                NewsDataRepository.get().getAllFieldsNews()
         };
     }
 
     @DataProvider
     public Object[] newsInvalidDataProvider() {
         return new Object[]{
-                NewsDataRepository.getInvalidData()
+                NewsDataRepository.get().getNewsWithInvalidData()
         };
     }
 

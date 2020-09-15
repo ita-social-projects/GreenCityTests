@@ -38,14 +38,14 @@ public class EcoNewsPageTest extends GreenCityTestRunner {
 	@DataProvider
 	public Object[][] newsTags() {
 		return new Object[][]{
-				{NewsDataRepository.getNewsByTags()}
+				{NewsDataRepository.get().getNewsByTags()}
 		};
 	}
 
 	@DataProvider
 	public Object[][] newsData() {
 		return new Object[][]{
-				{NewsDataRepository.getExistingNews()}
+				{NewsDataRepository.get().getExistingNews()}
 		};
 	}
 
@@ -99,7 +99,7 @@ public class EcoNewsPageTest extends GreenCityTestRunner {
 				"Number of news items does not match to required:");
 	}
 
-	@Test
+	//@Test
 	public void selectListView() {
 		logger.info("selectListView starts");
 

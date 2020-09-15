@@ -135,29 +135,29 @@ public class GoogleMailAPI  {
         long end = start + ((long) timeToWaitInSeconds);
         boolean isWaiting = true;
         while (isWaiting) {
-           int a = emailUtils.getMessagesBySubject(subject, unread,  maxToSearch).length ;
-            if (a > 0
+           int emailCount = emailUtils.getMessagesBySubject(subject, unread,  maxToSearch).length ;
+            if (emailCount > 0
                     || System.nanoTime()/1000000000 - end == 0 ) {
-                logger.info("emails with subject founds: " + a);
+                logger.info("emails with subject founds: " + emailCount);
                 isWaiting = false;
-                //break;
             }
         }
     }
 
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
-    public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWait,String email, String emailPassword){
+    public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds,String email, String emailPassword){
         logger.info("Wait for email with subject: " + subject);
         long start = System.nanoTime()/ 1000000000;
-        long end = start + ((long) timeToWait);
+        long end = start + ((long) timeToWaitInSeconds);
+        boolean isWaiting = true;
         connectToEmail(email, emailPassword);
-        while (true) {
+        while (isWaiting) {
             int emailCount = emailUtils.getMessagesBySubject(subject, unread,  maxToSearch).length ;
             if (emailCount > 0
                     || System.nanoTime()/1000000000 - end == 0 )
-            {logger.info("emails with " + subject +" founds: " + emailCount);
-                break;
+            {       logger.info("emails with " + subject +" founds: " + emailCount);
+                isWaiting = false;
             }
         }
     }

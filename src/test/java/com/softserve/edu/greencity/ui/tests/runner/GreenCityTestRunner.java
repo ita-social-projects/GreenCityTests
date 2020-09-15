@@ -31,11 +31,13 @@ public abstract class GreenCityTestRunner {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
     boolean remote = ValueProvider.remote();
+//    boolean remote = false;
     ChromeOptions options = new ChromeOptions();
+
     @SneakyThrows
     @BeforeSuite
     public void beforeSuite() {
-       new CredentialProperties().checkCredentialsExist();
+        new CredentialProperties().checkCredentialsExist();
         new DriverSetup().optionsArguments();
         WebDriverManager.chromedriver().setup();
     }
@@ -46,11 +48,11 @@ public abstract class GreenCityTestRunner {
         if (remote) {
             /*<==========================Selenoid logs==========================>*/
             String className = this.getClass().getName();
-            int index=className.lastIndexOf('.');
-            className =className.substring(index+1);
+            int index = className.lastIndexOf('.');
+            className = className.substring(index + 1);
             String logName = (className + "-" + DateUtil.getCurrentYearMonthDateTime())
-                    .replaceAll("\\s","-")
-                    .replaceAll("\\:","-") + ".log";
+                    .replaceAll("\\s", "-")
+                    .replaceAll("\\:", "-") + ".log";
             logger.info("http://35.198.124.146:4444/logs");
             logger.info("Selenoid logs:http://35.198.124.146:4444//logs/" + logName);
             /*<==========================Selenoid logs==========================>*/
@@ -70,14 +72,14 @@ public abstract class GreenCityTestRunner {
                     capabilities);
             /*<=======================Remote capabilities=======================>*/
 
-        }else {
+        } else {
             /*<============================Locale============================>*/
             driver = new RemoteWebDriver(
-                    new URL("http://localhost:4444/wd/hub"),options);
+                    new URL("http://localhost:4444/wd/hub"), options);
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-            /*<============================Locale============================>*/
+        /*<============================Locale============================>*/
     }
 
     @AfterClass(alwaysRun = true)
@@ -135,13 +137,15 @@ public abstract class GreenCityTestRunner {
         WebDriverManager.iedriver().setup();
         WebDriverManager.chromiumdriver().setup();
     }
-   private static int left  = 77;
+
+    private static int left = 97;
+
     public void loggerTest() {
-         left = left -1;
+        left = left - 1;
 
 
         logger.info("logging from thread " + Thread.currentThread().getId());
-        logger.info("||||||  Tests left " + (left) + "  |||||" );
+        logger.info("||||||  Tests left " + (left) + "  |||||");
         logger.info("\n----------------------------------------------------------------------------\n");
 
     }

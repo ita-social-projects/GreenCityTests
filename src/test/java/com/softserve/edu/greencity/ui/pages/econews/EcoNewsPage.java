@@ -32,7 +32,7 @@ public class EcoNewsPage extends TopPart {
     private TagsComponent tagsComponent;
     private By createNewsButton = By.id("create-button");
     private By gridView = By.cssSelector("div.gallery-view");
-    private By listView = By.cssSelector("div.list-view");
+    private By listView = By.cssSelector("div.list-view>.one-line");
     private By foundItems = By.xpath("//*[@class='ng-star-inserted']");
     private By header = By.cssSelector("H1");
     private By tagsFilterBlock = By.cssSelector("app-filter-news");
@@ -42,6 +42,7 @@ public class EcoNewsPage extends TopPart {
     private By uncheckTagButtons = By.cssSelector("app-filter-news>div.wrapper>ul>a>li>div.close");
     private By articleFoundCounter = By.cssSelector("app-remaining-count>p");
     private By displayedArticles = By.cssSelector(".gallery-view-li-active.ng-star-inserted");
+    private By displayedArticlesTitles = By.xpath("//div[@class = 'title-list word-wrap']");
     private By articleImage = By.cssSelector(" div.list-image>img");
     private By articleEcoButton = By.cssSelector("div.filter-tag>div.ul-eco-buttons");
     private By articleTitle = By.cssSelector("div.added-data>div.title-list>p");
@@ -67,7 +68,6 @@ public class EcoNewsPage extends TopPart {
     public EcoNewsPage(WebDriver driver) {
         super(driver);
         checkElements();
-//        visualiseElements();
     }
 
     private void checkElements() {
@@ -81,40 +81,41 @@ public class EcoNewsPage extends TopPart {
         return searchElementsByXpath(foundItems);
     }
 
-    private void visualiseElements() {
-        int i = 0;
-        waiting(2);
-        scrollToElement(getCopyright()); //  open all news
-        waiting(2);
-        List<WebElement> listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
-        while (i < listElements.size()) {
-            waiting(2);
-            scrollToElement(listElements.get(i));
-            i++;
-            listElements = driver.findElements(By.cssSelector("div[id='list-gallery-content']"));
-        }
-    }
-
     private TagsComponent getTagsComponent() {
         return tagsComponent = new TagsComponent(driver);
     }
 
+    //Header
+    public WebElement getHeader() {
+        return driver.findElement(header);
+    }
+
+    @Step("Get found items")
     private WebElement getFoundItems() {
         return searchElementByXpath(foundItems);
     }
 
+    @Step("Get found items text")
     private String getFoundItemsText() {
         return getFoundItems().getText();
     }
 
+    @Step("Get grid view")
     public WebElement getGridView() {
         return searchElementByCss(gridView);
     }
 
+    @Step("Check if grid view is active")
     public boolean isActiveGridView() {
         return getGridView().getAttribute("class").contains("active");
     }
 
+    @Step("Check if grid view is displayed")
+    public boolean isGridViewDisplayed() {
+        return getGridView().isDisplayed();
+    }
+
+    @Step("Click on grid view")
     private void clickGridView() {
         if (!isActiveGridView()) {
             scrollToElement(getGridView());
@@ -122,14 +123,46 @@ public class EcoNewsPage extends TopPart {
         }
     }
 
-    private WebElement getListView() {
+    @Step("Hover to grid view")
+    public EcoNewsPage hoverToGridView() {
+        Actions action = new Actions(driver);
+        action.moveToElement(getGridView()).perform();
+        return this;
+    }
+
+    @Step("Get list view")
+    public WebElement getListView() {
         return searchElementByCss(listView);
     }
 
+    @Step("Check if list view is displayed")
+    public boolean isDisplayedListView() {
+        return getListView().isDisplayed();
+    }
+
+    @Step("Hover to list view")
+    public EcoNewsPage hoverToListView() {
+        Actions action = new Actions(driver);
+        action.moveToElement(getListView()).perform();
+        return this;
+    }
+
+    @Step("Check if list view is present")
+    public boolean isListViewPresent() {
+        try {
+            driver.findElements(listView);
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    @Step("Check if list view is active")
     public boolean isActiveListView() {
         return getListView().getAttribute("class").contains("active");
     }
 
+    @Step("Click on list view")
     private void clickListView() {
         if (!isActiveListView()) {
             scrollToElement(getListView());
@@ -137,18 +170,37 @@ public class EcoNewsPage extends TopPart {
         }
     }
 
+    @Step("Get create news button")
     private WebElement getCreateNewsButton() {
         return driver.findElement(createNewsButton);
     }
 
+    @Step("Get create news button text")
     private String getCreateNewsButtonText() {
         return getCreateNewsButton().getText();
     }
 
+    @Step("Click on create news button")
     private void clickCreateNewsButton() {
         getCreateNewsButton().click();
     }
 
+    @Step("Check if create news button is displayed")
+    public boolean isCreateNewsButtonDisplayed() {
+        return getCreateNewsButton().isDisplayed();
+    }
+
+    @Step("Check if create news button is present")
+    public boolean isCreateNewsButtonPresent() {
+        try {
+            driver.findElement(createNewsButton);
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    @Step("Get items container")
     public ItemsContainer getItemsContainer() {
         return itemsContainer = new ItemsContainer(driver);
     }
@@ -156,24 +208,12 @@ public class EcoNewsPage extends TopPart {
     /**
      * Scroll to WebElement, in case when need to click on it or without scrolling are invisible
      *
-     * @param el
+     * @param element
      */
-    private void scrollToElement(WebElement el) {
+    @Step("Scroll to element")
+    private void scrollToElement(WebElement element) {
         Actions action = new Actions(driver);
-        action.moveToElement(el).perform();
-    }
-
-    /**
-     * Waiting for elements became visible
-     *
-     * @param i
-     */
-    private void waiting(int i) {
-        try {
-            Thread.sleep(i * 1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        action.moveToElement(element).perform();
     }
 
     /**
@@ -181,7 +221,9 @@ public class EcoNewsPage extends TopPart {
      *
      * @return int
      */
+    @Step("Get number of item component")
     public int getNumberOfItemComponent() {
+        logger.info("Get number of items component");
         return new QuantityItems().quantityItems(getFoundItemsText());
     }
 
@@ -191,7 +233,9 @@ public class EcoNewsPage extends TopPart {
      * @param tags
      * @return EcoNewsPage
      */
+    @Step("Select filters")
     public EcoNewsPage selectFilters(List<Tag> tags) {
+        logger.info("Select filters");
         scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().selectTags(tags);
         return new EcoNewsPage(driver);
@@ -203,7 +247,9 @@ public class EcoNewsPage extends TopPart {
      * @param tags
      * @return EcoNewsPage
      */
+    @Step("Deselect filters")
     public EcoNewsPage deselectFilters(List<Tag> tags) {
+        logger.info("Deselect filters");
         scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().deselectTags(tags);
         return new EcoNewsPage(driver);
@@ -215,6 +261,7 @@ public class EcoNewsPage extends TopPart {
      * @param language
      * @return EcoNewsPage
      */
+    @Step("Switch language")
     public EcoNewsPage switchLanguage(Languages language) {
         chooseLanguage(language);
         return new EcoNewsPage(driver);
@@ -225,16 +272,18 @@ public class EcoNewsPage extends TopPart {
      *
      * @return EcoNewsPage
      */
+    @Step("Switch to grid view")
     public EcoNewsPage switchToGridView() {
         clickGridView();
         return new EcoNewsPage(driver);
     }
 
     /**
-     * News are displaeyd as list
+     * News are displayed as list
      *
      * @return EcoNewsPage
      */
+    @Step("Switch to list view")
     public EcoNewsPage switchToListView() {
         clickListView();
         return new EcoNewsPage(driver);
@@ -246,7 +295,9 @@ public class EcoNewsPage extends TopPart {
      * @param number
      * @return SingleNewsPage
      */
+    @Step("Switch to single news page by number")
     public SingleNewsPage switchToSingleNewsPageByNumber(int number) {
+        logger.info("Switch to single news by number");
         scrollToElement(itemsContainer.chooseNewsByNumber(number).getTitle());
         itemsContainer.chooseNewsByNumber(number).clickTitle();
         return new SingleNewsPage(driver);
@@ -258,7 +309,9 @@ public class EcoNewsPage extends TopPart {
      * @param news
      * @return SingleNewsPage
      */
+    @Step("Switch to single news page by parameters")
     public SingleNewsPage switchToSingleNewsPageByParameters(NewsData news) {
+        logger.info("Switch to single news page by parameters");
         scrollToElement(itemsContainer.findItemComponentByParameters(news).getTitle());
         itemsContainer.clickItemComponentOpenPage(news);
         return new SingleNewsPage(driver);
@@ -269,10 +322,38 @@ public class EcoNewsPage extends TopPart {
      *
      * @return CreateNewsPage
      */
+    @Step("Go to create news page")
     public CreateNewsPage gotoCreateNewsPage() {
+        logger.info("Go to create news page");
         scrollToElement(getCreateNewsButton());
         clickCreateNewsButton();
         return new CreateNewsPage(driver);
+    }
+
+    @Step("Check if news is displayed by title")
+    public boolean isNewsDisplayedByTitle(String title) {
+        logger.info("Check if news is displayed by title");
+        refreshPage();
+        boolean result = false;
+        for (WebElement current : getDisplayedArticlesTitles()) {
+            if (current.getText().toLowerCase().trim().equals(title.trim().toLowerCase())) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    @Step("Get displayed articles titles")
+    public List<WebElement> getDisplayedArticlesTitles() {
+        searchElementsByCss(displayedArticlesTitles);
+        return driver.findElements(displayedArticlesTitles);
+    }
+
+    @Step("Refresh page")
+    public EcoNewsPage refreshPage() {
+        driver.navigate().refresh();
+        checkElements();
+        return this;
     }
 
 
@@ -280,23 +361,23 @@ public class EcoNewsPage extends TopPart {
     // Functional
     @Step("Verification of page condition")
     public void pageExistQuickCheck() {
-logger.info("Is element visible: \n");
-logger.info("header");
+        logger.info("Is element visible: \n");
+        logger.info("header");
         searchElementByCss(header);
-logger.info("tagsFilterBlock");
+        logger.info("tagsFilterBlock");
         searchElementByCss(tagsFilterBlock);
-logger.info("tagsFilterLabel");
+        logger.info("tagsFilterLabel");
         searchElementByCss(tagsFilterLabel);
-logger.info("tags");
+        logger.info("tags");
         searchElementByCss(tags);
-logger.info("articleFoundCounter");
+        logger.info("articleFoundCounter");
         searchElementByCss(articleFoundCounter);
-logger.info("displayedArticles");
+        logger.info("displayedArticles");
         searchElementByCss(displayedArticles);
-logger.info("listViewButton");
-        searchElementByCss(listViewButton);
-logger.info("galleryViewButton");
-        searchElementByCss(galleryViewButton);
+        logger.info("listViewButton");
+        searchElementByCss(listView);
+        logger.info("galleryViewButton");
+        searchElementByCss(gridView);
     }
 
     @Step("Get list of elements by css")
@@ -318,6 +399,7 @@ logger.info("galleryViewButton");
         waiting(searchElementByCss(displayedArticles));
         logger.info("Set actual information from page to articleExistCount");
         articleExistCount = Integer.parseInt(searchElementByCss(articleFoundCounter).getText().split(" ")[0]);
+        logger.info("Articles exist: " + articleExistCount);
         return this;
     }
 
@@ -326,7 +408,9 @@ logger.info("galleryViewButton");
         logger.info("scroll down");
         while (articleExistCount != articleDisplayedCount) {
             searchElementByCss(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.END);
+            articleExistCount = Integer.parseInt(searchElementByCss(articleFoundCounter).getText().split(" ")[0]);
             articleDisplayedCount = getElements(displayedArticles).size();
+            logger.info("Articles displayed: " + articleDisplayedCount);
         }
         waiting(searchElementsByCss(displayedArticles));
     }

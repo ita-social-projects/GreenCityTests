@@ -5,10 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class ManagerDao {
     private static volatile ManagerDao instance = null;
@@ -22,7 +19,7 @@ public final class ManagerDao {
         registerDriver();
         readProperties();
     }
-
+    private Properties property = new Properties();
     private void registerDriver() {
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
@@ -31,11 +28,19 @@ public final class ManagerDao {
             e.printStackTrace();
         }
     }
-//TODO hide log info
+
+    //TODO hide log info
     private void readProperties() {
-        username = "";
-        password = "";
-        url = "";
+        username =  System.getenv().get("JDBC_USERNAME");
+        password = System.getenv().get("JDBC_PASSWROD");
+        url = System.getenv().get("JDBC_URL");
+        /*-
+        username =  System.getenv().get(property.getProperty("JDBC_USERNAME"));
+        password = System.getProperty("JDBC_PASSWROD");
+        System.getenv().get(property.getProperty("JDBC_PASSWROD"));
+        url = System.getProperty("JDBC_URL");
+        System.getenv().get(property.getProperty("JDBC_URL"));
+        */
     }
 
     public static ManagerDao get() {

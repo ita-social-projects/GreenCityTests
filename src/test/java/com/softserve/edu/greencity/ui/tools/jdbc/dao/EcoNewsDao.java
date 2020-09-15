@@ -45,6 +45,11 @@ public class EcoNewsDao {
         return selectByField("title", title);
     }
 
+    ///***************************************************
+    public List<EcoNewsEntity> selectByIdCorrect(long id) {
+        return selectByField("id", String.valueOf(id));
+    }
+
     public List<EcoNewsEntity> selectAll() {
         Statement statement = ManagerDao.get().getStatement();
         List<List<String>> rows = null;
@@ -60,6 +65,7 @@ public class EcoNewsDao {
         ManagerDao.closeStatement(statement);
         return EcoNewsEntity.getListEcoNewsEntity(rows);
     }
+
     public List<EcoNewsEntity> selectAllOrderByDate() {
         Statement statement = ManagerDao.get().getStatement();
         List<List<String>> rows = null;
@@ -75,6 +81,7 @@ public class EcoNewsDao {
         ManagerDao.closeStatement(statement);
         return EcoNewsEntity.getListEcoNewsEntity(rows);
     }
+
     public void update(EcoNewsEntity ecoNewsEntity) {
         Statement statement = ManagerDao.get().getStatement();
         // TODO

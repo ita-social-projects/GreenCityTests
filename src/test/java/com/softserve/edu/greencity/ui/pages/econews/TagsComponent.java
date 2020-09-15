@@ -96,11 +96,11 @@ public class TagsComponent {
     /**
      * Check is some WebElement are choosen(clicked first time)
      *
-     * @param newsfilter
+     * @param tag
      * @return boolean
      */
-    protected boolean isTagActive(Tag newsfilter) {
-        return getWebElementByTagName(newsfilter)
+    public boolean isTagActive(Tag tag) {
+        return getWebElementByTagName(tag)
                 .getAttribute("class")
                 .matches(".*(clicked-filter-button|filters-color).*");
     }

@@ -1,4 +1,7 @@
 package com.softserve.edu.greencity.ui.data;
+
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;

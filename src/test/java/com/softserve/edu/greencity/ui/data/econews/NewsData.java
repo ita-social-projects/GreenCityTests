@@ -9,12 +9,14 @@ public class NewsData {
 
     private String title;
     private List<Tag> tags;
+    private Tag tag;
     private String source;
     private String content;
     private String filePath;
 
     /**
      * Constructor.
+     *
      * @param tags
      * @param title
      * @param content
@@ -29,6 +31,23 @@ public class NewsData {
 
     /**
      * Constructor.
+     *
+     * @param tags
+     * @param title
+     * @param content
+     * @param source
+     */
+    public NewsData(List<Tag> tags, String title, String content, String source) {
+        this.title = title;
+        this.tags = tags;
+        this.content = content;
+        this.source = source;
+        this.filePath = "";
+    }
+
+    /**
+     * Constructor.
+     *
      * @param tags
      * @param title
      * @param content
@@ -46,7 +65,7 @@ public class NewsData {
     public String getFilePath() {
         return filePath;
     }
-    
+
     public String getTitle() {
         return title;
     }
@@ -65,19 +84,20 @@ public class NewsData {
 
     /**
      * Method to convert list of Tags to sorted list of Strings
+     *
      * @return List<String>
      */
     public List<String> getTagsName() {
-    	List<String> list = new ArrayList<>();
-    	for(Tag current : getTags()) {
-    		list.add(current.toString().toLowerCase());
-    	}
-    	Collections.sort(list);
-		return list;
+        List<String> list = new ArrayList<>();
+        for (Tag current : getTags()) {
+            list.add(current.toString().toLowerCase());
+        }
+        Collections.sort(list);
+        return list;
     }
 
     @Override
-	public String toString() {
-		return "NewsData [title=" + title + ", tags=" + tags.toString() + ", content=" + content + "]";
-	}
+    public String toString() {
+        return "NewsData [title=" + title + ", tags=" + tags.toString() + ", content=" + content + "]";
+    }
 }

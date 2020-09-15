@@ -42,6 +42,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-224")
     @Description("Verify that user can sign in with valid credentials")
     public void signInWithValidCredentials() {
+        logger.info("Starting signInWithValidCredentials");
         User user = UserRepository.get().temporary();
         MyCabinetPage myCabinetPage = loadApplication()
                 .signIn()
@@ -61,6 +62,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-225")
     @Description("Verify that user can't sign in with unregistered credentials")
     public void signInWithUnregisteredCredentials() {
+        logger.info("Starting signInWithUnregisteredCredentials");
         User user = UserRepository.get().unregisterUser();
 
         String errorText = loadApplication()
@@ -75,6 +77,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-30")
     @Description("Verify that user can't sign in with invalid password")
     public void signInWithInvalidPassword() {
+        logger.info("Starting signInWithInvalidPassword");
         User user = UserRepository.get().userCredentialsWithInvalidPassword();
 
         String errorText = loadApplication()
@@ -89,6 +92,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-35")
     @Description("Verify that user can sign out")
     public void signOutValidation() {
+        logger.info("Starting signOutValidation");
         User user = UserRepository.get().temporary();
 
         TopGuestComponent topGuestComponent = loadApplication()
@@ -106,6 +110,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-228")
     @Description("Verify 'Sign in' form UI")
     public void signInFormValidation() {
+        logger.info("Starting signInFormValidation");
         LoginComponent loginComponent = loadApplication().signIn();
         assertSoftly().assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
         assertSoftly().assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
@@ -135,6 +140,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-229")
     @Description("Verify that user can't sign in leaving required fields empty #616")
     public void singInWithEmptyRequiredFields() {
+        logger.info("Starting singInWithEmptyRequiredFields");
         User user = UserRepository.get().emptyUserCredentials();
 
         ManualLoginComponent manualLoginComponent = loadApplication()
@@ -158,6 +164,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-492")
     @Description("Verify that 'Sign-up' form appears after click on ‘Sign-up’ link at the bottom of the 'Sign in' form")
     public void signUpLinkValidation() {
+        logger.info("Starting signUpLinkValidation");
         String titleString = loadApplication()
                 .signIn()
                 .clickSignUpLink()
@@ -169,6 +176,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-497")
     @Description("Verify 'Close' button functionality of the 'Sign in' form")
     public void signInFormCloseButtonValidation() {
+        logger.info("Starting signInFormCloseButtonValidation");
         boolean isLoginComponentClosed = loadApplication()
                 .signIn()
                 .isLoginComponentClosed();
@@ -179,6 +187,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-522")
     @Description("Verify that user can't sign in leaving 'Email' field empty")
     public void signInWithEmptyEmailFieldValidation() {
+        logger.info("Starting signInWithEmptyEmailFieldValidation");
         User user = UserRepository.get().userWithEmptyEmailField();
 
         ManualLoginComponent manualLoginComponent = loadApplication()
@@ -196,6 +205,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-523")
     @Description("Verify that user can't sign in leaving 'Password' field empty")
     public void signInWithEmptyPasswordFieldValidation() {
+        logger.info("Starting signInWithEmptyPasswordFieldValidation");
         User user = UserRepository.get().userWithEmptyPasswordField();
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
@@ -214,6 +224,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-524")
     @Description("Verify that user can't sign in with incorrect form of the email and password")
     public void signInWithIncorrectCredentials() {
+        logger.info("Starting signInWithIncorrectCredentials");
         User user = UserRepository.get().invalidUserCredentials();
 
         ManualLoginComponent manualLoginComponent = loadApplication()
@@ -249,6 +260,7 @@ private SoftAssert assertSoftly(){
     @Test(dataProvider = "getCorrectEmails", testName = "GC-525")
     @Description("Verify validation of the ‘Email’ field in the ‘Sign in’ form")
     public void correctEmailValidation(String correctEmail) {
+        logger.info("Starting correctEmailValidation");
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -275,6 +287,7 @@ private SoftAssert assertSoftly(){
     @Test(dataProvider = "getIncorrectEmails", testName = "GC-525")
     @Description("Verify validation of the ‘Email’ field in the ‘Sign in’ form")
     public void incorrectEmailValidation(String incorrectEmail) {
+        logger.info("Starting incorrectEmailValidation");
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -291,6 +304,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-525")
     @Description("Verify validation of the ‘Email’ field in the ‘Sign in’ form")
     public void clearEmailField() {
+        logger.info("Starting clearEmailField");
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -307,6 +321,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-526")
     @Description("Verify validation of the ‘Password’ field in the ‘Sign in’ form")
     public void correctPasswordValidation() {
+        logger.info("Starting correctPasswordValidation");
         String correctPassword = UserRepository.get().temporary().getPassword();
 
         ManualLoginComponent manualLoginComponent = loadApplication()
@@ -331,6 +346,7 @@ private SoftAssert assertSoftly(){
     @Test(dataProvider = "getIncorrectPasswords", testName = "GC-526")
     @Description("Verify validation of the ‘Password’ field in the ‘Sign in’ form")
     public void incorrectPasswordValidation(String incorrectPassword) {
+        logger.info("Starting incorrectPasswordValidation");
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -346,6 +362,7 @@ private SoftAssert assertSoftly(){
     @Test(testName = "GC-211")
     @Description("Verify that modal window with 'Sign in' form appears after unregistered user clicks on the 'Sign in' button")
     public void signInModalValidation() {
+        logger.info("Starting signInModalValidation");
         String titleString = loadApplication()
                 .signIn().getTitleText();
 
@@ -355,6 +372,7 @@ private SoftAssert assertSoftly(){
   //  @Test(testName = "GC-218")
     @Description("Verify that Unregistered user can Sign Up with Google account")
     public void signUpByGoogle() {
+        logger.info("Starting signUpByGoogle");
         User user = UserRepository.get().googleUserCredentials();
 
         WelcomePage welcomePage = loadApplication();
@@ -372,6 +390,7 @@ private SoftAssert assertSoftly(){
   //  @Test(testName = "GC-220")
     @Description("Verify that Unregistered user can Sign In with Google account")
     public void signInByGoogle() {
+        logger.info("Starting signInByGoogle");
         User user = UserRepository.get().googleUserCredentials();
 
         WelcomePage welcomePage = loadApplication();
@@ -391,6 +410,7 @@ private SoftAssert assertSoftly(){
    // @Test(testName = "GC-234")
     @Description("Verify that user can't sign in with Google Account credentials on 'Sign in' pop-up window")
     public void signInByGoogleCredentialsOnManualSignInPopUp() {
+        logger.info("Starting signInByGoogleCredentialsOnManualSignInPopUp");
         User user = UserRepository.get().googleUserCredentials();
         WelcomePage welcomePage = loadApplication()
                 .signUp()

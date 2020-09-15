@@ -3,9 +3,13 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -13,15 +17,17 @@ import java.io.File;
 import java.util.List;
 
 /**
- * CreateNewsPage class
- *
- * @author lv-493 Taqc/Java
+ * @author lv-519 Taqc/Java
  */
-public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
+public class CreateNewsPage extends TopPart {
+
+    protected WebDriverWait wait;
+    protected RemoteWebDriver remoteWebDriver;
 
     private final String VALUE_ATTRIBUTE = "value";
     private final String CLASS_ATTRIBUTE = "class";
     private TagsComponent tagsComponent;
+    private By createNewsMainTitle = By.cssSelector(".title h2");
     private By titleField = By.cssSelector("textarea[formcontrolname='title']");
     private By sourceField = By.cssSelector("div[formarrayname='tags']+label > input");
     private By contentField = By.cssSelector("div.textarea-wrapper > textarea");
@@ -36,6 +42,10 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
     private By sourceDescription = By.cssSelector("div[formarrayname='tags']+label > input + span");
     private By contentDescription = By.cssSelector("p.textarea-description");
     private By pictureDescription = By.xpath("//div[@class = 'text-wrapper']/../../div/../span | //div[@class = 'ng-star-inserted']/../span");
+    private By contentError = By.xpath("//*[@class = 'textarea-description']");
+    private By invalidSourceError = By.xpath("//*[@class = 'warning']");
+    private By invalidImageError = By.cssSelector(".dropzone+.warning");
+    private By tagsError = By.xpath("//p[@class = 'warning']");
 
     public CreateNewsPage(WebDriver driver) {
         super(driver);
@@ -46,175 +56,259 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
         tagsComponent = new TagsComponent(driver);
     }
 
+    @Step("Get tags components")
     public TagsComponent getTagsComponent() {
         tagsComponent = new TagsComponent(driver);
         return tagsComponent;
     }
 
+    @Step("Get create news main title text")
+    public String getCreateNewsMainTitleText() {
+        return searchElementByCss(titleField).getText();
+    }
+
+    @Step("Get title field")
     private WebElement getTitleField() {
         return searchElementByCss(titleField);
     }
 
+    @Step("Set title field")
     public void setTitleField(String text) {
         getTitleField().sendKeys(text);
     }
 
+    @Step("Get title field text")
     public String getTitleFieldText() {
         return getTitleField().getText();
     }
 
+    @Step("Get title field value")
     public String getTitleFieldValue() {
         return getTitleField().getAttribute(VALUE_ATTRIBUTE);
     }
 
+    @Step("Clear title field")
     public void clearTitleField() {
         getTitleField().clear();
     }
 
+    @Step("Click on title field")
     public void clickTitleField() {
         getTitleField().click();
     }
 
+    @Step("Get source field")
     public WebElement getSourceField() {
         return searchElementByCss(sourceField);
     }
 
+    @Step("Set source field")
     public void setSourceField(String text) {
         getSourceField().sendKeys(text);
     }
 
+    @Step("Get source field text")
     public String getSourceFieldText() {
         return getSourceField().getText();
     }
 
+    @Step("Get source field value")
     public String getSourceFieldValue() {
         return getSourceField().getAttribute(VALUE_ATTRIBUTE);
     }
 
+    @Step("Clear source field")
     public void clearSourceField() {
         getSourceField().clear();
     }
 
+    @Step("Click on source field")
     public void clickSourceField() {
         getSourceField().click();
     }
 
+    @Step("Get content field")
     public WebElement getContentField() {
         return searchElementByCss(contentField);
     }
 
+    @Step("Set content field")
     public void setContentField(String text) {
         getContentField().sendKeys(text);
     }
 
+    @Step("Get content field text")
     public String getContentFieldText() {
         return getContentField().getText();
     }
 
+    @Step("Get content field value")
     public String getContentFieldValue() {
         return getContentField().getAttribute(VALUE_ATTRIBUTE);
     }
 
+    @Step("Clear content field")
     public void clearContentField() {
         getContentField().clear();
     }
 
+    @Step("Click on content field")
     public void clickContentField() {
         getContentField().click();
     }
 
+    @Step("Get date field")
     public WebElement getDateField() {
         return searchElementByCss(dateField);
     }
 
+    @Step("Get date field text")
     public String getDateFieldText() {
         return getDateField().getText();
     }
 
+    @Step("Get author field")
     public WebElement getAuthorField() {
         return searchElementByCss(authorField);
     }
 
+    @Step("Get author field text")
     public String getAuthorFieldText() {
         return getAuthorField().getText();
     }
 
+    @Step("Get cancel button")
     public WebElement getCancelButton() {
         return searchElementByCss(cancelButton);
     }
 
-    public void clickCancelButton() {
+    @Step("Click cancel button")
+    public CancelFrame clickCancelButton() {
         getCancelButton().click();
+        return new CancelFrame(driver);
     }
 
+    @Step("Get preview button")
     public WebElement getPreviewButton() {
         return searchElementByCss(previewButton);
     }
 
+    @Step("Click on preview button")
     public void clickPreviewButton() {
         getPreviewButton().click();
     }
 
+    @Step("Get publish button")
     public WebElement getPublishButton() {
         return searchElementByCss(publishButton);
     }
 
+    @Step("Click on publish button")
     public void clickPublishButton() {
         getPublishButton().click();
     }
 
+    @Step("Check if publish button is clickable")
     public boolean isPublishButtonClickable() {
         return getPublishButton().isEnabled();
     }
 
+    @Step("Check if publish button is displayed")
+    public boolean isPublishButtonDisplayed() {
+        return getPublishButton().isDisplayed();
+    }
+
+    @Step("Get drop area")
     public WebElement getDropArea() {
         return searchElementByCss(dropArea);
     }
 
+    @Step("Check if picture is uploaded")
     public Boolean isPictureUploaded() {
         return getDropArea().getAttribute(CLASS_ATTRIBUTE).contains("ng-star-inserted");
     }
 
+    @Step("Get title description")
     public WebElement getTitleDescription() {
         return searchElementByCss(titleDescription);
     }
 
+    @Step("Is title description warning")
     public boolean isTitleDescriptionWarning() {
         return getTitleField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
 
+    @Step("Get source description")
     public WebElement getSourceDescription() {
         return searchElementByCss(sourceDescription);
     }
 
+    @Step("Is source description warning")
     public boolean isSourceDescriptionWarning() {
         return getSourceDescription().getAttribute(CLASS_ATTRIBUTE).contains("warning");
     }
 
+    @Step("Get content description")
     public WebElement getContentDescription() {
         return searchElementByCss(contentDescription);
     }
 
+    @Step("Get content description text")
+    public String getContentErrorText() {
+        return searchElementByXpath(contentError).getText();
+    }
+
+    @Step("Is content description warning")
     public boolean isContentDescriptionWarning() {
         return getContentField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
 
+    @Step("Get picture description")
     public WebElement getPictureDescription() {
         return searchElementByXpath(pictureDescription);
     }
 
+    @Step("Is picture description warning")
     public boolean isPictureDescriptionWarning() {
         return getPictureDescription().getAttribute(CLASS_ATTRIBUTE).contains("warning-color");
     }
 
+    @Step("Get tags description")
     public WebElement getTagsDescription() {
         return searchElementByCss(tagsDescription);
     }
 
+    @Step("Is tags description warning")
     public boolean isTagsDescriptionWarning() {
         return getTagsDescription().getAttribute(CLASS_ATTRIBUTE).contains("warning");
     }
 
+    @Step("Get invalid source error text")
+    public String getInvalidSourceErrorText() {
+        return searchElementByXpath(invalidSourceError).getText();
+    }
+
+    @Step("Get tags error")
+    public WebElement getTagsError() {
+        return searchElementByXpath(tagsError);
+    }
+
+    @Step("Check if tags error is displayed")
+    public boolean isTagsErrorDisplayed() {
+        return getTagsError().isDisplayed();
+    }
+
+    @Step("Get tags error text")
+    public String getTagsErrorText() {
+        return getTagsError().getText();
+    }
+
+    @Step("Get invalid image error text")
+    public String getInvalidImageErrorText() {
+        return searchElementByCss(invalidImageError).getText();
+    }
+
+    @Step("Upload file")
     public CreateNewsPage uploadFile(WebElement dropArea, String path) {
         String absolutePath = new File(path).getAbsolutePath();
         UploadFileUtil.DropFile(new File(absolutePath), dropArea, 0, 0);
@@ -226,12 +320,37 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
         return this;
     }
 
+    @Step("Upload GIF image")
+    public CreateNewsPage uploadGIFImage() {
+        getDropArea().sendKeys("src/test/resources/gifImage.gif");
+        return this;
+    }
+
+    @Step("Upload too large image")
+    public CreateNewsPage uploadTooLargeImage() {
+        uploadFile(getDropArea(), "src/test/resources/tooLargeImage.jpg");
+        return this;
+    }
+
+    @Step("Upload PNG image")
+    public CreateNewsPage uploadPNGImage() {
+        uploadFile(getDropArea(), "src/test/resources/pngImage.png");
+        return this;
+    }
+
+    @Step("Upload JPG image")
+    public CreateNewsPage uploadJPGImage() {
+        uploadFile(getDropArea(), "src/test/resources/validImage.jpg");
+        return this;
+    }
+
     /**
      * Method to fill all fields in CreateNewsPage or only required
      *
      * @param newsData
      * @return CreateNewsPage
      */
+    @Step("Fill all fields")
     public CreateNewsPage fillFields(NewsData newsData) {
         clearTitleField();
         setTitleField(newsData.getTitle());
@@ -253,6 +372,7 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
      *
      * @return List<String>
      */
+    @Step("Get selected tags names")
     public List<String> getSelectedTagsNames() {
         return tagsComponent.getTagsNames(tagsComponent.getSelectedTagsButtons());
     }
@@ -262,6 +382,7 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
      *
      * @return PreViewPage
      */
+    @Step("Go to pre view page")
     public PreViewPage goToPreViewPage() {
         clickPreviewButton();
         return new PreViewPage(driver);
@@ -272,18 +393,17 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
      *
      * @return EcoNewsPage
      */
-    public EcoNewsPage publishNews() {  //FIXME return type should be changed to EcoNewsPage
+    @Step("Publish news")
+    public EcoNewsPage publishNews() {
+        scrollToElement(getPublishButton());
         clickPublishButton();
         try {
             new WebDriverWait(driver, 20)
-                    .until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
-            new WebDriverWait(driver, 20)
                     .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
         } catch (Exception e) {
-            System.out.println("Publish Button(((((");
-            e.printStackTrace();
+            navigateMenuEcoNews();
         }
-        return new EcoNewsPage(driver);
+        return navigateMenuEcoNews();
     }
 
     /**
@@ -292,6 +412,7 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
      *
      * @return EcoNewsPage
      */
+    @Step("Cancel news creating")
     public EcoNewsPage cancelNewsCreating() {
         clickCancelButton();
         CancelFrame cancelFrame = new CancelFrame(driver);
@@ -304,41 +425,47 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
      *
      * @return CreateNewsPage
      */
+    @Step("Continue news creating")
     public CreateNewsPage continueNewsCreating() {
         clickCancelButton();
         CancelFrame cancelFrame = new CancelFrame(driver);
         return cancelFrame.clickContinueEditingButton();
     }
 
+    @Step("Scroll to element")
+    private void scrollToElement(WebElement element) {
+        Actions action = new Actions(driver);
+        action.moveToElement(element).perform();
+    }
+
     /**
      * CancelFrame class
      * Nested class that appears after clicking on Cancel button
      */
-    private class CancelFrame {
+    public class CancelFrame {
 
-        private WebElement continueEditingButton;
-        private WebElement cancelEditingButton;
+        protected WebDriverWait wait;
+        private By continueEditingButton = By.cssSelector("div.continue-btn > button");
+        private By cancelEditingButton = By.cssSelector("button.primary-global-button");
 
-        /**
-         * Constructor CancelFrame
-         *
-         * @param driver
-         */
         public CancelFrame(WebDriver driver) {
-            initElements(driver);
+            checkElements(driver);
         }
 
-        private void initElements(WebDriver driver) {
-            continueEditingButton = driver.findElement(By.cssSelector("div.continue-btn > button"));
-            cancelEditingButton = driver.findElement(By.cssSelector("button.primary-global-button"));
+        private void checkElements(WebDriver driver) {
+            wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOf(getContinueEditingButton()));
+            wait.until(ExpectedConditions.visibilityOf(getCancelEditingButton()));
         }
 
+        @Step("Get continue editing button")
         private WebElement getContinueEditingButton() {
-            return continueEditingButton;
+            return searchElementByCss(continueEditingButton);
         }
 
+        @Step("Get cancel editing button")
         private WebElement getCancelEditingButton() {
-            return cancelEditingButton;
+            return searchElementByCss(cancelEditingButton);
         }
 
         /**
@@ -346,6 +473,7 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
          *
          * @return CreateNewsPage
          */
+        @Step("Click on continue editing button")
         public CreateNewsPage clickContinueEditingButton() {
             getContinueEditingButton().click();
             return new CreateNewsPage(driver);
@@ -356,14 +484,10 @@ public class CreateNewsPage extends TopPart {    protected WebDriverWait wait;
          *
          * @return EcoNewsPage
          */
+        @Step("Click on cancel editing button")
         public EcoNewsPage clickCancelEditingButton() {
             getCancelEditingButton().click();
             return new EcoNewsPage(driver);
         }
-    }
-
-    @Override
-    public WebDriver setDriver() {
-        return this.driver;
     }
 }

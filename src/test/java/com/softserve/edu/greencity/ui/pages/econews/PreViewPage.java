@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -11,11 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.*;
 
 /**
- * PreViewPage class
- *
- * @author lv-493 Taqc/Java
+ * @author lv-519 Taqc/Java
  */
-public class PreViewPage extends TopPart  {
+public class PreViewPage extends TopPart {
 
     protected WebDriverWait wait;
 
@@ -26,15 +25,10 @@ public class PreViewPage extends TopPart  {
     private By imgTwitterLink = By.xpath("//img[contains(@src,'twitter.svg')]");
     private By imgLinkedInLink = By.xpath("//img[contains(@src,'linkedin.svg')]");
     private By imgFacebookLink = By.xpath("//img[contains(@src,'facebook.svg')]");
-    private By backToEditingLink = By.cssSelector("div.button-text");
-    private WebElement publishButton;
+    private By backToEditingButton = By.cssSelector("div.button-text");
+    private By publishButton = By.cssSelector("button[type='submit']");
     private List<WebElement> tagsFields;
 
-    /**
-     * Constructor PreViewPage
-     *
-     * @param driver
-     */
     public PreViewPage(WebDriver driver) {
         super(driver);
         checkElements();
@@ -42,92 +36,111 @@ public class PreViewPage extends TopPart  {
 
     private void checkElements() {
         wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getBackToEditingLink()));
+        wait.until(ExpectedConditions.visibilityOf(getBackToEditingButton()));
     }
 
+    @Step("Get tags fields")
     public List<WebElement> getTagsFields() {
         tagsFields = driver.findElements(By.cssSelector("div.tags > div"));
         return tagsFields;
     }
 
+    @Step("Get title field")
     public WebElement getTitleField() {
         return searchElementByCss(titleField);
     }
 
+    @Step("Get title field text")
     public String getTitleFieldText() {
         return getTitleField().getText();
     }
 
+    @Step("Get date field")
     public WebElement getDateField() {
         return searchElementByCss(dateField);
     }
 
+    @Step("Get date field text")
     public String getDateFieldText() {
         return getDateField().getText();
     }
 
+    @Step("Get author field")
     public WebElement getAuthorField() {
         return searchElementByCss(authorField);
     }
 
+    @Step("Get author field text")
     public String getAuthorFieldText() {
         return getAuthorField().getText();
     }
 
+    @Step("Get content field")
     public WebElement getContentField() {
         return searchElementByCss(contentField);
     }
 
+    @Step("Get content filed text")
     public String getContentFieldText() {
         return getContentField().getText();
     }
 
+    @Step("Get twitter image link")
     public WebElement getImgTwitterLink() {
         return searchElementByXpath(imgTwitterLink);
     }
 
+    @Step("Click on twitter image link")
     public void clickImgTwitterLink() {
         getImgTwitterLink().click();
     }
 
+    @Step("Get LinkedIn image link")
     public WebElement getImgLinkedInLink() {
         return searchElementByXpath(imgLinkedInLink);
     }
 
+    @Step("Click on LinkedIn image link")
     public void clickImgLinkedInLink() {
         getImgLinkedInLink().click();
     }
 
+    @Step("Get FaceBook image link")
     public WebElement getImgFacebookLink() {
         return searchElementByXpath(imgFacebookLink);
     }
 
+    @Step("Click on FaceBook image ling")
     public void clickImgFacebookLink() {
         getImgFacebookLink().click();
     }
 
-    public WebElement getBackToEditingLink() {
-        return searchElementByCss(backToEditingLink);
+    @Step("Get back to editing button")
+    public WebElement getBackToEditingButton() {
+        return searchElementByCss(backToEditingButton);
     }
 
-    public void clickBackToEditingLink() {
-        getBackToEditingLink().click();
+    @Step("Check if back editing button is displayed")
+    public boolean isBackToEditingButtonDisplayed() {
+        return getBackToEditingButton().isDisplayed();
     }
 
+    @Step("Click on back editing button")
+    public void clickBackToEditingButton() {
+        getBackToEditingButton().click();
+    }
+
+    @Step("Get publish button")
     public WebElement getPublishButton() {
-        List<WebElement> list = driver.findElements(By.cssSelector("button[type='submit']"));
-        if (list.size() > 0) {
-            publishButton = list.get(0);
-        } else {
-            return null;
-        }
-        return publishButton;
+        return searchElementByCss(publishButton);
     }
 
+    @Step("Check if publish button is present")
     public boolean isPublishButtonPresent() {
-        return (driver.findElements(By.cssSelector("button[type='submit']")).size() > 0);
+        return getPublishButton().isEnabled();
     }
 
+    @Step("Click on publish button")
     private void clickPublishButton() {
         if (isPublishButtonPresent()) {
             getPublishButton().click();
@@ -141,6 +154,7 @@ public class PreViewPage extends TopPart  {
      *
      * @return List<String>
      */
+    @Step("Get tags names")
     public List<String> getTagsNames() {
         List<String> tagsNames = new ArrayList<>();
         for (WebElement current : getTagsFields()) {
@@ -155,8 +169,9 @@ public class PreViewPage extends TopPart  {
      *
      * @return CreateNewsPage
      */
+    @Step("Go back to create news page")
     public CreateNewsPage backToCreateNewsPage() {
-        clickBackToEditingLink();
+        clickBackToEditingButton();
         return new CreateNewsPage(driver);
     }
 
@@ -165,13 +180,9 @@ public class PreViewPage extends TopPart  {
      *
      * @return EcoNewsPage
      */
+    @Step("Publish news")
     public EcoNewsPage publishNews() {
         clickPublishButton();
         return new EcoNewsPage(driver);
-    }
-
-    @Override
-    public WebDriver setDriver() {
-        return this.driver;
     }
 }
