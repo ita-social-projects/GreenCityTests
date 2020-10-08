@@ -38,6 +38,9 @@ public class TipsTricksPage extends TopPart {
         initElements();
     }
 
+    //TODO SmokeTest checkElements and all TipsTricksTest fail.
+    // There is no "start habit" and other buttons on Tips and tricks page. They all are at main page
+    // Should be moved/removed?
     private void initElements() {
         wait = new WebDriverWait(driver, 10);
         WebElement subscriptionError = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']")));

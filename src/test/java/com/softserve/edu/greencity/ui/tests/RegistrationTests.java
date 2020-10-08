@@ -51,6 +51,10 @@ public class RegistrationTests extends GreenCityTestRunner {
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
 
+        //TOVERIFY: added for test not to fail
+        driver.get(BASE_URL);
+        //END TOVERIFY
+
         loadApplication()
                 .signIn()
                 .getManualLoginComponent()

@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public abstract class GreenCityTestRunner {
-    private static final String BASE_URL = ValueProvider.getBaseUrl();
+    protected static final String BASE_URL = ValueProvider.getBaseUrl();
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
@@ -78,6 +78,7 @@ public abstract class GreenCityTestRunner {
                     new URL("http://localhost:4444/wd/hub"), options);
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(65, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         /*<============================Locale============================>*/
     }
