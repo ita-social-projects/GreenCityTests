@@ -60,6 +60,8 @@ public class EcoNewsPage extends TopPart {
     private By newsInfoSocicalLinksImg = By.cssSelector("div.news-links-images");
     private By newsInfoText = By.cssSelector("div.news-text-content");
     private By newsInfoSource = By.cssSelector("div.source-field");
+    private By listViewActive = By.cssSelector(".list-view-li-active"); //news cards displayed in list view (for explicit wait)
+    private By galleryViewActive = By.cssSelector(".gallery-view-li-active"); //news cards displayed in gallery view (for explicit wait)
 
 
     private int articleExistCount;
@@ -275,6 +277,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to grid view")
     public EcoNewsPage switchToGridView() {
         clickGridView();
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(galleryViewActive));
         return new EcoNewsPage(driver);
     }
 
@@ -286,6 +289,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to list view")
     public EcoNewsPage switchToListView() {
         clickListView();
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(listViewActive));
         return new EcoNewsPage(driver);
     }
 
