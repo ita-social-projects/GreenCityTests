@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.tests;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.ui.data.Languages;
@@ -19,6 +20,7 @@ public class SmokeTest extends GreenCityTestRunner {
         };
     }
 
+    @Ignore
     @Test(dataProvider = "users")
     public void checkElements(final User user) {
         TipsTricksPage tipstrickspage = loadApplication()

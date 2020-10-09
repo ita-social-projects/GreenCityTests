@@ -85,7 +85,7 @@ public class ValueProvider {
     @SneakyThrows
     public static String getvalidUnregisterEmail() {return (String) getRow(22).get(1);}
 
-    /*@SneakyThrows
+    @SneakyThrows
     public static Boolean remote() {
         try {
             logger.info("remote: " + Boolean.valueOf((String) getRow(23).get(1)));
@@ -93,9 +93,6 @@ public class ValueProvider {
         }catch (NullPointerException e){
             throw new Exception("Please add remote: TRUE/FALSE credential to google sheet");
         }
-    }*/
-    public static Boolean remote() {
-        return false;
     }
 
     @SneakyThrows
