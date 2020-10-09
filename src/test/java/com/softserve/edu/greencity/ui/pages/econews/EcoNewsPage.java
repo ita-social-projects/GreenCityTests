@@ -69,10 +69,12 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        checkElements();
+        //checkElements();
     }
 
     private void checkElements() {
+        //No need to wait since visibility is already checked in getGrid/ListView().
+        // Furthermore, implicit & explicit waits will be mixed. Remove?
         wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(getGridView()));
         wait.until(ExpectedConditions.visibilityOf(getListView()));
@@ -277,7 +279,6 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to grid view")
     public EcoNewsPage switchToGridView() {
         clickGridView();
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(galleryViewActive));
         return new EcoNewsPage(driver);
     }
 
@@ -289,7 +290,6 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to list view")
     public EcoNewsPage switchToListView() {
         clickListView();
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(listViewActive));
         return new EcoNewsPage(driver);
     }
 
