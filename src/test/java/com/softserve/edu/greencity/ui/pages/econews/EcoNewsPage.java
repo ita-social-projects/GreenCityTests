@@ -60,8 +60,6 @@ public class EcoNewsPage extends TopPart {
     private By newsInfoSocicalLinksImg = By.cssSelector("div.news-links-images");
     private By newsInfoText = By.cssSelector("div.news-text-content");
     private By newsInfoSource = By.cssSelector("div.source-field");
-    private By listViewActive = By.cssSelector(".list-view-li-active"); //news cards displayed in list view (for explicit wait)
-    private By galleryViewActive = By.cssSelector(".gallery-view-li-active"); //news cards displayed in gallery view (for explicit wait)
 
 
     private int articleExistCount;

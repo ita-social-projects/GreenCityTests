@@ -49,7 +49,6 @@ public class SmokeTest extends GreenCityTestRunner {
 
         myCabinetPage.signOut();
 
-        //Assert.assertEquals(userName, "Taras Malynovskyi");
         Assert.assertEquals(userName, "temp");
     }
 
