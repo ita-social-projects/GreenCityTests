@@ -282,7 +282,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    //    @Test(testName = "GC-588")
+        @Test(testName = "GC-588")
     @Description("Verify that user can`t upload .gif format image")
     public void verifyImpossibilityOfUploadingGifImage() {
         logger.info("verifyImpossibilityOfUploadingGifImage starts");
@@ -298,7 +298,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    //    @Test(testName = "GC-634")
+        @Test(testName = "GC-634")
     @Description("Verify that user can`t add JPEG image more than 10 MB")
     public void verifyImpossibilityOfUploadingTooLargeImage() {
         logger.info("verifyImpossibilityOfUploadingTooLargeImage starts");
@@ -309,7 +309,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadTooLargeImage();
-//        assertSoftly().assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);//TODO BUG
+        assertSoftly().assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);//TODO BUG
 
         createNewsPage.signOut();
     }
@@ -410,7 +410,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         };
     }
 
-    //    @Test(testName = "GC-643", dataProvider = "getInvalidTagsList")//TODO REFACTOR
+        @Test(testName = "GC-643", dataProvider = "getInvalidTagsList")//TODO REFACTOR
     @Description("Verify that user can`t create news with more than 3 tags selected")
     public void verifyPossibilityOfMaxThreeTagsWhenCreateNews(List<Tag> tags) {
         logger.info("verifyPossibilityOfMaxThreeTagsWhenCreateNews starts with parameter : " + tags.toString());
@@ -456,7 +456,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         };
     }
 
-    //    @Test(testName = "GC-654", dataProvider = "getTagsListWithSingleTag")
+        @Test(testName = "GC-654", dataProvider = "getTagsListWithSingleTag")
     @Description("Verify that user can`t create news with 2 or more same tags")
     public void verifyImpossibilityToSelectOneTagTwice(ArrayList<Tag> tags) {
         logger.info("verifyImpossibilityToSelectOneTagTwice starts with parameters : " + tags.toString());
@@ -573,7 +573,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    //    @Test(testName = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
+        @Test(testName = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
     @Description("Verify that news will be created, when user add PNG image less than 10 MB")
     public void verifyNewsCreationWithPNGImage() {
         logger.info("verifyNewsCreationWithPNGImage starts");
@@ -594,7 +594,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    //    @Test(testName = "GC-611")
+        @Test(testName = "GC-611")
     @Description("Verify that news will be created, when user add JPG image less than 10 MB")
     public void verifyNewsCreationWithValidImage() {
         logger.info("verifyNewsCreationWithValidImage starts");
