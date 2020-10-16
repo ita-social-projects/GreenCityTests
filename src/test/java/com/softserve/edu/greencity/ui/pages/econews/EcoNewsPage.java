@@ -70,8 +70,6 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkElements() {
-        //No need to wait since visibility is already checked in getGrid/ListView().
-        // Furthermore, implicit & explicit waits will be mixed. Remove?
         wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(getGridView()));
         wait.until(ExpectedConditions.visibilityOf(getListView()));
