@@ -424,7 +424,7 @@ public class EcoNewsPage extends TopPart {
         logger.info("<---------------------------------------------------------------->");
         logger.info("Verification that all content in the chosen article displayed");
         logger.info("assert all items displayed");
-        logger.info("Titele: " + element.findElement(articleTitle).getText());
+        logger.info("Title: " + element.findElement(articleTitle).getText());
         softAssert.assertTrue(
                 searchElementByCss(articleImage).isDisplayed() &&
                         searchElementByCss(articleEcoButton).isDisplayed() &&
@@ -434,10 +434,12 @@ public class EcoNewsPage extends TopPart {
                         searchElementByCss(articleAuthorName).isDisplayed(),
                 "Assert that all content is displayed in article");
         logger.info("assert text length < 170");
+
+
         softAssert.assertTrue(
-                element.findElement(articleText).getText().trim()
+                element.findElement(articleTitle).getText().trim()
                         .replace("\\s", "").length() < 171,
-                "Assert that topic text lenght < 170. Title: " + element.findElement(articleTitle).getText());
+                "Assert that topic text length < 170. Title: " + element.findElement(articleTitle).getText());
     }
 
     @Step("Verification that all text content in the chosen article displayed")
@@ -445,18 +447,18 @@ public class EcoNewsPage extends TopPart {
         logger.info("<---------------------------------------------------------------->");
         logger.info("Verification that all text content in the chosen article displayed");
         logger.info("assert all text  items displayed");
-        logger.info("Titele: " + element.findElement(articleTitle).getText());
+        logger.info("Text: " + element.findElement(articleText).getText());
         softAssert.assertTrue(
                 searchElementByCss(articleTitle).isDisplayed() &&
                         searchElementByCss(articleText).isDisplayed() &&
                         searchElementByCss(articleCreationDate).isDisplayed() &&
                         searchElementByCss(articleAuthorName).isDisplayed()
                 , "Assert that all text content is displayed in article");
-        logger.info("assert text length < 170");
+        logger.info("assert text length < 200");
         softAssert.assertTrue(
                 element.findElement(articleText).getText().trim()
-                        .replace("\\s", "").length() < 171,
-                "Assert that topic text lenght < 170. Title: " + element.findElement(articleTitle).getText());
+                        .replace("\\s", "").length() < 201,
+                "Assert that text length < 200. Title: " + element.findElement(articleText).getText());
     }
 
     @Step("Verification that all content in the list of articles displayed")
