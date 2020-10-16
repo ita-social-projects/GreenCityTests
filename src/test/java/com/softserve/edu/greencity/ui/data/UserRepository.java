@@ -83,7 +83,7 @@ public final class UserRepository {
         return new User(
                 getdefaultName(),
                 getvalidUnregisterEmail().replace("@", getRandom() + "@"),
-                gettemporaryPass(),
+                getdefaultPass(),
                 getcomfTemporaryPass());
     }
 
