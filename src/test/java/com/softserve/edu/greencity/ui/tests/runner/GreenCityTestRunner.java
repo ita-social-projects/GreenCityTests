@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public abstract class GreenCityTestRunner {
-    protected static final String BASE_URL = ValueProvider.getBaseUrl();
+    private static final String BASE_URL = ValueProvider.getBaseUrl();
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
@@ -109,6 +109,10 @@ public abstract class GreenCityTestRunner {
     }
 
     protected WelcomePage loadApplication() {
+        if (!driver.getCurrentUrl().equals(BASE_URL)) {
+            driver.get(BASE_URL);   //Sometimes loadApplication() is called not in the beginning of a test,
+                                    //so this may be necessary
+        }
         return new WelcomePage(driver);
     }
 

@@ -67,7 +67,6 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        //checkElements();
     }
 
     private void checkElements() {

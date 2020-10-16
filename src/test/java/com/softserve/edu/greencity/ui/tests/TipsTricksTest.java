@@ -12,6 +12,9 @@ import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
+//TODO Clarify requirements!
+// There is no "start habit" and other buttons on Tips and tricks page. They all are at the main page.
+// That is why this test class fails.
 @Ignore
 public class TipsTricksTest extends GreenCityTestRunner {
     @DataProvider

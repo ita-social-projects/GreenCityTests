@@ -20,6 +20,9 @@ public class SmokeTest extends GreenCityTestRunner {
         };
     }
 
+    //TODO Clarify requirements!
+    // There is no "start habit" and other buttons on Tips and tricks page. They all are at the main page.
+    // That is why this test fails.
     @Ignore
     @Test(dataProvider = "users")
     public void checkElements(final User user) {

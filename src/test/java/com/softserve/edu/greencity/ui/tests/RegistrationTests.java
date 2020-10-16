@@ -50,9 +50,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
-
-        driver.get(BASE_URL);   //Added for test not to fail.
-                                //There is no redirect to GreenCity after email verification. Clarify requirements!
+        //There is no redirect to GreenCity after email verification. Clarify requirements!
 
         loadApplication()
                 .signIn()
