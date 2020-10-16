@@ -129,7 +129,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     //TODO Jira task
     /*<======================================Front Bug==========================================>*/
-    //@Test
+    @Test
     @Description("Verify that all content in each article displayed GC-675")
     public void allContentDisplayedTest(){
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
@@ -139,7 +139,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    //@Test
+    @Test
     @Description("Verify that at least text content displayed in each article displayed GC-675")
     public void allTextContentDisplayedTest(){
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
@@ -148,7 +148,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         econewsPage.isArticleTextContentDisplayed(elements);
     }
 
-    //@Test(retryAnalyzer= RetryAnalyzerImpl.class)
+    @Test(retryAnalyzer= RetryAnalyzerImpl.class)
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest(){
         logger.info("ChronologicalNewsTest");
