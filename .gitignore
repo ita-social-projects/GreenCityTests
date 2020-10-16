@@ -54,6 +54,7 @@ hs_err_pid*
 /.idea/
 *.iml
 *.ucls
+/tokens/
 
 # Multi Modules Project
 /**/.externalToolBuilders/
