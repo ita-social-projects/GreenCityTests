@@ -136,7 +136,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         assertSoftly().assertAll();
     }
 
-    //@Test(testName = "GC-520")
+    @Test(testName = "GC-520")
     @Description("Verify that Unregistered User cannot restore password")
     public void restorePassForUnregisterUser() {
         logger.info("Starting restorePassForUnregisterUser");
