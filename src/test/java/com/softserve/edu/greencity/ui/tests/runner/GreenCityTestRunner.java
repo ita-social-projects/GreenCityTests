@@ -78,6 +78,7 @@ public abstract class GreenCityTestRunner {
                     new URL("http://localhost:4444/wd/hub"), options);
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(65, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         /*<============================Locale============================>*/
     }
@@ -108,6 +109,10 @@ public abstract class GreenCityTestRunner {
     }
 
     protected WelcomePage loadApplication() {
+        if (!driver.getCurrentUrl().equals(BASE_URL)) {
+            driver.get(BASE_URL);   //Sometimes loadApplication() is called not in the beginning of a test,
+                                    //so this may be necessary
+        }
         return new WelcomePage(driver);
     }
 
