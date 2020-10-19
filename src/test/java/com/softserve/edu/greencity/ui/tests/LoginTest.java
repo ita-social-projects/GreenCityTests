@@ -368,8 +368,8 @@ private SoftAssert assertSoftly(){
 
         Assert.assertEquals(titleString, SIGN_IN_TITLE);
     }
-    //TODO auth in google via api before clickSingInWithGoogleButton()
-  //  @Test(testName = "GC-218")
+
+    @Test(testName = "GC-218")
     @Description("Verify that Unregistered user can Sign Up with Google account")
     public void signUpByGoogle() {
         logger.info("Starting signUpByGoogle");
@@ -386,8 +386,8 @@ private SoftAssert assertSoftly(){
 
         Assert.assertEquals(topUserName, TOP_USER_NAME);
     }
-//TODO auth in google via api before clickSingInWithGoogleButton()
-  //  @Test(testName = "GC-220")
+
+    @Test(testName = "GC-220")
     @Description("Verify that Unregistered user can Sign In with Google account")
     public void signInByGoogle() {
         logger.info("Starting signInByGoogle");
@@ -406,8 +406,7 @@ private SoftAssert assertSoftly(){
         Assert.assertEquals(topUserName, TOP_USER_NAME);
     }
 
-    //TODO auth in google via api before clickSingInWithGoogleButton()
-   // @Test(testName = "GC-234")
+    @Test(testName = "GC-234")
     @Description("Verify that user can't sign in with Google Account credentials on 'Sign in' pop-up window")
     public void signInByGoogleCredentialsOnManualSignInPopUp() {
         logger.info("Starting signInByGoogleCredentialsOnManualSignInPopUp");
