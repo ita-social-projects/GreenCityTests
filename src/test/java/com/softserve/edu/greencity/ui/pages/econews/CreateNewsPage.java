@@ -29,7 +29,7 @@ public class CreateNewsPage extends TopPart {
     private TagsComponent tagsComponent;
     private By createNewsMainTitle = By.cssSelector(".title h2");
     private By titleField = By.cssSelector("textarea[formcontrolname='title']");
-    private By sourceField = By.cssSelector("div[formarrayname='tags']+label > input");
+    private By sourceField = By.cssSelector("input[formcontrolname='source']");
     private By contentField = By.cssSelector("div.textarea-wrapper > textarea");
     private By dateField = By.cssSelector("div.date > p:first-child > span");
     private By authorField = By.cssSelector("div.date > :nth-child(2n) > span");
