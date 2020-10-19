@@ -32,7 +32,7 @@ public class EcoNewsPage extends TopPart {
     private TagsComponent tagsComponent;
     private By createNewsButton = By.id("create-button");
     private By gridView = By.cssSelector("div.gallery-view");
-    private By listView = By.cssSelector("div.list-view>.one-line");
+    private By listView = By.cssSelector("div.list-view");
     private By foundItems = By.xpath("//*[@class='ng-star-inserted']");
     private By header = By.cssSelector("H1");
     private By tagsFilterBlock = By.cssSelector("app-filter-news");
@@ -297,6 +297,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to single news page by number")
     public SingleNewsPage switchToSingleNewsPageByNumber(int number) {
         logger.info("Switch to single news by number");
+        itemsContainer = getItemsContainer();
         scrollToElement(itemsContainer.chooseNewsByNumber(number).getTitle());
         itemsContainer.chooseNewsByNumber(number).clickTitle();
         return new SingleNewsPage(driver);
