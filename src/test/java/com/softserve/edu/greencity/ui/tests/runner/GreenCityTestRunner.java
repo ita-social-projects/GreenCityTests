@@ -30,9 +30,8 @@ public abstract class GreenCityTestRunner {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
-    public final boolean remote = ValueProvider.remote();
+    boolean remote = ValueProvider.remote();
     ChromeOptions options = new ChromeOptions();
-
 
     @SneakyThrows
     @BeforeSuite
