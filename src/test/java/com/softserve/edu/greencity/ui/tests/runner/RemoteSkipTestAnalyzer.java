@@ -16,7 +16,7 @@ public class RemoteSkipTestAnalyzer implements IInvokedMethodListener {
             return;
         }
         if (method.isAnnotationPresent(LocalOnly.class) && isRemote()) {
-            throw new SkipException("These Tests shouldn't be run in Production");
+            throw new SkipException("These Tests shouldn't be run on remote");
         }
             return;
     }
