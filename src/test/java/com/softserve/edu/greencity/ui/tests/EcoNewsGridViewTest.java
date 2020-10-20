@@ -16,7 +16,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class EcoNewsGridViewTest extends GreenCityTestRunner {
-    User defaultUser;
 
     @BeforeTest
     private SoftAssert assertSoftly(){

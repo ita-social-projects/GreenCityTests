@@ -341,7 +341,9 @@ public class EcoNewsPage extends TopPart {
         return count;
     }
 
-
+    /**
+     * Verify UI of the News page in Gallery view for different screen resolutions
+     */
     @Step
     public void isUiElementsDisplayedWithDifferentScreenResolution() {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
