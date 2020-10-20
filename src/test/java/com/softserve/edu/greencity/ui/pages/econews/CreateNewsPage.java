@@ -322,25 +322,25 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Upload GIF image")
     public CreateNewsPage uploadGIFImage() {
-        getDropArea().sendKeys("src/test/resources/gifImage.gif");
+        uploadFile(getDropArea(),"src/test/resources/images/gifImage.gif");
         return this;
     }
 
     @Step("Upload too large image")
     public CreateNewsPage uploadTooLargeImage() {
-        uploadFile(getDropArea(), "src/test/resources/tooLargeImage.jpg");
+        uploadFile(getDropArea(), "src/test/resources/images/tooLargeImage.jpg");
         return this;
     }
 
     @Step("Upload PNG image")
     public CreateNewsPage uploadPNGImage() {
-        uploadFile(getDropArea(), "src/test/resources/pngImage.png");
+        uploadFile(getDropArea(), "src/test/resources/images/pngValidImage.png");
         return this;
     }
 
     @Step("Upload JPG image")
     public CreateNewsPage uploadJPGImage() {
-        uploadFile(getDropArea(), "src/test/resources/validImage.jpg");
+        uploadFile(getDropArea(), "src/test/resources/images/jpgValidImage.jpg");
         return this;
     }
 
