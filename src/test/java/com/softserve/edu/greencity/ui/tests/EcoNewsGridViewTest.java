@@ -1,6 +1,8 @@
 package com.softserve.edu.greencity.ui.tests;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
@@ -14,6 +16,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class EcoNewsGridViewTest extends GreenCityTestRunner {
+    User defaultUser;
+
     @BeforeTest
     private SoftAssert assertSoftly(){
         return new  SoftAssert();
@@ -44,14 +48,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 .navigateMenuEcoNews();
         assertSoftly().assertTrue(page.isActiveGridView()) ;
         assertSoftly().assertAll();
-    }
-
-    @Test
-    @Description("GC-669")
-    public void verifyingUIForDifferentScreenResolution() {
-        logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
-        EcoNewsPage ecoNewsPage = loadApplication()
-                .navigateMenuEcoNews();
     }
 
     @Test(description = "GC-336")
@@ -126,6 +122,15 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() == 2);
         if(width < 576)
             assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() ==1 );
+    }
+
+    @Test(dataProvider = "windowWidth")
+    @Description("GC-669")
+    public void verifyingUIForDifferentScreenResolution(int width) {
+        logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
+        ecoNewsPage.changeWindowWidth(width);
+        ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
     }
 
     @Test(retryAnalyzer= RetryAnalyzerImpl.class)

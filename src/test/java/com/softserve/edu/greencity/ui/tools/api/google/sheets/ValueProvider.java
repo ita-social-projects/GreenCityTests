@@ -6,7 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.security.GeneralSecurityException;
 
 import static com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet.getRow;
 
@@ -93,6 +95,10 @@ public class ValueProvider {
         //return false;
         }catch (NullPointerException e){
             throw new Exception("Please add remote: TRUE/FALSE credential to google sheet");
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
