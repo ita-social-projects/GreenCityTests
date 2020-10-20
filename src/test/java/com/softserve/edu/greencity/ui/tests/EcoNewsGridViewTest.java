@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -41,6 +42,14 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 .navigateMenuEcoNews();
         assertSoftly().assertTrue(page.isActiveGridView()) ;
         assertSoftly().assertAll();
+    }
+
+    @Test
+    @Description("GC-669")
+    public void verifyingUIForDifferentScreenResolution() {
+        logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .navigateMenuEcoNews();
     }
 
     @Test(description = "GC-336")
