@@ -18,7 +18,7 @@ public class GoogleAccountManagerPage {
     private static String GOOGLE_ACCOUNT_MANAGE_URL = "https://myaccount.google.com/";
     private static String GOOGLE_MAIL_URL = "https://mail.google.com/mail/";
 
-    private By accountButton = By.cssSelector(".gb_La");
+    private By accountButton = By.cssSelector(".gb_Ia.gbii");
     private By signOutButton = By.id("gb_71");
 
     public GoogleAccountManagerPage(WebDriver driver) {
