@@ -1,10 +1,12 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
  *
  * @author lv-492
  */
-public class TagsComponent {
+public class TagsComponent implements StableWebElementSearch {
 
     private WebDriver driver;
     private List<WebElement> tags;
@@ -28,10 +30,11 @@ public class TagsComponent {
     }
 
     private void initElements() {
-        tags = driver.findElements(By.cssSelector("div.tags > button"));
-        if (tags.size() == 0) {
-            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
-        }
+        //tags = driver.findElements(By.cssSelector("div.tags > button"));
+//        if (tags.size() == 0) {
+//            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
+//        }
+        tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
     }
 
     protected List<WebElement> getTags() {
@@ -115,6 +118,7 @@ public class TagsComponent {
         if (!isTagActive(newsfilter)) {
             getWebElementByTagName(newsfilter).click();
         }
+
     }
 
     /**
@@ -133,5 +137,10 @@ public class TagsComponent {
         for (Tag current : tags) {
             deselectTag(current);
         }
+    }
+
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
     }
 }
