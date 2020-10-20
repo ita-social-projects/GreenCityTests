@@ -34,6 +34,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         Assert.assertTrue(page.isActiveGridView(), "Grid view is  active:");
     }
 
+
+
     @Test(description = "GC-334")
     @Description("Open eco news")
     public void NavigateToEcoNews() {
@@ -100,6 +102,30 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                     "assert that length <= 160px");
         }
         assertSoftly().assertAll();
+    }
+    @DataProvider
+    public static Object[][] windowWidth(){
+        return new Object[][]{
+                {320},
+                {576},
+                {768},
+                {1024},
+                {1140},
+        };
+    }
+
+    @Test(dataProvider = "windowWidth")
+    @Description("GC-668")
+    public void countOfColumnsInGridViewTest(int width) {
+        logger.info("Number of columns depending on screen width");
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
+        ecoNewsPage.changeWindowWidth(width);
+        if(width > 1024)
+            assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() == 3);
+        if ((width < 769) && (width > 575))
+            assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() == 2);
+        if(width < 576)
+            assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() ==1 );
     }
 
     @Test(retryAnalyzer= RetryAnalyzerImpl.class)
