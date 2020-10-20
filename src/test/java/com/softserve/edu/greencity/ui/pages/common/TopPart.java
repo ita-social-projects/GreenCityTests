@@ -171,6 +171,13 @@ public abstract class TopPart implements StableWebElementSearch {
         getMainMenuDropdown().clickMenuEcoNews();
         return new EcoNewsPage(driver);
     }
+    @Step("navigate to EcoNewsPage when header is minimized")
+    public EcoNewsPage navigateMenuEcoNewsMinimized() {
+        logger.debug("go to EcoNewsPage");
+        logger.trace("redirect via link");
+        driver.navigate().to("https://ita-social-projects.github.io/GreenCityClient/#/news");
+        return new EcoNewsPage(driver);
+    }
     @Step("navigate to Menu TipsTricks")
     public TipsTricksPage navigateMenuTipsTricks() {
         logger.debug("go to TipsTricks page");
@@ -247,7 +254,6 @@ public abstract class TopPart implements StableWebElementSearch {
     @Step("change Window Width")
     public void changeWindowWidth(int width) {
         WindowManager windowManager = new WindowManager(driver);
-
         windowManager.changeWindowWidth(width);
     }
     @Step("maximizeW indow")

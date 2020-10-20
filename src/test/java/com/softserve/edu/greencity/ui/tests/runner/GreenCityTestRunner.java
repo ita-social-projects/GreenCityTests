@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -30,8 +31,8 @@ public abstract class GreenCityTestRunner {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
-    boolean remote = ValueProvider.remote();
-//    boolean remote = false;
+//    boolean remote = ValueProvider.remote();
+    boolean remote = false;
     ChromeOptions options = new ChromeOptions();
 
     @SneakyThrows
@@ -44,7 +45,7 @@ public abstract class GreenCityTestRunner {
 
     @SneakyThrows
     @BeforeClass
-    public void setUpBeforeClass() {
+    public void setUpBeforeClass() throws MalformedURLException {
         if (remote) {
             /*<==========================Selenoid logs==========================>*/
             String className = this.getClass().getName();
