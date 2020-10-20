@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class EcoNewsPage extends TopPart {
 
     protected WebDriverWait wait;
-
+    SoftAssert softAssert = new SoftAssert();
     private ItemsContainer itemsContainer;
     private TagsComponent tagsComponent;
 
@@ -298,6 +298,28 @@ public class EcoNewsPage extends TopPart {
         return new SingleNewsPage(driver);
     }
 
+    @Step("Count number of Grid Columns")
+    public int countNewsColumns() {
+        logger.info("Count number of news columns in grid view");
+        List<WebElement> elements = getDisplayedArticles();
+        int count = 0;
+        if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
+            if (elements.get(1).getLocation().y == elements.get(2).getLocation().y) {
+                logger.info("3 columns");
+                count = 3;
+            }
+            if (elements.get(1).getLocation().y < elements.get(2).getLocation().y) {
+                logger.info("2 columns");
+                count = 2;
+            }
+        }
+        if(elements.get(0).getLocation().y < elements.get(1).getLocation().y) {
+            logger.info("1 column");
+            count = 1;
+        }
+        return count;
+    }
+
     /**
      * Open CreateNewsPage
      *
@@ -336,7 +358,6 @@ public class EcoNewsPage extends TopPart {
         checkElements();
         return this;
     }
-
 
     /*<======================================Grid View==========================================>*/
     // Functional
@@ -397,8 +418,6 @@ public class EcoNewsPage extends TopPart {
         waiting(searchElementsByCss(DISPLAYED_ARTICLES.getPath()));
         return this;
     }
-
-    SoftAssert softAssert = new SoftAssert();
 
     @Step("Verification that all content in the chosen article displayed")
     private void isArticleContentDisplayed(WebElement element) {
