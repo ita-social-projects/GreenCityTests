@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.ui.data.econews.Tag;
+import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,14 +18,6 @@ public final class ItemComponent {
     protected WebDriverWait wait;
     private final WebDriver driver;
     private final WebElement newsItem;
-    private final By tags = By.cssSelector(".filter-tag div");
-    private final By image = By.cssSelector(".list-image-content");
-    private final By title = By.cssSelector(".title-list p");
-    private final By content = By.cssSelector(".list-text p");
-    private final By contentWrap = By.cssSelector(".list-text");
-    private final By dateOfCreation = By.cssSelector(".user-data-text-date");
-    private final By author = By.cssSelector(".user-data-added-news > p:nth-child(2)");
-    private final By dateAndAuthorContainer = By.cssSelector(".user-data-added-news");
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
         this.driver = driver;
@@ -52,7 +45,7 @@ public final class ItemComponent {
 	}*/
 
     public List<WebElement> getTags() {
-        return newsItem.findElements(tags);
+        return newsItem.findElements(TAGS.getPath());
     }
 
     public boolean isDisplayedTags() {
@@ -65,7 +58,7 @@ public final class ItemComponent {
 
     //Image
     public WebElement getImage() {
-        return newsItem.findElement(image);
+        return newsItem.findElement(IMAGE.getPath());
     }
 
     public boolean isDisplayedImage() {
@@ -75,8 +68,8 @@ public final class ItemComponent {
     //Title
     public WebElement getTitle() {
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(title));
-        return newsItem.findElement(title);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
+        return newsItem.findElement(TITLE.getPath());
     }
 
     public String getTitleText() {
@@ -105,7 +98,7 @@ public final class ItemComponent {
 
     //Content
     public WebElement getContent() {
-        return newsItem.findElement(content);
+        return newsItem.findElement(CONTENT.getPath());
     }
 
     public String getContentText() {
@@ -127,7 +120,7 @@ public final class ItemComponent {
     }
 
     public int getContentWrapHeight() {
-        return driver.findElement(contentWrap).getSize().getHeight();
+        return driver.findElement(CONTENT_WRAP.getPath()).getSize().getHeight();
     }
 
     protected void clickContent() {
@@ -142,8 +135,8 @@ public final class ItemComponent {
     //DateOfCreation
     public WebElement getDateOfCreation() {
         wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(dateOfCreation));
-        return newsItem.findElement(dateOfCreation);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(DATE_OF_CREATION.getPath()));
+        return newsItem.findElement(DATE_OF_CREATION.getPath());
     }
 
     public String getDateOfCreationText() {
@@ -171,7 +164,7 @@ public final class ItemComponent {
 
     //Author
     private WebElement getAuthor() {
-        return newsItem.findElement(author);
+        return newsItem.findElement(AUTHOR.getPath());
     }
 
     public String getAuthorText() {
