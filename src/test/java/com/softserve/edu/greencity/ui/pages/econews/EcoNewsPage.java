@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
@@ -330,11 +331,11 @@ public class EcoNewsPage extends TopPart {
     public void isUiElementsDisplayedWithDifferentScreenResolution() {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
         softAssert.assertTrue(
-                 searchElementByCss(header).isDisplayed() &&
-                         //searchElementByCss(createNewsButton).isDisplayed() &&
-                         searchElementByCss(tagsFilterBlock).isDisplayed() &&
-                         searchElementByCss(articleFoundCounter).isDisplayed() &&
-                         searchElementByCss(displayedArticles).isDisplayed(),
+                 searchElementByCss(HEADER.getPath()).isDisplayed() &&
+                         //searchElementByCss(CREATE_NEWS_BUTTON.getPath()).isDisplayed() &&
+                         searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
+                         searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
                 "Assert that all UI elements in Eco News page is visible"
         );
     }

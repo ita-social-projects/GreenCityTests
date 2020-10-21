@@ -125,7 +125,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @Test(dataProvider = "windowWidth")
     @Description("GC-669")
-    public void verifyingUIForDifferentScreenResolution(int width) {
+    public void verifyingUIForDifferentScreenResolutionTest(int width) {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
         ecoNewsPage.changeWindowWidth(width);
