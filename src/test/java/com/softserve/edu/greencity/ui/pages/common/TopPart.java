@@ -256,10 +256,9 @@ public abstract class TopPart implements StableWebElementSearch {
         WindowManager windowManager = new WindowManager(driver);
         windowManager.changeWindowWidth(width);
     }
-    @Step("maximizeW indow")
+    @Step("maximize Window")
     public void maximizeWindow() {
         WindowManager windowManager = new WindowManager(driver);
-
         windowManager.maximizeWindow();
     }
     @Override
