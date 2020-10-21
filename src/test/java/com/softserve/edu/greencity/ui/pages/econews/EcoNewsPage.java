@@ -332,7 +332,6 @@ public class EcoNewsPage extends TopPart {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
         softAssert.assertTrue(
                  searchElementByCss(HEADER.getPath()).isDisplayed() &&
-                         //searchElementByCss(CREATE_NEWS_BUTTON.getPath()).isDisplayed() &&
                          searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
                          searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
                          searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
