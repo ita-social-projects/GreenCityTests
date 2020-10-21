@@ -147,7 +147,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         assertSoftly().assertTrue(econewsPage.getnewsInfoDot().isDisplayed(),"Dot displayed");
         assertSoftly().assertTrue(econewsPage.getnewsInfoAuthor().isDisplayed(),"Author displayed");
         assertSoftly().assertTrue(econewsPage.getnewsInfoImage().isDisplayed(),"Image displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoSocicalLinksImg().isDisplayed(),"Social buttons displayed");
+        assertSoftly().assertTrue(econewsPage.getnewsInfoSocialLinksImg().isDisplayed(),"Social buttons displayed");
         assertSoftly().assertTrue(econewsPage.getnewsInfoText().isDisplayed(),"Text displayed");
         assertSoftly().assertTrue(econewsPage.getnewsInfoSource().isDisplayed(),"Source displayed");
         assertSoftly().assertAll();

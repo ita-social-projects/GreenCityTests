@@ -1,36 +1,30 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
-
-import io.qameta.allure.Step;
+import com.softserve.edu.greencity.ui.data.econews.Tag;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Pattern;
 
 public final class ItemComponent {
 
-    private WebDriver driver;
     protected WebDriverWait wait;
-
-    private WebElement newsItem;
-    private By tags = By.cssSelector(".filter-tag div");
-    private By image = By.cssSelector(".list-image-content");
-    private By title = By.cssSelector(".title-list p");
-    private By content = By.cssSelector(".list-text p");
-    private By contentWrap = By.cssSelector(".list-text");
-    private By dateOfCreation = By.cssSelector(".user-data-text-date");
-    private By author = By.cssSelector(".user-data-added-news > p:nth-child(2)");
-    private By dateAndAuthorContainer = By.cssSelector(".user-data-added-news");
+    private final WebDriver driver;
+    private final WebElement newsItem;
+    private final By tags = By.cssSelector(".filter-tag div");
+    private final By image = By.cssSelector(".list-image-content");
+    private final By title = By.cssSelector(".title-list p");
+    private final By content = By.cssSelector(".list-text p");
+    private final By contentWrap = By.cssSelector(".list-text");
+    private final By dateOfCreation = By.cssSelector(".user-data-text-date");
+    private final By author = By.cssSelector(".user-data-added-news > p:nth-child(2)");
+    private final By dateAndAuthorContainer = By.cssSelector(".user-data-added-news");
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
         this.driver = driver;
@@ -200,5 +194,21 @@ public final class ItemComponent {
         }
         Collections.sort(str);
         return str;
+    }
+
+    /**
+     * Checks if at least one of tags provided is present in news
+     * @param tags tags to check
+     * @return
+     */
+    public boolean areTagsPresent(List<Tag> tags) {
+        for(WebElement actualTag : getTags()) {
+            for(Tag tagToCheck : tags) {
+                if(actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

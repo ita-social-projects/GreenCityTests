@@ -5,6 +5,8 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
+import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
+
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -30,36 +32,8 @@ public class EcoNewsPage extends TopPart {
     SoftAssert softAssert = new SoftAssert();
     private ItemsContainer itemsContainer;
     private TagsComponent tagsComponent;
-    private By createNewsButton = By.id("create-button");
-    private By gridView = By.cssSelector("div.gallery-view");
-    private By listView = By.cssSelector("div.list-view");
-    private By foundItems = By.xpath("//*[@class='ng-star-inserted']");
-    private By header = By.cssSelector("H1");
-    private By tagsFilterBlock = By.cssSelector("app-filter-news");
-    private By tagsFilterLabel = By.cssSelector("app-filter-news>div.wrapper>span");
-    private By tags = By.cssSelector("app-filter-news>div.wrapper>ul>a");
-    private By activeTags = By.cssSelector("app-filter-news>div.wrapper>ul>a>li.clicked-filter-button");
-    private By uncheckTagButtons = By.cssSelector("app-filter-news>div.wrapper>ul>a>li>div.close");
-    private By articleFoundCounter = By.cssSelector("app-remaining-count>p");
-    private By displayedArticles = By.cssSelector(".gallery-view-li-active.ng-star-inserted");
-    private By displayedArticlesTitles = By.xpath("//div[@class = 'title-list word-wrap']");
-    private By articleImage = By.cssSelector(" div.list-image>img");
-    private By articleEcoButton = By.cssSelector("div.filter-tag>div.ul-eco-buttons");
-    private By articleTitle = By.cssSelector("div.added-data>div.title-list>p");
-    private By articleText = By.cssSelector(" div.added-data>div.list-text>p");
-    private By articleCreationDate = By.cssSelector("div.user-data-added-news>p:first-child");
-    private By articleAuthorName = By.cssSelector("div.user-data-added-news>p:last-child");
-    private By galleryViewButton = By.cssSelector("div.gallery-view");
-    private By listViewButton = By.cssSelector("div.list-view");
-    private By openTopicTags = By.cssSelector("div.tags>div.tags-item");
-    private By newsTitle = By.cssSelector("div.news-title");
-    private By newsInfoDate = By.cssSelector("div.news-info>div.news-info-date");
-    private By newsInfoDot = By.cssSelector("div.news-info>div.news-info-dot");
-    private By newsInfoAuthor = By.cssSelector("div.news-info>div.news-info-author");
-    private By newsInfoImage = By.cssSelector("div>img.news-image-img");
-    private By newsInfoSocicalLinksImg = By.cssSelector("div.news-links-images");
-    private By newsInfoText = By.cssSelector("div.news-text-content");
-    private By newsInfoSource = By.cssSelector("div.source-field");
+
+
     private int articleExistCount;
     private int articleDisplayedCount;
 
@@ -70,13 +44,14 @@ public class EcoNewsPage extends TopPart {
 
     private void checkElements() {
         wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
         wait.until(ExpectedConditions.visibilityOf(getGridView()));
         wait.until(ExpectedConditions.visibilityOf(getListView()));
     }
 
     public List<WebElement> getTopicsInPage() {
         logger.info("Find all displayed topics");
-        return searchElementsByXpath(foundItems);
+        return searchElementsByXpath(FOUND_ITEMS.getPath());
     }
 
     private TagsComponent getTagsComponent() {
@@ -85,12 +60,12 @@ public class EcoNewsPage extends TopPart {
 
     //Header
     public WebElement getHeader() {
-        return driver.findElement(header);
+        return driver.findElement(HEADER.getPath());
     }
 
     @Step("Get found items")
     private WebElement getFoundItems() {
-        return searchElementByXpath(foundItems);
+        return searchElementByXpath(FOUND_ITEMS.getPath());
     }
 
     @Step("Get found items text")
@@ -100,7 +75,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get grid view")
     public WebElement getGridView() {
-        return searchElementByCss(gridView);
+        return searchElementByCss(GALLERY_VIEW_BUTTON.getPath());
     }
 
     @Step("Check if grid view is active")
@@ -130,7 +105,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get list view")
     public WebElement getListView() {
-        return searchElementByCss(listView);
+        return searchElementByCss(LIST_VIEW_BUTTON.getPath());
     }
 
     @Step("Check if list view is displayed")
@@ -148,7 +123,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Check if list view is present")
     public boolean isListViewPresent() {
         try {
-            driver.findElements(listView);
+            driver.findElements(LIST_VIEW_BUTTON.getPath());
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
@@ -170,7 +145,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get create news button")
     private WebElement getCreateNewsButton() {
-        return driver.findElement(createNewsButton);
+        return driver.findElement(CREATE_NEWS_BUTTON.getPath());
     }
 
     @Step("Get create news button text")
@@ -191,7 +166,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Check if create news button is present")
     public boolean isCreateNewsButtonPresent() {
         try {
-            driver.findElement(createNewsButton);
+            driver.findElement(CREATE_NEWS_BUTTON.getPath());
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
@@ -200,6 +175,12 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get items container")
     public ItemsContainer getItemsContainer() {
+        // TODO add here some waiter for uploading news
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return itemsContainer = new ItemsContainer(driver);
     }
 
@@ -234,8 +215,9 @@ public class EcoNewsPage extends TopPart {
     @Step("Select filters")
     public EcoNewsPage selectFilters(List<Tag> tags) {
         logger.info("Select filters");
-        scrollToElement(getTagsComponent().getTags().get(1));
+        //scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().selectTags(tags);
+
         return new EcoNewsPage(driver);
     }
 
@@ -366,8 +348,8 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get displayed articles titles")
     public List<WebElement> getDisplayedArticlesTitles() {
-        searchElementsByCss(displayedArticlesTitles);
-        return driver.findElements(displayedArticlesTitles);
+        searchElementsByCss(DISPLAYED_ARTICLES_TITLES.getPath());
+        return driver.findElements(DISPLAYED_ARTICLES_TITLES.getPath());
     }
 
     @Step("Refresh page")
@@ -383,21 +365,21 @@ public class EcoNewsPage extends TopPart {
     public void pageExistQuickCheck() {
         logger.info("Is element visible: \n");
         logger.info("header");
-        searchElementByCss(header);
+        searchElementByCss(HEADER.getPath());
         logger.info("tagsFilterBlock");
-        searchElementByCss(tagsFilterBlock);
+        searchElementByCss(TAGS_FILTER_BLOCK.getPath());
         logger.info("tagsFilterLabel");
-        searchElementByCss(tagsFilterLabel);
+        searchElementByCss(TAGS_FILTER_LABEL.getPath());
         logger.info("tags");
-        searchElementByCss(tags);
+        searchElementByCss(TAGS.getPath());
         logger.info("articleFoundCounter");
-        searchElementByCss(articleFoundCounter);
+        searchElementByCss(ARTICLES_FOUND_COUNTER.getPath());
         logger.info("displayedArticles");
-        searchElementByCss(displayedArticles);
+        searchElementByCss(DISPLAYED_ARTICLES.getPath());
         logger.info("listViewButton");
-        searchElementByCss(listView);
+        searchElementByCss(LIST_VIEW_BUTTON.getPath());
         logger.info("galleryViewButton");
-        searchElementByCss(gridView);
+        searchElementByCss(GALLERY_VIEW_BUTTON.getPath());
     }
 
     @Step("Get list of elements by css")
@@ -408,7 +390,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return searchElementsByCss(displayedArticles);
+        return searchElementsByCss(DISPLAYED_ARTICLES.getPath());
     }
 
     @Step("Set actual information from page to articleExistCount")
@@ -416,23 +398,25 @@ public class EcoNewsPage extends TopPart {
         logger.info("refresh page");
         driver.navigate().refresh();
         logger.info("wait until at least one article is displayed");
-        waiting(searchElementByCss(displayedArticles));
+        waiting(searchElementByCss(DISPLAYED_ARTICLES.getPath()));
         logger.info("Set actual information from page to articleExistCount");
-        articleExistCount = Integer.parseInt(searchElementByCss(articleFoundCounter).getText().split(" ")[0]);
+        articleExistCount = Integer.parseInt(searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).getText().split(" ")[0]);
         logger.info("Articles exist: " + articleExistCount);
         return this;
     }
 
     @Step("Scroll under end of page")
-    public void scrollDown() {
+    public EcoNewsPage scrollDown() {
         logger.info("scroll down");
         while (articleExistCount != articleDisplayedCount) {
             searchElementByCss(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.END);
-            articleExistCount = Integer.parseInt(searchElementByCss(articleFoundCounter).getText().split(" ")[0]);
-            articleDisplayedCount = getElements(displayedArticles).size();
+            articleExistCount = Integer.parseInt(searchElementByCss(ARTICLES_FOUND_COUNTER.getPath())
+                    .getText().split(" ")[0]);
+            articleDisplayedCount = getElements(DISPLAYED_ARTICLES.getPath()).size();
             logger.info("Articles displayed: " + articleDisplayedCount);
         }
-        waiting(searchElementsByCss(displayedArticles));
+        waiting(searchElementsByCss(DISPLAYED_ARTICLES.getPath()));
+        return this;
     }
 
     @Step("Verification that all content in the chosen article displayed")
@@ -440,22 +424,23 @@ public class EcoNewsPage extends TopPart {
         logger.info("<---------------------------------------------------------------->");
         logger.info("Verification that all content in the chosen article displayed");
         logger.info("assert all items displayed");
-        logger.info("Title: " + element.findElement(articleTitle).getText());
+        logger.info("Title: " + element.findElement(ARTICLE_TITLE.getPath()).getText());
         softAssert.assertTrue(
-                searchElementByCss(articleImage).isDisplayed() &&
-                        searchElementByCss(articleEcoButton).isDisplayed() &&
-                        searchElementByCss(articleTitle).isDisplayed() &&
-                        searchElementByCss(articleText).isDisplayed() &&
-                        searchElementByCss(articleCreationDate).isDisplayed() &&
-                        searchElementByCss(articleAuthorName).isDisplayed(),
+                searchElementByCss(ARTICLE_IMAGE.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_ECO_BUTTON.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_TITLE.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_TEXT.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_CREATION_DATE.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_AUTHOR_NAME.getPath()).isDisplayed(),
                 "Assert that all content is displayed in article");
         logger.info("assert text length < 170");
 
 
         softAssert.assertTrue(
-                element.findElement(articleTitle).getText().trim()
+                element.findElement(ARTICLE_TITLE.getPath()).getText().trim()
                         .replace("\\s", "").length() < 171,
-                "Assert that topic text length < 170. Title: " + element.findElement(articleTitle).getText());
+                "Assert that topic text length < 170. Title: " +
+                        element.findElement(ARTICLE_TITLE.getPath()).getText());
     }
 
     @Step("Verification that all text content in the chosen article displayed")
@@ -463,18 +448,19 @@ public class EcoNewsPage extends TopPart {
         logger.info("<---------------------------------------------------------------->");
         logger.info("Verification that all text content in the chosen article displayed");
         logger.info("assert all text  items displayed");
-        logger.info("Text: " + element.findElement(articleText).getText());
+        logger.info("Text: " + element.findElement(ARTICLE_TEXT.getPath()).getText());
         softAssert.assertTrue(
-                searchElementByCss(articleTitle).isDisplayed() &&
-                        searchElementByCss(articleText).isDisplayed() &&
-                        searchElementByCss(articleCreationDate).isDisplayed() &&
-                        searchElementByCss(articleAuthorName).isDisplayed()
+                searchElementByCss(ARTICLE_TITLE.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_TEXT.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_CREATION_DATE.getPath()).isDisplayed() &&
+                        searchElementByCss(ARTICLE_AUTHOR_NAME.getPath()).isDisplayed()
                 , "Assert that all text content is displayed in article");
         logger.info("assert text length < 200");
         softAssert.assertTrue(
-                element.findElement(articleText).getText().trim()
+                element.findElement(ARTICLE_TEXT.getPath()).getText().trim()
                         .replace("\\s", "").length() < 201,
-                "Assert that text length < 200. Title: " + element.findElement(articleText).getText());
+                "Assert that text length < 200. Title: " +
+                        element.findElement(ARTICLE_TEXT.getPath()).getText());
     }
 
     @Step("Verification that all content in the list of articles displayed")
@@ -513,7 +499,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Get creation date")
     public String getArticleCreationDate(WebElement element) {
         logger.info("Get creation date");
-        String date = element.findElement(articleCreationDate)
+        String date = element.findElement(ARTICLE_CREATION_DATE.getPath())
                 .getText().replace(",", "");
         String[] dateFlip = date.split(" ");
         String dbFormatDate = dateFlip[2] + "-" + dateFlip[0] + "-" + dateFlip[1];
@@ -548,52 +534,53 @@ public class EcoNewsPage extends TopPart {
     @Step("get random topic")
     public WebElement getRandomTopic() {
         final int topicNumber = getRandom();
-        logger.info("get random topic: " + topicNumber + " css: \n" + searchElementsByCss(displayedArticles).get(topicNumber).getCssValue("class"));
-        return searchElementsByCss(displayedArticles).get(topicNumber);
+        logger.info("get random topic: " + topicNumber + " css: \n"
+                + searchElementsByCss(DISPLAYED_ARTICLES.getPath()).get(topicNumber).getCssValue("class"));
+        return searchElementsByCss(DISPLAYED_ARTICLES.getPath()).get(topicNumber);
     }
 
     public int getCreationDateLength(WebElement element) {
-        return element.findElement(articleCreationDate).getSize().getWidth();
+        return element.findElement(ARTICLE_CREATION_DATE.getPath()).getSize().getWidth();
     }
 
     public int getCreationAuthorNameLength(WebElement element) {
-        return element.findElement(articleAuthorName).getSize().getWidth();
+        return element.findElement(ARTICLE_AUTHOR_NAME.getPath()).getSize().getWidth();
     }
 
     public WebElement getopenTopicTags() {
-        return searchElementByCss(openTopicTags);
+        return searchElementByCss(OPEN_TOPICS_TAGS.getPath());
     }
 
     public WebElement getnewsTitle() {
-        return searchElementByCss(newsTitle);
+        return searchElementByCss(NEWS_TITLE.getPath());
     }
 
     public WebElement getnewsInfoDate() {
-        return searchElementByCss(newsInfoDate);
+        return searchElementByCss(NEWS_INFO_DATE.getPath());
     }
 
     public WebElement getnewsInfoDot() {
-        return searchElementByCss(newsInfoDot);
+        return searchElementByCss(NEWS_INFO_DOT.getPath());
     }
 
     public WebElement getnewsInfoAuthor() {
-        return searchElementByCss(newsInfoAuthor);
+        return searchElementByCss(NEWS_INFO_AUTHOR.getPath());
     }
 
     public WebElement getnewsInfoImage() {
-        return searchElementByCss(newsInfoImage);
+        return searchElementByCss(NEWS_INFO_IMAGE.getPath());
     }
 
-    public WebElement getnewsInfoSocicalLinksImg() {
-        return searchElementByCss(newsInfoSocicalLinksImg);
+    public WebElement getnewsInfoSocialLinksImg() {
+        return searchElementByCss(NEWS_INFO_SOCIAL_LINKS_IMG.getPath());
     }
 
     public WebElement getnewsInfoText() {
-        return searchElementByCss(newsInfoText);
+        return searchElementByCss(NEWS_INFO_TEXT.getPath());
     }
 
     public WebElement getnewsInfoSource() {
-        return searchElementByCss(newsInfoSource);
+        return searchElementByCss(NEWS_INFO_SOURCE.getPath());
     }
 
     public int getRandom() {

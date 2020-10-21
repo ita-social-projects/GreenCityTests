@@ -3,9 +3,13 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +21,7 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
  *
  * @author lv-493
  */
-public class ItemsContainer {
+public class ItemsContainer implements StableWebElementSearch {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -143,5 +147,10 @@ public class ItemsContainer {
      */
     public ItemComponent chooseNewsByNumber(int number) {
         return getItemComponents().get(number);
+    }
+
+    @Override
+    public WebDriver setDriver() {
+        return this.driver;
     }
 }
