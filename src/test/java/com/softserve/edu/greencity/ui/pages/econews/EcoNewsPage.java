@@ -40,7 +40,7 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        checkElements();
+        //checkElements();
     }
 
     private void checkElements() {
@@ -299,6 +299,9 @@ public class EcoNewsPage extends TopPart {
         return new SingleNewsPage(driver);
     }
 
+    /**
+     * @return number of columns in gallery view depending on screen width (max = 3, min = 1)
+     */
     @Step("Count number of Grid Columns")
     public int countNewsColumns() {
         logger.info("Count number of news columns in grid view");
@@ -314,11 +317,27 @@ public class EcoNewsPage extends TopPart {
                 count = 2;
             }
         }
-        if(elements.get(0).getLocation().y < elements.get(1).getLocation().y) {
+        if (elements.get(0).getLocation().y < elements.get(1).getLocation().y) {
             logger.info("1 column");
             count = 1;
         }
         return count;
+    }
+
+    /**
+     * Verify UI of the News page in Gallery view for different screen resolutions
+     */
+    @Step
+    public void isUiElementsDisplayedWithDifferentScreenResolution() {
+        logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
+        softAssert.assertTrue(
+                 searchElementByCss(header).isDisplayed() &&
+                         //searchElementByCss(createNewsButton).isDisplayed() &&
+                         searchElementByCss(tagsFilterBlock).isDisplayed() &&
+                         searchElementByCss(articleFoundCounter).isDisplayed() &&
+                         searchElementByCss(displayedArticles).isDisplayed(),
+                "Assert that all UI elements in Eco News page is visible"
+        );
     }
 
     /**
