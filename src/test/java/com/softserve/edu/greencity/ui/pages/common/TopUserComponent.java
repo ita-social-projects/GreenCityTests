@@ -6,6 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+/**
+ * Header for signed in user
+ */
 public class TopUserComponent {
 	protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
 	//
