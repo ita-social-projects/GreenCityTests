@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.PreViewPage;
+import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
@@ -220,7 +220,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     public void verifyPossibilityOfPreViewingNewsPage() {
         logger.info("verifyPossibilityOfPreViewingNewsPage starts");
 
-        PreViewPage preViewPage = loadApplication()
+        PreviewPage preViewPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
@@ -238,7 +238,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     public void verifyThatPreViewIsDisplayedCorrectly() {
         logger.info("verifyThatPreViewIsDisplayedCorrectly starts");
 
-        PreViewPage preViewPage = loadApplication()
+        PreviewPage preViewPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
@@ -682,7 +682,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     public void verifyPossibilityOfGoingBackToEditNews() {
         logger.info("verifyPossibilityOfGoingBackToEditNews starts");
 
-        PreViewPage preViewPage = loadApplication()
+        PreviewPage preViewPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()

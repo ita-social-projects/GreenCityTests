@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The list of all eco news: https://ita-social-projects.github.io/GreenCityClient/#/news
  * @author lv-519 Taqc/Java
  */
 @Getter
@@ -330,11 +331,11 @@ public class EcoNewsPage extends TopPart {
     public void isUiElementsDisplayedWithDifferentScreenResolution() {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
         softAssert.assertTrue(
-                 searchElementByCss(header).isDisplayed() &&
+                 searchElementByCss(HEADER.getPath()).isDisplayed() &&
                          //searchElementByCss(createNewsButton).isDisplayed() &&
-                         searchElementByCss(tagsFilterBlock).isDisplayed() &&
-                         searchElementByCss(articleFoundCounter).isDisplayed() &&
-                         searchElementByCss(displayedArticles).isDisplayed(),
+                         searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
+                         searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
                 "Assert that all UI elements in Eco News page is visible"
         );
     }

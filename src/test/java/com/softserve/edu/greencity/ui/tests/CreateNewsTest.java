@@ -5,7 +5,7 @@ import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.PreViewPage;
+import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import org.testng.Assert;
@@ -76,7 +76,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
     }
 
     /**
-     * Create news test by using Publish button from PreViewPage
+     * Create news test by using Publish button from PreviewPage
      *@author lv-493
      * @param newsData
      */
@@ -86,7 +86,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEcoNews();
         int expectedCount = econewsPage.getNumberOfItemComponent();
-        PreViewPage preViewPage = econewsPage
+        PreviewPage preViewPage = econewsPage
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
                 .goToPreViewPage();
@@ -106,7 +106,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
     }
 
     /**
-     * Create news test after visiting PreViewPage
+     * Create news test after visiting PreviewPage
      *@author lv-493
      * @param newsData
      */
@@ -116,7 +116,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication()
                 .navigateMenuEcoNews();
         int expectedCount = econewsPage.getNumberOfItemComponent();
-        PreViewPage preViewPage = econewsPage.gotoCreateNewsPage()
+        PreviewPage preViewPage = econewsPage.gotoCreateNewsPage()
                 .fillFields(newsData)
                 .goToPreViewPage();
         SoftAssert softAssertPreView = new SoftAssert();
@@ -197,7 +197,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
         softAssert.assertTrue(createNewsPage.isTagsDescriptionWarning(), "Tags warning is not present");
         softAssert.assertAll();
         createNewsPage.getTagsComponent().deselectTags(newsData.getTags());
-        PreViewPage preViewPage = createNewsPage.goToPreViewPage();
+        PreviewPage preViewPage = createNewsPage.goToPreViewPage();
         Assert.assertFalse(preViewPage.isPublishButtonPresent());
         preViewPage.signOut();
     }
