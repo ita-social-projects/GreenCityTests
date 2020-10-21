@@ -93,12 +93,8 @@ public class ValueProvider {
             logger.info("remote: " + Boolean.valueOf((String) getRow(23).get(1)));
         return Boolean.valueOf((String) getRow(23).get(1));
         //return false;
-        }catch (NullPointerException e){
+        }catch (NullPointerException e) {
             throw new Exception("Please add remote: TRUE/FALSE credential to google sheet");
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
