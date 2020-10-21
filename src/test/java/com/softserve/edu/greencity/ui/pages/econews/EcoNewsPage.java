@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import com.softserve.edu.greencity.ui.data.Languages;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
@@ -338,6 +339,13 @@ public class EcoNewsPage extends TopPart {
                          searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
                 "Assert that all UI elements in Eco News page is visible"
         );
+    }
+
+    @Step
+    public void verifyContentItemsUI() {
+        List<WebElement> article = getDisplayedArticles();
+        int articleLeftCorner = article.get(0).getSize().height;
+        System.out.println("height = " + articleLeftCorner);
     }
 
     /**
