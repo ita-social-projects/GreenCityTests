@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import static com.softserve.edu.greencity.ui.locators.PreviewPageLocators.*;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,24 +13,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.*;
 
 /**
+ * The page you get to after clicking "Preview" on creating news
  * @author lv-519 Taqc/Java
  */
-public class PreViewPage extends TopPart {
+public class PreviewPage extends TopPart {
 
     protected WebDriverWait wait;
-
-    private By titleField = By.cssSelector("div.news-title");
-    private By dateField = By.cssSelector("div.news-info-date");
-    private By authorField = By.cssSelector("div.news-info-author");
-    private By contentField = By.cssSelector("div.news-text-content");
-    private By imgTwitterLink = By.xpath("//img[contains(@src,'twitter.svg')]");
-    private By imgLinkedInLink = By.xpath("//img[contains(@src,'linkedin.svg')]");
-    private By imgFacebookLink = By.xpath("//img[contains(@src,'facebook.svg')]");
-    private By backToEditingButton = By.cssSelector("div.button-text");
-    private By publishButton = By.cssSelector("button[type='submit']");
     private List<WebElement> tagsFields;
 
-    public PreViewPage(WebDriver driver) {
+    public PreviewPage(WebDriver driver) {
         super(driver);
         checkElements();
     }
@@ -41,13 +33,13 @@ public class PreViewPage extends TopPart {
 
     @Step("Get tags fields")
     public List<WebElement> getTagsFields() {
-        tagsFields = driver.findElements(By.cssSelector("div.tags > div"));
+        tagsFields = driver.findElements(TAGS_FIELDS.getPath());
         return tagsFields;
     }
 
     @Step("Get title field")
     public WebElement getTitleField() {
-        return searchElementByCss(titleField);
+        return searchElementByCss(TITLE_FIELD.getPath());
     }
 
     @Step("Get title field text")
@@ -57,7 +49,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get date field")
     public WebElement getDateField() {
-        return searchElementByCss(dateField);
+        return searchElementByCss(DATE_FIELD.getPath());
     }
 
     @Step("Get date field text")
@@ -67,7 +59,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get author field")
     public WebElement getAuthorField() {
-        return searchElementByCss(authorField);
+        return searchElementByCss(AUTHOR_FIELD.getPath());
     }
 
     @Step("Get author field text")
@@ -77,7 +69,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get content field")
     public WebElement getContentField() {
-        return searchElementByCss(contentField);
+        return searchElementByCss(CONTENT_FIELD.getPath());
     }
 
     @Step("Get content filed text")
@@ -87,7 +79,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get twitter image link")
     public WebElement getImgTwitterLink() {
-        return searchElementByXpath(imgTwitterLink);
+        return searchElementByXpath(IMG_TWITTER_LINK.getPath());
     }
 
     @Step("Click on twitter image link")
@@ -97,7 +89,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get LinkedIn image link")
     public WebElement getImgLinkedInLink() {
-        return searchElementByXpath(imgLinkedInLink);
+        return searchElementByXpath(IMG_LINKEDIN_LINK.getPath());
     }
 
     @Step("Click on LinkedIn image link")
@@ -107,7 +99,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get FaceBook image link")
     public WebElement getImgFacebookLink() {
-        return searchElementByXpath(imgFacebookLink);
+        return searchElementByXpath(IMG_FACEBOOK_LINK.getPath());
     }
 
     @Step("Click on FaceBook image ling")
@@ -117,7 +109,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get back to editing button")
     public WebElement getBackToEditingButton() {
-        return searchElementByCss(backToEditingButton);
+        return searchElementByCss(BACK_TO_EDITING_BUTTON.getPath());
     }
 
     @Step("Check if back editing button is displayed")
@@ -132,7 +124,7 @@ public class PreViewPage extends TopPart {
 
     @Step("Get publish button")
     public WebElement getPublishButton() {
-        return searchElementByCss(publishButton);
+        return searchElementByCss(PUBLISH_BUTTON.getPath());
     }
 
     @Step("Check if publish button is present")
@@ -165,7 +157,7 @@ public class PreViewPage extends TopPart {
     }
 
     /**
-     * Method to back to CreateNewsPage from PreViewPage
+     * Method to back to CreateNewsPage from PreviewPage
      *
      * @return CreateNewsPage
      */

@@ -9,7 +9,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -360,14 +359,14 @@ public class CreateNewsPage extends TopPart {
     }
 
     /**
-     * Method to open PreViewPage
+     * Method to open PreviewPage
      *
-     * @return PreViewPage
+     * @return PreviewPage
      */
     @Step("Go to pre view page")
-    public PreViewPage goToPreViewPage() {
+    public PreviewPage goToPreViewPage() {
         clickPreviewButton();
-        return new PreViewPage(driver);
+        return new PreviewPage(driver);
     }
 
     /**
