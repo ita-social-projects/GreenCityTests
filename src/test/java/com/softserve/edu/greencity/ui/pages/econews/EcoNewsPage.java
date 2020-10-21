@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * The list of all eco news: https://ita-social-projects.github.io/GreenCityClient/#/news
  * @author lv-519 Taqc/Java
  */
 @Getter

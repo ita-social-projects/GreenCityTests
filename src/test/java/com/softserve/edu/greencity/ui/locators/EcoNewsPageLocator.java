@@ -2,6 +2,9 @@ package com.softserve.edu.greencity.ui.locators;
 
 import org.openqa.selenium.By;
 
+/**
+ * Locators for the list of all eco news: https://ita-social-projects.github.io/GreenCityClient/#/news
+ */
 public enum EcoNewsPageLocator implements Locator {
     CREATE_NEWS_BUTTON(By.id("create-button")),
     FOUND_ITEMS(By.xpath("//*[@class='ng-star-inserted']")),

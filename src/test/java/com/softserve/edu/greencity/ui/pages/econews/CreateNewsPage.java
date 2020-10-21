@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
+import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,25 +28,6 @@ public class CreateNewsPage extends TopPart {
     private final String VALUE_ATTRIBUTE = "value";
     private final String CLASS_ATTRIBUTE = "class";
     private TagsComponent tagsComponent;
-    private By createNewsMainTitle = By.cssSelector(".title h2");
-    private By titleField = By.cssSelector("textarea[formcontrolname='title']");
-    private By sourceField = By.cssSelector("input[formcontrolname='source']");
-    private By contentField = By.cssSelector("div.textarea-wrapper > textarea");
-    private By dateField = By.cssSelector("div.date > p:first-child > span");
-    private By authorField = By.cssSelector("div.date > :nth-child(2n) > span");
-    private By cancelButton = By.cssSelector("div.submit-buttons > :first-child");
-    private By previewButton = By.cssSelector("div.submit-buttons > :first-child+button");
-    private By publishButton = By.cssSelector("div.submit-buttons > button[type='submit']");
-    private By dropArea = By.cssSelector("div.text-wrapper, div.ng-star-inserted > img");
-    private By titleDescription = By.cssSelector("input[formcontrolname='title'] + span");
-    private By tagsDescription = By.cssSelector("div.tags > button + p");
-    private By sourceDescription = By.cssSelector("div[formarrayname='tags']+label > input + span");
-    private By contentDescription = By.cssSelector("p.textarea-description");
-    private By pictureDescription = By.xpath("//div[@class = 'text-wrapper']/../../div/../span | //div[@class = 'ng-star-inserted']/../span");
-    private By contentError = By.xpath("//*[@class = 'textarea-description']");
-    private By invalidSourceError = By.xpath("//*[@class = 'warning']");
-    private By invalidImageError = By.cssSelector(".dropzone+.warning");
-    private By tagsError = By.xpath("//p[@class = 'warning']");
 
     public CreateNewsPage(WebDriver driver) {
         super(driver);
@@ -64,12 +46,12 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get create news main title text")
     public String getCreateNewsMainTitleText() {
-        return searchElementByCss(titleField).getText();
+        return searchElementByCss(TITLE_FIELD.getPath()).getText();
     }
 
     @Step("Get title field")
     private WebElement getTitleField() {
-        return searchElementByCss(titleField);
+        return searchElementByCss(TITLE_FIELD.getPath());
     }
 
     @Step("Set title field")
@@ -99,7 +81,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get source field")
     public WebElement getSourceField() {
-        return searchElementByCss(sourceField);
+        return searchElementByCss(SOURCE_FIELD.getPath());
     }
 
     @Step("Set source field")
@@ -129,7 +111,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get content field")
     public WebElement getContentField() {
-        return searchElementByCss(contentField);
+        return searchElementByCss(CONTENT_FIELD.getPath());
     }
 
     @Step("Set content field")
@@ -159,7 +141,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get date field")
     public WebElement getDateField() {
-        return searchElementByCss(dateField);
+        return searchElementByCss(DATE_FIELD.getPath());
     }
 
     @Step("Get date field text")
@@ -169,7 +151,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get author field")
     public WebElement getAuthorField() {
-        return searchElementByCss(authorField);
+        return searchElementByCss(AUTHOR_FIELD.getPath());
     }
 
     @Step("Get author field text")
@@ -179,7 +161,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get cancel button")
     public WebElement getCancelButton() {
-        return searchElementByCss(cancelButton);
+        return searchElementByCss(CANCEL_BUTTON.getPath());
     }
 
     @Step("Click cancel button")
@@ -190,7 +172,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get preview button")
     public WebElement getPreviewButton() {
-        return searchElementByCss(previewButton);
+        return searchElementByCss(PREVIEW_BUTTON.getPath());
     }
 
     @Step("Click on preview button")
@@ -200,7 +182,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get publish button")
     public WebElement getPublishButton() {
-        return searchElementByCss(publishButton);
+        return searchElementByCss(PUBLISH_BUTTON.getPath());
     }
 
     @Step("Click on publish button")
@@ -220,7 +202,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get drop area")
     public WebElement getDropArea() {
-        return searchElementByCss(dropArea);
+        return searchElementByCss(DROP_AREA.getPath());
     }
 
     @Step("Check if picture is uploaded")
@@ -230,7 +212,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get title description")
     public WebElement getTitleDescription() {
-        return searchElementByCss(titleDescription);
+        return searchElementByCss(TITLE_DESCRIPTION.getPath());
     }
 
     @Step("Is title description warning")
@@ -240,7 +222,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get source description")
     public WebElement getSourceDescription() {
-        return searchElementByCss(sourceDescription);
+        return searchElementByCss(SOURCE_DESCRIPTION.getPath());
     }
 
     @Step("Is source description warning")
@@ -250,12 +232,12 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get content description")
     public WebElement getContentDescription() {
-        return searchElementByCss(contentDescription);
+        return searchElementByCss(CONTENT_DESCRIPTION.getPath());
     }
 
     @Step("Get content description text")
     public String getContentErrorText() {
-        return searchElementByXpath(contentError).getText();
+        return searchElementByXpath(CONTENT_ERROR.getPath()).getText();
     }
 
     @Step("Is content description warning")
@@ -265,7 +247,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get picture description")
     public WebElement getPictureDescription() {
-        return searchElementByXpath(pictureDescription);
+        return searchElementByXpath(PICTURE_DESCRIPTION.getPath());
     }
 
     @Step("Is picture description warning")
@@ -275,7 +257,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get tags description")
     public WebElement getTagsDescription() {
-        return searchElementByCss(tagsDescription);
+        return searchElementByCss(TAGS_DESCRIPTION.getPath());
     }
 
     @Step("Is tags description warning")
@@ -285,12 +267,12 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get invalid source error text")
     public String getInvalidSourceErrorText() {
-        return searchElementByXpath(invalidSourceError).getText();
+        return searchElementByXpath(INVALID_SOURCE_ERROR.getPath()).getText();
     }
 
     @Step("Get tags error")
     public WebElement getTagsError() {
-        return searchElementByXpath(tagsError);
+        return searchElementByXpath(TAGS_ERROR.getPath());
     }
 
     @Step("Check if tags error is displayed")
@@ -305,7 +287,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get invalid image error text")
     public String getInvalidImageErrorText() {
-        return searchElementByCss(invalidImageError).getText();
+        return searchElementByCss(INVALID_IMAGE_ERROR.getPath()).getText();
     }
 
     @Step("Upload file")
