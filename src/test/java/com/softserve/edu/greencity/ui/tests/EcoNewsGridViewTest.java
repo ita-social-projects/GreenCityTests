@@ -147,6 +147,15 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
     @Test
+    @Description("GC-340")
+    public void verifyContentItemsUITest() {
+        logger.info("Verify Content items UI");
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        ecoNewsPage.verifyContentItemsUI();
+
+    }
+
+    @Test
     @Description("GC-341")
     public void openTopicTest(){
         logger.info("openTopicTest test");

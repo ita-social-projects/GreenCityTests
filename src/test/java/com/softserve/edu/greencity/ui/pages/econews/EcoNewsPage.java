@@ -340,6 +340,13 @@ public class EcoNewsPage extends TopPart {
         );
     }
 
+    @Step
+    public void verifyContentItemsUI() {
+        List<WebElement> article = getDisplayedArticles();
+        int articleLeftCorner = article.get(0).getSize().height;
+        System.out.println("height = " + articleLeftCorner);
+    }
+
     /**
      * Open CreateNewsPage
      *
