@@ -30,11 +30,10 @@ public class TagsComponent implements StableWebElementSearch {
     }
 
     private void initElements() {
-        //tags = driver.findElements(By.cssSelector("div.tags > button"));
-//        if (tags.size() == 0) {
-//            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
-//        }
-        tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
+        tags = driver.findElements(By.cssSelector("div.tags > button"));
+        if (tags.size() == 0) {
+            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
+        }
     }
 
     protected List<WebElement> getTags() {
