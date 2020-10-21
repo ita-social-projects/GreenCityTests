@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -14,13 +15,7 @@ public class SingleNewsPage extends TopPart  {
 
     protected WebDriverWait wait;
 
-    private By goToNews = By.cssSelector("div.back-button");
-    private By title = By.cssSelector("div.news-title");
-    private By data = By.cssSelector("div.news-info > div.news-info-date");
-    private By author = By.cssSelector("div.news-info > div.news-info-author");
-    private By picture = By.cssSelector("div.news-image > img.news-image-img");
-    private By content = By.cssSelector("div.news-text");
-    private List<WebElement> tagsList = driver.findElements(By.cssSelector("div.tags > div"));
+    private List<WebElement> tagsList = driver.findElements(TAGS_LIST.getPath());
     private ItemsContainer itemsContainer;
 
     public SingleNewsPage(WebDriver driver) {
@@ -35,7 +30,7 @@ public class SingleNewsPage extends TopPart  {
     }
 
     private WebElement getGoToNews() {
-        return searchElementByCss(goToNews);
+        return searchElementByCss(GO_TO_NEWS.getPath());
     }
 
     private String getGoToNewsText() {
@@ -51,7 +46,7 @@ public class SingleNewsPage extends TopPart  {
     }
 
     private WebElement getTitle() {
-        return searchElementByCss(title);
+        return searchElementByCss(TITLE.getPath());
     }
 
     public String getTitleText() {
@@ -59,7 +54,7 @@ public class SingleNewsPage extends TopPart  {
     }
 
     private WebElement getData() {
-        return searchElementByCss(data);
+        return searchElementByCss(DATA.getPath());
     }
 
     private String getDataText() {
@@ -67,7 +62,7 @@ public class SingleNewsPage extends TopPart  {
     }
 
     private WebElement getAuthor() {
-        return searchElementByCss(author);
+        return searchElementByCss(AUTHOR.getPath());
     }
 
     private String getAuthorText() {
@@ -75,7 +70,7 @@ public class SingleNewsPage extends TopPart  {
     }
 
     private WebElement getContent() {
-        return searchElementByCss(content);
+        return searchElementByCss(CONTENT.getPath());
     }
 
     private String getContentText() {
