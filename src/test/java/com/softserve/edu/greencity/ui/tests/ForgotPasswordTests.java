@@ -30,11 +30,6 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         expectedBorderColorRBG = "rgb(240, 49, 39)";
     }
 
-    @BeforeTest
-    private SoftAssert assertSoftly() {
-        return new SoftAssert();
-    }
-
     private GoogleMailAPI googleMailAPI() {
         return new GoogleMailAPI();
     }
@@ -83,9 +78,9 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertEquals(forgotPasswordComponent.getEmailValidationErrorText(), FORGOT_PASS_EMAIL_VALIDATION_ERROR);
-        assertSoftly().assertAll();
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertEquals(forgotPasswordComponent.getEmailValidationErrorText(), FORGOT_PASS_EMAIL_VALIDATION_ERROR);
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-515")
@@ -109,31 +104,31 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .signIn()
                 .clickForgotPasswordLink();
 
-        assertSoftly().assertEquals(forgotPasswordComponent.getForgotTitleText(), FORGOT_PASS_TITLE);
-        assertSoftly().assertEquals(forgotPasswordComponent.getSubTitleText(), FORGOT_PASS_SUB_TITLE);
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedEmailField());
-        assertSoftly().assertEquals(forgotPasswordComponent.getEmailPlaceholderText(), EMAIL_PLACEHOLDER_TEXT);
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedSubmitButton());
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedGoogleSignInButton());
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedBackLink());
-        assertSoftly().assertEquals(forgotPasswordComponent.getBackLinkLabelText(), BACK_TO_SIGN_IN_LABEL);
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedCloseFormButton());
+        softAssert.assertEquals(forgotPasswordComponent.getForgotTitleText(), FORGOT_PASS_TITLE);
+        softAssert.assertEquals(forgotPasswordComponent.getSubTitleText(), FORGOT_PASS_SUB_TITLE);
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedEmailField());
+        softAssert.assertEquals(forgotPasswordComponent.getEmailPlaceholderText(), EMAIL_PLACEHOLDER_TEXT);
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedSubmitButton());
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedGoogleSignInButton());
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedBackLink());
+        softAssert.assertEquals(forgotPasswordComponent.getBackLinkLabelText(), BACK_TO_SIGN_IN_LABEL);
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedCloseFormButton());
 
         forgotPasswordComponent.changeWindowWidth(800);
 
-        assertSoftly().assertEquals(forgotPasswordComponent.getForgotTitleText(), FORGOT_PASS_TITLE);
-        assertSoftly().assertEquals(forgotPasswordComponent.getSubTitleText(), FORGOT_PASS_SUB_TITLE);
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedEmailField());
-        assertSoftly().assertEquals(forgotPasswordComponent.getEmailPlaceholderText(), EMAIL_PLACEHOLDER_TEXT);
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedSubmitButton());
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedGoogleSignInButton());
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedBackLink());
-        assertSoftly().assertEquals(forgotPasswordComponent.getBackLinkLabelText(), BACK_TO_SIGN_IN_LABEL);
-        assertSoftly().assertTrue(forgotPasswordComponent.isDisplayedCloseFormButton());
+        softAssert.assertEquals(forgotPasswordComponent.getForgotTitleText(), FORGOT_PASS_TITLE);
+        softAssert.assertEquals(forgotPasswordComponent.getSubTitleText(), FORGOT_PASS_SUB_TITLE);
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedEmailField());
+        softAssert.assertEquals(forgotPasswordComponent.getEmailPlaceholderText(), EMAIL_PLACEHOLDER_TEXT);
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedSubmitButton());
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedGoogleSignInButton());
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedBackLink());
+        softAssert.assertEquals(forgotPasswordComponent.getBackLinkLabelText(), BACK_TO_SIGN_IN_LABEL);
+        softAssert.assertTrue(forgotPasswordComponent.isDisplayedCloseFormButton());
 
         forgotPasswordComponent.maximizeWindow();
 
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-520")
@@ -151,13 +146,13 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
-        assertSoftly().assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(BAD_EMAIL_ERROR_MESSAGE));
+        softAssert.assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
+        softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(BAD_EMAIL_ERROR_MESSAGE));
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT, true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(), FORGOT_PASS_MAIL_SUBJECT, 50);
-        assertSoftly().assertEquals(numberOfEmail, 0);
-        assertSoftly().assertAll();
+        softAssert.assertEquals(numberOfEmail, 0);
+        softAssert.assertAll();
     }
 
     //@Test(testName = "GC-504")
@@ -191,14 +186,14 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
-        assertSoftly().assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(RESTORE_EMAIL_ERROR_MESSAGE));
+        softAssert.assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
+        softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(RESTORE_EMAIL_ERROR_MESSAGE));
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT, true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(), FORGOT_PASS_MAIL_SUBJECT, 20);
 
-        assertSoftly().assertEquals(numberOfEmail, 1);
-        assertSoftly().assertAll();
+        softAssert.assertEquals(numberOfEmail, 1);
+        softAssert.assertAll();
     }
 }
 

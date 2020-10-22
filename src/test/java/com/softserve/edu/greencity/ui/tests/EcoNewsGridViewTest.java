@@ -17,11 +17,6 @@ import org.testng.asserts.SoftAssert;
 
 public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
-    @BeforeTest
-    private SoftAssert assertSoftly(){
-        return new  SoftAssert();
-    }
-
     /*<======================================Grid View==========================================>*/
 
     @Test
@@ -45,8 +40,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("NavigateToEcoNews starts");
         EcoNewsPage page = loadApplication()
                 .navigateMenuEcoNews();
-        assertSoftly().assertTrue(page.isActiveGridView()) ;
-        assertSoftly().assertAll();
+        softAssert.assertTrue(page.isActiveGridView()) ;
+        softAssert.assertAll();
     }
 
     @Test(description = "GC-336")
@@ -54,7 +49,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("twelveNewsDisplayed starts");
         EcoNewsPage page = loadApplication()
                 .navigateMenuEcoNews();
-        assertSoftly()
+        softAssert
                 .assertTrue(
                         page
                                 .getTopicsInPage()
@@ -63,7 +58,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 page
                         .getTopicsInPage()
                         .size());
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Test(retryAnalyzer= RetryAnalyzerImpl.class)
@@ -76,10 +71,10 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
         for (WebElement element : elements) {
             logger.info("assert that date:" +  " length <= 95px");
-            assertSoftly().assertTrue(econewsPage.getCreationDateLength(element) < 96,
+            softAssert.assertTrue(econewsPage.getCreationDateLength(element) < 96,
                     "assert that length <= 95px");
         }
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Test(retryAnalyzer= RetryAnalyzerImpl.class)
@@ -92,11 +87,11 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
         for (WebElement element : elements) {
             logger.info("assert that length <= 160px");
-            assertSoftly().assertTrue(econewsPage
+            softAssert.assertTrue(econewsPage
                             .getCreationAuthorNameLength(element) < 161,
                     "assert that length <= 160px");
         }
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
     @DataProvider
     public static Object[][] windowWidth(){
@@ -116,11 +111,11 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
         ecoNewsPage.changeWindowWidth(width);
         if(width > 1024)
-            assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() == 3);
+            softAssert.assertTrue(ecoNewsPage.countNewsColumns() == 3);
         if ((width < 769) && (width > 575))
-            assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() == 2);
+            softAssert.assertTrue(ecoNewsPage.countNewsColumns() == 2);
         if(width < 576)
-            assertSoftly().assertTrue(ecoNewsPage.countNewsColumns() ==1 );
+            softAssert.assertTrue(ecoNewsPage.countNewsColumns() ==1 );
     }
 
     @Test(dataProvider = "windowWidth")
@@ -140,7 +135,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
         for (WebElement element : elements) {
-            assertSoftly()
+            softAssert
                     .assertTrue(element.isEnabled(),
                             "topc is clickble");
         }
@@ -162,16 +157,16 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.getRandomTopic().click();
         logger.info("assert that Tags, Title, Date, Dot, Author, Image, Social buttons, Text, Source displayed");
-        assertSoftly().assertTrue(econewsPage.getopenTopicTags().isDisplayed(),"Tags displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsTitle().isDisplayed(),"Title displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoDate().isDisplayed(),"Date displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoDot().isDisplayed(),"Dot displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoAuthor().isDisplayed(),"Author displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoImage().isDisplayed(),"Image displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoSocialLinksImg().isDisplayed(),"Social buttons displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoText().isDisplayed(),"Text displayed");
-        assertSoftly().assertTrue(econewsPage.getnewsInfoSource().isDisplayed(),"Source displayed");
-        assertSoftly().assertAll();
+        softAssert.assertTrue(econewsPage.getopenTopicTags().isDisplayed(),"Tags displayed");
+        softAssert.assertTrue(econewsPage.getnewsTitle().isDisplayed(),"Title displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoDate().isDisplayed(),"Date displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoDot().isDisplayed(),"Dot displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoAuthor().isDisplayed(),"Author displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoImage().isDisplayed(),"Image displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoSocialLinksImg().isDisplayed(),"Social buttons displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoText().isDisplayed(),"Text displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoSource().isDisplayed(),"Source displayed");
+        softAssert.assertAll();
 
     }
 
@@ -214,9 +209,9 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         List <String> pureDateDB = new ArrayList<>();
         datesDB.forEach(d -> pureDateDB.add(econewsPage.formatChronologicalDateFromDB(d)));
         logger.info("compare  dates order in DB and front");
-        assertSoftly().assertEquals(dates,pureDateDB,
+        softAssert.assertEquals(dates,pureDateDB,
                 "assert dates order in DB and front");
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
     /*<======================================Front Bug==========================================>*/
 
