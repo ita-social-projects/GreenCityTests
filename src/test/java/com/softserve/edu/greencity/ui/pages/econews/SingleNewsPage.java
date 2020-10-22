@@ -65,7 +65,13 @@ public class SingleNewsPage extends TopPart  {
         return searchElementByCss(AUTHOR.getPath());
     }
 
-    private String getAuthorText() {
+    public String getAuthorNameOnly() {
+        String author = getAuthor().getText();
+        String [] arr = author.split(" ", 2);
+        return arr[1];
+    }
+
+    public String getAuthorText(){
         return getAuthor().getText();
     }
 
