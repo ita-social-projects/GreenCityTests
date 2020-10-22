@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Header for signed in user
  */
@@ -44,8 +46,10 @@ public class TopUserComponent {
 	// userNameButton
 
 	public WebElement getUserNameButton() {
+		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(USER_NAME_CSS)));
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		return userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
 	}
