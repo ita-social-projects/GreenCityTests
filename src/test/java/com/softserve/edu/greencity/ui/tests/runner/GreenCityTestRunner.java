@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -33,6 +34,8 @@ public abstract class GreenCityTestRunner {
     protected RemoteWebDriver driver;
     boolean remote = ValueProvider.remote();
     ChromeOptions options = new ChromeOptions();
+
+    protected SoftAssert softAssert;
 
     @SneakyThrows
     @BeforeSuite
@@ -93,6 +96,7 @@ public abstract class GreenCityTestRunner {
     @BeforeMethod
     public void setUp() {
         driver.get(BASE_URL);
+        softAssert = new SoftAssert();
     }
 
 

@@ -1,12 +1,16 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
+import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
+import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
-import org.apache.poi.ss.formula.functions.T;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -46,29 +50,52 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         multipleTags.add(Tag.NEWS); multipleTags.add(Tag.ADS); multipleTags.add(Tag.EVENTS);
 
         // Steps
-        // Step 1
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews()
                 .selectFilters(singleTag);
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), singleTag);
 
-        // Step 2
         ecoNewsPage = ecoNewsPage
                 .switchToSingleNewsPageByNumber(0)
-        // Step 3
                 .switchToEcoNewsPageBack()
-        // Step 4
                 .selectFilters(multipleTags);
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
 
-        // Step 5
         ecoNewsPage = ecoNewsPage
                 .switchToSingleNewsPageByNumber(0)
-        // Step 6
                 .switchToEcoNewsPageBack();
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
+    }
+
+
+
+
+    @Test(testName = "GC-731")
+    @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
+    public void noSourceIfItWasntSpecified() {
+        logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
+
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
+        try {
+            SingleNewsPage singleNewsPage = loadApplication()
+                    .loginIn(UserRepository.get().temporary())
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(newsWithEmptySource)
+                    .publishNews()
+                    .switchToSingleNewsPageByNumber(0);
+
+            softAssert.assertTrue(singleNewsPage.getSourceLinkText().equals(""),
+                    "Checking if news has no source");
+            softAssert.assertAll();
+
+            singleNewsPage.signOut();
+        } finally {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
+        }
     }
 }

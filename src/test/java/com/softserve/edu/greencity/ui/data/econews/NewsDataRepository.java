@@ -192,6 +192,13 @@ public final class NewsDataRepository {
                 "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
     }
 
+    public NewsData getNewsWithoutSource() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.INITIATIVES);
+        return new NewsData(tags, "Еко лавка",
+                "Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, яка вирощується і виробляється на фермерських господарствах.");
+    }
+
     public NewsData getTitleForAutoResizeCheck() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);

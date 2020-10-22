@@ -11,6 +11,9 @@ import io.qameta.allure.Step;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Header for unsigned in user
+ */
 public class TopGuestComponent implements StableWebElementSearch {
     private WebDriver driver;
     private By signInLink = By.cssSelector("li.sign-in-link.tertiary-global-button a");

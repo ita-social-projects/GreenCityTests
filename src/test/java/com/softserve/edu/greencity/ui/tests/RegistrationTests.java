@@ -19,11 +19,6 @@ import org.testng.asserts.SoftAssert;
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner {
 
-    @BeforeTest
-    private SoftAssert assertSoftly() {
-        return new SoftAssert();
-    }
-
     @DataProvider
     public Object[][] successRegistrationUserCreds() {
         return new Object[][]{{UserRepository.get()
@@ -71,7 +66,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         logger.info("Get a title text of the modal window: "
                 + registerComponent.getTitleString());
 
-        assertSoftly().assertEquals("Hello!", registerComponent.getTitleString(),
+        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
 
 
@@ -83,7 +78,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         WebDriverWait wait = new WebDriverWait(driver, 6);
 
         wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
-        assertSoftly().assertTrue(registerComponent.getCongratsModal().isDisplayed());
+        softAssert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));
 
@@ -91,10 +86,10 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
 
-        assertSoftly().assertEquals(manualLoginComponent.getWrongEmailOrPassErrorText(),
+        softAssert.assertEquals(manualLoginComponent.getWrongEmailOrPassErrorText(),
                 "Bad email or password",
                 "The validation message is not equal to the expected one");
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
@@ -126,19 +121,19 @@ public class RegistrationTests extends GreenCityTestRunner {
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
         ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
-        assertSoftly().assertNotNull(new GoogleMailAPI().getconfirmURL(userLoginCredentials.getEmail(), userLoginCredentials.getPassword(), 20));
+        softAssert.assertNotNull(new GoogleMailAPI().getconfirmURL(userLoginCredentials.getEmail(), userLoginCredentials.getPassword(), 20));
         signOutByStorage();
         driver.navigate().refresh();
         new TopGuestComponent(driver).clickSignUpLink();
         manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
         manualRegisterComponent.clickSignUpButton();
-        assertSoftly().assertEquals(
+        softAssert.assertEquals(
                 manualRegisterComponent
                         .getSignUpErrorsMsg(1),
                 "The user already exists by this email",
                 "error msg mismatch"
         );
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Test(dataProvider = "invalidPasswordDataProvider", description = "GC-204")

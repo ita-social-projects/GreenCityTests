@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.*;
@@ -11,7 +12,10 @@ import com.softserve.edu.greencity.ui.tests.runner.RemoteSkipTestAnalyzer;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
@@ -23,27 +27,18 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     private final String CREATE_NEWS_TITLE = "Create news";
     private final String CONTENT_ERROR = "Must be minimum 20 symbols";
-    private final String INVALID_SOURCE_ERROR = " Please add the link of original article/news/post. ";
+    private final String INVALID_SOURCE_ERROR = "Please add the link of original article/news/post. Link must start with http(s)://";
     private final String IMAGE_ERROR = "Download PNG or JPG only. File size should be less than 10MB";
     private final String VALID_TITLE = "Green Day";
     private final String VALID_CONTENT = "Content = description";
     private final String TAGS_ERROR = "Only 3 tags can be added";
 
-    private SoftAssert softAssert;
-
-    @BeforeMethod
-    private void createSoftAssert(){
-        logger.info("assertSoftly starts");
-        softAssert = new SoftAssert();
-    }
 
     private User getTemporaryUser() {
-        logger.info("getTemporaryUser starts");
         return UserRepository.get().temporary();
     }
 
     private EcoNewsService getEcoNewsService() {
-        logger.info("getEcoNewsService starts");
         return new EcoNewsService();
     }
 
@@ -658,14 +653,20 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     public void verifyPossibilityOfCreatingNewsWithEmptySourceField() {
         logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
 
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithEmptySourceField();
         EcoNewsPage ecoNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithEmptySourceField())
+                .fillFields(newsWithEmptySource)
                 .publishNews();
 
-        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
+        softAssert.assertTrue(ecoNewsPage
+                .isNewsDisplayedByTitle(newsWithEmptySource.getTitle()),
+                "Checking if news with title \"" + newsWithEmptySource.getTitle() + "\" is displayed");
+
+
+
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle());
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
         softAssert.assertAll();

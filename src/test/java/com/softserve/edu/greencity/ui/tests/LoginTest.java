@@ -35,10 +35,7 @@ public class LoginTest extends GreenCityTestRunner {
         cssBorderColorProperty = "border-color";
         expectedBorderColorRBG = "rgb(240, 49, 39)";
     }
-@BeforeTest
-private SoftAssert assertSoftly(){
-    return new  SoftAssert();
-}
+
     @Test(testName = "GC-224")
     @Description("Verify that user can sign in with valid credentials")
     public void signInWithValidCredentials() {
@@ -102,9 +99,9 @@ private SoftAssert assertSoftly(){
                 .signOut()
                 .createTopGuestComponent();
 
-        assertSoftly().assertTrue(topGuestComponent.isDisplayedSignInLink());
-        assertSoftly().assertTrue(topGuestComponent.isDisplayedSignUpLink());
-        assertSoftly().assertAll();
+        softAssert.assertTrue(topGuestComponent.isDisplayedSignInLink());
+        softAssert.assertTrue(topGuestComponent.isDisplayedSignUpLink());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-228")
@@ -112,29 +109,29 @@ private SoftAssert assertSoftly(){
     public void signInFormValidation() {
         logger.info("Starting signInFormValidation");
         LoginComponent loginComponent = loadApplication().signIn();
-        assertSoftly().assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
-        assertSoftly().assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
-        assertSoftly().assertTrue(loginComponent.isDisplayedForgotPasswordLink());
-        assertSoftly().assertTrue(loginComponent.isDisplayedSignUpLink());
-        assertSoftly().assertTrue(loginComponent.isDisplayedSingInWithGoogleButton());
+        softAssert.assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
+        softAssert.assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
+        softAssert.assertTrue(loginComponent.isDisplayedForgotPasswordLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSignUpLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSingInWithGoogleButton());
 
         loginComponent.changeWindowWidth(800);
 
-        assertSoftly().assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
-        assertSoftly().assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
-        assertSoftly().assertTrue(loginComponent.getManualLoginComponent().isDisplayedForgotPasswordLink());
-        assertSoftly().assertTrue(loginComponent.isDisplayedSignUpLink());
-        assertSoftly().assertTrue(loginComponent.isDisplayedSingInWithGoogleButton());
+        softAssert.assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
+        softAssert.assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
+        softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedForgotPasswordLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSignUpLink());
+        softAssert.assertTrue(loginComponent.isDisplayedSingInWithGoogleButton());
 
         loginComponent.maximizeWindow();
 
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-229")
@@ -153,12 +150,12 @@ private SoftAssert assertSoftly(){
         String emailBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
         String passwordBorderColor = manualLoginComponent.getPasswordFieldWrapper().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertEquals(passwordBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertTrue(manualLoginComponent.IsDisplayedEmailValidationError());
-        assertSoftly().assertTrue(manualLoginComponent.IsPasswordValidationError());
-        assertSoftly().assertFalse(manualLoginComponent.isEnabledSignInButton());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(emailBorderColor, expectedBorderColorRBG);
+        softAssert.assertEquals(passwordBorderColor, expectedBorderColorRBG);
+        softAssert.assertTrue(manualLoginComponent.IsDisplayedEmailValidationError());
+        softAssert.assertTrue(manualLoginComponent.IsPasswordValidationError());
+        softAssert.assertFalse(manualLoginComponent.isEnabledSignInButton());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-492")
@@ -197,9 +194,9 @@ private SoftAssert assertSoftly(){
 
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertFalse(manualLoginComponent.isEnabledSignInButton());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertFalse(manualLoginComponent.isEnabledSignInButton());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-523")
@@ -216,9 +213,9 @@ private SoftAssert assertSoftly(){
 
         String passwordFieldBorderColor = manualLoginComponent.getPasswordFieldWrapper().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(passwordFieldBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertFalse(manualLoginComponent.isEnabledSignInButton());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(passwordFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertFalse(manualLoginComponent.isEnabledSignInButton());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-524")
@@ -239,11 +236,11 @@ private SoftAssert assertSoftly(){
         String emailValidationErrorText = manualLoginComponent.getEmailValidationErrorText();
         String passwordValidationErrorText = manualLoginComponent.getPasswordValidationErrorText();
 
-        assertSoftly().assertEquals(emailBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertEquals(passwordBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertEquals(emailValidationErrorText, SIGN_IN_EMAIL_VALIDATION_ERROR);
-        assertSoftly().assertEquals(passwordValidationErrorText, SIGN_IN_PASSWORD_VALIDATION_ERROR);
-        assertSoftly().assertAll();
+        softAssert.assertEquals(emailBorderColor, expectedBorderColorRBG);
+        softAssert.assertEquals(passwordBorderColor, expectedBorderColorRBG);
+        softAssert.assertEquals(emailValidationErrorText, SIGN_IN_EMAIL_VALIDATION_ERROR);
+        softAssert.assertEquals(passwordValidationErrorText, SIGN_IN_PASSWORD_VALIDATION_ERROR);
+        softAssert.assertAll();
     }
 
     @DataProvider
@@ -268,9 +265,9 @@ private SoftAssert assertSoftly(){
 
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");
-        assertSoftly().assertTrue(manualLoginComponent.isSuccessfulEmailValidation());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");
+        softAssert.assertTrue(manualLoginComponent.isSuccessfulEmailValidation());
+        softAssert.assertAll();
     }
 
     @DataProvider
@@ -295,9 +292,9 @@ private SoftAssert assertSoftly(){
 
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
+        softAssert.assertAll();
     }
 
 
@@ -313,9 +310,9 @@ private SoftAssert assertSoftly(){
         manualLoginComponent.getEmailField().clear();
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-    assertSoftly().assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-    assertSoftly().assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
-    assertSoftly().assertAll();
+    softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+    softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
+    softAssert.assertAll();
     }
 
     @Test(testName = "GC-526")
@@ -330,9 +327,9 @@ private SoftAssert assertSoftly(){
                 .inputPassword(correctPassword);
 
         String passwordFieldBorderColor = manualLoginComponent.getPasswordFieldWrapper().getCssValue(cssBorderColorProperty);
-        assertSoftly().assertEquals(passwordFieldBorderColor, "rgb(135, 135, 135)");
-        assertSoftly().assertTrue(manualLoginComponent.isSuccessfulPasswordValidation());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(passwordFieldBorderColor, "rgb(135, 135, 135)");
+        softAssert.assertTrue(manualLoginComponent.isSuccessfulPasswordValidation());
+        softAssert.assertAll();
     }
 
     @DataProvider
@@ -354,9 +351,9 @@ private SoftAssert assertSoftly(){
 
         String passwordFieldBorderColor = manualLoginComponent.getPasswordFieldWrapper().getCssValue(cssBorderColorProperty);
 
-        assertSoftly().assertEquals(passwordFieldBorderColor, expectedBorderColorRBG);
-        assertSoftly().assertEquals(manualLoginComponent.getPasswordValidationErrorText(), SIGN_IN_PASSWORD_VALIDATION_ERROR);
-        assertSoftly().assertAll();
+        softAssert.assertEquals(passwordFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertEquals(manualLoginComponent.getPasswordValidationErrorText(), SIGN_IN_PASSWORD_VALIDATION_ERROR);
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-211")
@@ -416,7 +413,7 @@ private SoftAssert assertSoftly(){
                 .signUp()
                 .clickGoogleSignUpButton()
                 .successfulLoginByGoogle(user);
-        assertSoftly().assertEquals(welcomePage.getTopUserName(), TOP_USER_NAME);
+        softAssert.assertEquals(welcomePage.getTopUserName(), TOP_USER_NAME);
 
         welcomePage.signOut().googleAccountSignOut();
         WebElement wrongEmailOrPasswordError = loadApplication()
@@ -424,7 +421,7 @@ private SoftAssert assertSoftly(){
                 .getManualLoginComponent()
                 .unsuccessfullyLogin(user)
                 .getWrongEmailOrPassError();
-        assertSoftly().assertTrue(wrongEmailOrPasswordError.isDisplayed());
-        assertSoftly().assertAll();
+        softAssert.assertTrue(wrongEmailOrPasswordError.isDisplayed());
+        softAssert.assertAll();
     }
 }
