@@ -1,19 +1,29 @@
 package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
+import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
+import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
-import org.apache.poi.ss.formula.functions.T;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
+    @BeforeTest
+    private SoftAssert assertSoftly() {
+        return new SoftAssert();
+    }
 
     @Test
     @Description("GC-670")
@@ -70,5 +80,34 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .switchToEcoNewsPageBack();
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
+    }
+
+
+
+
+    @Test(testName = "GC-731")
+    @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
+    public void noSourceIfItWasntSpecified() {
+        logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
+
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
+        try {
+            SingleNewsPage singleNewsPage = loadApplication()
+                    .loginIn(UserRepository.get().temporary())
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(newsWithEmptySource)
+                    .publishNews()
+                    .switchToSingleNewsPageByNumber(0);
+
+            assertSoftly().assertTrue(singleNewsPage.getSourceLinkText().equals(""),
+                    "Checking if news has no source");
+            assertSoftly().assertAll();
+
+            singleNewsPage.signOut();
+        } finally {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
+        }
     }
 }

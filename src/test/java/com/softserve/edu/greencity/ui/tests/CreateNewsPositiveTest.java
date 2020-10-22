@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
@@ -662,14 +663,20 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     public void verifyPossibilityOfCreatingNewsWithEmptySourceField() {
         logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
 
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithEmptySourceField();
         EcoNewsPage ecoNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithEmptySourceField())
+                .fillFields(newsWithEmptySource)
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
+        assertSoftly().assertTrue(ecoNewsPage
+                .isNewsDisplayedByTitle(newsWithEmptySource.getTitle()),
+                "Checking if news with title \"" + newsWithEmptySource.getTitle() + "\" is displayed");
+
+
+
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle());
         assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
         assertSoftly().assertAll();

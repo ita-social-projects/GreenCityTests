@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.naming.directory.NoSuchAttributeException;
 
 public class SingleNewsPage extends TopPart  {
 
@@ -75,6 +78,26 @@ public class SingleNewsPage extends TopPart  {
 
     private String getContentText() {
         return getContent().getText();
+    }
+
+    private WebElement getSourceTitle() {
+        return searchElementByCss(SOURCE_TITLE.getPath());
+    }
+
+    public String getSourceTitleText() {
+        return getSourceTitle().getText();
+    }
+
+    private WebElement getSourceLink() {
+        return searchElementByCss(SOURCE_LINK.getPath());
+    }
+
+    public String getSourceLinkText() {
+        String link = getSourceLink().getAttribute("href");
+        if(link.equals("null") || link.equals("")) {
+            return "";
+        }
+        return link;
     }
 
     /**
