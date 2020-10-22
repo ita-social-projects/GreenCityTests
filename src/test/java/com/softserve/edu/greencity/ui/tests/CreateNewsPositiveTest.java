@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
@@ -29,24 +30,17 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     private final String CREATE_NEWS_TITLE = "Create news";
     private final String CONTENT_ERROR = "Must be minimum 20 symbols";
-    private final String INVALID_SOURCE_ERROR = " Please add the link of original article/news/post. ";
+    private final String INVALID_SOURCE_ERROR = "Please add the link of original article/news/post. Link must start with http(s)://";
     private final String IMAGE_ERROR = "Download PNG or JPG only. File size should be less than 10MB";
     private final String VALID_TITLE = "Green Day";
     private final String VALID_CONTENT = "Content = description";
     private final String TAGS_ERROR = "Only 3 tags can be added";
+    
 
-
-    @BeforeTest
-    private SoftAssert assertSoftly() {
-        return new SoftAssert();
-    }
-
-    @BeforeTest
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
 
-    @BeforeTest
     private EcoNewsService getEcoNewsService() {
         return new EcoNewsService();
     }
@@ -61,9 +55,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage();
 
-        assertSoftly().assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE);
-        assertSoftly().assertTrue(createNewsPage.isPublishButtonDisplayed());
-        assertSoftly().assertAll();
+        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE);
+        softAssert.assertTrue(createNewsPage.isPublishButtonDisplayed());
+        softAssert.assertAll();
 
         createNewsPage.signOut();
     }
@@ -140,9 +134,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getNewsWithInvalidSourceField());
 
-        assertSoftly().assertFalse(createNewsPage.isPublishButtonClickable());
-        assertSoftly().assertEquals(createNewsPage.getInvalidSourceErrorText(), INVALID_SOURCE_ERROR);
-        assertSoftly().assertAll();
+        softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
+        softAssert.assertEquals(createNewsPage.getInvalidSourceErrorText(), INVALID_SOURCE_ERROR);
+        softAssert.assertAll();
 
         createNewsPage.signOut();
     }
@@ -191,8 +185,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getNewsWithInvalidTitleField());
 
-        assertSoftly().assertFalse(createNewsPage.isPublishButtonClickable());
-        assertSoftly().assertAll();
+        softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
+        softAssert.assertAll();
 
         createNewsPage.signOut();
     }
@@ -208,9 +202,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getNewsWithEmptyContentField());
 
-        assertSoftly().assertFalse(createNewsPage.isPublishButtonClickable());
-        assertSoftly().assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR);
-        assertSoftly().assertAll();
+        softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
+        softAssert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR);
+        softAssert.assertAll();
 
         createNewsPage.signOut();
     }
@@ -227,8 +221,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .goToPreViewPage();
 
-        assertSoftly().assertTrue(preViewPage.isBackToEditingButtonDisplayed());
-        assertSoftly().assertAll();
+        softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
+        softAssert.assertAll();
 
         preViewPage.signOut();
     }
@@ -245,10 +239,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .goToPreViewPage();
 
-        assertSoftly().assertTrue(preViewPage.isBackToEditingButtonDisplayed());
-        assertSoftly().assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE);
-        assertSoftly().assertEquals(preViewPage.getContentFieldText(), VALID_CONTENT);
-        assertSoftly().assertAll();
+        softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
+        softAssert.assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE);
+        softAssert.assertEquals(preViewPage.getContentFieldText(), VALID_CONTENT);
+        softAssert.assertAll();
 
         preViewPage.signOut();
     }
@@ -266,8 +260,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .clickCancelButton()
                 .clickContinueEditingButton();
 
-        assertSoftly().assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE);
-        assertSoftly().assertAll();
+        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE);
+        softAssert.assertAll();
 
         createNewsPage.signOut();
     }
@@ -285,8 +279,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .clickCancelButton()
                 .clickCancelEditingButton();
 
-        assertSoftly().assertTrue(ecoNewsPage.isGridViewDisplayed());
-        assertSoftly().assertAll();
+        softAssert.assertTrue(ecoNewsPage.isGridViewDisplayed());
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -324,7 +318,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadTooLargeImage();
-        assertSoftly().assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);//TODO BUG
+        softAssert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);//TODO BUG
 
         createNewsPage.signOut();
 
@@ -343,10 +337,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -363,10 +357,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData(title))
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(title));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(title));
         getEcoNewsService().deleteNewsByTitle(title);
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(title));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(title));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -395,10 +389,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData(tags))
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -438,23 +432,23 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getNewsWithInvalidTags(tags));
 
-        assertSoftly().assertTrue(createNewsPage.isTagsErrorDisplayed());
-        assertSoftly().assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR);
+        softAssert.assertTrue(createNewsPage.isTagsErrorDisplayed());
+        softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR);
 
         createNewsPage.goToPreViewPage().backToCreateNewsPage();
 
         createNewsPage.getTagsComponent().deselectTags(tags);
         createNewsPage.getTagsComponent().selectTags(tags);
 
-        assertSoftly().assertTrue(createNewsPage.isTagsErrorDisplayed());
-        assertSoftly().assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR);
+        softAssert.assertTrue(createNewsPage.isTagsErrorDisplayed());
+        softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR);
 
         EcoNewsPage ecoNewsPage = createNewsPage.publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithInvalidTags(tags).getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithInvalidTags(tags).getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithInvalidTags(tags).getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithInvalidTags(tags).getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithInvalidTags(tags).getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -490,10 +484,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
         EcoNewsPage ecoNewsPage = createNewsPage.publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -521,10 +515,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -541,10 +535,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidSourceField())
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidSourceField().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidSourceField().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidSourceField().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidSourceField().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidSourceField().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -561,11 +555,11 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         //TODO CHECK THAT DATE IS CREATED
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -582,10 +576,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -605,10 +599,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .uploadPNGImage()
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
 
@@ -629,10 +623,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .uploadJPGImage()
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -649,10 +643,10 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
+        softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -662,17 +656,23 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     public void verifyPossibilityOfCreatingNewsWithEmptySourceField() {
         logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
 
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithEmptySourceField();
         EcoNewsPage ecoNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithEmptySourceField())
+                .fillFields(newsWithEmptySource)
                 .publishNews();
 
-        assertSoftly().assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
+        softAssert.assertTrue(ecoNewsPage
+                .isNewsDisplayedByTitle(newsWithEmptySource.getTitle()),
+                "Checking if news with title \"" + newsWithEmptySource.getTitle() + "\" is displayed");
+
+
+
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle());
-        assertSoftly().assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle()));
+        softAssert.assertAll();
 
         ecoNewsPage.signOut();
     }
@@ -689,14 +689,14 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .goToPreViewPage();
 
-        assertSoftly().assertTrue(preViewPage.isBackToEditingButtonDisplayed());
+        softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
         CreateNewsPage createNewsPage = preViewPage.backToCreateNewsPage();
-        assertSoftly().assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
-        assertSoftly().assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
+        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
+        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
         createNewsPage.navigateMenuEcoNews().gotoCreateNewsPage();
-        assertSoftly().assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
-        assertSoftly().assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
-        assertSoftly().assertAll();
+        softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
+        softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
+        softAssert.assertAll();
 
         createNewsPage.signOut();
     }

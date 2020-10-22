@@ -6,9 +6,12 @@ import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import org.openqa.selenium.WebDriver;
 
-public class SmallHeightPart extends TopPart {
+/**
+ * Navigation menu for small width screens (mobiles, etc.) Also known as "burger-menu"
+ */
+public class SmallWidthPart extends TopPart {
 
-    public SmallHeightPart(WebDriver driver) {
+    public SmallWidthPart(WebDriver driver) {
         super(driver);
     }
 

@@ -11,6 +11,7 @@ import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 public class SingleNewsPage extends TopPart  {
 
     protected WebDriverWait wait;
@@ -75,6 +76,26 @@ public class SingleNewsPage extends TopPart  {
 
     private String getContentText() {
         return getContent().getText();
+    }
+
+    private WebElement getSourceTitle() {
+        return searchElementByCss(SOURCE_TITLE.getPath());
+    }
+
+    public String getSourceTitleText() {
+        return getSourceTitle().getText();
+    }
+
+    private WebElement getSourceLink() {
+        return searchElementByCss(SOURCE_LINK.getPath());
+    }
+
+    public String getSourceLinkText() {
+        String link = getSourceLink().getAttribute("href");
+        if(link.equals("null") || link.equals("")) {
+            return "";
+        }
+        return link;
     }
 
     /**
