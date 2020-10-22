@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.viewallnews;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,14 +1,13 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.signin;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
+import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
 public class ForgotPasswordTests extends GreenCityTestRunner {
     String cssBorderColorProperty;

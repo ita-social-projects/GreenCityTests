@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tools.api.mail;
+package com.softserve.edu.greencity.ui.api.mail;
 
 
 import java.io.BufferedReader;
