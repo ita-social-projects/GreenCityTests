@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.tipsandtricks;
 
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import org.testng.Assert;

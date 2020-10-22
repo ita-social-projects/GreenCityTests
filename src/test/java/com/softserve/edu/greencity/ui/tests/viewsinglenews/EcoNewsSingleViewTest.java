@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests;
+package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
 import com.softserve.edu.greencity.ui.data.UserRepository;
