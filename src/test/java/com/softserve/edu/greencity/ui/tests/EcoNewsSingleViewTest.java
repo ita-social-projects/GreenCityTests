@@ -11,6 +11,7 @@ import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.apache.poi.ss.formula.functions.T;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -56,27 +57,21 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         multipleTags.add(Tag.NEWS); multipleTags.add(Tag.ADS); multipleTags.add(Tag.EVENTS);
 
         // Steps
-        // Step 1
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews()
                 .selectFilters(singleTag);
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), singleTag);
 
-        // Step 2
         ecoNewsPage = ecoNewsPage
                 .switchToSingleNewsPageByNumber(0)
-        // Step 3
                 .switchToEcoNewsPageBack()
-        // Step 4
                 .selectFilters(multipleTags);
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
 
-        // Step 5
         ecoNewsPage = ecoNewsPage
                 .switchToSingleNewsPageByNumber(0)
-        // Step 6
                 .switchToEcoNewsPageBack();
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
