@@ -19,6 +19,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -344,6 +348,15 @@ public class EcoNewsPage extends TopPart {
         List<WebElement> article = getDisplayedArticles();
         System.out.println("height = " + article.get(0).getRect().height);
         System.out.println("width = " + article.get(0).getRect().width);
+    }
+
+    @Step
+    public String getImageAttribute() {
+       return getItemsContainer().
+                       chooseNewsByNumber(0).
+                       getImage().
+                       getAttribute("src");
+
     }
 
     /**

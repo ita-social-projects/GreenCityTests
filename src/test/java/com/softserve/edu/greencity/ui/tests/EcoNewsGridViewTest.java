@@ -1,5 +1,8 @@
 package com.softserve.edu.greencity.ui.tests;
 
+import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
@@ -14,11 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
-import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.DISPLAYED_ARTICLES;
-
 public class EcoNewsGridViewTest extends GreenCityTestRunner {
     List<Integer> screenWidth;
+    private String defaultImagePath = "resources/images/defaultImage.png";
 
     @DataProvider
     public static Object[][] windowWidth() {
@@ -44,6 +45,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         return new SoftAssert();
     }
 
+    /*<======================================Grid View==========================================>*/
+
     @Test
     @Description("Select grid view")
     public void selectGridView() {
@@ -56,6 +59,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
         Assert.assertTrue(page.isActiveGridView(), "Grid view is  active:");
     }
+
 
     @Test(description = "GC-334")
     @Description("Open eco news")
@@ -122,8 +126,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     public void countOfColumnsInGridViewTest() {
         logger.info("Number of columns depending on screen width");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        for(Integer integer : screenWidth){
-        //for (Integer integer = 1024; integer > 992; integer--) {
+        for (Integer integer : screenWidth) {
+            //for (Integer integer = 1024; integer > 992; integer--) {
             ecoNewsPage.changeWindowWidth(integer);
             logger.info("When width = " + integer);
             ecoNewsPage.countNewsColumns();
@@ -144,7 +148,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         assertSoftly().assertAll();
     }
 
-
     @Test(dataProvider = "windowWidth")
     @Description("GC-669")
     public void verifyingUIForDifferentScreenResolutionTest(int width) {
@@ -153,6 +156,35 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         ecoNewsPage.changeWindowWidth(width);
         assertSoftly().assertTrue(ecoNewsPage.isGridViewDisplayed());
         ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
+    }
+
+    @Test
+    @Description("GC-340")
+    public void verifyContentItemsUITest() {
+        logger.info("Verify Content items UI");
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        ecoNewsPage.verifyContentItemsUI();
+
+    }
+
+    @Test
+    @Description("GC-339")
+    public void verifyDefaultImageTest() {
+        logger.info("Verify that news article has default image if it was not uploaded");
+        User user = UserRepository.get().temporary();
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                .publishNews();
+        for(Integer integer : screenWidth) {
+            ecoNewsPage.changeWindowWidth(integer);
+            ecoNewsPage.getGridView();
+            assertSoftly().assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
+        }
     }
 
     @Test(retryAnalyzer = RetryAnalyzerImpl.class)
@@ -167,14 +199,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                     .assertTrue(element.isEnabled(),
                             "topic is clickable");
         }
-    }
-
-    @Test
-    @Description("GC-340")
-    public void verifyContentItemsUITest() {
-        logger.info("Verify Content items UI");
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
-        ecoNewsPage.verifyContentItemsUI();
     }
 
     @Test
