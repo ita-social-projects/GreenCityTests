@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
@@ -12,7 +11,6 @@ import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import javax.naming.directory.NoSuchAttributeException;
 
 public class SingleNewsPage extends TopPart  {
 
