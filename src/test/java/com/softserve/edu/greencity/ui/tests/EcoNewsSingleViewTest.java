@@ -11,20 +11,13 @@ import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
-import org.apache.poi.ss.formula.functions.T;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
-    @BeforeTest
-    private SoftAssert assertSoftly() {
-        return new SoftAssert();
-    }
 
     @Test
     @Description("GC-670")
@@ -95,9 +88,9 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                     .publishNews()
                     .switchToSingleNewsPageByNumber(0);
 
-            assertSoftly().assertTrue(singleNewsPage.getSourceLinkText().equals(""),
+            softAssert.assertTrue(singleNewsPage.getSourceLinkText().equals(""),
                     "Checking if news has no source");
-            assertSoftly().assertAll();
+            softAssert.assertAll();
 
             singleNewsPage.signOut();
         } finally {
