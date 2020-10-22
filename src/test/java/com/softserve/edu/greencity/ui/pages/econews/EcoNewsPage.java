@@ -305,7 +305,6 @@ public class EcoNewsPage extends TopPart {
      */
     @Step("Count number of Grid Columns")
     public int countNewsColumns() {
-        logger.info("Count number of news columns in grid view");
         List<WebElement> elements = getDisplayedArticles();
         int count = 0;
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
@@ -333,7 +332,6 @@ public class EcoNewsPage extends TopPart {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
         softAssert.assertTrue(
                  searchElementByCss(HEADER.getPath()).isDisplayed() &&
-                         //searchElementByCss(createNewsButton).isDisplayed() &&
                          searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
                          searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
                          searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
@@ -344,8 +342,8 @@ public class EcoNewsPage extends TopPart {
     @Step
     public void verifyContentItemsUI() {
         List<WebElement> article = getDisplayedArticles();
-        int articleLeftCorner = article.get(0).getSize().height;
-        System.out.println("height = " + articleLeftCorner);
+        System.out.println("height = " + article.get(0).getRect().height);
+        System.out.println("width = " + article.get(0).getRect().width);
     }
 
     /**
