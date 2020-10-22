@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.runner;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;

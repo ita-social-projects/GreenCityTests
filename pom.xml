@@ -68,7 +68,7 @@
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${org.testng.version}</version>
-			<scope>test</scope>
+<!--			<scope>test</scope>-->
 		</dependency>
 
 		<!-- - - - - - Automation - - - - - -->
@@ -193,7 +193,7 @@
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-testng</artifactId>
 			<version>${allure.version}</version>
-			<scope>test</scope>
+<!--			<scope>test</scope>-->
 		</dependency>
 
 		<dependency>

@@ -1,12 +1,10 @@
 package com.softserve.edu.greencity.ui.tools;
 
 
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import java.io.*;
 import java.util.Properties;

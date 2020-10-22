@@ -5,16 +5,14 @@ import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tools.api.mail.GoogleMailAPI;
+import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner {

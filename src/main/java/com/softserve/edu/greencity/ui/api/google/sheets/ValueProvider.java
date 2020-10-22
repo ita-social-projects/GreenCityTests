@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tools.api.google.sheets;
+package com.softserve.edu.greencity.ui.api.google.sheets;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.BeforeMethod;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
-import java.security.GeneralSecurityException;
 
-import static com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet.getRow;
+import static com.softserve.edu.greencity.ui.api.google.sheets.GoogleSheet.getRow;
 
 public class ValueProvider {
     protected static final Logger logger = LoggerFactory.getLogger(ValueProvider.class);
