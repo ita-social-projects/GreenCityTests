@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tools.api.google.sheets;
+package com.softserve.edu.greencity.ui.api.google.sheets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,7 +19,6 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import org.testng.annotations.BeforeMethod;
 
 public class GoogleSheet {
     private static Sheets sheetsService;

@@ -1,18 +1,10 @@
 package com.softserve.edu.greencity.ui.data;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.SneakyThrows;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 
-import static com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet.getRow;
-import static com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider.*;
+import static com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
-import java.util.logging.Level;
 
 public final class UserRepository {
     private static volatile UserRepository instance = null;
