@@ -40,6 +40,11 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
+    @BeforeMethod
+    public void maximizeWindow() {
+        driver.manage().window().maximize(); //Returning as it was, because some tests change width
+    }
+
     /*<======================================Grid View==========================================>*/
 
     /*<======================================Grid View==========================================>*/
@@ -137,6 +142,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             ecoNewsPage.countNewsColumns();
         }
         softAssert.assertAll();
+        
     }
 
     @Ignore
@@ -150,6 +156,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("When width = " + width);
         ecoNewsPage.countNewsColumns();
         softAssert.assertAll();
+        
     }
 
     @Test(dataProvider = "windowWidth")
@@ -160,6 +167,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         ecoNewsPage.changeWindowWidth(width);
         softAssert.assertTrue(ecoNewsPage.isGridViewDisplayed());
         ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
+        
     }
 
     @Test
@@ -188,6 +196,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             ecoNewsPage.changeWindowWidth(integer);
             softAssert.assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
         }
+        
     }
 
     @Test(retryAnalyzer = RetryAnalyzerImpl.class)
@@ -216,6 +225,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                         ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getContent().getLocation().x);
             }
         }
+        
     }
 
     @Test

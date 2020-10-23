@@ -35,7 +35,7 @@
 		<org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
 		<org.seleniumhq.selenium.htmlunit-driver>2.36.0</org.seleniumhq.selenium.htmlunit-driver>
 		<apache.commons.io.version>2.6</apache.commons.io.version>
-		<io.github.bonigarcia.version>3.8.1</io.github.bonigarcia.version>
+		<io.github.bonigarcia.version>4.2.2</io.github.bonigarcia.version>
 		<com.codeborne.phantomjsdriver.version>1.4.4</com.codeborne.phantomjsdriver.version>
 		<maven.os-maven-plugin.version>1.6.2</maven.os-maven-plugin.version>
 		<!--	<maven.webdriverextensions-maven-plugin.version>3.2.0</maven.webdriverextensions-maven-plugin.version>-->

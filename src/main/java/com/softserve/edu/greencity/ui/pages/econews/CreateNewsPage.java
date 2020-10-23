@@ -337,7 +337,6 @@ public class CreateNewsPage extends TopPart {
         setTitleField(newsData.getTitle());
         clearContentField();
         setContentField(newsData.getContent());
-        tagsComponent.selectTags(newsData.getTags());
         if (!newsData.getSource().equals("")) {
             clearSourceField();
             setSourceField(newsData.getSource());
@@ -345,6 +344,7 @@ public class CreateNewsPage extends TopPart {
         if (!newsData.getFilePath().equals("")) {
             uploadFile(getDropArea(), newsData.getFilePath());
         }
+        tagsComponent.selectTags(newsData.getTags());
         return this;
     }
 
