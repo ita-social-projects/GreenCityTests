@@ -32,7 +32,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     private final String CONTENT_ERROR = "Must be minimum 20 symbols";
     private final String INVALID_SOURCE_ERROR = "Please add the link of original article/news/post. Link must start with http(s)://";
     private final String IMAGE_ERROR = "Download PNG or JPG only. File size should be less than 10MB";
-    private final String VALID_TITLE = "Green Day";
+    private final String VALID_TITLE = "Green Day Test";
     private final String VALID_CONTENT = "Content = description";
     private final String TAGS_ERROR = "Only 3 tags can be added";
     
@@ -236,12 +236,12 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .goToPreViewPage();
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
         softAssert.assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE);
-        softAssert.assertEquals(preViewPage.getContentFieldText(), VALID_CONTENT);
+        softAssert.assertEquals(preViewPage.getContentFieldText().trim(), VALID_CONTENT); //TODO Trim()
         softAssert.assertAll();
 
         preViewPage.signOut();

@@ -118,8 +118,8 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "Green Day Test", "https://news.com",
-                "Content = description");
+        return new NewsData(tags, "Green Day Test", "Content = description",
+                "https://news.com");
     }
 
     public NewsData getNewsWithInvalidData() {
