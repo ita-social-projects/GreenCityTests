@@ -45,10 +45,9 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        wait.until(ExpectedConditions.visibilityOf(getGridView()));
-        wait.until(ExpectedConditions.visibilityOf(getListView()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getGridView()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getListView()));
     }
 
     public List<WebElement> getTopicsInPage() {

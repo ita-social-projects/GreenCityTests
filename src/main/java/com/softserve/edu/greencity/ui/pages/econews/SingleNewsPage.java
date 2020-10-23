@@ -26,8 +26,7 @@ public class SingleNewsPage extends TopPart  {
 
     private void checkElements() {
         itemsContainer = new ItemsContainer(driver);
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getTitle()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getTitle()));
     }
 
     private WebElement getGoToNews() {

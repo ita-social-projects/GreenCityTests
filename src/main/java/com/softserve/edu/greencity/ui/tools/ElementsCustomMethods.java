@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.tools;
 
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,17 +16,10 @@ public class ElementsCustomMethods implements StableWebElementSearch {
         this.driver = driver;
     }
 
-    public static void threadSleep(int sleep) {
-        try {
-            Thread.sleep(sleep);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     public boolean waitTillElementGone(WebDriver driver, By locator, int wait) {
         try {
-            new WebDriverWait(driver, wait).until(invisibilityOfElementLocated(locator));
+            WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+            waitsSwitcher.setExplicitWait(wait, invisibilityOfElementLocated(locator));
             return true;
         }catch (Exception e){
             return false;

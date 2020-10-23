@@ -81,9 +81,7 @@ public class ManualLoginComponent extends LoginComponent implements StableWebEle
     //Email Or Password Error
     @Step
     public WebElement getWrongEmailOrPassError() {
-        wait = new WebDriverWait(driver, 4);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(wrongEmailOrPassError));
-        return searchElementByCss(wrongEmailOrPassError);
+        return waitsSwitcher.setExplicitWait(4, ExpectedConditions.visibilityOfElementLocated(wrongEmailOrPassError));
     }
     @Step
     public String getWrongEmailOrPassErrorText() {

@@ -11,6 +11,7 @@ import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,11 +20,6 @@ import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Base Abstract Class of Header and Footer.
- *
- * @author Lv-493.Taqc/Java
- */
 import io.qameta.allure.Step;
 
 /**
@@ -48,9 +44,11 @@ public abstract class TopPart implements StableWebElementSearch {
     private GoogleAccountManagerPage googleAccountManagerPage;
 
     protected WebDriver driver;
+    protected WaitsSwitcher waitsSwitcher;
 
     public TopPart(WebDriver driver) {
         this.driver = driver;
+        this.waitsSwitcher = new WaitsSwitcher(driver, 5, 10);
     }
 
     public Select getLanguageSwitcher() {
