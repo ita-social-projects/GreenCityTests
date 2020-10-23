@@ -12,9 +12,7 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
@@ -138,7 +136,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             logger.info("Expected width = " + integer);
             ecoNewsPage.countNewsColumns();
         }
-        assertSoftly().assertAll();
+        softAssert.assertAll();
     }
 
     @Ignore
@@ -188,7 +186,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 .publishNews();
         for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
-            assertSoftly().assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
+            softAssert.assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
         }
     }
 
@@ -214,7 +212,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
             for (int i = 0; i < ecoNewsPage.getItemsContainer().getItemComponentsCount(); i++) {
-                assertSoftly().assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getTitle().getLocation().x,
+                softAssert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getTitle().getLocation().x,
                         ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getContent().getLocation().x);
             }
         }
