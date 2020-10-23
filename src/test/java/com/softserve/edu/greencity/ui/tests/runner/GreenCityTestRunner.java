@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.runner;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -122,7 +122,9 @@ public abstract class GreenCityTestRunner {
 
     @Step("verifying that user is not login")
     protected boolean isLogInNow() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(By.id("form.sign-in-form")));
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         return !((webStorage.getLocalStorage().getItem("name")) == null);
