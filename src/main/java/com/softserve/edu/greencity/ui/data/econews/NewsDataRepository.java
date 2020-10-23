@@ -37,6 +37,7 @@ public final class NewsDataRepository {
     public NewsData getNewsWithValidData() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
         return new NewsData(tags,
                 "Be eco! Be cool!",
                 "It's so healthy, fun and cool to bring eco habits in everyday life"
@@ -118,8 +119,8 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "Green Day Test", "https://news.com",
-                "Content = description");
+        return new NewsData(tags, "Green Day Test", "https://goodnews.com",
+                "https://goodnews.com");
     }
 
     public NewsData getNewsWithInvalidData() {
