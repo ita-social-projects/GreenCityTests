@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tools;
 
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -25,7 +26,8 @@ public final class UploadFileUtil {
 
         WebDriver driver = ((RemoteWebElement) target).getWrappedDriver();
         JavascriptExecutor jse = (JavascriptExecutor) driver;
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        //WebDriverWait wait = new WebDriverWait(driver, 30);
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
 
         String JS_DROP_FILE =
                 "var target = arguments[0]," +
@@ -57,6 +59,7 @@ public final class UploadFileUtil {
 
         WebElement input = (WebElement) jse.executeScript(JS_DROP_FILE, target, offsetX, offsetY);
         input.sendKeys(filePath.getAbsoluteFile().toString());
-        wait.until(ExpectedConditions.stalenessOf(input));
+        //wait.until(ExpectedConditions.stalenessOf(input));
+        waitsSwitcher.setExplicitWait(30, ExpectedConditions.stalenessOf(input));
     }
 }

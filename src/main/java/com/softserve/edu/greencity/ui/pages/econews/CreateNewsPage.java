@@ -434,9 +434,8 @@ public class CreateNewsPage extends TopPart {
         }
 
         private void checkElements(WebDriver driver) {
-            wait = new WebDriverWait(driver, 10);
-            wait.until(ExpectedConditions.visibilityOf(getContinueEditingButton()));
-            wait.until(ExpectedConditions.visibilityOf(getCancelEditingButton()));
+            waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getContinueEditingButton()));
+            waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getCancelEditingButton()));
         }
 
         @Step("Get continue editing button")

@@ -35,8 +35,7 @@ public class LoginComponent extends TopPart  {
     }
     @Step
     public void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getTitle()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getTitle()));
     }
     @Step
     public ManualLoginComponent getManualLoginComponent() {
@@ -56,8 +55,7 @@ public class LoginComponent extends TopPart  {
     }
     @Step
     public String getTitleText() {
-        wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(title));
+        waitsSwitcher.setExplicitWait(3, ExpectedConditions.visibilityOfElementLocated(title));
         return getTitle().getText();
     }
     @Step
@@ -106,9 +104,7 @@ public class LoginComponent extends TopPart  {
     //Sign up link
     @Step
     public WebElement getSignUpLink() {
-        wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.elementToBeClickable(singUpLink));
-        return searchElementByCss(singUpLink);
+        return waitsSwitcher.setExplicitWait(5, ExpectedConditions.elementToBeClickable(singUpLink));
     }
     @Step
     public boolean isDisplayedSignUpLink() {

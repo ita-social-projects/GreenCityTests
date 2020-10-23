@@ -27,8 +27,7 @@ public class PreviewPage extends TopPart {
     }
 
     private void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getBackToEditingButton()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getBackToEditingButton()));
     }
 
     @Step("Get tags fields")
