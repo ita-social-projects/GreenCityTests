@@ -126,10 +126,17 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     public void countOfColumnsInGridViewTest() {
         logger.info("Number of columns depending on screen width");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        for (Integer integer : screenWidth) {
-            //for (Integer integer = 1024; integer > 992; integer--) {
+        //for (Integer integer : screenWidth) {
+
+        for (Integer integer = 1010; integer > 1000; integer--) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             ecoNewsPage.changeWindowWidth(integer);
-            logger.info("When width = " + integer);
+            logger.info("When width = " + driver.manage().window().getSize().getWidth());
+            logger.info("Expected width = " + integer);
             ecoNewsPage.countNewsColumns();
         }
         assertSoftly().assertAll();
@@ -178,11 +185,10 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews();
-        for(Integer integer : screenWidth) {
+        for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
-            ecoNewsPage.getGridView();
             assertSoftly().assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
         }
     }

@@ -120,7 +120,7 @@ public final class NewsDataRepository {
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
         return new NewsData(tags, "Green Day Test", "https://goodnews.com",
-                "Content = description");
+                "https://goodnews.com");
     }
 
     public NewsData getNewsWithInvalidData() {
