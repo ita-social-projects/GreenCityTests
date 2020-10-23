@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
+
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +29,7 @@ public class ItemsContainer implements StableWebElementSearch {
 
     private WebDriver driver;
     private List<ItemComponent> itemComponents;
-    private By items = By.cssSelector(".list>li.ng-star-inserted");
+    private By items = By.cssSelector(".list>li.ng-star-inserted"); //list of eco news cards
 
     public ItemsContainer(WebDriver driver) {
         this.driver = driver;
@@ -46,7 +48,9 @@ public class ItemsContainer implements StableWebElementSearch {
     }
 
     private List<WebElement> getItems() {
-        return driver.findElements(items);
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        return waitsSwitcher.setExplicitWait(7,
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(items));
     }
 
     public int getItemsSize() {

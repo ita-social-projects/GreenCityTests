@@ -417,7 +417,8 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return searchElementsByCss(DISPLAYED_ARTICLES.getPath());
+        return waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 
     @Step("Set actual information from page to articleExistCount")
@@ -425,7 +426,9 @@ public class EcoNewsPage extends TopPart {
         logger.info("refresh page");
         driver.navigate().refresh();
         logger.info("wait until at least one article is displayed");
-        waiting(searchElementByCss(DISPLAYED_ARTICLES.getPath()));
+        //waiting(searchElementByCss(DISPLAYED_ARTICLES.getPath()));
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(DISPLAYED_ARTICLES.getPath()));
         logger.info("Set actual information from page to articleExistCount");
         articleExistCount = Integer.parseInt(searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).getText().split(" ")[0]);
         logger.info("Articles exist: " + articleExistCount);
@@ -514,13 +517,13 @@ public class EcoNewsPage extends TopPart {
     @Step("short explicit wait visibility Of element")
     private void waiting(WebElement element) {
         logger.info("short explicit wait visibility Of element \n" + String.valueOf(element));
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
+        waitsSwitcher.setExplicitWait(30, ExpectedConditions.visibilityOf(element));
     }
 
     @Step("short explicit wait visibility Of elements list")
     private void waiting(List<WebElement> elements) {
         logger.info("short explicit wait visibility Of elements list \n" + String.valueOf(elements));
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfAllElements(elements));
+        waitsSwitcher.setExplicitWait(30, ExpectedConditions.visibilityOfAllElements(elements));
     }
 
     @Step("Get creation date")
