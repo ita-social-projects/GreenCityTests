@@ -25,6 +25,7 @@ public enum EcoNewsPageLocator implements Locator {
     ARTICLE_AUTHOR_NAME(By.cssSelector("div.user-data-added-news>p:last-child")),
     GALLERY_VIEW_BUTTON(By.cssSelector("div.gallery-view")),
     LIST_VIEW_BUTTON(By.cssSelector("div.list-view")),
+    LIST_VIEW_BUTTON_COMPONENT(By.cssSelector("div.list-view > div")),
     OPEN_TOPICS_TAGS(By.cssSelector("div.tags>div.tags-item")),
     NEWS_TITLE(By.cssSelector("div.news-title")),
     NEWS_INFO_DATE(By.cssSelector("div.news-info>div.news-info-date")),

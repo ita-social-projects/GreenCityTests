@@ -338,6 +338,7 @@ public class CreateNewsPage extends TopPart {
         clearContentField();
         setContentField(newsData.getContent());
         tagsComponent.selectTags(newsData.getTags());
+
         if (!newsData.getSource().equals("")) {
             clearSourceField();
             setSourceField(newsData.getSource());

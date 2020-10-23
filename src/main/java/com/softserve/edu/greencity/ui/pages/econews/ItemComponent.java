@@ -76,16 +76,19 @@ public final class ItemComponent {
         return getTitle().getText();
     }
 
-    public int getTitleLineHeight() {
+    public double getTitleLineHeight() {
         return Integer.parseInt(getTitle().getCssValue("line-height").split("px")[0]);
     }
 
-    public int getTitleHeight() {
+    public double getTitleHeight() {
+        wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return getTitle().getSize().getHeight();
     }
 
     public int getTitleNumberRow() {
-        return getTitleHeight() / getTitleLineHeight();
+
+        return (int) Math.round(getTitleHeight() / getTitleLineHeight());
     }
 
     protected void clickTitle() {
