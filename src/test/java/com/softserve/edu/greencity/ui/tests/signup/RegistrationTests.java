@@ -14,6 +14,8 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner {
 
@@ -72,10 +74,11 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationUser(userLoginCredentials);
-
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         WebDriverWait wait = new WebDriverWait(driver, 6);
 
         wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         softAssert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));

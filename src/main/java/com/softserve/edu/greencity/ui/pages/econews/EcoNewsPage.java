@@ -19,6 +19,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,10 +49,9 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        wait.until(ExpectedConditions.visibilityOf(getGridView()));
-        wait.until(ExpectedConditions.visibilityOf(getListView()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getGridView()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getListView()));
     }
 
     public List<WebElement> getTopicsInPage() {
@@ -310,7 +313,6 @@ public class EcoNewsPage extends TopPart {
      */
     @Step("Count number of Grid Columns")
     public int countNewsColumns() {
-        logger.info("Count number of news columns in grid view");
         List<WebElement> elements = getDisplayedArticles();
         int count = 0;
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
@@ -338,7 +340,6 @@ public class EcoNewsPage extends TopPart {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
         softAssert.assertTrue(
                  searchElementByCss(HEADER.getPath()).isDisplayed() &&
-                         //searchElementByCss(createNewsButton).isDisplayed() &&
                          searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
                          searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
                          searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
@@ -349,8 +350,17 @@ public class EcoNewsPage extends TopPart {
     @Step
     public void verifyContentItemsUI() {
         List<WebElement> article = getDisplayedArticles();
-        int articleLeftCorner = article.get(0).getSize().height;
-        System.out.println("height = " + articleLeftCorner);
+        System.out.println("height = " + article.get(0).getRect().height);
+        System.out.println("width = " + article.get(0).getRect().width);
+    }
+
+    @Step
+    public String getImageAttribute() {
+       return getItemsContainer().
+                       chooseNewsByNumber(0).
+                       getImage().
+                       getAttribute("src");
+
     }
 
     /**
@@ -423,7 +433,8 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return searchElementsByCss(DISPLAYED_ARTICLES.getPath());
+        return waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 
     @Step("Set actual information from page to articleExistCount")
@@ -431,7 +442,9 @@ public class EcoNewsPage extends TopPart {
         logger.info("refresh page");
         driver.navigate().refresh();
         logger.info("wait until at least one article is displayed");
-        waiting(searchElementByCss(DISPLAYED_ARTICLES.getPath()));
+        //waiting(searchElementByCss(DISPLAYED_ARTICLES.getPath()));
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(DISPLAYED_ARTICLES.getPath()));
         logger.info("Set actual information from page to articleExistCount");
         articleExistCount = Integer.parseInt(searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).getText().split(" ")[0]);
         logger.info("Articles exist: " + articleExistCount);
@@ -520,13 +533,13 @@ public class EcoNewsPage extends TopPart {
     @Step("short explicit wait visibility Of element")
     private void waiting(WebElement element) {
         logger.info("short explicit wait visibility Of element \n" + String.valueOf(element));
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOf(element));
+        waitsSwitcher.setExplicitWait(30, ExpectedConditions.visibilityOf(element));
     }
 
     @Step("short explicit wait visibility Of elements list")
     private void waiting(List<WebElement> elements) {
         logger.info("short explicit wait visibility Of elements list \n" + String.valueOf(elements));
-        new WebDriverWait(driver, 30).until(ExpectedConditions.visibilityOfAllElements(elements));
+        waitsSwitcher.setExplicitWait(30, ExpectedConditions.visibilityOfAllElements(elements));
     }
 
     @Step("Get creation date")

@@ -34,8 +34,7 @@ public class ForgotPasswordComponent extends TopPart {
     }
 
     private void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getForgotTitle()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getForgotTitle()));
     }
 
     // Page Object

@@ -1,10 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Header for signed in user
@@ -44,8 +47,9 @@ public class TopUserComponent {
 	// userNameButton
 
 	public WebElement getUserNameButton() {
-		WebDriverWait wait = new WebDriverWait(driver, 5);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(USER_NAME_CSS)));
+		WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+		waitsSwitcher.setExplicitWait(5,
+				ExpectedConditions.visibilityOfElementLocated(By.cssSelector(USER_NAME_CSS)));
 
 		return userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
 	}

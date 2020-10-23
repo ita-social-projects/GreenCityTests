@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -30,8 +31,8 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     private void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(getMenuEcoNews()));
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getMenuEcoNews()));
     }
     @Step
     public WebElement getNaviconButton() {

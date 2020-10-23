@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
+
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,10 +20,12 @@ public final class ItemComponent {
     protected WebDriverWait wait;
     private final WebDriver driver;
     private final WebElement newsItem;
+    private WaitsSwitcher waitsSwitcher;
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
         this.driver = driver;
         this.newsItem = newsItem;
+        this.waitsSwitcher = new WaitsSwitcher(driver);
         //initElements();
     }
 
@@ -67,8 +71,7 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return newsItem.findElement(TITLE.getPath());
     }
 
@@ -137,8 +140,8 @@ public final class ItemComponent {
 
     //DateOfCreation
     public WebElement getDateOfCreation() {
-        wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(DATE_OF_CREATION.getPath()));
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(DATE_OF_CREATION.getPath()));
         return newsItem.findElement(DATE_OF_CREATION.getPath());
     }
 

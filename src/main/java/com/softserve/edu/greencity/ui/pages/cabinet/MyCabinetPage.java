@@ -20,8 +20,7 @@ public class MyCabinetPage extends TopPart  {
     }
     @Step
     private void checkElements() {
-        wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.elementToBeClickable(getAddNewHabitButton()));
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.elementToBeClickable(getAddNewHabitButton()));
     }
     @Step
     public HabitsContainer getHabitsContainer() {

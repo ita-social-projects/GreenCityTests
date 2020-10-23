@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class GmailManagerPage {
     private WebDriver driver;
@@ -39,8 +40,10 @@ public class GmailManagerPage {
 
     //Search line
     public WebElement getSearchLine() {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchIcon));
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         return driver.findElement(searchLine);
     }
 
