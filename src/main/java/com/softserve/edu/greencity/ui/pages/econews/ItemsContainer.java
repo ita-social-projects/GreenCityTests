@@ -44,6 +44,10 @@ public class ItemsContainer implements StableWebElementSearch {
     }
 
     private List<ItemComponent> getItemComponents() {
+        itemComponents = new ArrayList<>();
+        for (WebElement current : getItems()) {
+            itemComponents.add(new ItemComponent(driver, current));
+        }
         return itemComponents;
     }
 
