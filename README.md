@@ -56,7 +56,7 @@ If you wana create personal file with credentials, you should :
 - [download configuration file](https://dl.dropboxusercontent.com/s/4rnaxhhej94oap1/shot_200907_235731.png)
 - [file loocks like this](https://dl.dropboxusercontent.com/s/j833vocuvpodzbm/shot_200907_235901.png)
 - replace information in `resources/sheetsApi.json`
-* Add key to `com.softserve.edu.greencity.ui.tools.api.google.sheets.GoogleSheet`,
+* Add key to `com.softserve.edu.greencity.ui.api.google.sheets.GoogleSheet`,
 ([Key looks like this](https://dl.dropboxusercontent.com/s/j3hzw7u8frlhpf8/shot_200908_000657.png))
 *  `SPREADSHEET_ID = YOUR_KEY_FROM_GOOGLE_SHEET`
 

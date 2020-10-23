@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.runner;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -33,6 +34,8 @@ public abstract class GreenCityTestRunner {
     protected RemoteWebDriver driver;
     boolean remote = ValueProvider.remote();
     ChromeOptions options = new ChromeOptions();
+
+    protected SoftAssert softAssert;
 
     @SneakyThrows
     @BeforeSuite
@@ -93,6 +96,7 @@ public abstract class GreenCityTestRunner {
     @BeforeMethod
     public void setUp() {
         driver.get(BASE_URL);
+        softAssert = new SoftAssert();
     }
 
 
