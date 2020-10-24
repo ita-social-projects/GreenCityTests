@@ -76,7 +76,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     @Test(testName = "GC-731")
     @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
     public void noSourceIfItWasntSpecified() {
-        logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
+        logger.info("noSourceIfItWasntSpecified starts");
 
         NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
         try {
@@ -96,6 +96,34 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         } finally {
             EcoNewsService ecoNewsService = new EcoNewsService();
             ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
+        }
+    }
+
+    @Test(testName = "GC-695")
+    @Description("Source field appears if User entered Source in the Create news form.")
+    public void presentSourceIfItWasSpecified() {
+        logger.info("presentSourceIfItWasSpecified starts");
+
+        NewsData newsWithSource = NewsDataRepository.get().getNewsWithSource();
+        try {
+            SingleNewsPage singleNewsPage = loadApplication()
+                    .loginIn(UserRepository.get().temporary())
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(newsWithSource)
+                    .publishNews()
+                    .switchToSingleNewsPageByNumber(0);
+
+            softAssert.assertTrue(singleNewsPage.getSourceTitleText().length() > 1,
+                    "Checking if source title is present");
+            softAssert.assertEquals(singleNewsPage.getSourceLinkText(), newsWithSource.getSource(),
+                    "Checking if news has given source"); //TODO BUG: source == content. Site bug?
+            softAssert.assertAll();
+
+            singleNewsPage.signOut();
+        } finally {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(newsWithSource.getTitle());
         }
     }
 }

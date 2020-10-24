@@ -40,6 +40,11 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
+    @BeforeMethod
+    public void maximizeWindow() {
+        driver.manage().window().maximize(); //Returning as it was, because some tests change width
+    }
+
     /*<======================================Grid View==========================================>*/
 
     /*<======================================Grid View==========================================>*/
@@ -137,6 +142,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             ecoNewsPage.countNewsColumns();
         }
         softAssert.assertAll();
+        
     }
 
     @Ignore
@@ -150,6 +156,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("When width = " + width);
         ecoNewsPage.countNewsColumns();
         softAssert.assertAll();
+        
     }
 
     @Test(dataProvider = "windowWidth")
@@ -160,6 +167,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         ecoNewsPage.changeWindowWidth(width);
         softAssert.assertTrue(ecoNewsPage.isGridViewDisplayed());
         ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
+        
     }
 
     @Test
@@ -188,6 +196,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             ecoNewsPage.changeWindowWidth(integer);
             softAssert.assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
         }
+        
     }
 
     @Test(retryAnalyzer = RetryAnalyzerImpl.class)
@@ -207,15 +216,19 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     @Test
     @Description("GC-674")
     public void newsAligningTest() {
-        logger.info("News aligning");
+        logger.info("News aligning starts");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         for (Integer integer : screenWidth) {
+            logger.info("News aligning on screenWidth = " + integer);
             ecoNewsPage.changeWindowWidth(integer);
-            for (int i = 0; i < ecoNewsPage.getItemsContainer().getItemComponentsCount(); i++) {
+            int newsFound = ecoNewsPage.getItemsContainer().getItemComponentsCount();
+            for (int i = 0; i < newsFound; i++) {
+                logger.info("i = " + i);
                 softAssert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getTitle().getLocation().x,
                         ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getContent().getLocation().x);
             }
         }
+        
     }
 
     @Test
