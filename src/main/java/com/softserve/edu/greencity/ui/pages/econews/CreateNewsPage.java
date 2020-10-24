@@ -45,7 +45,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get create news main title text")
     public String getCreateNewsMainTitleText() {
-        return searchElementByCss(TITLE_FIELD.getPath()).getText();
+        return searchElementByCss(CREATE_NEWS_MAIN_TITLE.getPath()).getText();
     }
 
     @Step("Get title field")

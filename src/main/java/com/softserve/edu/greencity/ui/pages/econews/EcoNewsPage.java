@@ -114,6 +114,11 @@ public class EcoNewsPage extends TopPart {
         return searchElementByCss(LIST_VIEW_BUTTON.getPath());
     }
 
+    @Step("Get list view button component")
+    public WebElement getListViewButtonComponent() {
+        return searchElementByCss(LIST_VIEW_BUTTON_COMPONENT.getPath());
+    }
+
     @Step("Check if list view is displayed")
     public boolean isDisplayedListView() {
         return getListView().isDisplayed();
