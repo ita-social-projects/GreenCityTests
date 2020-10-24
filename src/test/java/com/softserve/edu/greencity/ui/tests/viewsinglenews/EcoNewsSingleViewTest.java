@@ -88,7 +88,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                     .publishNews()
                     .switchToSingleNewsPageByNumber(0);
 
-            softAssert.assertTrue(singleNewsPage.getSourceLinkText().equals(""),
+            softAssert.assertEquals(singleNewsPage.getSourceLinkText(), "",
                     "Checking if news has no source");
             softAssert.assertAll();
 
