@@ -83,7 +83,7 @@ public class GoogleSheet {
 
     public static List<Object> getRow(int row) throws IOException, GeneralSecurityException {
         sheetsService  = getSheetsService();
-        String range = "A1:B25";
+        String range = "A1:B27";
         ValueRange response = sheetsService.spreadsheets().values()
                 .get(SPREADSHEET_ID,range)
                 .execute();
