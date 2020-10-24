@@ -136,10 +136,6 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
     public void restorePassForUnregisterUser() {
         logger.info("Starting restorePassForUnregisterUser");
         User user = UserRepository.get().unregisterUser();
-        logger.info("name = "+user.getUserName());
-        logger.info("mail = "+user.getEmail());
-        logger.info("pass = "+user.getPassword());
-        logger.info("confpass = "+user.getConfirmPassword());
 
         googleMailAPI().clearMail(user.getEmail(), user.getPassword());
 
@@ -149,9 +145,8 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .unsuccessfullySubmit(user);
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
-
-        softAssert.assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
-        logger.info("text="+forgotPasswordComponent.getEmailValidationErrorText());
+        expectedBorderColorRBG = "rgb(135, 135, 135)";
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE));
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT, true, 3, 10, user.getEmail(), user.getPassword());
