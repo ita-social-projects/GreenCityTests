@@ -86,6 +86,12 @@ public class ValueProvider {
     public static String getvalidUnregisterEmail() {return (String) getRow(22).get(1);}
 
     @SneakyThrows
+    public static String getUnregisterEmailPassword() {return (String) getRow(23).get(1);}
+
+    @SneakyThrows
+    public static String getComfUnregisterEmailPassword() {return (String) getRow(24).get(1);}
+
+    @SneakyThrows
     public static Boolean remote() {
         try {
             logger.info("remote: " + Boolean.valueOf((String) getRow(25).get(1)));
