@@ -365,7 +365,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 78.0, 1.5);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 78);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 3);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 1);
 

@@ -532,7 +532,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithValidSourceField())
+                .fillFields(NewsDataRepository.get().getNewsWithValidSourceField()) //TODO BUG WITH TAGS
                 .publishNews();
 
         softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidSourceField().getTitle()));
@@ -640,7 +640,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                .fillFields(NewsDataRepository.get().getAllFieldsNews()) //TODO BUG WITH TAGS
                 .publishNews();
 
         softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
@@ -691,7 +691,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
         CreateNewsPage createNewsPage = preViewPage.backToCreateNewsPage();
-        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
+        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS)); //TODO BUG WITH TAGS
         softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
         createNewsPage.navigateMenuEcoNews().gotoCreateNewsPage();
         softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
