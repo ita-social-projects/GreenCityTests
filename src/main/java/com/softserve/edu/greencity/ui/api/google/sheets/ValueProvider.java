@@ -88,8 +88,8 @@ public class ValueProvider {
     @SneakyThrows
     public static Boolean remote() {
         try {
-            logger.info("remote: " + Boolean.valueOf((String) getRow(23).get(1)));
-        return Boolean.valueOf((String) getRow(23).get(1));
+            logger.info("remote: " + Boolean.valueOf((String) getRow(25).get(1)));
+        return Boolean.valueOf((String) getRow(25).get(1));
         //return false;
         }catch (NullPointerException e) {
             throw new Exception("Please add remote: TRUE/FALSE credential to google sheet");
@@ -99,7 +99,7 @@ public class ValueProvider {
     @SneakyThrows
     public static String getBaseUrl() {
         try {
-            return (String) getRow(24).get(1);
+            return (String) getRow(26).get(1);
         }catch (NullPointerException e){
             logger.error("Fail to get link from google sheet, used hardcode link");
             return "https://ita-social-projects.github.io/GreenCityClient/#/welcome";
