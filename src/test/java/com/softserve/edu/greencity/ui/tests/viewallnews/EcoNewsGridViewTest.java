@@ -216,11 +216,14 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     @Test
     @Description("GC-674")
     public void newsAligningTest() {
-        logger.info("News aligning");
+        logger.info("News aligning starts");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         for (Integer integer : screenWidth) {
+            logger.info("News aligning on screenWidth = " + integer);
             ecoNewsPage.changeWindowWidth(integer);
-            for (int i = 0; i < ecoNewsPage.getItemsContainer().getItemComponentsCount(); i++) {
+            int newsFound = ecoNewsPage.getItemsContainer().getItemComponentsCount();
+            for (int i = 0; i < newsFound; i++) {
+                logger.info("i = " + i);
                 softAssert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getTitle().getLocation().x,
                         ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getContent().getLocation().x);
             }
