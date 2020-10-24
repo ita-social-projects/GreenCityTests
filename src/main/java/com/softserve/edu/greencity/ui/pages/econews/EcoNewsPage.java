@@ -45,7 +45,7 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        //checkElements();
+        checkElements();
     }
 
     private void checkElements() {
@@ -80,7 +80,8 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get grid view")
     public WebElement getGridView() {
-        return searchElementByCss(GALLERY_VIEW_BUTTON.getPath());
+        return waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(GALLERY_VIEW_BUTTON.getPath()));
     }
 
     @Step("Check if grid view is active")
@@ -185,13 +186,15 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get items container")
     public ItemsContainer getItemsContainer() {
-        // TODO add here some waiter for uploading news
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return itemsContainer = new ItemsContainer(driver);
+//        // TODO add here some waiter for uploading news
+//        try {
+//            Thread.sleep(800);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        waitsSwitcher.setExplicitWait(
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
+        return new ItemsContainer(driver);
     }
 
     /**
@@ -454,7 +457,8 @@ public class EcoNewsPage extends TopPart {
     @Step("Scroll under end of page")
     public EcoNewsPage scrollDown() {
         logger.info("scroll down");
-        while (articleExistCount != articleDisplayedCount) {
+        while (articleExistCount > articleDisplayedCount) { //TODO Site BUG!
+            // Sometimes first (?) 12 displayed news appear again on scroll
             searchElementByCss(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.END);
             articleExistCount = Integer.parseInt(searchElementByCss(ARTICLES_FOUND_COUNTER.getPath())
                     .getText().split(" ")[0]);

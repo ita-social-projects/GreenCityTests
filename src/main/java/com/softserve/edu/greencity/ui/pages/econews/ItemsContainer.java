@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
@@ -29,7 +30,7 @@ public class ItemsContainer implements StableWebElementSearch {
 
     private WebDriver driver;
     private List<ItemComponent> itemComponents;
-    private By items = By.cssSelector(".list>li.ng-star-inserted"); //list of eco news cards
+    private By items = DISPLAYED_ARTICLES.getPath(); //By.cssSelector(".list>li.ng-star-inserted"); //list of eco news cards
 
     public ItemsContainer(WebDriver driver) {
         this.driver = driver;
