@@ -66,9 +66,7 @@ public class SingleNewsPage extends TopPart  {
     }
 
     public String getAuthorNameOnly() {
-        String author = getAuthor().getText();
-        String [] arr = author.split(" ", 2);
-        return arr[1];
+        return getAuthor().getText().split(" ")[1];
     }
 
     public String getAuthorText(){
