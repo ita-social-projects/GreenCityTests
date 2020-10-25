@@ -1,4 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.viewallnews;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
@@ -11,6 +13,7 @@ import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +69,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("NavigateToEcoNews starts");
         EcoNewsPage page = loadApplication()
                 .navigateMenuEcoNews();
-        softAssert.assertTrue(page.isActiveGridView());
+        softAssert.assertTrue(page.isActiveGridView()) ;
         softAssert.assertAll();
     }
 
@@ -130,15 +133,16 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test(dataProvider = "windowWidth")
-    @Description("GC-669")
-    public void verifyingUIForDifferentScreenResolutionTest(int width) {
-        logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        ecoNewsPage.changeWindowWidth(width);
-        softAssert.assertTrue(ecoNewsPage.isGridViewDisplayed());
-        ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
 
+
+    @Test(testName = "GC-669")
+    @Description("Verify UI of the News page in Gallery view for different screen resolutions")
+    public void verifyingUIForDifferentScreenResolutionTest() {
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
+        for (Integer integer : screenWidth) {
+            ecoNewsPage.changeWindowWidth(integer);
+            ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
+        }
     }
 
     @Test
