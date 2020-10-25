@@ -327,6 +327,7 @@ public class EcoNewsPage extends TopPart {
             else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
                 softAssert.assertTrue( count == 2);
             }
+
         }
         else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
             softAssert.assertTrue( count == 1);

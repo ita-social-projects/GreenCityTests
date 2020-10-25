@@ -1,6 +1,4 @@
 package com.softserve.edu.greencity.ui.tests.viewallnews;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
@@ -12,8 +10,10 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -151,7 +151,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         ecoNewsPage.verifyContentItemsUI();
-
     }
 
     @Test
