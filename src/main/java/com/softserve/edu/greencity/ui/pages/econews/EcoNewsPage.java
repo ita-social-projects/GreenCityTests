@@ -315,24 +315,22 @@ public class EcoNewsPage extends TopPart {
      * @return number of columns in gallery view depending on screen width (max = 3, min = 1)
      */
     @Step("Count number of Grid Columns")
-    public int countNewsColumns() {
+    public void countNewsColumns(int width) {
+        int count = 1;
         List<WebElement> elements = getDisplayedArticles();
-        int count = 0;
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
-            if (elements.get(1).getLocation().y == elements.get(2).getLocation().y) {
-                logger.info("3 columns");
-                count = 3;
+            count++;
+            if (width > 1006 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
+                count++;
+                softAssert.assertTrue( count == 3);
             }
-            if (elements.get(1).getLocation().y < elements.get(2).getLocation().y) {
-                logger.info("2 columns");
-                count = 2;
+            else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+                softAssert.assertTrue( count == 2);
             }
         }
-        if (elements.get(0).getLocation().y < elements.get(1).getLocation().y) {
-            logger.info("1 column");
-            count = 1;
+        else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
+            softAssert.assertTrue( count == 1);
         }
-        return count;
     }
 
     /**
