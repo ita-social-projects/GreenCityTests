@@ -44,7 +44,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         expectedHoveredByMouseBackgroundColorRGBA = "rgba(19, 170, 87, 1)";
         screenWidth = Arrays.asList(1200, 1024, 768, 667);
         screenWidth1 = Arrays.asList(1400, 1024, 768);
-        screenWidth2 = Arrays.asList(576, 360);
+        screenWidth2 = Arrays.asList(576, 575);
     }
 
     @Test(testName = "GC-707")
@@ -168,34 +168,71 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         testNewsTitles.add(NewsDataRepository.get().getOneRowTitle().getTitle());
 
-        for (Integer integer : screenWidth) {
+           ecoNewsPage.changeWindowWidth(1440);
+            ecoNewsPage.switchToListView();
+        softAssert.assertFalse(ecoNewsPage.isListViewPresent());
+        logger.info("isListViewPresent "+ecoNewsPage.isListViewPresent());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
+            logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
+            logger.info("tags " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
+            logger.info("title " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            logger.info("content " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
+            logger.info("date " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
+            logger.info("dateformat " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
 
+
+       /* for (Integer integer : screenWidth) {
+            logger.info("screenWidth = "+integer);
             ecoNewsPage.changeWindowWidth(integer);
             ecoNewsPage.switchToListView();
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
+            logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
+            logger.info("tags " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            logger.info("title " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            logger.info("content " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
+            logger.info("date " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
+            logger.info("dateformat " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
 
             ecoNewsPage.maximizeWindow();
-        }
+        } */
         for (Integer integer : screenWidth2) {
-
+            logger.info("screenWidth = "+integer);
             ecoNewsPage.changeWindowWidth(integer);
+            ecoNewsPage.switchToListView();
             softAssert.assertFalse(ecoNewsPage.isListViewPresent());
+            logger.info("isListViewPresent "+ecoNewsPage.isListViewPresent());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
+            logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
+            logger.info("tags " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            logger.info("title " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            logger.info("content " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
+            logger.info("date " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
+            logger.info("dateformat " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
 
             ecoNewsPage.maximizeWindow();
         }
+
         ecoNewsPage.signOut();
         softAssert.assertAll();
     }
@@ -343,6 +380,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+    //@TODO Change when we will know new requirements
     @Test(testName = "GC-723")
     @Description("Verify that when Title consist of 3 row, then Description consist of 1 row.")
     public void isOneRowDescriptionWhenThreeRowsTitle() {
@@ -373,6 +411,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+    //@TODO Change when we will know new requirements
     @Test(testName = "GC-722")
     @Description("Verify that when Title consist of 2 row, then Description consist of 2 row.")
     public void isTwoRowsDescriptionWhenTwoRowsTitle() {
@@ -403,6 +442,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+    //@TODO Change when we will know new requirements
     @Test(testName = "GC-724")
     @Description("Verify that when Title consist of 1 row, then Description consist of 3 row.")
     public void isTwoRowsDescriptionWhenOneRowsTitle() {
@@ -420,14 +460,14 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         testNewsTitles.add(NewsDataRepository.get().getOneRowTitle().getTitle());
 
-        ecoNewsPage.changeWindowWidth(1400);
+        ecoNewsPage.changeWindowWidth(1440);
 
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
         softAssert.assertEquals(firstItemTitle.getTitleHeight(), 26);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 1);
-        softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 2);
+        softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 3);
 
         ecoNewsPage.signOut();
         softAssert.assertAll();
