@@ -341,13 +341,7 @@ public class EcoNewsPage extends TopPart {
     @Step
     public void isUiElementsDisplayedWithDifferentScreenResolution() {
         logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
-        softAssert.assertTrue(
-                 searchElementByCss(HEADER.getPath()).isDisplayed() &&
-                         searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
-                         searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
-                         searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
-                "Assert that all UI elements in Eco News page is visible"
-        );
+
     }
 
     @Step
