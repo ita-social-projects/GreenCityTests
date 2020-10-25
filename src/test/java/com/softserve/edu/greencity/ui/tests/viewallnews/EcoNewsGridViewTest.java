@@ -203,6 +203,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                         ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getContent().getLocation().x);
             }
         }
+
     }
 
     @Test
