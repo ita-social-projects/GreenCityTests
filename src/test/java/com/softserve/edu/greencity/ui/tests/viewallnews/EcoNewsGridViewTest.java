@@ -10,7 +10,10 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +69,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("NavigateToEcoNews starts");
         EcoNewsPage page = loadApplication()
                 .navigateMenuEcoNews();
-        softAssert.assertTrue(page.isActiveGridView());
+        softAssert.assertTrue(page.isActiveGridView()) ;
         softAssert.assertAll();
     }
 
@@ -120,41 +123,17 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
-    @Description("GC-668")
+    @Test(testName = "GC-668")
     public void countOfColumnsInGridViewTest() {
         logger.info("Number of columns depending on screen width");
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        //for (Integer integer : screenWidth) {
-
-        for (Integer integer = 1010; integer > 1000; integer--) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
-            logger.info("When width = " + driver.manage().window().getSize().getWidth());
-            logger.info("Expected width = " + integer);
-            ecoNewsPage.countNewsColumns();
+            ecoNewsPage.countNewsColumns(integer);
         }
-        softAssert.assertAll();
-
     }
 
-    @Ignore
-    @Test(dataProvider = "windowWidth")
-    @Description("GC-668")
-    public void countOfColumnsInGridViewTest(int width) {
-        logger.info("----------------------------------------------------------------------------------");
-        logger.info("Number of columns depending on screen width");
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        ecoNewsPage.changeWindowWidth(width);
-        logger.info("When width = " + width);
-        ecoNewsPage.countNewsColumns();
-        softAssert.assertAll();
 
-    }
 
     @Test(testName = "GC-669")
     @Description("Verify UI of the News page in Gallery view for different screen resolutions")
@@ -172,7 +151,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         ecoNewsPage.verifyContentItemsUI();
-
     }
 
     @Test
