@@ -195,7 +195,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         for (Integer integer : screenWidth) {
             logger.info("News aligning on screenWidth = " + integer);
             ecoNewsPage.changeWindowWidth(integer);
-            int newsFound = ecoNewsPage.getItemsContainer().getItemComponentsCount();
+            ecoNewsPage.scrollDown();
+            int newsFound = ecoNewsPage.getDisplayedArticles().size();
             for (int i = 0; i < newsFound; i++) {
                 logger.info("i = " + i);
                 softAssert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getTitle().getLocation().x,
@@ -225,7 +226,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
-    //TODO Jira task
+    //TODO Jira task9
     /*<======================================Front Bug==========================================>*/
     @Test
     @Description("Verify that all content in each article displayed GC-675")
