@@ -45,7 +45,7 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        //checkElements();
+        checkElements();
     }
 
     private void checkElements() {
@@ -80,7 +80,8 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get grid view")
     public WebElement getGridView() {
-        return searchElementByCss(GALLERY_VIEW_BUTTON.getPath());
+        return waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(GALLERY_VIEW_BUTTON.getPath()));
     }
 
     @Step("Check if grid view is active")
@@ -111,6 +112,11 @@ public class EcoNewsPage extends TopPart {
     @Step("Get list view")
     public WebElement getListView() {
         return searchElementByCss(LIST_VIEW_BUTTON.getPath());
+    }
+
+    @Step("Get list view button component")
+    public WebElement getListViewButtonComponent() {
+        return searchElementByCss(LIST_VIEW_BUTTON_COMPONENT.getPath());
     }
 
     @Step("Check if list view is displayed")
@@ -180,13 +186,15 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get items container")
     public ItemsContainer getItemsContainer() {
-        // TODO add here some waiter for uploading news
-        try {
-            Thread.sleep(800);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return itemsContainer = new ItemsContainer(driver);
+//        // TODO add here some waiter for uploading news
+//        try {
+//            Thread.sleep(800);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        waitsSwitcher.setExplicitWait(
+                ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
+        return new ItemsContainer(driver);
     }
 
     /**
@@ -307,24 +315,23 @@ public class EcoNewsPage extends TopPart {
      * @return number of columns in gallery view depending on screen width (max = 3, min = 1)
      */
     @Step("Count number of Grid Columns")
-    public int countNewsColumns() {
+    public void countNewsColumns(int width) {
+        int count = 1;
         List<WebElement> elements = getDisplayedArticles();
-        int count = 0;
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
-            if (elements.get(1).getLocation().y == elements.get(2).getLocation().y) {
-                logger.info("3 columns");
-                count = 3;
+            count++;
+            if (width > 1006 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
+                count++;
+                softAssert.assertTrue( count == 3);
             }
-            if (elements.get(1).getLocation().y < elements.get(2).getLocation().y) {
-                logger.info("2 columns");
-                count = 2;
+            else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+                softAssert.assertTrue( count == 2);
             }
+
         }
-        if (elements.get(0).getLocation().y < elements.get(1).getLocation().y) {
-            logger.info("1 column");
-            count = 1;
+        else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
+            softAssert.assertTrue( count == 1);
         }
-        return count;
     }
 
     /**
@@ -337,7 +344,12 @@ public class EcoNewsPage extends TopPart {
                  searchElementByCss(HEADER.getPath()).isDisplayed() &&
                          searchElementByCss(TAGS_FILTER_BLOCK.getPath()).isDisplayed() &&
                          searchElementByCss(ARTICLES_FOUND_COUNTER.getPath()).isDisplayed() &&
-                         searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed(),
+                         searchElementByCss(DISPLAYED_ARTICLES.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLE_IMAGE.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLE_TITLE.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLE_TEXT.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLE_CREATION_DATE.getPath()).isDisplayed() &&
+                         searchElementByCss(ARTICLE_AUTHOR_NAME.getPath()).isDisplayed(),
                 "Assert that all UI elements in Eco News page is visible"
         );
     }
@@ -449,7 +461,8 @@ public class EcoNewsPage extends TopPart {
     @Step("Scroll under end of page")
     public EcoNewsPage scrollDown() {
         logger.info("scroll down");
-        while (articleExistCount != articleDisplayedCount) {
+        while (articleExistCount > articleDisplayedCount) { //TODO Site BUG!
+            // Sometimes first (?) 12 displayed news appear again on scroll
             searchElementByCss(By.cssSelector("body")).sendKeys(Keys.CONTROL, Keys.END);
             articleExistCount = Integer.parseInt(searchElementByCss(ARTICLES_FOUND_COUNTER.getPath())
                     .getText().split(" ")[0]);

@@ -74,9 +74,9 @@ public final class UserRepository {
     public User unregisterUser() {
         return new User(
                 getdefaultName(),
-                getvalidUnregisterEmail().replace("@", getRandom() + "@"),
-                getdefaultPass(),
-                getcomfTemporaryPass());
+                getvalidUnregisterEmail(),
+                getUnregisterEmailPassword(),
+                getComfUnregisterEmailPassword());
     }
 
     @SneakyThrows

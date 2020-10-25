@@ -45,7 +45,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get create news main title text")
     public String getCreateNewsMainTitleText() {
-        return searchElementByCss(TITLE_FIELD.getPath()).getText();
+        return searchElementByCss(CREATE_NEWS_MAIN_TITLE.getPath()).getText();
     }
 
     @Step("Get title field")
@@ -357,7 +357,6 @@ public class CreateNewsPage extends TopPart {
         setTitleField(newsData.getTitle());
         clearContentField();
         setContentField(newsData.getContent());
-        tagsComponent.selectTags(newsData.getTags());
         if (!newsData.getSource().equals("")) {
             clearSourceField();
             setSourceField(newsData.getSource());
@@ -365,6 +364,7 @@ public class CreateNewsPage extends TopPart {
         if (!newsData.getFilePath().equals("")) {
             uploadFile(getDropArea(), newsData.getFilePath());
         }
+        tagsComponent.selectTags(newsData.getTags());
         return this;
     }
 

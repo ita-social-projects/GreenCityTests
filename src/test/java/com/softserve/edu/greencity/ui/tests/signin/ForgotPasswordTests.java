@@ -19,6 +19,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
     private final String FORGOT_PASS_EMAIL_VALIDATION_ERROR = "Please check that your e-mail address is indicated correctly";
     private final String EMPTY_EMAIL_ERROR_MESSAGE = "Email is required";
     private final String BAD_EMAIL_ERROR_MESSAGE = "Bad email or password:";
+    private final String NOT_EXISTING_EMAIL_MESSAGE = "The user does not exist by this email:";
     private final String BACK_TO_SIGN_IN_LABEL = "Remember your password? Back to Sign-in";
     private final String RESTORE_EMAIL_ERROR_MESSAGE = "Password restore link already sent, please check your email:";
     private final String FORGOT_PASS_MAIL_SUBJECT = "Confirm restoring password";
@@ -144,9 +145,9 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .unsuccessfullySubmit(user);
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
-
-        softAssert.assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
-        softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(BAD_EMAIL_ERROR_MESSAGE));
+        expectedBorderColorRBG = "rgb(135, 135, 135)";
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE));
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT, true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(), FORGOT_PASS_MAIL_SUBJECT, 50);

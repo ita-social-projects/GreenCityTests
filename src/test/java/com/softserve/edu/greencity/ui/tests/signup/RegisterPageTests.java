@@ -33,7 +33,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     @DataProvider
     public Object[][] unregisterCredentials() {
         return new Object[][]{
-                {UserRepository.get().unregisterUser()},};
+                {UserRepository.get().userCredentialsForRegistration()},};
     }
 
     @DataProvider

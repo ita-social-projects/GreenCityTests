@@ -92,12 +92,18 @@ public class SingleNewsPage extends TopPart  {
     }
 
     private WebElement getSourceLink() {
-        return searchElementByCss(SOURCE_LINK.getPath());
+        return waitsSwitcher.setExplicitWait(
+                ExpectedConditions.presenceOfElementLocated(SOURCE_LINK.getPath()));
     }
 
     public String getSourceLinkText() {
         String link = getSourceLink().getAttribute("href");
-        if(link.equals("null") || link.equals("")) {
+        try {
+            if (link.equals("null") || link.equals("")) {
+                return "";
+            }
+        } catch (NullPointerException e) {
+            logger.warn("NullPointerException in getSourceLinkText() interpreted as not existing href attribute");
             return "";
         }
         return link;

@@ -209,6 +209,14 @@ public final class NewsDataRepository {
     }
 
 
+    public NewsData getNewsWithSource() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.INITIATIVES);
+        return new NewsData(tags, "Еко лавка",
+                "Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, яка вирощується і виробляється на фермерських господарствах.",
+                "https://google.com.ua");
+    }
+
     public List<Tag> getNewsByTags() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);

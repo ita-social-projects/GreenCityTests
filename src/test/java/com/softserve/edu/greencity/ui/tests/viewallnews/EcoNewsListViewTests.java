@@ -23,6 +23,7 @@ import java.util.List;
 public class EcoNewsListViewTests extends GreenCityTestRunner {
     String cssBackgroundColorProperty;
     String expectedBackgroundColorRGBA;
+    String expectedHoveredByMouseBackgroundColorRGBA;
     List<Integer> screenWidth, screenWidth1, screenWidth2;
 
     private final String DEFAULT_IMAGE = "assets/img/icon/econews/default-image-list-view.png";
@@ -40,6 +41,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     public void beforeClass() {
         cssBackgroundColorProperty = "background-color";
         expectedBackgroundColorRGBA = "rgba(5, 107, 51, 1)";
+        expectedHoveredByMouseBackgroundColorRGBA = "rgba(19, 170, 87, 1)";
         screenWidth = Arrays.asList(1200, 1024, 768, 667);
         screenWidth1 = Arrays.asList(1400, 1024, 768);
         screenWidth2 = Arrays.asList(576, 360);
@@ -67,15 +69,15 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertTrue(ecoNewsPage.isDisplayedListView());
 
         ecoNewsPage.hoverToListView();
-        String hoverListViewIconColor = ecoNewsPage.getListView().getCssValue(cssBackgroundColorProperty);
+        String hoverListViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
         softAssert.assertEquals(hoverListViewIconColor, expectedBackgroundColorRGBA);
 
         ecoNewsPage
                 .switchToListView()
                 .hoverToGridView();
 
-        String ListViewIconColor = ecoNewsPage.getListView().getCssValue(cssBackgroundColorProperty);
-        softAssert.assertEquals(ListViewIconColor, expectedBackgroundColorRGBA);
+        String ListViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
+        softAssert.assertEquals(ListViewIconColor, expectedHoveredByMouseBackgroundColorRGBA);
         softAssert.assertAll();
     }
 
@@ -98,7 +100,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .switchToListView();
 
-        String listViewIconColor = ecoNewsPage.getListView().getCssValue(cssBackgroundColorProperty);
+        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
 
         softAssert.assertEquals(listViewIconColor, expectedBackgroundColorRGBA);
         softAssert.assertTrue(ecoNewsPage.getItemsContainer().getItemsSize() >= 6);
@@ -113,7 +115,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .switchToListView();
 
-        ItemComponent firstItem = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
+        ItemComponent firstItem = ecoNewsPage.getItemsContainer().chooseNewsByNumber(1);
 
         softAssert.assertTrue(firstItem.isDisplayedImage());
         softAssert.assertTrue(firstItem.isDisplayedTags());
