@@ -75,6 +75,10 @@ public final class ItemComponent {
         return newsItem.findElement(TITLE.getPath());
     }
 
+    public WebElement getItemTags() {
+        return newsItem.findElement(TAGS.getPath());
+    }
+
     public String getTitleText() {
         return getTitle().getText();
     }

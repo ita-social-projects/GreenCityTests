@@ -355,13 +355,6 @@ public class EcoNewsPage extends TopPart {
     }
 
     @Step
-    public void verifyContentItemsUI() {
-        List<WebElement> article = getDisplayedArticles();
-        System.out.println("height = " + article.get(0).getRect().height);
-        System.out.println("width = " + article.get(0).getRect().width);
-    }
-
-    @Step
     public String getImageAttribute() {
        return getItemsContainer().
                        chooseNewsByNumber(0).
