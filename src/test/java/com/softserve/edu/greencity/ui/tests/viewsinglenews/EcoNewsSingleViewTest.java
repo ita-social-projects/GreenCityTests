@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
+import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
@@ -9,6 +10,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -70,9 +72,6 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
     }
 
-
-
-
     @Test(testName = "GC-731")
     @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
     public void noSourceIfItWasntSpecified() {
@@ -126,4 +125,28 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             ecoNewsService.deleteNewsByTitle(newsWithSource.getTitle());
         }
     }
+
+    @Test(testName = "GC-713")
+    @Description("Verify that User sees the last 3 news with the same tag in the News recommendations" +
+            " widget, if there are more than 3 news with this tag")
+    public void testRecommendations() {
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .navigateMenuEcoNews();
+
+        Tag suitableTag = TagsUtill.getSuitableTag(ecoNewsPage, (e) -> (e.getNumberOfItemComponent() > 3));
+        if(suitableTag != null) {
+            ItemsContainer suggestedNews = ecoNewsPage
+                    .selectFilter(suitableTag)
+                    .switchToSingleNewsPageByNumber(0)
+                    .suggestedNews();
+            Assert.assertEquals(suggestedNews.getItemComponentsCount(), 3);
+            EcoNewsSuggestionsAssertion.assertSuggestionsByDate(suggestedNews, false);
+
+        } else {
+            Assert.assertTrue(false, "Couldn't find suitable tag");
+        }
+
+
+    }
+
 }
