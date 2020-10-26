@@ -337,18 +337,30 @@ public class EcoNewsPage extends TopPart {
         List<WebElement> elements = getDisplayedArticles();
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
             count++;
-            if (width > 1006 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
+
+            if (width > 991 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
                 count++;
+                logger.info("3 columns when width = " + width);
                 softAssert.assertTrue( count == 3);
             }
-            else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+            else if ((width > 575) && (width < 992) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+                logger.info("2 columns when width = " + width);
                 softAssert.assertTrue( count == 2);
+            }
+            else {
+                logger.info("Error! " + width + "  " + Boolean.toString(elements.get(1).getLocation().y < elements.get(2).getLocation().y));
+                logger.info(elements.get(1).getLocation().y + " " + elements.get(2).getLocation().y);
             }
 
         }
         else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
+            logger.info("1 column when width = " + width);
             softAssert.assertTrue( count == 1);
         }
+        else {
+            logger.info("Error! " + width + "  " + Boolean.toString(elements.get(0).getLocation().y < elements.get(1).getLocation().y));
+        }
+        softAssert.assertAll();
     }
 
     /**
@@ -369,13 +381,6 @@ public class EcoNewsPage extends TopPart {
                          searchElementByCss(ARTICLE_AUTHOR_NAME.getPath()).isDisplayed(),
                 "Assert that all UI elements in Eco News page is visible"
         );
-    }
-
-    @Step
-    public void verifyContentItemsUI() {
-        List<WebElement> article = getDisplayedArticles();
-        System.out.println("height = " + article.get(0).getRect().height);
-        System.out.println("width = " + article.get(0).getRect().width);
     }
 
     @Step

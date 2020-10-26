@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,8 +15,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
+
 public final class ItemComponent {
 
+    protected WebDriverWait wait;
     private final WebDriver driver;
     private final WebElement newsItem;
     private WaitsSwitcher waitsSwitcher;
@@ -40,6 +44,12 @@ public final class ItemComponent {
         return newsItem.findElements(TAGS.getPath());
     }
 
+    public WebElement getTagsContainer() {
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(TAGS_CONTAINER.getPath()));
+        return newsItem.findElement(TAGS_CONTAINER.getPath());
+    }
+
     public boolean isDisplayedTags() {
         boolean isDisplayedCurrent = false;
         for (WebElement current : getTags()) {
@@ -60,7 +70,7 @@ public final class ItemComponent {
     //Title
     public WebElement getTitle() {
         waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.presenceOfNestedElementLocatedBy(newsItem, TITLE.getPath()));
+                ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return newsItem.findElement(TITLE.getPath());
     }
 
@@ -135,6 +145,12 @@ public final class ItemComponent {
         return newsItem.findElement(DATE_OF_CREATION.getPath());
     }
 
+    public WebElement getDateAndAuthorContainer() {
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(DATE_AND_AUTHOR_CONTAINER.getPath()));
+        return newsItem.findElement(DATE_AND_AUTHOR_CONTAINER.getPath());
+    }
+
     public Date getCreationDate() {
         String date = getDateOfCreationText().replace(",", "").toUpperCase();
         DateFormat format = new SimpleDateFormat("MMM d yyyy", Locale.ENGLISH);
@@ -201,9 +217,9 @@ public final class ItemComponent {
      * @return
      */
     public boolean areTagsPresent(List<Tag> tags) {
-        for(WebElement actualTag : getTags()) {
-            for(Tag tagToCheck : tags) {
-                if(actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
+        for (WebElement actualTag : getTags()) {
+            for (Tag tagToCheck : tags) {
+                if (actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
                     return true;
                 }
             }
