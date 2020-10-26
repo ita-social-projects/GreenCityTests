@@ -106,6 +106,19 @@ public final class NewsDataRepository {
         return new NewsData(tags, "Green Day", "foo");
     }
 
+    public NewsData getNewsWithContentFieldForCheckAutoResize() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        return new NewsData(tags,
+                "XVI International specialized exhibition of ecologic products for the daily life",
+                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet " +
+                        "dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit " +
+                        "lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d. Lorem ipsum dolor sit amet, " +
+                        "consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. " +
+                        "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d. "
+        );
+    }
+
     public NewsData getNewsWithEmptyContentField() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
@@ -186,6 +199,15 @@ public final class NewsDataRepository {
         return new NewsData(tags, "Еко лавка",
                 "Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, яка вирощується і виробляється на фермерських господарствах.");
     }
+
+    public NewsData getTitleForAutoResizeCheck() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
+        return new NewsData(tags, "March 4 – 7, 2020, International Exhibition Center, Kyiv, 15 Brovarsky Ave., takes place the most important event for professionals and funs of natural food and healthy life.",
+                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
+    }
+
 
     public NewsData getNewsWithSource() {
         List<Tag> tags = new ArrayList<>();

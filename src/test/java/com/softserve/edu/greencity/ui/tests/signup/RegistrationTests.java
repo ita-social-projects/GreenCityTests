@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
+import io.qameta.allure.Description;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,6 +19,8 @@ import java.util.concurrent.TimeUnit;
 
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner {
+
+    private final String SIGN_IN_TITLE = "Welcome back!";
 
     @DataProvider
     public Object[][] successRegistrationUserCreds() {
@@ -52,6 +55,17 @@ public class RegistrationTests extends GreenCityTestRunner {
                 .getManualLoginComponent()
                 .successfullyLogin(userLoginCredentials);
         Assert.assertTrue(isLogInNow());
+    }
+
+    @Test(testName = "GC-200")
+    @Description("Verify that unregistered user sees popup window 'Sign in' after clicking on the “My habits” button")
+    public void signInAfterMyhabits() {
+        logger.info("Starting signInAfterMyhabits");
+        String titleString = loadApplication()
+                .clickMyHabitsUnsignedLink()
+                .getTitleText();
+
+        Assert.assertEquals(titleString, SIGN_IN_TITLE);
     }
 
     @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
