@@ -165,7 +165,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertEquals(itemComponent.getTitle().getLocation().y - (itemComponent.getTagsContainer().getLocation().y + itemComponent.getTagsContainer().getSize().height),
                 8, "Height between title and tags");
         softAssert.assertEquals(itemComponent.getContent().getLocation().y - (itemComponent.getTitle().getLocation().y + itemComponent.getTitleHeight()),
-                8, "Height between content and title"); // Requirements could be changed
+                10, "Height between content and title"); // Requirements could be changed
         softAssert.assertEquals(itemComponent.getDateOfCreation().getLocation().y - (itemComponent.getContent().getLocation().y + itemComponent.getContentHeight()),
                 16, "Height between date and content");
         softAssert.assertEquals(itemComponent.getTitle().getLocation().x - itemComponent.getImage().getLocation().x,

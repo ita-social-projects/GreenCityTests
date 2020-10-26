@@ -317,11 +317,6 @@ public class EcoNewsPage extends TopPart {
     @Step("Count number of Grid Columns")
     public void countNewsColumns(int width) {
         int count = 1;
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         List<WebElement> elements = getDisplayedArticles();
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
             count++;
