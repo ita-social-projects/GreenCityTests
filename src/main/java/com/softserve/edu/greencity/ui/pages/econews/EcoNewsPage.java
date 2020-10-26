@@ -322,16 +322,20 @@ public class EcoNewsPage extends TopPart {
             count++;
             if (width > 1006 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
                 count++;
+                logger.info("3 columns");
                 softAssert.assertTrue( count == 3);
             }
             else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+                logger.info("2 columns");
                 softAssert.assertTrue( count == 2);
             }
 
         }
         else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
+            logger.info("1 column");
             softAssert.assertTrue( count == 1);
         }
+        softAssert.assertAll();
     }
 
     /**

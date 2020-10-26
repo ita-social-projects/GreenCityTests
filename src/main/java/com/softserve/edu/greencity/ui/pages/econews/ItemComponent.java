@@ -1,10 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.ui.data.econews.Tag;
-import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
-
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,11 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
+
 public final class ItemComponent {
 
-    protected WebDriverWait wait;
     private final WebDriver driver;
     private final WebElement newsItem;
+    protected WebDriverWait wait;
     private WaitsSwitcher waitsSwitcher;
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
@@ -52,6 +51,12 @@ public final class ItemComponent {
         return newsItem.findElements(TAGS.getPath());
     }
 
+    public WebElement getTagsContainer() {
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(TAGS_CONTAINER.getPath()));
+        return newsItem.findElement(TAGS_CONTAINER.getPath());
+    }
+
     public boolean isDisplayedTags() {
         boolean isDisplayedCurrent = false;
         for (WebElement current : getTags()) {
@@ -73,10 +78,6 @@ public final class ItemComponent {
     public WebElement getTitle() {
         waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return newsItem.findElement(TITLE.getPath());
-    }
-
-    public WebElement getItemTags() {
-        return newsItem.findElement(TAGS.getPath());
     }
 
     public String getTitleText() {
@@ -146,6 +147,12 @@ public final class ItemComponent {
         return newsItem.findElement(DATE_OF_CREATION.getPath());
     }
 
+    public WebElement getDateAndAuthorContainer() {
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(DATE_AND_AUTHOR_CONTAINER.getPath()));
+        return newsItem.findElement(DATE_AND_AUTHOR_CONTAINER.getPath());
+    }
+
     public String getDateOfCreationText() {
         return getDateOfCreation().getText();
     }
@@ -198,13 +205,14 @@ public final class ItemComponent {
 
     /**
      * Checks if at least one of tags provided is present in news
+     *
      * @param tags tags to check
      * @return
      */
     public boolean areTagsPresent(List<Tag> tags) {
-        for(WebElement actualTag : getTags()) {
-            for(Tag tagToCheck : tags) {
-                if(actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
+        for (WebElement actualTag : getTags()) {
+            for (Tag tagToCheck : tags) {
+                if (actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
                     return true;
                 }
             }
