@@ -13,6 +13,7 @@ import com.softserve.edu.greencity.ui.tools.WindowManager;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -258,6 +259,12 @@ public abstract class TopPart implements StableWebElementSearch {
     public void maximizeWindow() {
         WindowManager windowManager = new WindowManager(driver);
         windowManager.maximizeWindow();
+    }
+    public int getWindowWidth(int width){
+        JavascriptExecutor js= (JavascriptExecutor)driver;
+        String windowSize = js.executeScript("return (window.outerWidth - window.innerWidth + "+width+"); ").toString();
+        width = Integer.parseInt((windowSize));
+        return width;
     }
     @Override
     public WebDriver setDriver() {
