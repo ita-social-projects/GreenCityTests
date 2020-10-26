@@ -1,6 +1,4 @@
 package com.softserve.edu.greencity.ui.tests.viewallnews;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
@@ -12,8 +10,10 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,7 +99,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         List<WebElement> elements = econewsPage.getDisplayedArticles();
 
         for (WebElement element : elements) {
-            logger.info("assert that date:" +  " length <= 95px");
+            logger.info("assert that date:" + " length <= 95px");
             softAssert.assertTrue(econewsPage.getCreationDateLength(element) < 96,
                     "assert that length <= 95px");
         }
@@ -123,51 +123,26 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
-    @Description("GC-668")
+    @Test(testName = "GC-668")
     public void countOfColumnsInGridViewTest() {
         logger.info("Number of columns depending on screen width");
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        //for (Integer integer : screenWidth) {
-
-        for (Integer integer = 1010; integer > 1000; integer--) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
-            logger.info("When width = " + driver.manage().window().getSize().getWidth());
-            logger.info("Expected width = " + integer);
-            ecoNewsPage.countNewsColumns();
+            ecoNewsPage.countNewsColumns(integer);
         }
-        softAssert.assertAll();
-        
     }
 
-    @Ignore
-    @Test(dataProvider = "windowWidth")
-    @Description("GC-668")
-    public void countOfColumnsInGridViewTest(int width) {
-        logger.info("----------------------------------------------------------------------------------");
-        logger.info("Number of columns depending on screen width");
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        ecoNewsPage.changeWindowWidth(width);
-        logger.info("When width = " + width);
-        ecoNewsPage.countNewsColumns();
-        softAssert.assertAll();
-        
-    }
 
-    @Test(dataProvider = "windowWidth")
-    @Description("GC-669")
-    public void verifyingUIForDifferentScreenResolutionTest(int width) {
-        logger.info("Verify UI of the News page in Gallery view for different screen resolutions");
+
+    @Test(testName = "GC-669")
+    @Description("Verify UI of the News page in Gallery view for different screen resolutions")
+    public void verifyingUIForDifferentScreenResolutionTest() {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
-        ecoNewsPage.changeWindowWidth(width);
-        softAssert.assertTrue(ecoNewsPage.isGridViewDisplayed());
-        ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
-        
+        for (Integer integer : screenWidth) {
+            ecoNewsPage.changeWindowWidth(integer);
+            ecoNewsPage.isUiElementsDisplayedWithDifferentScreenResolution();
+        }
     }
 
     @Test
@@ -176,7 +151,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         ecoNewsPage.verifyContentItemsUI();
-
     }
 
     @Test
@@ -196,7 +170,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             ecoNewsPage.changeWindowWidth(integer);
             softAssert.assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
         }
-        
+
     }
 
     @Test(retryAnalyzer = RetryAnalyzerImpl.class)
@@ -221,14 +195,15 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         for (Integer integer : screenWidth) {
             logger.info("News aligning on screenWidth = " + integer);
             ecoNewsPage.changeWindowWidth(integer);
-            int newsFound = ecoNewsPage.getItemsContainer().getItemComponentsCount();
+            ecoNewsPage.scrollDown();
+            int newsFound = ecoNewsPage.getDisplayedArticles().size();
             for (int i = 0; i < newsFound; i++) {
                 logger.info("i = " + i);
                 softAssert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getTitle().getLocation().x,
                         ecoNewsPage.getItemsContainer().chooseNewsByNumber(i).getContent().getLocation().x);
             }
         }
-        
+
     }
 
     @Test
@@ -238,20 +213,20 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.getRandomTopic().click();
         logger.info("assert that Tags, Title, Date, Dot, Author, Image, Social buttons, Text, Source displayed");
-        softAssert.assertTrue(econewsPage.getopenTopicTags().isDisplayed(),"Tags displayed");
-        softAssert.assertTrue(econewsPage.getnewsTitle().isDisplayed(),"Title displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoDate().isDisplayed(),"Date displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoDot().isDisplayed(),"Dot displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoAuthor().isDisplayed(),"Author displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoImage().isDisplayed(),"Image displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoSocialLinksImg().isDisplayed(),"Social buttons displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoText().isDisplayed(),"Text displayed");
-        softAssert.assertTrue(econewsPage.getnewsInfoSource().isDisplayed(),"Source displayed");
+        softAssert.assertTrue(econewsPage.getopenTopicTags().isDisplayed(), "Tags displayed");
+        softAssert.assertTrue(econewsPage.getnewsTitle().isDisplayed(), "Title displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoDate().isDisplayed(), "Date displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoDot().isDisplayed(), "Dot displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoAuthor().isDisplayed(), "Author displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoImage().isDisplayed(), "Image displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoSocialLinksImg().isDisplayed(), "Social buttons displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoText().isDisplayed(), "Text displayed");
+        softAssert.assertTrue(econewsPage.getnewsInfoSource().isDisplayed(), "Source displayed");
         softAssert.assertAll();
 
     }
 
-    //TODO Jira task
+    //TODO Jira task9
     /*<======================================Front Bug==========================================>*/
     @Test
     @Description("Verify that all content in each article displayed GC-675")
@@ -290,7 +265,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         List<String> pureDateDB = new ArrayList<>();
         datesDB.forEach(d -> pureDateDB.add(econewsPage.formatChronologicalDateFromDB(d)));
         logger.info("compare  dates order in DB and front");
-        softAssert.assertEquals(dates,pureDateDB,
+        softAssert.assertEquals(dates, pureDateDB,
                 "assert dates order in DB and front");
         softAssert.assertAll();
     }
