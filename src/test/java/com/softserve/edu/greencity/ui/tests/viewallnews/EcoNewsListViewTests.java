@@ -26,7 +26,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     String expectedHoveredByMouseBackgroundColorRGBA;
     List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages;
 
-    private final String DEFAULT_IMAGE = "assets/img/icon/econews/default-image-list-view.png";
+    private final String DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
     private static List<String> testNewsTitles = new ArrayList<>();
 
     @AfterTest(alwaysRun = true)
