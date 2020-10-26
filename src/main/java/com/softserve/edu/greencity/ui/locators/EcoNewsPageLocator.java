@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
  */
 public enum EcoNewsPageLocator implements Locator {
     CREATE_NEWS_BUTTON(By.id("create-button")),
-    FOUND_ITEMS(By.xpath("//*[@class='ng-star-inserted']")),
+    FOUND_ITEMS(By.cssSelector("div.main-wrapper")),
     HEADER(By.cssSelector("H1")),
     TAGS_FILTER_BLOCK(By.cssSelector("app-filter-news")),
     TAGS_FILTER_LABEL(By.cssSelector("app-filter-news>div.wrapper>span")),
@@ -15,7 +15,7 @@ public enum EcoNewsPageLocator implements Locator {
     ACTIVE_TAGS(By.cssSelector("app-filter-news>div.wrapper>ul>a>li.clicked-filter-button")),
     UNCHECK_TAG_BUTTONS(By.cssSelector("app-filter-news>div.wrapper>ul>a>li>div.close")),
     ARTICLES_FOUND_COUNTER(By.cssSelector("app-remaining-count>p")),
-    DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),//(By.cssSelector(".gallery-view-li-active.ng-star-inserted")),
+    DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),
     DISPLAYED_ARTICLES_TITLES(By.xpath("//div[@class = 'title-list word-wrap']")),
     ARTICLE_IMAGE(By.cssSelector(" div.list-image>img")),
     ARTICLE_ECO_BUTTON(By.cssSelector("div.filter-tag>div.ul-eco-buttons")),
@@ -24,8 +24,10 @@ public enum EcoNewsPageLocator implements Locator {
     ARTICLE_CREATION_DATE(By.cssSelector("div.user-data-added-news>p:first-child")),
     ARTICLE_AUTHOR_NAME(By.cssSelector("div.user-data-added-news>p:last-child")),
     GALLERY_VIEW_BUTTON(By.cssSelector("div.gallery-view")),
+    GALLERY_VIEW_WRAPPER(By.cssSelector(".gallery-view-active.list")),
     LIST_VIEW_BUTTON(By.cssSelector("div.list-view")),
     LIST_VIEW_BUTTON_COMPONENT(By.cssSelector("div.list-view > div")),
+    LIST_VIEW_WRAPPER(By.cssSelector(".list-view-li-active")),
     OPEN_TOPICS_TAGS(By.cssSelector("div.tags>div.tags-item")),
     NEWS_TITLE(By.cssSelector("div.news-title")),
     NEWS_INFO_DATE(By.cssSelector("div.news-info>div.news-info-date")),
