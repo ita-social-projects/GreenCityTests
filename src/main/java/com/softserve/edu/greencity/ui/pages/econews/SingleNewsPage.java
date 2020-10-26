@@ -2,12 +2,20 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.List;
 
+import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
+import com.softserve.edu.greencity.ui.pages.common.CommentContainer;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+
+import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.COMMENT_BUTTON;
+import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.COMMENT_FIELD;
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
+
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,6 +26,7 @@ public class SingleNewsPage extends TopPart  {
 
     private List<WebElement> tagsList = driver.findElements(TAGS_LIST.getPath());
     private ItemsContainer itemsContainer;
+    private CommentContainer commentContainer;
 
     public SingleNewsPage(WebDriver driver) {
         super(driver);
@@ -26,6 +35,7 @@ public class SingleNewsPage extends TopPart  {
 
     private void checkElements() {
         itemsContainer = new ItemsContainer(driver);
+        //commentContainer = new CommentContainer(driver);
         waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getTitle()));
     }
 
@@ -132,6 +142,30 @@ public class SingleNewsPage extends TopPart  {
     public EcoNewsPage switchToEcoNewsPageBack() {
         clickGoToNewsButton();
         return new EcoNewsPage(driver);
+    }
+
+    public CommentContainer getCommentContainer(){
+        commentContainer = new CommentContainer(driver);
+        commentContainer.getCommentComponents();
+        return new CommentContainer(driver);
+    }
+
+    public WebElement getCommentField(){
+        return searchElementByCss(COMMENT_FIELD.getPath());
+    }
+
+    public SingleNewsPage setCommentText(String commentText){
+        getCommentField().sendKeys(commentText);
+        return this;
+    }
+
+    public  WebElement getCommentButton(){
+        return searchElementByCss(COMMENT_BUTTON.getPath());
+    }
+
+    public SingleNewsPage clickCommentButton(){
+        getCommentButton().click();
+        return this;
     }
 
     @Override
