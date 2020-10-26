@@ -42,8 +42,8 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         cssBackgroundColorProperty = "background-color";
         expectedBackgroundColorRGBA = "rgba(5, 107, 51, 1)";
         expectedHoveredByMouseBackgroundColorRGBA = "rgba(19, 170, 87, 1)";
-        screenWidthWithContent = Arrays.asList(1440);
-        screenWidthWithoutContent = Arrays.asList(1200, 1024, 768, 667);
+        screenWidthWithContent = Arrays.asList(1440, 1200);
+        screenWidthWithoutContent = Arrays.asList(1024, 768, 667);
         screenWidthWithoutImages = Arrays.asList(576, 575);
         screenWidth1 = Arrays.asList(1400, 1024, 768);
         screenWidth2 = Arrays.asList(576, 360);
