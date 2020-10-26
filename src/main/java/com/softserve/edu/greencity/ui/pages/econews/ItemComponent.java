@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -151,6 +152,16 @@ public final class ItemComponent {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(DATE_AND_AUTHOR_CONTAINER.getPath()));
         return newsItem.findElement(DATE_AND_AUTHOR_CONTAINER.getPath());
+    }
+
+    public Date getCreationDate() {
+        String date = getDateOfCreationText().replace(",", "").toUpperCase();
+        DateFormat format = new SimpleDateFormat("MMM d yyyy", Locale.ENGLISH);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     public String getDateOfCreationText() {
