@@ -37,7 +37,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @BeforeClass
     public void widthData() {
-        screenWidth = Arrays.asList(1140, 1024, 1007, 991, 576, 575, 320);
+        screenWidth = Arrays.asList(1140, 1024, 1007, 1005, 992, 991, 576, 575, 320);
 
     }
 
@@ -126,7 +126,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @Test(testName = "GC-668")
     public void countOfColumnsInGridViewTest() {
-        logger.info("Number of columns depending on screen width");
+        logger.info("Number of columns depending on screen width " + screenWidth);
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
@@ -153,16 +153,16 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         ItemComponent itemComponent = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
         softAssert.assertEquals(itemComponent.getImage().getSize().height,
-                199, "Image height"); //Valid result when image height is 206. Requirements could be changed
+                206, "Image height"); //Valid result when image height is 206. Requirements could be changed
         softAssert.assertEquals(itemComponent.getTagsContainer().getSize().height,
                 24, "Tags height");
-        softAssert.assertEquals(itemComponent.getTitleHeight() + itemComponent.getContentHeight() + 8,
-                200, "Title and Content height"); // Depends on size of Title and Content. Probably max height is 200
+        softAssert.assertTrue(itemComponent.getTitleHeight() + itemComponent.getContentHeight() + 8 <
+                    201, "Title and Content height"); // Depends on size of Title and Content. Probably max height is 200
         softAssert.assertEquals(itemComponent.getDateOfCreation().getSize().height,
                 21, "Date height");
-        softAssert.assertEquals(itemComponent.getTagsContainer().getLocation().y - (itemComponent.getImage().getLocation().y + 199), //Valid result when image height is 206. Requirements could be changed
+        softAssert.assertEquals(itemComponent.getTagsContainer().getLocation().y - (itemComponent.getImage().getLocation().y + itemComponent.getImage().getSize().height), //Valid result when image height is 206. Requirements could be changed
                 8, "Height between image and tags");
-        softAssert.assertEquals(itemComponent.getTitle().getLocation().y - (itemComponent.getTagsContainer().getLocation().y + 24),
+        softAssert.assertEquals(itemComponent.getTitle().getLocation().y - (itemComponent.getTagsContainer().getLocation().y + itemComponent.getTagsContainer().getSize().height),
                 8, "Height between title and tags");
         softAssert.assertEquals(itemComponent.getContent().getLocation().y - (itemComponent.getTitle().getLocation().y + itemComponent.getTitleHeight()),
                 8, "Height between content and title"); // Requirements could be changed

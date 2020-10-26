@@ -317,23 +317,36 @@ public class EcoNewsPage extends TopPart {
     @Step("Count number of Grid Columns")
     public void countNewsColumns(int width) {
         int count = 1;
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         List<WebElement> elements = getDisplayedArticles();
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
             count++;
-            if (width > 1006 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
+
+            if (width > 991 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
                 count++;
-                logger.info("3 columns");
+                logger.info("3 columns when width = " + width);
                 softAssert.assertTrue( count == 3);
             }
-            else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
-                logger.info("2 columns");
+            else if ((width > 575) && (width < 992) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+                logger.info("2 columns when width = " + width);
                 softAssert.assertTrue( count == 2);
+            }
+            else {
+                logger.info("Error! " + width + "  " + Boolean.toString(elements.get(1).getLocation().y < elements.get(2).getLocation().y));
+                logger.info(elements.get(1).getLocation().y + " " + elements.get(2).getLocation().y);
             }
 
         }
         else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
-            logger.info("1 column");
+            logger.info("1 column when width = " + width);
             softAssert.assertTrue( count == 1);
+        }
+        else {
+            logger.info("Error! " + width + "  " + Boolean.toString(elements.get(0).getLocation().y < elements.get(1).getLocation().y));
         }
         softAssert.assertAll();
     }
