@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
  */
 public enum EcoNewsPageLocator implements Locator {
     CREATE_NEWS_BUTTON(By.id("create-button")),
-    FOUND_ITEMS(By.xpath("//*[@class='ng-star-inserted']")),
+    FOUND_ITEMS(By.cssSelector("div.main-wrapper")),
     HEADER(By.cssSelector("H1")),
     TAGS_FILTER_BLOCK(By.cssSelector("app-filter-news")),
     TAGS_FILTER_LABEL(By.cssSelector("app-filter-news>div.wrapper>span")),
@@ -15,7 +15,7 @@ public enum EcoNewsPageLocator implements Locator {
     ACTIVE_TAGS(By.cssSelector("app-filter-news>div.wrapper>ul>a>li.clicked-filter-button")),
     UNCHECK_TAG_BUTTONS(By.cssSelector("app-filter-news>div.wrapper>ul>a>li>div.close")),
     ARTICLES_FOUND_COUNTER(By.cssSelector("app-remaining-count>p")),
-    DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),//(By.cssSelector(".gallery-view-li-active.ng-star-inserted")),
+    DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),
     DISPLAYED_ARTICLES_TITLES(By.xpath("//div[@class = 'title-list word-wrap']")),
     ARTICLE_IMAGE(By.cssSelector(" div.list-image>img")),
     ARTICLE_ECO_BUTTON(By.cssSelector("div.filter-tag>div.ul-eco-buttons")),

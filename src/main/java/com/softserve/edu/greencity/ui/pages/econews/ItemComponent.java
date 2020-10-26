@@ -4,12 +4,11 @@ import com.softserve.edu.greencity.ui.data.econews.Tag;
 import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -17,7 +16,6 @@ import java.util.regex.Pattern;
 
 public final class ItemComponent {
 
-    protected WebDriverWait wait;
     private final WebDriver driver;
     private final WebElement newsItem;
     private WaitsSwitcher waitsSwitcher;
@@ -26,27 +24,17 @@ public final class ItemComponent {
         this.driver = driver;
         this.newsItem = newsItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
-        //initElements();
     }
 
-	/*private void initElements() {
-		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
-		title = newsItem.findElement(By.cssSelector("div.title-list p"));
-		content = newsItem.findElement(By.cssSelector("div.list-text p"));
-		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
-		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
-//		makeElPresent();
-	}
-
-	private void makeElPresent() {
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		Duration duration = Duration.ofMillis(20L);
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
+//	private void makeElPresent() {
+//		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+//		Duration duration = Duration.ofMillis(20L);
+//		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
 //		WebDriverWait wait = new WebDriverWait(myDriver, 15);
 //		wait.until(webDriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete"));
-		wait.until(ExpectedConditions.visibilityOfAllElements(title, content, dateOfCreation, author));
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}*/
+//		wait.until(ExpectedConditions.visibilityOfAllElements(title, content, dateOfCreation, author));
+//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//	}
 
     public List<WebElement> getTags() {
         return newsItem.findElements(TAGS.getPath());
@@ -71,7 +59,8 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.presenceOfNestedElementLocatedBy(newsItem, TITLE.getPath()));
         return newsItem.findElement(TITLE.getPath());
     }
 
@@ -93,6 +82,10 @@ public final class ItemComponent {
 
     protected void clickTitle() {
         getTitle().click();
+    }
+
+    public void click() {
+        newsItem.click();
     }
 
     public boolean isDisplayedTitle() {
@@ -140,6 +133,16 @@ public final class ItemComponent {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(DATE_OF_CREATION.getPath()));
         return newsItem.findElement(DATE_OF_CREATION.getPath());
+    }
+
+    public Date getCreationDate() {
+        String date = getDateOfCreationText().replace(",", "").toUpperCase();
+        DateFormat format = new SimpleDateFormat("MMM d yyyy", Locale.ENGLISH);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     public String getDateOfCreationText() {

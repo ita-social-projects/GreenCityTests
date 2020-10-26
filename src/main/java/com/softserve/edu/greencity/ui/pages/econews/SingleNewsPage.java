@@ -2,7 +2,6 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -126,12 +125,19 @@ public class SingleNewsPage extends TopPart  {
 
     /**
      * Return to EcoNewsPage
-     *
      * @return EcoNewsPage
      */
     public EcoNewsPage switchToEcoNewsPageBack() {
         clickGoToNewsButton();
         return new EcoNewsPage(driver);
+    }
+
+    /**
+     * Gives a list of suggested news in the bottom of page
+     * @return ItemsContainer with suggested news
+     */
+    public ItemsContainer suggestedNews() {
+        return new ItemsContainer(driver);
     }
 
     @Override
