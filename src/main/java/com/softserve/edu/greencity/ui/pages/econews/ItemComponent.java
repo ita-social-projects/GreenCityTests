@@ -1,6 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.ui.data.econews.Tag;
+import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
+
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,36 +19,26 @@ import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 public final class ItemComponent {
 
+    protected WebDriverWait wait;
     private final WebDriver driver;
     private final WebElement newsItem;
-    protected WebDriverWait wait;
     private WaitsSwitcher waitsSwitcher;
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
         this.driver = driver;
         this.newsItem = newsItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
-        //initElements();
     }
 
-	/*private void initElements() {
-		tags = newsItem.findElements(By.cssSelector("div.filter-tag div"));
-		title = newsItem.findElement(By.cssSelector("div.title-list p"));
-		content = newsItem.findElement(By.cssSelector("div.list-text p"));
-		dateOfCreation = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(1)"));
-		author = newsItem.findElement(By.cssSelector("div.user-data-added-news > p:nth-child(2)"));
-//		makeElPresent();
-	}
-
-	private void makeElPresent() {
-		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		Duration duration = Duration.ofMillis(20L);
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
+//	private void makeElPresent() {
+//		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+//		Duration duration = Duration.ofMillis(20L);
+//		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
 //		WebDriverWait wait = new WebDriverWait(myDriver, 15);
 //		wait.until(webDriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete"));
-		wait.until(ExpectedConditions.visibilityOfAllElements(title, content, dateOfCreation, author));
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	}*/
+//		wait.until(ExpectedConditions.visibilityOfAllElements(title, content, dateOfCreation, author));
+//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//	}
 
     public List<WebElement> getTags() {
         return newsItem.findElements(TAGS.getPath());
@@ -77,7 +69,8 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return newsItem.findElement(TITLE.getPath());
     }
 
@@ -99,6 +92,10 @@ public final class ItemComponent {
 
     protected void clickTitle() {
         getTitle().click();
+    }
+
+    public void click() {
+        newsItem.click();
     }
 
     public boolean isDisplayedTitle() {
@@ -216,7 +213,6 @@ public final class ItemComponent {
 
     /**
      * Checks if at least one of tags provided is present in news
-     *
      * @param tags tags to check
      * @return
      */

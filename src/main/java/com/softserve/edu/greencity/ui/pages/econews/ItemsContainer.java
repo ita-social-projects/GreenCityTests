@@ -30,7 +30,7 @@ public class ItemsContainer implements StableWebElementSearch {
 
     private WebDriver driver;
     private List<ItemComponent> itemComponents;
-    private By items = DISPLAYED_ARTICLES.getPath(); //By.cssSelector(".list>li.ng-star-inserted"); //list of eco news cards
+    private By items = DISPLAYED_ARTICLES.getPath();
 
     public ItemsContainer(WebDriver driver) {
         this.driver = driver;
@@ -55,7 +55,7 @@ public class ItemsContainer implements StableWebElementSearch {
     private List<WebElement> getItems() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         return waitsSwitcher.setExplicitWait(7,
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(items));
+                ExpectedConditions.presenceOfAllElementsLocatedBy(items));
     }
 
     public int getItemsSize() {
@@ -122,7 +122,6 @@ public class ItemsContainer implements StableWebElementSearch {
     protected void clickItemComponentOpenPage(NewsData news) {
 //   	getItemComponentByHeader(news.getTitle()).clickContent();
         findItemComponentByParameters(news).getTitle().click();
-
     }
 
 

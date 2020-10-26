@@ -58,6 +58,16 @@ public class CreateNewsPage extends TopPart {
         getTitleField().sendKeys(text);
     }
 
+    @Step("Get title field height")
+    public int getTitleFieldHeight(){
+        return getTitleField().getSize().getHeight();
+    }
+
+    @Step("Get title field width")
+    public int getTitleFieldWidth() {
+        return getTitleField().getSize().getWidth();
+    }
+
     @Step("Get title field text")
     public String getTitleFieldText() {
         return getTitleField().getText();
@@ -121,6 +131,16 @@ public class CreateNewsPage extends TopPart {
     @Step("Get content field text")
     public String getContentFieldText() {
         return getContentField().getText();
+    }
+
+    @Step("Get content field height")
+    public int getContentHeight(){
+        return getContentField().getSize().getHeight();
+    }
+
+    @Step("Get content field width")
+    public int getContentWidth() {
+        return getContentField().getSize().getWidth();
     }
 
     @Step("Get content field value")
@@ -417,6 +437,23 @@ public class CreateNewsPage extends TopPart {
     private void scrollToElement(WebElement element) {
         Actions action = new Actions(driver);
         action.moveToElement(element).perform();
+    }
+
+    /**
+     * Method that resized 'Content' field
+     * Get width (x) and height (y) of content field, divided it by 2 because getContentField method return
+     * the central coordinates of the element. Minus 2 for navigation exactly on resize element by X and Y coordinate
+     * @param resizeDown - the number of pixels on which content field resize
+     */
+    @Step("Action")
+    public CreateNewsPage changeContentFieldSize(int resizeDown){
+        Actions action = new Actions(driver);
+        action.moveToElement(getCopyright()).perform();
+        int x = getContentWidth() / 2 - 2;
+        int y = getContentHeight() / 2 - 2;
+        action.moveToElement(getContentField(), x, y)
+                .clickAndHold().moveByOffset(0, resizeDown).release().perform();
+        return this;
     }
 
     /**

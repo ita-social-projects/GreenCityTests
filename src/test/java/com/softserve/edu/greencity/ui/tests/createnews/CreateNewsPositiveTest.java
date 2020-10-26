@@ -8,6 +8,7 @@ import com.softserve.edu.greencity.ui.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
+import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
@@ -35,7 +36,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     private final String VALID_TITLE = "Green Day Test";
     private final String VALID_CONTENT = "Content = description";
     private final String TAGS_ERROR = "Only 3 tags can be added";
-    
+
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -699,5 +700,67 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
         createNewsPage.signOut();
+    }
+
+    @Test(testName = "GC-402")
+    @Description("Verify that 'Title' field is auto-resizing")
+    public void verifyThatTitleFieldIsAutoResizing() {
+        logger.info("verifyThatTitleFieldIsAutoResizing starts");
+
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage();
+
+        int heightBeforeSetTitle = createNewsPage.getTitleFieldHeight();
+        int widthBeforeSetTitle = createNewsPage.getTitleFieldWidth();
+
+        createNewsPage.fillFields(NewsDataRepository.get().getTitleForAutoResizeCheck());
+        softAssert.assertEquals(createNewsPage.getTitleFieldWidth(), widthBeforeSetTitle);
+        softAssert.assertTrue(createNewsPage.getTitleFieldHeight() > (heightBeforeSetTitle * 2));
+        softAssert.assertAll();
+
+        createNewsPage.signOut();
+    }
+
+    @Test(testName = "GC-651")
+    @Description("Verify that 'Content' field is auto-resizing and can be manually resized by user")
+    public void VerifyThatContentFieldIsAutoResizingAndCanBeResizedByUser() {
+        logger.info("verifyThatContentFieldIsAutoResizing starts");
+
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage();
+
+        int widthBeforeSetContent = createNewsPage.getContentWidth();
+        int heightBeforeSetContent = createNewsPage.getContentHeight();
+
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithContentFieldForCheckAutoResize());
+        softAssert.assertEquals(createNewsPage.getContentWidth(), widthBeforeSetContent);
+        softAssert.assertNotEquals(createNewsPage.getContentHeight(), heightBeforeSetContent);
+        softAssert.assertEquals(createNewsPage.getContentHeight() + 100, createNewsPage.changeContentFieldSize(100).getContentHeight());
+
+        createNewsPage.signOut();
+    }
+
+    @Test(testName = "GC-618")
+    @Description("Verify that Author is Auto-filled based on Name of registered User")
+    public void VerifyThatAuthorIsAutoFilledBasedOnNameOfRegisteredUser() {
+        logger.info("VerifyThatAuthorIsAutoFilledBasedOnNameOfRegisteredUser starts");
+
+        SingleNewsPage singleNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getNewsWithValidData())
+                .publishNews()
+                .switchToSingleNewsPageByNumber(0);
+
+        softAssert.assertEquals(singleNewsPage.getAuthorNameOnly(), singleNewsPage.getTopUserName());
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        softAssert.assertAll();
     }
 }
