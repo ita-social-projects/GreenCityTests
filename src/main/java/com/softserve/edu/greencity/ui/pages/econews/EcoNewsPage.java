@@ -86,7 +86,14 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Check if grid view is active")
     public boolean isActiveGridView() {
-        return getGridView().getAttribute("class").contains("active");
+        try{
+            driver.findElement(GALLERY_VIEW_WRAPPER.getPath()).isDisplayed();
+            return true;
+        }
+        catch (org.openqa.selenium.NoSuchElementException e){
+            logger.info("Grid view is not active");
+            return false;
+        }
     }
 
     @Step("Check if grid view is displayed")
@@ -134,16 +141,23 @@ public class EcoNewsPage extends TopPart {
     @Step("Check if list view is present")
     public boolean isListViewPresent() {
         try {
-            driver.findElements(LIST_VIEW_BUTTON.getPath());
+            getListView();
             return true;
-        } catch (org.openqa.selenium.NoSuchElementException e) {
+        } catch (org.openqa.selenium.TimeoutException e) {
+            logger.info("List view is not present");
             return false;
         }
     }
 
     @Step("Check if list view is active")
     public boolean isActiveListView() {
-        return getListView().getAttribute("class").contains("active");
+        try{
+            driver.findElement(LIST_VIEW_WRAPPER.getPath()).isDisplayed();
+            return true;
+        }
+        catch (org.openqa.selenium.NoSuchElementException e){
+            return false;
+        }
     }
 
     @Step("Click on list view")
@@ -278,8 +292,9 @@ public class EcoNewsPage extends TopPart {
      */
     @Step("Switch to list view")
     public EcoNewsPage switchToListView() {
-        clickListView();
-        return new EcoNewsPage(driver);
+        if(isListViewPresent()){
+        clickListView();}
+        return this;
     }
 
     /**
