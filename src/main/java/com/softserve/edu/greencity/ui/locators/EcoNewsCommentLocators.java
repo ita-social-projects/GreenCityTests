@@ -8,6 +8,7 @@ public enum EcoNewsCommentLocators implements Locator {
     DELETE_BUTTON(By.cssSelector("button.cta-btn.delete")),
     EDIT_BUTTON(By.cssSelector("button.cta-btn.edit")),
     COMMENT_TEXT(By.cssSelector("p.comment-text")),
+    COMMENTS_LIST(By.cssSelector("app-comments-list > div")),
     COMMENT_REPLY(By.cssSelector("app-add-comment")),
     REPLY_BUTTON(By.cssSelector("button.cta-btn.reply"));
 
