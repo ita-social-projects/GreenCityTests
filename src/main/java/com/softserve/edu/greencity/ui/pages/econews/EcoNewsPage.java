@@ -45,7 +45,7 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        checkElements();
+        //checkElements();
     }
 
     private void checkElements() {
@@ -200,20 +200,14 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get items container")
     public ItemsContainer getItemsContainer() {
-//        // TODO add here some waiter for uploading news
-//        try {
-//            Thread.sleep(800);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        // TODO add here some waiter for uploading news
         waitsSwitcher.setExplicitWait(
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
+                ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
         return new ItemsContainer(driver);
     }
 
     /**
      * Scroll to WebElement, in case when need to click on it or without scrolling are invisible
-     *
      * @param element
      */
     @Step("Scroll to element")
@@ -224,7 +218,6 @@ public class EcoNewsPage extends TopPart {
 
     /**
      * Get number of ItemComponent, what are present on EcoNewsPage
-     *
      * @return int
      */
     @Step("Get number of item component")
@@ -235,14 +228,12 @@ public class EcoNewsPage extends TopPart {
 
     /**
      * Method allows to choose type of news, which will be displayed on the EcoNewsPage
-     *
      * @param tags
      * @return EcoNewsPage
      */
     @Step("Select filters")
     public EcoNewsPage selectFilters(List<Tag> tags) {
         logger.info("Select filters");
-        //scrollToElement(getTagsComponent().getTags().get(1));
         getTagsComponent().selectTags(tags);
 
         return new EcoNewsPage(driver);
@@ -250,7 +241,6 @@ public class EcoNewsPage extends TopPart {
 
     /**
      * Method allows to choose type of news, which will be displayed on the EcoNewsPage
-     *
      * @param tags
      * @return EcoNewsPage
      */
@@ -262,9 +252,24 @@ public class EcoNewsPage extends TopPart {
         return new EcoNewsPage(driver);
     }
 
+    @Step("Select filter")
+    public EcoNewsPage selectFilter(Tag tag) {
+        logger.info("Select filter");
+        getTagsComponent().selectTag(tag);
+
+        return new EcoNewsPage(driver);
+    }
+
+    @Step("Deselct filter")
+    public EcoNewsPage deselectFilter(Tag tag) {
+        logger.info("Deselect filter");
+        getTagsComponent().deselectTag(tag);
+
+        return new EcoNewsPage(driver);
+    }
+
     /**
      * Choose language
-     *
      * @param language
      * @return EcoNewsPage
      */
@@ -276,7 +281,6 @@ public class EcoNewsPage extends TopPart {
 
     /**
      * News are displayed as grid
-     *
      * @return EcoNewsPage
      */
     @Step("Switch to grid view")
@@ -299,7 +303,6 @@ public class EcoNewsPage extends TopPart {
 
     /**
      * Open SingleNewsPage
-     *
      * @param number
      * @return SingleNewsPage
      */
@@ -307,14 +310,13 @@ public class EcoNewsPage extends TopPart {
     public SingleNewsPage switchToSingleNewsPageByNumber(int number) {
         logger.info("Switch to single news by number");
         itemsContainer = getItemsContainer();
-        scrollToElement(itemsContainer.chooseNewsByNumber(number).getTitle());
-        itemsContainer.chooseNewsByNumber(number).clickTitle();
+        //scrollToElement(itemsContainer.chooseNewsByNumber(number).getTitle());
+        itemsContainer.chooseNewsByNumber(number).click();
         return new SingleNewsPage(driver);
     }
 
     /**
      * Open SingleNewsPage
-     *
      * @param news
      * @return SingleNewsPage
      */
@@ -335,18 +337,30 @@ public class EcoNewsPage extends TopPart {
         List<WebElement> elements = getDisplayedArticles();
         if (elements.get(0).getLocation().y == elements.get(1).getLocation().y) {
             count++;
-            if (width > 1006 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
+
+            if (width > 991 && (elements.get(1).getLocation().y == elements.get(2).getLocation().y)) {
                 count++;
+                logger.info("3 columns when width = " + width);
                 softAssert.assertTrue( count == 3);
             }
-            else if ((width > 575) && (width < 1007) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+            else if ((width > 575) && (width < 992) && (elements.get(1).getLocation().y < elements.get(2).getLocation().y)) {
+                logger.info("2 columns when width = " + width);
                 softAssert.assertTrue( count == 2);
+            }
+            else {
+                logger.info("Error! " + width + "  " + Boolean.toString(elements.get(1).getLocation().y < elements.get(2).getLocation().y));
+                logger.info(elements.get(1).getLocation().y + " " + elements.get(2).getLocation().y);
             }
 
         }
         else if (width < 576 && (elements.get(0).getLocation().y < elements.get(1).getLocation().y)) {
+            logger.info("1 column when width = " + width);
             softAssert.assertTrue( count == 1);
         }
+        else {
+            logger.info("Error! " + width + "  " + Boolean.toString(elements.get(0).getLocation().y < elements.get(1).getLocation().y));
+        }
+        softAssert.assertAll();
     }
 
     /**
@@ -370,13 +384,6 @@ public class EcoNewsPage extends TopPart {
     }
 
     @Step
-    public void verifyContentItemsUI() {
-        List<WebElement> article = getDisplayedArticles();
-        System.out.println("height = " + article.get(0).getRect().height);
-        System.out.println("width = " + article.get(0).getRect().width);
-    }
-
-    @Step
     public String getImageAttribute() {
        return getItemsContainer().
                        chooseNewsByNumber(0).
@@ -387,7 +394,6 @@ public class EcoNewsPage extends TopPart {
 
     /**
      * Open CreateNewsPage
-     *
      * @return CreateNewsPage
      */
     @Step("Go to create news page")
@@ -464,7 +470,6 @@ public class EcoNewsPage extends TopPart {
         logger.info("refresh page");
         driver.navigate().refresh();
         logger.info("wait until at least one article is displayed");
-        //waiting(searchElementByCss(DISPLAYED_ARTICLES.getPath()));
         waitsSwitcher.setExplicitWait(10,
                 ExpectedConditions.visibilityOfElementLocated(DISPLAYED_ARTICLES.getPath()));
         logger.info("Set actual information from page to articleExistCount");

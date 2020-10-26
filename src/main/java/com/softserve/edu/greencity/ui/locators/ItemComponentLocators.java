@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 
 public enum ItemComponentLocators implements Locator {
     TAGS(By.cssSelector(".filter-tag div")),
+    TAGS_CONTAINER(By.cssSelector(".filter-tag")),
     IMAGE(By.cssSelector(".list-image-content")),
     TITLE(By.cssSelector(".title-list p")),
     CONTENT(By.cssSelector(".list-text p")),
