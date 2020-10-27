@@ -145,7 +145,6 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .unsuccessfullySubmit(user);
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
-        expectedBorderColorRBG = "rgb(135, 135, 135)";
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE));
 
