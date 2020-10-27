@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
 import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
+import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
@@ -86,6 +87,28 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .editNewsButtonExist();
         Assert.assertFalse(editButtonExist, "Edit button exists");
     }
+
+    @Test(testName = "GC-691")
+    @Description("Verify that ‘Edit’ button is available for registered User in case " +
+            "he/she has submitted this particular piece of news ")
+    public void verifyEditAvailable() {
+        logger.info("verifyEditAvailable starts");
+        User user = UserRepository.get().temporary();
+        NewsData news = NewsDataRepository.get().getNewsWithValidData();
+        boolean editButtonExist  = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(news)
+                .publishNews()
+                .switchToSingleNewsPageByNumber(0)
+                .editNewsButtonExist();
+
+        Assert.assertTrue(editButtonExist,"Edit button doesn't exist");
+    }
+
 
     @Test(testName = "GC-695")
     @Description("Source field appears if User entered Source in the Create news form.")
