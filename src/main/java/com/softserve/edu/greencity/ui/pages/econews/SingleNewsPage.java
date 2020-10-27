@@ -167,9 +167,6 @@ public class SingleNewsPage extends TopPart {
         }
     }
 
-//    public boolean editReplyButtonExist() {
-//        if(){}
-//    }
 
     public String getTitleText() {
         return getTitle().getText().trim();
@@ -208,11 +205,18 @@ public class SingleNewsPage extends TopPart {
 
     /**
      * Gives a list of suggested news in the bottom of page
-     *
      * @return ItemsContainer with suggested news
      */
     public ItemsContainer suggestedNews() {
         return new ItemsContainer(driver);
+    }
+
+    public boolean editNewsButtonExist() {
+        if (driver.findElements(EDIT_NEWS_BUTTON.getPath()).size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

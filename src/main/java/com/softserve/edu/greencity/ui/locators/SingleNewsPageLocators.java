@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 
 public enum SingleNewsPageLocators implements Locator {
     GO_TO_NEWS(By.cssSelector("div.back-button")),
+    EDIT_NEWS_BUTTON(By.cssSelector("div.edit-news")),
     TITLE(By.cssSelector("div.news-title")),
     DATA(By.cssSelector("div.news-info > div.news-info-date")),
     AUTHOR(By.cssSelector("div.news-info > div.news-info-author")),
