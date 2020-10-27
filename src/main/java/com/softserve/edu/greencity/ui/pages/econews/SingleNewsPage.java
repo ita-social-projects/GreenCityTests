@@ -2,17 +2,19 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
+import static com.softserve.edu.greencity.ui.locators.EcoNewsCommentLocators.*;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class SingleNewsPage extends TopPart  {
+public class SingleNewsPage extends TopPart {
 
     protected WebDriverWait wait;
 
@@ -49,10 +51,6 @@ public class SingleNewsPage extends TopPart  {
         return searchElementByCss(TITLE.getPath());
     }
 
-    public String getTitleText() {
-        return getTitle().getText().trim();
-    }
-
     private WebElement getData() {
         return searchElementByCss(DATA.getPath());
     }
@@ -69,7 +67,7 @@ public class SingleNewsPage extends TopPart  {
         return getAuthor().getText().split(" ")[1];
     }
 
-    public String getAuthorText(){
+    public String getAuthorText() {
         return getAuthor().getText();
     }
 
@@ -107,6 +105,73 @@ public class SingleNewsPage extends TopPart  {
         return link;
     }
 
+    private WebElement getReplyButton() {
+        return searchElementByCss(REPLY_BUTTON.getPath());
+    }
+
+    private WebElement getDeleteButton() {
+        return searchElementByCss(DELETE_BUTTON.getPath());
+    }
+
+    private WebElement getEditButton() {
+        return searchElementByCss(EDIT_BUTTON.getPath());
+    }
+
+    private WebElement getCommentButton() {
+        return searchElementByCss(COMMENT_BUTTON.getPath());
+    }
+
+    private WebElement getCommentArea() {
+        return searchElementByCss(COMMENT_AREA.getPath());
+//        return driver.findElement(COMMENT_AREA.getPath());
+    }
+
+    public SingleNewsPage addComment(String value) {
+        WebElement area = getCommentArea();
+        area.click();
+        area.sendKeys(value);
+        getCommentButton().click();
+        return new SingleNewsPage(driver);
+    }
+
+    public List<WebElement> getCommentsList() {
+        return driver.findElements(COMMENTS_LIST.getPath());
+    }
+
+    public SingleNewsPage replyToComment(int commentNumber, String replyText) {
+        if (replyButtonExist()) {
+            //TODO
+            List<WebElement> comments = getCommentsList();
+            if (commentNumber + 1 > comments.size()) {
+                throw new IllegalArgumentException("comment number was out of range");
+            } else {
+                WebElement comment = comments.get(commentNumber);
+                comment.findElement(REPLY_BUTTON.getPath()).click();
+                WebElement reply = comment.findElement(COMMENT_REPLY.getPath());
+                WebElement replyArea = reply.findElement(COMMENT_AREA.getPath());
+                replyArea.click();
+                replyArea.sendKeys(replyText);
+                reply.findElement(COMMENT_BUTTON.getPath()).click();
+                return new SingleNewsPage(driver);
+            }
+        } else {
+            return this;
+        }
+    }
+
+    public boolean replyButtonExist() {
+        if (driver.findElements(REPLY_BUTTON.getPath()).size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+    public String getTitleText() {
+        return getTitle().getText().trim();
+    }
+
     /**
      * Go to next SingleNewsPage
      *
@@ -136,6 +201,22 @@ public class SingleNewsPage extends TopPart  {
     public EcoNewsPage switchToEcoNewsPageBack() {
         clickGoToNewsButton();
         return new EcoNewsPage(driver);
+    }
+
+    /**
+     * Gives a list of suggested news in the bottom of page
+     * @return ItemsContainer with suggested news
+     */
+    public ItemsContainer suggestedNews() {
+        return new ItemsContainer(driver);
+    }
+
+    public boolean editNewsButtonExist() {
+        if (driver.findElements(EDIT_NEWS_BUTTON.getPath()).size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override

@@ -82,9 +82,8 @@ public class TagsComponent implements StableWebElementSearch {
     }
 
     /**
-     * Method to select tags
-     *
-     * @param tags
+     * Method to select multiple tags
+     * @param tags tags to be selected
      */
     public void selectTags(List<Tag> tags) {
         JavascriptExecutor js = ((JavascriptExecutor) driver);
@@ -94,10 +93,8 @@ public class TagsComponent implements StableWebElementSearch {
         }
     }
 
-
     /**
-     * Check is some WebElement are choosen(clicked first time)
-     *
+     * Check is some WebElement are chosen(clicked first time)
      * @param tag
      * @return boolean
      */
@@ -109,7 +106,6 @@ public class TagsComponent implements StableWebElementSearch {
 
     /**
      * Click on some WebElement to choose it(click first time)
-     *
      * @param newsfilter
      * @return boolean
      */
@@ -122,7 +118,6 @@ public class TagsComponent implements StableWebElementSearch {
 
     /**
      * Click on some WebElement to deselect it(click second time)
-     *
      * @param tag
      * @return boolean
      */

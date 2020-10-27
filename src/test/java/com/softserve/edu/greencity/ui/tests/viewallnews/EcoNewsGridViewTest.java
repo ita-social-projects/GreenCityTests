@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -36,7 +37,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @BeforeClass
     public void widthData() {
-        screenWidth = Arrays.asList(1140, 1024, 992, 991, 576, 575, 320);
+        screenWidth = Arrays.asList(1140, 1024, 1007, 1005, 992, 991, 576, 575, 320);
 
     }
 
@@ -125,12 +126,13 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @Test(testName = "GC-668")
     public void countOfColumnsInGridViewTest() {
-        logger.info("Number of columns depending on screen width");
+        logger.info("Number of columns depending on screen width " + screenWidth);
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
             ecoNewsPage.countNewsColumns(integer);
         }
+        softAssert.assertAll();
     }
 
 
@@ -145,12 +147,44 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test
-    @Description("GC-340")
+    @Test(testName = "GC-340")
     public void verifyContentItemsUITest() {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
-        ecoNewsPage.verifyContentItemsUI();
+        ItemComponent itemComponent = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
+        softAssert.assertEquals(itemComponent.getImage().getSize().height,
+                206, "Image height"); //Valid result when image height is 206. Requirements could be changed
+        softAssert.assertEquals(itemComponent.getTagsContainer().getSize().height,
+                24, "Tags height");
+        softAssert.assertTrue(itemComponent.getTitleHeight() + itemComponent.getContentHeight() + 8 <
+                    201, "Title and Content height"); // Depends on size of Title and Content. Probably max height is 200
+        softAssert.assertEquals(itemComponent.getDateOfCreation().getSize().height,
+                21, "Date height");
+        softAssert.assertEquals(itemComponent.getTagsContainer().getLocation().y - (itemComponent.getImage().getLocation().y + itemComponent.getImage().getSize().height), //Valid result when image height is 206. Requirements could be changed
+                8, "Height between image and tags");
+        softAssert.assertEquals(itemComponent.getTitle().getLocation().y - (itemComponent.getTagsContainer().getLocation().y + itemComponent.getTagsContainer().getSize().height),
+                8, "Height between title and tags");
+        softAssert.assertEquals(itemComponent.getContent().getLocation().y - (itemComponent.getTitle().getLocation().y + itemComponent.getTitleHeight()),
+                10, "Height between content and title"); // Requirements could be changed
+        softAssert.assertEquals(itemComponent.getDateOfCreation().getLocation().y - (itemComponent.getContent().getLocation().y + itemComponent.getContentHeight()),
+                16, "Height between date and content");
+        softAssert.assertEquals(itemComponent.getTitle().getLocation().x - itemComponent.getImage().getLocation().x,
+                24, "Width between image and title (left side)");
+        softAssert.assertEquals(itemComponent.getTagsContainer().getLocation().x - itemComponent.getImage().getLocation().x,
+                24, "Width between image and tags (left side)");
+        softAssert.assertEquals(itemComponent.getContent().getLocation().x - itemComponent.getImage().getLocation().x,
+                24, "Width between image and content (left side)");
+        softAssert.assertEquals(itemComponent.getDateOfCreation().getLocation().x - itemComponent.getImage().getLocation().x,
+                24, "Width between image creation date");
+        softAssert.assertEquals((itemComponent.getImage().getLocation().x + itemComponent.getImage().getSize().width) - (itemComponent.getTitle().getLocation().x + itemComponent.getTitle().getSize().width),
+                24, "Width between image and title (right side)");
+        softAssert.assertEquals((itemComponent.getImage().getLocation().x + itemComponent.getImage().getSize().width) - (itemComponent.getTagsContainer().getLocation().x + itemComponent.getTagsContainer().getSize().width),
+                24, "Width between image and tags (right side)");
+        softAssert.assertEquals((itemComponent.getImage().getLocation().x + itemComponent.getImage().getSize().width) - (itemComponent.getContent().getLocation().x + itemComponent.getContent().getSize().width),
+                24, "Width between image and content (right side)");
+        softAssert.assertEquals((itemComponent.getImage().getLocation().x + itemComponent.getImage().getSize().width) - (itemComponent.getDateAndAuthorContainer().getLocation().x + itemComponent.getDateAndAuthorContainer().getSize().width),
+                24, "Width between image and date with author container (right side)");
+        softAssert.assertAll();
     }
 
     @Test
