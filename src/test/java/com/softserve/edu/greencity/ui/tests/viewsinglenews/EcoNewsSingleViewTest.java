@@ -11,6 +11,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.EcoNewsUtils;
 import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
@@ -95,7 +96,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         logger.info("verifyEditAvailable starts");
         User user = UserRepository.get().temporary();
         NewsData news = NewsDataRepository.get().getNewsWithValidData();
-        boolean editButtonExist  = loadApplication()
+        boolean editButtonExist = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
@@ -106,9 +107,27 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .switchToSingleNewsPageByNumber(0)
                 .editNewsButtonExist();
 
-        Assert.assertTrue(editButtonExist,"Edit button doesn't exist");
+        Assert.assertTrue(editButtonExist, "Edit button doesn't exist");
     }
 
+    @Test(testName = "GC-692")
+    @Description("Verify that ‘Edit’ button is not available for registered User in " +
+            "case he/she has not submitted this particular piece of news")
+    public void verifyUnavailabilityOfEditButton() {
+        logger.info("verifyUnavailabilityOfEditButton starts");
+        User user = UserRepository.get().temporary();
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews();
+        int suitableNews = EcoNewsUtils.getNumberOfNewsNotCreatedBy(user.getUserName(),
+                ecoNewsPage.getItemsContainer());
+        boolean editButtonExists = ecoNewsPage
+                .switchToSingleNewsPageByNumber(suitableNews)
+                .editNewsButtonExist();
+        Assert.assertFalse(editButtonExists,"Edit button exists");
+    }
 
     @Test(testName = "GC-695")
     @Description("Source field appears if User entered Source in the Create news form.")
