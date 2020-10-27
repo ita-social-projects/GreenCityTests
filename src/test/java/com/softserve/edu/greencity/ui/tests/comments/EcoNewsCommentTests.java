@@ -10,7 +10,7 @@ import org.testng.annotations.*;
 
 public class EcoNewsCommentTests extends GreenCityTestRunner {
 
-    @BeforeClass
+    /*@BeforeClass
     public void creatingCommentToNews() {
         String comment = "i think its a great news, especially deded";
         User user = UserRepository.get().temporary();
@@ -32,6 +32,6 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .switchToSingleNewsPageByNumber(0)
                 .replyToComment(0, reply);
         EcoNewsCommentAssertions.assertNewComment(singleNewsPage.getCommentsList(), reply);
-    }
+    }*/
 
 }

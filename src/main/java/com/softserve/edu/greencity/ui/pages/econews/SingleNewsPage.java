@@ -119,7 +119,7 @@ public class SingleNewsPage extends TopPart {
         return link;
     }
 
-    private WebElement getReplyButton() {
+    /*private WebElement getReplyButton() {
         return searchElementByCss(REPLY_BUTTON.getPath());
     }
 
@@ -180,7 +180,7 @@ public class SingleNewsPage extends TopPart {
 
     public String getTitleText() {
         return getTitle().getText().trim();
-    }
+    }*/
 
     /**
      * Go to next SingleNewsPage
@@ -224,24 +224,6 @@ public class SingleNewsPage extends TopPart {
         commentContainer = new CommentContainer(driver);
         commentContainer.getCommentComponents();
         return new CommentContainer(driver);
-    }
-
-    public WebElement getCommentField(){
-        return searchElementByCss(COMMENT_FIELD.getPath());
-    }
-
-    public SingleNewsPage setCommentText(String commentText){
-        getCommentField().sendKeys(commentText);
-        return this;
-    }
-
-    public  WebElement getCommentButton(){
-        return searchElementByCss(COMMENT_BUTTON.getPath());
-    }
-
-    public SingleNewsPage clickCommentButton(){
-        getCommentButton().click();
-        return this;
     }
 
     @Override

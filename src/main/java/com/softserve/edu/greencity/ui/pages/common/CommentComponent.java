@@ -13,7 +13,7 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
 
     protected WebDriverWait wait;
     //private final WebDriver driver;
-    private final WebElement commentItem;
+    protected WebElement commentItem;
     private WaitsSwitcher waitsSwitcher;
     private By replyItem = REPLY_COMPONENTS.getPath();
 
@@ -72,6 +72,7 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
     public WebElement getReplyButton(){
         return commentItem.findElement(REPLY_BUTTON.getPath());
     }
+
     public CommentComponent clickReplyButton(){
         getReplyButton().click();
         return this;
@@ -108,22 +109,6 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
         return new ReplyContainer(driver);
     }
 
-    public WebElement getCommentField(){
-        return commentItem.findElement(COMMENT_FIELD.getPath());
-    }
 
-    public CommentComponent setCommentText(String commentText){
-        getCommentField().sendKeys(commentText);
-        return this;
-    }
-
-    public  WebElement getCommentButton(){
-        return commentItem.findElement(COMMENT_BUTTON.getPath());
-    }
-
-    public CommentComponent clickCommentButton(){
-        getCommentButton().click();
-        return this;
-    }
 
 }

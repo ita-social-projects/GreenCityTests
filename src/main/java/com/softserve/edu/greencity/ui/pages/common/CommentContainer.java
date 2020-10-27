@@ -69,6 +69,28 @@ public class CommentContainer implements StableWebElementSearch {
         return result;
     }
 
+    public WebElement getCommentField(){
+        return searchElementByCss(COMMENT_FIELD.getPath());
+    }
+
+    public CommentContainer setCommentText(String commentText){
+        getCommentField().sendKeys(commentText);
+        return this;
+    }
+
+    public  WebElement getCommentButton(){
+        return searchElementByCss(COMMENT_BUTTON.getPath());
+    }
+
+    public CommentContainer clickCommentButton() {
+        getCommentButton().click();
+        return this;
+    }
+
+    public CommentContainer addComment(String commentText){
+        setCommentText(commentText).clickCommentButton();
+        return this;
+    }
 
 
     @Override

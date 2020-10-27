@@ -51,12 +51,13 @@ public class CommentTest extends GreenCityTestRunner {
     public void publishComment() {
         logger.info("publishComment");
         String setText = "Set comment test";
-        SingleNewsPage singleNewsPage = loadApplication()
+        CommentContainer commentContainer = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
+                .getCommentContainer()
                 .setCommentText(setText).clickCommentButton();
-        String commentText = singleNewsPage.getCommentContainer().chooseCommentByNumber(0).getCommentText();
+        String commentText = commentContainer.chooseCommentByNumber(0).getCommentText();
         softAssert.assertEquals(setText, commentText);
     }
 
@@ -109,24 +110,33 @@ public class CommentTest extends GreenCityTestRunner {
     public void loggedUserCanAddComment() {
         logger.info("Verify that logged user can add comment starts");
         String commentText = "First comment";
-        SingleNewsPage singleNewsPage = loadApplication()
+        CommentContainer commentContainer = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
-                .setCommentText(commentText).clickCommentButton();
+                .getCommentContainer()
+                .addComment(commentText);
 
-        softAssert.assertEquals(commentText, singleNewsPage.getCommentContainer().chooseCommentByNumber(0).getCommentText());
+        softAssert.assertEquals(commentText, commentContainer.chooseCommentByNumber(0).getCommentText());
     }
 
-    /*@Test
+    @Test
     @Description("GC-958")
     public void loggedUserCanPublishReply() {
         logger.info("Verify that logged user can publish reply starts");
 
+        String replyText = "First reply";
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(1);
+                .switchToSingleNewsPageByNumber(1)
+                .getCommentContainer()
+                .chooseCommentByNumber(0)
+                .clickAddReplyButton()
+                .setReplyText(replyText).clickAddReplyButton();
 
-    }*/
+        String actualReplyText = commentComponent.chooseCommentByNumber(0).clickShowReplyButton().chooseReplyByNumber(0).getReplyField().getText();
+        softAssert.assertEquals(replyText, actualReplyText);
+
+    }
 
 }
