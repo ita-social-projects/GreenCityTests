@@ -14,24 +14,33 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
     public void creatingCommentToNews() {
         String comment = "i think its a great news, especially deded";
         User user = UserRepository.get().temporary();
-        SingleNewsPage singleNewsPage = loadApplication()
+        loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
-                .addComment(comment);
+                .addComment(comment)
+                .signOut()
+                .navigateMenuEcoNews();
     }
 
     @Test(testName = "GC-872")
     @Description("Unregistered users can’t edit reply on the News page")
     public void tryToReplyOnComment() {
         String reply = "hello,buddy,welcome to the club";
+        User user = UserRepository.get().temporary();
         SingleNewsPage singleNewsPage = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
-                .replyToComment(0, reply);
-        EcoNewsCommentAssertions.assertNewComment(singleNewsPage.getCommentsList(), reply);
+                .replyToComment(0, reply)
+                .signOut()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0);
     }
+
 
 }

@@ -9,6 +9,7 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsCommentLocators.*;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -147,9 +148,12 @@ public class SingleNewsPage extends TopPart {
                 WebElement comment = comments.get(commentNumber);
                 comment.findElement(REPLY_BUTTON.getPath()).click();
                 WebElement reply = comment.findElement(COMMENT_REPLY.getPath());
-
+                WebElement replyArea = reply.findElement(COMMENT_AREA.getPath());
+                replyArea.click();
+                replyArea.sendKeys(replyText);
+                reply.findElement(COMMENT_BUTTON.getPath()).click();
+                return new SingleNewsPage(driver);
             }
-            return new SingleNewsPage(driver);
         } else {
             return this;
         }
@@ -162,6 +166,10 @@ public class SingleNewsPage extends TopPart {
             return true;
         }
     }
+
+//    public boolean editReplyButtonExist() {
+//        if(){}
+//    }
 
     public String getTitleText() {
         return getTitle().getText().trim();
@@ -190,6 +198,7 @@ public class SingleNewsPage extends TopPart {
 
     /**
      * Return to EcoNewsPage
+     *
      * @return EcoNewsPage
      */
     public EcoNewsPage switchToEcoNewsPageBack() {
@@ -199,6 +208,7 @@ public class SingleNewsPage extends TopPart {
 
     /**
      * Gives a list of suggested news in the bottom of page
+     *
      * @return ItemsContainer with suggested news
      */
     public ItemsContainer suggestedNews() {
