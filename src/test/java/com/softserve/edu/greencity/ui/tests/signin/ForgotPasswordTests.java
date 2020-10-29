@@ -155,7 +155,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    //@Test(testName = "GC-504")
+    @Test(testName = "GC-504")
     @Description("Verify that Registered User receives an e-mail with link to enter new password")
     public void successMailToRestorePass() {
         logger.info("Starting successMailToRestorePass");

@@ -1,22 +1,22 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
-import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
-import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.COMMENTS_COMPONENTS;
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.REPLY_COMPONENTS;
 
 public class ReplyContainer {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private WebDriver driver;
     private List<ReplyComponent> replyComponent;
@@ -24,9 +24,8 @@ public class ReplyContainer {
 
     public ReplyContainer(WebDriver driver){
         this.driver = driver;
-        checkElements();
+        //checkElements();
     }
-
 
     public void checkElements() {
         replyComponent = new ArrayList<>();
@@ -48,11 +47,31 @@ public class ReplyContainer {
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
     }
 
-    public ReplyComponent chooseReplyByNumber(int number) {
-        return getReplyComponents().get(number);
+    public ReplyComponent chooseReplyByNumber(int replyNumber) {
+        List<ReplyComponent> replies = getReplyComponents();
+        if(replyNumber + 1 > replies.size()){
+            throw new IllegalArgumentException("Reply number was out of range");
+        }else {
+            return getReplyComponents().get(replyNumber);
+        }
     }
 
+    public ReplyComponent chooseReplyByText(String title) {
+        ReplyComponent result = null;
+        for (ReplyComponent current : getReplyComponents()) {
+            if (current.getReplyText().equals(title)){
+                result = current;
+            }
+        }
+        if (result == null) {
+            logger.warn("Reply with text " + title + "not exist");
+            throw new RuntimeException("Comment Component with text " + title + " not found");
+        }
+        return result;
+    }
 
-
+    public boolean isReplyComponentPresent(){
+        return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
+    }
 
 }

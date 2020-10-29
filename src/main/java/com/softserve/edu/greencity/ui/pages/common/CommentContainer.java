@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
@@ -26,15 +25,22 @@ public class CommentContainer implements StableWebElementSearch {
 
     public CommentContainer(WebDriver driver){
         this.driver = driver;
-        checkElements();
+     //   checkElements();
     }
 
-
-    public void checkElements() {
-        commentComponents = new ArrayList<>();
-        for (WebElement current : getComments()) {
-            commentComponents.add(new CommentComponent(driver, current));
+    public void checkElements(){
+        if(isCommentPresent()){
+            commentComponents = new ArrayList<>();
+            for (WebElement current : getComments()) {
+                commentComponents.add(new CommentComponent(driver, current));
+            }
+        } else {
+            throw new IllegalArgumentException("Comment isn't present on this page");
         }
+    }
+
+    public boolean isCommentPresent(){
+        return driver.findElements(COMMENTS_COMPONENTS.getPath()).size() > 0;
     }
 
     public List<CommentComponent> getCommentComponents() {
@@ -51,8 +57,13 @@ public class CommentContainer implements StableWebElementSearch {
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
     }
 
-    public CommentComponent chooseCommentByNumber(int number) {
-        return getCommentComponents().get(number);
+    public CommentComponent chooseCommentByNumber(int commentNumber) {
+        List<CommentComponent> comments = getCommentComponents();
+        if(commentNumber + 1 > comments.size()){
+            throw new IllegalArgumentException("Comment number was out of range");
+        }else {
+            return getCommentComponents().get(commentNumber);
+        }
     }
 
     public CommentComponent chooseCommentByText(String title) {

@@ -7,27 +7,73 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
-public class ReplyComponent extends CommentComponent  {
+public class ReplyComponent  {
 
-    /*private WebElement replyItem;
+    private WebElement replyItem;
     protected WebDriverWait wait;
     private final WebDriver driver;
-    private WaitsSwitcher waitsSwitcher;*/
 
     public ReplyComponent(WebDriver driver, WebElement replyItem){
-        super(driver, replyItem);
-        /*this.driver = driver;
+        this.driver = driver;
         this.replyItem = replyItem;
-        this.waitsSwitcher = new WaitsSwitcher(driver);*/
     }
 
-   /* public WebElement getComment(){
-        return replyItem.findElement(COMMENT_TEXT.getPath());
+    public WebElement getReplyComment(){ return replyItem.findElement(COMMENT_TEXT.getPath()); }
+
+    public String getReplyText(){ return getReplyComment().getText(); }
+
+    public WebElement getReplyAuthor(){
+        return replyItem.findElement(AUTHOR_NAME.getPath());
     }
 
-    public String getCommentText(){
-        return getComment().getText();
-    }*/
+    public String getReplyAuthorText(){
+        return getReplyAuthor().getText();
+    }
+
+    public boolean isReplyLikesButtonDisplayed(){
+        return replyItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
+    }
+
+    public WebElement getReplyLikeButton(){
+        return replyItem.findElement(LIKE_BUTTON.getPath());
+    }
+
+    public ReplyComponent clickReplyLikeButton(){
+        getReplyLikeButton().click();
+        return this;
+    }
+
+    public WebElement getReplyEditButton(){
+        return replyItem.findElement(EDIT_COMMENT_BUTTON.getPath());
+    }
+    public ReplyComponent clickReplyEditButton(){
+        getReplyEditButton().click();
+        return this;
+    }
+
+    public WebElement getReplyDeleteButton(){
+        return replyItem.findElement(DELETE_COMMENT_BUTTON.getPath());
+    }
+    public ReplyComponent clickReplyDeleteButton(){
+        getReplyEditButton().click();
+        return this;
+    }
+
+    public WebElement getReplyLikes(){
+        return replyItem.findElement(COMMENT_LIKES.getPath());
+    }
+
+    public String getReplyLikesNumber(){
+        return getReplyLikes().getText();
+    }
+
+    public WebElement getReplyDate(){
+        return replyItem.findElement(COMMENT_DATE.getPath());
+    }
+
+    public String getReplyDateText(){
+        return getReplyDate().getText();
+    }
 
 
 

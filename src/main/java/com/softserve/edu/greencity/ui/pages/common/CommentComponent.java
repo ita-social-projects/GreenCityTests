@@ -12,7 +12,7 @@ import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*
 public class CommentComponent extends CommentContainer implements StableWebElementSearch {
 
     protected WebDriverWait wait;
-    //private final WebDriver driver;
+
     protected WebElement commentItem;
     private WaitsSwitcher waitsSwitcher;
     private By replyItem = REPLY_COMPONENTS.getPath();
@@ -38,6 +38,22 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
 
     public String getCommentAuthorText(){
         return getCommentAuthor().getText();
+    }
+
+    public WebElement getEditButton(){
+        return commentItem.findElement(EDIT_COMMENT_BUTTON.getPath());
+    }
+    public CommentComponent clickEditButton(){
+        getEditButton().click();
+        return this;
+    }
+
+    public WebElement getDeleteButton(){
+        return commentItem.findElement(DELETE_COMMENT_BUTTON.getPath());
+    }
+    public CommentComponent clickDeleteButton(){
+        getEditButton().click();
+        return this;
     }
 
     public boolean isLikesButtonDisplayed(){
@@ -104,9 +120,28 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
         return commentItem.findElement(SHOW_REPLIES.getPath());
     }
 
-    public ReplyContainer clickShowReplyButton(){
+    public ReplyContainer openReply(){
         getShowReplyButton().click();
         return new ReplyContainer(driver);
+    }
+
+    public CommentComponent closeReply(){
+        getShowReplyButton().click();
+        return this;
+    }
+
+    public CommentComponent addReply(String replyText){
+        clickReplyButton().setReplyText(replyText).clickAddReplyButton();
+        return this;
+    }
+
+    public CommentComponent refreshPage(){
+        driver.navigate().refresh();
+        return this;
+    }
+
+    public boolean isReplyComponentPresent(){
+        return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
 
 
