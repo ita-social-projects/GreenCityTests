@@ -16,7 +16,7 @@ public class TopUserComponent {
 	protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
 	//
 	private final String TAG_ATTRIBUTE_CLASS = "class";
-	private final String USER_NAME_CSS = "div#user-avatar-wrapper li.tertiary-global-button > a";
+	private final String USER_NAME_CSS = "#user-avatar-wrapper"; //"div#user-avatar-wrapper li.tertiary-global-button > a";
 	//
 	private WebDriver driver;
 	//
