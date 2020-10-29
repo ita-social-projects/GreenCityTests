@@ -8,7 +8,7 @@ public class ProfileDropdown {
 	//
 	private WebDriver driver;
 	//
-	private WebElement favoritePlaces;
+	//private WebElement favoritePlaces; //removed from UI
 	private WebElement userSettings;
 	private WebElement signout;
 
@@ -19,15 +19,15 @@ public class ProfileDropdown {
 
 	private void initElements() {
 		// init elements
-		favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
-		userSettings = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li + li"));
-		signout = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li + li + li"));
+		//favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
+		userSettings = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
+		signout = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li + li"));
 	}
 
 	// Page Object
 
 	// favoritePlaces
-
+/*Removed from UI
 	public WebElement getFavoritePlaces() {
 		return favoritePlaces;
 	}
@@ -39,7 +39,7 @@ public class ProfileDropdown {
 	public void clickFavoritePlaces() {
 		getFavoritePlaces().click();
 	}
-
+*/
 	// userSettings
 
 	public WebElement getUserSettings() {

@@ -5,10 +5,8 @@ import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
@@ -152,7 +150,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         softAssert.assertEquals(emailBorderColor, expectedBorderColorRBG);
         softAssert.assertEquals(passwordBorderColor, expectedBorderColorRBG);
-        softAssert.assertTrue(manualLoginComponent.IsDisplayedEmailValidationError());
+        softAssert.assertTrue(manualLoginComponent.isDisplayedEmailValidationError());
         softAssert.assertTrue(manualLoginComponent.IsPasswordValidationError());
         softAssert.assertFalse(manualLoginComponent.isEnabledSignInButton());
         softAssert.assertAll();
@@ -288,12 +286,14 @@ public class LoginTest extends GreenCityTestRunner {
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .inputEmail(incorrectEmail);
+                .inputEmail(incorrectEmail)
+                .clickPasswordField();
 
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-        softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
+        //softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
+        softAssert.assertTrue(manualLoginComponent.isDisplayedEmailValidationError());
         softAssert.assertAll();
     }
 
@@ -347,7 +347,8 @@ public class LoginTest extends GreenCityTestRunner {
         ManualLoginComponent manualLoginComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .inputPassword(incorrectPassword);
+                .inputPassword(incorrectPassword)
+                .clickEmailField();
 
         String passwordFieldBorderColor = manualLoginComponent.getPasswordFieldWrapper().getCssValue(cssBorderColorProperty);
 

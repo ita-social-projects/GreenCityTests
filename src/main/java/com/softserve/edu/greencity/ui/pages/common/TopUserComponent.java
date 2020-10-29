@@ -96,11 +96,12 @@ public class TopUserComponent {
 		profileDropdown = new ProfileDropdown(driver);
 		return getProfileDropdown();
 	}
-
+	/*Removed from UI
 	protected void clickProfileDropdownFavoritePlaces() {
 		createProfileDropdown().clickFavoritePlaces();
 		closeProfileDropdown();
 	}
+	*/
 
 	protected void clickProfileDropdownUserSettings() {
 		createProfileDropdown().clickUserSettings();

@@ -266,6 +266,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         }
         for (Integer integer : screenWidth2) {
             ecoNewsPage.changeWindowWidth(integer);
+            //On small screen resolution list view automatically switches off
             softAssert.assertFalse(ecoNewsPage.isListViewPresent());
             String src = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getImage().getAttribute("src");
             softAssert.assertEquals(src, DEFAULT_IMAGE);

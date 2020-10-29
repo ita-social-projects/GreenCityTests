@@ -16,7 +16,7 @@ public class RegisterComponent extends TopPart {
     private By closeModalButton = By.cssSelector(".close-btn a");
     public static final By modal_window_css = By.cssSelector("mat-dialog-container");
     private By submit_email_selector = By.cssSelector("app-submit-email div.submit-email");
-    private By googleSignUpButtonClass = By.cssSelector(".cta-button-google");
+    private By googleSignUpButtonClass = By.cssSelector(".google-sign-in"); //By.cssSelector(".cta-button-google");
     private By titleCss = By.cssSelector("app-sign-up h1.title-text");
     private By subtitleCss = By.cssSelector(".subtitle-text");
     private By congratsModalCss = By.cssSelector(".main-container .submit-email");
