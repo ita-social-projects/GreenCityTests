@@ -1,6 +1,6 @@
-package com.softserve.edu.greencity.api.builders;
+package com.softserve.edu.greencity.api.builders.ownsecurity;
 
-import com.softserve.edu.greencity.api.models.OwnSecurityModel;
+import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
 
 /**
  * Gives a possibility to get a new OwnSecurityModel with desired properties

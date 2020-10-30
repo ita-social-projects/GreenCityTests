@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.models;
+package com.softserve.edu.greencity.api.models.ownsecurity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
