@@ -169,7 +169,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT, true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(), FORGOT_PASS_MAIL_SUBJECT, 3);
-        Assert.assertEquals(numberOfEmail, 1);
+        Assert.assertEquals(numberOfEmail, 1); //For some reason, email doesn't come when running remotely
     }
 
     @Test(testName = "GC-521")
