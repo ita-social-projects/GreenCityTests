@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.api.assertions;
 
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 
@@ -24,6 +25,16 @@ public class ArrayAssertion extends BaseAssertion {
     @Override
     public ArrayAssertion defaultAsserts() {
         return (ArrayAssertion) super.defaultAsserts();
+    }
+
+    @Override
+    public ArrayAssertion statusCode(int httpStatus) {
+        return (ArrayAssertion) super.statusCode(httpStatus);
+    }
+
+    @Override
+    public ArrayAssertion contentType(ContentType type) {
+        return (ArrayAssertion) super.contentType(type);
     }
 
     /**
