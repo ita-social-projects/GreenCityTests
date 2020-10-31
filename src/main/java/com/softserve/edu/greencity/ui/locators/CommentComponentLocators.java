@@ -23,6 +23,7 @@ public enum CommentComponentLocators implements Locator {
     AVATAR(By.cssSelector("img[alt='avatar']")),
     COMMENTS_COMPONENTS(By.cssSelector("app-comments-list > div")),
     REPLY_COMPONENTS(By.cssSelector(".comment-body-wrapper.wrapper-reply.ng-star-inserted")),
+    PUBLISH_COMPONENT(By.cssSelector("form.main-wrapper.wrapper-comment.ng-untouched.ng-pristine.ng-invalid")),
     SHOW_REPLIES(By.cssSelector("button.cta-btn.view.ng-star-inserted"));
 
 

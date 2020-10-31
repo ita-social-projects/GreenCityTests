@@ -18,14 +18,14 @@ import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*
 public class CommentContainer implements StableWebElementSearch {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    private WaitsSwitcher waitsSwitcher;
     protected WebDriver driver;
     private List<CommentComponent> commentComponents;
     private By item = COMMENTS_COMPONENTS.getPath();
 
     public CommentContainer(WebDriver driver){
         this.driver = driver;
-     //   checkElements();
+        //checkElements();
     }
 
     public void checkElements(){
@@ -79,7 +79,7 @@ public class CommentContainer implements StableWebElementSearch {
         }
         return result;
     }
-
+/*
     public WebElement getCommentField(){
         return searchElementByCss(COMMENT_FIELD.getPath());
     }
@@ -99,9 +99,19 @@ public class CommentContainer implements StableWebElementSearch {
     }
 
     public CommentContainer addComment(String commentText){
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         setCommentText(commentText).clickCommentButton();
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this;
-    }
+    }*/
 
 
     @Override

@@ -66,8 +66,9 @@ public class ReplyContainer {
         if (result == null) {
             logger.warn("Reply with text " + title + "not exist");
             throw new RuntimeException("Comment Component with text " + title + " not found");
+        } else {
+            return result;
         }
-        return result;
     }
 
     public boolean isReplyComponentPresent(){

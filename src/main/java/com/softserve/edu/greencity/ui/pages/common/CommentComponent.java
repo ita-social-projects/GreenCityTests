@@ -1,25 +1,27 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.google.gson.annotations.Until;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
-public class CommentComponent extends CommentContainer implements StableWebElementSearch {
+public class CommentComponent {
 
     protected WebDriverWait wait;
-
+    private WebDriver driver;
     protected WebElement commentItem;
     private WaitsSwitcher waitsSwitcher;
     private By replyItem = REPLY_COMPONENTS.getPath();
 
     public CommentComponent(WebDriver driver, WebElement commentItem) {
-        super(driver);
-        //this.driver = driver;
+        this.driver = driver;
         this.commentItem = commentItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
@@ -49,16 +51,31 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
     }
 
     public WebElement getDeleteButton(){
+/*        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOf(getDeleteButton()));*/
         return commentItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
     public CommentComponent clickDeleteButton(){
-        getEditButton().click();
+        getDeleteButton().click();
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.invisibilityOf(getDeleteButton()));
         return this;
     }
 
     public boolean isLikesButtonDisplayed(){
         return commentItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
     }
+
+    public boolean isCommentPresent() {
+        try {
+            waitsSwitcher.setExplicitWait(5,
+                    ExpectedConditions.visibilityOf(getComment()));
+            return true;
+        } catch (StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
 
     public WebElement getLikeButton(){
         return commentItem.findElement(LIKE_BUTTON.getPath());
@@ -129,9 +146,18 @@ public class CommentComponent extends CommentContainer implements StableWebEleme
         getShowReplyButton().click();
         return this;
     }
-
+    public boolean isAddReplyButtonEnable(){
+        return getAddReplyButton().isEnabled();
+    }
     public CommentComponent addReply(String replyText){
         clickReplyButton().setReplyText(replyText).clickAddReplyButton();
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.not(ExpectedConditions.elementToBeClickable(getAddReplyButton())));
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 

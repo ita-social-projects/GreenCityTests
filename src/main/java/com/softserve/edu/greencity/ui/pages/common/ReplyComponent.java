@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.common;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
@@ -12,7 +13,7 @@ public class ReplyComponent  {
     private WebElement replyItem;
     protected WebDriverWait wait;
     private final WebDriver driver;
-
+    private WaitsSwitcher waitsSwitcher;
     public ReplyComponent(WebDriver driver, WebElement replyItem){
         this.driver = driver;
         this.replyItem = replyItem;
@@ -55,7 +56,9 @@ public class ReplyComponent  {
         return replyItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
     public ReplyComponent clickReplyDeleteButton(){
-        getReplyEditButton().click();
+        getReplyDeleteButton().click();
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.invisibilityOf(getReplyDeleteButton()));
         return this;
     }
 
