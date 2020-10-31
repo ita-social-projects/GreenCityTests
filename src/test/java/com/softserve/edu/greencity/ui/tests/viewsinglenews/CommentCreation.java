@@ -5,13 +5,11 @@ import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.common.*;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import jdk.jfr.Description;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 public class CommentCreation extends GreenCityTestRunner {
@@ -34,9 +32,8 @@ public class CommentCreation extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews()
                 .switchToSingleNewsPageByNumber(0)
-                .getPublishComment()
+                .getCommentPart()
                 .addComment("First Comment")
-                .getCommentContainer()
                 .chooseCommentByNumber(0)
                 .addReply("First reply");
         signOutByStorage();
@@ -58,7 +55,7 @@ public class CommentCreation extends GreenCityTestRunner {
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
-                .getCommentContainer()
+                .getCommentPart()
                 .chooseCommentByNumber(0)
                 .addReply(replyText).openReply().chooseReplyByNumber(0);
 
@@ -71,17 +68,47 @@ public class CommentCreation extends GreenCityTestRunner {
     public void loggedUserCanAddComment() {
         logger.info("Verify that logged user can add comment starts");
         String commentText = "Add comment";
-        SingleNewsPage singleNewsPage = loadApplication()
+        CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
-                .getPublishComment()
+                .getCommentPart()
                 .addComment(commentText);
 
-        softAssert.assertEquals(commentText, singleNewsPage.getCommentContainer().chooseCommentByNumber(0).getCommentText());
+        softAssert.assertEquals(commentText, commentPart.chooseCommentByNumber(0).getCommentText());
         softAssert.assertAll();
     }
 
+    @Test
+    @Description("GC-821")
+    public void loggedUserCannotAddEmptyComment() {
+        logger.info("Verify that logged user cannot add empty comment starts");
+        String commentText = "";
+        CommentPart commentPart = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .setCommentText(commentText);
+
+        softAssert.assertFalse(commentPart.isPublishCommentButtonEnable());
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-826")
+    public void unloggedUserCannotDeleteCommentAndReply() {
+        logger.info("Verify that unregistered user can’t delete comment/reply starts");
+
+        CommentComponent commentComponent = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+        softAssert.assertFalse(commentComponent.isDeleteCommentButtonDisplayed());
+        softAssert.assertFalse(commentComponent.openReply().isReplyComponentPresent());
+        softAssert.assertAll();
+    }
 
     @Test
     @Description("GC-819")
@@ -92,17 +119,12 @@ public class CommentCreation extends GreenCityTestRunner {
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
-                .getPublishComment()
+                .getCommentPart()
                 .addComment(commentText)
-                .getCommentContainer()
                 .chooseCommentByNumber(0)
-                .clickDeleteButton(); //TODO Right
-       softAssert.assertFalse(commentComponent.isCommentPresent());
-       softAssert.assertAll();
-
+                .clickDeleteCommentButton(); //TODO Right
+        softAssert.assertFalse(commentComponent.isCommentPresent());
+        softAssert.assertAll();
     }
-
-
-
 
 }

@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.COMMENTS_COMPONENTS;
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.REPLY_COMPONENTS;
 
 public class ReplyContainer {
@@ -74,5 +73,6 @@ public class ReplyContainer {
     public boolean isReplyComponentPresent(){
         return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
+
 
 }

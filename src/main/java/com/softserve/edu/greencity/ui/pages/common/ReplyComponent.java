@@ -31,10 +31,6 @@ public class ReplyComponent  {
         return getReplyAuthor().getText();
     }
 
-    public boolean isReplyLikesButtonDisplayed(){
-        return replyItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
-    }
-
     public WebElement getReplyLikeButton(){
         return replyItem.findElement(LIKE_BUTTON.getPath());
     }
@@ -44,9 +40,14 @@ public class ReplyComponent  {
         return this;
     }
 
+    public boolean isReplyLikesButtonDisplayed(){
+        return replyItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
+    }
+
     public WebElement getReplyEditButton(){
         return replyItem.findElement(EDIT_COMMENT_BUTTON.getPath());
     }
+
     public ReplyComponent clickReplyEditButton(){
         getReplyEditButton().click();
         return this;
@@ -55,11 +56,16 @@ public class ReplyComponent  {
     public WebElement getReplyDeleteButton(){
         return replyItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
+
     public ReplyComponent clickReplyDeleteButton(){
         getReplyDeleteButton().click();
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.invisibilityOf(getReplyDeleteButton()));
         return this;
+    }
+
+    public boolean isDeleteReplyButtonDisplayed(){
+        return replyItem.findElements(DELETE_COMMENT_BUTTON.getPath()).size() > 0;
     }
 
     public WebElement getReplyLikes(){
@@ -77,9 +83,5 @@ public class ReplyComponent  {
     public String getReplyDateText(){
         return getReplyDate().getText();
     }
-
-
-
-
 
 }

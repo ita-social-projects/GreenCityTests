@@ -14,8 +14,7 @@ import java.util.List;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
-
-public class CommentContainer implements StableWebElementSearch {
+public class CommentPart implements StableWebElementSearch {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private WaitsSwitcher waitsSwitcher;
@@ -23,24 +22,34 @@ public class CommentContainer implements StableWebElementSearch {
     private List<CommentComponent> commentComponents;
     private By item = COMMENTS_COMPONENTS.getPath();
 
-    public CommentContainer(WebDriver driver){
+
+    public CommentPart(WebDriver driver){
         this.driver = driver;
-        //checkElements();
+        this.waitsSwitcher= new WaitsSwitcher(driver);
     }
 
-    public void checkElements(){
-        if(isCommentPresent()){
-            commentComponents = new ArrayList<>();
-            for (WebElement current : getComments()) {
-                commentComponents.add(new CommentComponent(driver, current));
-            }
-        } else {
-            throw new IllegalArgumentException("Comment isn't present on this page");
-        }
+    public WebElement getCommentField(){
+        return searchElementByCss(COMMENT_FIELD.getPath());
     }
 
-    public boolean isCommentPresent(){
-        return driver.findElements(COMMENTS_COMPONENTS.getPath()).size() > 0;
+    public CommentPart setCommentText(String commentText){
+        getCommentField().sendKeys(commentText);
+        return this;
+    }
+
+    public  WebElement getPublishCommentButton(){
+        return searchElementByCss(COMMENT_BUTTON.getPath());
+    }
+
+    public CommentPart clickPublishCommentButton() {
+        getPublishCommentButton().click();
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.not(ExpectedConditions.elementToBeClickable(getPublishCommentButton())));
+        return this;
+    }
+
+    public boolean isPublishCommentButtonEnable(){
+        return getPublishCommentButton().isEnabled();
     }
 
     public List<CommentComponent> getCommentComponents() {
@@ -79,40 +88,16 @@ public class CommentContainer implements StableWebElementSearch {
         }
         return result;
     }
-/*
-    public WebElement getCommentField(){
-        return searchElementByCss(COMMENT_FIELD.getPath());
-    }
 
-    public CommentContainer setCommentText(String commentText){
-        getCommentField().sendKeys(commentText);
-        return this;
-    }
-
-    public  WebElement getCommentButton(){
-        return searchElementByCss(COMMENT_BUTTON.getPath());
-    }
-
-    public CommentContainer clickCommentButton() {
-        getCommentButton().click();
-        return this;
-    }
-
-    public CommentContainer addComment(String commentText){
+    public CommentPart addComment(String commentText){ //TODO WAITER
+        setCommentText(commentText).clickPublishCommentButton();
         try {
-            Thread.sleep(5);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        setCommentText(commentText).clickCommentButton();
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }*/
-
+        return new CommentPart(driver);
+    }
 
     @Override
     public WebDriver setDriver() {

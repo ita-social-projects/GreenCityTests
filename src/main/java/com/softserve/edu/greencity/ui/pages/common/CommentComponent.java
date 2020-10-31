@@ -1,9 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.google.gson.annotations.Until;
-import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,11 +11,10 @@ import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*
 
 public class CommentComponent {
 
-    protected WebDriverWait wait;
     private WebDriver driver;
+    protected WebDriverWait wait;
     protected WebElement commentItem;
     private WaitsSwitcher waitsSwitcher;
-    private By replyItem = REPLY_COMPONENTS.getPath();
 
     public CommentComponent(WebDriver driver, WebElement commentItem) {
         this.driver = driver;
@@ -55,15 +51,15 @@ public class CommentComponent {
                 ExpectedConditions.visibilityOf(getDeleteButton()));*/
         return commentItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
-    public CommentComponent clickDeleteButton(){
+    public CommentComponent clickDeleteCommentButton(){
         getDeleteButton().click();
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.invisibilityOf(getDeleteButton()));
         return this;
     }
 
-    public boolean isLikesButtonDisplayed(){
-        return commentItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
+    public boolean isDeleteCommentButtonDisplayed(){
+        return commentItem.findElements(DELETE_COMMENT_BUTTON.getPath()).size() > 0;
     }
 
     public boolean isCommentPresent() {
@@ -76,7 +72,6 @@ public class CommentComponent {
         }
     }
 
-
     public WebElement getLikeButton(){
         return commentItem.findElement(LIKE_BUTTON.getPath());
     }
@@ -84,6 +79,10 @@ public class CommentComponent {
     public CommentComponent clickLikeButton(){
         getLikeButton().click();
         return this;
+    }
+
+    public boolean isLikesButtonDisplayed(){
+        return commentItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
     }
 
     public WebElement getLikes(){
@@ -149,7 +148,8 @@ public class CommentComponent {
     public boolean isAddReplyButtonEnable(){
         return getAddReplyButton().isEnabled();
     }
-    public CommentComponent addReply(String replyText){
+
+    public CommentComponent addReply(String replyText){ //TODO WAITER
         clickReplyButton().setReplyText(replyText).clickAddReplyButton();
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.not(ExpectedConditions.elementToBeClickable(getAddReplyButton())));
@@ -161,15 +161,7 @@ public class CommentComponent {
         return this;
     }
 
-    public CommentComponent refreshPage(){
-        driver.navigate().refresh();
-        return this;
-    }
-
     public boolean isReplyComponentPresent(){
         return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
-
-
-
 }

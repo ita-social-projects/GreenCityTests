@@ -4,16 +4,12 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
-import com.softserve.edu.greencity.ui.pages.common.CommentContainer;
-import com.softserve.edu.greencity.ui.pages.common.ReplyContainer;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 public class CheckElementOfCommentTest extends GreenCityTestRunner {
@@ -35,9 +31,8 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews()
                 .switchToSingleNewsPageByNumber(0)
-                .getPublishComment()
+                .getCommentPart()
                 .addComment("First Comment")
-                .getCommentContainer()
                 .chooseCommentByNumber(0)
                 .addReply("First reply");
         signOutByStorage();
@@ -57,7 +52,8 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0).getCommentContainer()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
                 .chooseCommentByNumber(0);
 
         softAssert.assertFalse(commentComponent.isLikesButtonDisplayed());
@@ -65,14 +61,32 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+
     @Test
     @Description("GC-914")
     public void unloggedUserCanReviewReply() {
-        logger.info("Verify that unlogged user cannot like the comment/reply on News Single Page starts");
+        logger.info("Verify that not logged user can review the replies to the comment starts");
 
         boolean isReplyDisplayed = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0).getCommentContainer()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply().isReplyComponentPresent();
+        softAssert.assertTrue(isReplyDisplayed);
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-895")
+    public void loggedUserCanReviewReply() {
+        logger.info("Verify that logged user can review the replies to the comment starts");
+
+        boolean isReplyDisplayed = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
                 .chooseCommentByNumber(0)
                 .openReply().isReplyComponentPresent();
         softAssert.assertTrue(isReplyDisplayed);
@@ -86,7 +100,26 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0).getCommentContainer()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+        String commentNumberOfLikes = commentComponent.getLikesNumber();
+        softAssert.assertEquals(commentNumberOfLikes, "0");
+        String replyNumberOfLikes = commentComponent.openReply().chooseReplyByNumber(0).getReplyLikesNumber();
+        softAssert.assertEquals(replyNumberOfLikes, "0");
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-917")
+    public void loggedUserCanSeeLikes() {
+        logger.info("Verify that logged user can see the total likes number related to the comments and/or replies");
+
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
                 .chooseCommentByNumber(0);
         String commentNumberOfLikes = commentComponent.getLikesNumber();
         softAssert.assertEquals(commentNumberOfLikes, "0");
@@ -103,7 +136,8 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         Boolean isReplyComponentPresentLoginUser = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0).getCommentContainer()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
                 .chooseCommentByNumber(0)
                 .isReplyComponentPresent();
         softAssert.assertFalse(isReplyComponentPresentLoginUser);
@@ -111,12 +145,28 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
         Boolean isReplyComponentPresentNotLoggedUser = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0).getCommentContainer()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
                 .chooseCommentByNumber(0)
                 .isReplyComponentPresent();
         softAssert.assertFalse(isReplyComponentPresentNotLoggedUser);
         softAssert.assertAll();
     }
 
+    @Test
+    @Description("GC-826")
+    public void unloggedUserCannotDeleteTheCommentAndReply() {
+        logger.info("Verify that unregistered user can’t delete comment/reply starts");
+
+        CommentComponent commentComponent = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+
+        softAssert.assertFalse(commentComponent.isDeleteCommentButtonDisplayed());
+        softAssert.assertFalse(commentComponent.openReply().chooseReplyByNumber(0).isDeleteReplyButtonDisplayed());
+        softAssert.assertAll();
+    }
 
 }

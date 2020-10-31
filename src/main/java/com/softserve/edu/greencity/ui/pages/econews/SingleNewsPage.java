@@ -2,8 +2,7 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import java.util.List;
 
-import com.softserve.edu.greencity.ui.pages.common.CommentContainer;
-import com.softserve.edu.greencity.ui.pages.common.PublishComment;
+import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -11,7 +10,6 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.COMMENTS_COMPONENTS;
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.PUBLISH_COMPONENT;
-import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.DISPLAYED_ARTICLES;
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,7 +22,6 @@ public class SingleNewsPage extends TopPart {
 
     private List<WebElement> tagsList = driver.findElements(TAGS_LIST.getPath());
     private ItemsContainer itemsContainer;
-    private CommentContainer commentContainer;
 
     public SingleNewsPage(WebDriver driver) {
         super(driver);
@@ -152,17 +149,8 @@ public class SingleNewsPage extends TopPart {
         return new ItemsContainer(driver);
     }
 
-    public CommentContainer getCommentContainer(){
-        waitsSwitcher.setExplicitWait(
-                ExpectedConditions.presenceOfAllElementsLocatedBy(COMMENTS_COMPONENTS.getPath()));
-        //commentContainer = new CommentContainer(driver);
-        return new CommentContainer(driver);
-    }
-
-    public PublishComment getPublishComment(){
-        waitsSwitcher.setExplicitWait(
-                ExpectedConditions.presenceOfAllElementsLocatedBy(PUBLISH_COMPONENT.getPath()));
-        return new PublishComment(driver);
+    public CommentPart getCommentPart(){
+        return new CommentPart(driver);
     }
 
     @Override
