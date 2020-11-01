@@ -145,7 +145,6 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .unsuccessfullySubmit(user);
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
-        expectedBorderColorRBG = "rgb(135, 135, 135)";
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE));
 
@@ -170,10 +169,10 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT, true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(), FORGOT_PASS_MAIL_SUBJECT, 3);
-        Assert.assertEquals(numberOfEmail, 1);
+        Assert.assertEquals(numberOfEmail, 1); //For some reason, email doesn't come when running remotely
     }
 
-    //@Test(testName = "GC-521")
+    @Test(testName = "GC-521")
     @Description("Verify that Registered User does not receive email to restore password twice")
     public void unSuccessRestorePassTwice() {
         logger.info("Starting unSuccessRestorePassTwice");

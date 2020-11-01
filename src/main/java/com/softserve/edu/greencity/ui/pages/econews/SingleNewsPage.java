@@ -51,10 +51,6 @@ public class SingleNewsPage extends TopPart {
         return searchElementByCss(TITLE.getPath());
     }
 
-    public String getTitleText() {
-        return getTitle().getText().trim();
-    }
-
     private WebElement getData() {
         return searchElementByCss(DATA.getPath());
     }

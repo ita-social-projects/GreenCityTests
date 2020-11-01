@@ -26,7 +26,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     String expectedHoveredByMouseBackgroundColorRGBA;
     List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages;
 
-    private final String DEFAULT_IMAGE = "assets/img/icon/econews/default-image-list-view.png";
+    private final String DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
     private static List<String> testNewsTitles = new ArrayList<>();
 
     @AfterTest(alwaysRun = true)
@@ -172,7 +172,8 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         for (Integer integer : screenWidthWithContent) {
             ecoNewsPage.changeWindowWidth(integer);
-            logger.info("actual width = " + driver.manage().window().getSize());
+            logger.info("set width = "+integer);
+            logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
             logger.info("image " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
@@ -189,12 +190,12 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
             logger.info("author " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
 
-
         }
 
         for (Integer integer : screenWidthWithoutContent) {
-            logger.info("screenWidth = "+integer);
             ecoNewsPage.changeWindowWidth(integer);
+            logger.info("set width = "+integer);
+            logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
             logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
@@ -211,11 +212,10 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
             logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
 
-            ecoNewsPage.maximizeWindow();
         }
         for (Integer integer : screenWidthWithoutImages) {
             ecoNewsPage.changeWindowWidth(integer);
-            logger.info("actual width = "+driver.manage().window().getSize());
+            logger.info("set width = "+integer);
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
             if(ecoNewsPage.isActiveListView()){
@@ -234,91 +234,13 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
             logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
             }
-
-
-            ecoNewsPage.maximizeWindow();
         }
+        ecoNewsPage.maximizeWindow();
         ecoNewsPage.signOut();
         softAssert.assertAll();
     }
 
-    /*
-        @Test(testName = "GC-720")
-        @Description("Verify that content items contain all required UI elements according to mock-up.(Add news and verify Author)")
-        public void isNewsAuthorEqualsTopUserName() {
-            User user = UserRepository.get().temporary();
-            EcoNewsPage ecoNewsPage = loadApplication()
-                    .signIn()
-                    .getManualLoginComponent()
-                    .successfullyLogin(user)
-                    .navigateMenuEcoNews()
-                    .gotoCreateNewsPage()
-                    .fillFields(NewsDataRepository.getOneRowTitle())
-                    .publishNews();
 
-            String userName = ecoNewsPage.getTopUserName();
-            Assert.assertEquals(userName, ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getAuthorText());
-        }
-
-        @DataProvider
-        private Object[] getScreenWidthValidForListView() {
-            return new Object[]{1200, 1000, 850, 650};
-        }
-
-        @Test(testName = "GC-720", dataProvider = "getScreenWidthValidForListView", dependsOnMethods = {"isNewsAuthorEqualsTopUserName"})
-        @Description("Verify that content items contain all required UI elements according to mock-up.")
-        public void isPresentAllContentElements(int width) {
-            EcoNewsPage ecoNewsPage = loadApplication()
-                    .navigateMenuEcoNews();
-
-            ecoNewsPage.changeWindowWidth(width);
-            ecoNewsPage.switchToListView();
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
-
-            ecoNewsPage.maximizeWindow();
-
-            softAssert.assertAll();
-        }
-
-        @DataProvider
-        private Object[] getScreenWidthInvalidForListView() {
-            return new Object[]{576, 360};
-        }
-        @Test(testName = "GC-720", dataProvider = "getScreenWidthInvalidForListView", dependsOnMethods = {"isNewsAuthorEqualsTopUserName"})
-        @Description("Verify that content items contain all required UI elements according to mock-up.")
-        public void isPresentAllContentElementsSmallResolution(int width) {
-            EcoNewsPage ecoNewsPage = loadApplication()
-                    .navigateMenuEcoNews();
-
-            ecoNewsPage.changeWindowWidth(width);
-            softAssert.assertFalse(ecoNewsPage.isListViewPresent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
-
-            ecoNewsPage.maximizeWindow();
-
-            softAssert.assertAll();
-        }
-
-        @Test(testName = "GC-720", dependsOnMethods = {"isNewsAuthorEqualsTopUserName", "isPresentAllContentElements", "isPresentAllContentElementsSmallResolution"})
-        @Description("Verify that content items contain all required UI elements according to mock-up.")
-        public void deleteNewsGC720() {
-            EcoNewsService ecoNewsService = new EcoNewsService();
-        ecoNewsService.deleteNewsByTitle(NewsDataRepository.getOneRowTitle().getTitle());
-        //ecoNewsService.deleteLastNewsByTitle(NewsDataRepository.getOneRowTitle().getTitle());
-        }
-    */
     @Test(testName = "GC-725")
     @Description("Verify that displayed image in List view is default image if user didn’t choose own image during news creation.")
     public void isPresentDefaultImage() {
@@ -344,6 +266,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         }
         for (Integer integer : screenWidth2) {
             ecoNewsPage.changeWindowWidth(integer);
+            //On small screen resolution list view automatically switches off
             softAssert.assertFalse(ecoNewsPage.isListViewPresent());
             String src = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getImage().getAttribute("src");
             softAssert.assertEquals(src, DEFAULT_IMAGE);

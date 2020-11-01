@@ -41,8 +41,9 @@ public class ManualLoginComponent extends LoginComponent implements StableWebEle
         return getEmailField().isDisplayed();
     }
     @Step
-    public void clickEmailField(){
+    public ManualLoginComponent clickEmailField(){
         getEmailField().click();
+        return this;
     }
 
     //Password field
@@ -57,6 +58,11 @@ public class ManualLoginComponent extends LoginComponent implements StableWebEle
     @Step
     public WebElement getPasswordFieldWrapper() {
         return searchElementByCss(passwordFieldWrapper);
+    }
+    @Step
+    public ManualLoginComponent clickPasswordField(){
+        getPasswordField().click();
+        return this;
     }
 
     //Sign in button
@@ -95,7 +101,7 @@ public class ManualLoginComponent extends LoginComponent implements StableWebEle
         return searchElementByCss(emailValidationError);
     }
     @Step
-    public boolean IsDisplayedEmailValidationError() {
+    public boolean isDisplayedEmailValidationError() {
         return getEmailValidationError().isDisplayed();
     }
     @Step

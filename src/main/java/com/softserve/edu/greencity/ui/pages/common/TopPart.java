@@ -132,10 +132,12 @@ public abstract class TopPart implements StableWebElementSearch {
     public String getTopUserName() {
         return createTopUserComponent().getUserNameButtonText();
     }
+    /*Removed from UI
     @Step("click Top User Favorite Places")
     protected void clickTopUserFavoritePlaces() {
         getTopUserComponent().clickProfileDropdownFavoritePlaces();
     }
+     */
     @Step("click Top User Settings")
     protected void clickTopUserSettings() {
         getTopUserComponent().clickProfileDropdownUserSettings();
@@ -228,7 +230,7 @@ public abstract class TopPart implements StableWebElementSearch {
         return new RegisterComponent(driver);
     }
     @Step("signOut")
-    public TipsTricksPage signOut() {
+    public WelcomePage signOut() {
         logger.debug("start signout()");
         logger.trace("click Signout link from ProfileDropdown");
         createTopUserComponent().clickProfileDropdownSignout();
@@ -236,7 +238,7 @@ public abstract class TopPart implements StableWebElementSearch {
         closeTopUserComponent();
         logger.trace("create TopGuestComponent");
         createTopGuestComponent();
-        return new TipsTricksPage(driver);
+        return new WelcomePage(driver);
     }
     @Step("loginIn")
     public MyCabinetPage loginIn(User user) {
