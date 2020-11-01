@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests.viewsinglenews;
+package com.softserve.edu.greencity.ui.tests.comments;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
