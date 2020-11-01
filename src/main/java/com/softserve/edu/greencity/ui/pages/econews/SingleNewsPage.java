@@ -8,8 +8,6 @@ import org.openqa.selenium.WebElement;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
-import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.COMMENTS_COMPONENTS;
-import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.PUBLISH_COMPONENT;
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
