@@ -12,11 +12,13 @@ public class ReplyComponent  {
 
     private WebElement replyItem;
     protected WebDriverWait wait;
-    private final WebDriver driver;
+    private WebDriver driver;
     private WaitsSwitcher waitsSwitcher;
+
     public ReplyComponent(WebDriver driver, WebElement replyItem){
         this.driver = driver;
         this.replyItem = replyItem;
+        this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
     public WebElement getReplyComment(){ return replyItem.findElement(COMMENT_TEXT.getPath()); }
@@ -83,5 +85,6 @@ public class ReplyComponent  {
     public String getReplyDateText(){
         return getReplyDate().getText();
     }
+
 
 }

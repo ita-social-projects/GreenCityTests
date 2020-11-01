@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.common;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -22,31 +23,43 @@ public class CommentPart implements StableWebElementSearch {
     private List<CommentComponent> commentComponents;
     private By item = COMMENTS_COMPONENTS.getPath();
 
-
-    public CommentPart(WebDriver driver){
+    public CommentPart(WebDriver driver) {
         this.driver = driver;
-        this.waitsSwitcher= new WaitsSwitcher(driver);
+        this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
-    public WebElement getCommentField(){
+    public WebElement getCommentCounter() {
+        return searchElementByCss(NUMBERS_OF_COMMENTS.getPath());
+    }
+
+    public int getNumberOfComment() {
+        return Integer.parseInt(getCommentCounter().getText().split(" ")[0]);
+    }
+
+    public WebElement getCommentField() {
         return searchElementByCss(COMMENT_FIELD.getPath());
     }
 
-    public CommentPart setCommentText(String commentText){
+    public CommentPart setCommentText(String commentText) {
         getCommentField().sendKeys(commentText);
         return this;
     }
 
-    public  WebElement getPublishCommentButton(){
+    public WebElement getPublishCommentButton() {
         return searchElementByCss(COMMENT_BUTTON.getPath());
     }
 
     public CommentPart clickPublishCommentButton() {
-        getPublishCommentButton().click();
-        waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.not(ExpectedConditions.elementToBeClickable(getPublishCommentButton())));
-        return this;
+        if (getCommentComponents().size() == 0) {
+            getPublishCommentButton().click();
+        } else {
+            getPublishCommentButton().click();
+            waitsSwitcher.setExplicitWait(5,
+                    ExpectedConditions.numberOfElementsToBe(item, getCommentComponents().size() + 1));
+        }
+        return new CommentPart(driver);
     }
+
 
     public boolean isPublishCommentButtonEnable(){
         return getPublishCommentButton().isEnabled();
@@ -62,8 +75,12 @@ public class CommentPart implements StableWebElementSearch {
 
     public List<WebElement> getComments() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        return waitsSwitcher.setExplicitWait(7,
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
+        try{
+            return waitsSwitcher.setExplicitWait(2,
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
+        }catch (TimeoutException e){
+            return new ArrayList<>();
+        }
     }
 
     public CommentComponent chooseCommentByNumber(int commentNumber) {
@@ -89,13 +106,8 @@ public class CommentPart implements StableWebElementSearch {
         return result;
     }
 
-    public CommentPart addComment(String commentText){ //TODO WAITER
-        setCommentText(commentText).clickPublishCommentButton();
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public CommentPart addComment(String commentText){
+            setCommentText(commentText).clickPublishCommentButton();
         return new CommentPart(driver);
     }
 
@@ -103,4 +115,5 @@ public class CommentPart implements StableWebElementSearch {
     public WebDriver setDriver() {
         return this.driver;
     }
+
 }

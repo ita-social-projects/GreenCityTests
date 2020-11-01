@@ -5,15 +5,13 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
 public class CommentComponent {
 
     private WebDriver driver;
-    protected WebDriverWait wait;
-    protected WebElement commentItem;
+    private WebElement commentItem;
     private WaitsSwitcher waitsSwitcher;
 
     public CommentComponent(WebDriver driver, WebElement commentItem) {
@@ -47,10 +45,9 @@ public class CommentComponent {
     }
 
     public WebElement getDeleteButton(){
-/*        waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.visibilityOf(getDeleteButton()));*/
         return commentItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
+
     public CommentComponent clickDeleteCommentButton(){
         getDeleteButton().click();
         waitsSwitcher.setExplicitWait(5,
@@ -128,12 +125,25 @@ public class CommentComponent {
     }
 
     public CommentComponent clickAddReplyButton(){
-        getAddReplyButton().click();
+        if(isShowReplyDisplayed()){
+            getAddReplyButton().click();
+            waitsSwitcher.setExplicitWait(5,
+                    ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
+                            Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
+        }else {
+            getAddReplyButton().click();
+            waitsSwitcher.setExplicitWait(5,
+                    ExpectedConditions.visibilityOf(getShowReplyButton()));
+        }
         return this;
     }
 
     public WebElement getShowReplyButton(){
         return commentItem.findElement(SHOW_REPLIES.getPath());
+    }
+
+    public boolean isShowReplyDisplayed(){
+        return commentItem.findElements(SHOW_REPLIES.getPath()).size() > 0;
     }
 
     public ReplyContainer openReply(){
@@ -149,19 +159,17 @@ public class CommentComponent {
         return getAddReplyButton().isEnabled();
     }
 
-    public CommentComponent addReply(String replyText){ //TODO WAITER
-        clickReplyButton().setReplyText(replyText).clickAddReplyButton();
-        waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.not(ExpectedConditions.elementToBeClickable(getAddReplyButton())));
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public boolean isAddReplyDisplayed(){
+        return commentItem.findElements(ADD_REPLY_BUTTON.getPath()).size() > 0;
+    }
+
+    public CommentComponent addReply(String replyText){
+            clickReplyButton().setReplyText(replyText).clickAddReplyButton();
         return this;
     }
 
     public boolean isReplyComponentPresent(){
         return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
+
 }

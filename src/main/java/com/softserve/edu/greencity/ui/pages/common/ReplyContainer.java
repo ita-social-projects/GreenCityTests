@@ -23,15 +23,8 @@ public class ReplyContainer {
 
     public ReplyContainer(WebDriver driver){
         this.driver = driver;
-        //checkElements();
     }
 
-    public void checkElements() {
-        replyComponent = new ArrayList<>();
-        for (WebElement current : getReplies()) {
-            replyComponent.add(new ReplyComponent(driver, current));
-        }
-    }
     public List<ReplyComponent> getReplyComponents() {
         replyComponent = new ArrayList<>();
         for (WebElement current : getReplies()) {
@@ -44,6 +37,10 @@ public class ReplyContainer {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         return waitsSwitcher.setExplicitWait(7,
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
+    }
+
+    public boolean isReplyComponentPresent(){
+        return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
 
     public ReplyComponent chooseReplyByNumber(int replyNumber) {
@@ -69,10 +66,5 @@ public class ReplyContainer {
             return result;
         }
     }
-
-    public boolean isReplyComponentPresent(){
-        return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
-    }
-
 
 }

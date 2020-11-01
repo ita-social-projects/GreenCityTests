@@ -4,7 +4,9 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
+import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
+import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
@@ -37,6 +39,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
                 .addReply("First reply");
         signOutByStorage();
     }
+
     @AfterClass
     public void deleteNews() {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
@@ -166,6 +169,46 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
         softAssert.assertFalse(commentComponent.isDeleteCommentButtonDisplayed());
         softAssert.assertFalse(commentComponent.openReply().chooseReplyByNumber(0).isDeleteReplyButtonDisplayed());
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-864")
+    public void changesAreNotSavedWhenLeavePage() {
+        logger.info("Changes are not saved if logged user leaves the ‘News’ page without pressing ‘Comment’ button starts");
+        String commentText = "Test comment";
+        CommentPart commentPart = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .setCommentText(commentText);
+        EcoNewsPage ecoNewsPage = new EcoNewsPage(driver);
+        String commentAfterLeave = ecoNewsPage.navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .chooseCommentByNumber(0).getCommentText();
+
+        softAssert.assertNotEquals(commentPart, commentAfterLeave);
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-865")
+    public void changesAreNotSavedWhenUpdatePage() {
+        logger.info("Changes are not saved if logged user updates the ‘News’ page without pressing ‘Comment’ button starts");
+        String commentText = "Test comment";
+        CommentPart commentPart = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .setCommentText(commentText);
+
+        SingleNewsPage singleNewsPage = new SingleNewsPage(driver);
+        singleNewsPage.refreshPage();
+
+        softAssert.assertNotEquals(commentText, singleNewsPage.getCommentPart().chooseCommentByNumber(0).getCommentText());
         softAssert.assertAll();
     }
 

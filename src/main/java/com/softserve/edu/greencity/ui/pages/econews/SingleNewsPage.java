@@ -149,8 +149,17 @@ public class SingleNewsPage extends TopPart {
         return new ItemsContainer(driver);
     }
 
+    /**
+     * Get comment part of SingleNewsPage
+     * @return comment part
+     */
     public CommentPart getCommentPart(){
         return new CommentPart(driver);
+    }
+
+    public SingleNewsPage refreshPage() {
+        driver.navigate().refresh();
+        return this;
     }
 
     @Override
