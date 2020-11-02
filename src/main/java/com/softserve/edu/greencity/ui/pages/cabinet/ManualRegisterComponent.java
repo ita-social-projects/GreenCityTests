@@ -136,7 +136,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getEmailValidator() {
-        return searchElementByCss(emailValidatorSelector);
+        return searchElementByCss(errorMessages);
     }
 
 

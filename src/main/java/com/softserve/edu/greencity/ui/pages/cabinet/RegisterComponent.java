@@ -22,7 +22,7 @@ public class RegisterComponent extends TopPart {
     private By congratsModalCss = By.cssSelector(".main-container .submit-email");
     private By signInLinkCss = By.cssSelector("div.exist-account a");
     private By emailFieldSelector = By.cssSelector("input[name='email']");
-    private By userNameFieldSelector = By.cssSelector("input[name='fistName']");
+    private By userNameFieldSelector = By.cssSelector("input[name='firstName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
     private By closeSingUpButton = By.cssSelector("app-sign-up div.close-btn-img");
