@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
@@ -53,6 +54,18 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     public Object[][] invalidEmail() {
         return new Object[][]{
                 {UserRepository.get().invalidEmailUserCredentials()},};
+    }
+
+    @DataProvider
+    public Object[][] invalidPassword(){
+        return new Object[][]{
+                {UserRepository.get().invalidPassUppercaseUserCreds()},
+                {UserRepository.get().invalidPassDigitUserCreds()},
+                {UserRepository.get().invalidPassLowercaseUserCreds()},
+                {UserRepository.get().invalidPassSpecCharUserCreds()},
+                {UserRepository.get().invalidPassLengthUserCreds()},
+                {UserRepository.get().invalidPassSpaceUserCreds()},
+        };
     }
 
     @DataProvider
@@ -116,11 +129,11 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
         ManualRegisterComponent manualRegisterComponent = new ManualRegisterComponent(driver);
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        softAssert.assertFalse(manualRegisterComponent.signUpIsEnabled());
         logger.info(
                 "Filling out the fields with valid credentials without clicking on Sign up button");
         manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        softAssert.assertFalse(manualRegisterComponent.signUpIsDisabled());
+        softAssert.assertTrue(manualRegisterComponent.signUpIsEnabled());
         softAssert.assertAll();
     }
 
@@ -205,7 +218,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-501")
+    @Test(testName = "GC-501")
+    @Description("Verify that pop up 'Sign up' opens after click 'Sign up' link on the ‘Sign in’ pop up.")
     public void navigateFromSignInToSignUp() {
         logger.info("Starting navigateFromSignInToSignUp");
         loadApplication();
@@ -223,7 +237,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidEmail", description = "GC-509")
+    @Test(dataProvider = "invalidEmail", testName = "GC-509")
+    @Description("Verify that user is not registered, when he enters invalid e-mail format in ‘Email’ field.")
     public void invalidEmailRegistration(User invalidEmailCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + invalidEmailCredentials.toString());
@@ -236,11 +251,12 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
                 "Please check that your e-mail address is indicated correctly",
                 "The validation message is not equal to the expected one");
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        softAssert.assertFalse(manualRegisterComponent.signUpIsEnabled());
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidConfirmPass", description = "GC-519")
+    @Test(dataProvider = "invalidConfirmPass", testName = "GC-519")
+    @Description ("Verify that user is not registered when 'Confirm password' does not match to 'Password'")
     public void invalidConfirmPassRegistration(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
@@ -254,88 +270,26 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
                 "Passwords do not match",
                 "The validation message is not equal to the expected one");
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        softAssert.assertFalse(manualRegisterComponent.signUpIsEnabled());
         softAssert.assertAll();
     }
 
-    //TODO uncomment after front fix
-    @Test(dataProvider = "invalidPassUppercaseUserCreds", description = "GC-517")
-    public void invalidPassUppercaseValidation(User userLoginCredentials) {
-        logger.info("Starting checkInvalidFieldsValidation. Input values = "
-                + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        logger.info("Enter invalid values into the form ");
-        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        softAssert.assertEquals(manualRegisterComponent.getSignUpErrorsMsg(1),
-                "Password has contain at least one character of Uppercase letter (A-Z), " +
-                        "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
-                "The validation message is not equal to the expected one");
-        //Assert.assertTrue(manualRegisterComponent.signUpIsDisabled()); front bug, test ok
-        softAssert.assertAll();
-    }
 
-    @Test(dataProvider = "invalidPassDigitUserCreds", description = "GC-517")
+    @Test(dataProvider = "invalidPassword", testName = "GC-517")
+    @Description("Verify that user is not registered with password, that does not contain all required characters.")
     public void invalidPassDigitValidation(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        logger.info("Enter invalid values into the form");
-        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        softAssert.assertEquals(manualRegisterComponent.getSingInErrorsMsg(4),
-                "Password has contain at least one character of Uppercase letter (A-Z), " +
-                        "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
-                "The validation message is not equal to the expected one");
-        // Assert.assertTrue(manualRegisterComponent.signUpIsDisabled()); ui bug, test works ok
-        softAssert.assertAll();
+        boolean isSignUpButtonEnabled = loadApplication()
+                .signUp()
+                .getManualRegisterComponent()
+                .fillFieldsWithoutRegistration(userLoginCredentials)
+                .signUpIsEnabled();
+         Assert.assertFalse(isSignUpButtonEnabled,"Is SignUp Button enabled ?");
     }
 
-    //TODO uncomment after front fix
-    @Test(dataProvider = "invalidPassLowercaseUserCreds", description = "GC-517")
-    public void invalidPassLowercaseValidation(User userLoginCredentials) {
-        logger.info("Starting checkInvalidFieldsValidation. Input values = "
-                + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        logger.info("Enter invalid values into the form");
-        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        softAssert.assertEquals(manualRegisterComponent.getSingInErrorsMsg(4),
-                "Password has contain at least one character of Uppercase letter (A-Z), " +
-                        "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
-                "The validation message is not equal to the expected one");
-        //Assert.assertTrue(manualRegisterComponent.signUpIsDisabled()); front bug, test works ok
-        softAssert.assertAll();
-    }
 
-    @Test(dataProvider = "invalidPassSpecCharUserCreds", description = "GC-517")
-    public void invalidPassSpecCharValidation(User userLoginCredentials) {
-        logger.info("Starting checkInvalidFieldsValidation. Input values = "
-                + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        logger.info("Enter invalid values into the form ");
-        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        softAssert.assertEquals(manualRegisterComponent.getSignUpErrorsMsg(1),
-                "Password must be at least 8 characters long without spaces",
-                "The validation message is not equal to the expected one");
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
-        softAssert.assertAll();
-    }
-
-    @Test(dataProvider = "invalidPassLengthUserCreds", description = "GC-198, GC-517")
+    @Test(dataProvider = "invalidPassLengthUserCreds", description = "GC-198")
     public void invalidPassLengthValidation(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
@@ -349,31 +303,13 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters in length",
                 "The validation message is not equal to the expected one");
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        softAssert.assertFalse(manualRegisterComponent.signUpIsEnabled());
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidPassSpaceUserCreds", description = "GC-517")
-    public void invalidPassSpaceValidation(User userLoginCredentials) {
-        logger.info("Starting checkInvalidFieldsValidation. Input values = "
-                + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        logger.info("Get a title text of the modal window: "
-                + registerComponent.getTitleString());
-        softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
-                "This is not a register modal:(");
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        logger.info("Enter invalid values into the form ");
-        manualRegisterComponent.fillFieldsWithoutRegistration(userLoginCredentials);
-        softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
-                "Password must be at least 8 characters long without spaces",
-                "The validation message is not equal to the expected one");
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
-        softAssert.assertAll();
-    }
 
-    @Test(description = "GC-499")
+    @Test(testName = "GC-499")
+    @Description ("Verify that pop up ‘Sign up’ form closes after unregistered user click on X at the top-right corner of a window")
     public void checkCloseRegisterModalButton() {
         logger.info("Starting checkCloseRegisterModalButton:");
         loadApplication();
@@ -389,7 +325,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-527")
+    @Test(testName = "GC-527")
+    @Description ("Verify that symbols entered in 'Password' and 'Confirm password' fields on 'Sign up' pop up transforms into dots.")
     public void checkPasswordIsHidden() {
         logger.info("Starting checkInvalidFieldsValidation:");
         loadApplication();
@@ -402,11 +339,12 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals(manualRegisterComponent.getPasswordField().getAttribute("type"),
                 "password",
                 "The password is not hidden.");
-        softAssert.assertTrue(manualRegisterComponent.signUpIsDisabled());
+        softAssert.assertFalse(manualRegisterComponent.signUpIsEnabled());
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-485")
+    @Test(testName = "GC-485")
+    @Description("Verify that background behind the Registration form is dimmed out")
     public void checkBackgroundIsDimmed() {
         logger.info("Starting checkBackgroundIsDimmed:");
         loadApplication();
@@ -415,7 +353,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"));
     }
 
-    @Test(dataProvider = "invalidNameCredentials", description = "GC-205")
+    @Test(dataProvider = "invalidNameCredentials", testName = "GC-205")
+    @Description("Verify that user is not registered with too long 'User name'")
     public void checkUserFieldMaxLength(User userLoginCredentials) {
         loadApplication();
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -535,14 +474,16 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-482")
+    @Test(testName = "GC-482")
+    @Description("Verify that User can close Registration form by pressing \"x\" in top-right corner of the modal window")
     public void checkThatUserCanCloseSingUp() {
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
         registerComponent.closeSingUpForm();
     }
 
-    @Test(description = "GC-500")
+    @Test(testName = "GC-500")
+    @Description("Verify that user sees “Sign up” link on the popup ‘Sign in’ form.")
     public void singUpButtonExist() {
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
@@ -554,15 +495,16 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-498")
+    @Test(testName = "GC-498")
+    @Description("Verify that, Unregistered user sees My cabinet button, after accesses to the main page of the application")
     public void myHabitsExistForUnsignedUser() {
         Assert.assertEquals(new WelcomePage(driver)
                 .clickMyHabitsUnsignedLink()
                 .getSubtitleText(), "Please enter your details to sign in");
     }
 
-    @Test(dataProvider = "unregisterCredentials", retryAnalyzer = RetryAnalyzerImpl.class)
-    @Description("GC-213")
+    @Test(testName = "GC-213", dataProvider = "unregisterCredentials", retryAnalyzer = RetryAnalyzerImpl.class)
+    @Description("Verify that user sees popup about successfully registration after registration on the site")
     public void successRegistrationPopUpDisplayed(User userLoginCredentials) {
         loadApplication();
         RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
@@ -574,7 +516,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                         .isDisplayed());
     }
 
-    @Test(description = "GC-212")
+    @Test(testName = "GC-212")
+    @Description("Verify that unregistered user sees popup with registration form after clicking on the 'Sign up' button")
     public void registrationFormIsDisplayed() {
         logger.info("Starting registration form is displayed");
         loadApplication();
