@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
@@ -13,7 +14,7 @@ public class RegisterComponent extends TopPart {
 
     WebDriverWait wait;
 
-    private By closeModalButton = By.cssSelector(".close-btn a");
+    private By closeModalButton = By.cssSelector("a.close-modal-window");
     public static final By modal_window_css = By.cssSelector("mat-dialog-container");
     private By submit_email_selector = By.cssSelector("app-submit-email div.submit-email");
     private By googleSignUpButtonClass = By.cssSelector(".google-sign-in"); //By.cssSelector(".cta-button-google");
@@ -27,7 +28,7 @@ public class RegisterComponent extends TopPart {
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
     private By closeSingUpButton = By.cssSelector("app-sign-up div.close-btn-img");
     private By signUpImg = By.cssSelector("div.main-image");
-    private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
+    private By signUpWrap = By.cssSelector(".cdk-overlay-container"); // .cdk-overlay-pane
     private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
     public RegisterComponent(WebDriver driver) {
         super(driver);
@@ -143,10 +144,28 @@ public class RegisterComponent extends TopPart {
     public WebElement getSingUpImage(){
         return searchElementByCss(signUpImg);
     }
+
+
     @Step
-    public void closeSingUpForm(){
-        logger.info("close SingUp form");
-        searchElementByCss(closeSingUpButton).click();
+    public WebElement getSignUpComponent(){
+        return searchElementByCss(signUpWrap);
+    }
+    @Step
+    public WebElement getCloseFormButton() {
+        return searchElementByCss(closeModalButton);
+    }
+    @Step
+    public void closeSignUpComponent() {
+        getCloseFormButton().click();
+    }
+
+    @Step
+    public boolean isSignUpComponentOpen(){
+      //  try {
+            return getSignUpComponent().isDisplayed();
+      //  } catch (org.openqa.selenium.TimeoutException e){
+      //      return false;
+      //  }
     }
     public WebElement getProposeSwitchToSingInText(){
         return searchElementByCss(proposeSwitchToSingInText);

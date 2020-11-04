@@ -283,7 +283,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    public boolean signUpIsEnabled() {
+    public boolean isSignUpSubmitButtonEnabled() {
         return getSignUpButton().isEnabled();
 
     }
