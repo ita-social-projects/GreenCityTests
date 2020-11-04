@@ -2,12 +2,17 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 @Getter
 public class RegisterComponent extends TopPart {
@@ -15,7 +20,7 @@ public class RegisterComponent extends TopPart {
     WebDriverWait wait;
 
     private By closeModalButton = By.cssSelector("a.close-modal-window");
-    public static final By modal_window_css = By.cssSelector("mat-dialog-container");
+    private By modal_window_css = By.cssSelector(".cdk-overlay-pane");
     private By submit_email_selector = By.cssSelector("app-submit-email div.submit-email");
     private By googleSignUpButtonClass = By.cssSelector(".google-sign-in"); //By.cssSelector(".cta-button-google");
     private By titleCss = By.cssSelector("app-sign-up h1.title-text");
@@ -26,9 +31,7 @@ public class RegisterComponent extends TopPart {
     private By userNameFieldSelector = By.cssSelector("input[name='firstName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
-    private By closeSingUpButton = By.cssSelector("app-sign-up div.close-btn-img");
     private By signUpImg = By.cssSelector("div.main-image");
-    private By signUpWrap = By.cssSelector(".cdk-overlay-container"); // .cdk-overlay-pane
     private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
     public RegisterComponent(WebDriver driver) {
         super(driver);
@@ -61,8 +64,9 @@ public class RegisterComponent extends TopPart {
     }
 
     @Step
-    public void closeRegisterComponentModal() {
+    public RegisterComponent closeRegisterComponentModal() {
         searchElementByCss(closeModalButton).click();
+        return this;
     }
 
 
@@ -148,7 +152,7 @@ public class RegisterComponent extends TopPart {
 
     @Step
     public WebElement getSignUpComponent(){
-        return searchElementByCss(signUpWrap);
+        return searchElementByCss(modal_window_css);
     }
     @Step
     public WebElement getCloseFormButton() {
@@ -161,12 +165,25 @@ public class RegisterComponent extends TopPart {
 
     @Step
     public boolean isSignUpComponentOpen(){
-      //  try {
-            return getSignUpComponent().isDisplayed();
-      //  } catch (org.openqa.selenium.TimeoutException e){
-      //      return false;
-      //  }
+        try {
+            waitsSwitcher.setExplicitWait(6, visibilityOfElementLocated(modal_window_css));
+            return true;
+        } catch (Exception e) {
+
+            return false;
+        }
     }
+
+    @Step
+    public boolean isSignUpComponentClosed() {
+        try {
+            waitsSwitcher.setExplicitWait(6, invisibilityOfElementLocated(modal_window_css));
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     public WebElement getProposeSwitchToSingInText(){
         return searchElementByCss(proposeSwitchToSingInText);
     }

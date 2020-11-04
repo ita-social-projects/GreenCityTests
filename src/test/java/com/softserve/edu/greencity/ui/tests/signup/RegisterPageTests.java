@@ -309,15 +309,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals("Hello!", registerComponent.getTitleString(),
                 "This is not a register modal:(");
         softAssert.assertTrue(registerComponent.isSignUpComponentOpen());
-        logger.info("is open ="+registerComponent.isSignUpComponentOpen());
-        registerComponent.closeSignUpComponent();
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        logger.info("is open ="+registerComponent.isSignUpComponentOpen());
-        softAssert.assertFalse(registerComponent.isSignUpComponentOpen());
+        registerComponent.closeRegisterComponentModal();
+       softAssert.assertTrue(registerComponent.isSignUpComponentClosed());
         softAssert.assertAll();
     }
 
@@ -473,9 +466,12 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     @Test(testName = "GC-482")
     @Description("Verify that User can close Registration form by pressing \"x\" in top-right corner of the modal window")
     public void checkThatUserCanCloseSingUp() {
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        registerComponent.closeSignUpComponent();
+        Assert.assertTrue(
+                loadApplication()
+                .signUp()
+                .closeRegisterComponentModal()
+                .isSignUpComponentClosed()
+        );
     }
 
     @Test(testName = "GC-500")
