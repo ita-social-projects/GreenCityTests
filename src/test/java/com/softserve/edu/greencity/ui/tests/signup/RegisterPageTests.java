@@ -64,7 +64,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 {UserRepository.get().invalidPassLowercaseUserCreds()},
                 {UserRepository.get().invalidPassSpecCharUserCreds()},
                 {UserRepository.get().invalidPassLengthUserCreds()},
-                {UserRepository.get().invalidPassSpaceUserCreds()},
+                {UserRepository.get().invalidPassSpaceUserCreds()}, //TODO Clarify requirements! Now spaces are allowed, and test fails
         };
     }
 
@@ -185,7 +185,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "Password is required",
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
-                "Password is required",
+                "Password is required", //Now doesn't appear, leading to a TimeoutException
                 "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }

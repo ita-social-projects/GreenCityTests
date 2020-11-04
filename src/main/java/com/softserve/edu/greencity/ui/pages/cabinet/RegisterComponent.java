@@ -13,7 +13,7 @@ public class RegisterComponent extends TopPart {
 
     WebDriverWait wait;
 
-    private By closeModalButton = By.cssSelector(".close-btn a");
+    private By closeModalButton = By.cssSelector(".cross-btn"); //(".close-btn a");
     public static final By modal_window_css = By.cssSelector("mat-dialog-container");
     private By submit_email_selector = By.cssSelector("app-submit-email div.submit-email");
     private By googleSignUpButtonClass = By.cssSelector(".google-sign-in"); //By.cssSelector(".cta-button-google");
@@ -25,8 +25,8 @@ public class RegisterComponent extends TopPart {
     private By userNameFieldSelector = By.cssSelector("input[name='firstName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
-    private By closeSingUpButton = By.cssSelector("app-sign-up div.close-btn-img");
-    private By signUpImg = By.cssSelector("div.main-image");
+    private By closeSingUpButton = By.cssSelector(".cross-btn");
+    private By signUpImg = By.cssSelector("img.main-picture");
     private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
     private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
     public RegisterComponent(WebDriver driver) {
