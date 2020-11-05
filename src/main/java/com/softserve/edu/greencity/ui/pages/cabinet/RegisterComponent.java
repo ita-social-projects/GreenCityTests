@@ -32,6 +32,9 @@ public class RegisterComponent extends TopPart {
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
     private By signUpImg = By.cssSelector("div.main-image");
+    private By closeSingUpButton = By.cssSelector(".cross-btn");
+    private By signUpImg = By.cssSelector("img.main-picture");
+    private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
     private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
     public RegisterComponent(WebDriver driver) {
         super(driver);

@@ -16,17 +16,11 @@ import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 
+import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.*;
+
 public class LoginTest extends GreenCityTestRunner {
     String cssBorderColorProperty;
     String expectedBorderColorRBG;
-    private final String SIGN_UP_TITLE = "Hello!";
-    private final String SIGN_IN_TITLE = "Welcome back!";
-    private final String SIGN_IN_SUB_TITLE = "Please enter your details to sign in";
-    private final String ADD_NEW_HABIT_BUTTON_TEXT = "Add new habit";
-    private final String SIGN_IN_EMAIL_VALIDATION_ERROR = "Please check that your e-mail address is indicated correctly";
-    private final String SIGN_IN_PASSWORD_VALIDATION_ERROR = "Password must be at least 8 characters long";
-    private final String WRONG_EMAIL_OR_PASS_ERROR = "Bad email or password";
-    private final String TOP_USER_NAME = "nagrebetski";
 
     @BeforeClass
     public void beforeClass() {
@@ -51,7 +45,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         myCabinetPage.signOut();
 
-        Assert.assertEquals(newHabitButton, ADD_NEW_HABIT_BUTTON_TEXT);
+        Assert.assertEquals(newHabitButton, ADD_NEW_HABIT_BUTTON_TEXT.getText());
     }
 
     @Test(testName = "GC-225")
@@ -66,7 +60,7 @@ public class LoginTest extends GreenCityTestRunner {
                 .unsuccessfullyLogin(user)
                 .getWrongEmailOrPassErrorText();
 
-        Assert.assertEquals(errorText, WRONG_EMAIL_OR_PASS_ERROR);
+        Assert.assertEquals(errorText, WRONG_EMAIL_OR_PASS_ERROR.getText());
     }
 
     @Test(testName = "GC-30")
@@ -81,7 +75,7 @@ public class LoginTest extends GreenCityTestRunner {
                 .unsuccessfullyLogin(user)
                 .getWrongEmailOrPassErrorText();
 
-        Assert.assertEquals(errorText, WRONG_EMAIL_OR_PASS_ERROR);
+        Assert.assertEquals(errorText, WRONG_EMAIL_OR_PASS_ERROR.getText());
     }
 
     @Test(testName = "GC-35")
@@ -107,8 +101,8 @@ public class LoginTest extends GreenCityTestRunner {
     public void signInFormValidation() {
         logger.info("Starting signInFormValidation");
         LoginComponent loginComponent = loadApplication().signIn();
-        softAssert.assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
-        softAssert.assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
+        softAssert.assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE.getText());
+        softAssert.assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE.getText());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
@@ -118,8 +112,8 @@ public class LoginTest extends GreenCityTestRunner {
 
         loginComponent.changeWindowWidth(800);
 
-        softAssert.assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE);
-        softAssert.assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE);
+        softAssert.assertEquals(loginComponent.getTitleText(), SIGN_IN_TITLE.getText());
+        softAssert.assertEquals(loginComponent.getSubtitleText(), SIGN_IN_SUB_TITLE.getText());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedEmailField());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedPasswordField());
         softAssert.assertTrue(loginComponent.getManualLoginComponent().isDisplayedSignInButton());
@@ -165,7 +159,7 @@ public class LoginTest extends GreenCityTestRunner {
                 .clickSignUpLink()
                 .getTitleString();
 
-        Assert.assertEquals(titleString, SIGN_UP_TITLE);
+        Assert.assertEquals(titleString, SIGN_UP_TITLE.getText());
     }
 
     @Test(testName = "GC-497")
@@ -236,8 +230,8 @@ public class LoginTest extends GreenCityTestRunner {
 
         softAssert.assertEquals(emailBorderColor, expectedBorderColorRBG);
         softAssert.assertEquals(passwordBorderColor, expectedBorderColorRBG);
-        softAssert.assertEquals(emailValidationErrorText, SIGN_IN_EMAIL_VALIDATION_ERROR);
-        softAssert.assertEquals(passwordValidationErrorText, SIGN_IN_PASSWORD_VALIDATION_ERROR);
+        softAssert.assertEquals(emailValidationErrorText, SIGN_IN_EMAIL_VALIDATION_ERROR.getText());
+        softAssert.assertEquals(passwordValidationErrorText, SIGN_IN_PASSWORD_VALIDATION_ERROR.getText());
         softAssert.assertAll();
     }
 
@@ -353,7 +347,7 @@ public class LoginTest extends GreenCityTestRunner {
         String passwordFieldBorderColor = manualLoginComponent.getPasswordFieldWrapper().getCssValue(cssBorderColorProperty);
 
         softAssert.assertEquals(passwordFieldBorderColor, expectedBorderColorRBG);
-        softAssert.assertEquals(manualLoginComponent.getPasswordValidationErrorText(), SIGN_IN_PASSWORD_VALIDATION_ERROR);
+        softAssert.assertEquals(manualLoginComponent.getPasswordValidationErrorText(), SIGN_IN_PASSWORD_VALIDATION_ERROR.getText());
         softAssert.assertAll();
     }
 
@@ -364,7 +358,7 @@ public class LoginTest extends GreenCityTestRunner {
         String titleString = loadApplication()
                 .signIn().getTitleText();
 
-        Assert.assertEquals(titleString, SIGN_IN_TITLE);
+        Assert.assertEquals(titleString, SIGN_IN_TITLE.getText());
     }
     //TODO auth in google via api before clickSingInWithGoogleButton()
     @Test(testName = "GC-218")
@@ -382,7 +376,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         welcomePage.signOut().googleAccountSignOut();
 
-        Assert.assertEquals(topUserName, TOP_USER_NAME);
+        Assert.assertEquals(topUserName, TOP_USER_NAME.getText());
     }
 //TODO auth in google via api before clickSingInWithGoogleButton()
     @Test(testName = "GC-220")
@@ -401,7 +395,7 @@ public class LoginTest extends GreenCityTestRunner {
 
         welcomePage.signOut().googleAccountSignOut();
 
-        Assert.assertEquals(topUserName, TOP_USER_NAME);
+        Assert.assertEquals(topUserName, TOP_USER_NAME.getText());
     }
 
     //TODO auth in google via api before clickSingInWithGoogleButton()
@@ -414,7 +408,7 @@ public class LoginTest extends GreenCityTestRunner {
                 .signUp()
                 .clickGoogleSignUpButton()
                 .successfulLoginByGoogle(user);
-        softAssert.assertEquals(welcomePage.getTopUserName(), TOP_USER_NAME);
+        softAssert.assertEquals(welcomePage.getTopUserName(), TOP_USER_NAME.getText());
 
         welcomePage.signOut().googleAccountSignOut();
         WebElement wrongEmailOrPasswordError = loadApplication()

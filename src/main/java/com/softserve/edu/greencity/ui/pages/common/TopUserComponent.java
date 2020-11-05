@@ -48,7 +48,7 @@ public class TopUserComponent {
 
 	public WebElement getUserNameButton() {
 		WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-		waitsSwitcher.setExplicitWait(5,
+		waitsSwitcher.setExplicitWait(7,
 				ExpectedConditions.visibilityOfElementLocated(By.cssSelector(USER_NAME_CSS)));
 
 		return userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));

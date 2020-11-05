@@ -66,7 +66,17 @@ public class BaseAssertion {
     }
 
     public BaseAssertion bodyValueContains(String bodyParameter, String expectedValue) {
-        response.body(bodyParameter, contains(expectedValue));
+        response.body(bodyParameter, containsString(expectedValue));
+        return this;
+    }
+
+    public BaseAssertion bodyHasParameter(String bodyParameter) {
+        response.body("$", hasKey(bodyParameter));
+        return this;
+    }
+
+    public BaseAssertion bodyNoParameter(String bodyParameter) {
+        response.body("$", not(hasKey(bodyParameter)));
         return this;
     }
 
