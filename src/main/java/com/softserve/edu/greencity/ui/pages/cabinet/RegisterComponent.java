@@ -1,14 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
-import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.server.handler.FindElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -31,10 +28,7 @@ public class RegisterComponent extends TopPart {
     private By userNameFieldSelector = By.cssSelector("input[name='firstName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
-    private By signUpImg = By.cssSelector("div.main-image");
-    private By closeSingUpButton = By.cssSelector(".cross-btn");
-    private By signUpImg = By.cssSelector("img.main-picture");
-    private By signUpWrap = By.cssSelector("app-sign-up div.main-container");
+    private By signUpImg = By.cssSelector("img.main-picture"); //"div.main-image"
     private By proposeSwitchToSingInText = By.cssSelector("app-sign-up div.exist-account span");
     public RegisterComponent(WebDriver driver) {
         super(driver);
