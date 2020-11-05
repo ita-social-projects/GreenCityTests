@@ -148,7 +148,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertEquals(
                 manualRegisterComponent
                         .getSignUpErrorsMsg(1),
-                "The user already exists by this email",
+                "User with this email is already registered",
                 "error msg mismatch"
         );
         softAssert.assertAll();
