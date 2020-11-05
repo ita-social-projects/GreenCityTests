@@ -10,9 +10,9 @@ import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*
 
 public class CommentComponent {
 
-    private WebDriver driver;
-    private WebElement commentItem;
-    private WaitsSwitcher waitsSwitcher;
+    private final WebDriver driver;
+    private final WebElement commentItem;
+    private final WaitsSwitcher waitsSwitcher;
 
     public CommentComponent(WebDriver driver, WebElement commentItem) {
         this.driver = driver;
@@ -20,42 +20,43 @@ public class CommentComponent {
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
-    public WebElement getComment(){
+    public WebElement getComment() {
         return commentItem.findElement(COMMENT_TEXT.getPath());
     }
 
-    public String getCommentText(){
+    public String getCommentText() {
         return getComment().getText();
     }
 
-    public WebElement getCommentAuthor(){
+    public WebElement getCommentAuthor() {
         return commentItem.findElement(AUTHOR_NAME.getPath());
     }
 
-    public String getCommentAuthorText(){
+    public String getCommentAuthorText() {
         return getCommentAuthor().getText();
     }
 
-    public WebElement getEditButton(){
+    public WebElement getEditButton() {
         return commentItem.findElement(EDIT_COMMENT_BUTTON.getPath());
     }
-    public CommentComponent clickEditButton(){
+
+    public CommentComponent clickEditButton() {
         getEditButton().click();
         return this;
     }
 
-    public WebElement getDeleteButton(){
+    public WebElement getDeleteButton() {
         return commentItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
 
-    public CommentComponent clickDeleteCommentButton(){
+    public CommentComponent clickDeleteCommentButton() {
         getDeleteButton().click();
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.invisibilityOf(getDeleteButton()));
         return this;
     }
 
-    public boolean isDeleteCommentButtonDisplayed(){
+    public boolean isDeleteCommentButtonDisplayed() {
         return commentItem.findElements(DELETE_COMMENT_BUTTON.getPath()).size() > 0;
     }
 
@@ -69,107 +70,110 @@ public class CommentComponent {
         }
     }
 
-    public WebElement getLikeButton(){
+    public WebElement getLikeButton() {
         return commentItem.findElement(LIKE_BUTTON.getPath());
     }
 
-    public CommentComponent clickLikeButton(){
+    public CommentComponent clickLikeButton() {
         getLikeButton().click();
         return this;
     }
 
-    public boolean isLikesButtonDisplayed(){
+    public boolean isLikesButtonDisplayed() {
         return commentItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
     }
 
-    public WebElement getLikes(){
+    public WebElement getLikes() {
         return commentItem.findElement(COMMENT_LIKES.getPath());
     }
 
-    public String getLikesNumber(){
+    public String getLikesNumber() {
         return getLikes().getText();
     }
 
-    public WebElement getCommentDate(){
+    public WebElement getCommentDate() {
         return commentItem.findElement(COMMENT_DATE.getPath());
     }
 
-    public String getCommentDateText(){
+    public String getCommentDateText() {
         return getCommentDate().getText();
     }
 
-    public WebElement getReplyButton(){
+    public WebElement getReplyButton() {
         return commentItem.findElement(REPLY_BUTTON.getPath());
     }
 
-    public CommentComponent clickReplyButton(){
+    public CommentComponent clickReplyButton() {
         getReplyButton().click();
         return this;
     }
 
-    public boolean isReplyButtonDisplayed(){
+    public boolean isReplyButtonDisplayed() {
         return commentItem.findElements(REPLY_BUTTON.getPath()).size() > 0;
     }
 
-    public WebElement getReplyField(){
+    public WebElement getReplyField() {
         return commentItem.findElement(REPLY_FIELD.getPath());
     }
 
-    public CommentComponent setReplyText(String replyText){
+    public CommentComponent setReplyText(String replyText) {
         getReplyField().sendKeys(replyText);
         return this;
     }
 
-    public WebElement getAddReplyButton(){
+    public WebElement getAddReplyButton() {
         return commentItem.findElement(ADD_REPLY_BUTTON.getPath());
     }
 
     public CommentComponent clickAddReplyButton(){
-        if(isShowReplyDisplayed()){
-            getAddReplyButton().click();
+        boolean isShowReplyButtonDisplayed = isShowReplyDisplayed();
+        getAddReplyButton().click();
+        if(isShowReplyButtonDisplayed){
             waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
                             Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
         }else {
-            getAddReplyButton().click();
             waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.visibilityOf(getShowReplyButton()));
         }
+
         return this;
     }
 
-    public WebElement getShowReplyButton(){
+    public WebElement getShowReplyButton() {
         return commentItem.findElement(SHOW_REPLIES.getPath());
     }
 
-    public boolean isShowReplyDisplayed(){
+    public boolean isShowReplyDisplayed() {
         return commentItem.findElements(SHOW_REPLIES.getPath()).size() > 0;
     }
 
-    public ReplyContainer openReply(){
+    public ReplyContainer openReply() {
         getShowReplyButton().click();
         return new ReplyContainer(driver);
     }
 
-    public CommentComponent closeReply(){
+    public CommentComponent closeReply() {
         getShowReplyButton().click();
         return this;
     }
-    public boolean isAddReplyButtonEnable(){
+
+    public boolean isAddReplyButtonEnable() {
         return getAddReplyButton().isEnabled();
     }
 
-    public boolean isAddReplyDisplayed(){
+    public boolean isAddReplyDisplayed() {
         return commentItem.findElements(ADD_REPLY_BUTTON.getPath()).size() > 0;
     }
 
-    public CommentComponent addReply(String replyText){
-            clickReplyButton().setReplyText(replyText).clickAddReplyButton();
+    public CommentComponent addReply(String replyText) {
+        clickReplyButton().setReplyText(replyText).clickAddReplyButton();
         return this;
     }
 
-    public boolean isReplyComponentPresent(){
+    public boolean isReplyComponentPresent() {
         return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
+
 
 }

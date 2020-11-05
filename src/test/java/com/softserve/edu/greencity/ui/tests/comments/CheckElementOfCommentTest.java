@@ -60,7 +60,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
                 .chooseCommentByNumber(0);
 
         softAssert.assertFalse(commentComponent.isLikesButtonDisplayed());
-        softAssert.assertFalse(commentComponent.isReplyButtonDisplayed());
+        softAssert.assertFalse(commentComponent.openReply().chooseReplyByNumber(0).isReplyLikesButtonDisplayed());
         softAssert.assertAll();
     }
 
@@ -136,17 +136,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
     public void repliesToTheCommentAreHidden() {
         logger.info("Verify that replies to the comment are hidden by default for all users(logged and not logged)");
 
-        Boolean isReplyComponentPresentLoginUser = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .isReplyComponentPresent();
-        softAssert.assertFalse(isReplyComponentPresentLoginUser);
-        signOutByStorage();
-
-        Boolean isReplyComponentPresentNotLoggedUser = loadApplication()
+        boolean isReplyComponentPresentNotLoggedUser = loadApplication()
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
                 .getCommentPart()
@@ -154,6 +144,16 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
                 .isReplyComponentPresent();
         softAssert.assertFalse(isReplyComponentPresentNotLoggedUser);
         softAssert.assertAll();
+
+        boolean isReplyComponentPresentLoginUser = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .isReplyComponentPresent();
+        softAssert.assertFalse(isReplyComponentPresentLoginUser);
+
     }
 
     @Test

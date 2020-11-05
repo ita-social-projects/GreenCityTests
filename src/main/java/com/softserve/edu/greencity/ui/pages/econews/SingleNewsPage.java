@@ -105,6 +105,10 @@ public class SingleNewsPage extends TopPart {
         return link;
     }
 
+    public String getTitleText() {
+        return getTitle().getText().trim();
+    }
+
     /**
      * Go to next SingleNewsPage
      *
@@ -141,6 +145,14 @@ public class SingleNewsPage extends TopPart {
      */
     public ItemsContainer suggestedNews() {
         return new ItemsContainer(driver);
+    }
+
+    public boolean editNewsButtonExist() {
+        if (driver.findElements(EDIT_NEWS_BUTTON.getPath()).size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**

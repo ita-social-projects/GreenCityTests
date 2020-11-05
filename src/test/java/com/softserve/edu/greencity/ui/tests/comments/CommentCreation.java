@@ -10,7 +10,7 @@ import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -156,6 +156,5 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertEquals(numberBeforePublish + 1, numberAfterPublish);
         softAssert.assertAll();
     }
-
 
 }

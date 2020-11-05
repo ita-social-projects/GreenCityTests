@@ -86,5 +86,4 @@ public class ReplyComponent  {
         return getReplyDate().getText();
     }
 
-
 }

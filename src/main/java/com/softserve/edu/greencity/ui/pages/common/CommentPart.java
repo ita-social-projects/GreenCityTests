@@ -50,12 +50,12 @@ public class CommentPart implements StableWebElementSearch {
     }
 
     public CommentPart clickPublishCommentButton() {
-        if (getCommentComponents().size() == 0) {
-            getPublishCommentButton().click();
-        } else {
-            getPublishCommentButton().click();
+        int currentCount = getCommentComponents().size();
+        getPublishCommentButton().click();
+        if (currentCount != 0) {
             waitsSwitcher.setExplicitWait(5,
-                    ExpectedConditions.numberOfElementsToBe(item, getCommentComponents().size() + 1));
+                    ExpectedConditions.numberOfElementsToBe(item, currentCount + 1));
+
         }
         return new CommentPart(driver);
     }
@@ -79,6 +79,7 @@ public class CommentPart implements StableWebElementSearch {
             return waitsSwitcher.setExplicitWait(2,
                     ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
         }catch (TimeoutException e){
+            logger.info("Comments are not present");
             return new ArrayList<>();
         }
     }
@@ -115,5 +116,4 @@ public class CommentPart implements StableWebElementSearch {
     public WebDriver setDriver() {
         return this.driver;
     }
-
 }
