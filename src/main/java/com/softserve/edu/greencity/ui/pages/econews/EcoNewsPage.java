@@ -8,12 +8,10 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -152,6 +150,8 @@ public class EcoNewsPage extends TopPart {
     @Step("Check if list view is active")
     public boolean isActiveListView() {
         try{
+            waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(3,
+                    ExpectedConditions.presenceOfElementLocated(LIST_VIEW_WRAPPER.getPath()));
             driver.findElement(LIST_VIEW_WRAPPER.getPath()).isDisplayed();
             return true;
         }
@@ -408,13 +408,24 @@ public class EcoNewsPage extends TopPart {
     public boolean isNewsDisplayedByTitle(String title) {
         logger.info("Check if news is displayed by title");
         refreshPage();
-        boolean result = false;
-        for (WebElement current : getDisplayedArticlesTitles()) {
-            if (current.getText().toLowerCase().trim().equals(title.trim().toLowerCase())) {
-                result = true;
+        int retriesLeft = 5;
+        //The site performs the same GET request twice and redraws page, so StaleElementReferences appear
+        do {
+            try {
+                for (WebElement current : getDisplayedArticlesTitles()) {
+                    if (current.getText().toLowerCase().trim().equals(title.trim().toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException during ItemsContainer.getItems() method caught, retrying...");
+                WaitsSwitcher.sleep(100);
             }
-        }
-        return result;
+            retriesLeft--;
+        } while (retriesLeft > 0);
+
+        return false;
     }
 
     @Step("Get displayed articles titles")
@@ -461,7 +472,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return waitsSwitcher.setExplicitWait(10,
+        return waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(10,
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 

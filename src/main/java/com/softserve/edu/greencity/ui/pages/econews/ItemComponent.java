@@ -4,10 +4,13 @@ import com.softserve.edu.greencity.ui.data.econews.Tag;
 import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -69,7 +72,7 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        waitsSwitcher.setExplicitWait(5,
+        waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(5,
                 ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return newsItem.findElement(TITLE.getPath());
     }
@@ -217,13 +220,24 @@ public final class ItemComponent {
      * @return
      */
     public boolean areTagsPresent(List<Tag> tags) {
-        for (WebElement actualTag : getTags()) {
-            for (Tag tagToCheck : tags) {
-                if (actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
-                    return true;
+        Logger logger = LoggerFactory.getLogger("ItemComponent");
+        int trialsLeft = 5;
+        do {
+            try {
+                for (WebElement actualTag : getTags()) {
+                    for (Tag tagToCheck : tags) {
+                        if (actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
+                            return true;
+                        }
+                    }
                 }
+                return false;
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException caught, retrying...");
+                WaitsSwitcher.sleep(100);
             }
-        }
+            trialsLeft--;
+        } while (trialsLeft > 0);
         return false;
     }
 }

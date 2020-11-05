@@ -1,7 +1,11 @@
 package com.softserve.edu.greencity.ui.tools.engine;
 
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -32,10 +36,9 @@ public final class WaitsSwitcher {
 
     /**
      * A wrap for Thread.sleep
-     * @param seconds - time in seconds (could be decimal)
+     * @param millis - time in milliseconds (could be decimal)
      */
-    public static void sleep(double seconds) {
-        long millis = secondsToMillis(seconds);
+    public static void sleep(long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
@@ -81,6 +84,30 @@ public final class WaitsSwitcher {
      */
     public <V> V setExplicitWait(Function<? super WebDriver, V> expectedCondition) {
         return setExplicitWait(defaultExplicitWait, expectedCondition);
+    }
+
+    /**
+     * The site performs the same GET request twice and redraws page, so StaleElementReferences appear
+     * This method retries the explicit search several times
+     */
+    public <V> V setExplicitWaitWithStaleReferenceWrap(long seconds, Function<? super WebDriver, V> expectedCondition,
+                                                       int retries) {
+        //The site performs the same GET request twice and redraws page, so StaleElementReferences appear
+        Logger logger = LoggerFactory.getLogger("WaitsSwitcher");
+        do {
+            try {
+                return setExplicitWait(seconds, expectedCondition);
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException caught, retrying...");
+                WaitsSwitcher.sleep(100);
+            }
+            retries--;
+        } while (retries > 0);
+        return setExplicitWait(seconds, expectedCondition);
+    }
+
+    public <V> V setExplicitWaitWithStaleReferenceWrap(long seconds, Function<? super WebDriver, V> expectedCondition) {
+        return setExplicitWaitWithStaleReferenceWrap(seconds, expectedCondition, 5);
     }
 
     private static long secondsToMillis(double seconds) {

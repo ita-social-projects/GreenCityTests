@@ -91,7 +91,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test
     @Description("GC-666")
     public void datePxLengthTest() {
         logger.info("Date px length test");
@@ -281,7 +281,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         econewsPage.isArticleTextContentDisplayed(elements);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
         logger.info("ChronologicalNewsTest");

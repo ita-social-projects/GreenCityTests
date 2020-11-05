@@ -9,6 +9,7 @@ import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -53,8 +54,9 @@ public class ItemsContainer implements StableWebElementSearch {
     }
 
     private List<WebElement> getItems() {
+        //The site performs the same GET request twice and redraws page, so StaleElementReferences appear
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        return waitsSwitcher.setExplicitWait(7,
+        return waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));
     }
 
