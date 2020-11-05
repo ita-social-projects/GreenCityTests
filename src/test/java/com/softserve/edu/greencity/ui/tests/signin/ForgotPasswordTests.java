@@ -18,7 +18,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
     @BeforeClass
     public void beforeClass() {
         cssBorderColorProperty = "border-color";
-        expectedBorderColorRBG = "rgb(240, 49, 39)";
+        expectedBorderColorRBG = "rgb(240, 49, 39)"; //Red
     }
 
     private GoogleMailAPI googleMailAPI() {
@@ -161,9 +161,9 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .successfullySubmit(user);
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
-                true, 3, 10, user.getEmail(), user.getPassword());
+                true, 3, 30, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
-                FORGOT_PASS_MAIL_SUBJECT.getText(), 3);
+                FORGOT_PASS_MAIL_SUBJECT.getText(), 5);
         Assert.assertEquals(numberOfEmail, 1); //For some reason, email doesn't come when running remotely
     }
 
@@ -180,7 +180,8 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-        softAssert.assertEquals(emailFieldBorderColor, "rgb(135, 135, 135)");//expectedBorderColorRBG
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        // ^ Fails, the color is gray rgb(135, 135, 135) while expected red
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText()
                 .contains(RESTORE_EMAIL_ERROR_MESSAGE.getText()));
 
