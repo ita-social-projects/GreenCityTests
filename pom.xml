@@ -40,6 +40,8 @@
 		<maven.os-maven-plugin.version>1.6.2</maven.os-maven-plugin.version>
 		<!--	<maven.webdriverextensions-maven-plugin.version>3.2.0</maven.webdriverextensions-maven-plugin.version>-->
 		<maven.clean.plugin.version.version>3.1.0</maven.clean.plugin.version.version>
+		<!-- - - - - - API - - - - - -->
+		<io.rest-assured.version>4.2.0</io.rest-assured.version>
 		<!-- - - - - - Reports - - - - - -->
 		<testng.reports.directory>./target/surefire-reports/test-output</testng.reports.directory>
 		<allure.version>2.13.5</allure.version>
@@ -131,6 +133,8 @@
 			<artifactId>maven-clean-plugin</artifactId>
 			<version>${maven.clean.plugin.version.version}</version>
 		</dependency>
+
+		<!-- - - - - - - API - - - - -->
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
@@ -145,6 +149,12 @@
 			<groupId>com.google.apis</groupId>
 			<artifactId>google-api-services-sheets</artifactId>
 			<version>v4-rev493-1.23.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${io.rest-assured.version}</version>
 		</dependency>
 
 		<!-- - - - - - DB - - - - - -->

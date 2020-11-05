@@ -23,7 +23,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private WebDriver driver;
     private String confirmURL = null;
     private By email_field_selector = By.cssSelector("input[name='email']");
-    private By userNameFieldSelector = By.cssSelector("input[name='fistName']");
+    private By userNameFieldSelector = By.cssSelector("input[name='firstName']");
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
     private By signButtonSelector = By.cssSelector("app-sign-up button.primary-global-button");
@@ -136,7 +136,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private WebElement getEmailValidator() {
-        return searchElementByCss(emailValidatorSelector);
+        return searchElementByCss(errorMessages);
     }
 
 
@@ -283,8 +283,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    public boolean signUpIsDisabled() {
-        return getSignUpButton().getAttribute("disabled") != null;
+    public boolean signUpIsEnabled() {
+        return getSignUpButton().isEnabled();
 
     }
 
@@ -363,11 +363,12 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    public void fillFieldsWithoutRegistration(User userData) {
+    public ManualRegisterComponent fillFieldsWithoutRegistration(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getConfirmPassword());
+        return this;
     }
 
     @Step

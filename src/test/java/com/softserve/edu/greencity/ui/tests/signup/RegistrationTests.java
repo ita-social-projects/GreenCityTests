@@ -68,7 +68,8 @@ public class RegistrationTests extends GreenCityTestRunner {
         Assert.assertEquals(titleString, SIGN_IN_TITLE);
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-512")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-512")
+    @Description("Verify that user is not registered if he didn’t confirm email address in the mailbox.")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         logger.info("Start test registration without mail verifying");
         loadApplication();
@@ -107,7 +108,8 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-513")
+    @Description("Verify that user receive a verification email about registration in the application to email address after successfully registration.")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         logger.info("Start test registration check if mail received");
         loadApplication();
@@ -128,7 +130,8 @@ public class RegistrationTests extends GreenCityTestRunner {
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-204")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-204")
+    @Description("Verify that Email must be existence and unique while new user registration")
     public void existingUserRegistration(User userLoginCredentials) {
         new GoogleMailAPI().clearMail(userLoginCredentials.getEmail(), userLoginCredentials.getPassword());
         logger.info("Start test existing user registration" + userLoginCredentials.toString());
@@ -151,7 +154,8 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidPasswordDataProvider", description = "GC-204")
+    @Test(dataProvider = "invalidPasswordDataProvider", testName = "GC-204")
+    @Description("Verify that Email must be existence and unique while new user registration")
     public void invalidPasswordRegistration(User userLoginCredentials) {
         logger.info("Start test invalid password registration" + userLoginCredentials.toString());
         loadApplication();
