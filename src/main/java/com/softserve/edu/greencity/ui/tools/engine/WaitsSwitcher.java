@@ -89,6 +89,7 @@ public final class WaitsSwitcher {
     /**
      * The site performs the same GET request twice and redraws page, so StaleElementReferences appear
      * This method retries the explicit search several times
+     * No sense to use it with the conditions that re-locate an element
      */
     public <V> V setExplicitWaitWithStaleReferenceWrap(long seconds, Function<? super WebDriver, V> expectedCondition,
                                                        int retries) {

@@ -51,7 +51,7 @@ public final class ItemComponent {
     }
 
     public WebElement getTagsContainer() {
-        waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(5,
+        waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(TAGS_CONTAINER.getPath()));
         return findFromItemWithStaleReferenceWrap(TAGS_CONTAINER);
     }
@@ -86,7 +86,7 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(5,
+        waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
         return findFromItemWithStaleReferenceWrap(TITLE);
     }
@@ -262,6 +262,7 @@ public final class ItemComponent {
             } catch (StaleElementReferenceException error) {
                 logger.warn("StaleElementReferenceException caught, retrying...");
                 WaitsSwitcher.sleep(100);
+                //TODO need somehow to refresh the newsItem...
             }
             retriesLeft--;
         } while (retriesLeft > 0);

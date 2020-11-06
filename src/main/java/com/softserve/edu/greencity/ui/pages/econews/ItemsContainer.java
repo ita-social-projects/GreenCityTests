@@ -8,10 +8,7 @@ import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -61,9 +58,16 @@ public class ItemsContainer implements StableWebElementSearch {
     }
 
     private List<WebElement> getItems() {
-        //The site performs the same GET request twice and redraws page, so StaleElementReferences appear
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        return waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(5,
+        WebElement firstItem = driver.findElement(items);
+        try {
+            waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
+            logger.warn("The site performed the same GET request twice and redrew page");
+        } catch (TimeoutException error) {
+            ; //Everything is OK
+        }
+
+        return waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));
     }
 

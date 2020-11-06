@@ -11,10 +11,7 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -221,6 +218,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
+    @Ignore //runs too long
     @Test
     @Description("GC-674")
     public void newsAligningTest() {

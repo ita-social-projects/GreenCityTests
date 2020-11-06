@@ -150,7 +150,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Check if list view is active")
     public boolean isActiveListView() {
         try{
-            waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(3,
+            waitsSwitcher.setExplicitWait(3,
                     ExpectedConditions.presenceOfElementLocated(LIST_VIEW_WRAPPER.getPath()));
             driver.findElement(LIST_VIEW_WRAPPER.getPath()).isDisplayed();
             return true;
@@ -472,7 +472,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(10,
+        return waitsSwitcher.setExplicitWait(10,
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 
