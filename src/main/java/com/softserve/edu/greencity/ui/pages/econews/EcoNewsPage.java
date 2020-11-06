@@ -47,6 +47,12 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkElements() {
+        checkNewsDisplayed();
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getGridView()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getListView()));
+    }
+
+    private void checkNewsDisplayed() {
         WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
         try {
             waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
@@ -55,8 +61,6 @@ public class EcoNewsPage extends TopPart {
             ; //Everything is OK
         }
         waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getGridView()));
-        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getListView()));
     }
 
     public List<WebElement> getTopicsInPage() {
@@ -293,7 +297,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to grid view")
     public EcoNewsPage switchToGridView() {
         clickGridView();
-        checkElements();
+        checkNewsDisplayed();
         return new EcoNewsPage(driver);
     }
 
@@ -306,7 +310,7 @@ public class EcoNewsPage extends TopPart {
     public EcoNewsPage switchToListView() {
         if(isListViewPresent()){
         clickListView();}
-        checkElements();
+        checkNewsDisplayed();
         return this;
     }
 
