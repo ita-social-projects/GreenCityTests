@@ -297,7 +297,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         ecoNewsPage.switchToListView();
 
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getTitleHeight(), 104);
+        Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getTitleHeight(), 128);
         Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getTitleNumberRow(), 4);
         Assert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getContent().isDisplayed());
         Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getContentNumberVisibleRow(), 0);
@@ -306,7 +306,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    //@TODO Change when we will know new requirements
+
     @Test(testName = "GC-723")
     @Description("Verify that when Title consist of 3 row, then Description consist of 1 row.")
     public void isOneRowDescriptionWhenThreeRowsTitle() {
@@ -329,7 +329,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 78);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 96);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 3);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 1);
 
@@ -337,7 +337,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    //@TODO Change when we will know new requirements
+
     @Test(testName = "GC-722")
     @Description("Verify that when Title consist of 2 row, then Description consist of 2 row.")
     public void isTwoRowsDescriptionWhenTwoRowsTitle() {
@@ -360,7 +360,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 52);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 64);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 2);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 2);
 
@@ -368,7 +368,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    //@TODO Change when we will know new requirements
+
     @Test(testName = "GC-724")
     @Description("Verify that when Title consist of 1 row, then Description consist of 3 row.")
     public void isTwoRowsDescriptionWhenOneRowsTitle() {
@@ -391,7 +391,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 26);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 32);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 1);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 3);
 
