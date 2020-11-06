@@ -43,13 +43,20 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        //checkElements();
+        checkElements();
     }
 
     private void checkElements() {
+        WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
+        try {
+            waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
+            logger.warn("The site performed the same GET request twice and redrew page");
+        } catch (TimeoutException error) {
+            ; //Everything is OK
+        }
         waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getGridView()));
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getListView()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getGridView()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getListView()));
     }
 
     public List<WebElement> getTopicsInPage() {
@@ -201,7 +208,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Get items container")
     public ItemsContainer getItemsContainer() {
         // TODO add here some waiter for uploading news
-        waitsSwitcher.setExplicitWait(
+        waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
         return new ItemsContainer(driver);
     }
@@ -286,6 +293,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to grid view")
     public EcoNewsPage switchToGridView() {
         clickGridView();
+        checkElements();
         return new EcoNewsPage(driver);
     }
 
@@ -298,6 +306,7 @@ public class EcoNewsPage extends TopPart {
     public EcoNewsPage switchToListView() {
         if(isListViewPresent()){
         clickListView();}
+        checkElements();
         return this;
     }
 
@@ -472,7 +481,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return waitsSwitcher.setExplicitWait(10,
+        return waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(10,
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 

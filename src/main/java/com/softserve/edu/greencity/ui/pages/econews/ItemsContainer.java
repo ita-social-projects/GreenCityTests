@@ -59,6 +59,7 @@ public class ItemsContainer implements StableWebElementSearch {
 
     private List<WebElement> getItems() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        /*
         WebElement firstItem = driver.findElement(items);
         try {
             waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
@@ -66,6 +67,7 @@ public class ItemsContainer implements StableWebElementSearch {
         } catch (TimeoutException error) {
             ; //Everything is OK
         }
+        */
 
         return waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));

@@ -2,11 +2,13 @@ package com.softserve.edu.greencity.ui.tests.viewallnews;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
+import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsDao;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
@@ -118,7 +120,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
             ecoNewsPage.changeWindowWidth(integer);
             ecoNewsPage.countNewsColumns(integer);
         }
-        softAssert.assertAll();
+        softAssert.assertAll(); //Asserts are hidden in countNewsColumns
     }
 
 
@@ -178,18 +180,22 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     public void verifyDefaultImageTest() {
         logger.info("Verify that news article has default image if it was not uploaded");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getNewsWithValidData();
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithValidData())
+                .fillFields(newsData)
                 .publishNews();
         for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
             softAssert.assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
         }
+        //Clean up
+        EcoNewsService ecoNewsService = new EcoNewsService();
+        ecoNewsService.deleteNewsByTitle(newsData.getTitle());
 
     }
 
@@ -207,7 +213,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Ignore //runs too long
+    //@Ignore //runs too long
     @Test
     @Description("GC-674")
     public void newsAligningTest() {
