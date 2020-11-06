@@ -9,10 +9,7 @@ import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
@@ -154,6 +151,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
+    //@Ignore //Runs too long
     @Test(testName = "GC-720")
     @Description("Verify that content items contain all required UI elements according to mock-up.")
     public void isPresentAllContentElements() {

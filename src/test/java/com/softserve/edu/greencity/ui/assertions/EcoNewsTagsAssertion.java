@@ -9,9 +9,12 @@ import java.util.List;
 public class EcoNewsTagsAssertion {
     public static void assertNewsFilteredByTags(ItemsContainer news, List<Tag> tags) {
         boolean newFilteredCorrectly = true;
-        for(int i = 0; i < news.getItemComponentsCount(); i++) {
+        int newsCount = news.getItemComponentsCount();
+        for(int i = 0; i < newsCount; i++) {
+            System.out.println("i = " + i);
             if(!news.chooseNewsByNumber(i).areTagsPresent(tags)) {
                 newFilteredCorrectly = false;
+                break;
             }
         }
         Assert.assertTrue(newFilteredCorrectly);
