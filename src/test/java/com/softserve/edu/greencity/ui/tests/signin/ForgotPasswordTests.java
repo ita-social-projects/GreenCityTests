@@ -136,7 +136,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .unsuccessfullySubmit(user);
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
-        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG); //fails, bug, expected color = red, actual = gray
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE.getText()));
 
         googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
