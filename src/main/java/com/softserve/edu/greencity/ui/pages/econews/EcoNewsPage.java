@@ -166,7 +166,7 @@ public class EcoNewsPage extends TopPart {
             driver.findElement(LIST_VIEW_WRAPPER.getPath()).isDisplayed();
             return true;
         }
-        catch (org.openqa.selenium.NoSuchElementException e){
+        catch (NoSuchElementException | TimeoutException e){
             return false;
         }
     }
