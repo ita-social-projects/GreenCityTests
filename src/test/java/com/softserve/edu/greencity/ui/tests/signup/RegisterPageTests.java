@@ -466,12 +466,12 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     @Test(testName = "GC-482")
     @Description("Verify that User can close Registration form by pressing \"x\" in top-right corner of the modal window")
     public void checkThatUserCanCloseSingUp() {
-        Assert.assertTrue(
+        boolean isSignUpComponentClosed =
                 loadApplication()
                 .signUp()
                 .closeRegisterComponentModal()
-                .isSignUpComponentClosed()
-        );
+                .isSignUpComponentClosed();
+        Assert.assertTrue(isSignUpComponentClosed);
     }
 
     @Test(testName = "GC-500")
