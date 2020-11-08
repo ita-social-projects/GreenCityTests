@@ -66,17 +66,13 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     @Test(description = "GC-336")
     public void twelveNewsDisplayed() {
         logger.info("twelveNewsDisplayed starts");
-        EcoNewsPage page = loadApplication()
-                .navigateMenuEcoNews();
-        softAssert
-                .assertTrue(
-                            page.getTopicsInPage()
-                                .size() > 11);
-        logger.info("elements found: " +
-                         page.getTopicsInPage()
-                        .size());
+        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        logger.info(String.valueOf("Number of displayed news without scrolling down = " + ecoNewsPage.getDisplayedArticles().size()));
+        softAssert.assertTrue(ecoNewsPage.getDisplayedArticles().size() > 11);
         softAssert.assertAll();
     }
+
+
 
     @Test
     @Description("GC-666")
