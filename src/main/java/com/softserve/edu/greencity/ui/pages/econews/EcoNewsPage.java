@@ -8,12 +8,10 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -45,13 +43,24 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
-        //checkElements();
+        checkElements();
     }
 
     private void checkElements() {
+        checkNewsDisplayed();
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getGridView()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getListView()));
+    }
+
+    private void checkNewsDisplayed() {
+        WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
+        try {
+            waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
+            logger.warn("The site performed the same GET request twice and redrew page");
+        } catch (TimeoutException error) {
+            ; //Everything is OK
+        }
         waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getGridView()));
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.visibilityOf(getListView()));
     }
 
     public List<WebElement> getTopicsInPage() {
@@ -152,10 +161,12 @@ public class EcoNewsPage extends TopPart {
     @Step("Check if list view is active")
     public boolean isActiveListView() {
         try{
+            waitsSwitcher.setExplicitWait(3,
+                    ExpectedConditions.presenceOfElementLocated(LIST_VIEW_WRAPPER.getPath()));
             driver.findElement(LIST_VIEW_WRAPPER.getPath()).isDisplayed();
             return true;
         }
-        catch (org.openqa.selenium.NoSuchElementException e){
+        catch (NoSuchElementException | TimeoutException e){
             return false;
         }
     }
@@ -201,7 +212,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Get items container")
     public ItemsContainer getItemsContainer() {
         // TODO add here some waiter for uploading news
-        waitsSwitcher.setExplicitWait(
+        waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
         return new ItemsContainer(driver);
     }
@@ -286,6 +297,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to grid view")
     public EcoNewsPage switchToGridView() {
         clickGridView();
+        checkNewsDisplayed();
         return new EcoNewsPage(driver);
     }
 
@@ -298,6 +310,7 @@ public class EcoNewsPage extends TopPart {
     public EcoNewsPage switchToListView() {
         if(isListViewPresent()){
         clickListView();}
+        checkNewsDisplayed();
         return this;
     }
 
@@ -408,13 +421,24 @@ public class EcoNewsPage extends TopPart {
     public boolean isNewsDisplayedByTitle(String title) {
         logger.info("Check if news is displayed by title");
         refreshPage();
-        boolean result = false;
-        for (WebElement current : getDisplayedArticlesTitles()) {
-            if (current.getText().toLowerCase().trim().equals(title.trim().toLowerCase())) {
-                result = true;
+        int retriesLeft = 5;
+        //The site performs the same GET request twice and redraws page, so StaleElementReferences appear
+        do {
+            try {
+                for (WebElement current : getDisplayedArticlesTitles()) {
+                    if (current.getText().toLowerCase().trim().equals(title.trim().toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException during ItemsContainer.getItems() method caught, retrying...");
+                WaitsSwitcher.sleep(100);
             }
-        }
-        return result;
+            retriesLeft--;
+        } while (retriesLeft > 0);
+
+        return false;
     }
 
     @Step("Get displayed articles titles")
@@ -461,7 +485,7 @@ public class EcoNewsPage extends TopPart {
 
     @Step
     public List<WebElement> getDisplayedArticles() {
-        return waitsSwitcher.setExplicitWait(10,
+        return waitsSwitcher.setExplicitWaitWithStaleReferenceWrap(10,
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 

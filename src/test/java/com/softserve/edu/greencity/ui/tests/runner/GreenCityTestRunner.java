@@ -82,7 +82,6 @@ public abstract class GreenCityTestRunner {
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(65, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
         /*<============================Locale============================>*/
     }
 
@@ -95,6 +94,7 @@ public abstract class GreenCityTestRunner {
 
     @BeforeMethod
     public void setUp() {
+        driver.manage().window().maximize();
         driver.get(BASE_URL);
         softAssert = new SoftAssert();
     }

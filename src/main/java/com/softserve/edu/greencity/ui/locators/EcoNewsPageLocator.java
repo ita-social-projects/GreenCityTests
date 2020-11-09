@@ -27,7 +27,7 @@ public enum EcoNewsPageLocator implements Locator {
     GALLERY_VIEW_WRAPPER(By.cssSelector(".gallery-view-active.list")),
     LIST_VIEW_BUTTON(By.cssSelector("div.list-view")),
     LIST_VIEW_BUTTON_COMPONENT(By.cssSelector("div.list-view > div")),
-    LIST_VIEW_WRAPPER(By.cssSelector(".list-view-li-active")),
+    LIST_VIEW_WRAPPER(By.cssSelector(".list-view")),
     OPEN_TOPICS_TAGS(By.cssSelector("div.tags>div.tags-item")),
     NEWS_TITLE(By.cssSelector("div.news-title")),
     NEWS_INFO_DATE(By.cssSelector("div.news-info>div.news-info-date")),

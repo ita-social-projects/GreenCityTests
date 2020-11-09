@@ -8,9 +8,7 @@ import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -38,23 +36,40 @@ public class ItemsContainer implements StableWebElementSearch {
     }
 
     private void checkElements() {
-        itemComponents = new ArrayList<>();
-        for (WebElement current : getItems()) {
-            itemComponents.add(new ItemComponent(driver, current));
-        }
+        getItemComponents();
     }
 
     private List<ItemComponent> getItemComponents() {
         itemComponents = new ArrayList<>();
-        for (WebElement current : getItems()) {
-            itemComponents.add(new ItemComponent(driver, current));
-        }
+        int retriesLeft = 5;
+        do {
+            try {
+                for (WebElement current : getItems()) {
+                    itemComponents.add(new ItemComponent(driver, current));
+                }
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException caught, retrying...");
+                WaitsSwitcher.sleep(100);
+            }
+            retriesLeft--;
+        } while (retriesLeft > 0);
+
         return itemComponents;
     }
 
     private List<WebElement> getItems() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        return waitsSwitcher.setExplicitWait(7,
+        /*
+        WebElement firstItem = driver.findElement(items);
+        try {
+            waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
+            logger.warn("The site performed the same GET request twice and redrew page");
+        } catch (TimeoutException error) {
+            ; //Everything is OK
+        }
+        */
+
+        return waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));
     }
 
