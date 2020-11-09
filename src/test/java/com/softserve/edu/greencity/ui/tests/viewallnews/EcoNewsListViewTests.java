@@ -151,7 +151,6 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    //@Ignore //Runs too long
     @Test(testName = "GC-720")
     @Description("Verify that content items contain all required UI elements according to mock-up.")
     public void isPresentAllContentElements() {

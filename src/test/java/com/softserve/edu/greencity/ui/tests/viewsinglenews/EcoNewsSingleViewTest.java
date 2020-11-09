@@ -43,6 +43,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertTrue(ecoNewsPage.isActiveListView());
     }
 
+
     @Test(testName = "GC-671")
     @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
     public void returnToFilteredNews() {
@@ -150,7 +151,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             softAssert.assertTrue(singleNewsPage.getSourceTitleText().length() > 1,
                     "Checking if source title is present");
             softAssert.assertEquals(singleNewsPage.getSourceLinkText(), newsWithSource.getSource(),
-                    "Checking if news has given source"); //TODO BUG: source == content. Site bug?
+                    "Checking if news has given source"); //TODO Site BUG: source == content
             softAssert.assertAll();
 
             singleNewsPage.signOut();

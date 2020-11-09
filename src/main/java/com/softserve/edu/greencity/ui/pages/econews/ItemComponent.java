@@ -36,16 +36,6 @@ public final class ItemComponent {
         logger = LoggerFactory.getLogger("ItemComponent");
     }
 
-//	private void makeElPresent() {
-//		driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-//		Duration duration = Duration.ofMillis(20L);
-//		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(duration).ignoring(TimeoutException.class);
-//		WebDriverWait wait = new WebDriverWait(myDriver, 15);
-//		wait.until(webDriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete"));
-//		wait.until(ExpectedConditions.visibilityOfAllElements(title, content, dateOfCreation, author));
-//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//	}
-
     public List<WebElement> getTags() {
         return newsItem.findElements(TAGS.getPath());
     }

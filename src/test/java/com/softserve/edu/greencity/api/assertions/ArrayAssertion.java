@@ -67,7 +67,6 @@ public class ArrayAssertion extends BaseAssertion {
     }
 
     public ArrayAssertion bodyArrayContains(String bodyParameter, String expectedValue) {
-        //response.body(bodyParameter, contains(expectedValue));
         List<String> list = getBodyArrayValue(bodyParameter);
         for (String actual: list) {
             if(actual.equals(expectedValue)) {

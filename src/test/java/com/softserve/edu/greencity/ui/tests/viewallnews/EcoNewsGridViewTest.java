@@ -209,7 +209,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    //@Ignore //runs too long
     @Test
     @Description("GC-674")
     public void newsAligningTest() {

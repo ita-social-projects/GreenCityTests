@@ -242,7 +242,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
         softAssert.assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE);
-        softAssert.assertEquals(preViewPage.getContentFieldText().trim(), VALID_CONTENT); //TODO Trim()
+        softAssert.assertEquals(preViewPage.getContentFieldText().trim(), VALID_CONTENT);
         softAssert.assertAll();
 
         preViewPage.signOut();
@@ -319,7 +319,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadTooLargeImage();
-        softAssert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);//TODO BUG
+        softAssert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);
+        //TODO ^ Site BUG: Large image can be uploaded ^
 
         createNewsPage.signOut();
 
