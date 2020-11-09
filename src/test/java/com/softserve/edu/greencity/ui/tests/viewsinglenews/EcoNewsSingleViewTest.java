@@ -23,8 +23,8 @@ import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
-    @Test
-    @Description("GC-670")
+    @Test(testName = "C-670")
+    @Description("Verify that User can return to News from single view by clicking ‘Back to news’ button")
     public void returningToNewsViaBackToNews() {
         logger.info("Starting returningToNewsViaBackToNews");
 
@@ -42,16 +42,15 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertTrue(ecoNewsPage.isActiveListView());
     }
 
-    @Test
-    @Description("GC-671")
+    @Test(testName = "GC-671")
+    @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
     public void returnToFilteredNews() {
         logger.info("Starting returnToFilteredNews");
 
         List<Tag> singleTag = new ArrayList<Tag>();
         singleTag.add(Tag.NEWS);
 
-        List<Tag> multipleTags = new ArrayList<Tag>() {
-        };
+        List<Tag> multipleTags = new ArrayList<Tag>();
         multipleTags.add(Tag.NEWS);
         multipleTags.add(Tag.ADS);
         multipleTags.add(Tag.EVENTS);
