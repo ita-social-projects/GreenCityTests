@@ -82,6 +82,7 @@ public abstract class GreenCityTestRunner {
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(65, TimeUnit.SECONDS);
+        driver.manage().window().maximize();
         /*<============================Locale============================>*/
     }
 
