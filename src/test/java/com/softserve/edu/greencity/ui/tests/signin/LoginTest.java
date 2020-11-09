@@ -286,7 +286,6 @@ public class LoginTest extends GreenCityTestRunner {
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-        //softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
         softAssert.assertTrue(manualLoginComponent.isDisplayedEmailValidationError());
         softAssert.assertAll();
     }

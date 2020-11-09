@@ -109,7 +109,6 @@ public abstract class GreenCityTestRunner {
         if (isLogInNow()) {
             signOutByStorage();
         }
-        //System.out.println("@AfterMethod tearDown");
         loggerTest();
     }
 
@@ -123,9 +122,6 @@ public abstract class GreenCityTestRunner {
 
     @Step("verifying that user is not login")
     protected boolean isLogInNow() {
-//        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-//        new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(By.id("form.sign-in-form")));
-//        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         return !((webStorage.getLocalStorage().getItem("name")) == null);

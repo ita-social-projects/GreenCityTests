@@ -43,7 +43,6 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertTrue(ecoNewsPage.isActiveListView());
     }
 
-    //@Ignore //Runs too long
     @Test
     @Description("GC-671")
     public void returnToFilteredNews() {
@@ -152,7 +151,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             softAssert.assertTrue(singleNewsPage.getSourceTitleText().length() > 1,
                     "Checking if source title is present");
             softAssert.assertEquals(singleNewsPage.getSourceLinkText(), newsWithSource.getSource(),
-                    "Checking if news has given source"); //TODO BUG: source == content. Site bug?
+                    "Checking if news has given source"); //TODO Site BUG: source == content
             softAssert.assertAll();
 
             singleNewsPage.signOut();
