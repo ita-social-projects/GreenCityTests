@@ -89,7 +89,7 @@ public class CommentPart implements StableWebElementSearch {
         if(commentNumber + 1 > comments.size()){
             throw new IllegalArgumentException("Comment number was out of range");
         }else {
-            return getCommentComponents().get(commentNumber);
+            return comments.get(commentNumber);
         }
     }
 
@@ -109,7 +109,7 @@ public class CommentPart implements StableWebElementSearch {
 
     public CommentPart addComment(String commentText){
             setCommentText(commentText).clickPublishCommentButton();
-        return new CommentPart(driver);
+        return this;
     }
 
     @Override
