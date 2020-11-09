@@ -7,13 +7,15 @@ import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
 import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
-import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsDao;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +23,7 @@ import java.util.List;
 
 public class EcoNewsGridViewTest extends GreenCityTestRunner {
     List<Integer> screenWidth;
-    private String defaultImagePath = "resources/images/defaultImage.png";
+    private final String defaultImagePath = "resources/images/defaultImage.png";
 
 
     @BeforeClass
@@ -59,7 +61,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("NavigateToEcoNews starts");
         EcoNewsPage page = loadApplication()
                 .navigateMenuEcoNews();
-        softAssert.assertTrue(page.isActiveGridView()) ;
+        softAssert.assertTrue(page.isActiveGridView());
         softAssert.assertAll();
     }
 
@@ -67,11 +69,10 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     public void twelveNewsDisplayed() {
         logger.info("twelveNewsDisplayed starts");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
-        logger.info(String.valueOf("Number of displayed news without scrolling down = " + ecoNewsPage.getDisplayedArticles().size()));
+        logger.info("Number of displayed news without scrolling down = " + ecoNewsPage.getDisplayedArticles().size());
         softAssert.assertTrue(ecoNewsPage.getDisplayedArticles().size() > 11);
         softAssert.assertAll();
     }
-
 
 
     @Test
@@ -120,7 +121,6 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-
     @Test(testName = "GC-669")
     @Description("Verify UI of the News page in Gallery view for different screen resolutions")
     public void verifyingUIForDifferentScreenResolutionTest() {
@@ -141,7 +141,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertEquals(itemComponent.getTagsContainer().getSize().height,
                 24, "Tags height");
         softAssert.assertTrue(itemComponent.getTitleHeight() + itemComponent.getContentHeight() + 8 <
-                    201, "Title and Content height"); // Depends on size of Title and Content. Probably max height is 200
+                201, "Title and Content height"); // Depends on size of Title and Content. Probably max height is 200
         softAssert.assertEquals(itemComponent.getDateOfCreation().getSize().height,
                 21, "Date height");
         softAssert.assertEquals(itemComponent.getTagsContainer().getLocation().y - (itemComponent.getImage().getLocation().y + itemComponent.getImage().getSize().height), //Valid result when image height is 206. Requirements could be changed
@@ -269,6 +269,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         econewsPage.isArticleTextContentDisplayed(elements);
     }
 
+    @LocalOnly //On remote machine the time differs
     @Test
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
