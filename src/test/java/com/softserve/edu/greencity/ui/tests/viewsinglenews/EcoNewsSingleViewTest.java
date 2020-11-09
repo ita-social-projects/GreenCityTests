@@ -16,6 +16,7 @@ import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -107,6 +108,9 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .editNewsButtonExist();
 
         Assert.assertTrue(editButtonExist, "Edit button doesn't exist");
+        //Clean up
+        EcoNewsService ecoNewsService = new EcoNewsService();
+        ecoNewsService.deleteNewsByTitle(news.getTitle());
     }
 
     @Test(testName = "GC-692")

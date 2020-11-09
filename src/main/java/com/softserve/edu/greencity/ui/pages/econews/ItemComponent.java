@@ -3,11 +3,15 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
 import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
+import com.softserve.edu.greencity.ui.locators.ItemComponentLocators;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -23,11 +27,13 @@ public final class ItemComponent {
     private final WebDriver driver;
     private final WebElement newsItem;
     private WaitsSwitcher waitsSwitcher;
+    private Logger logger;
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
         this.driver = driver;
         this.newsItem = newsItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
+        logger = LoggerFactory.getLogger("ItemComponent");
     }
 
 //	private void makeElPresent() {
@@ -47,20 +53,31 @@ public final class ItemComponent {
     public WebElement getTagsContainer() {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(TAGS_CONTAINER.getPath()));
-        return newsItem.findElement(TAGS_CONTAINER.getPath());
+        return findFromItemWithStaleReferenceWrap(TAGS_CONTAINER);
     }
 
     public boolean isDisplayedTags() {
         boolean isDisplayedCurrent = false;
-        for (WebElement current : getTags()) {
-            isDisplayedCurrent = current.isDisplayed();
-        }
+        int retriesLeft = 5;
+        do {
+            try {
+                for (WebElement current : getTags()) {
+                    isDisplayedCurrent = current.isDisplayed();
+                }
+                return isDisplayedCurrent;
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException caught, retrying...");
+                WaitsSwitcher.sleep(100);
+            }
+            retriesLeft--;
+        } while (retriesLeft > 0);
+
         return isDisplayedCurrent;
     }
 
     //Image
     public WebElement getImage() {
-        return newsItem.findElement(IMAGE.getPath());
+        return findFromItemWithStaleReferenceWrap(IMAGE);
     }
 
     public boolean isDisplayedImage() {
@@ -71,7 +88,7 @@ public final class ItemComponent {
     public WebElement getTitle() {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
-        return newsItem.findElement(TITLE.getPath());
+        return findFromItemWithStaleReferenceWrap(TITLE);
     }
 
     public String getTitleText() {
@@ -104,7 +121,7 @@ public final class ItemComponent {
 
     //Content
     public WebElement getContent() {
-        return newsItem.findElement(CONTENT.getPath());
+        return findFromItemWithStaleReferenceWrap(CONTENT);
     }
 
     public String getContentText() {
@@ -142,13 +159,13 @@ public final class ItemComponent {
     public WebElement getDateOfCreation() {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(DATE_OF_CREATION.getPath()));
-        return newsItem.findElement(DATE_OF_CREATION.getPath());
+        return findFromItemWithStaleReferenceWrap(DATE_OF_CREATION);
     }
 
     public WebElement getDateAndAuthorContainer() {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(DATE_AND_AUTHOR_CONTAINER.getPath()));
-        return newsItem.findElement(DATE_AND_AUTHOR_CONTAINER.getPath());
+        return findFromItemWithStaleReferenceWrap(DATE_AND_AUTHOR_CONTAINER);
     }
 
     public Date getCreationDate() {
@@ -186,7 +203,7 @@ public final class ItemComponent {
 
     //Author
     private WebElement getAuthor() {
-        return newsItem.findElement(AUTHOR.getPath());
+        return findFromItemWithStaleReferenceWrap(AUTHOR);
     }
 
     public String getAuthorText() {
@@ -217,13 +234,39 @@ public final class ItemComponent {
      * @return
      */
     public boolean areTagsPresent(List<Tag> tags) {
-        for (WebElement actualTag : getTags()) {
-            for (Tag tagToCheck : tags) {
-                if (actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
-                    return true;
+        int trialsLeft = 5;
+        do {
+            try {
+                for (WebElement actualTag : getTags()) {
+                    for (Tag tagToCheck : tags) {
+                        if (actualTag.getText().equalsIgnoreCase(tagToCheck.toString())) {
+                            return true;
+                        }
+                    }
                 }
+                return false;
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException caught, retrying...");
+                WaitsSwitcher.sleep(100);
             }
-        }
+            trialsLeft--;
+        } while (trialsLeft > 0);
         return false;
+    }
+
+    private WebElement findFromItemWithStaleReferenceWrap(ItemComponentLocators locator) {
+        int retriesLeft = 5;
+        do {
+            try {
+                return newsItem.findElement(locator.getPath());
+            } catch (StaleElementReferenceException error) {
+                logger.warn("StaleElementReferenceException caught, retrying...");
+                WaitsSwitcher.sleep(100);
+                //TODO need somehow to refresh the newsItem...
+            }
+            retriesLeft--;
+        } while (retriesLeft > 0);
+
+        return newsItem.findElement(locator.getPath());
     }
 }

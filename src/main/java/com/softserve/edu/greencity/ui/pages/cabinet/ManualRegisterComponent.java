@@ -27,15 +27,15 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By passwordFieldSelector = By.cssSelector("input[name='form-control password']");
     private By passwordConfirmFieldSelector = By.cssSelector("input[name='form-control password-confirm");
     private By signButtonSelector = By.cssSelector("app-sign-up button.primary-global-button");
-    private By emailValidatorSelector = By.xpath("//input[@name='email']/following-sibling::div/div");
-    private By firstNameValidatorSelector = By.xpath("//input[@name='fistName']/following-sibling::div/div");
-    private By passwordValidatorSelector = By.xpath("//*[@name = 'form-control password']//parent::div//following-sibling::div");
-    private By showPasswordButtonSelector = By.xpath("//input[@name='form-control password']/../span/img");
-    private By showPasswordConfirmButtonSelector = By.xpath("//input[@name='form-control password-confirm']/../span/img");
-    private By passwordConfirmValidatorSelector = By.xpath("//*[@name = 'form-control password-confirm']//parent::div//following-sibling::div");
+    private By emailValidatorSelector = By.cssSelector("#email + div.error-message div");
+    private By firstNameValidatorSelector = By.cssSelector("#firstName + div.error-message div");
+    private By passwordValidatorSelector = By.xpath("//input[@id='password']/../following-sibling::div[contains(@class, 'error-message')][1]");
+    private By showPasswordButtonSelector = By.cssSelector("#password + span img");
+    private By showPasswordConfirmButtonSelector = By.cssSelector("#repeatPassword + span img");
+    private By passwordConfirmValidatorSelector = By.xpath("//input[@id='repeatPassword']/../following-sibling::div[contains(@class, 'error-message')]");
     private By errorMessages = By.cssSelector("div.error-message");
     private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
-    private By sackfulRegistrationPopUp = By.cssSelector("app-submit-email div.submit-email");
+    private By successfulRegistrationPopUp = By.cssSelector("app-submit-email div.submit-email");
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -225,7 +225,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     public WebElement GetSackfulRegistrationPopUp() {
-        return searchElementByCss(sackfulRegistrationPopUp);
+        return searchElementByCss(successfulRegistrationPopUp);
     }
     @Step
     private RegisterComponent inputPasswordConfirm(String passwordConfirm) {
@@ -283,7 +283,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    public boolean signUpIsEnabled() {
+    public boolean isSignUpSubmitButtonEnabled() {
         return getSignUpButton().isEnabled();
 
     }
@@ -417,12 +417,12 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .clickSignUpButton();
     }
     private ManualRegisterComponent waitSuccessfulRegistrationPopUp() {
-        new WebDriverWait(driver, 20).until(visibilityOfElementLocated(sackfulRegistrationPopUp));
+        new WebDriverWait(driver, 20).until(visibilityOfElementLocated(successfulRegistrationPopUp));
         return this;
     }
 
     private ManualRegisterComponent waitSuccessfulRegistrationPopUpDisappear() {
-        new WebDriverWait(driver, 20).until(invisibilityOfElementLocated(sackfulRegistrationPopUp));
+        new WebDriverWait(driver, 20).until(invisibilityOfElementLocated(successfulRegistrationPopUp));
         return this;
     }
 
