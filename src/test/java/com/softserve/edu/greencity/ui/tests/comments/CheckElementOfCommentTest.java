@@ -50,8 +50,8 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
     @Test
     @Description("GC-908")
-    public void unloggedUserCannotLikeTheCommentAndReply() {
-        logger.info("Verify that unlogged user cannot like the comment/reply on News Single Page starts");
+    public void notLoggedInUserCannotLikeTheCommentAndReply() {
+        logger.info("Verify that not logged in user cannot like the comment/reply on News Single Page starts");
 
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
@@ -67,8 +67,8 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
     @Test
     @Description("GC-914")
-    public void unloggedUserCanReviewReply() {
-        logger.info("Verify that not logged user can review the replies to the comment starts");
+    public void notLoggedInUserCanReviewReply() {
+        logger.info("Verify that not logged in user can review the replies to the comment starts");
 
         boolean isReplyDisplayed = loadApplication()
                 .navigateMenuEcoNews()
@@ -98,8 +98,8 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
     @Test
     @Description("GC-920")
-    public void unloggedUserCanSeeLikes() {
-        logger.info("Verify that unlogged user can see the total likes number related to the comments and/or replies");
+    public void notLoggedInUserCanSeeLikes() {
+        logger.info("Verify that not logged in user can see the total likes number related to the comments and/or replies");
 
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
@@ -158,7 +158,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
     @Test
     @Description("GC-826")
-    public void unloggedUserCannotDeleteTheCommentAndReply() {
+    public void unregisteredUserCannotDeleteTheCommentAndReply() {
         logger.info("Verify that unregistered user can’t delete comment/reply starts");
 
         CommentComponent commentComponent = loadApplication()
@@ -183,8 +183,9 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
                 .switchToSingleNewsPageByNumber(0)
                 .getCommentPart()
                 .setCommentText(commentText);
-        EcoNewsPage ecoNewsPage = new EcoNewsPage(driver);
-        String commentAfterLeave = ecoNewsPage.navigateMenuEcoNews()
+
+        SingleNewsPage singleNewsPage = new SingleNewsPage(driver);
+        String commentAfterLeave = singleNewsPage.navigateMenuEcoNews()
                 .switchToSingleNewsPageByNumber(0)
                 .getCommentPart()
                 .chooseCommentByNumber(0).getCommentText();
