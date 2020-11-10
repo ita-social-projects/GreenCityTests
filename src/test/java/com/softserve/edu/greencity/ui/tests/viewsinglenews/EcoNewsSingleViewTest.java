@@ -24,8 +24,8 @@ import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
-    @Test
-    @Description("GC-670")
+    @Test(testName = "C-670")
+    @Description("Verify that User can return to News from single view by clicking ‘Back to news’ button")
     public void returningToNewsViaBackToNews() {
         logger.info("Starting returningToNewsViaBackToNews");
 
@@ -43,17 +43,16 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertTrue(ecoNewsPage.isActiveListView());
     }
 
-    //@Ignore //Runs too long
-    @Test
-    @Description("GC-671")
+
+    @Test(testName = "GC-671")
+    @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
     public void returnToFilteredNews() {
         logger.info("Starting returnToFilteredNews");
 
         List<Tag> singleTag = new ArrayList<Tag>();
         singleTag.add(Tag.NEWS);
 
-        List<Tag> multipleTags = new ArrayList<Tag>() {
-        };
+        List<Tag> multipleTags = new ArrayList<Tag>();
         multipleTags.add(Tag.NEWS);
         multipleTags.add(Tag.ADS);
         multipleTags.add(Tag.EVENTS);
@@ -152,7 +151,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             softAssert.assertTrue(singleNewsPage.getSourceTitleText().length() > 1,
                     "Checking if source title is present");
             softAssert.assertEquals(singleNewsPage.getSourceLinkText(), newsWithSource.getSource(),
-                    "Checking if news has given source"); //TODO BUG: source == content. Site bug?
+                    "Checking if news has given source"); //TODO Site BUG: source == content
             softAssert.assertAll();
 
             singleNewsPage.signOut();

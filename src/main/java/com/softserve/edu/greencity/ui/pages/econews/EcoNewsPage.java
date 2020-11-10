@@ -600,7 +600,7 @@ public class EcoNewsPage extends TopPart {
         String date = element.findElement(ARTICLE_CREATION_DATE.getPath())
                 .getText().replace(",", "");
         String[] dateFlip = date.split(" ");
-        String dbFormatDate = dateFlip[2] + "-" + dateFlip[0] + "-" + dateFlip[1];
+        String dbFormatDate = dateFlip[2] + "-" + dateFlip[0] + "-" + dateFlip[1].replaceAll("^0", ""); //Year-month-day
         return dbFormatDate
                 .replace("Jan", "01")
                 .replace("Feb", "02")
@@ -613,8 +613,7 @@ public class EcoNewsPage extends TopPart {
                 .replace("Sep", "09")
                 .replace("Oct", "10")
                 .replace("Nov", "11")
-                .replace("Dec", "12")
-                .replace("0", "");
+                .replace("Dec", "12");
     }
 
     public String formatChronologicalDateFromDB(String topic) {
@@ -622,11 +621,15 @@ public class EcoNewsPage extends TopPart {
         final Matcher m = pattern.matcher(topic);
         m.find();
 
-        return m.group(0)
+        String res = m.group(0)
                 .replace(",", "")
                 .substring(0, 24)
-                .replace("creation_date=", "")
-                .replace("0", "");
+                .replace("creation_date=", "");
+
+        String[] dateFlip = res.split("-");
+        String dbFormatDate = dateFlip[0] + "-" + dateFlip[1] + "-" + dateFlip[2].replaceAll("^0", ""); //Year-month-day
+
+        return dbFormatDate;
     }
 
     @Step("get random topic")
