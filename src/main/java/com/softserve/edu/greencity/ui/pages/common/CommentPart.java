@@ -52,11 +52,8 @@ public class CommentPart implements StableWebElementSearch {
     public CommentPart clickPublishCommentButton() {
         int currentCount = getCommentComponents().size();
         getPublishCommentButton().click();
-        if (currentCount != 0) {
             waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.numberOfElementsToBe(item, currentCount + 1));
-
-        }
         return new CommentPart(driver);
     }
 
@@ -87,9 +84,10 @@ public class CommentPart implements StableWebElementSearch {
     public CommentComponent chooseCommentByNumber(int commentNumber) {
         List<CommentComponent> comments = getCommentComponents();
         if(commentNumber + 1 > comments.size()){
+            logger.warn("Comment number was out of range");
             throw new IllegalArgumentException("Comment number was out of range");
         }else {
-            return getCommentComponents().get(commentNumber);
+            return comments.get(commentNumber);
         }
     }
 
@@ -109,7 +107,7 @@ public class CommentPart implements StableWebElementSearch {
 
     public CommentPart addComment(String commentText){
             setCommentText(commentText).clickPublishCommentButton();
-        return new CommentPart(driver);
+        return this;
     }
 
     @Override
