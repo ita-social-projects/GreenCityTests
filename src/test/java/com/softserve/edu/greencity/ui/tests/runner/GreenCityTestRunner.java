@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.runner;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import com.softserve.edu.greencity.ui.tools.api.google.sheets.ValueProvider;
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -18,7 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -31,8 +33,9 @@ public abstract class GreenCityTestRunner {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
     boolean remote = ValueProvider.remote();
-//    boolean remote = false;
     ChromeOptions options = new ChromeOptions();
+
+    protected SoftAssert softAssert;
 
     @SneakyThrows
     @BeforeSuite
@@ -44,7 +47,7 @@ public abstract class GreenCityTestRunner {
 
     @SneakyThrows
     @BeforeClass
-    public void setUpBeforeClass() {
+    public void setUpBeforeClass() throws MalformedURLException {
         if (remote) {
             /*<==========================Selenoid logs==========================>*/
             String className = this.getClass().getName();
@@ -92,7 +95,9 @@ public abstract class GreenCityTestRunner {
 
     @BeforeMethod
     public void setUp() {
+        driver.manage().window().maximize();
         driver.get(BASE_URL);
+        softAssert = new SoftAssert();
     }
 
 
@@ -104,7 +109,6 @@ public abstract class GreenCityTestRunner {
         if (isLogInNow()) {
             signOutByStorage();
         }
-        //System.out.println("@AfterMethod tearDown");
         loggerTest();
     }
 
@@ -118,7 +122,6 @@ public abstract class GreenCityTestRunner {
 
     @Step("verifying that user is not login")
     protected boolean isLogInNow() {
-        new WebDriverWait(driver, 10).until(invisibilityOfElementLocated(By.id("form.sign-in-form")));
         RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         return !((webStorage.getLocalStorage().getItem("name")) == null);

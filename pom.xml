@@ -27,19 +27,19 @@
 		<!-- - - - - - Test - - - - - -->
 		<testng.xml>testng.xml</testng.xml>
 		<org.junit.version>4.13</org.junit.version>
-		<!-- <org.testng.version>7.1.0</org.testng.version> -->
 		<org.testng.version>6.14.3</org.testng.version>
-		<!-- <org.testng.version>7.0.0</org.testng.version> -->
 		<maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
 		<!-- - - - - - Automation - - - - - -->
 		<org.seleniumhq.selenium.version>3.141.59</org.seleniumhq.selenium.version>
 		<org.seleniumhq.selenium.htmlunit-driver>2.36.0</org.seleniumhq.selenium.htmlunit-driver>
 		<apache.commons.io.version>2.6</apache.commons.io.version>
-		<io.github.bonigarcia.version>3.8.1</io.github.bonigarcia.version>
+		<io.github.bonigarcia.version>4.2.2</io.github.bonigarcia.version>
 		<com.codeborne.phantomjsdriver.version>1.4.4</com.codeborne.phantomjsdriver.version>
 		<maven.os-maven-plugin.version>1.6.2</maven.os-maven-plugin.version>
-		<!--	<maven.webdriverextensions-maven-plugin.version>3.2.0</maven.webdriverextensions-maven-plugin.version>-->
+
 		<maven.clean.plugin.version.version>3.1.0</maven.clean.plugin.version.version>
+		<!-- - - - - - API - - - - - -->
+		<io.rest-assured.version>4.2.0</io.rest-assured.version>
 		<!-- - - - - - Reports - - - - - -->
 		<testng.reports.directory>./target/surefire-reports/test-output</testng.reports.directory>
 		<allure.version>2.13.5</allure.version>
@@ -65,17 +65,9 @@
 
 		<!-- - - - - - Test - - - - - -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${org.junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>${org.testng.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- - - - - - Automation - - - - - -->
@@ -110,7 +102,6 @@
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>${io.github.bonigarcia.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
@@ -130,7 +121,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${org.slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-clean-plugin -->
 		<dependency>
@@ -138,6 +128,8 @@
 			<artifactId>maven-clean-plugin</artifactId>
 			<version>${maven.clean.plugin.version.version}</version>
 		</dependency>
+
+		<!-- - - - - - - API - - - - -->
 		<dependency>
 			<groupId>com.google.api-client</groupId>
 			<artifactId>google-api-client</artifactId>
@@ -154,12 +146,13 @@
 			<version>v4-rev493-1.23.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>${io.rest-assured.version}</version>
+		</dependency>
+
 		<!-- - - - - - DB - - - - - -->
-		<!-- <dependency> -->
-		<!-- <groupId>javax.transaction</groupId> -->
-		<!-- <artifactId>jta</artifactId> -->
-		<!-- <version>${javax.transaction.version}</version> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
@@ -200,14 +193,12 @@
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-testng</artifactId>
 			<version>${allure.version}</version>
-			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj.version}</version>
-			<!-- <scope>test</scope> -->
 		</dependency>
 
 		<!--https://projectlombok.org/setup/maven-->
