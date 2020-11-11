@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 
 /**
- * Contains all itemsComponents that are present on page
+ * Contains all itemsComponents (news cards) that are present on page
  * Use for SingleNewsPage & EcoNewsPage.
  *
  * @author lv-493
