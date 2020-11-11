@@ -17,7 +17,8 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author lv-519 Taqc/Java
+ * A class that handles this page: https://ita-social-projects.github.io/GreenCityClient/#/news/create-news
+ * (available only for logged in users)
  */
 public class CreateNewsPage extends TopPart {
 

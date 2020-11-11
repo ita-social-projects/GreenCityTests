@@ -29,10 +29,13 @@ public class TagsComponent implements StableWebElementSearch {
         initElements();
     }
 
+    /**
+     * Initiates elements by different selectors depending on the page type (EcoNewsPage or CreateNewsPage)
+     */
     private void initElements() {
-        tags = driver.findElements(By.cssSelector("div.tags > button"));
+        tags = driver.findElements(By.cssSelector("div.tags > button")); //For CreateNews
         if (tags.size() == 0) {
-            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li"));
+            tags = driver.findElements(By.cssSelector("ul.ul-eco-buttons > a > li")); //For EcoNews
         }
     }
 

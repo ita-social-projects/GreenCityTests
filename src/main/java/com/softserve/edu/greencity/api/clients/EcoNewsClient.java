@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.clients;
 
-import com.softserve.edu.greencity.api.model.EcoNewsPOSTdto;
+import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 

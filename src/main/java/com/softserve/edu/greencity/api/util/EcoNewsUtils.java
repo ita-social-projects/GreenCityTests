@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.util;
 
-import com.softserve.edu.greencity.api.model.EcoNewsModel;
+import com.softserve.edu.greencity.api.models.econews.EcoNewsModel;
 import io.restassured.response.Response;
 
 import java.util.List;

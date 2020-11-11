@@ -13,7 +13,9 @@ import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+/**
+ * A detailed page with one specific news, e. g. https://ita-social-projects.github.io/GreenCityClient/#/news/179
+ */
 public class SingleNewsPage extends TopPart {
 
     protected WebDriverWait wait;

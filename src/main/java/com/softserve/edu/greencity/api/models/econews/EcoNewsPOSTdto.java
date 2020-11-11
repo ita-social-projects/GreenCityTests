@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.model;
+package com.softserve.edu.greencity.api.models.econews;
 
 public class EcoNewsPOSTdto {
 

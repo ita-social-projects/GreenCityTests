@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
+/**
+ * A single comment at single news page. All comments are handled by CommentPart.java
+ */
 public class CommentComponent {
 
     private final WebDriver driver;
