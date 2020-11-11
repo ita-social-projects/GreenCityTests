@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 public class OwnSecurityClient extends BaseClient {
+
     public OwnSecurityClient(ContentType contentType) {
         super(contentType, "ownSecurity");
     }
