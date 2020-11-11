@@ -32,7 +32,8 @@ public abstract class GreenCityTestRunner {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
-    boolean remote = ValueProvider.remote();
+    //boolean remote = ValueProvider.remote();
+    boolean remote = false;
     ChromeOptions options = new ChromeOptions();
 
     protected SoftAssert softAssert;
