@@ -99,6 +99,7 @@ public abstract class GreenCityTestRunner {
         softAssert = new SoftAssert();
     }
 
+
     @AfterMethod
     public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
@@ -125,14 +126,14 @@ public abstract class GreenCityTestRunner {
 
     @Step("verifying that user is not login")
     protected boolean isLogInNow() {
-        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod(driver);
+        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         return !((webStorage.getLocalStorage().getItem("name")) == null);
     }
 
     @Step
     protected void signOutByStorage() {
-        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod(driver);
+        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         webStorage.getLocalStorage().clear();
         driver.navigate().refresh();
