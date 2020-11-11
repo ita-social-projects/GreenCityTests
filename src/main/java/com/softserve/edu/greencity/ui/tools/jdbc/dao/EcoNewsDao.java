@@ -71,9 +71,9 @@ public class EcoNewsDao {
         List<List<String>> rows = null;
         try {
             ResultSet resultSet = statement.executeQuery(EcoNewsEntity.SELECT_ALL_ORDER_BY_DATE);
+            //TODO use proper time zone
             rows = ManagerDao.get().parseResultSet(resultSet);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
