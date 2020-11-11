@@ -21,7 +21,7 @@ public enum CommentComponentLocators implements Locator {
     AUTHOR_NAME(By.cssSelector(".author-name > span")),
     COMMENT_AUTHOR_AVATAR(By.cssSelector("img[alt='comment-author']")),
     AVATAR(By.cssSelector("img[alt='avatar']")),
-    COMMENTS_COMPONENTS(By.cssSelector("app-comments-list > div")),
+    COMMENTS_COMPONENTS(By.cssSelector("app-com.softserve.edu.greencity.api.comments-list > div")),
     REPLY_COMPONENTS(By.cssSelector(".comment-body-wrapper.wrapper-reply.ng-star-inserted")),
     SHOW_REPLIES(By.cssSelector("button.cta-btn.view.ng-star-inserted"));
 

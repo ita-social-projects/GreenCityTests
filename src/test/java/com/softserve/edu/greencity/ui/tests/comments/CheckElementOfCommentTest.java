@@ -99,7 +99,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
     @Test
     @Description("GC-920")
     public void unloggedUserCanSeeLikes() {
-        logger.info("Verify that unlogged user can see the total likes number related to the comments and/or replies");
+        logger.info("Verify that unlogged user can see the total likes number related to the com.softserve.edu.greencity.api.comments and/or replies");
 
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
@@ -116,7 +116,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
     @Test
     @Description("GC-917")
     public void loggedUserCanSeeLikes() {
-        logger.info("Verify that logged user can see the total likes number related to the comments and/or replies");
+        logger.info("Verify that logged user can see the total likes number related to the com.softserve.edu.greencity.api.comments and/or replies");
 
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
