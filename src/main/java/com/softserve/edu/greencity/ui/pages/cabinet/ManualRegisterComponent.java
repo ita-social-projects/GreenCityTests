@@ -30,8 +30,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By emailValidatorSelector = By.cssSelector("#email + div.error-message div");
     private By firstNameValidatorSelector = By.cssSelector("#firstName + div.error-message div");
     private By passwordValidatorSelector = By.xpath("//input[@id='password']/../following-sibling::div[contains(@class, 'error-message')][1]");
-    private By showPasswordButtonSelector = By.cssSelector("#password + span img");
-    private By showPasswordConfirmButtonSelector = By.cssSelector("#repeatPassword + span img");
+    private By showPasswordButtonSelector = By.cssSelector("#password + img");
+    private By showPasswordConfirmButtonSelector = By.cssSelector("#repeatPassword + img");
     private By passwordConfirmValidatorSelector = By.xpath("//input[@id='repeatPassword']/../following-sibling::div[contains(@class, 'error-message')]");
     private By errorMessages = By.cssSelector("div.error-message");
     private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");

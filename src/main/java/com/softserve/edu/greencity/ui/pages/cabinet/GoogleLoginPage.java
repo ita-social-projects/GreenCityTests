@@ -20,7 +20,7 @@ public class GoogleLoginPage {
 
     private By emailField = By.id("identifierId");
     private By emailNextButton = By.xpath("//*[@id='identifierNext']/div");
-    private By passwordField = By.xpath(".//*[@id='password']/div[1]/div/div[1]/input");
+    private By passwordField = By.xpath("//input[@type='password']");
     private By passwordNextButton = By.xpath("//*[@id='passwordNext']/div");
     private By loggedInUser = By.cssSelector(".lCoei");
 

@@ -25,6 +25,7 @@ public class ForgotPasswordComponent extends TopPart {
     private By backLinkLabel = By.cssSelector(".mentioned-password p");
     private By closeFormButton = By.cssSelector(".cross-btn");
     protected By forgotPasswordComponent = By.cssSelector(".cdk-overlay-pane");
+    protected By picture = By.cssSelector("img.main-picture");
 
     protected WebDriverWait wait;
 
@@ -187,6 +188,11 @@ public class ForgotPasswordComponent extends TopPart {
     public boolean isForgotPassComponentDisappeared() {
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
         return elementsCustomMethods.waitTillElementGone(driver, forgotPasswordComponent, 6000);
+    }
+
+    public ForgotPasswordComponent clickPicture() {
+        driver.findElement(picture).click();
+        return this;
     }
 }
 
