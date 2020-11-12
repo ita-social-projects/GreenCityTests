@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class GreenCityTestRunner {
     private static final String BASE_URL = ValueProvider.getBaseUrl();
-    private static int left = 150; //Total amount of UI tests
+    private static int left = 160; //Total amount of UI tests
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
     protected SoftAssert softAssert;
@@ -99,6 +99,7 @@ public abstract class GreenCityTestRunner {
         softAssert = new SoftAssert();
     }
 
+
     @AfterMethod
     public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
@@ -125,14 +126,14 @@ public abstract class GreenCityTestRunner {
 
     @Step("verifying that user is not login")
     protected boolean isLogInNow() {
-        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod(driver);
+        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         return !((webStorage.getLocalStorage().getItem("name")) == null);
     }
 
     @Step
     protected void signOutByStorage() {
-        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod(driver);
+        RemoteExecuteMethod executeMethod = new RemoteExecuteMethod((RemoteWebDriver) driver);
         RemoteWebStorage webStorage = new RemoteWebStorage(executeMethod);
         webStorage.getLocalStorage().clear();
         driver.navigate().refresh();
@@ -154,7 +155,7 @@ public abstract class GreenCityTestRunner {
 
 
         logger.info("logging from thread " + Thread.currentThread().getId());
-        logger.info("||||||  Tests left " + (left) + "  |||||");
+        logger.info("||||||  UI tests left " + (left) + "  |||||");
         logger.info("\n----------------------------------------------------------------------------\n");
 
     }

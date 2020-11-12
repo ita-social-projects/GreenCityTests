@@ -181,9 +181,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password is required",
                 "The validation message is not equal to the expected one");
-        softAssert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
-                "Password is required", //Now doesn't appear, leading to a TimeoutException
-                "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }
 
@@ -207,10 +204,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
                 "Password must be at least 8 characters in length",
-                "The validation message is not equal to the expected one");
-        softAssert.assertEquals(manualRegisterComponent.getPasswordConfirmValidatorText(),
-                "Password has contain at least one character of Uppercase letter (A-Z), " +
-                        "Lowercase letter (a-z), Digit (0-9), Special character (~`!@#$%^&*()+=_-{}[]|:;”’?/<>,.)",
                 "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }

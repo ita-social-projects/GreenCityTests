@@ -65,7 +65,8 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         ForgotPasswordComponent forgotPasswordComponent = loadApplication()
                 .signIn()
                 .clickForgotPasswordLink()
-                .inputEmail(incorrectEmail);
+                .inputEmail(incorrectEmail)
+                .clickPicture(); //The validation error doesn't appear unless you click somewhere
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
@@ -176,7 +177,8 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         ForgotPasswordComponent forgotPasswordComponent = loadApplication()
                 .signIn()
                 .clickForgotPasswordLink()
-                .unsuccessfullySubmit(user);
+                .unsuccessfullySubmit(user)
+                .clickPicture();
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 

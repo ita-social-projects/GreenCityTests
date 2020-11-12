@@ -10,7 +10,6 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,9 +17,9 @@ import java.util.Date;
 import java.util.List;
 
 public class EcoNewsListViewTests extends GreenCityTestRunner {
-    String cssBackgroundColorProperty;
-    String expectedBackgroundColorRGBA;
-    String expectedHoveredByMouseBackgroundColorRGBA;
+    String cssColorProperty;
+    String expectedColorRGBA;
+    String expectedHoveredByMouseColorRGBA;
     List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages;
 
     private final String DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
@@ -36,9 +35,9 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
     @BeforeClass
     public void beforeClass() {
-        cssBackgroundColorProperty = "background-color";
-        expectedBackgroundColorRGBA = "rgba(5, 107, 51, 1)";
-        expectedHoveredByMouseBackgroundColorRGBA = "rgba(19, 170, 87, 1)";
+        cssColorProperty = "color";
+        expectedColorRGBA = "rgba(19, 170, 87, 1)"; //lighter
+        expectedHoveredByMouseColorRGBA =  "rgba(5, 107, 51, 1)"; //darker
         screenWidthWithContent = Arrays.asList(1440, 1200);
         screenWidthWithoutContent = Arrays.asList(1024, 768, 667);
         screenWidthWithoutImages = Arrays.asList(576, 575);
@@ -65,23 +64,23 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews();
 
-        softAssert.assertTrue(ecoNewsPage.isDisplayedListView());
+        softAssert.assertTrue(ecoNewsPage.isDisplayedListView(), "List view displayed");
 
         ecoNewsPage.hoverToListView();
-        String hoverListViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
-        softAssert.assertEquals(hoverListViewIconColor, expectedBackgroundColorRGBA);
+        String hoverListViewIconColor = ecoNewsPage.getListViewButtonHoverColor();
+        softAssert.assertEquals(hoverListViewIconColor, expectedHoveredByMouseColorRGBA, "List view hover");
 
         ecoNewsPage
                 .switchToListView()
                 .hoverToGridView();
 
-        String ListViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
-        softAssert.assertEquals(ListViewIconColor, expectedHoveredByMouseBackgroundColorRGBA);
+        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssColorProperty);
+        softAssert.assertEquals(listViewIconColor, expectedColorRGBA, "List view no hover");
         softAssert.assertAll();
     }
 
     @Test(testName = "GC-710")
-    @Description("Verify that 6 first Content items are displayed by deafault")
+    @Description("Verify that 6 first Content items are displayed by default")
     public void isDisplayedFirstSixContent() {
         logger.info("Starting isDisplayedFirstSixContent");
         EcoNewsPage ecoNewsPage = loadApplication()
@@ -99,9 +98,9 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .switchToListView();
 
-        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
+        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssColorProperty);
 
-        softAssert.assertEquals(listViewIconColor, expectedBackgroundColorRGBA);
+        softAssert.assertEquals(listViewIconColor, expectedColorRGBA);
         softAssert.assertTrue(ecoNewsPage.getItemsContainer().getItemsSize() >= 6);
         softAssert.assertAll();
     }
@@ -216,19 +215,21 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
             if(ecoNewsPage.isActiveListView()){
-            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage(), "image");
             logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags(), "tags");
             logger.info("tags " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle(), "title");
             logger.info("title " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent(), "content");
             logger.info("content " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation(), "date");
             logger.info("date " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0)
+                    .isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()),
+                    "date format");
             logger.info("dateformat " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor(), "author");
             logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
             }
         }
@@ -256,15 +257,17 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         testNewsTitles.add(NewsDataRepository.get().getOneRowTitle().getTitle());
 
         for (Integer integer : screenWidth1) {
+            logger.debug("Screen width: " + integer);
             ecoNewsPage.changeWindowWidth(integer);
             ecoNewsPage.switchToListView();
             String src = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getImage().getAttribute("src");
             softAssert.assertEquals(src, DEFAULT_IMAGE);
         }
         for (Integer integer : screenWidth2) {
+            logger.debug("Screen width: " + integer);
             ecoNewsPage.changeWindowWidth(integer);
             //On small screen resolution list view automatically switches off
-            softAssert.assertFalse(ecoNewsPage.isListViewPresent());
+            softAssert.assertFalse(ecoNewsPage.isListViewPresent(), "List view at " + integer + " width");
             String src = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getImage().getAttribute("src");
             softAssert.assertEquals(src, DEFAULT_IMAGE);
         }

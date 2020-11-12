@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.api.clients;
 
 import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
-
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;

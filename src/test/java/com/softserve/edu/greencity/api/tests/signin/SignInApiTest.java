@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SignInTest {
+public class SignInApiTest {
     @DataProvider(name = "blankCredentials")
     public Object[][] blankCredentials() { //GC-490
         return new Object[][]{
