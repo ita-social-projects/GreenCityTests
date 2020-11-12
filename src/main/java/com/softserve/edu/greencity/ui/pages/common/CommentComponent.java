@@ -14,6 +14,9 @@ import java.util.List;
 
 import static com.softserve.edu.greencity.ui.locators.comments.CommentLocator.*;
 
+/**
+ * A single comment at single news page. All comments are handled by CommentPart.java
+ */
 public class CommentComponent {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());

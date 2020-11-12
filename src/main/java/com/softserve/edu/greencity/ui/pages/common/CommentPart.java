@@ -15,6 +15,10 @@ import java.util.List;
 
 import static com.softserve.edu.greencity.ui.locators.comments.CommentComponentLocators.*;
 
+/**
+ * The part of single news page where comments are displayed.
+ * A single comment is CommentComponent.java
+ */
 public class CommentPart implements StableWebElementSearch {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

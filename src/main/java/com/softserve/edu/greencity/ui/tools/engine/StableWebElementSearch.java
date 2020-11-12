@@ -16,8 +16,9 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 
 /**
  * convenient way to search Web Elements
+ * Waits for visibilityOfElementLocated and then returns the WebElement searched for.
  */
-//TODO replace elements search workaround with proper implementation using explicit wait
+//TODO Try to replace all usages of this interface with newer implementation at WaitsSwitcher.java
 public interface StableWebElementSearch {
     /**
      * set Webdriver that should to be used

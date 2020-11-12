@@ -1,6 +1,6 @@
-package com.softserve.edu.greencity.api.builder;
+package com.softserve.edu.greencity.api.builders.econews;
 
-import com.softserve.edu.greencity.api.model.EcoNewsAuthorModel;
+import com.softserve.edu.greencity.api.models.econews.EcoNewsAuthorModel;
 
 public class EcoNewsAuthorBuilder {
 
