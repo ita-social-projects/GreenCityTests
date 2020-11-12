@@ -10,20 +10,25 @@ import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.*;
 import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
 
-public class CreateNewsTest {
+public class CreateNewsTest extends GreenCityAPITestRunner {
 
     EcoNewsClient ecoNewsClient;
+    EcoNewsService ecoNewsService;
 
     @DataProvider(name = "improperNewsWithShortResponse")
     private Object[] getImproperNewsWithShortResponse() {
@@ -157,7 +162,7 @@ public class CreateNewsTest {
     }
 
     @BeforeClass
-    public void authorize() {
+    public void setUp() {
         OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
         User user = UserRepository.get().temporary();
         Response signedIn = authorizationClient
@@ -165,38 +170,45 @@ public class CreateNewsTest {
 
         OwnSecurityModel userData = signedIn.as(OwnSecurityModel.class);
         ecoNewsClient = new EcoNewsClient(ContentType.JSON, userData.accessToken);
+        ecoNewsService = new EcoNewsService();
     }
 
     @Test(dataProvider = "improperNewsWithShortResponse", testName = "GC-596, GC-598")
     public void createNewsWithShortResponseTest(String testId, EcoNewsPOSTdto ecoNews, ErrorMessage expectedError){
-        //TODO   ADD LOGGER
+        logger.info("Running createNewsWithShortResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);
         BaseAssertion assertCreated = new BaseAssertion(created);
         ErrorAssertions.errorEquals(created, expectedError);
         assertCreated.statusCode(400);
-        // TODO   CHECK IF NEWS REALLY WAS NOT ADDED
+
+        List<EcoNewsEntity> list = ecoNewsService.getNewsByTitle(ecoNews.title);
+        Assert.assertTrue(list.isEmpty());
     }
 
     @Test(dataProvider = "improperNewsWithDetailedResponse", testName = "GC-594, GC-631")
     public void createNewsWithDetailedResponseTest(String testId, EcoNewsPOSTdto ecoNews, DetailedErrorMessage expectedError){
-        //TODO   ADD LOGGER
+        logger.info("Running createNewsWithDetailedResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);
         BaseAssertion assertCreated = new BaseAssertion(created);
         ErrorAssertions.errorEquals(created, expectedError);
         assertCreated.statusCode(500);
-        // TODO   CHECK IF NEWS REALLY WAS NOT ADDED
+
+        List<EcoNewsEntity> list = ecoNewsService.getNewsByTitle(ecoNews.title);
+        Assert.assertTrue(list.isEmpty());
     }
 
     @Test(dataProvider = "improperNewsWithArrayResponse", testName = "GC-571, GC-572, GC-581, " +
             "GC-585, GC-600, GC-601")
     public void createNewsWithArrayResponseTest(String testId, EcoNewsPOSTdto ecoNews, PairErrorMessage[] expectedError) {
-        //TODO   ADD LOGGER
+        logger.info("Running createNewsWithArrayResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);
         BaseAssertion assertCreated = new BaseAssertion(created);
         ErrorAssertions.arrayEquals(
                 created,
                 Arrays.asList(expectedError));
         assertCreated.statusCode(400);
-        // TODO   CHECK IF NEWS REALLY WAS NOT ADDED
+
+        List<EcoNewsEntity> list = ecoNewsService.getNewsByTitle(ecoNews.title);
+        Assert.assertTrue(list.isEmpty());
     }
 }
