@@ -28,6 +28,7 @@ public class EcoNewsService {
     public List<EcoNewsEntity> getAllNews() {
         return ecoNewsDao.selectAll();
     }
+    
     public List<EcoNewsEntity> getAllNewsOrderByDate() {
         return ecoNewsDao.selectAllOrderByDate();
     }
