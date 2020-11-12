@@ -28,18 +28,10 @@ public class RegistrationTests extends GreenCityTestRunner {
                 .userCredentialsForRegistration()},};
     }
 
-    @DataProvider
-    public Object[][] invalidPasswordDataProvider() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassLowercaseUserCreds()},
-                {UserRepository.get().invalidPassLowercaseUserCreds()},
-                {UserRepository.get().invalidPassDigitUserCreds()},
-                {UserRepository.get().invalidPassSpecCharUserCreds()},
-                {UserRepository.get().invalidPassSpaceUserCreds()},
-        };
-    }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-199, GC-206")
+    @Description("GC-199 - Verify that unregistered user can register after entering valid values in registration form" +
+            "GC-206 - Verify that Password must contain at least one digit, special character, upper and lowercase letter when user registered")
     @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
         logger.info("Start test registration and login");
@@ -154,15 +146,5 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidPasswordDataProvider", testName = "GC-204")
-    @Description("Verify that Email must be existence and unique while new user registration")
-    public void invalidPasswordRegistration(User userLoginCredentials) {
-        logger.info("Start test invalid password registration" + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
-        Assert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
-    }
 }
 
