@@ -146,13 +146,13 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter empty values into the form");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
         softAssert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
-                "Email is required",
+                "Email is required", // test fails, bug
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
                 "The name must contain 6-30 characters and can contain letters(a-z), numbers(0-9) and a dot(.)",
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
-                "Password is required",
+                "Password is required", // test fails, bug
                 "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }
