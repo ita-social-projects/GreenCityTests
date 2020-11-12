@@ -118,10 +118,21 @@ public class EcoNewsPage extends TopPart {
         }
     }
 
+    public String getListViewButtonHoverColor() {
+        //It is a subelement that changes color on :hover
+        return waitsSwitcher.setExplicitWait(3,
+                ExpectedConditions.visibilityOfElementLocated(LIST_VIEW_BUTTON_HOVER.getPath()))
+                .getCssValue("color");
+    }
+
     @Step("Hover to grid view")
     public EcoNewsPage hoverToGridView() {
         Actions action = new Actions(driver);
-        action.moveToElement(getGridView()).perform();
+        action.moveToElement(getGridView())
+                .moveToElement(
+                waitsSwitcher.setExplicitWait(3,
+                        ExpectedConditions.visibilityOfElementLocated(GALLERY_VIEW_BUTTON_HOVER.getPath()))
+        ).build().perform();
         return this;
     }
 
@@ -135,6 +146,12 @@ public class EcoNewsPage extends TopPart {
         return searchElementByCss(LIST_VIEW_BUTTON.getPath());
     }
 
+    public String getListViewButtonColor() {
+        return waitsSwitcher.setExplicitWait(3,
+                ExpectedConditions.visibilityOfElementLocated(LIST_VIEW_BUTTON_HOVER.getPath()))
+                .getCssValue("color");
+    }
+
     @Step("Check if list view is displayed")
     public boolean isDisplayedListView() {
         return getListView().isDisplayed();
@@ -143,7 +160,11 @@ public class EcoNewsPage extends TopPart {
     @Step("Hover to list view")
     public EcoNewsPage hoverToListView() {
         Actions action = new Actions(driver);
-        action.moveToElement(getListView()).perform();
+        action.moveToElement(getListView())
+                .moveToElement(
+                waitsSwitcher.setExplicitWait(3,
+                        ExpectedConditions.visibilityOfElementLocated(LIST_VIEW_BUTTON_HOVER.getPath()))
+        ).build().perform();
         return this;
     }
 

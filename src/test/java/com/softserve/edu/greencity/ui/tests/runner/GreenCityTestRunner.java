@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class GreenCityTestRunner {
     private static final String BASE_URL = ValueProvider.getBaseUrl();
-    private static int left = 150; //Total amount of UI tests
+    private static int left = 160; //Total amount of UI tests
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
     protected SoftAssert softAssert;
@@ -155,7 +155,7 @@ public abstract class GreenCityTestRunner {
 
 
         logger.info("logging from thread " + Thread.currentThread().getId());
-        logger.info("||||||  Tests left " + (left) + "  |||||");
+        logger.info("||||||  UI tests left " + (left) + "  |||||");
         logger.info("\n----------------------------------------------------------------------------\n");
 
     }
