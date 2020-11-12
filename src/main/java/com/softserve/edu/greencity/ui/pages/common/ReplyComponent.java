@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
+import static com.softserve.edu.greencity.ui.locators.comments.ReplyLocator.*;
 
 public class ReplyComponent {
 
@@ -22,15 +22,23 @@ public class ReplyComponent {
     }
 
     public WebElement getReplyComment() {
-        return replyItem.findElement(COMMENT_TEXT.getPath());
+        return replyItem.findElement(REPLY_CURRENT_TEXT.getPath());
     }
 
     public String getReplyText() {
         return getReplyComment().getText();
     }
 
+//    public ReplyComponent editReply(String reply) {
+//        clickReplyEditButton();
+//    }
+//
+//    private WebElement getReplyTextInput() {
+//        return replyItem.findElement()
+//    }
+
     public WebElement getReplyAuthor() {
-        return replyItem.findElement(AUTHOR_NAME.getPath());
+        return replyItem.findElement(REPLY_AUTHOR.getPath());
     }
 
     public String getReplyAuthorText() {
@@ -38,7 +46,7 @@ public class ReplyComponent {
     }
 
     public WebElement getReplyLikeButton() {
-        return replyItem.findElement(LIKE_BUTTON.getPath());
+        return replyItem.findElement(REPLY_LIKE_BUTTON.getPath());
     }
 
     public ReplyComponent clickReplyLikeButton() {
@@ -47,11 +55,11 @@ public class ReplyComponent {
     }
 
     public boolean isReplyLikesButtonDisplayed() {
-        return replyItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
+        return replyItem.findElements(REPLY_LIKE_BUTTON.getPath()).size() > 0;
     }
 
     public WebElement getReplyEditButton() {
-        return replyItem.findElement(EDIT_COMMENT_BUTTON.getPath());
+        return replyItem.findElement(REPLY_EDIT_BUTTON.getPath());
     }
 
     public ReplyComponent clickReplyEditButton() {
@@ -60,7 +68,7 @@ public class ReplyComponent {
     }
 
     public WebElement getReplyDeleteButton() {
-        return replyItem.findElement(DELETE_COMMENT_BUTTON.getPath());
+        return replyItem.findElement(REPLY_DELETE_BUTTON.getPath());
     }
 
     public ReplyComponent clickReplyDeleteButton() {
@@ -71,27 +79,18 @@ public class ReplyComponent {
     }
 
     public boolean isDeleteReplyButtonDisplayed() {
-        return replyItem.findElements(DELETE_COMMENT_BUTTON.getPath()).size() > 0;
+        return replyItem.findElements(REPLY_DELETE_BUTTON.getPath()).size() > 0;
     }
 
     public boolean isEditReplyButtonDisplayed() {
-        return replyItem.findElements(REPLY_BUTTON.getPath()).size() > 0;
-    }
-
-    public WebElement getReplyLikes() {
-        return replyItem.findElement(COMMENT_LIKES.getPath());
+        return replyItem.findElements(REPLY_EDIT_BUTTON.getPath()).size() > 0;
     }
 
     public String getReplyLikesNumber() {
-        return getReplyLikes().getText();
+        return replyItem.findElement(REPLY_LIKE_AMOUNT.getPath()).getText();
     }
 
-    public WebElement getReplyDate() {
-        return replyItem.findElement(COMMENT_DATE.getPath());
+    public String getReplyDate() {
+        return replyItem.findElement(REPLY_DATE.getPath()).getText();
     }
-
-    public String getReplyDateText() {
-        return getReplyDate().getText();
-    }
-
 }

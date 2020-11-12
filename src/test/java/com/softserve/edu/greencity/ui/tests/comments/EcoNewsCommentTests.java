@@ -52,4 +52,46 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
         Assert.assertFalse(newpage.getCommentPart().chooseCommentByNumber(0).openReply()
                 .chooseReplyByNumber(0).isEditReplyButtonDisplayed());
     }
+
+    @Test(description = "GC-871")
+    @Description("Logged users can edit their own replies on the 'News' page.")
+    public void loggedUsersCanEditTheirReply() {
+        logger.info("Verify that logged users can edit their own reply on the News page");
+        String reply = "hello,sweetiee";
+        User user = UserRepository.get().temporary();
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0);
+        page.getCommentPart()
+                .chooseCommentByNumber(0)
+                .addReply(reply)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .clickReplyEditButton();
+    }
+
+    @Test(description = "GC-861")
+    @Description("Logged users can edit their own comments on the 'News' page.")
+    public void loggedUsersCanEditOwnComments() {
+        User user = UserRepository.get().temporary();
+        String comment = "different news";
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByNumber(0);
+        page.getCommentPart()
+                .addComment(comment);
+
+    }
+
+    @Test(description = "GC-862")
+    @Description("Unlogged users can not edit their own comments on the 'News' page.")
+    public void unloggedUsersCanNotEditComments() {
+
+    }
 }
