@@ -32,7 +32,6 @@ public class EcoNewsDao {
             ResultSet resultSet = statement.executeQuery(String.format(EcoNewsEntity.SELECT_BY_FIELD, field, value));
             rows = ManagerDao.get().parseResultSet(resultSet);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
