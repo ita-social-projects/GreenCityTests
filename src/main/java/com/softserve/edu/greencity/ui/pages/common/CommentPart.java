@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.softserve.edu.greencity.ui.locators.comments.CommentComponentLocators.*;
+import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
 /**
  * The part of single news page where comments are displayed.
@@ -25,6 +25,7 @@ public class CommentPart implements StableWebElementSearch {
     private WaitsSwitcher waitsSwitcher;
     protected WebDriver driver;
     private List<CommentComponent> commentComponents;
+    private By item = COMMENTS_COMPONENTS.getPath();
 
     public CommentPart(WebDriver driver) {
         this.driver = driver;
@@ -40,7 +41,7 @@ public class CommentPart implements StableWebElementSearch {
     }
 
     public WebElement getCommentField() {
-        return searchElementByCss(ADD_COMMENT_TEXTAREA.getPath());
+        return searchElementByCss(COMMENT_FIELD.getPath());
     }
 
     public CommentPart setCommentText(String commentText) {
@@ -49,14 +50,14 @@ public class CommentPart implements StableWebElementSearch {
     }
 
     public WebElement getPublishCommentButton() {
-        return searchElementByCss(ADD_COMMENT_BUTTON.getPath());
+        return searchElementByCss(COMMENT_BUTTON.getPath());
     }
 
     public CommentPart clickPublishCommentButton() {
         int currentCount = getCommentComponents().size();
         getPublishCommentButton().click();
             waitsSwitcher.setExplicitWait(5,
-                    ExpectedConditions.numberOfElementsToBe(COMMENTS_LIST.getPath(), currentCount + 1));
+                    ExpectedConditions.numberOfElementsToBe(item, currentCount + 1));
         return new CommentPart(driver);
     }
 
@@ -77,7 +78,7 @@ public class CommentPart implements StableWebElementSearch {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         try{
             return waitsSwitcher.setExplicitWait(2,
-                    ExpectedConditions.visibilityOfAllElementsLocatedBy(COMMENTS_LIST.getPath()));
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(item));
         }catch (TimeoutException e){
             logger.info("Comments are not present");
             return new ArrayList<>();

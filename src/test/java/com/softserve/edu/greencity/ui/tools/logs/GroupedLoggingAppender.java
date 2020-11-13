@@ -118,7 +118,7 @@ public class GroupedLoggingAppender extends AppenderSkeleton implements IReporte
     @Override
     public void append(LoggingEvent event) {
         if (outputDir == null)
-            return; // by default nothing appended, see com.softserve.edu.greencity.api.comments on top
+            return; // by default nothing appended, see comments on top
         try {
             long tid = Thread.currentThread().getId();
             BufferedWriter fw = tid2file.get(tid);

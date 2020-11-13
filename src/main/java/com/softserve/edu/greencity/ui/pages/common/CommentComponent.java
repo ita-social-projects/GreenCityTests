@@ -1,25 +1,18 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.softserve.edu.greencity.ui.locators.comments.CommentLocator.*;
+import static com.softserve.edu.greencity.ui.locators.CommentComponentLocators.*;
 
 /**
  * A single comment at single news page. All comments are handled by CommentPart.java
  */
 public class CommentComponent {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private final WebDriver driver;
     private final WebElement commentItem;
     private final WaitsSwitcher waitsSwitcher;
@@ -31,7 +24,7 @@ public class CommentComponent {
     }
 
     public WebElement getComment() {
-        return commentItem.findElement(COMMENT_CURRENT_TEXT.getPath());
+        return commentItem.findElement(COMMENT_TEXT.getPath());
     }
 
     public String getCommentText() {
@@ -39,7 +32,7 @@ public class CommentComponent {
     }
 
     public WebElement getCommentAuthor() {
-        return commentItem.findElement(COMMENT_AUTHOR.getPath());
+        return commentItem.findElement(AUTHOR_NAME.getPath());
     }
 
     public String getCommentAuthorText() {
@@ -47,11 +40,7 @@ public class CommentComponent {
     }
 
     public WebElement getEditButton() {
-        return commentItem.findElement(COMMENT_EDIT_BUTTON.getPath());
-    }
-
-    public boolean isEditButtonDisplayed() {
-        return commentItem.findElements(COMMENT_EDIT_BUTTON.getPath()).size() > 0;
+        return commentItem.findElement(EDIT_COMMENT_BUTTON.getPath());
     }
 
     public CommentComponent clickEditButton() {
@@ -60,7 +49,7 @@ public class CommentComponent {
     }
 
     public WebElement getDeleteButton() {
-        return commentItem.findElement(COMMENT_DELETE_BUTTON.getPath());
+        return commentItem.findElement(DELETE_COMMENT_BUTTON.getPath());
     }
 
     public CommentComponent clickDeleteCommentButton() {
@@ -71,7 +60,7 @@ public class CommentComponent {
     }
 
     public boolean isDeleteCommentButtonDisplayed() {
-        return commentItem.findElements(COMMENT_DELETE_BUTTON.getPath()).size() > 0;
+        return commentItem.findElements(DELETE_COMMENT_BUTTON.getPath()).size() > 0;
     }
 
     public boolean isCommentPresent() {
@@ -85,7 +74,7 @@ public class CommentComponent {
     }
 
     public WebElement getLikeButton() {
-        return commentItem.findElement(COMMENT_LIKE_BUTTON.getPath());
+        return commentItem.findElement(LIKE_BUTTON.getPath());
     }
 
     public CommentComponent clickLikeButton() {
@@ -94,11 +83,11 @@ public class CommentComponent {
     }
 
     public boolean isLikesButtonDisplayed() {
-        return commentItem.findElements(COMMENT_LIKE_BUTTON.getPath()).size() > 0;
+        return commentItem.findElements(LIKE_BUTTON.getPath()).size() > 0;
     }
 
     public WebElement getLikes() {
-        return commentItem.findElement(COMMENT_LIKE_AMOUNT.getPath());
+        return commentItem.findElement(COMMENT_LIKES.getPath());
     }
 
     public String getLikesNumber() {
@@ -114,7 +103,7 @@ public class CommentComponent {
     }
 
     public WebElement getReplyButton() {
-        return commentItem.findElement(COMMENT_REPLY_BUTTON.getPath());
+        return commentItem.findElement(REPLY_BUTTON.getPath());
     }
 
     public CommentComponent clickReplyButton() {
@@ -123,11 +112,11 @@ public class CommentComponent {
     }
 
     public boolean isReplyButtonDisplayed() {
-        return commentItem.findElements(COMMENT_REPLY_BUTTON.getPath()).size() > 0;
+        return commentItem.findElements(REPLY_BUTTON.getPath()).size() > 0;
     }
 
     public WebElement getReplyField() {
-        return commentItem.findElement(ADD_REPLY_TEXTAREA.getPath());
+        return commentItem.findElement(REPLY_FIELD.getPath());
     }
 
     public CommentComponent setReplyText(String replyText) {
@@ -139,14 +128,14 @@ public class CommentComponent {
         return commentItem.findElement(ADD_REPLY_BUTTON.getPath());
     }
 
-    public CommentComponent clickAddReplyButton() {
+    public CommentComponent clickAddReplyButton(){
         boolean isShowReplyButtonDisplayed = isShowReplyDisplayed();
         getAddReplyButton().click();
-        if (isShowReplyButtonDisplayed) {
+        if(isShowReplyButtonDisplayed){
             waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
                             Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
-        } else {
+        }else {
             waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.visibilityOf(getShowReplyButton()));
         }
@@ -155,16 +144,16 @@ public class CommentComponent {
     }
 
     public WebElement getShowReplyButton() {
-        return commentItem.findElement(COMMENT_SHOW_REPLIES_BUTTON.getPath());
+        return commentItem.findElement(SHOW_REPLIES.getPath());
     }
 
     public boolean isShowReplyDisplayed() {
-        return commentItem.findElements(COMMENT_SHOW_REPLIES_BUTTON.getPath()).size() > 0;
+        return commentItem.findElements(SHOW_REPLIES.getPath()).size() > 0;
     }
 
-    public CommentComponent openReply() {
+    public ReplyContainer openReply() {
         getShowReplyButton().click();
-        return this;
+        return new ReplyContainer(driver);
     }
 
     public CommentComponent closeReply() {
@@ -186,46 +175,8 @@ public class CommentComponent {
     }
 
     public boolean isReplyComponentPresent() {
-        return driver.findElements(COMMENT_REPLIES.getPath()).size() > 0;
+        return driver.findElements(REPLY_COMPONENTS.getPath()).size() > 0;
     }
 
-    private List<ReplyComponent> replyComponent;
 
-    public List<ReplyComponent> getReplyComponents() {
-        replyComponent = new ArrayList<>();
-        for (WebElement current : getReplies()) {
-            replyComponent.add(new ReplyComponent(driver, current));
-        }
-        return replyComponent;
-    }
-
-    public List<WebElement> getReplies() {
-        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        return waitsSwitcher.setExplicitWait(7,
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(COMMENT_REPLIES.getPath()));
-    }
-
-    public ReplyComponent chooseReplyByNumber(int replyNumber) {
-        List<ReplyComponent> replies = getReplyComponents();
-        if (replyNumber + 1 > replies.size()) {
-            throw new IllegalArgumentException("Reply number was out of range");
-        } else {
-            return getReplyComponents().get(replyNumber);
-        }
-    }
-
-    public ReplyComponent chooseReplyByText(String title) {
-        ReplyComponent result = null;
-        for (ReplyComponent current : getReplyComponents()) {
-            if (current.getReplyText().equals(title)) {
-                result = current;
-            }
-        }
-        if (result == null) {
-            logger.warn("Reply with text " + title + "not exist");
-            throw new RuntimeException("Comment Component with text " + title + " not found");
-        } else {
-            return result;
-        }
-    }
 }

@@ -143,7 +143,7 @@ public class CommentCreation extends GreenCityTestRunner {
     @Test
     @Description("GC-827")
     public void systemRecalculatesTheTotalCommentsNumber() {
-        logger.info("Verify that after comment was published, system recalculates the total com.softserve.edu.greencity.api.comments number starts");
+        logger.info("Verify that after comment was published, system recalculates the total comments number starts");
         String commentText = "Test comment";
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
