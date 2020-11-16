@@ -59,35 +59,12 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 {UserRepository.get().invalidPassUppercaseUserCreds()},
                 {UserRepository.get().invalidPassDigitUserCreds()},
                 {UserRepository.get().invalidPassLowercaseUserCreds()},
-                {UserRepository.get().invalidPassSpecCharUserCreds()},
+                {UserRepository.get().invalidPassSpecCharUserCreds()}, //TODO Clarify requirements! Now spaces are allowed, and test fails
                 {UserRepository.get().invalidPassLengthUserCreds()},
-                {UserRepository.get().invalidPassSpaceUserCreds()}, //TODO Clarify requirements! Now spaces are allowed, and test fails
+                {UserRepository.get().invalidPassSpaceUserCreds()},
         };
     }
 
-    @DataProvider
-    public Object[][] invalidPassUppercaseUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassUppercaseUserCreds()},};
-    }
-
-    @DataProvider
-    public Object[][] invalidPassDigitUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassDigitUserCreds()},};
-    }
-
-    @DataProvider
-    public Object[][] invalidPassLowercaseUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassLowercaseUserCreds()},};
-    }
-
-    @DataProvider
-    public Object[][] invalidPassSpecCharUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassSpecCharUserCreds()},};
-    }
 
     @DataProvider
     public Object[][] invalidPassLengthUserCreds() {
@@ -95,11 +72,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 {UserRepository.get().invalidPassLengthUserCreds()},};
     }
 
-    @DataProvider
-    public Object[][] invalidPassSpaceUserCreds() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassSpaceUserCreds()},};
-    }
 
     @DataProvider
     public Object[][] invalidNameCredentials() {
@@ -161,7 +133,8 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
      * Putting empty values into register form
      * and reading the validation messages.
      */
-    @Test(dataProvider = "emptyFields", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    @Test(dataProvider = "emptyFields", testName = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    @Description("Verifying empty field validation messages")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
         logger.info("Starting checkEmptyFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
@@ -173,13 +146,13 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter empty values into the form");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
         softAssert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
-                "Email is required",
+                "Email is required", // test fails, bug
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
-                "User name is required",
+                "The name must contain 6-30 characters and can contain letters(a-z), numbers(0-9) and a dot(.)",
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
-                "Password is required",
+                "Password is required", // test fails, bug
                 "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }
@@ -265,7 +238,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     }
 
 
-    @Test(dataProvider = "invalidPassword", testName = "GC-517")
+    @Test(dataProvider = "invalidPassword", testName = "GC-517, GC-516")
     @Description("Verify that user is not registered with password, that does not contain all required characters.")
     public void invalidPassDigitValidation(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -357,8 +330,9 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    //TODO ask some one info about expected params
-    @Test(dataProvider = "validUserCredentials", description = "GC-487, GC-216")
+    //TODO ask some one info about expected params and refactor
+    @Test(dataProvider = "validUserCredentials", testName = "GC-487, GC-216")
+    @Description("Verify UI on Sign-up page")
     public void checkResponsiveSingUp(User userLoginCredentials) {
         driver.manage().window().setSize(new Dimension(1024, 768));
         loadApplication();
