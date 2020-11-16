@@ -4,14 +4,9 @@ import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
-import io.restassured.config.LogConfig;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
 
 import static io.restassured.RestAssured.given;
 
