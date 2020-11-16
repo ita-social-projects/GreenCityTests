@@ -173,7 +173,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         logger.info("Enter empty values into the form");
         manualRegisterComponent.registrationWrongUser(userLoginCredentials);
         softAssert.assertEquals(manualRegisterComponent.getEmailValidatorText(),
-                "Email is required",
+                "This field is required",
                 "The validation message is not equal to the expected one");
         softAssert.assertEquals(manualRegisterComponent.getUserNameValidatorText(),
                 "User name is required",

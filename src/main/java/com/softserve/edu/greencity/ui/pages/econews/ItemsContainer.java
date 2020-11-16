@@ -41,33 +41,16 @@ public class ItemsContainer implements StableWebElementSearch {
 
     private List<ItemComponent> getItemComponents() {
         itemComponents = new ArrayList<>();
-        int retriesLeft = 5;
-        do {
-            try {
-                for (WebElement current : getItems()) {
-                    itemComponents.add(new ItemComponent(driver, current));
-                }
-            } catch (StaleElementReferenceException error) {
-                logger.warn("StaleElementReferenceException caught, retrying...");
-                WaitsSwitcher.sleep(100);
-            }
-            retriesLeft--;
-        } while (retriesLeft > 0);
+        for (WebElement current : getItems()) {
+            itemComponents.add(new ItemComponent(driver, current));
+        }
+
 
         return itemComponents;
     }
 
     private List<WebElement> getItems() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        /*
-        WebElement firstItem = driver.findElement(items);
-        try {
-            waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
-            logger.warn("The site performed the same GET request twice and redrew page");
-        } catch (TimeoutException error) {
-            ; //Everything is OK
-        }
-        */
 
         return waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));

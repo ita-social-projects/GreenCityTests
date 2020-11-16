@@ -15,6 +15,8 @@ import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
 import com.softserve.edu.greencity.ui.tests.runner.RemoteSkipTestAnalyzer;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -319,8 +321,13 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadTooLargeImage();
-        softAssert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);
-        //TODO ^ Site BUG: Large image can be uploaded ^
+        try {
+            String errorMsg = createNewsPage.getInvalidImageErrorText();
+            Assert.assertEquals(errorMsg, IMAGE_ERROR);
+            //TODO ^ Site BUG: Large image can be uploaded ^
+        } catch (TimeoutException | NoSuchElementException er) {
+            Assert.fail("No error message appeared");
+        }
 
         createNewsPage.signOut();
 
