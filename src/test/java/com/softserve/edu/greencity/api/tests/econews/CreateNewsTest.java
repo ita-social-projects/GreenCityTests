@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.tests.signin;
+package com.softserve.edu.greencity.api.tests.econews;
 
 import com.softserve.edu.greencity.api.assertions.BaseAssertion;
 import com.softserve.edu.greencity.api.assertions.ErrorAssertions;
@@ -8,6 +8,7 @@ import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
 import com.softserve.edu.greencity.api.models.errors.*;
 import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
+import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;

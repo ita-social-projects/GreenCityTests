@@ -55,7 +55,7 @@ public class CommentPart implements StableWebElementSearch {
     public CommentPart clickPublishCommentButton() {
         int currentCount = getCommentComponents().size();
         getPublishCommentButton().click();
-            waitsSwitcher.setExplicitWait(5,
+            waitsSwitcher.setExplicitWait(10,
                     ExpectedConditions.numberOfElementsToBe(COMMENTS_LIST.getPath(), currentCount + 1));
         return new CommentPart(driver);
     }
