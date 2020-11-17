@@ -55,8 +55,9 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Set title field")
-    public void setTitleField(String text) {
+    public CreateNewsPage setTitleField(String text) {
         getTitleField().sendKeys(text);
+        return  this;
     }
 
     @Step("Get title field height")
@@ -125,8 +126,9 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Set content field")
-    public void setContentField(String text) {
+    public CreateNewsPage setContentField(String text) {
         getContentField().sendKeys(text);
+        return this;
     }
 
     @Step("Get content field text")

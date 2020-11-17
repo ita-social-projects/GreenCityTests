@@ -361,6 +361,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to single news page by parameters")
     public SingleNewsPage switchToSingleNewsPageByParameters(NewsData news) {
         logger.info("Switch to single news page by parameters");
+        itemsContainer = getItemsContainer();
         scrollToElement(itemsContainer.findItemComponentByParameters(news).getTitle());
         itemsContainer.clickItemComponentOpenPage(news);
         return new SingleNewsPage(driver);
