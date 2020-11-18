@@ -16,7 +16,7 @@ public class EcoNewsBuilder {
     }
 
     public EcoNewsBuilder author(EcoNewsAuthorModel author) {
-        ecoNews.author = author;
+        ecoNews.ecoNewsAuthorDto = author;
         return this;
     }
 
