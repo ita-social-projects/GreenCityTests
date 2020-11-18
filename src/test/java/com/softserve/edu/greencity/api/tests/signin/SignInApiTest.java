@@ -59,7 +59,7 @@ public class SignInApiTest {
                 .contentType(ContentType.JSON);
     }
 
-    @Test(dataProvider = "blankCredentials", testName = "GC-490")
+    @Test(dataProvider = "blankCredentials", testName = "GC-490", description = "GC-490")
     @Description("Verify that user gets error message when sign in with empty text fields")
     public void blankCredentialsTest(String email, String password, String message) {
         ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
@@ -67,7 +67,7 @@ public class SignInApiTest {
                 .bodyArrayContains("message", message);
     }
 
-    @Test(dataProvider = "invalidEmail", testName = "GC-493, GC-494")
+    @Test(dataProvider = "invalidEmail", testName = "GC-493, GC-494", description = "GC-493, GC-494")
     @Description("Verify that user gets error message and no token when sign in with incorrect email")
     public void invalidEmailTest(String email, String password, String message) {
         ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
@@ -77,7 +77,7 @@ public class SignInApiTest {
     }
 
 
-    @Test(dataProvider = "invalidCredentials", testName = "GC-495, GC-496, GC-507")
+    @Test(dataProvider = "invalidCredentials", testName = "GC-495, GC-496, GC-507", description = "GC-495, GC-496, GC-507")
     @Description("Verifies proper status codes and error messages on providing improper email/password")
     public void badCredentialsTest(String email, String password, String message) {
         ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
@@ -87,7 +87,7 @@ public class SignInApiTest {
                 .statusCode(400); //Sometimes the status code is improper (500), so let's check it last
     }
 
-    @Test(dataProvider = "validCredentials", testName = "GC-506")
+    @Test(dataProvider = "validCredentials", testName = "GC-506", description = "GC-506")
     @Description("Verify that user can get token to authorize with valid credential")
     public void validCredentialsTest(String email, String password) {
         ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);

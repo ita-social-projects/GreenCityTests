@@ -75,14 +75,14 @@ public abstract class GreenCityTestRunner {
             /*<=======================Remote capabilities=======================>*/
 
         } else {
-            /*<============================Locale============================>*/
+            /*<============================Local============================>*/
             driver = new RemoteWebDriver(
                     new URL("http://localhost:4444/wd/hub"), options);
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(65, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        /*<============================Locale============================>*/
+        /*<============================Local============================>*/
     }
 
     @AfterClass(alwaysRun = true)

@@ -24,7 +24,7 @@ import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
-    @Test(testName = "C-670")
+    @Test(testName = "GC-670", description = "GC-670")
     @Description("Verify that User can return to News from single view by clicking ‘Back to news’ button")
     public void returningToNewsViaBackToNews() {
         logger.info("Starting returningToNewsViaBackToNews");
@@ -44,7 +44,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-671")
+    @Test(testName = "GC-671", description = "GC-671")
     @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
     public void returnToFilteredNews() {
         logger.info("Starting returnToFilteredNews");
@@ -78,7 +78,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
     }
 
-    @Test(testName = "GC-672")
+    @Test(testName = "GC-672", description = "GC-672")
     @Description("Verify that ‘Edit’ button is not available for unregistered User")
     public void verifyEditNotAvailable() {
         logger.info("verifyEditNotAvailable starts");
@@ -90,7 +90,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertFalse(editButtonExist, "Edit button exists");
     }
 
-    @Test(testName = "GC-691")
+    @Test(testName = "GC-691", description = "GC-691")
     @Description("Verify that ‘Edit’ button is available for registered User in case " +
             "he/she has submitted this particular piece of news ")
     public void verifyEditAvailable() {
@@ -114,7 +114,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(news.getTitle());
     }
 
-    @Test(testName = "GC-692")
+    @Test(testName = "GC-692", description = "GC-692")
     @Description("Verify that ‘Edit’ button is not available for registered User in " +
             "case he/she has not submitted this particular piece of news")
     public void verifyUnavailabilityOfEditButton() {
@@ -133,7 +133,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertFalse(editButtonExists,"Edit button exists");
     }
 
-    @Test(testName = "GC-695")
+    @Test(testName = "GC-695", description = "GC-695")
     @Description("Source field appears if User entered Source in the Create news form.")
     public void presentSourceIfItWasSpecified() {
         logger.info("presentSourceIfItWasSpecified starts");
@@ -161,7 +161,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test(testName = "GC-713")
+    @Test(testName = "GC-713", description = "GC-713")
     @Description("Verify that User sees the last 3 news with the same tag in the News recommendations" +
             " widget, if there are more than 3 news with this tag")
     public void testRecommendations() {
@@ -181,7 +181,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test(testName = "GC-731")
+    @Test(testName = "GC-731", description = "GC-731")
     @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
     public void noSourceIfItWasntSpecified() {
         logger.info("noSourceIfItWasntSpecified starts");

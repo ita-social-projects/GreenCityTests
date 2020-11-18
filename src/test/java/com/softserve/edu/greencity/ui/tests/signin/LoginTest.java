@@ -28,7 +28,7 @@ public class LoginTest extends GreenCityTestRunner {
         expectedBorderColorRBG = "rgb(240, 49, 39)";
     }
 
-    @Test(testName = "GC-224")
+    @Test(testName = "GC-224", description = "GC-224")
     @Description("Verify that user can sign in with valid credentials")
     public void signInWithValidCredentials() {
         logger.info("Starting signInWithValidCredentials");
@@ -48,7 +48,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(newHabitButton, ADD_NEW_HABIT_BUTTON_TEXT.getText());
     }
 
-    @Test(testName = "GC-225")
+    @Test(testName = "GC-225", description = "GC-225")
     @Description("Verify that user can't sign in with unregistered credentials")
     public void signInWithUnregisteredCredentials() {
         logger.info("Starting signInWithUnregisteredCredentials");
@@ -63,7 +63,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(errorText, WRONG_EMAIL_OR_PASS_ERROR.getText());
     }
 
-    @Test(testName = "GC-30")
+    @Test(testName = "GC-30", description = "GC-30")
     @Description("Verify that user can't sign in with invalid password")
     public void signInWithInvalidPassword() {
         logger.info("Starting signInWithInvalidPassword");
@@ -78,7 +78,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(errorText, WRONG_EMAIL_OR_PASS_ERROR.getText());
     }
 
-    @Test(testName = "GC-35")
+    @Test(testName = "GC-35", description = "GC-35")
     @Description("Verify that user can sign out")
     public void signOutValidation() {
         logger.info("Starting signOutValidation");
@@ -96,7 +96,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-228")
+    @Test(testName = "GC-228", description = "GC-228")
     @Description("Verify 'Sign in' form UI")
     public void signInFormValidation() {
         logger.info("Starting signInFormValidation");
@@ -126,7 +126,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-229")
+    @Test(testName = "GC-229", description = "GC-229")
     @Description("Verify that user can't sign in leaving required fields empty #616")
     public void singInWithEmptyRequiredFields() {
         logger.info("Starting singInWithEmptyRequiredFields");
@@ -150,7 +150,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-492")
+    @Test(testName = "GC-492", description = "GC-492")
     @Description("Verify that 'Sign-up' form appears after click on ‘Sign-up’ link at the bottom of the 'Sign in' form")
     public void signUpLinkValidation() {
         logger.info("Starting signUpLinkValidation");
@@ -162,7 +162,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(titleString, SIGN_UP_TITLE.getText());
     }
 
-    @Test(testName = "GC-497")
+    @Test(testName = "GC-497", description = "GC-497")
     @Description("Verify 'Close' button functionality of the 'Sign in' form")
     public void signInFormCloseButtonValidation() {
         logger.info("Starting signInFormCloseButtonValidation");
@@ -173,7 +173,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertTrue(isLoginComponentClosed);
     }
 
-    @Test(testName = "GC-522")
+    @Test(testName = "GC-522", description = "GC-522")
     @Description("Verify that user can't sign in leaving 'Email' field empty")
     public void signInWithEmptyEmailFieldValidation() {
         logger.info("Starting signInWithEmptyEmailFieldValidation");
@@ -191,7 +191,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-523")
+    @Test(testName = "GC-523", description = "GC-523")
     @Description("Verify that user can't sign in leaving 'Password' field empty")
     public void signInWithEmptyPasswordFieldValidation() {
         logger.info("Starting signInWithEmptyPasswordFieldValidation");
@@ -210,7 +210,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-524")
+    @Test(testName = "GC-524", description = "GC-524")
     @Description("Verify that user can't sign in with incorrect form of the email and password")
     public void signInWithIncorrectCredentials() {
         logger.info("Starting signInWithIncorrectCredentials");
@@ -246,7 +246,7 @@ public class LoginTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(dataProvider = "getCorrectEmails", testName = "GC-525")
+    @Test(dataProvider = "getCorrectEmails", testName = "GC-525", description = "GC-525")
     @Description("Verify validation of the ‘Email’ field in the ‘Sign in’ form")
     public void correctEmailValidation(String correctEmail) {
         logger.info("Starting correctEmailValidation");
@@ -273,7 +273,7 @@ public class LoginTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(dataProvider = "getIncorrectEmails", testName = "GC-525")
+    @Test(dataProvider = "getIncorrectEmails", testName = "GC-525", description = "GC-525")
     @Description("Verify validation of the ‘Email’ field in the ‘Sign in’ form")
     public void incorrectEmailValidation(String incorrectEmail) {
         logger.info("Starting incorrectEmailValidation");
@@ -291,7 +291,7 @@ public class LoginTest extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-525")
+    @Test(testName = "GC-525", description = "GC-525")
     @Description("Verify validation of the ‘Email’ field in the ‘Sign in’ form")
     public void clearEmailField() {
         logger.info("Starting clearEmailField");
@@ -308,7 +308,7 @@ public class LoginTest extends GreenCityTestRunner {
     softAssert.assertAll();
     }
 
-    @Test(testName = "GC-526")
+    @Test(testName = "GC-526", description = "GC-526")
     @Description("Verify validation of the ‘Password’ field in the ‘Sign in’ form")
     public void correctPasswordValidation() {
         logger.info("Starting correctPasswordValidation");
@@ -333,7 +333,7 @@ public class LoginTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(dataProvider = "getIncorrectPasswords", testName = "GC-526")
+    @Test(dataProvider = "getIncorrectPasswords", testName = "GC-526", description = "GC-526")
     @Description("Verify validation of the ‘Password’ field in the ‘Sign in’ form")
     public void incorrectPasswordValidation(String incorrectPassword) {
         logger.info("Starting incorrectPasswordValidation");
@@ -350,7 +350,7 @@ public class LoginTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-211")
+    @Test(testName = "GC-211", description = "GC-211")
     @Description("Verify that modal window with 'Sign in' form appears after unregistered user clicks on the 'Sign in' button")
     public void signInModalValidation() {
         logger.info("Starting signInModalValidation");
@@ -360,7 +360,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(titleString, SIGN_IN_TITLE.getText());
     }
     //TODO auth in google via api before clickSingInWithGoogleButton()
-    @Test(testName = "GC-218")
+    @Test(testName = "GC-218", description = "GC-218")
     @Description("Verify that Unregistered user can Sign Up with Google account")
     public void signUpByGoogle() {
         logger.info("Starting signUpByGoogle");
@@ -378,7 +378,7 @@ public class LoginTest extends GreenCityTestRunner {
         Assert.assertEquals(topUserName, TOP_USER_NAME.getText());
     }
 //TODO auth in google via api before clickSingInWithGoogleButton()
-    @Test(testName = "GC-220")
+    @Test(testName = "GC-220", description = "GC-220")
     @Description("Verify that Unregistered user can Sign In with Google account")
     public void signInByGoogle() {
         logger.info("Starting signInByGoogle");
@@ -398,7 +398,7 @@ public class LoginTest extends GreenCityTestRunner {
     }
 
     //TODO auth in google via api before clickSingInWithGoogleButton()
-    @Test(testName = "GC-234")
+    @Test(testName = "GC-234", description = "GC-234")
     @Description("Verify that user can't sign in with Google Account credentials on 'Sign in' pop-up window")
     public void signInByGoogleCredentialsOnManualSignInPopUp() {
         logger.info("Starting signInByGoogleCredentialsOnManualSignInPopUp");

@@ -94,8 +94,9 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
         };
     }
 
-    @Test(dataProvider = "improperNewsWithArrayResponse", testName = "GC-571, GC-572, GC-581, " +
-            "GC-585, GC-600, GC-601")
+    @Test(dataProvider = "improperNewsWithArrayResponse",
+            testName = "GC-571, GC-572, GC-581, GC-585, GC-600, GC-601",
+            description = "GC-571, GC-572, GC-581, GC-585, GC-600, GC-601")
     public void createNewsWithArrayResponseTest(String testId, EcoNewsPOSTdto ecoNews, PairErrorMessage[] expectedError) {
         logger.info("Running createNewsWithArrayResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);

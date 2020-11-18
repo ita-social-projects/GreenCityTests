@@ -52,7 +52,7 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
         };
     }
 
-    @Test(dataProvider = "improperNewsWithDetailedResponse", testName = "GC-594, GC-631")
+    @Test(dataProvider = "improperNewsWithDetailedResponse", testName = "GC-594, GC-631", description = "GC-594, GC-631")
     public void createNewsWithDetailedResponseTest(String testId, EcoNewsPOSTdto ecoNews, DetailedErrorMessage expectedError){
         logger.info("Running createNewsWithDetailedResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);

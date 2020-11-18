@@ -48,7 +48,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         return new EcoNewsService();
     }
 
-    @Test(testName = "GC-595")
+    @Test(testName = "GC-595", description = "GC-595")
     @Description("Verify that user is on create news form")
     public void checkThatUserOnCreateNewsForm() {
         logger.info("checkThatUserOnCreateNewsForm starts");
@@ -65,7 +65,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-591")
+    @Test(testName = "GC-591", description = "GC-591")
     @Description("Verify that create news button is visible for registered user")
     public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {
         logger.info("checkVisibilityOfCreateNewsButtonForRegisteredUser starts");
@@ -79,7 +79,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         econewsPage.signOut();
     }
 
-    @Test(testName = "GC-593")
+    @Test(testName = "GC-593", description = "GC-593")
     @Description("Verify that create news button is invisible for unregistered user")
     public void checkInvisibilityOfCreateNewsButtonForGuest() {
         logger.info("checkInvisibilityOfCreateNewsButtonForGuest starts");
@@ -90,7 +90,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         Assert.assertFalse(ecoNewsPage.isCreateNewsButtonPresent());
     }
 
-    @Test(testName = "GC-623")
+    @Test(testName = "GC-623", description = "GC-623")
     @Description("Verify possibility of choosing tags")
     public void verifySelectAndDeselectPossibilityOfTags() {
         logger.info("verifySelectAndDeselectPossibilityOfTags starts");
@@ -109,7 +109,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-592")
+    @Test(testName = "GC-592", description = "GC-592")
     @Description("Verify that news would not be created if content is too short")
     public void verifyImpossibilityOfCreatingNewsWithTooShortContent() {
         logger.info("verifyImpossibilityOfCreatingNewsWithTooShortContent starts");
@@ -126,7 +126,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-645")
+    @Test(testName = "GC-645", description = "GC-645")
     @Description("Verify that user can`t create news with incorrect URL")
     public void verifyImpossibilityOfCreatingTestWithIncorrectUrlInSourceField() {
         logger.info("verifyImpossibilityOfCreatingTestWithIncorrectUrlInSourceField starts");
@@ -144,7 +144,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-637")
+    @Test(testName = "GC-637", description = "GC-637")
     @Description("Verify that user can`t create news with empty fields")
     public void verifyImpossibilityOfCreatingNewsWithEmptyFields() {
         logger.info("verifyImpossibilityOfCreatingNewsWithEmptyFields starts");
@@ -159,7 +159,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-642")
+    @Test(testName = "GC-642", description = "GC-642")
     @Description("Verify that user can`t create news without tags")
     public void verifyImpossibilityOfCreatingNewsWithoutAnyTags() {
         logger.info("verifyImpossibilityOfCreatingNewsWithoutAnyTags starts");
@@ -177,7 +177,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-644")
+    @Test(testName = "GC-644", description = "GC-644")
     @Description("Verify that user can`t create news with empty title")
     public void verifyImpossibilityOfCreatingNewsWithEmptyTitle() {
         logger.info("verifyImpossibilityOfCreatingNewsWithEmptyTitle starts");
@@ -194,7 +194,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-638")
+    @Test(testName = "GC-638", description = "GC-638")
     @Description("Verify that user can`t create news with empty content")
     public void verifyImpossibilityOfCreatingNewsWithEmptyContent() {
         logger.info("verifyImpossibilityOfCreatingNewsWithEmptyContent starts");
@@ -212,7 +212,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-621")
+    @Test(testName = "GC-621", description = "GC-621")
     @Description("Verify that user can go to preview page")
     public void verifyPossibilityOfPreViewingNewsPage() {
         logger.info("verifyPossibilityOfPreViewingNewsPage starts");
@@ -230,7 +230,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         preViewPage.signOut();
     }
 
-    @Test(testName = "GC-633")
+    @Test(testName = "GC-633", description = "GC-633")
     @Description("Verify that preview page is displayed correctly")
     public void verifyThatPreViewIsDisplayedCorrectly() {
         logger.info("verifyThatPreViewIsDisplayedCorrectly starts");
@@ -250,7 +250,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         preViewPage.signOut();
     }
 
-    @Test(testName = "GC-606")
+    @Test(testName = "GC-606", description = "GC-606")
     @Description("Verify that User can continue editing news in case ‘Cancel’ button was pressed")
     public void verifyThatUserCanContinueNewsCreations() {
         logger.info("verifyThatUserCanContinueNewsCreations starts");
@@ -269,7 +269,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-607")
+    @Test(testName = "GC-607", description = "GC-607")
     @Description("Verify that user can cancel news creation if he decided to drop posting")
     public void verifyThatUserCanCancelNewsCreations() {
         logger.info("verifyThatUserCanCancelNewsCreations starts");
@@ -289,7 +289,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-588")
+    @Test(testName = "GC-588", description = "GC-588")
     @Description("Verify that user can`t upload .gif format image")
     public void verifyImpossibilityOfUploadingGifImage() {
 
@@ -309,7 +309,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-634")
+    @Test(testName = "GC-634", description = "GC-634")
     @Description("Verify that user can`t add JPEG image more than 10 MB")
     public void verifyImpossibilityOfUploadingTooLargeImage() {
 
@@ -334,7 +334,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     }
 
-    @Test(testName = "GC-397")
+    @Test(testName = "GC-397", description = "GC-397")
     @Description("Verify that user can publish news only after filling in all mandatory fields with valid data")
     public void checkImpossibleToCreateNewsWithoutFillingMandatoryFields() {
         logger.info("checkImpossibleToCreateNewsWithoutFillingMandatoryFields starts");
@@ -354,7 +354,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-401", dataProvider = "getStringForTitle")
+    @Test(testName = "GC-401", description = "GC-401", dataProvider = "getStringForTitle")
     @Description("Verify that user can publish news with valid characters in a 'Title' field")
     public void fillTitleFieldFromMinToMax(String title) {
         logger.info("fillTitleFieldFromMinToMax starts with parameters : " + title);
@@ -386,7 +386,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(testName = "GC-628", dataProvider = "getTagsList")
+    @Test(testName = "GC-628", description = "GC-628", dataProvider = "getTagsList")
     @Description("Verify news creation with allowed amount of selected tags")
     public void checkCreateNewsWithOneToThreeTags(List<Tag> tags) {
         logger.info("checkCreateNewsWithOneToThreeTags starts with parameters : " + tags.toString());
@@ -430,7 +430,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(testName = "GC-643", dataProvider = "getInvalidTagsList")//TODO REFACTOR
+    @Test(testName = "GC-643", description = "GC-643", dataProvider = "getInvalidTagsList")//TODO REFACTOR
     @Description("Verify that user can`t create news with more than 3 tags selected")
     public void verifyPossibilityOfMaxThreeTagsWhenCreateNews(List<Tag> tags) {
         logger.info("verifyPossibilityOfMaxThreeTagsWhenCreateNews starts with parameter : " + tags.toString());
@@ -476,7 +476,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(testName = "GC-654", dataProvider = "getTagsListWithSingleTag")
+    @Test(testName = "GC-654", description = "GC-654", dataProvider = "getTagsListWithSingleTag")
     @Description("Verify that user can`t create news with 2 or more same tags")
     public void verifyImpossibilityToSelectOneTagTwice(ArrayList<Tag> tags) {
         logger.info("verifyImpossibilityToSelectOneTagTwice starts with parameters : " + tags.toString());
@@ -512,7 +512,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         };
     }
 
-    @Test(testName = "GC-616")
+    @Test(testName = "GC-616", description = "GC-616")
     @Description("Verify that news will be created, when user put more than 20 symbols in ‘Content’ field.")
     public void createNewsWithContentLengthMoreThen20() {
         logger.info("createNewsWithContentLengthMoreThen20 starts");
@@ -532,7 +532,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-613")
+    @Test(testName = "GC-613", description = "GC-613")
     @Description("Verify that news will be created when user add a link, which contains https:// in ‘Source’ field")
     public void createNewsWithSourceField() {
         logger.info("createNewsWithSourceField starts");
@@ -552,7 +552,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-617")
+    @Test(testName = "GC-617", description = "GC-617")
     @Description("Verify that date is Auto-filled")
     public void verifyAutoFillingDataWhenCreateNews() {
         logger.info("verifyAutoFillingDataWhenCreateNews starts");
@@ -573,7 +573,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-629")
+    @Test(testName = "GC-629", description = "GC-629")
     @Description("Verify that news will be created when user add no image")
     public void verifyNewsCreationWithoutImage() {
         logger.info("verifyNewsCreationWithoutImage starts");
@@ -594,7 +594,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
+    @Test(testName = "GC-610", description = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
     @Description("Verify that news will be created, when user add PNG image less than 10 MB")
     public void verifyNewsCreationWithPNGImage() {
 
@@ -619,7 +619,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-611")
+    @Test(testName = "GC-611", description = "GC-611")
     @Description("Verify that news will be created, when user add JPG image less than 10 MB")
     public void verifyNewsCreationWithValidImage() {
         logger.info("verifyNewsCreationWithValidImage starts");
@@ -640,7 +640,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-620")
+    @Test(testName = "GC-620", description = "GC-620")
     @Description("Verify that user can publish news after clicking ‘Publish’ button")
     public void verifyThatNewsIsCreatedAfterClickOnPublishButton() {
         logger.info("verifyThatNewsIsCreatedAfterClickOnPublishButton starts");
@@ -660,7 +660,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-622")
+    @Test(testName = "GC-622", description = "GC-622")
     @Description("Verify that news will be created with empty source field")
     public void verifyPossibilityOfCreatingNewsWithEmptySourceField() {
         logger.info("verifyPossibilityOfCreatingNewsWithEmptySourceField starts");
@@ -686,7 +686,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
-    @Test(testName = "GC-403")
+    @Test(testName = "GC-403", description = "GC-403")
     @Description("Verify that User can go back to editing news by following ‘Back to editing’ link")
     public void verifyPossibilityOfGoingBackToEditNews() {
         logger.info("verifyPossibilityOfGoingBackToEditNews starts");
@@ -710,7 +710,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-402")
+    @Test(testName = "GC-402", description = "GC-402")
     @Description("Verify that 'Title' field is auto-resizing")
     public void verifyThatTitleFieldIsAutoResizing() {
         logger.info("verifyThatTitleFieldIsAutoResizing starts");
@@ -731,7 +731,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-651")
+    @Test(testName = "GC-651", description = "GC-651")
     @Description("Verify that 'Content' field is auto-resizing and can be manually resized by user")
     public void VerifyThatContentFieldIsAutoResizingAndCanBeResizedByUser() {
         logger.info("verifyThatContentFieldIsAutoResizing starts");
@@ -752,7 +752,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-618")
+    @Test(testName = "GC-618", description = "GC-618")
     @Description("Verify that Author is Auto-filled based on Name of registered User")
     public void VerifyThatAuthorIsAutoFilledBasedOnNameOfRegisteredUser() {
         logger.info("VerifyThatAuthorIsAutoFilledBasedOnNameOfRegisteredUser starts");
