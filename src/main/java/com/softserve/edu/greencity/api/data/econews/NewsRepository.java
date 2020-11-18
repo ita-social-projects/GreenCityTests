@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.api.data.econews;
 
 public class NewsRepository {
 
+    private NewsRepository(){}
+
     /**
      * @return string with length more than 170 symbols
      */
@@ -31,10 +33,6 @@ public class NewsRepository {
                 "яка вирощується і виробляється на фермерських господарствах.";
     }
 
-    public static String getImageUrl() {
-        return "https://www.galka.if.ua/app/uploads/2018/11/logo_Ecolavkhigh_quality-01.png";
-    }
-
     public static String getTooShortText() {
         return "Магазин";
     }
@@ -51,8 +49,23 @@ public class NewsRepository {
         return "eco-lavca.https://ua/";
     }
 
+    //TODO
     public static String getNormalImageData() {
         return null;
+    }
+
+    /**
+     * @return title with length 1
+     */
+    public static String getMinimalTitle() {
+        return "1";
+    }
+
+    /**
+     * @return text with length 20
+     */
+    public static String getMinimalText() {
+        return "12345678901234567890";
     }
 }
 

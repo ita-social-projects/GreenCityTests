@@ -37,6 +37,5 @@ public class ErrorAssertions {
         softAssert.assertEquals(actual.size(), expected.size(), "Arrays have different length");
         softAssert.assertTrue(expected.containsAll(actual));
         softAssert.assertAll();
-
     }
 }
