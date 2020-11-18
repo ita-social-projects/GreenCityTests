@@ -130,19 +130,16 @@ public class ItemsContainer implements StableWebElementSearch {
      * @return ItemComponent
      */
     protected ItemComponent findItemComponentByParameters(NewsData news) {
-        ItemComponent result = null;
         for (ItemComponent cur : getItemComponents()) {
             if (cur.getTitleText().toLowerCase().equals(news.getTitle().toLowerCase())
                     && cur.getTagsText().equals(news.getTagsName())
-                    && news.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
-                result = cur;
+                    && news.getContent().toLowerCase().trim().equals(cur.getContentText().toLowerCase().trim())
+            ) {
+                return cur;
             }
         }
-        if (result == null) {
-            logger.warn("News with parameters " + news.toString() + "not exist");
-            throw new RuntimeException("ItemComponent with parameters " + news.toString() + " not found");
-        }
-        return result;
+        logger.warn("News with parameters " + news.toString() + " does not exist");
+        throw new RuntimeException("ItemComponent with parameters " + news.toString() + " not found");
     }
 
     /**
