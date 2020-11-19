@@ -53,7 +53,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
-    @Test(testName = "GC-872")
+    @Test(testName = "GC-872", description = "GC-872")
     @Description("Unregistered users can’t edit reply on the News page")
     public void unregisteredUsersCanNotEditReply() {
         logger.info("Verify that unregistered users can’t edit reply on the News page");
@@ -78,7 +78,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .chooseReplyByNumber(0).isEditReplyButtonDisplayed());
     }
 
-    @Test(testName = "GC-871")
+    @Test(testName = "GC-871", description = "GC-871")
     @Description("Logged users can edit their own replies on the 'News' page.")
     public void loggedUsersCanEditTheirReply() {
         logger.info("Verify that logged users can edit their own reply on the News page");
@@ -98,7 +98,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .clickReplyEditButton();
     }
 
-    @Test(testName = "GC-861")
+    @Test(testName = "GC-861", description = "GC-861")
     @Description("Logged users can edit their own comments on the 'News' page.")
     public void loggedUsersCanEditOwnComments() {
         User user = UserRepository.get().temporary();
@@ -114,7 +114,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
 
     }
 
-    @Test(testName = "GC-862")
+    @Test(testName = "GC-862", description = "GC-862")
     @Description("Unlogged users can not edit their own comments on the 'News' page.")
     public void unloggedUsersCanNotEditComments() {
         throw new SkipException("This test is not implemented!");

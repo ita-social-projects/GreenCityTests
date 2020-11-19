@@ -109,7 +109,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-668")
+    @Test(testName = "GC-668", description = "GC-668")
     public void countOfColumnsInGridViewTest() {
         logger.info("Number of columns depending on screen width " + screenWidth);
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
@@ -121,7 +121,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-669")
+    @Test(testName = "GC-669", description = "GC-669")
     @Description("Verify UI of the News page in Gallery view for different screen resolutions")
     public void verifyingUIForDifferentScreenResolutionTest() {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNewsMinimized();
@@ -131,7 +131,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test(testName = "GC-340")
+    @Test(testName = "GC-340", description = "GC-340")
     public void verifyContentItemsUITest() {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();

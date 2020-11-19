@@ -45,7 +45,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         screenWidth2 = Arrays.asList(576, 360);
     }
 
-    @Test(testName = "GC-707")
+    @Test(testName = "GC-707", description = "GC-707")
     @Description("Verify that Content items are displayed as a list in case if 'List view' option is activated")
     public void isDisplayedListContent() {
         logger.info("Starting isDisplayedListContent");
@@ -57,7 +57,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-704")
+    @Test(testName = "GC-704", description = "GC-704")
     @Description("Verify that ‘List view’ icon is present on the 'Eco news' page")
     public void isPresentListView() {
         logger.info("Starting isPresentListView");
@@ -79,7 +79,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-710")
+    @Test(testName = "GC-710", description = "GC-710")
     @Description("Verify that 6 first Content items are displayed by default")
     public void isDisplayedFirstSixContent() {
         logger.info("Starting isDisplayedFirstSixContent");
@@ -90,7 +90,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         Assert.assertTrue(ecoNewsPage.getItemsContainer().getItemsSize() >= 6);
     }
 
-    @Test(testName = "GC-332")
+    @Test(testName = "GC-332", description = "GC-332")
     @Description("Verify that content items are displayed in a list view")
     public void isDisplayedContentItems() {
         logger.info("Starting isDisplayedContentItems");
@@ -105,7 +105,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-333")
+    @Test(testName = "GC-333", description = "GC-333")
     @Description("Verify that content items have all specified elements.")
     public void isPresentAllItemElements() {
         logger.info("Starting isPresentAllItemElements");
@@ -126,7 +126,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-352")
+    @Test(testName = "GC-352", description = "GC-352")
     @Description("Verify that Content items are displayed in chronological order")
     public void isItemsDisplayedChronological() {
         logger.info("isItemsDisplayedChronological");
@@ -150,7 +150,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-720")
+    @Test(testName = "GC-720", description = "GC-720")
     @Description("Verify that content items contain all required UI elements according to mock-up.")
     public void isPresentAllContentElements() {
         logger.info("isPresentAllContentElements");
@@ -239,7 +239,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-725")
+    @Test(testName = "GC-725", description = "GC-725")
     @Description("Verify that displayed image in List view is default image if user didn’t choose own image during news creation.")
     public void isPresentDefaultImage() {
         logger.info("isPresentDefaultImage");
@@ -278,7 +278,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-708")
+    @Test(testName = "GC-708", description = "GC-708")
     @Description("Verify that when Title consist of 4 row, then Description consist of 0 row.")
     public void isZeroRowDescriptionWhenFourRowsTitle() {
         logger.info("isZeroRowDescriptionWhenFourRowsTitle");
@@ -309,7 +309,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-723")
+    @Test(testName = "GC-723", description = "GC-723")
     @Description("Verify that when Title consist of 3 row, then Description consist of 1 row.")
     public void isOneRowDescriptionWhenThreeRowsTitle() {
         logger.info("isOneRowDescriptionWhenThreeRowsTitle");
@@ -340,7 +340,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-722")
+    @Test(testName = "GC-722", description = "GC-722")
     @Description("Verify that when Title consist of 2 row, then Description consist of 2 row.")
     public void isTwoRowsDescriptionWhenTwoRowsTitle() {
         logger.info("isTwoRowsDescriptionWhenTwoRowsTitle");
@@ -371,7 +371,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-724")
+    @Test(testName = "GC-724", description = "GC-724")
     @Description("Verify that when Title consist of 1 row, then Description consist of 3 row.")
     public void isTwoRowsDescriptionWhenOneRowsTitle() {
         logger.info("isTwoRowsDescriptionWhenOneRowsTitle");

@@ -31,7 +31,7 @@ public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
                 };
     }
 
-    @Test(testName = "GC-605", dataProvider = "minimalDataNews")
+    @Test(testName = "GC-605", description = "GC-605", dataProvider = "minimalDataNews")
     @Description("Verify that news will be created with min symbols entered in all editable fields")
     public void createNewsWithMinimalValuesTest(EcoNewsPOSTdto news) {
         logger.info("Running createNewsWithMinimalValuesTest");

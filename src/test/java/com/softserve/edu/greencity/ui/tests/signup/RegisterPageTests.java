@@ -133,7 +133,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
      * Putting empty values into register form
      * and reading the validation messages.
      */
-    @Test(dataProvider = "emptyFields", testName = "GC-502, GC-207, GC-208, GC-209, GC-210")
+    @Test(dataProvider = "emptyFields", testName = "GC-502, GC-207, GC-208, GC-209, GC-210", description = "GC-502, GC-207, GC-208, GC-209, GC-210")
     @Description("Verifying empty field validation messages")
     public void checkEmptyFieldsValidation(User userLoginCredentials) {
         logger.info("Starting checkEmptyFieldsValidation. Input values = "
@@ -181,7 +181,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-501")
+    @Test(testName = "GC-501", description = "GC-501")
     @Description("Verify that pop up 'Sign up' opens after click 'Sign up' link on the ‘Sign in’ pop up.")
     public void navigateFromSignInToSignUp() {
         logger.info("Starting navigateFromSignInToSignUp");
@@ -200,7 +200,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidEmail", testName = "GC-509")
+    @Test(dataProvider = "invalidEmail", testName = "GC-509", description = "GC-509")
     @Description("Verify that user is not registered, when he enters invalid e-mail format in ‘Email’ field.")
     public void invalidEmailRegistration(User invalidEmailCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -218,7 +218,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidConfirmPass", testName = "GC-519")
+    @Test(dataProvider = "invalidConfirmPass", testName = "GC-519", description = "GC-519")
     @Description ("Verify that user is not registered when 'Confirm password' does not match to 'Password'")
     public void invalidConfirmPassRegistration(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -238,7 +238,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     }
 
 
-    @Test(dataProvider = "invalidPassword", testName = "GC-517, GC-516")
+    @Test(dataProvider = "invalidPassword", testName = "GC-517, GC-516", description = "GC-517, GC-516")
     @Description("Verify that user is not registered with password, that does not contain all required characters.")
     public void invalidPassDigitValidation(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
@@ -267,7 +267,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     }
 
 
-    @Test(testName = "GC-499")
+    @Test(testName = "GC-499", description = "GC-499")
     @Description ("Verify that pop up ‘Sign up’ form closes after unregistered user click on X at the top-right corner of a window")
     public void checkCloseRegisterModalButton() {
         logger.info("Starting checkCloseRegisterModalButton:");
@@ -280,7 +280,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-527")
+    @Test(testName = "GC-527", description = "GC-527")
     @Description ("Verify that symbols entered in 'Password' and 'Confirm password' fields on 'Sign up' pop up transforms into dots.")
     public void checkPasswordIsHidden() {
         logger.info("Starting checkInvalidFieldsValidation:");
@@ -298,7 +298,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-485")
+    @Test(testName = "GC-485", description = "GC-485")
     @Description("Verify that background behind the Registration form is dimmed out")
     public void checkBackgroundIsDimmed() {
         logger.info("Starting checkBackgroundIsDimmed:");
@@ -308,7 +308,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getAttribute("class").contains("cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"));
     }
 
-    @Test(dataProvider = "invalidNameCredentials", testName = "GC-205")
+    @Test(dataProvider = "invalidNameCredentials", testName = "GC-205", description = "GC-205")
     @Description("Verify that user is not registered with too long 'User name'")
     public void checkUserFieldMaxLength(User userLoginCredentials) {
         loadApplication();
@@ -331,7 +331,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     }
 
     //TODO ask some one info about expected params and refactor
-    @Test(dataProvider = "validUserCredentials", testName = "GC-487, GC-216")
+    @Test(dataProvider = "validUserCredentials", testName = "GC-487, GC-216", description = "GC-487, GC-216")
     @Description("Verify UI on Sign-up page")
     public void checkResponsiveSingUp(User userLoginCredentials) {
         driver.manage().window().setSize(new Dimension(1024, 768));
@@ -430,7 +430,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-482")
+    @Test(testName = "GC-482", description = "GC-482")
     @Description("Verify that User can close Registration form by pressing \"x\" in top-right corner of the modal window")
     public void checkThatUserCanCloseSingUp() {
         boolean isSignUpComponentClosed =
@@ -441,7 +441,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         Assert.assertTrue(isSignUpComponentClosed);
     }
 
-    @Test(testName = "GC-500")
+    @Test(testName = "GC-500", description = "GC-500")
     @Description("Verify that user sees “Sign up” link on the popup ‘Sign in’ form.")
     public void singUpButtonExist() {
         loadApplication();
@@ -454,7 +454,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-498")
+    @Test(testName = "GC-498", description = "GC-498")
     @Description("Verify that, Unregistered user sees My cabinet button, after accesses to the main page of the application")
     public void myHabitsExistForUnsignedUser() {
         Assert.assertEquals(new WelcomePage(driver)
@@ -462,7 +462,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getSubtitleText(), "Please enter your details to sign in");
     }
 
-    @Test(testName = "GC-213", dataProvider = "unregisterCredentials", retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test(testName = "GC-213", description = "GC-213", dataProvider = "unregisterCredentials", retryAnalyzer = RetryAnalyzerImpl.class)
     @Description("Verify that user sees popup about successfully registration after registration on the site")
     public void successRegistrationPopUpDisplayed(User userLoginCredentials) {
         loadApplication();
@@ -475,7 +475,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                         .isDisplayed());
     }
 
-    @Test(testName = "GC-212")
+    @Test(testName = "GC-212", description = "GC-212")
     @Description("Verify that unregistered user sees popup with registration form after clicking on the 'Sign up' button")
     public void registrationFormIsDisplayed() {
         logger.info("Starting registration form is displayed");

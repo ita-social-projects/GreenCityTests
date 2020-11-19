@@ -43,7 +43,7 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
         };
     }
 
-    @Test(dataProvider = "improperNewsWithShortResponse", testName = "GC-596, GC-598")
+    @Test(dataProvider = "improperNewsWithShortResponse", testName = "GC-596, GC-598", description = "GC-596, GC-598")
     public void createNewsWithShortResponseTest(String testId, EcoNewsPOSTdto ecoNews, ErrorMessage expectedError){
         logger.info("Running createNewsWithShortResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);

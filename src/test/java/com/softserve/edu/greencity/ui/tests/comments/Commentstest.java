@@ -28,7 +28,7 @@ public class Commentstest extends GreenCityTestRunner {
                 .switchToSingleNewsPageByNumber(0);
     }
 
-    @Test(testName = "GC-672")
+    @Test(testName = "GC-672", description = "GC-672")
     @Description("Unregistered users can not use 'Edit’ button")
     public void editIsNotAvailableForUnregisteredUsers() {
         logger.info("Verify that ‘Edit’ button is not available for unregistered User");

@@ -29,7 +29,7 @@ public class RegistrationTests extends GreenCityTestRunner {
     }
 
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-199, GC-206", description = "GC-199, GC-206")
     @Description("GC-199 - Verify that unregistered user can register after entering valid values in registration form" +
             "GC-206 - Verify that Password must contain at least one digit, special character, upper and lowercase letter when user registered")
     @SneakyThrows
@@ -49,7 +49,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         Assert.assertTrue(isLogInNow());
     }
 
-    @Test(testName = "GC-200")
+    @Test(testName = "GC-200", description = "GC-200")
     @Description("Verify that unregistered user sees popup window 'Sign in' after clicking on the “My habits” button")
     public void signInAfterMyhabits() {
         logger.info("Starting signInAfterMyhabits");
@@ -60,7 +60,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         Assert.assertEquals(titleString, SIGN_IN_TITLE);
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-512")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-512", description = "GC-512")
     @Description("Verify that user is not registered if he didn’t confirm email address in the mailbox.")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         logger.info("Start test registration without mail verifying");
@@ -100,7 +100,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-513", description = "GC-513")
     @Description("Verify that user receive a verification email about registration in the application to email address after successfully registration.")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         logger.info("Start test registration check if mail received");
@@ -122,7 +122,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-204")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-204", description = "GC-204")
     @Description("Verify that Email must be existence and unique while new user registration")
     public void existingUserRegistration(User userLoginCredentials) {
         new GoogleMailAPI().clearMail(userLoginCredentials.getEmail(), userLoginCredentials.getPassword());
