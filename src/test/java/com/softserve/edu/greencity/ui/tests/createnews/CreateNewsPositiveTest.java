@@ -5,41 +5,28 @@ import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.data.econews.Tag;
-import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
-import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
-import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
+import com.softserve.edu.greencity.ui.pages.econews.*;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
 import com.softserve.edu.greencity.ui.tests.runner.RemoteSkipTestAnalyzer;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
+
 import io.qameta.allure.Description;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
+
 @Listeners(value = RemoteSkipTestAnalyzer.class)
 
 public class CreateNewsPositiveTest extends GreenCityTestRunner {
-
-    private final String CREATE_NEWS_TITLE = "Create news";
-    private final String CONTENT_ERROR = "Must be minimum 20 symbols";
-    private final String INVALID_SOURCE_ERROR = "Please add the link of original article/news/post. Link must start with http(s)://";
-    private final String IMAGE_ERROR = "Download PNG or JPG only. File size should be less than 10MB";
-    private final String VALID_TITLE = "Green Day Test";
-    private final String VALID_CONTENT = "Content = description";
-    private final String TAGS_ERROR = "Only 3 tags can be added";
-
-
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
@@ -58,7 +45,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage();
 
-        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE);
+        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE.getText());
         softAssert.assertTrue(createNewsPage.isPublishButtonDisplayed());
         softAssert.assertAll();
 
@@ -121,7 +108,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithInvalidContentField());
 
         Assert.assertFalse(createNewsPage.isPublishButtonClickable());
-        Assert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR);
+        Assert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR.getText());
 
         createNewsPage.signOut();
     }
@@ -138,7 +125,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithInvalidSourceField());
 
         softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
-        softAssert.assertEquals(createNewsPage.getInvalidSourceErrorText(), INVALID_SOURCE_ERROR);
+        softAssert.assertEquals(createNewsPage.getInvalidSourceErrorText(), INVALID_SOURCE_ERROR.getText());
         softAssert.assertAll();
 
         createNewsPage.signOut();
@@ -206,7 +193,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithEmptyContentField());
 
         softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
-        softAssert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR);
+        softAssert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR.getText());
         softAssert.assertAll();
 
         createNewsPage.signOut();
@@ -243,8 +230,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .goToPreViewPage();
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
-        softAssert.assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE);
-        softAssert.assertEquals(preViewPage.getContentFieldText().trim(), VALID_CONTENT);
+        softAssert.assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE.getText());
+        softAssert.assertEquals(preViewPage.getContentFieldText().trim(), VALID_CONTENT.getText());
         softAssert.assertAll();
 
         preViewPage.signOut();
@@ -263,7 +250,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .clickCancelButton()
                 .clickContinueEditingButton();
 
-        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE);
+        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE.getText());
         softAssert.assertAll();
 
         createNewsPage.signOut();
@@ -301,7 +288,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadGIFImage();
-        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR);
+        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR.getText());
 
         createNewsPage.signOut();
 
@@ -323,7 +310,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .uploadTooLargeImage();
         try {
             String errorMsg = createNewsPage.getInvalidImageErrorText();
-            Assert.assertEquals(errorMsg, IMAGE_ERROR);
+            Assert.assertEquals(errorMsg, IMAGE_ERROR.getText());
             //TODO ^ Site BUG: Large image can be uploaded ^
         } catch (TimeoutException | NoSuchElementException er) {
             Assert.fail("No error message appeared");
@@ -442,7 +429,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getNewsWithInvalidTags(tags));
 
         softAssert.assertTrue(createNewsPage.isTagsErrorDisplayed());
-        softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR);
+        softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR.getText());
 
         createNewsPage.goToPreViewPage().backToCreateNewsPage();
 
@@ -450,7 +437,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.getTagsComponent().selectTags(tags);
 
         softAssert.assertTrue(createNewsPage.isTagsErrorDisplayed());
-        softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR);
+        softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR.getText());
 
         EcoNewsPage ecoNewsPage = createNewsPage.publishNews();
 
@@ -674,9 +661,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .publishNews();
 
         softAssert.assertTrue(ecoNewsPage
-                .isNewsDisplayedByTitle(newsWithEmptySource.getTitle()),
+                        .isNewsDisplayedByTitle(newsWithEmptySource.getTitle()),
                 "Checking if news with title \"" + newsWithEmptySource.getTitle() + "\" is displayed");
-
 
 
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithEmptySourceField().getTitle());
