@@ -2,8 +2,8 @@ package com.softserve.edu.greencity.ui.tests.comments;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
-
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class CommentCreation extends GreenCityTestRunner {
+    private NewsData news;
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -26,26 +27,27 @@ public class CommentCreation extends GreenCityTestRunner {
     }
 
     @BeforeClass
-    public void createNews(){
-
+    public void createNews() {
+        news = NewsDataRepository.get().getNewsWithValidData("Comment Creation test");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithValidData())
+                .fillFields(news)
                 .publishNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment("First Comment")
                 .chooseCommentByNumber(0)
                 .addReply("First reply");
         signOutByStorage();
     }
+
     @AfterClass
     public void deleteNews() {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
-        getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
-        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
+        getEcoNewsService().deleteNewsByTitle(news.getTitle());
+        softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(news.getTitle()));
     }
 
     @Test
@@ -57,7 +59,7 @@ public class CommentCreation extends GreenCityTestRunner {
         ReplyComponent replyComponent = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
                 .addReply(replyText).openReply().chooseReplyByNumber(0);
@@ -74,7 +76,7 @@ public class CommentCreation extends GreenCityTestRunner {
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment(commentText);
 
@@ -90,7 +92,7 @@ public class CommentCreation extends GreenCityTestRunner {
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
 
@@ -106,7 +108,7 @@ public class CommentCreation extends GreenCityTestRunner {
         CommentComponent createTestData = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment("Check Delete")
                 .chooseCommentByNumber(0)
@@ -114,7 +116,7 @@ public class CommentCreation extends GreenCityTestRunner {
         signOutByStorage();
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
 
@@ -131,7 +133,7 @@ public class CommentCreation extends GreenCityTestRunner {
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment(commentText)
                 .chooseCommentByNumber(0)
@@ -148,7 +150,7 @@ public class CommentCreation extends GreenCityTestRunner {
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .getCommentPart();
         int numberBeforePublish = commentPart.getNumberOfComment();
         int numberAfterPublish = commentPart.addComment(commentText).getNumberOfComment();
