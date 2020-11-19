@@ -145,7 +145,7 @@ public final class NewsDataRepository {
         return new NewsData("The loss of any species is devastating. However, the decline or " +
                 "extinction of one species can trigger an avalanche within an ecosystem, wiping out" +
                 " many species in the process",
-                tags, "news.com", "Content", "src/test/resources/invalid.gif");
+                tags, "news.com", "Content", "src/test/resources/images/gifImage.gif");
     }
 
     public NewsData getExistingNews() {

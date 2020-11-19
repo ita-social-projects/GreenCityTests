@@ -80,8 +80,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
 
     @Test(testName = "GC-607", description = "GC-607")
     @Description("Verify that user can cancel news creation if he decided to drop posting")
-    public void verifyThatUserCanCancelNewsCreations() {
-        logger.info("verifyThatUserCanCancelNewsCreations starts");
+    public void verifyThatUserCanCancelNewsCreation() {
+        logger.info("verifyThatUserCanCancelNewsCreation starts");
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
@@ -92,6 +92,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
                 .clickCancelEditingButton();
 
         softAssert.assertTrue(ecoNewsPage.isGridViewDisplayed());
+        softAssert.assertFalse(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
         softAssert.assertAll();
 
         ecoNewsPage.signOut();
@@ -120,5 +121,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
 
         createNewsPage.signOut();
     }
+
+    //TODO add some test on publishing news right from preview page
 
 }

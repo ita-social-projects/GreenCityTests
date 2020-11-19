@@ -8,7 +8,7 @@
             <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest"/>
             <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPositiveTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTest"/>
+<!--            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsLegacyTest"/>-->
             <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsPageTest"/>
             <class name="com.softserve.edu.greencity.ui.tests.signin.ForgotPasswordTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signin.LoginTest"/>
