@@ -1,20 +1,17 @@
 package com.softserve.edu.greencity.ui.tests.signin;
 
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import io.qameta.allure.Description;
-import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
-
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import io.qameta.allure.Description;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.*;
 
@@ -303,9 +300,9 @@ public class LoginTest extends GreenCityTestRunner {
         manualLoginComponent.getEmailField().clear();
         String emailFieldBorderColor = manualLoginComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
-    softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
-    softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
-    softAssert.assertAll();
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
+        softAssert.assertTrue(manualLoginComponent.isUnsuccessfulEmailValidation());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-526", description = "GC-526")
@@ -358,64 +355,5 @@ public class LoginTest extends GreenCityTestRunner {
                 .signIn().getTitleText();
 
         Assert.assertEquals(titleString, SIGN_IN_TITLE.getText());
-    }
-    //TODO auth in google via api before clickSingInWithGoogleButton()
-    @Test(testName = "GC-218", description = "GC-218")
-    @Description("Verify that Unregistered user can Sign Up with Google account")
-    public void signUpByGoogle() {
-        logger.info("Starting signUpByGoogle");
-        User user = UserRepository.get().googleUserCredentials();
-
-        WelcomePage welcomePage = loadApplication();
-        welcomePage
-                .signUp()
-                .clickGoogleSignUpButton()
-                .successfulLoginByGoogle(user);
-        String topUserName = welcomePage.getTopUserName();
-
-        welcomePage.signOut().googleAccountSignOut();
-
-        Assert.assertEquals(topUserName, TOP_USER_NAME.getText());
-    }
-//TODO auth in google via api before clickSingInWithGoogleButton()
-    @Test(testName = "GC-220", description = "GC-220")
-    @Description("Verify that Unregistered user can Sign In with Google account")
-    public void signInByGoogle() {
-        logger.info("Starting signInByGoogle");
-        User user = UserRepository.get().googleUserCredentials();
-
-        WelcomePage welcomePage = loadApplication();
-        welcomePage
-                .signIn()
-                .clickSingInWithGoogleButton()
-                .successfulLoginByGoogle(user);
-
-        String topUserName = welcomePage.getTopUserName();
-
-        welcomePage.signOut().googleAccountSignOut();
-
-        Assert.assertEquals(topUserName, TOP_USER_NAME.getText());
-    }
-
-    //TODO auth in google via api before clickSingInWithGoogleButton()
-    @Test(testName = "GC-234", description = "GC-234")
-    @Description("Verify that user can't sign in with Google Account credentials on 'Sign in' pop-up window")
-    public void signInByGoogleCredentialsOnManualSignInPopUp() {
-        logger.info("Starting signInByGoogleCredentialsOnManualSignInPopUp");
-        User user = UserRepository.get().googleUserCredentials();
-        WelcomePage welcomePage = loadApplication()
-                .signUp()
-                .clickGoogleSignUpButton()
-                .successfulLoginByGoogle(user);
-        softAssert.assertEquals(welcomePage.getTopUserName(), TOP_USER_NAME.getText());
-
-        welcomePage.signOut().googleAccountSignOut();
-        WebElement wrongEmailOrPasswordError = loadApplication()
-                .signIn()
-                .getManualLoginComponent()
-                .unsuccessfullyLogin(user)
-                .getWrongEmailOrPassError();
-        softAssert.assertTrue(wrongEmailOrPasswordError.isDisplayed());
-        softAssert.assertAll();
     }
 }
