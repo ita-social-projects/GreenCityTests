@@ -402,7 +402,7 @@ public class CreateNewsPage extends TopPart {
         scrollToElement(getPublishButton());
         clickPublishButton();
         try {
-            new WebDriverWait(driver, 20)
+            new WebDriverWait(driver, 10)
                     .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
         } catch (Exception e) {
             navigateMenuEcoNews();

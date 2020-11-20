@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
 import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.ui.data.UserRepository;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
@@ -8,6 +9,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -15,38 +17,41 @@ import org.testng.asserts.SoftAssert;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Properties;
 
 /**
  * Tests to verify "Create News" functional
+ * WARNING! This is a legacy class.
+ * Its test cases might be implemented in CreateNewsPositiveTest, CreateNewsNegativeTest and CreateNewsPreviewTest
+ * TODO merge with other classes and then delete this class
  * @author lv-493
  */
-public class CreateNewsTest extends GreenCityTestRunner {
+public class CreateNewsLegacyTest extends GreenCityTestRunner {
     User defaultUser;
-    private Properties property = new Properties();
+
     @BeforeClass
     public void readCredentials() {
-        Properties properties = new Properties();
-        try {
-            properties
-                    .load(new BufferedReader(new FileReader("src/test/resources/credentials.properties")));
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
-        defaultUser = new User(properties.getProperty("temporaryEmail"), System.getenv().get(property.getProperty("temporaryPass")));
+        defaultUser = UserRepository.get().temporary();
     }
 
     @BeforeMethod
     public void login() {
         if(isLogInNow()) return;
         loadApplication()
-                .loginIn(defaultUser)
-                .navigateMenuTipsTricks();
+                .loginIn(defaultUser);
     }
 
+    @DataProvider
+    public Object[] newsDataProvider() {
+        return new Object[]{
+                NewsDataRepository.get().getAllFieldsNews(),
+                NewsDataRepository.get().getRequiredFieldsNews(),
+                NewsDataRepository.get().getAllFieldsNews()
+        };
+    }
 
-    //@Test(dataProvider = "newsDataProvider")
+    @Test(dataProvider = "newsDataProvider")
     public void createNewsTest(NewsData newsData) {
         logger.info("createNewsTest starts with parameters: " + newsData.toString());
         EcoNewsPage econewsPage = loadApplication()
@@ -64,7 +69,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 "Text in Source field doesn't match with input data");
         softAssert.assertEquals(createNewsPage.getSelectedTagsNames(), newsData.getTagsName(),
                 "Tags don't match with input data");
-        if (newsData.getFilePath() != "") {
+        if (!newsData.getFilePath().equals("")) {
             softAssert.assertTrue(createNewsPage.isPictureUploaded(),
                     "Picture is not uploaded");
         }
@@ -80,7 +85,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      *@author lv-493
      * @param newsData
      */
-    //@Test(dataProvider = "newsDataProvider")
+    @Test(dataProvider = "newsDataProvider")
     public void createNewsFromPreViewTest(NewsData newsData) {
         logger.info("createNewsFromPreViewTest starts with parameters: " + newsData.toString());
         EcoNewsPage econewsPage = loadApplication()
@@ -91,11 +96,11 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 .fillFields(newsData)
                 .goToPreViewPage();
         SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(preViewPage.getContentFieldText(), newsData.getContent(),
+        softAssert.assertEquals(preViewPage.getContentFieldText().trim(), newsData.getContent().trim(),
                 "Text in Content field doesn't match with input data");
         softAssert.assertEquals(preViewPage.getTitleFieldText(), newsData.getTitle(),
                 "Text in Title field doesn't match with input data");
-        softAssert.assertEquals(preViewPage.getDateFieldText(), DateUtil.getCurrentDate(),
+        softAssert.assertEquals(preViewPage.getDateFieldText(), DateUtil.getCurrentDateMonthFirst(),
                 "Text in Date field doesn't match with input data");
         softAssert.assertEquals(preViewPage.getTagsNames(), newsData.getTagsName(),
                 "Tags don't match with input data");
@@ -110,7 +115,7 @@ public class CreateNewsTest extends GreenCityTestRunner {
      *@author lv-493
      * @param newsData
      */
-    //@Test(dataProvider = "newsDataProvider")
+    @Test(dataProvider = "newsDataProvider")
     public void createNewsAfterPreViewTest(NewsData newsData) {
         logger.info("createNewsAfterPreViewTest starts with parameters: " + newsData.toString());
         EcoNewsPage econewsPage = loadApplication()
@@ -122,9 +127,9 @@ public class CreateNewsTest extends GreenCityTestRunner {
         SoftAssert softAssertPreView = new SoftAssert();
         softAssertPreView.assertEquals(preViewPage.getTitleFieldText(), newsData.getTitle(),
                 "Text in Title field doesn't match with input data");
-        softAssertPreView.assertEquals(preViewPage.getContentFieldText(), newsData.getContent(),
+        softAssertPreView.assertEquals(preViewPage.getContentFieldText().trim(), newsData.getContent().trim(),
                 "Text in Content field doesn't match with input data");
-        softAssertPreView.assertEquals(preViewPage.getDateFieldText(), DateUtil.getCurrentDate(),
+        softAssertPreView.assertEquals(preViewPage.getDateFieldText(), DateUtil.getCurrentDateMonthFirst(),
                 "Text in Date field doesn't match with input data");
         softAssertPreView.assertTrue(preViewPage.isPublishButtonPresent(),
                 "Publish button is not present");
@@ -137,9 +142,9 @@ public class CreateNewsTest extends GreenCityTestRunner {
                 "Tags don't match with input data");
         softAssert.assertEquals(createNewsPage.getTitleFieldValue(), newsData.getTitle(),
                 "Text in Title field doesn't match with input data");
-        softAssert.assertEquals(createNewsPage.getContentFieldValue(), newsData.getContent(),
+        softAssert.assertEquals(createNewsPage.getContentFieldValue().trim(), newsData.getContent().trim(),
                 "Text in Content field doesn't match with input data");
-        softAssert.assertEquals(createNewsPage.getDateFieldText(), DateUtil.getCurrentDate("d MMM, yyyy"),
+        softAssert.assertEquals(createNewsPage.getDateFieldText(), DateUtil.getCurrentDateDayFirst(),
                 "Text in Date field doesn't match with input data");
         softAssert.assertEquals(createNewsPage.getSourceFieldValue(), newsData.getSource(),
                 "Text in Source field doesn't match with input data");
@@ -152,28 +157,20 @@ public class CreateNewsTest extends GreenCityTestRunner {
         econewsPage.signOut();
     }
 
-    /**
-     * Cancel news creation test.
-     * @author lv-493
-     */
-    //@Test
-    public void cancelNewsCreatingTest() {
-        logger.info("cancelNewsCreatingTest starts");
-        EcoNewsPage econewsPage = loadApplication()
-                .navigateMenuEcoNews();
-        int expectedCount = econewsPage.getNumberOfItemComponent();
-        econewsPage = econewsPage.gotoCreateNewsPage()
-                .cancelNewsCreating();
-        Assert.assertEquals(econewsPage.getNumberOfItemComponent(), expectedCount);
-        Assert.assertEquals(driver.getTitle(), "Eco news");
-        econewsPage.signOut();
+
+    @DataProvider
+    public Object[] newsInvalidDataProvider() {
+        return new Object[]{
+                NewsDataRepository.get().getNewsWithInvalidData()
+        };
     }
+
     /**
      * Create news negative test
      *@author lv-493
      * @param newsData
      */
-    //@Test(dataProvider = "newsInvalidDataProvider", invocationCount = 4)
+    @Test(dataProvider = "newsInvalidDataProvider", invocationCount = 4)
     public void createNewsNegativeTest(NewsData newsData) {
         logger.info("createNewsNegativeTest starts with parameters: " + newsData.toString());
         SoftAssert softAssert = new SoftAssert();
@@ -202,25 +199,16 @@ public class CreateNewsTest extends GreenCityTestRunner {
         preViewPage.signOut();
     }
 
-    @DataProvider
-    public Object[] newsDataProvider() {
-        return new Object[]{
-                NewsDataRepository.get().getAllFieldsNews(),
-                NewsDataRepository.get().getRequiredFieldsNews(),
-                NewsDataRepository.get().getAllFieldsNews()
-        };
-    }
-
-    @DataProvider
-    public Object[] newsInvalidDataProvider() {
-        return new Object[]{
-                NewsDataRepository.get().getNewsWithInvalidData()
-        };
-    }
-
     @AfterMethod
     public void afterMethod() {
         driver.manage().deleteAllCookies();
+    }
+
+    @AfterClass
+    public void cleanUp() {
+        EcoNewsService service = new EcoNewsService();
+        service.deleteNewsByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle());
+        service.deleteNewsByTitle(NewsDataRepository.get().getRequiredFieldsNews().getTitle());
     }
 
 }

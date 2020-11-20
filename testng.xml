@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="classes" thread-count="5">
-    <test name="registrationAndLogin">
+<!-- ===============================   UI  ============================= -->
+    <test name="UI_smoke">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.SmokeTest"/>
+
+        </classes>
+    </test>
+
+    <test name="UI_registrationAndLogin">
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegisterPageTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegistrationTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPositiveTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsPageTest"/>
             <class name="com.softserve.edu.greencity.ui.tests.signin.ForgotPasswordTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signin.LoginTest"/>
 <!--
@@ -21,4 +24,53 @@
 -->
         </classes>
     </test>
+
+    <test name="UI_createNews">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPositiveTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsNegativeTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPreviewTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsLegacyTest"/>
+        </classes>
+    </test>
+
+    <test name="UI_viewAllNews">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
+<!--            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsPageTest"/>-->
+        </classes>
+    </test>
+
+    <test name="UI_viewSingleNews">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.viewsinglenews.EcoNewsSingleViewTest"/>
+        </classes>
+    </test>
+
+    <test name="UI_comments">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.CheckElementOfCommentTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.CommentCreation"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.Commentstest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.EcoNewsCommentTests"/>
+        </classes>
+    </test>
+
+<!-- ===============================   API  ============================= -->
+    <test name="API_registrationAndLogin">
+        <classes>
+            <class name="com.softserve.edu.greencity.api.tests.signin.SignInApiTest"/>
+        </classes>
+    </test>
+
+    <test name="API_createNews">
+        <classes>
+            <class name="com.softserve.edu.greencity.api.tests.econews.positive.CreateNewsWithMinimalValuesTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithArrayResponseTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithDetailedResponseTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithShortResponseTest"/>
+        </classes>
+    </test>
+
 </suite>

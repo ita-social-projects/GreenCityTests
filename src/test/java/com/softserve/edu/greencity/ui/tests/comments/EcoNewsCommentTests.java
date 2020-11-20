@@ -24,7 +24,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
         String comment = "different news";
         User user = UserRepository.get().temporary();
 
-        newsData = new NewsData(Arrays.asList(new Tag[]{Tag.ADS}), "Comment, please!",
+        newsData = new NewsData(Arrays.asList(Tag.ADS), "Comment, please!",
                 "I need a lot of comments! Comment, go on!");
 
         loadApplication()
@@ -64,7 +64,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0);
+                .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .chooseCommentByNumber(0)
                 .addReply(reply);
@@ -72,7 +72,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
 
         SingleNewsPage newpage = loadApplication()
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0);
+                .switchToSingleNewsPageByParameters(newsData);
 
         Assert.assertFalse(newpage.getCommentPart().chooseCommentByNumber(0).openReply()
                 .chooseReplyByNumber(0).isEditReplyButtonDisplayed());
@@ -89,7 +89,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0);
+                .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .chooseCommentByNumber(0)
                 .addReply(reply)
@@ -108,7 +108,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
-                .switchToSingleNewsPageByNumber(0);
+                .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .addComment(comment);
 
