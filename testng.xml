@@ -36,8 +36,8 @@
         </classes>
     </test>
 
-    <test name="Create_news_independent" thread-count="4">
-    <!-- Tests that create news, but will not fail if other news is created at the same time
+    <test name="Independent_news_creation" thread-count="4">
+    <!-- Tests that may create news, but will not fail if other news is created at the same time
     (these tests should use switchToSingleNewsPageByParameters, but not ByNumber) -->
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPositiveTest"/>
@@ -49,25 +49,26 @@
             <class name="com.softserve.edu.greencity.ui.tests.comments.CommentCreation"/>
             <class name="com.softserve.edu.greencity.ui.tests.comments.Commentstest"/>
             <class name="com.softserve.edu.greencity.ui.tests.comments.EcoNewsCommentTests"/>
+
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest">
+                <methods>
+                    <exclude name="chronologicalNewsTest" />
+                </methods>
+            </class>
         </classes>
     </test>
 
-    <test name="View_all_news">
+    <test name="Separate_from_news_creation">
 <!--        Should be run separately from the tests that create or delete news. Don't create news by themselves-->
         <classes>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest">
+                <methods>
+                    <include name="chronologicalNewsTest" />
+                </methods>
+            </class>
 <!--            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsPageTest"/>-->
         </classes>
     </test>
-
-
-    <!--
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests">
-                <methods>
-                    <include name="isItemsDisplayedChronological" />
-                </methods>
-            </class>
--->
 
 </suite>
