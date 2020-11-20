@@ -86,9 +86,9 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         softAssert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
-        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));
-
-        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
+        //TMind that now the login window doesn't appear automatically
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.invisibilityOf(registerComponent.getCongratsModal()));
+        ManualLoginComponent manualLoginComponent = (new TopGuestComponent(driver)).clickSignInLink().getManualLoginComponent();
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
 
@@ -138,7 +138,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertEquals(
                 manualRegisterComponent
                         .getSignUpErrorsMsg(1),
-                "User with this email is already registered",
+                "The user already exists by this email",
                 "error msg mismatch"
         );
         softAssert.assertAll();

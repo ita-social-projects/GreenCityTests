@@ -71,23 +71,27 @@ public class GoogleMailAPI  {
         waitFroMassagesWithSubject("Verify your email address",true,5,10);
         String link = "";
         int count = 0;
-        while (true) {
-            Message[] email = emailUtils.getMessagesBySubject("Verify your email address", true, 5);
-            String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
-            Pattern pattern = Pattern.compile("https://greencity[^\"]+");
-            final Matcher m = pattern.matcher(mailContent);
-            m.find();
-            link = mailContent.substring( m.start(), m.end() )
-                    .replace("3D","")
-                    .replace("amp;","")
-                    .replace("=","")
-                    .replace("token","token=")
-                    .replace("user_id","user_id=");
-            if (++count == maxTries) {
-                return null;
-            }
-            return link;
+        Message[] email;
+        do {
+            email = emailUtils.getMessagesBySubject("Verify your email address", true, 5);
+        } while ((email.length == 0) && (++count < maxTries));
+
+        if(email.length == 0) {
+            return null;
         }
+
+        String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
+        Pattern pattern = Pattern.compile("https://greencity[^\"]+");
+        final Matcher m = pattern.matcher(mailContent);
+        m.find();
+        link = mailContent.substring( m.start(), m.end() )
+                .replace("3D","")
+                .replace("amp;","")
+                .replace("=","")
+                .replace("token","token=")
+                .replace("user_id","user_id=");
+
+        return link;
     }
 
     @Step("get green city auth confirm link from first mail")
