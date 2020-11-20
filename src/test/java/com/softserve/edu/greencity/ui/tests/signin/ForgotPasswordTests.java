@@ -140,7 +140,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG); //fails, bug, expected color = red, actual = gray
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE.getText()));
 
-        googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 50);
@@ -161,7 +161,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .clickForgotPasswordLink()
                 .successfullySubmit(user);
 
-        googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 30, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 5);
@@ -187,7 +187,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText()
                 .contains(RESTORE_EMAIL_ERROR_MESSAGE.getText()));
 
-        googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 20);

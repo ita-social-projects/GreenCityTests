@@ -16,7 +16,7 @@
         </classes>
     </test>
 
-    <test name="Registration_and_login">
+    <test name="Registration_and_login" thread-count="5">
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegisterPageTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegistrationTests"/>
