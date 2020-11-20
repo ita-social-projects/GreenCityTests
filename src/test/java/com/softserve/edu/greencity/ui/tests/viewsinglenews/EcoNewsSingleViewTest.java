@@ -96,7 +96,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     public void verifyEditAvailable() {
         logger.info("verifyEditAvailable starts");
         User user = UserRepository.get().temporary();
-        NewsData news = NewsDataRepository.get().getNewsWithValidData("verifyEditAvailable");
+        NewsData news = NewsDataRepository.get().getNewsWithValidData("VerifyEditAvailable");
         boolean editButtonExist = loadApplication()
                 .signIn()
                 .getManualLoginComponent()

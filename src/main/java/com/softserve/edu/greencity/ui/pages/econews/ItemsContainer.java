@@ -129,11 +129,11 @@ public class ItemsContainer implements StableWebElementSearch {
      * @param news
      * @return ItemComponent
      */
-    protected ItemComponent findItemComponentByParameters(NewsData news) {
+    public ItemComponent findItemComponentByParameters(NewsData news) {
         for (ItemComponent cur : getItemComponents()) {
             if (cur.getTitleText().toLowerCase().equals(news.getTitle().toLowerCase())
                     && cur.getTagsText().equals(news.getTagsName())
-                    && news.getContent().toLowerCase().trim().equals(cur.getContentText().toLowerCase().trim())
+                    && news.getContent().toLowerCase().trim().contains(cur.getContentText().toLowerCase().trim())
             ) {
                 return cur;
             }

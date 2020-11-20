@@ -423,9 +423,9 @@ public class EcoNewsPage extends TopPart {
     }
 
     @Step
-    public String getImageAttribute() {
+    public String getImageAttribute(NewsData newsData) {
        return getItemsContainer().
-                       chooseNewsByNumber(0).
+                       findItemComponentByParameters(newsData).
                        getImage().
                        getAttribute("src");
 
