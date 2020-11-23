@@ -42,7 +42,7 @@ public class GoogleMailAPI  {
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
     public Message[] getMassagesBySubject(String subject, boolean unread, int maxToSearch, long timeToWait){
-        waitFroMassagesWithSubject(subject,unread,maxToSearch,timeToWait);
+        waitForMassagesWithSubject(subject,unread,maxToSearch,timeToWait);
         return emailUtils.getMessagesBySubject(subject, unread,  maxToSearch);
     }
 
@@ -68,33 +68,37 @@ public class GoogleMailAPI  {
     @SneakyThrows(Exception.class)
     public String getconfirmURL(String mail, String pass,int maxTries) {
         connectToEmail(mail,pass);
-        waitFroMassagesWithSubject("Verify your email address",true,5,10);
+        waitForMassagesWithSubject("Verify your email address",true,5,30);
         String link = "";
         int count = 0;
-        while (true) {
-            Message[] email = emailUtils.getMessagesBySubject("Verify your email address", true, 5);
-            String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
-            Pattern pattern = Pattern.compile("https://greencity[^\"]+");
-            final Matcher m = pattern.matcher(mailContent);
-            m.find();
-            link = mailContent.substring( m.start(), m.end() )
-                    .replace("3D","")
-                    .replace("amp;","")
-                    .replace("=","")
-                    .replace("token","token=")
-                    .replace("user_id","user_id=");
-            if (++count == maxTries) {
-                return null;
-            }
-            return link;
+        Message[] email;
+        do {
+            email = emailUtils.getMessagesBySubject("Verify your email address", true, 5);
+        } while ((email.length == 0) && (++count < maxTries));
+
+        if(email.length == 0) {
+            return null;
         }
+
+        String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
+        Pattern pattern = Pattern.compile("https://greencity[^\"]+");
+        final Matcher m = pattern.matcher(mailContent);
+        m.find();
+        link = mailContent.substring( m.start(), m.end() )
+                .replace("3D","")
+                .replace("amp;","")
+                .replace("=","")
+                .replace("token","token=")
+                .replace("user_id","user_id=");
+
+        return link;
     }
 
     @Step("get green city auth confirm link from first mail")
     @SneakyThrows(Exception.class)
     public String getconfirmURL(String subject, String mail, String pass,String regex) {
         connectToEmail(mail,pass);
-        waitFroMassagesWithSubject(subject,true,5,10);
+        waitForMassagesWithSubject(subject,true,5,10);
         String link = "";
             Message[] email = emailUtils.getMessagesBySubject("Verify your email address", true, 5);
             String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
@@ -126,7 +130,7 @@ public class GoogleMailAPI  {
 
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
-    public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds){
+    public void waitForMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds){
         logger.info("Wait for email with subject: " + subject);
         User user = UserRepository.get().googleUserCredentials();
         connectToEmail(user.getEmail(),user.getPassword());
@@ -145,7 +149,7 @@ public class GoogleMailAPI  {
 
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
-    public void waitFroMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds,String email, String emailPassword){
+    public void waitForMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds, String email, String emailPassword){
         logger.info("Wait for email with subject: " + subject);
         long start = System.nanoTime()/ 1000000000;
         long end = start + ((long) timeToWaitInSeconds);

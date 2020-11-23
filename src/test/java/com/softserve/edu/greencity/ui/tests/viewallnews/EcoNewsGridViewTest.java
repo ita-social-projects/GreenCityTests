@@ -187,7 +187,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 .publishNews();
         for (Integer integer : screenWidth) {
             ecoNewsPage.changeWindowWidth(integer);
-            softAssert.assertEquals(ecoNewsPage.getImageAttribute(), defaultImagePath);
+            softAssert.assertEquals(ecoNewsPage.getImageAttribute(newsData), defaultImagePath);
         }
         //Clean up
         EcoNewsService ecoNewsService = new EcoNewsService();

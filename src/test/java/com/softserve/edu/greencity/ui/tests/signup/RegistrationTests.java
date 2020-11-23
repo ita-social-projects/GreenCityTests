@@ -1,25 +1,25 @@
 package com.softserve.edu.greencity.ui.tests.signup;
 
+import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.*;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
-
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner {
-
     private final String SIGN_IN_TITLE = "Welcome back!";
 
     @DataProvider
@@ -81,16 +81,14 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationUser(userLoginCredentials);
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        WebDriverWait wait = new WebDriverWait(driver, 6);
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
 
-        wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         softAssert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));
-
-        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
+        //TMind that now the login window doesn't appear automatically
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.invisibilityOf(registerComponent.getCongratsModal()));
+        ManualLoginComponent manualLoginComponent = (new TopGuestComponent(driver)).clickSignInLink().getManualLoginComponent();
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
 
@@ -140,7 +138,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertEquals(
                 manualRegisterComponent
                         .getSignUpErrorsMsg(1),
-                "User with this email is already registered",
+                "The user already exists by this email",
                 "error msg mismatch"
         );
         softAssert.assertAll();

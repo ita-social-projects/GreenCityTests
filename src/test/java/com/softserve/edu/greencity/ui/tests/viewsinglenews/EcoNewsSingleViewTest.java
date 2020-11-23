@@ -96,7 +96,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     public void verifyEditAvailable() {
         logger.info("verifyEditAvailable starts");
         User user = UserRepository.get().temporary();
-        NewsData news = NewsDataRepository.get().getNewsWithValidData();
+        NewsData news = NewsDataRepository.get().getNewsWithValidData("VerifyEditAvailable");
         boolean editButtonExist = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -105,7 +105,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(news)
                 .publishNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .editNewsButtonExist();
 
         Assert.assertTrue(editButtonExist, "Edit button doesn't exist");
@@ -146,7 +146,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                     .gotoCreateNewsPage()
                     .fillFields(newsWithSource)
                     .publishNews()
-                    .switchToSingleNewsPageByNumber(0);
+                    .switchToSingleNewsPageByParameters(newsWithSource);
 
             softAssert.assertTrue(singleNewsPage.getSourceTitleText().length() > 1,
                     "Checking if source title is present");
@@ -158,6 +158,32 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         } finally {
             EcoNewsService ecoNewsService = new EcoNewsService();
             ecoNewsService.deleteNewsByTitle(newsWithSource.getTitle());
+        }
+    }
+
+    @Test(testName = "GC-731", description = "GC-731")
+    @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
+    public void noSourceIfItWasntSpecified() {
+        logger.info("noSourceIfItWasntSpecified starts");
+
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
+        try {
+            SingleNewsPage singleNewsPage = loadApplication()
+                    .loginIn(UserRepository.get().temporary())
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(newsWithEmptySource)
+                    .publishNews()
+                    .switchToSingleNewsPageByParameters(newsWithEmptySource);
+
+            softAssert.assertEquals(singleNewsPage.getSourceLinkText(), "",
+                    "Checking if news has no source");
+            softAssert.assertAll();
+
+            singleNewsPage.signOut();
+        } finally {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
         }
     }
 
@@ -177,33 +203,8 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             Assert.assertEquals(suggestedNews.getItemComponentsCount(), 3);
             EcoNewsSuggestionsAssertion.assertSuggestionsByDate(suggestedNews, false);
         } else {
-            Assert.assertTrue(false, "Couldn't find suitable tag");
+            Assert.fail("Couldn't find suitable tag");
         }
     }
 
-    @Test(testName = "GC-731", description = "GC-731")
-    @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
-    public void noSourceIfItWasntSpecified() {
-        logger.info("noSourceIfItWasntSpecified starts");
-
-        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
-        try {
-            SingleNewsPage singleNewsPage = loadApplication()
-                    .loginIn(UserRepository.get().temporary())
-                    .navigateMenuEcoNews()
-                    .gotoCreateNewsPage()
-                    .fillFields(newsWithEmptySource)
-                    .publishNews()
-                    .switchToSingleNewsPageByNumber(0);
-
-            softAssert.assertEquals(singleNewsPage.getSourceLinkText(), "",
-                    "Checking if news has no source");
-            softAssert.assertAll();
-
-            singleNewsPage.signOut();
-        } finally {
-            EcoNewsService ecoNewsService = new EcoNewsService();
-            ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
-        }
-    }
 }

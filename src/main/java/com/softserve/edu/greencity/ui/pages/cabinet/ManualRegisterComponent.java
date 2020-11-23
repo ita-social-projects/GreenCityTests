@@ -427,7 +427,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     private ManualRegisterComponent waitForConfirmationEmail() {
-        new GoogleMailAPI().waitFroMassagesWithSubject("Verify your email address",true,5,30);
+        new GoogleMailAPI().waitForMassagesWithSubject("Verify your email address",true,5,30);
         return this;
     }
 
