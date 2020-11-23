@@ -1,7 +1,9 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
@@ -53,6 +55,16 @@ public class PreviewPage extends TopPart {
 
     @Step("Get date field text")
     public String getDateFieldText() {
+        int retriesLeft = 5;
+        do {
+            if (!getDateField().getText().contains("Date:")) { //The page displays a placeholder for milliseconds
+                return getDateField().getText();
+            }
+            else {
+                WaitsSwitcher.sleep(100);
+                retriesLeft--;
+            }
+        } while (retriesLeft > 0);
         return getDateField().getText();
     }
 
@@ -128,7 +140,12 @@ public class PreviewPage extends TopPart {
 
     @Step("Check if publish button is present")
     public boolean isPublishButtonPresent() {
-        return getPublishButton().isEnabled();
+        try {
+            return getPublishButton().isEnabled();
+        }
+        catch (TimeoutException er) {
+            return false;
+        }
     }
 
     @Step("Click on publish button")
@@ -174,6 +191,7 @@ public class PreviewPage extends TopPart {
     @Step("Publish news")
     public EcoNewsPage publishNews() {
         clickPublishButton();
+        navigateMenuEcoNews();
         return new EcoNewsPage(driver);
     }
 }

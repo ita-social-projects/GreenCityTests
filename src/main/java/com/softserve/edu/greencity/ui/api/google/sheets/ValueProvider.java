@@ -10,6 +10,9 @@ import java.lang.reflect.Method;
 
 import static com.softserve.edu.greencity.ui.api.google.sheets.GoogleSheet.getRow;
 
+/**
+ * A class that reads data from Google Sheets settings file (see GoogleSheet.java)
+ */
 public class ValueProvider {
     protected static final Logger logger = LoggerFactory.getLogger(ValueProvider.class);
 

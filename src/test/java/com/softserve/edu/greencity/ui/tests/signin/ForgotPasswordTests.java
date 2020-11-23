@@ -25,7 +25,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         return new GoogleMailAPI();
     }
 
-    @Test(testName = "GC-503")
+    @Test(testName = "GC-503", description = "GC-503") //testName - for IDEA/TestNG, description - for Allure
     @Description("Verify that user can sign in with valid credentials")
     public void isForgotPasswordPopup() {
         logger.info("Starting isForgotPasswordPopup");
@@ -37,7 +37,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         Assert.assertEquals(forgotPasswordTitle, FORGOT_PASS_TITLE.getText());
     }
 
-    @Test(testName = "GC-511")
+    @Test(testName = "GC-511", description = "GC-511")
     @Description("Verify that 'Email' field is highlighted and error-message is shown after user leaves 'Email' field empty")
     public void forgotPasswordWithEmptyEmailFieldValidation() {
         logger.info("Starting forgotPasswordWithEmptyEmailFieldValidation");
@@ -58,14 +58,15 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         };
     }
 
-    @Test(dataProvider = "getIncorrectEmails", testName = "GC-505")
+    @Test(dataProvider = "getIncorrectEmails", testName = "GC-505", description = "GC-505")
     @Description("Verify that 'Email' field is highlighted and error-message is shown after user enters not valid e-mail address")
     public void forgotPasswordWithInCorrectEmailFieldValidation(String incorrectEmail) {
         logger.info("Starting forgotPasswordWithInCorrectEmailFieldValidation");
         ForgotPasswordComponent forgotPasswordComponent = loadApplication()
                 .signIn()
                 .clickForgotPasswordLink()
-                .inputEmail(incorrectEmail);
+                .inputEmail(incorrectEmail)
+                .clickPicture(); //The validation error doesn't appear unless you click somewhere
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
@@ -74,7 +75,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-515")
+    @Test(testName = "GC-515", description = "GC-515")
     @Description("Verify that User is directed back to Sign In page after he clicks on 'Back to Sign in' link")
     public void directedBackToSignInFromForgot() {
         logger.info("Starting directedBackToSignInFromForgot");
@@ -87,7 +88,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         Assert.assertEquals(signInTitle, SIGN_IN_TITLE.getText());
     }
 
-    @Test(testName = "GC-518")
+    @Test(testName = "GC-518", description = "GC-518")
     @Description("Verify UI of the 'Forgot Password' popup according to the mock up")
     public void forgotPassFormValidation() {
         logger.info("Starting forgotPassFormValidation");
@@ -122,7 +123,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-520")
+    @Test(testName = "GC-520", description = "GC-520")
     @Description("Verify that Unregistered User cannot restore password")
     public void restorePassForUnregisterUser() {
         logger.info("Starting restorePassForUnregisterUser");
@@ -139,7 +140,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG); //fails, bug, expected color = red, actual = gray
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE.getText()));
 
-        googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 50);
@@ -147,7 +148,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-504")
+    @Test(testName = "GC-504", description = "GC-504")
     @Description("Verify that Registered User receives an e-mail with link to enter new password")
     public void successMailToRestorePass() {
         logger.info("Starting successMailToRestorePass");
@@ -160,14 +161,14 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .clickForgotPasswordLink()
                 .successfullySubmit(user);
 
-        googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 30, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 5);
         Assert.assertEquals(numberOfEmail, 1); //For some reason, email doesn't come when running remotely
     }
 
-    @Test(testName = "GC-521")
+    @Test(testName = "GC-521", description = "GC-521")
     @Description("Verify that Registered User does not receive email to restore password twice")
     public void unSuccessRestorePassTwice() {
         logger.info("Starting unSuccessRestorePassTwice");
@@ -176,7 +177,8 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         ForgotPasswordComponent forgotPasswordComponent = loadApplication()
                 .signIn()
                 .clickForgotPasswordLink()
-                .unsuccessfullySubmit(user);
+                .unsuccessfullySubmit(user)
+                .clickPicture();
 
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
@@ -185,7 +187,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText()
                 .contains(RESTORE_EMAIL_ERROR_MESSAGE.getText()));
 
-        googleMailAPI().waitFroMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 10, user.getEmail(), user.getPassword());
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(user.getEmail(), user.getPassword(),
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 20);

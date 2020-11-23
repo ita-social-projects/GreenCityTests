@@ -21,6 +21,10 @@ import java.util.regex.Pattern;
 
 import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
+/**
+ * Any one of news cards displayed at https://ita-social-projects.github.io/GreenCityClient/#/news
+ * Handled by ItemsContainer.java
+ */
 public final class ItemComponent {
 
     protected WebDriverWait wait;

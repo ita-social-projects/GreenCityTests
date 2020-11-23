@@ -1,19 +1,17 @@
 package com.softserve.edu.greencity.ui.tests.runner;
 
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
-import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
-import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteExecuteMethod;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.html5.RemoteWebStorage;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
@@ -25,17 +23,18 @@ import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
+/**
+ * A base class for UI tests. All test classes should extend this one.
+ */
 public abstract class GreenCityTestRunner {
     private static final String BASE_URL = ValueProvider.getBaseUrl();
-
+    private static int left = 160; //Total amount of UI tests
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
+    protected SoftAssert softAssert;
     boolean remote = ValueProvider.remote();
     ChromeOptions options = new ChromeOptions();
-
-    protected SoftAssert softAssert;
 
     @SneakyThrows
     @BeforeSuite
@@ -76,14 +75,14 @@ public abstract class GreenCityTestRunner {
             /*<=======================Remote capabilities=======================>*/
 
         } else {
-            /*<============================Locale============================>*/
+            /*<============================Local============================>*/
             driver = new RemoteWebDriver(
                     new URL("http://localhost:4444/wd/hub"), options);
         }
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(65, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(80, TimeUnit.SECONDS);
         driver.manage().window().maximize();
-        /*<============================Locale============================>*/
+        /*<============================Local============================>*/
     }
 
     @AfterClass(alwaysRun = true)
@@ -112,10 +111,15 @@ public abstract class GreenCityTestRunner {
         loggerTest();
     }
 
+    /**
+     * The first method your tests should start with.
+     * @return WelcomePage page object
+     */
     protected WelcomePage loadApplication() {
         if (!driver.getCurrentUrl().equals(BASE_URL)) {
-            driver.get(BASE_URL);   //Sometimes loadApplication() is called not in the beginning of a test,
-                                    //so this may be necessary
+            driver.get(BASE_URL);
+            /*Sometimes loadApplication() is called not in the beginning of a test,
+            so this may be necessary*/
         }
         return new WelcomePage(driver);
     }
@@ -146,14 +150,12 @@ public abstract class GreenCityTestRunner {
         WebDriverManager.chromiumdriver().setup();
     }
 
-    private static int left = 97;
-
     public void loggerTest() {
         left = left - 1;
 
 
         logger.info("logging from thread " + Thread.currentThread().getId());
-        logger.info("||||||  Tests left " + (left) + "  |||||");
+        logger.info("||||||  UI tests left " + (left) + "  |||||");
         logger.info("\n----------------------------------------------------------------------------\n");
 
     }

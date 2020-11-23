@@ -24,7 +24,7 @@ import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
-    @Test(testName = "C-670")
+    @Test(testName = "GC-670", description = "GC-670")
     @Description("Verify that User can return to News from single view by clicking ‘Back to news’ button")
     public void returningToNewsViaBackToNews() {
         logger.info("Starting returningToNewsViaBackToNews");
@@ -44,7 +44,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-671")
+    @Test(testName = "GC-671", description = "GC-671")
     @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
     public void returnToFilteredNews() {
         logger.info("Starting returnToFilteredNews");
@@ -78,7 +78,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
     }
 
-    @Test(testName = "GC-672")
+    @Test(testName = "GC-672", description = "GC-672")
     @Description("Verify that ‘Edit’ button is not available for unregistered User")
     public void verifyEditNotAvailable() {
         logger.info("verifyEditNotAvailable starts");
@@ -90,13 +90,13 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertFalse(editButtonExist, "Edit button exists");
     }
 
-    @Test(testName = "GC-691")
+    @Test(testName = "GC-691", description = "GC-691")
     @Description("Verify that ‘Edit’ button is available for registered User in case " +
             "he/she has submitted this particular piece of news ")
     public void verifyEditAvailable() {
         logger.info("verifyEditAvailable starts");
         User user = UserRepository.get().temporary();
-        NewsData news = NewsDataRepository.get().getNewsWithValidData();
+        NewsData news = NewsDataRepository.get().getNewsWithValidData("VerifyEditAvailable");
         boolean editButtonExist = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
@@ -105,7 +105,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(news)
                 .publishNews()
-                .switchToSingleNewsPageByNumber(0)
+                .switchToSingleNewsPageByParameters(news)
                 .editNewsButtonExist();
 
         Assert.assertTrue(editButtonExist, "Edit button doesn't exist");
@@ -114,7 +114,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(news.getTitle());
     }
 
-    @Test(testName = "GC-692")
+    @Test(testName = "GC-692", description = "GC-692")
     @Description("Verify that ‘Edit’ button is not available for registered User in " +
             "case he/she has not submitted this particular piece of news")
     public void verifyUnavailabilityOfEditButton() {
@@ -133,7 +133,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertFalse(editButtonExists,"Edit button exists");
     }
 
-    @Test(testName = "GC-695")
+    @Test(testName = "GC-695", description = "GC-695")
     @Description("Source field appears if User entered Source in the Create news form.")
     public void presentSourceIfItWasSpecified() {
         logger.info("presentSourceIfItWasSpecified starts");
@@ -146,7 +146,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                     .gotoCreateNewsPage()
                     .fillFields(newsWithSource)
                     .publishNews()
-                    .switchToSingleNewsPageByNumber(0);
+                    .switchToSingleNewsPageByParameters(newsWithSource);
 
             softAssert.assertTrue(singleNewsPage.getSourceTitleText().length() > 1,
                     "Checking if source title is present");
@@ -161,7 +161,33 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test(testName = "GC-713")
+    @Test(testName = "GC-731", description = "GC-731")
+    @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
+    public void noSourceIfItWasntSpecified() {
+        logger.info("noSourceIfItWasntSpecified starts");
+
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
+        try {
+            SingleNewsPage singleNewsPage = loadApplication()
+                    .loginIn(UserRepository.get().temporary())
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(newsWithEmptySource)
+                    .publishNews()
+                    .switchToSingleNewsPageByParameters(newsWithEmptySource);
+
+            softAssert.assertEquals(singleNewsPage.getSourceLinkText(), "",
+                    "Checking if news has no source");
+            softAssert.assertAll();
+
+            singleNewsPage.signOut();
+        } finally {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
+        }
+    }
+
+    @Test(testName = "GC-713", description = "GC-713")
     @Description("Verify that User sees the last 3 news with the same tag in the News recommendations" +
             " widget, if there are more than 3 news with this tag")
     public void testRecommendations() {
@@ -177,33 +203,8 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             Assert.assertEquals(suggestedNews.getItemComponentsCount(), 3);
             EcoNewsSuggestionsAssertion.assertSuggestionsByDate(suggestedNews, false);
         } else {
-            Assert.assertTrue(false, "Couldn't find suitable tag");
+            Assert.fail("Couldn't find suitable tag");
         }
     }
 
-    @Test(testName = "GC-731")
-    @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
-    public void noSourceIfItWasntSpecified() {
-        logger.info("noSourceIfItWasntSpecified starts");
-
-        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
-        try {
-            SingleNewsPage singleNewsPage = loadApplication()
-                    .loginIn(UserRepository.get().temporary())
-                    .navigateMenuEcoNews()
-                    .gotoCreateNewsPage()
-                    .fillFields(newsWithEmptySource)
-                    .publishNews()
-                    .switchToSingleNewsPageByNumber(0);
-
-            softAssert.assertEquals(singleNewsPage.getSourceLinkText(), "",
-                    "Checking if news has no source");
-            softAssert.assertAll();
-
-            singleNewsPage.signOut();
-        } finally {
-            EcoNewsService ecoNewsService = new EcoNewsService();
-            ecoNewsService.deleteNewsByTitle(newsWithEmptySource.getTitle());
-        }
-    }
 }

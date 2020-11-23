@@ -1,7 +1,7 @@
-package com.softserve.edu.greencity.api.builder;
+package com.softserve.edu.greencity.api.builders.econews;
 
-import com.softserve.edu.greencity.api.model.EcoNewsAuthorModel;
-import com.softserve.edu.greencity.api.model.EcoNewsModel;
+import com.softserve.edu.greencity.api.models.econews.EcoNewsAuthorModel;
+import com.softserve.edu.greencity.api.models.econews.EcoNewsModel;
 
 public class EcoNewsBuilder {
 
@@ -16,7 +16,7 @@ public class EcoNewsBuilder {
     }
 
     public EcoNewsBuilder author(EcoNewsAuthorModel author) {
-        ecoNews.author = author;
+        ecoNews.ecoNewsAuthorDto = author;
         return this;
     }
 

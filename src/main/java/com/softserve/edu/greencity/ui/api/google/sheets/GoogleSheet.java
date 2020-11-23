@@ -20,6 +20,13 @@ import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 
+/**
+ * A class that works with Google Sheet
+ * Settings sheet: https://docs.google.com/spreadsheets/d/165DiBh-2TKxIHPtfBTDJ_GBq8kgal4Ac5vRlbaUC6O4
+ * IMPORTANT!
+ * If you add some params to the sheet, add them to the end of the file!
+ * To make your newly-added parameters reachable, edit variable "range" at getRow() method
+ */
 public class GoogleSheet {
     private static Sheets sheetsService;
     private static String APPLICATION_NAME = "OAuth client";
@@ -98,14 +105,3 @@ public class GoogleSheet {
         return null;
     }
 }
-/*
-Це в класі GreencityTestRunner  в методі beforeSuite()
-System.setProperty("webdriver.chrome.silentOutput", "true");
-        System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-        // System.setProperty("webdriver.chrome.verboseLogging", "false");
-         System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-
-        java.util.logging.Logger.getLogger("org.openqa.selenium.remote").setLevel(Level.OFF);
-
-але все одно, ще один запис висвітлюється
-* */

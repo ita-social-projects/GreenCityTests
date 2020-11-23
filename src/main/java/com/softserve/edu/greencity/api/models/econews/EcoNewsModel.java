@@ -1,10 +1,10 @@
-package com.softserve.edu.greencity.api.model;
+package com.softserve.edu.greencity.api.models.econews;
 
 import java.util.Arrays;
 
 public class EcoNewsModel {
 
-    public EcoNewsAuthorModel author;
+    public EcoNewsAuthorModel ecoNewsAuthorDto;
     public String creationDate;
     public Long id;
     public String imagePath;
@@ -14,10 +14,10 @@ public class EcoNewsModel {
     public String title;
 
     public EcoNewsModel() {
-        author = null;
+        ecoNewsAuthorDto = null;
         creationDate = null;
         id = 0L;
-        imagePath = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
+        imagePath = null;
         source = "";
         tags = new String[0];
         text = "";
@@ -34,7 +34,7 @@ public class EcoNewsModel {
         }
         EcoNewsModel e = (EcoNewsModel) obj;
 
-        return author.equals(e.id) && creationDate.equals(e.creationDate)
+        return ecoNewsAuthorDto.equals(e.ecoNewsAuthorDto) && creationDate.equals(e.creationDate)
                 && id.equals(e.id) && imagePath.equals(e.imagePath)
                 && source.equals(e.source) && text.equals(e.text) && title.equals(e.title)
                 && Arrays.equals(tags, e.tags);

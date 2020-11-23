@@ -25,12 +25,11 @@ import io.qameta.allure.Step;
 
 /**
  * Base Abstract Class of Header and Footer.
+ * All page classes should extend this class
  *
  * @author Lv-493.Taqc/Java
  */
 public abstract class TopPart implements StableWebElementSearch {
-    public static final String PROFILE_NAME = "Nadiia Steblivets";
-
     private final int WINDOW_WIDTH_TO_SCROLL = 1024;
     private final int WINDOW_HEIGHT_TO_CLICK_FOOTER = 480;
 

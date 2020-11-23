@@ -1,24 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="classes" thread-count="5">
-    <test name="registrationAndLogin">
+
+    <test name="Quick_tests" thread-count="6">
+    <!-- API and other tests that run quickly (1 minute and less) -->
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.SmokeTest"/>
+
+            <class name="com.softserve.edu.greencity.api.tests.econews.positive.CreateNewsWithMinimalValuesTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithArrayResponseTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithDetailedResponseTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithShortResponseTest"/>
+
+            <class name="com.softserve.edu.greencity.api.tests.signin.SignInApiTest"/>
+        </classes>
+    </test>
+
+    <test name="Registration_and_login" thread-count="5">
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegisterPageTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegistrationTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPositiveTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTest"/>
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsPageTest"/>
             <class name="com.softserve.edu.greencity.ui.tests.signin.ForgotPasswordTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signin.LoginTest"/>
-<!--
-            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests">
-                <methods>
-                    <include name="isItemsDisplayedChronological" />
-                </methods>
-            </class>
--->
+
+            <class name="com.softserve.edu.greencity.ui.tests.viewsinglenews.EcoNewsSingleViewTest"/>
+            <!-- EcoNewsSingleViewTest needs no another news to be created, but creates by itself.
+            So it could be merged only with this suite -->
         </classes>
     </test>
+
+    <test name="Google_login" thread-count="1">
+    <!-- Should be run separately, since it interacts with other windows (Google login window) -->
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.signin.GoogleSignInTest"/>
+        </classes>
+    </test>
+
+    <test name="Independent_news_creation" thread-count="4">
+    <!-- Tests that may create news, but will not fail if other news is created at the same time
+    (these tests should use switchToSingleNewsPageByParameters, but not ByNumber) -->
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPositiveTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsNegativeTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsPreviewTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.createnews.CreateNewsLegacyTest"/>
+
+            <class name="com.softserve.edu.greencity.ui.tests.comments.CheckElementOfCommentTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.CommentCreation"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.Commentstest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.EcoNewsCommentTests"/>
+
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest">
+                <methods>
+                    <exclude name="chronologicalNewsTest" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="Separate_from_news_creation">
+<!--        Should be run separately from the tests that create or delete news. Don't create news by themselves-->
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest">
+                <methods>
+                    <include name="chronologicalNewsTest" />
+                </methods>
+            </class>
+<!--            <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsPageTest"/>-->
+        </classes>
+    </test>
+
 </suite>

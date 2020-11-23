@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.Properties;
 
+/**
+ * A class that registers properties retrieved from ValueProvider.java
+ */
 public class CredentialProperties {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 

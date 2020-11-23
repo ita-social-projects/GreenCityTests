@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests.viewallnews;
 
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.ui.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
@@ -10,7 +11,6 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,9 +18,9 @@ import java.util.Date;
 import java.util.List;
 
 public class EcoNewsListViewTests extends GreenCityTestRunner {
-    String cssBackgroundColorProperty;
-    String expectedBackgroundColorRGBA;
-    String expectedHoveredByMouseBackgroundColorRGBA;
+    String cssColorProperty;
+    String expectedColorRGBA;
+    String expectedHoveredByMouseColorRGBA;
     List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages;
 
     private final String DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
@@ -36,9 +36,9 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
     @BeforeClass
     public void beforeClass() {
-        cssBackgroundColorProperty = "background-color";
-        expectedBackgroundColorRGBA = "rgba(5, 107, 51, 1)";
-        expectedHoveredByMouseBackgroundColorRGBA = "rgba(19, 170, 87, 1)";
+        cssColorProperty = "color";
+        expectedColorRGBA = "rgba(19, 170, 87, 1)"; //lighter
+        expectedHoveredByMouseColorRGBA =  "rgba(5, 107, 51, 1)"; //darker
         screenWidthWithContent = Arrays.asList(1440, 1200);
         screenWidthWithoutContent = Arrays.asList(1024, 768, 667);
         screenWidthWithoutImages = Arrays.asList(576, 575);
@@ -46,7 +46,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         screenWidth2 = Arrays.asList(576, 360);
     }
 
-    @Test(testName = "GC-707")
+    @Test(testName = "GC-707", description = "GC-707")
     @Description("Verify that Content items are displayed as a list in case if 'List view' option is activated")
     public void isDisplayedListContent() {
         logger.info("Starting isDisplayedListContent");
@@ -58,30 +58,30 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-704")
+    @Test(testName = "GC-704", description = "GC-704")
     @Description("Verify that ‘List view’ icon is present on the 'Eco news' page")
     public void isPresentListView() {
         logger.info("Starting isPresentListView");
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews();
 
-        softAssert.assertTrue(ecoNewsPage.isDisplayedListView());
+        softAssert.assertTrue(ecoNewsPage.isDisplayedListView(), "List view displayed");
 
         ecoNewsPage.hoverToListView();
-        String hoverListViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
-        softAssert.assertEquals(hoverListViewIconColor, expectedBackgroundColorRGBA);
+        String hoverListViewIconColor = ecoNewsPage.getListViewButtonHoverColor();
+        softAssert.assertEquals(hoverListViewIconColor, expectedHoveredByMouseColorRGBA, "List view hover");
 
         ecoNewsPage
                 .switchToListView()
                 .hoverToGridView();
 
-        String ListViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
-        softAssert.assertEquals(ListViewIconColor, expectedHoveredByMouseBackgroundColorRGBA);
+        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssColorProperty);
+        softAssert.assertEquals(listViewIconColor, expectedColorRGBA, "List view no hover");
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-710")
-    @Description("Verify that 6 first Content items are displayed by deafault")
+    @Test(testName = "GC-710", description = "GC-710")
+    @Description("Verify that 6 first Content items are displayed by default")
     public void isDisplayedFirstSixContent() {
         logger.info("Starting isDisplayedFirstSixContent");
         EcoNewsPage ecoNewsPage = loadApplication()
@@ -91,7 +91,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         Assert.assertTrue(ecoNewsPage.getItemsContainer().getItemsSize() >= 6);
     }
 
-    @Test(testName = "GC-332")
+    @Test(testName = "GC-332", description = "GC-332")
     @Description("Verify that content items are displayed in a list view")
     public void isDisplayedContentItems() {
         logger.info("Starting isDisplayedContentItems");
@@ -99,14 +99,14 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .switchToListView();
 
-        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssBackgroundColorProperty);
+        String listViewIconColor = ecoNewsPage.getListViewButtonComponent().getCssValue(cssColorProperty);
 
-        softAssert.assertEquals(listViewIconColor, expectedBackgroundColorRGBA);
+        softAssert.assertEquals(listViewIconColor, expectedColorRGBA);
         softAssert.assertTrue(ecoNewsPage.getItemsContainer().getItemsSize() >= 6);
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-333")
+    @Test(testName = "GC-333", description = "GC-333")
     @Description("Verify that content items have all specified elements.")
     public void isPresentAllItemElements() {
         logger.info("Starting isPresentAllItemElements");
@@ -127,7 +127,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-352")
+    @Test(testName = "GC-352", description = "GC-352")
     @Description("Verify that Content items are displayed in chronological order")
     public void isItemsDisplayedChronological() {
         logger.info("isItemsDisplayedChronological");
@@ -151,41 +151,42 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-720")
+    @Test(testName = "GC-720", description = "GC-720")
     @Description("Verify that content items contain all required UI elements according to mock-up.")
     public void isPresentAllContentElements() {
         logger.info("isPresentAllContentElements");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getOneRowTitle();
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getOneRowTitle())
+                .fillFields(newsData)
                 .publishNews();
 
-        testNewsTitles.add(NewsDataRepository.get().getOneRowTitle().getTitle());
+        testNewsTitles.add(newsData.getTitle());
 
         for (Integer integer : screenWidthWithContent) {
             ecoNewsPage.changeWindowWidth(integer);
             logger.info("set width = "+integer);
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            logger.info("image " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            logger.info("tags " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            logger.info("title " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            logger.info("content " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            logger.info("date " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            logger.info("dateformat " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
-            logger.info("author " + ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
+            logger.info("image " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
+            logger.info("tags " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
+            logger.info("title " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
+            logger.info("content " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
+            logger.info("date " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
+            logger.info("dateformat " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
+            logger.info("author " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
 
         }
 
@@ -194,20 +195,20 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("set width = "+integer);
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            logger.info("tags " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            logger.info("title " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            logger.info("content " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            logger.info("date " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            logger.info("dateformat " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
-            logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
+            logger.info("image " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
+            logger.info("tags " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
+            logger.info("title " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
+            logger.info("content " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
+            logger.info("date " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
+            logger.info("dateformat " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
+            logger.info("author " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
 
         }
         for (Integer integer : screenWidthWithoutImages) {
@@ -216,20 +217,22 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
             if(ecoNewsPage.isActiveListView()){
-            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            logger.info("image " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedImage());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            logger.info("tags " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            logger.info("title " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedTitle());
-            softAssert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            logger.info("content " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            logger.info("date " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            logger.info("dateformat " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isCorrectDateFormat(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
-            logger.info("author " +ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).isDisplayedAuthor());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage(), "image");
+            logger.info("image " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags(), "tags");
+            logger.info("tags " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle(), "title");
+            logger.info("title " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
+            softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent(), "content");
+            logger.info("content " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation(), "date");
+            logger.info("date " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData)
+                    .isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()),
+                    "date format");
+            logger.info("dateformat " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
+            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor(), "author");
+            logger.info("author " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
             }
         }
         ecoNewsPage.maximizeWindow();
@@ -238,11 +241,12 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-725")
+    @Test(testName = "GC-725", description = "GC-725")
     @Description("Verify that displayed image in List view is default image if user didn’t choose own image during news creation.")
     public void isPresentDefaultImage() {
         logger.info("isPresentDefaultImage");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getNewsWithValidData("Default image test");
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
@@ -250,22 +254,24 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getOneRowTitle())
+                .fillFields(newsData)
                 .publishNews();
 
-        testNewsTitles.add(NewsDataRepository.get().getOneRowTitle().getTitle());
+        testNewsTitles.add(newsData.getTitle());
 
         for (Integer integer : screenWidth1) {
+            logger.debug("Screen width: " + integer);
             ecoNewsPage.changeWindowWidth(integer);
             ecoNewsPage.switchToListView();
-            String src = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getImage().getAttribute("src");
+            String src = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getImage().getAttribute("src");
             softAssert.assertEquals(src, DEFAULT_IMAGE);
         }
         for (Integer integer : screenWidth2) {
+            logger.debug("Screen width: " + integer);
             ecoNewsPage.changeWindowWidth(integer);
             //On small screen resolution list view automatically switches off
-            softAssert.assertFalse(ecoNewsPage.isListViewPresent());
-            String src = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getImage().getAttribute("src");
+            softAssert.assertFalse(ecoNewsPage.isListViewPresent(), "List view at " + integer + " width");
+            String src = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getImage().getAttribute("src");
             softAssert.assertEquals(src, DEFAULT_IMAGE);
         }
 
@@ -275,11 +281,12 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-708")
+    @Test(testName = "GC-708", description = "GC-708")
     @Description("Verify that when Title consist of 4 row, then Description consist of 0 row.")
     public void isZeroRowDescriptionWhenFourRowsTitle() {
         logger.info("isZeroRowDescriptionWhenFourRowsTitle");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getFourRowsTitle();
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
@@ -287,30 +294,31 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getFourRowsTitle())
+                .fillFields(newsData)
                 .publishNews();
 
-        testNewsTitles.add(NewsDataRepository.get().getFourRowsTitle().getTitle());
+        testNewsTitles.add(newsData.getTitle());
 
         ecoNewsPage.changeWindowWidth(1400);
 
         ecoNewsPage.switchToListView();
 
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getTitleHeight(), 128);
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getTitleNumberRow(), 4);
-        Assert.assertFalse(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getContent().isDisplayed());
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().chooseNewsByNumber(0).getContentNumberVisibleRow(), 0);
+        Assert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 128);
+        Assert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleNumberRow(), 4);
+        Assert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContent().isDisplayed());
+        Assert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContentNumberVisibleRow(), 0);
 
         ecoNewsPage.signOut();
         softAssert.assertAll();
     }
 
 
-    @Test(testName = "GC-723")
+    @Test(testName = "GC-723", description = "GC-723")
     @Description("Verify that when Title consist of 3 row, then Description consist of 1 row.")
     public void isOneRowDescriptionWhenThreeRowsTitle() {
         logger.info("isOneRowDescriptionWhenThreeRowsTitle");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getThreeRowsTitle();
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
@@ -318,16 +326,16 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getThreeRowsTitle())
+                .fillFields(newsData)
                 .publishNews();
 
-        testNewsTitles.add(NewsDataRepository.get().getThreeRowsTitle().getTitle());
+        testNewsTitles.add(newsData.getTitle());
 
         ecoNewsPage.changeWindowWidth(1400);
 
         ecoNewsPage.switchToListView();
 
-        ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
+        ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
         softAssert.assertEquals(firstItemTitle.getTitleHeight(), 96);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 3);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 1);
@@ -337,11 +345,12 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-722")
+    @Test(testName = "GC-722", description = "GC-722")
     @Description("Verify that when Title consist of 2 row, then Description consist of 2 row.")
     public void isTwoRowsDescriptionWhenTwoRowsTitle() {
         logger.info("isTwoRowsDescriptionWhenTwoRowsTitle");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getTwoRowsTitle();
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
@@ -349,16 +358,16 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getTwoRowsTitle())
+                .fillFields(newsData)
                 .publishNews();
 
-        testNewsTitles.add(NewsDataRepository.get().getTwoRowsTitle().getTitle());
+        testNewsTitles.add(newsData.getTitle());
 
         ecoNewsPage.changeWindowWidth(1400);
 
         ecoNewsPage.switchToListView();
 
-        ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
+        ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
         softAssert.assertEquals(firstItemTitle.getTitleHeight(), 64);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 2);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 2);
@@ -368,11 +377,12 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
-    @Test(testName = "GC-724")
+    @Test(testName = "GC-724", description = "GC-724")
     @Description("Verify that when Title consist of 1 row, then Description consist of 3 row.")
     public void isTwoRowsDescriptionWhenOneRowsTitle() {
         logger.info("isTwoRowsDescriptionWhenOneRowsTitle");
         User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getOneRowTitle();
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
@@ -380,16 +390,16 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getOneRowTitle())
+                .fillFields(newsData)
                 .publishNews();
 
-        testNewsTitles.add(NewsDataRepository.get().getOneRowTitle().getTitle());
+        testNewsTitles.add(newsData.getTitle());
 
         ecoNewsPage.changeWindowWidth(1440);
 
         ecoNewsPage.switchToListView();
 
-        ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
+        ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
         softAssert.assertEquals(firstItemTitle.getTitleHeight(), 32);
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 1);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 3);

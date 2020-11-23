@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.FormatStyle;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * DateUtil class
@@ -15,13 +17,23 @@ public final class DateUtil {
      * Method to get current date in format "MMMM d, yyyy (example авг 13, 2020)"
      * @return String
      */
-    public static String getCurrentDate(String format) {
+    public static String getCurrentDate(DateTimeFormatter formatter) {
         LocalDate date = LocalDate.now();
-        DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendPattern(format).toFormatter();
         return date.format(formatter);
     }
-    public static String getCurrentDate() {
-        return getCurrentDate("MMM d, yyyy");
+
+    public static String getCurrentDateMonthFirst() {
+        return getCurrentDate(
+                DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+                        .withLocale(new Locale("en"))
+        );
+    }
+
+    public static String getCurrentDateDayFirst() {
+        return getCurrentDate(
+                new DateTimeFormatterBuilder().appendPattern("d MMM, yyyy")
+                        .toFormatter(new Locale("en"))
+        );
     }
 
     /**

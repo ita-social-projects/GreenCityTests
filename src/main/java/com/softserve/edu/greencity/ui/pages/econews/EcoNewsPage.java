@@ -14,6 +14,7 @@ import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
@@ -21,6 +22,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -54,12 +56,14 @@ public class EcoNewsPage extends TopPart {
 
     private void checkNewsDisplayed() {
         WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
+        /* Only try-catch works, since FluentWait doesn't ignore TimeoutException */
         try {
             waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
             logger.warn("The site performed the same GET request twice and redrew page");
         } catch (TimeoutException error) {
             ; //Everything is OK
         }
+
         waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 
@@ -118,10 +122,21 @@ public class EcoNewsPage extends TopPart {
         }
     }
 
+    public String getListViewButtonHoverColor() {
+        //It is a subelement that changes color on :hover
+        return waitsSwitcher.setExplicitWait(3,
+                ExpectedConditions.visibilityOfElementLocated(LIST_VIEW_BUTTON_HOVER.getPath()))
+                .getCssValue("color");
+    }
+
     @Step("Hover to grid view")
     public EcoNewsPage hoverToGridView() {
         Actions action = new Actions(driver);
-        action.moveToElement(getGridView()).perform();
+        action.moveToElement(getGridView())
+                .moveToElement(
+                waitsSwitcher.setExplicitWait(3,
+                        ExpectedConditions.visibilityOfElementLocated(GALLERY_VIEW_BUTTON_HOVER.getPath()))
+        ).build().perform();
         return this;
     }
 
@@ -132,7 +147,13 @@ public class EcoNewsPage extends TopPart {
 
     @Step("Get list view button component")
     public WebElement getListViewButtonComponent() {
-        return searchElementByCss(LIST_VIEW_BUTTON_COMPONENT.getPath());
+        return searchElementByCss(LIST_VIEW_BUTTON.getPath());
+    }
+
+    public String getListViewButtonColor() {
+        return waitsSwitcher.setExplicitWait(3,
+                ExpectedConditions.visibilityOfElementLocated(LIST_VIEW_BUTTON_HOVER.getPath()))
+                .getCssValue("color");
     }
 
     @Step("Check if list view is displayed")
@@ -143,7 +164,11 @@ public class EcoNewsPage extends TopPart {
     @Step("Hover to list view")
     public EcoNewsPage hoverToListView() {
         Actions action = new Actions(driver);
-        action.moveToElement(getListView()).perform();
+        action.moveToElement(getListView())
+                .moveToElement(
+                waitsSwitcher.setExplicitWait(3,
+                        ExpectedConditions.visibilityOfElementLocated(LIST_VIEW_BUTTON_HOVER.getPath()))
+        ).build().perform();
         return this;
     }
 
@@ -336,6 +361,7 @@ public class EcoNewsPage extends TopPart {
     @Step("Switch to single news page by parameters")
     public SingleNewsPage switchToSingleNewsPageByParameters(NewsData news) {
         logger.info("Switch to single news page by parameters");
+        itemsContainer = getItemsContainer();
         scrollToElement(itemsContainer.findItemComponentByParameters(news).getTitle());
         itemsContainer.clickItemComponentOpenPage(news);
         return new SingleNewsPage(driver);
@@ -397,9 +423,9 @@ public class EcoNewsPage extends TopPart {
     }
 
     @Step
-    public String getImageAttribute() {
+    public String getImageAttribute(NewsData newsData) {
        return getItemsContainer().
-                       chooseNewsByNumber(0).
+                       findItemComponentByParameters(newsData).
                        getImage().
                        getAttribute("src");
 

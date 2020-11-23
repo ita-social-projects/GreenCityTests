@@ -6,6 +6,10 @@ import static com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider.*;
 
 import java.util.Properties;
 
+/**
+ * Allows one to get pre-defined User instances for login / sign up tests
+ * Usage: UserRepository.get().*
+ */
 public final class UserRepository {
     private static volatile UserRepository instance = null;
     private Properties property = new Properties();

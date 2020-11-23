@@ -1,25 +1,25 @@
 package com.softserve.edu.greencity.ui.tests.signup;
 
+import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import com.softserve.edu.greencity.ui.data.User;
 import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.*;
+import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
+import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
-
 //TODO add DB check
 public class RegistrationTests extends GreenCityTestRunner {
-
     private final String SIGN_IN_TITLE = "Welcome back!";
 
     @DataProvider
@@ -28,18 +28,10 @@ public class RegistrationTests extends GreenCityTestRunner {
                 .userCredentialsForRegistration()},};
     }
 
-    @DataProvider
-    public Object[][] invalidPasswordDataProvider() {
-        return new Object[][]{
-                {UserRepository.get().invalidPassLowercaseUserCreds()},
-                {UserRepository.get().invalidPassLowercaseUserCreds()},
-                {UserRepository.get().invalidPassDigitUserCreds()},
-                {UserRepository.get().invalidPassSpecCharUserCreds()},
-                {UserRepository.get().invalidPassSpaceUserCreds()},
-        };
-    }
 
-    @Test(dataProvider = "successRegistrationUserCreds", description = "GC-199, GC-206")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-199, GC-206", description = "GC-199, GC-206")
+    @Description("GC-199 - Verify that unregistered user can register after entering valid values in registration form" +
+            "GC-206 - Verify that Password must contain at least one digit, special character, upper and lowercase letter when user registered")
     @SneakyThrows
     public void registrationAndLogin(User userLoginCredentials) {
         logger.info("Start test registration and login");
@@ -57,7 +49,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         Assert.assertTrue(isLogInNow());
     }
 
-    @Test(testName = "GC-200")
+    @Test(testName = "GC-200", description = "GC-200")
     @Description("Verify that unregistered user sees popup window 'Sign in' after clicking on the “My habits” button")
     public void signInAfterMyhabits() {
         logger.info("Starting signInAfterMyhabits");
@@ -68,7 +60,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         Assert.assertEquals(titleString, SIGN_IN_TITLE);
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-512")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-512", description = "GC-512")
     @Description("Verify that user is not registered if he didn’t confirm email address in the mailbox.")
     public void registrationWithoutMailVerif(User userLoginCredentials) {
         logger.info("Start test registration without mail verifying");
@@ -89,16 +81,14 @@ public class RegistrationTests extends GreenCityTestRunner {
 
         logger.info("Enter credentials into the form");
         manualRegisterComponent.registrationUser(userLoginCredentials);
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        WebDriverWait wait = new WebDriverWait(driver, 6);
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
 
-        wait.until(ExpectedConditions.visibilityOf(registerComponent.getCongratsModal()));
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         softAssert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector((LoginComponent.MODAL_WINDOW_CSS))));
-
-        ManualLoginComponent manualLoginComponent = new ManualLoginComponent(driver);
+        //TMind that now the login window doesn't appear automatically
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.invisibilityOf(registerComponent.getCongratsModal()));
+        ManualLoginComponent manualLoginComponent = (new TopGuestComponent(driver)).clickSignInLink().getManualLoginComponent();
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
 
@@ -108,7 +98,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-513")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-513", description = "GC-513")
     @Description("Verify that user receive a verification email about registration in the application to email address after successfully registration.")
     public void registrationCheckIfMailReceived(User userLoginCredentials) {
         logger.info("Start test registration check if mail received");
@@ -130,7 +120,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         manualRegisterComponent.registerUserCheckIfMailReceived(userLoginCredentials);
     }
 
-    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-204")
+    @Test(dataProvider = "successRegistrationUserCreds", testName = "GC-204", description = "GC-204")
     @Description("Verify that Email must be existence and unique while new user registration")
     public void existingUserRegistration(User userLoginCredentials) {
         new GoogleMailAPI().clearMail(userLoginCredentials.getEmail(), userLoginCredentials.getPassword());
@@ -148,21 +138,11 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertEquals(
                 manualRegisterComponent
                         .getSignUpErrorsMsg(1),
-                "User with this email is already registered",
+                "The user already exists by this email",
                 "error msg mismatch"
         );
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "invalidPasswordDataProvider", testName = "GC-204")
-    @Description("Verify that Email must be existence and unique while new user registration")
-    public void invalidPasswordRegistration(User userLoginCredentials) {
-        logger.info("Start test invalid password registration" + userLoginCredentials.toString());
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
-        manualRegisterComponent.enterDataToSingUpFields(userLoginCredentials);
-        Assert.assertTrue(manualRegisterComponent.getSignUpButton().isDisplayed());
-    }
 }
 

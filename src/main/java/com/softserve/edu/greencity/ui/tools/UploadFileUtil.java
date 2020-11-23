@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 
 /**
- * UploadFileUtil class
+ * UploadFileUtil class. Allows dropping file to the file drop zone (using JavaScript)
  */
 public final class UploadFileUtil {
 

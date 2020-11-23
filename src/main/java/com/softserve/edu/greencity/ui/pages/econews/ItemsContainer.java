@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.softserve.edu.greencity.ui.data.econews.NewsData;
 
 /**
- * Contains all itemsComponents that are present on page
+ * Contains all itemsComponents (news cards) that are present on page
  * Use for SingleNewsPage & EcoNewsPage.
  *
  * @author lv-493
@@ -41,33 +41,16 @@ public class ItemsContainer implements StableWebElementSearch {
 
     private List<ItemComponent> getItemComponents() {
         itemComponents = new ArrayList<>();
-        int retriesLeft = 5;
-        do {
-            try {
-                for (WebElement current : getItems()) {
-                    itemComponents.add(new ItemComponent(driver, current));
-                }
-            } catch (StaleElementReferenceException error) {
-                logger.warn("StaleElementReferenceException caught, retrying...");
-                WaitsSwitcher.sleep(100);
-            }
-            retriesLeft--;
-        } while (retriesLeft > 0);
+        for (WebElement current : getItems()) {
+            itemComponents.add(new ItemComponent(driver, current));
+        }
+
 
         return itemComponents;
     }
 
     private List<WebElement> getItems() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        /*
-        WebElement firstItem = driver.findElement(items);
-        try {
-            waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
-            logger.warn("The site performed the same GET request twice and redrew page");
-        } catch (TimeoutException error) {
-            ; //Everything is OK
-        }
-        */
 
         return waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));
@@ -146,20 +129,17 @@ public class ItemsContainer implements StableWebElementSearch {
      * @param news
      * @return ItemComponent
      */
-    protected ItemComponent findItemComponentByParameters(NewsData news) {
-        ItemComponent result = null;
+    public ItemComponent findItemComponentByParameters(NewsData news) {
         for (ItemComponent cur : getItemComponents()) {
             if (cur.getTitleText().toLowerCase().equals(news.getTitle().toLowerCase())
                     && cur.getTagsText().equals(news.getTagsName())
-                    && news.getContent().toLowerCase().contains(cur.getContentText().toLowerCase())) {
-                result = cur;
+                    && news.getContent().toLowerCase().trim().contains(cur.getContentText().toLowerCase().trim())
+            ) {
+                return cur;
             }
         }
-        if (result == null) {
-            logger.warn("News with parameters " + news.toString() + "not exist");
-            throw new RuntimeException("ItemComponent with parameters " + news.toString() + " not found");
-        }
-        return result;
+        logger.warn("News with parameters " + news.toString() + " does not exist");
+        throw new RuntimeException("ItemComponent with parameters " + news.toString() + " not found");
     }
 
     /**

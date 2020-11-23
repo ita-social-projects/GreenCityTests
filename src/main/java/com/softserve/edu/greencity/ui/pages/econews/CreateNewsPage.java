@@ -17,7 +17,8 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @author lv-519 Taqc/Java
+ * A class that handles this page: https://ita-social-projects.github.io/GreenCityClient/#/news/create-news
+ * (available only for logged in users)
  */
 public class CreateNewsPage extends TopPart {
 
@@ -54,8 +55,9 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Set title field")
-    public void setTitleField(String text) {
+    public CreateNewsPage setTitleField(String text) {
         getTitleField().sendKeys(text);
+        return  this;
     }
 
     @Step("Get title field height")
@@ -124,8 +126,9 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Set content field")
-    public void setContentField(String text) {
+    public CreateNewsPage setContentField(String text) {
         getContentField().sendKeys(text);
+        return this;
     }
 
     @Step("Get content field text")
@@ -399,7 +402,7 @@ public class CreateNewsPage extends TopPart {
         scrollToElement(getPublishButton());
         clickPublishButton();
         try {
-            new WebDriverWait(driver, 20)
+            new WebDriverWait(driver, 10)
                     .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
         } catch (Exception e) {
             navigateMenuEcoNews();
