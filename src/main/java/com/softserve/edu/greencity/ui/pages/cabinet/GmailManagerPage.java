@@ -1,5 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
-import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.data.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;

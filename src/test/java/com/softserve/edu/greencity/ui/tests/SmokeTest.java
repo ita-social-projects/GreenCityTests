@@ -6,9 +6,9 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.ui.data.Languages;
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.data.Languages;
+import com.softserve.edu.greencity.data.User;
+import com.softserve.edu.greencity.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 

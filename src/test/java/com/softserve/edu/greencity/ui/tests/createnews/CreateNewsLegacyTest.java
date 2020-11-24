@@ -1,9 +1,9 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
-import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.User;
+import com.softserve.edu.greencity.data.UserRepository;
+import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
@@ -13,12 +13,6 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.Properties;
 
 /**
  * Tests to verify "Create News" functional

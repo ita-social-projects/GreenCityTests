@@ -8,7 +8,7 @@ import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import org.openqa.selenium.WebDriver;
 
 import com.google.common.collect.Streams;
-import com.softserve.edu.greencity.ui.data.Goal;
+import com.softserve.edu.greencity.data.Goal;
 
 public abstract class GoalsContainerPart implements StableWebElementSearch {
 

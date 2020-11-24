@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.softserve.edu.greencity.ui.data.Goal;
+import com.softserve.edu.greencity.data.Goal;
 
 
 public class ManageGoalsDropdown {

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsRepository.*;
 
 public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
 

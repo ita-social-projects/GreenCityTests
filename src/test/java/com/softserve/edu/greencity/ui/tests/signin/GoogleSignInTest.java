@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.tests.signin;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.data.User;
+import com.softserve.edu.greencity.data.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;

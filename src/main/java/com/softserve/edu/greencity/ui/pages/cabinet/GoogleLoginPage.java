@@ -1,14 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.data.User;
+import com.softserve.edu.greencity.data.User;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 

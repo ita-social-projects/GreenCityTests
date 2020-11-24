@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.data.econews;
+package com.softserve.edu.greencity.data.econews;
 
 public class NewsRepository {
 

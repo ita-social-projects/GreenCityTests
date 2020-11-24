@@ -14,8 +14,8 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.getProperSource;
+import static com.softserve.edu.greencity.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsRepository.getProperSource;
 
 public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
 
