@@ -14,8 +14,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.data.econews.NewsRepository.*;
-import static com.softserve.edu.greencity.data.econews.NewsRepository.getProperSource;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
 
@@ -24,10 +23,10 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
         return new Object[][]{
                 {
                         "GC-594",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
                                 .image(null)
-                                .source(getProperSource())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "events", "education", "news"}).build(),
                         new DetailedErrorMessage(
                                 500,
@@ -37,10 +36,10 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-631",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
                                 .image(null)
-                                .source(getProperSource())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "ads", "events"}).build(),
                         new DetailedErrorMessage(
                                 500,

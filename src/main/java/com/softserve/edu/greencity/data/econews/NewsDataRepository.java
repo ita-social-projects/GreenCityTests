@@ -6,6 +6,10 @@ import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class provides templates for posting eco news, used in tests that create news.
+ * Usage: NewsDataRepository.get().getNewsWithValidData() etc.
+ */
 public final class NewsDataRepository {
 
     private static volatile NewsDataRepository instance = null;
@@ -45,6 +49,14 @@ public final class NewsDataRepository {
         );
     }
 
+    /**
+     * This method allows you to pass a non-default title.
+     * Could be very useful if other news may be created while a test run,
+     * and you need to get the specific one by parameters.
+     * Use in pair with EcoNewsPage.switchToSingleNewsPageByParameters()
+     * @param title your title for news
+     * @return NewsData with specified title and default content
+     */
     public NewsData getNewsWithValidData(String title) {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
@@ -63,10 +75,10 @@ public final class NewsDataRepository {
 
     public NewsData getNewsWithValidSourceField() {
         List<Tag> tags = new ArrayList<>();
-        tags.add(Tag.NEWS);
+        tags.add(Tag.INITIATIVES);
         return new NewsData(tags,
-                TITLE_BE_COOL.getString(),
-                CONTENT_BE_COOL.getString(),
+                TITLE_EKO_LAVKA.getString(),
+                CONTENT_EKO_LAVKA.getString(),
                 SOURCE_NEWS_COM.getString()
         );
     }
@@ -89,6 +101,13 @@ public final class NewsDataRepository {
                 TITLE_EXHIBITION.getString(),
                 CONTENT_EXHIBITION.getString()
         );
+    }
+
+    public NewsData getNewsWithEmptySourceField2() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.INITIATIVES);
+        return new NewsData(tags, TITLE_EKO_LAVKA.getString(),
+                CONTENT_EKO_LAVKA.getString());
     }
 
     public NewsData getNewsWithInvalidTitleField() {
@@ -195,28 +214,12 @@ public final class NewsDataRepository {
                 CONTENT_LOREM_IPSUM.getString());
     }
 
-    public NewsData getNewsWithoutSource() {
-        List<Tag> tags = new ArrayList<>();
-        tags.add(Tag.INITIATIVES);
-        return new NewsData(tags, TITLE_EKO_LAVKA.getString(),
-                CONTENT_EKO_LAVKA.getString());
-    }
-
     public NewsData getTitleForAutoResizeCheck() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
         return new NewsData(tags, CONTENT_EXHIBITION.getString(), //sic!
                 CONTENT_LOREM_IPSUM.getString());
-    }
-
-
-    public NewsData getNewsWithSource() {
-        List<Tag> tags = new ArrayList<>();
-        tags.add(Tag.INITIATIVES);
-        return new NewsData(tags, TITLE_EKO_LAVKA.getString(),
-                CONTENT_EKO_LAVKA.getString(),
-                SOURCE_GOOGLE.getString());
     }
 
     public List<Tag> getNewsByTags() {

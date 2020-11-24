@@ -14,8 +14,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.data.econews.NewsRepository.*;
-import static com.softserve.edu.greencity.data.econews.NewsRepository.getLinkWithImproperHttpPos;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
 
@@ -24,19 +23,19 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
         return new Object[][]{
                 {
                         "GC-596",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
                                 .image(null)
-                                .source(getSourceWithoutHttp())
+                                .source(SOURCE_NO_HTTP_NEWS_COM.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
                 },
                 {
                         "GC-598",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
                                 .image(null)
-                                .source(getLinkWithImproperHttpPos())
+                                .source(SOURCE_HTTP_INSIDE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
                 }

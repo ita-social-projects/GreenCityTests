@@ -137,7 +137,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     public void presentSourceIfItWasSpecified() {
         logger.info("presentSourceIfItWasSpecified starts");
 
-        NewsData newsWithSource = NewsDataRepository.get().getNewsWithSource();
+        NewsData newsWithSource = NewsDataRepository.get().getNewsWithValidSourceField();
         try {
             SingleNewsPage singleNewsPage = loadApplication()
                     .loginIn(UserRepository.get().temporary())
@@ -165,7 +165,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     public void noSourceIfItWasntSpecified() {
         logger.info("noSourceIfItWasntSpecified starts");
 
-        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithEmptySourceField2();
         try {
             SingleNewsPage singleNewsPage = loadApplication()
                     .loginIn(UserRepository.get().temporary())
