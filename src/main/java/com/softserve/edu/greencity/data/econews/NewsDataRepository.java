@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.data.econews;
 
 import com.softserve.edu.greencity.data.users.UserRepository;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "Green Day Test", "Content = description");
+        return new NewsData(tags, TITLE_GREEN_DAY.getString(), CONTENT_GREEN_DAY.getString());
     }
 
     public NewsData getNewsWithValidData() {
@@ -39,8 +40,8 @@ public final class NewsDataRepository {
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
         return new NewsData(tags,
-                "Be eco! Be cool!",
-                "It's so healthy, fun and cool to bring eco habits in everyday life"
+                TITLE_BE_COOL.getString(),
+                CONTENT_BE_COOL.getString()
         );
     }
 
@@ -49,14 +50,14 @@ public final class NewsDataRepository {
         tags.add(Tag.NEWS);
         return new NewsData(tags,
                 title,
-                "It's so healthy, fun and cool to bring eco habits in everyday life"
+                CONTENT_BE_COOL.getString()
         );
     }
 
     public NewsData getNewsWithValidData(List<Tag> tags) {
         return new NewsData(tags,
-                "Be eco! Be cool!",
-                "It's so healthy, fun and cool to bring eco habits in everyday life"
+                TITLE_BE_COOL.getString(),
+                CONTENT_BE_COOL.getString()
         );
     }
 
@@ -64,9 +65,9 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         return new NewsData(tags,
-                "Be eco! Be cool!",
-                "It's so healthy, fun and cool to bring eco habits in everyday life",
-                "https://news.com"
+                TITLE_BE_COOL.getString(),
+                CONTENT_BE_COOL.getString(),
+                SOURCE_NEWS_COM.getString()
         );
     }
 
@@ -74,9 +75,9 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         return new NewsData(tags,
-                "XVI International specialized exhibition of ecologic products for the daily life",
-                "March 4 – 7, 2020, International Exhibition Center, Kyiv, 15 Brovarsky Ave., takes place the most important event for professionals and funs of natural food and healthy life",
-                "www.greenmatch.co.uk/blog/how-to-be-more-eco-friendly"
+                TITLE_EXHIBITION.getString(),
+                CONTENT_EXHIBITION.getString(),
+                SOURCE_NO_HTTP_GREEN_MATCH.getString()
         );
     }
 
@@ -85,8 +86,8 @@ public final class NewsDataRepository {
         tags.add(Tag.NEWS);
         tags.add(Tag.EDUCATION);
         return new NewsData(tags,
-                "XVI International specialized exhibition of ecologic products for the daily life test",
-                "March 4 – 7, 2020, International Exhibition Center, Kyiv, 15 Brovarsky Ave., takes place the most important event for professionals and funs of natural food and healthy life"
+                TITLE_EXHIBITION.getString(),
+                CONTENT_EXHIBITION.getString()
         );
     }
 
@@ -96,26 +97,22 @@ public final class NewsDataRepository {
         tags.add(Tag.EDUCATION);
         return new NewsData(tags,
                 " ",
-                "March 4 – 7, 2020, International Exhibition Center, Kyiv, 15 Brovarsky Ave., takes place the most important event for professionals and funs of natural food and healthy life"
+                CONTENT_EXHIBITION.getString()
         );
     }
 
     public NewsData getNewsWithInvalidContentField() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
-        return new NewsData(tags, "Green Day", "foo");
+        return new NewsData(tags, TITLE_GREEN_DAY.getString(), CONTENT_SHORT_FOO.getString());
     }
 
     public NewsData getNewsWithContentFieldForCheckAutoResize() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         return new NewsData(tags,
-                "XVI International specialized exhibition of ecologic products for the daily life",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet " +
-                        "dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit " +
-                        "lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d. Lorem ipsum dolor sit amet, " +
-                        "consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. " +
-                        "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d. "
+                TITLE_EXHIBITION.getString(),
+                CONTENT_LOREM_IPSUM.getString() + CONTENT_LOREM_IPSUM.getString()
         );
     }
 
@@ -123,7 +120,7 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         return new NewsData(tags,
-                "XVI International specialized exhibition of ecologic products for the daily life",
+                TITLE_EXHIBITION.getString(),
                 " "
         );
     }
@@ -132,8 +129,8 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "Green Day Test", "https://goodnews.com",
-                "https://goodnews.com");
+        return new NewsData(tags, TITLE_GREEN_DAY.getString(), SOURCE_GOOD_NEWS.getString(),
+                SOURCE_GOOD_NEWS.getString());
     }
 
     public NewsData getNewsWithInvalidData() {
@@ -142,13 +139,15 @@ public final class NewsDataRepository {
         tags.add(Tag.NEWS);
         tags.add(Tag.EDUCATION);
         tags.add(Tag.ADS);
-        return new NewsData("The loss of any species is devastating. However, the decline or " +
-                "extinction of one species can trigger an avalanche within an ecosystem, wiping out" +
-                " many species in the process",
-                tags, "news.com", "Content", "src/test/resources/images/gifImage.gif");
+        return new NewsData(TITLE_LONG_LOSS_OF_SPECIES.getString(),
+                tags,
+                SOURCE_NO_HTTP_NEWS_COM.getString(),
+                CONTENT_SHORT_FOO.getString(),
+                "src/test/resources/images/gifImage.gif"
+        );
     }
 
-    public NewsData getExistingNews() {
+    public NewsData getExistingNews() { //Now doesn't exist. Used in a legacy EcoNewsPageTest
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.EVENTS);
         return new NewsData(tags, "Толока в Горіховому гаю", " Test Test Test Test Test Test Test  ");
