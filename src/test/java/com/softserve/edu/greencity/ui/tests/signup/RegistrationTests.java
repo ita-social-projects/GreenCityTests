@@ -152,6 +152,7 @@ public class RegistrationTests extends GreenCityTestRunner {
                 .signUp()
                 .getManualRegisterComponent()
                 .registerUser(userLoginCredentials)
+                .getMyCabinetPage()
                 .getAddNewHabitButton()
                 .getText();
 
