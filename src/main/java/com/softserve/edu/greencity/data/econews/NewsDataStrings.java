@@ -24,7 +24,17 @@ public enum NewsDataStrings {
     TITLE_LONG_LOSS_OF_SPECIES("The loss of any species is devastating. However, the decline or " +
             "extinction of one species can trigger an avalanche within an ecosystem, wiping out" +
             " many species in the process"),
-    SOURCE_NO_HTTP_NEWS_COM("news.com");
+    SOURCE_NO_HTTP_NEWS_COM("news.com"),
+
+    TITLE_TOLOKA("Толока в Горіховому гаю"),
+    CONTENT_TOLOKA("25 серпня запрошуємо на велику толоку в парку Горіховий гай. Початок о 9:00."),
+
+    TITLE_31W("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"),
+
+    TITLE_EKO_LAVKA("Еко лавка"),
+    CONTENT_EKO_LAVKA("Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, "
+            + "яка вирощується і виробляється на фермерських господарствах."),
+    SOURCE_GOOGLE("https://google.com.ua");
 
     private final String str;
 

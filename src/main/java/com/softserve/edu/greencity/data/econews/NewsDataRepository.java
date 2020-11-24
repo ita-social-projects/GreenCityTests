@@ -150,13 +150,13 @@ public final class NewsDataRepository {
     public NewsData getExistingNews() { //Now doesn't exist. Used in a legacy EcoNewsPageTest
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "Толока в Горіховому гаю", " Test Test Test Test Test Test Test  ");
+        return new NewsData(tags, TITLE_TOLOKA.getString(), CONTENT_TOLOKA.getString());
     }
 
     public NewsData getNewsWithInvalidTags(List<Tag> tags) {
         return new NewsData(tags,
-                "Be eco! Be cool!",
-                "It's so healthy, fun and cool to bring eco habits in everyday life"
+                TITLE_BE_COOL.getString(),
+                CONTENT_BE_COOL.getString()
         );
     }
 
@@ -164,56 +164,59 @@ public final class NewsDataRepository {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
-    }
-
-    public NewsData getFourRowsTitle() {
-        List<Tag> tags = new ArrayList<>();
-        tags.add(Tag.NEWS);
-        tags.add(Tag.EVENTS);
-        return new NewsData(tags, "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
-    }
-
-    public NewsData getThreeRowsTitle() {
-        List<Tag> tags = new ArrayList<>();
-        tags.add(Tag.NEWS);
-        tags.add(Tag.EVENTS);
-        return new NewsData(tags, "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
+        return new NewsData(tags, TITLE_31W.getString(),
+                CONTENT_LOREM_IPSUM.getString());
     }
 
     public NewsData getTwoRowsTitle() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
+        return new NewsData(tags, TITLE_31W.getString() + TITLE_31W.getString(),
+                CONTENT_LOREM_IPSUM.getString());
+    }
+
+    public NewsData getThreeRowsTitle() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
+        return new NewsData(tags,
+                TITLE_31W.getString() + TITLE_31W.getString() + TITLE_31W.getString(),
+                CONTENT_LOREM_IPSUM.getString());
+    }
+
+    public NewsData getFourRowsTitle() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
+        return new NewsData(tags,
+                TITLE_31W.getString() + TITLE_31W.getString() +
+                        TITLE_31W.getString() + TITLE_31W.getString(),
+                CONTENT_LOREM_IPSUM.getString());
     }
 
     public NewsData getNewsWithoutSource() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.INITIATIVES);
-        return new NewsData(tags, "Еко лавка",
-                "Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, яка вирощується і виробляється на фермерських господарствах.");
+        return new NewsData(tags, TITLE_EKO_LAVKA.getString(),
+                CONTENT_EKO_LAVKA.getString());
     }
 
     public NewsData getTitleForAutoResizeCheck() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
         tags.add(Tag.EVENTS);
-        return new NewsData(tags, "March 4 – 7, 2020, International Exhibition Center, Kyiv, 15 Brovarsky Ave., takes place the most important event for professionals and funs of natural food and healthy life.",
-                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
+        return new NewsData(tags, CONTENT_EXHIBITION.getString(), //sic!
+                CONTENT_LOREM_IPSUM.getString());
     }
 
 
     public NewsData getNewsWithSource() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.INITIATIVES);
-        return new NewsData(tags, "Еко лавка",
-                "Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, яка вирощується і виробляється на фермерських господарствах.",
-                "https://google.com.ua");
+        return new NewsData(tags, TITLE_EKO_LAVKA.getString(),
+                CONTENT_EKO_LAVKA.getString(),
+                SOURCE_GOOGLE.getString());
     }
 
     public List<Tag> getNewsByTags() {
