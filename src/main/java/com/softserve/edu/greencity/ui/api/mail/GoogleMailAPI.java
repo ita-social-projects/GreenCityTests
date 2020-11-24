@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.api.mail;
 
-import com.softserve.edu.greencity.data.User;
-import com.softserve.edu.greencity.data.UserRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.sun.mail.imap.protocol.FLAGS;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;

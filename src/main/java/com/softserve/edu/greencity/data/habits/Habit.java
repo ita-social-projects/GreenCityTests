@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.data;
+package com.softserve.edu.greencity.data.habits;
 
 public enum Habit {
     DISCARD_DISPOSABLE_CUPS("Discard disposable cups"),

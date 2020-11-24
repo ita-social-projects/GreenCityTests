@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.data.econews;
 
-import com.softserve.edu.greencity.data.UserRepository;
+import com.softserve.edu.greencity.data.users.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.tests.comments;
 
-import com.softserve.edu.greencity.data.User;
-import com.softserve.edu.greencity.data.UserRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;

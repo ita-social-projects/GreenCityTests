@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.data.Languages;
-import com.softserve.edu.greencity.data.User;
+import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;

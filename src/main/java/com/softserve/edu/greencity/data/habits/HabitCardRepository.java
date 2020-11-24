@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.data;
+package com.softserve.edu.greencity.data.habits;
 
 public class HabitCardRepository {
     private static volatile HabitCardRepository instance = null;

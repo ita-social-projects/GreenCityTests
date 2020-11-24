@@ -1,4 +1,6 @@
-package com.softserve.edu.greencity.data;
+package com.softserve.edu.greencity.data.habits;
+
+import com.softserve.edu.greencity.data.Estimation;
 
 public class HabitItem {
 

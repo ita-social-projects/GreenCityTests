@@ -2,8 +2,8 @@ package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
 import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
-import com.softserve.edu.greencity.data.User;
-import com.softserve.edu.greencity.data.UserRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;

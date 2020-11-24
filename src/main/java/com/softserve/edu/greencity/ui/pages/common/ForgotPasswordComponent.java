@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.data.User;
+import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
 import org.openqa.selenium.By;

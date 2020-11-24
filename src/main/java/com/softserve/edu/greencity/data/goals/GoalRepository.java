@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.data;
+package com.softserve.edu.greencity.data.goals;
 
 public class GoalRepository {
     private static volatile GoalRepository instance = null;
