@@ -401,13 +401,14 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .waitForConfirmationEmail();
     }
     @Step
-    public void registerUser(User userData) {
+    public MyCabinetPage registerUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword())
                 .clickSignUpButton()
                 .waitSuccessfulRegistrationPopUp();
+        return new MyCabinetPage(driver);
     }
     public void enterDataToSingUpFields(User userData){
         fillEmailField(userData.getEmail())
