@@ -222,6 +222,25 @@ public final class NewsDataRepository {
                 CONTENT_LOREM_IPSUM.getString());
     }
 
+    /**
+     * Congratulations! You've found an "Easter egg"!
+     * This is a poem about TAQCs' hard studies
+     * @author Meownjik
+     */
+    public NewsData getNewsWithPoem() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.EDUCATION);
+        return new NewsData(tags,
+                TITLE_POEM.getString(),
+                CONTENT_POEM_VERSE1 + "\n"
+                        + CONTENT_POEM_REFRAIN + "\n"
+                        + CONTENT_POEM_VERSE2 + "\n"
+                        + CONTENT_POEM_REFRAIN + "\n"
+                        + CONTENT_POEM_VERSE3 + "\n"
+                        + CONTENT_POEM_REFRAIN + "\n"
+                        + CONTENT_POEM_VERSE4 + "\n");
+    }
+
     public List<Tag> getNewsByTags() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);

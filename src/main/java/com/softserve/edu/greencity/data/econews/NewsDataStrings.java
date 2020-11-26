@@ -53,7 +53,45 @@ public enum NewsDataStrings {
 
     TITLE_MAXIMAL("This title contains one hundred and seventy characters! "
             + " This title contains one hundred and seventy characters!! "
-            + "This title contains one hundred and seventy characters!!!");
+            + "This title contains one hundred and seventy characters!!!"),
+
+    TITLE_POEM("У академії IT"),
+    CONTENT_POEM_VERSE1("Лагав комп'ютер під Віндою,\n" +
+            "І захід за вікном горів.\n" +
+            "Нас залишалось тільки троє\n" +
+            "Із вісімнадцяти учнів.\n" +
+            "\n" +
+            "Чимало з них, студентів файних,\n" +
+            "Сказало: «Нам не по путі»\n"),
+    CONTENT_POEM_REFRAIN("На курсах автотестування\n" +
+            "У академії IT.\n" +
+            "На курсах автотестування\n" +
+            "У академії IT.\n"),
+    CONTENT_POEM_VERSE2("Світились тестів результати,\n" +
+            "Як непрочитаний email —\n" +
+            "Всі намагались з'ясувати,\n" +
+            "Чому з'явився новий fail,\n" +
+            "\n" +
+            "Чому невдале порівняння,\n" +
+            "Що ся вписало в логи ті\n"),
+    CONTENT_POEM_VERSE3("Над нами ментори кружили,\n" +
+            "Спостерігали кожен день,\n" +
+            "Чи з головою ми дружили,\n" +
+            "Чи не творили єрундєнь.\n" +
+            "\n" +
+            "До цілі працевлаштування\n" +
+            "Ми вже стояли на мості\n"),
+    CONTENT_POEM_VERSE4("Мені вже сняться баги вічні,\n" +
+            "Stack trace ексепшинів до них\n" +
+            "І класи на півтищі стрічок,\n" +
+            "Що зрозуміти ледве зміг.\n" +
+            "\n" +
+            "Та час забути ці страждання:\n" +
+            "Хто вижив, попадуть усі\n" +
+            "Із курсів автотестування\n" +
+            "Та й на посаду TAQC!\n" +
+            "Із курсів автотестування\n" +
+            "Та й на посаду TAQC!\n");
 
     private final String str;
 
