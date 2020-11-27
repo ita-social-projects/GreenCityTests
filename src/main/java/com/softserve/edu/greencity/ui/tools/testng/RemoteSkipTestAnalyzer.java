@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests.runner;
+package com.softserve.edu.greencity.ui.tools.testng;
 
 import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import org.testng.*;

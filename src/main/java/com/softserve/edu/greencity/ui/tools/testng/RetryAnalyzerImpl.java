@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.tests.runner;
+package com.softserve.edu.greencity.ui.tools.testng;
 
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
