@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
-import com.softserve.edu.greencity.ui.data.Languages;
+import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;

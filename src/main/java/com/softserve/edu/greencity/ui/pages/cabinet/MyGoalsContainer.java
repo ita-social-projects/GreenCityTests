@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.softserve.edu.greencity.ui.data.Goal;
+import com.softserve.edu.greencity.data.goals.Goal;
 
 public class MyGoalsContainer extends GoalsContainerPart{
 

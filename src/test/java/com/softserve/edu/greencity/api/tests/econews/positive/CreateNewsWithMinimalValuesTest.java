@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 import static com.softserve.edu.greencity.api.assertions.EcoNewsAssertion.*;
 
 public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
@@ -23,8 +23,8 @@ public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
     private Object[] getMinimalValues() {
         return new Object[]
                 {
-                        ecoNewsDtoWith().title(getMinimalTitle())
-                                .text(getMinimalText())
+                        ecoNewsDtoWith().title(TITLE_MINIMAL.getString())
+                                .text(CONTENT_MINIMAL.getString())
                                 .image(null)
                                 .source("")
                                 .tags(new String[]{"news"}).build()

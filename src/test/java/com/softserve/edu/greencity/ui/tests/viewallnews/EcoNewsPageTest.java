@@ -1,31 +1,16 @@
 package com.softserve.edu.greencity.ui.tests.viewallnews;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
-import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;
-import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
-import com.sun.net.httpserver.Authenticator;
-import io.qameta.allure.Description;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
 
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
-import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
-import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 
 /**
