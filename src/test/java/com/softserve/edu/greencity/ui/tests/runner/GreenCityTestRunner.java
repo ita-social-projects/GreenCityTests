@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
+import com.softserve.edu.greencity.ui.tools.testng.TestNgListeners;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
 import lombok.SneakyThrows;
@@ -14,6 +15,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.html5.RemoteWebStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -27,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * A base class for UI tests. All test classes should extend this one.
  */
+@Listeners(TestNgListeners.class)
 public abstract class GreenCityTestRunner {
     private static final String BASE_URL = ValueProvider.getBaseUrl();
     private static int left = 160; //Total amount of UI tests
@@ -46,7 +49,7 @@ public abstract class GreenCityTestRunner {
 
     @SneakyThrows
     @BeforeClass
-    public void setUpBeforeClass() throws MalformedURLException {
+    public void setUpBeforeClass(ITestContext context) throws MalformedURLException {
         if (remote) {
             /*<==========================Selenoid logs==========================>*/
             String className = this.getClass().getName();
@@ -83,6 +86,8 @@ public abstract class GreenCityTestRunner {
         driver.manage().timeouts().pageLoadTimeout(80, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         /*<============================Local============================>*/
+
+        context.setAttribute("driver", driver);
     }
 
     @AfterClass(alwaysRun = true)
