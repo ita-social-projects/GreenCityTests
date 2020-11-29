@@ -161,6 +161,14 @@ public final class NewsDataRepository {
         );
     }
 
+    public NewsData getRealTestNew() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
+        return new NewsData(tags, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim ven",
+                "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d");
+    }
+
     public NewsData getOneRowTitle() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.NEWS);
