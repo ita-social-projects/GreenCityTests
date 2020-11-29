@@ -1,14 +1,14 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
-import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
-import com.softserve.edu.greencity.ui.tests.runner.RemoteSkipTestAnalyzer;
+import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
+import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.NoSuchElementException;

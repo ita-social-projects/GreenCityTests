@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
 import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;

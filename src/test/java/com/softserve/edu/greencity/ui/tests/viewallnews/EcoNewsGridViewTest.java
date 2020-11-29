@@ -1,14 +1,14 @@
 package com.softserve.edu.greencity.ui.tests.viewallnews;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
-import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tests.runner.LocalOnly;
-import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
+import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
+import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;

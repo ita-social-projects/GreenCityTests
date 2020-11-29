@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
-import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.data.econews.Tag;
 import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 import com.softserve.edu.greencity.ui.locators.ItemComponentLocators;
@@ -18,8 +18,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
-
-import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 /**
  * Any one of news cards displayed at https://ita-social-projects.github.io/GreenCityClient/#/news
