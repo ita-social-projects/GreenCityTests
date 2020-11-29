@@ -288,7 +288,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     public void isTitleAndContentNotHigherThan() {
         logger.info("isTitleAndContentNotHigherThan");
         User user = UserRepository.get().temporary();
-        NewsData newsData = NewsDataRepository.get().getRealTestNew();
+        NewsData newsData = NewsDataRepository.get().getHeightCheckContent();
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .signIn()
@@ -321,7 +321,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     public void isTitleDisplayedFully() {
         logger.info("isTitleDisplayedFully");
         User user = UserRepository.get().temporary();
-        NewsData newsData = NewsDataRepository.get().getRealTestNew();
+        NewsData newsData = NewsDataRepository.get().getHeightCheckContent();
         String expectedTitle = newsData.getTitle();
 
         EcoNewsPage ecoNewsPage = loadApplication()
