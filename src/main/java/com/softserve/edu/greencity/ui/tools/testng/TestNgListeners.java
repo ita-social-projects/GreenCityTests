@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tools.testng;
 
+import com.softserve.edu.greencity.ui.tools.logs.GroupedLoggingAppender;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -24,7 +25,8 @@ public class TestNgListeners implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         log.warn("The name of the testcase failed is: {}", result.getName());
-        //attachLogFile(result.getInstance().getClass().getSimpleName());
+        long tid = Thread.currentThread().getId();
+        attachLogFile(tid);
         //attachRequestLogFile(result.getName());
         ITestContext context = result.getTestContext();
         WebDriver driver = (WebDriver) context.getAttribute("driver");
@@ -82,19 +84,19 @@ public class TestNgListeners implements ITestListener {
     public byte[] attachScreenshot(WebDriver driver) {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
-/*
-    @Attachment(value = "Logs for {className}", type = "text/plain", fileExtension = ".log")
-    public byte[] attachLogFile(String className) {
+
+    @Attachment(value = "Logs for thread {tid}", type = "text/plain", fileExtension = ".log")
+    public byte[] attachLogFile(long tid) {
         try {
-            Path path = Paths.get(System.getProperty("user.dir") + "\\target\\logs\\"
-                    + className + ".log");
+            Path path = Paths.get(System.getProperty("user.dir") + "\\target\\" +
+                    String.format("thread_output_%04d%s", tid, GroupedLoggingAppender.ext));
             return Files.readAllBytes(path);
         } catch (IOException ignored) {
-            log.warn("Logs for " + className + " are unavailable");
+            log.warn("Logs for thread " + tid + " are unavailable");
         }
         return null;
     }
-
+/*
     @Attachment(value = "Request logs for {testName}", type = "text/plain", fileExtension = ".log")
     public byte[] attachRequestLogFile(String testName) {
         try {

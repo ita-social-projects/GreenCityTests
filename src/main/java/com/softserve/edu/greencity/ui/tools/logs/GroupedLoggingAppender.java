@@ -59,7 +59,7 @@ public class GroupedLoggingAppender extends AppenderSkeleton implements IReporte
 
     private final String outputDir;
     private final String outputFile;
-    private final String ext = ".threadlog.txt";
+    public static final String ext = ".threadlog.txt";
 
     public GroupedLoggingAppender() {
         String outdir = System.getProperty("outputdir");
@@ -118,7 +118,7 @@ public class GroupedLoggingAppender extends AppenderSkeleton implements IReporte
     @Override
     public void append(LoggingEvent event) {
         if (outputDir == null)
-            return; // by default nothing appended, see com.softserve.edu.greencity.api.comments on top
+            return; // by default nothing appended, comments on top
         try {
             long tid = Thread.currentThread().getId();
             BufferedWriter fw = tid2file.get(tid);
