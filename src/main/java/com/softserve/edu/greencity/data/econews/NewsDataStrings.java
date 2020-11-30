@@ -24,6 +24,17 @@ public enum NewsDataStrings {
             "Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit " +
             "lobortis nisl ut aliquip ex ea commodo consequat."),
 
+    CONTENT_LOREM_IPSUM_LONG("Lorem ipsum dolor sit amet, consectetuer adipiscing elit, " +
+            "sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat." +
+            " Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl" +
+            " ut aliquip ex ea commodo consequat. Duis autem vel eum iriure d"),
+
+    TITLE_LOREM_IPSUM("Lorem ipsum dolor sit amet, consectetuer adipiscing elit," +
+            " sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. " +
+            "Ut wisi enim ad minim ven"),
+
+
+
     SOURCE_GOOD_NEWS("https://goodnews.com"),
 
     TITLE_LONG_LOSS_OF_SPECIES("The loss of any species is devastating. However, the decline or " +

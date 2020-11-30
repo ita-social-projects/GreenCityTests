@@ -464,14 +464,14 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     @Test(testName = "GC-213", description = "GC-213", dataProvider = "unregisterCredentials", retryAnalyzer = RetryAnalyzerImpl.class)
     @Description("Verify that user sees popup about successfully registration after registration on the site")
     public void successRegistrationPopUpDisplayed(User userLoginCredentials) {
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        registerComponent.getManualRegisterComponent().registerUser(userLoginCredentials);
-        Assert.assertTrue(
-                registerComponent
-                        .getManualRegisterComponent()
-                        .GetSackfulRegistrationPopUp()
-                        .isDisplayed());
+       Boolean isDisplayed = loadApplication()
+               .signUp()
+               .getManualRegisterComponent()
+                .registerUser(userLoginCredentials)
+               .getSackfulRegistrationPopUp()
+               .isDisplayed();
+
+        Assert.assertTrue(isDisplayed);
     }
 
     @Test(testName = "GC-212", description = "GC-212")

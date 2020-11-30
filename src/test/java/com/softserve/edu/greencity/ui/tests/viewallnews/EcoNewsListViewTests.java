@@ -21,7 +21,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     String cssColorProperty;
     String expectedColorRGBA;
     String expectedHoveredByMouseColorRGBA;
-    List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages;
+    List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages, screenWidthForTitleTests;
 
     private final String DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
     private static List<String> testNewsTitles = new ArrayList<>();
@@ -42,6 +42,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         screenWidthWithContent = Arrays.asList(1440, 1200);
         screenWidthWithoutContent = Arrays.asList(1024, 768, 667);
         screenWidthWithoutImages = Arrays.asList(576, 575);
+        screenWidthForTitleTests = Arrays.asList(1440, 1024, 768, 576);
         screenWidth1 = Arrays.asList(1400, 1024, 768);
         screenWidth2 = Arrays.asList(576, 360);
     }
@@ -281,6 +282,70 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     }
 
 
+    //TODO Modify after UI bug fixed
+    @Test(testName = "GC-703", description = "GC-703")
+    @Description("Verify that Title and Content text can be not higher than 136 px.")
+    public void isTitleAndContentNotHigherThan() {
+        logger.info("isTitleAndContentNotHigherThan");
+        User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getHeightCheckContent();
+
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(newsData)
+                .publishNews();
+
+        testNewsTitles.add(newsData.getTitle());
+
+        for (Integer integer : screenWidthForTitleTests) {
+            ecoNewsPage.changeWindowWidth(integer);
+            ecoNewsPage.switchToListView();
+            ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
+            logger.info("titleHeight " +firstItemTitle.getTitleHeight() +"+ contentHeight "+firstItemTitle.getContentHeight()+" = "+(firstItemTitle.getTitleHeight()+firstItemTitle.getContentHeight()));
+            int TitleAndContentHeight = (firstItemTitle.getTitleHeight()+firstItemTitle.getContentHeight());
+            logger.info("Height = "+TitleAndContentHeight);
+            softAssert.assertEquals(TitleAndContentHeight, 136 );
+        }
+        ecoNewsPage.maximizeWindow();
+        ecoNewsPage.signOut();
+        softAssert.assertAll();
+    }
+
+    //TODO Modify after UI bug fixed
+    @Test(testName = "GC-706", description = "GC-706")
+    @Description("Verify that Title is displayed fully.")
+    public void isTitleDisplayedFully() {
+        logger.info("isTitleDisplayedFully");
+        User user = UserRepository.get().temporary();
+        NewsData newsData = NewsDataRepository.get().getHeightCheckContent();
+        String expectedTitle = newsData.getTitle();
+
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(newsData)
+                .publishNews();
+
+        testNewsTitles.add(newsData.getTitle());
+
+        for (Integer integer : screenWidthForTitleTests) {
+            ecoNewsPage.changeWindowWidth(integer);
+            ecoNewsPage.switchToListView();
+            ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
+            softAssert.assertEquals(firstItemTitle.getTitleText(), expectedTitle);
+        }
+        ecoNewsPage.maximizeWindow();
+        ecoNewsPage.signOut();
+        softAssert.assertAll();
+    }
+
     @Test(testName = "GC-708", description = "GC-708")
     @Description("Verify that when Title consist of 4 row, then Description consist of 0 row.")
     public void isZeroRowDescriptionWhenFourRowsTitle() {
@@ -303,10 +368,10 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         ecoNewsPage.switchToListView();
 
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 128);
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleNumberRow(), 4);
-        Assert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContent().isDisplayed());
-        Assert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContentNumberVisibleRow(), 0);
+        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 128);
+        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleNumberRow(), 4);
+        softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContent().isDisplayed());
+        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContentNumberVisibleRow(), 0);
 
         ecoNewsPage.signOut();
         softAssert.assertAll();

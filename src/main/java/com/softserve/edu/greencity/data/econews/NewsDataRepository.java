@@ -222,6 +222,13 @@ public final class NewsDataRepository {
                 CONTENT_LOREM_IPSUM.getString());
     }
 
+    public NewsData getHeightCheckContent() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        tags.add(Tag.EVENTS);
+        return new NewsData(tags, TITLE_LOREM_IPSUM.getString(), CONTENT_LOREM_IPSUM_LONG.getString());
+    }
+
     /**
      * Congratulations! You've found an "Easter egg"!
      * This is a poem about TAQCs' hard studies

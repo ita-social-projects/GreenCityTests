@@ -224,7 +224,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     @Step
-    public WebElement GetSackfulRegistrationPopUp() {
+    public WebElement getSackfulRegistrationPopUp() {
         return searchElementByCss(successfulRegistrationPopUp);
     }
     @Step
@@ -401,13 +401,14 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .waitForConfirmationEmail();
     }
     @Step
-    public void registerUser(User userData) {
+    public ManualRegisterComponent registerUser(User userData) {
         fillEmailField(userData.getEmail())
                 .fillUserNameField(userData.getUserName())
                 .fillPasswordFieldPassShown(userData.getPassword())
                 .fillPasswordConfirmField(userData.getPassword())
                 .clickSignUpButton()
                 .waitSuccessfulRegistrationPopUp();
+        return this;
     }
     public void enterDataToSingUpFields(User userData){
         fillEmailField(userData.getEmail())
@@ -429,6 +430,10 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private ManualRegisterComponent waitForConfirmationEmail() {
         new GoogleMailAPI().waitForMassagesWithSubject("Verify your email address",true,5,30);
         return this;
+    }
+
+    public MyCabinetPage getMyCabinetPage(){
+        return new MyCabinetPage(driver);
     }
 
     @Override
