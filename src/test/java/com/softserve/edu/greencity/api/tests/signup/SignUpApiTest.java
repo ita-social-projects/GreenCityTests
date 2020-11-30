@@ -159,28 +159,7 @@ public class SignUpApiTest {
                 .bodyValueContains("message", message);
     }
 
-   /*   @Test(dataProvider = "SuccessfulRegistration", testName = "GC-531", description = "GC-531")
-    @Description("Verify that user is registered, after he enters valid values ")
-    public void signUpWithValidCredentialsTest(String email, String name,  String password) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, name, password);
-        assertion.statusCode(201);
-       String url = new GoogleMailAPI().getconfirmURL(email,password,20);
-        List<NameValuePair> params = null;
-        try {
-            params = URLEncodedUtils.parse(new URI(url), Charset.forName("UTF-8"));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
 
-        for (org.apache.http.NameValuePair param : params) {
-            System.out.println(param.getName() + " : " + param.getValue());
-        }
-        Map<String, String> mappedMovies = new HashMap<String, String>();
-        for (org.apache.http.NameValuePair param : params) {
-            mappedMovies.put(param.getName(),param.getValue());
-        }
-        System.out.println(mappedMovies.get("token"));
-    } */
 
     @Test(dataProvider = "SuccessfulRegistration", testName = "GC-531", description = "GC-531")
     @Description("Verify that user is registered, after he enters valid values ")
@@ -192,16 +171,5 @@ public class SignUpApiTest {
         assertion = getVerifyEmailAssertion(email, password);
         assertion.statusCode(200);
     }
-      /*  URL url = null;
-        try {
-            url = new URL(new GoogleMailAPI().getconfirmURL(email, password, 20));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        String tokenAndUserId = url.getQuery();
-        assertion = getVerifyEmailAssertion(tokenAndUserId);
-        assertion.statusCode(200); */
-
-
-    }
+}
 
