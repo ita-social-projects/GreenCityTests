@@ -127,6 +127,7 @@ public final class UserRepository {
                 getpasswordForRegistration());
     }
 
+
     @SneakyThrows
     public User invalidPassUppercaseUserCreds() {
         return new User(
