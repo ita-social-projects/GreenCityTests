@@ -16,10 +16,8 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -40,13 +38,13 @@ public class SignUpApiTest {
     public Object[][] invalidCredentials() { //GC-536, 537, 540, 541
         return new Object[][]{
                 {"InvalidEmail", "DefaultName", "Test1234_", "The email is invalid"},
-                {"TestEmail@gmail.com", "DefaultName", "Te1_", "Password has contain at least one character of Uppercase letter (A-Z)," +
+                {"TestEmail@gmail.com", "DefaultName", "InvalidPassword", "Password has contain at least one character of Uppercase letter (A-Z)," +
                         " Lowercase letter (a-z), Digit (0-9)," +
-                        " Special character (~`!@#$%^&*()+=_-{}[]|:;\\\\�\\\\�?/<>,.)"},
+                        " Special character (~`!@#$%^&*()+=_-{}[]|:;"},
                 {"TestEmail@gmail.com", "InvalidVeryLongNameForSignUpTest", "Test1234_", "length must be between 6 and 30"},
                 {"TestEmail@gmail.com", "DefaultName", "InvalidPassword", "Password has contain at least one character of Uppercase letter (A-Z)," +
                         " Lowercase letter (a-z), Digit (0-9)," +
-                        " Special character (~`!@#$%^&*()+=_-{}[]|:;\\\\�\\\\�?/<>,.)"},
+                        " Special character (~`!@#$%^&*()+=_-{}[]|:;"},
         };
     }
 
@@ -79,7 +77,7 @@ public class SignUpApiTest {
         };
     }
 
-    private ArrayAssertion getCommonCredentialsAssertion(String email, String name, String password) {
+    private ArrayAssertion getSignUpAssertion(String email, String name, String password) {
         SignUpDto credentials = SignUpBuilder.signUpWith()
                 .email(email)
                 .name(name)
@@ -105,8 +103,6 @@ public class SignUpApiTest {
        for (org.apache.http.NameValuePair param : params) {
            map.put(param.getName(),param.getValue());
        }
-       System.out.println(map.get("token"));
-       System.out.println(map.get("user_id"));
        OwnSecurityClient ownSecurityClient = new OwnSecurityClient("JSON");
        Response response = ownSecurityClient.verifyEmail(map.get("token"), map.get("user_id"));
        response.print();
@@ -128,7 +124,7 @@ public class SignUpApiTest {
     @Test(dataProvider = "emptyCredentials", testName = "GC-532, GC-534, GC-535", description = "GC-532, GC-534, GC-535")
     @Description("Verify that user is not registered, when values in request are empty")
     public void blankCredentialsTest(String email, String name, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, name, password);
+        ArrayAssertion assertion = getSignUpAssertion(email, name, password);
         assertion.statusCode(400)
                 .bodyArrayContains("message", message);
     }
@@ -136,15 +132,15 @@ public class SignUpApiTest {
     @Test(dataProvider = "invalidCredentials", testName = "GC-536, GC-537, GC-540, GC-541", description = "GC-536, GC-537, GC-540, GC-541")
     @Description("Verify that user is not registered, when credentials are invalid")
     public void invalidCredentialsTest(String email, String name, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, name, password);
+        ArrayAssertion assertion = getSignUpAssertion(email, name, password);
         assertion.statusCode(400)
-                .bodyArrayContains("message", message);
+                .bodyArrayStartWith("message", message);
     }
 
     @Test(dataProvider = "existingEmail", testName = "GC-528", description = "GC-528")
     @Description("Verify that the user cannot register with the already registered email address")
     public void existingEmailTest(String email, String name, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, name, password);
+        ArrayAssertion assertion = getSignUpAssertion(email, name, password);
         assertion.statusCode(400)
                 .bodyArrayContains("message", message);
     }
@@ -152,7 +148,7 @@ public class SignUpApiTest {
     @Test(dataProvider = "validCredentials", testName = "GC-533", description = "GC-533")
     @Description("Verify that user can not Sign in if he didn’t verify email address in email box ")
     public void signInWithoutVerifyingEmailTest(String email, String name, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, name, password);
+        ArrayAssertion assertion = getSignUpAssertion(email, name, password);
         assertion.statusCode(201);
         assertion = getSignInAssertion(email, password);
         assertion.statusCode(403)
@@ -165,7 +161,7 @@ public class SignUpApiTest {
     @Description("Verify that user is registered, after he enters valid values ")
     public void signUpWithValidCredentialsTest(String email, String name, String password) {
         new GoogleMailAPI().clearMail(email, password);
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, name, password);
+        ArrayAssertion assertion = getSignUpAssertion(email, name, password);
         assertion.statusCode(201);
 
         assertion = getVerifyEmailAssertion(email, password);
