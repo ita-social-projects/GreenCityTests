@@ -4,13 +4,14 @@ import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
 import com.softserve.edu.greencity.api.builders.ownsecurity.SignInBuilder;
 import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
+import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import io.qameta.allure.Description;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SignInApiTest {
+public class SignInApiTest extends GreenCityAPITestRunner {
     @DataProvider(name = "blankCredentials")
     public Object[][] blankCredentials() { //GC-490
         return new Object[][]{

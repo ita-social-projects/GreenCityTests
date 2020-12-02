@@ -27,7 +27,9 @@ public class TestNgListeners implements ITestListener {
         log.warn("The name of the testcase failed is: {}", result.getName());
         long tid = Thread.currentThread().getId();
         attachLogFile(tid);
-        //attachRequestLogFile(result.getName());
+        if(result.getInstance().getClass().getName().toLowerCase().contains("greencity.api")) {
+            attachRequestLogFile(result.getName());
+        }
         ITestContext context = result.getTestContext();
         WebDriver driver = (WebDriver) context.getAttribute("driver");
         if (driver != null) {
@@ -60,6 +62,7 @@ public class TestNgListeners implements ITestListener {
     public void onTestStart(ITestResult result) {
         log.info("{}.{} test case started",
                 result.getInstance().getClass().getSimpleName(), result.getName());
+        System.out.println(result.getInstance().getClass().getName().toLowerCase());
     }
 
     @Override
@@ -96,7 +99,7 @@ public class TestNgListeners implements ITestListener {
         }
         return null;
     }
-/*
+
     @Attachment(value = "Request logs for {testName}", type = "text/plain", fileExtension = ".log")
     public byte[] attachRequestLogFile(String testName) {
         try {
@@ -108,6 +111,6 @@ public class TestNgListeners implements ITestListener {
         }
         return null;
     }
-*/
+
 }
 
