@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.api.tests.ownsecurity.signup;
 
 import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
+import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import com.softserve.edu.greencity.api.tests.ownsecurity.OwnSecurityTestRunner;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
