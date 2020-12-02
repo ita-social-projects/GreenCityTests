@@ -1,15 +1,10 @@
 package com.softserve.edu.greencity.api.tests.ownsecurity.signup;
 
 import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
-import com.softserve.edu.greencity.api.builders.ownsecurity.SignInBuilder;
-import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
-import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
 import com.softserve.edu.greencity.api.tests.ownsecurity.OwnSecurityTestRunner;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import io.qameta.allure.Description;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
