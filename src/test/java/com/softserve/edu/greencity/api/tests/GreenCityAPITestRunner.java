@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.api.tests;
 
+import com.softserve.edu.greencity.ui.tools.testng.TestNgListeners;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -7,10 +8,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,8 +17,8 @@ import java.lang.reflect.Method;
 
 /**
  * A base class for API tests. All test classes should extend this one.
- * TODO Make all API test classes extend this one!
  */
+@Listeners(TestNgListeners.class)
 public class GreenCityAPITestRunner {
 
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -31,10 +29,10 @@ public class GreenCityAPITestRunner {
      */
     @BeforeMethod
     public void setFilters(Method method) {
-        File logFile = new File(System.getProperty("user.dir") + "\\target\\logs\\"
+        File logFile = new File(System.getProperty("user.dir") + "\\target\\"
                 + method.getName() + "_requests.log");
         try {
-            logFile.createNewFile();
+            //logFile.createNewFile();
             PrintStream stream = new PrintStream(logFile);
             RestAssured.filters(
                     new ResponseLoggingFilter(LogDetail.ALL, stream),

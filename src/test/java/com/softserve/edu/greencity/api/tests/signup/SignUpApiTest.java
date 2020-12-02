@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.api.builders.ownsecurity.SignUpBuilder;
 import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignUpDto;
+import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import io.qameta.allure.Description;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SignUpApiTest {
+public class SignUpApiTest extends GreenCityAPITestRunner {
     @DataProvider(name = "emptyCredentials")
     public Object[][] blankCredentials() { //GC-532, 534, 535
         return new Object[][]{
