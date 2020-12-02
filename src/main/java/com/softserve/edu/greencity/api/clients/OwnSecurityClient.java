@@ -45,20 +45,14 @@ public class OwnSecurityClient extends BaseClient {
     }
 
     public Response changePassword(ChangePasswordDto params) {
-        Map<String, String> formParams = new HashMap<>();
-        formParams.put("confirmPassword", params.confirmPassword);
-        formParams.put("password", params.password);
-        formParams.put("token", params.token);
-
-        return prepareRequest()
-                .formParams(formParams)
-                .contentType(ContentType.URLENC)
+        return prepareRequest().given().log().all()
+                .body(params)
                 .post("/{entity}/changePassword");
     }
 
     public Response updatePassword(UpdatePasswordDto params) {
         return prepareRequest().given().log().all()
                 .body(params)
-                .post("/{entity}");
+                .put("/{entity}");
     }
 }
