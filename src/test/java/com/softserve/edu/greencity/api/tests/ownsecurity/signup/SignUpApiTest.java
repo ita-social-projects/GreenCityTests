@@ -30,11 +30,11 @@ public class SignUpApiTest {
                 {"InvalidEmail", "DefaultName", "Test1234_", "The email is invalid"},
                 {"TestEmail@gmail.com", "DefaultName", "Te1_", "Password has contain at least one character of Uppercase letter (A-Z)," +
                         " Lowercase letter (a-z), Digit (0-9)," +
-                        " Special character (~`!@#$%^&*()+=_-{}[]|:;\\\\�\\\\�?/<>,.)"},
+                        " Special character (~`!@#$%^&*()+=_-{}[]|:;"},
                 {"TestEmail@gmail.com", "InvalidVeryLongNameForSignUpTest", "Test1234_", "length must be between 6 and 30"},
                 {"TestEmail@gmail.com", "DefaultName", "InvalidPassword", "Password has contain at least one character of Uppercase letter (A-Z)," +
                         " Lowercase letter (a-z), Digit (0-9)," +
-                        " Special character (~`!@#$%^&*()+=_-{}[]|:;\\\\�\\\\�?/<>,.)"},
+                        " Special character (~`!@#$%^&*()+=_-{}[]|:;"},
         };
     }
 
@@ -82,7 +82,7 @@ public class SignUpApiTest {
     public void invalidCredentialsTest(String email, String name, String password, String message) {
         ArrayAssertion assertion = OwnSecurityTestRunner.getSignUpAssertion(email, name, password);
         assertion.statusCode(400)
-                .bodyArrayContains("message", message);
+                .bodyArrayStartWith("message", message);
     }
 
     @Test(dataProvider = "existingEmail", testName = "GC-528", description = "GC-528")

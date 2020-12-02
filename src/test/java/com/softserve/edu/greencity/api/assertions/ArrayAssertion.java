@@ -77,6 +77,17 @@ public class ArrayAssertion extends BaseAssertion {
         return this;
     }
 
+    public ArrayAssertion bodyArrayStartWith(String bodyParameter, String expectedValue) {
+        List<String> list = getBodyArrayValue(bodyParameter);
+        for (String actual: list) {
+            if(actual.startsWith(expectedValue)) {
+                return this;
+            }
+        }
+        Assert.fail();
+        return this;
+    }
+
     /**
      * Retrieves .xmlPath() or .jsonPath() depending on the .contentType()
      */
