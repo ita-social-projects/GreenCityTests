@@ -1,12 +1,8 @@
-package com.softserve.edu.greencity.api.tests.signin;
+package com.softserve.edu.greencity.api.tests.ownsecurity.signin;
 
 import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
-import com.softserve.edu.greencity.api.builders.ownsecurity.SignInBuilder;
-import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
-import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
+import com.softserve.edu.greencity.api.tests.ownsecurity.OwnSecurityTestRunner;
 import io.qameta.allure.Description;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -43,26 +39,11 @@ public class SignInApiTest {
         };
     }
 
-    /**
-     * Does similar logic for credentials tests.
-     * Also asserts that content type is JSON
-     */
-    private ArrayAssertion getCommonCredentialsAssertion(String email, String password) {
-        SignInDto credentials = SignInBuilder.signInWith()
-                .email(email)
-                .password(password)
-                .build();
-        OwnSecurityClient ownSecurityClient = new OwnSecurityClient("JSON");
-        Response response = ownSecurityClient.signIn(credentials);
-        response.print();
-        return new ArrayAssertion(response)
-                .contentType(ContentType.JSON);
-    }
 
     @Test(dataProvider = "blankCredentials", testName = "GC-490", description = "GC-490")
     @Description("Verify that user gets error message when sign in with empty text fields")
     public void blankCredentialsTest(String email, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
+        ArrayAssertion assertion = OwnSecurityTestRunner.getSignInAssertion(email, password);
         assertion.statusCode(400)
                 .bodyArrayContains("message", message);
     }
@@ -70,7 +51,7 @@ public class SignInApiTest {
     @Test(dataProvider = "invalidEmail", testName = "GC-493, GC-494", description = "GC-493, GC-494")
     @Description("Verify that user gets error message and no token when sign in with incorrect email")
     public void invalidEmailTest(String email, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
+        ArrayAssertion assertion = OwnSecurityTestRunner.getSignInAssertion(email, password);
         assertion.statusCode(400)
                 .bodyArrayContains("message", message) //For some reason, they return an array here
                 .bodyNoParameter("accessToken");
@@ -80,7 +61,7 @@ public class SignInApiTest {
     @Test(dataProvider = "invalidCredentials", testName = "GC-495, GC-496, GC-507", description = "GC-495, GC-496, GC-507")
     @Description("Verifies proper status codes and error messages on providing improper email/password")
     public void badCredentialsTest(String email, String password, String message) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
+        ArrayAssertion assertion = OwnSecurityTestRunner.getSignInAssertion(email, password);
         assertion
                 .bodyValueContains("message", message)
                 .bodyNoParameter("accessToken")
@@ -90,7 +71,7 @@ public class SignInApiTest {
     @Test(dataProvider = "validCredentials", testName = "GC-506", description = "GC-506")
     @Description("Verify that user can get token to authorize with valid credential")
     public void validCredentialsTest(String email, String password) {
-        ArrayAssertion assertion = getCommonCredentialsAssertion(email, password);
+        ArrayAssertion assertion = OwnSecurityTestRunner.getSignInAssertion(email, password);
         assertion.defaultAsserts()
                 .bodyHasParameter("accessToken");
     }
