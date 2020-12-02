@@ -5,23 +5,18 @@ import com.softserve.edu.greencity.api.builders.ownsecurity.ChangePasswordBuilde
 import com.softserve.edu.greencity.api.builders.ownsecurity.SignInBuilder;
 import com.softserve.edu.greencity.api.builders.ownsecurity.SignUpBuilder;
 import com.softserve.edu.greencity.api.builders.ownsecurity.UpdatePasswordBuilder;
-import com.softserve.edu.greencity.api.clients.EcoNewsClient;
 import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
 import com.softserve.edu.greencity.api.models.ownsecurity.*;
 import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
-import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.testng.annotations.BeforeClass;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,12 +59,12 @@ public class OwnSecurityTestRunner extends GreenCityAPITestRunner {
        String url = new GoogleMailAPI().getconfirmURL(email,password,20);
        List<NameValuePair> params = null;
        try {
-           params = URLEncodedUtils.parse(new URI(url), Charset.forName("UTF-8"));
+           params = URLEncodedUtils.parse(new URI(url), StandardCharsets.UTF_8);
        } catch (URISyntaxException e) {
            e.printStackTrace();
        }
 
-       Map<String, String> map = new HashMap<String, String>();
+       Map<String, String> map = new HashMap<>();
        for (NameValuePair param : params) {
            map.put(param.getName(),param.getValue());
        }
@@ -97,12 +92,12 @@ public class OwnSecurityTestRunner extends GreenCityAPITestRunner {
         String url = new GoogleMailAPI().getconfirmURL(FORGOT_PASS_MAIL_SUBJECT.getText(), email,oldPassword, "https://ita-social-projects.github.io/GreenCityClient//#/auth/restore[^\"]+", 20);
         List<NameValuePair> params = null;
         try {
-            params = URLEncodedUtils.parse(new URI(url), Charset.forName("UTF-8"));
+            params = URLEncodedUtils.parse(new URI(url), StandardCharsets.UTF_8);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         for (NameValuePair param : params) {
             map.put(param.getName(),param.getValue());
         }

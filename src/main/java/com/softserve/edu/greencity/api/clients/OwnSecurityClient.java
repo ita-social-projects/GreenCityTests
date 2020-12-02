@@ -1,13 +1,11 @@
 package com.softserve.edu.greencity.api.clients;
 
-import com.softserve.edu.greencity.api.models.ownsecurity.*;
+import com.softserve.edu.greencity.api.models.ownsecurity.ChangePasswordDto;
+import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
+import com.softserve.edu.greencity.api.models.ownsecurity.SignUpDto;
+import com.softserve.edu.greencity.api.models.ownsecurity.UpdatePasswordDto;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 public class OwnSecurityClient extends BaseClient {
 

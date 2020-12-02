@@ -1,18 +1,15 @@
 package com.softserve.edu.greencity.api.tests.ownsecurity.forgotpassword;
 
 import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
-import com.softserve.edu.greencity.api.clients.EcoNewsClient;
 import com.softserve.edu.greencity.api.tests.ownsecurity.OwnSecurityTestRunner;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
-import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.FORGOT_PASS_MAIL_SUBJECT;
-
 
 
 public class ForgotPasswordApiTest {
