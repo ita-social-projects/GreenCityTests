@@ -11,12 +11,27 @@ import static io.restassured.RestAssured.given;
 
 public class OwnSecurityClient extends BaseClient {
 
+    private final String authToken;
+
     public OwnSecurityClient(ContentType contentType) {
         super(contentType, "ownSecurity");
+        authToken = "";
     }
 
     public OwnSecurityClient(String contentType) {
         super(contentType, "ownSecurity");
+        authToken = "";
+    }
+
+    /**
+     * Use it to create authorized client.
+     *
+     * @param contentType content type of response and request
+     * @param authToken   unique token. Use OwnSecurityClient to get it
+     */
+    public OwnSecurityClient(ContentType contentType, String authToken) {
+        super(contentType, "econews");
+        this.authToken = "Bearer " + authToken;
     }
 
     public Response signIn(SignInDto credentials) {
@@ -53,6 +68,7 @@ public class OwnSecurityClient extends BaseClient {
     public Response updatePassword(UpdatePasswordDto params) {
         return prepareRequest().given().log().all()
                 .body(params)
+                .header("Authorization", authToken)
                 .put("/{entity}");
     }
 }
