@@ -96,16 +96,26 @@ public class GoogleMailAPI  {
 
     @Step("get green city auth confirm link from first mail")
     @SneakyThrows(Exception.class)
-    public String getconfirmURL(String subject, String mail, String pass,String regex) {
+    public String getconfirmURL(String subject, String mail, String pass, String regex, int maxTries) {
         connectToEmail(mail,pass);
-        waitForMassagesWithSubject(subject,true,5,10);
+        waitForMassagesWithSubject(subject,true,5,30);
         String link = "";
-            Message[] email = emailUtils.getMessagesBySubject("Verify your email address", true, 5);
-            String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
+        int count = 0;
+        Message[] email;
+        do {
+            email = emailUtils.getMessagesBySubject(subject, true, 5);
+        } while ((email.length == 0) && (++count < maxTries));
+
+        if(email.length == 0) {
+            return null;
+        }
+
+        String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
             Pattern pattern = Pattern.compile(regex);
             final Matcher m = pattern.matcher(mailContent);
             m.find();
             link = mailContent.substring( m.start(), m.end() )
+                    .replace("#","%23")
                     .replace("3D","")
                     .replace("amp;","")
                     .replace("=","")
