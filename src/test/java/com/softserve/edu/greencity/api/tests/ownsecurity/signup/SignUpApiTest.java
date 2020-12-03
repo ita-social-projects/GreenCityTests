@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.api.tests.ownsecurity.signup;
 
 import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
+import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import com.softserve.edu.greencity.api.tests.ownsecurity.OwnSecurityTestRunner;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
@@ -8,7 +9,7 @@ import io.qameta.allure.Description;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SignUpApiTest {
+public class SignUpApiTest extends GreenCityAPITestRunner {
     @DataProvider(name = "emptyCredentials")
     public Object[][] blankCredentials() { //GC-532, 534, 535
         return new Object[][]{

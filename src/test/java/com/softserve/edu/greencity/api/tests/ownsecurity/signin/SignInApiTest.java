@@ -1,12 +1,13 @@
 package com.softserve.edu.greencity.api.tests.ownsecurity.signin;
 
 import com.softserve.edu.greencity.api.assertions.ArrayAssertion;
+import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import com.softserve.edu.greencity.api.tests.ownsecurity.OwnSecurityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class SignInApiTest {
+public class SignInApiTest extends GreenCityAPITestRunner {
     @DataProvider(name = "blankCredentials")
     public Object[][] blankCredentials() { //GC-490
         return new Object[][]{
