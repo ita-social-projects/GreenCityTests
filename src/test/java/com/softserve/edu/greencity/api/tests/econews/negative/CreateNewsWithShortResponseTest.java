@@ -17,6 +17,10 @@ import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder
 import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
 import static com.softserve.edu.greencity.api.data.econews.NewsRepository.getLinkWithImproperHttpPos;
 
+/**
+ * It is called so because requests in this test return error in "short format"
+ * See ErrorMessage class
+ */
 public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
 
     @DataProvider(name = "improperNewsWithShortResponse")
@@ -26,7 +30,7 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
                         "GC-596",
                         ecoNewsDtoWith().title(getShortTitle())
                                 .text(getMediumText())
-                                .image(null)
+                                .image("image/png", getNormalImage())
                                 .source(getSourceWithoutHttp())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
@@ -35,7 +39,7 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
                         "GC-598",
                         ecoNewsDtoWith().title(getShortTitle())
                                 .text(getMediumText())
-                                .image(null)
+                                .image("image/png", getNormalImage())
                                 .source(getLinkWithImproperHttpPos())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
@@ -43,7 +47,13 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
         };
     }
 
-    @Test(dataProvider = "improperNewsWithShortResponse", testName = "GC-596, GC-598", description = "GC-596, GC-598")
+    /**
+     * Use this command to run only this test from terminal:
+     * mvn -Dtest=CreateNewsWithShortResponseTest#createNewsWithShortResponseTest test
+     */
+    @Test(dataProvider = "improperNewsWithShortResponse",
+            testName = "GC-596, GC-598",
+            description = "Tests which get response in short format")
     public void createNewsWithShortResponseTest(String testId, EcoNewsPOSTdto ecoNews, ErrorMessage expectedError){
         logger.info("Running createNewsWithShortResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);

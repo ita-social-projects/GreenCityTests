@@ -8,6 +8,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.MultiPartSpecification;
 
+import java.nio.charset.StandardCharsets;
+
 import static io.restassured.RestAssured.given;
 
 public class EcoNewsClient extends BaseClient {
@@ -26,7 +28,6 @@ public class EcoNewsClient extends BaseClient {
 
     /**
      * Use it to create authorized client with possibility to create, update etc.
-     *
      * @param contentType content type of response and request
      * @param authToken   unique token. Use OwnSecurityClient to get it
      */
@@ -35,18 +36,8 @@ public class EcoNewsClient extends BaseClient {
         this.authToken = "Bearer " + authToken;
     }
 
-    /**
-     * Gives three newest news
-     *
-     * @return "Array" of news
-     */
-    public Response getNewest() {
-        return prepareRequest()
-                .get("{entity}/newest");
-    }
-
     private MultiPartSpecification getMultiPart(EcoNewsPOSTdto news) {
-        return new MultiPartSpecBuilder(news.toString().getBytes())
+        return new MultiPartSpecBuilder(news.toString().getBytes(StandardCharsets.UTF_8))
                 .controlName("addEcoNewsDtoRequest")
                 .fileName(null)
                 .build();

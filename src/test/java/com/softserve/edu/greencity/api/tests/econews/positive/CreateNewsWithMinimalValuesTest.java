@@ -25,7 +25,7 @@ public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
                 {
                         ecoNewsDtoWith().title(getMinimalTitle())
                                 .text(getMinimalText())
-                                .image(null)
+                                .image(null, null)
                                 .source("")
                                 .tags(new String[]{"news"}).build()
                 };

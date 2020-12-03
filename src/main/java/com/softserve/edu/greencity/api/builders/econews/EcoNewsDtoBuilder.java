@@ -1,6 +1,12 @@
 package com.softserve.edu.greencity.api.builders.econews;
 
 import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class EcoNewsDtoBuilder {
 
@@ -28,8 +34,32 @@ public class EcoNewsDtoBuilder {
         return this;
     }
 
-    public EcoNewsDtoBuilder image(String image) {
-        this.ecoNews.image = image;
+    /**
+     * MIME types reference: https://www.freeformatter.com/mime-types-list.html
+     * @param mimeType manually assigned type of file like "text/plain", "image/png"
+     * @param image filename of image to upload
+     * @return possibility to set nex parameter
+     */
+    public EcoNewsDtoBuilder image(String mimeType, String image) {
+        if(image == null || image.isEmpty()) {
+            this.ecoNews.image = image;
+        } else if(!mimeType.matches("\\w+/[-+.\\w]+")) {
+            throw new IllegalArgumentException("mime type doesn't match format:" + mimeType);
+        } else {
+            StringBuilder str = new StringBuilder();
+            str.append("data:").append(mimeType).append(";").append("base64,");
+
+            byte[] fileContent = new byte[0];
+            try {
+                fileContent = FileUtils.readFileToByteArray(new File(image));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            str.append(Base64.getEncoder().encodeToString(fileContent));
+
+            this.ecoNews.image = str.toString();//new String(str.toString().getBytes(), StandardCharsets.UTF_8);//
+            //System.out.println(this.ecoNews.image);
+        }
         return this;
     }
 
