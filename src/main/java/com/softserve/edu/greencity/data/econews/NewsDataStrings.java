@@ -1,5 +1,10 @@
 package com.softserve.edu.greencity.data.econews;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Constant string for tests with news creation.
  * Mostly used by NewsDataRepository,
@@ -58,13 +63,19 @@ public enum NewsDataStrings {
             "Філософія «Еко-Лавки» - найкращі продукти з найкращим сервісом."),
     SOURCE_EKO_LAVKA("https://eco-lavca.ua/"),
     SOURCE_HTTP_INSIDE_EKO_LAVKA("eco-lavca.https://ua/"),
+    IMAGE_ECO_LAVKA("src/test/resources/images/eco-shop.png"),
 
     TITLE_MINIMAL("1"),
     CONTENT_MINIMAL("12345678901234567890"),
 
     TITLE_MAXIMAL("This title contains one hundred and seventy characters! "
-            + " This title contains one hundred and seventy characters!! "
+            + "This title contains one hundred and seventy characters!! "
             + "This title contains one hundred and seventy characters!!!"),
+
+    CONTENT_MAXIMAL(readFromFile("src/test/resources/texts/maximalText.txt")),
+    SOURCE_MAXIMAL("http://www.example.com/very-long-title/so-long-that-i-can-paste-here-some-text/for-example/"
+            + "lorem-impsum-dolor-sit-amet/or-something-more-interesting/like/william-shakespeare-was-an"
+            + "-english-playwright-poet-and-actor/he-was-born-in-stratford-upon-avon/konec"),
 
     TITLE_POEM("У академії IT"),
     CONTENT_POEM_VERSE1("Лагав комп'ютер під Віндою,\n" +
@@ -102,7 +113,27 @@ public enum NewsDataStrings {
             "Із курсів автотестування\n" +
             "Та й на посаду TAQC!\n" +
             "Із курсів автотестування\n" +
-            "Та й на посаду TAQC!\n");
+            "Та й на посаду TAQC!\n"),
+
+
+    IMAGE_TOO_BIG_PNG("src/test/resources/images/tooLargePng.png"),
+    IMAGE_TOO_BIG_JPEG("src/test/resources/images/tooLargeImage.jpg"),
+    IMAGE_NOT_AN_IMAGE("src/test/resources/images/notAnImage.txt"),
+    IMAGE_GIF("src/test/resources/images/gifImage.gif"),
+    IMAGE_MAXIMAL("src/test/resources/images/maximalImage.png");
+
+    private static String readFromFile(String filePath) {
+        String str = null;
+        try {
+            str = FileUtils.readFileToString(
+                    new File(filePath), "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return str;
+        }
+    }
+
 
     private final String str;
 

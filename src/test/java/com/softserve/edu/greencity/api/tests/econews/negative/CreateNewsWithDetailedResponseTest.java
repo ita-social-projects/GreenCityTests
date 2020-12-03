@@ -16,6 +16,10 @@ import java.util.List;
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
 import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
+/**
+ * This test is called so because requests have a lot of data inside
+ * See DetailedErrorMessage class
+ */
 public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
 
     @DataProvider(name = "improperNewsWithDetailedResponse")
@@ -25,7 +29,7 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                         "GC-594",
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "events", "education", "news"}).build(),
                         new DetailedErrorMessage(
@@ -38,7 +42,7 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                         "GC-631",
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "ads", "events"}).build(),
                         new DetailedErrorMessage(
@@ -46,12 +50,17 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                                 "Internal Server Error",
                                 "Eco news haven't been saved because of constraint violation",
                                 "/econews"),
-
                 }
         };
     }
 
-    @Test(dataProvider = "improperNewsWithDetailedResponse", testName = "GC-594, GC-631", description = "GC-594, GC-631")
+    /**
+     * Use this command to run only this test from terminal:
+     * mvn -Dtest=CreateNewsWithDetailedResponseTest#createNewsWithDetailedResponseTest test
+     */
+    @Test(dataProvider = "improperNewsWithDetailedResponse",
+            testName = "GC-594, GC-631",
+            description = "Tests which get response in detailed format")
     public void createNewsWithDetailedResponseTest(String testId, EcoNewsPOSTdto ecoNews, DetailedErrorMessage expectedError){
         logger.info("Running createNewsWithDetailedResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);

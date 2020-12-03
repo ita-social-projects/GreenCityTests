@@ -25,12 +25,16 @@ public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
                 {
                         ecoNewsDtoWith().title(TITLE_MINIMAL.getString())
                                 .text(CONTENT_MINIMAL.getString())
-                                .image(null)
+                                .image(null, null)
                                 .source("")
                                 .tags(new String[]{"news"}).build()
                 };
     }
 
+    /**
+     * Use thi command to run this test from terminal
+     * mvn -Dtest=CreateNewsWithMinimalValuesTest#createNewsWithMinimalValuesTest test
+     */
     @Test(testName = "GC-605", description = "GC-605", dataProvider = "minimalDataNews")
     @Description("Verify that news will be created with min symbols entered in all editable fields")
     public void createNewsWithMinimalValuesTest(EcoNewsPOSTdto news) {
