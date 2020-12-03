@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
 import org.testng.IReporter;
 import org.testng.ISuite;
@@ -62,6 +63,8 @@ public class GroupedLoggingAppender extends AppenderSkeleton implements IReporte
     public static final String ext = ".threadlog.txt";
 
     public GroupedLoggingAppender() {
+        setLayout(new PatternLayout("%d{ABSOLUTE} %5p %c{1}:%L - %m%n"));
+        //TODO this layout isn't applied. Apply it so that time is logged!
         String outdir = System.getProperty("outputdir");
         if (!outdir.endsWith("/"))
             outdir += "/";
@@ -141,6 +144,6 @@ public class GroupedLoggingAppender extends AppenderSkeleton implements IReporte
 
     @Override
     public boolean requiresLayout() {
-        return false;
+        return true;
     }
 }
