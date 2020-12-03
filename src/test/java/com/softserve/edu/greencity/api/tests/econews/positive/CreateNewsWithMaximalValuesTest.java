@@ -16,7 +16,7 @@ import java.util.List;
 
 import static com.softserve.edu.greencity.api.assertions.EcoNewsAssertion.assertExistence;
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 public class CreateNewsWithMaximalValuesTest extends EcoNewsApiTestRunner {
 
@@ -24,16 +24,16 @@ public class CreateNewsWithMaximalValuesTest extends EcoNewsApiTestRunner {
     private Object[] getIntermediateValues() {
         return new Object[]
                 {
-                        ecoNewsDtoWith().title(getMaximalTitle())
-                                .text(getMaximalText())
-                                .image("image/png", getNormalImage())
-                                .source(getMaximalLink())
+                        ecoNewsDtoWith().title(TITLE_MAXIMAL.getString())
+                                .text(CONTENT_MAXIMAL.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_MAXIMAL.getString())
                                 .tags(new String[]{"news", "ads", "events"}).build(),
 
-                        ecoNewsDtoWith().title(getMinimalTitle())
-                                .text(getMinimalText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_MINIMAL.getString())
+                                .text(CONTENT_MINIMAL.getString())
+                                .image("image/png", IMAGE_MAXIMAL.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[] {"news"}).build()
                 };
     }

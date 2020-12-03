@@ -43,11 +43,8 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 {
                         "GC-572",
                         ecoNewsDtoWith().title(null)
-                                .text(getMediumText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
@@ -56,13 +53,9 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-581",
-                        ecoNewsDtoWith().title(getTooLongTitle())
-                                .text(getLongText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
                         ecoNewsDtoWith().title(TITLE_MAXIMAL.getString() + TITLE_MINIMAL.getString())
                                 .text(CONTENT_LONG_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
@@ -71,13 +64,9 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-585",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[0]).build(),
                         new PairErrorMessage[] {
@@ -88,9 +77,7 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                         "GC-600",
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(null)
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
@@ -99,13 +86,9 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-601",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getTooShortText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_SHORT_FOO.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {

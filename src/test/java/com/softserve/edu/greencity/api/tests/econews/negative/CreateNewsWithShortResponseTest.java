@@ -27,26 +27,18 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
         return new Object[][]{
                 {
                         "GC-596",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/png", getNormalImage())
-                                .source(getSourceWithoutHttp())
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_NO_HTTP_NEWS_COM.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
                 },
                 {
                         "GC-598",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/png", getNormalImage())
-                                .source(getLinkWithImproperHttpPos())
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_HTTP_INSIDE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")

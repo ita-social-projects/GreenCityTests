@@ -10,7 +10,7 @@ public enum Tag {
 	
 	private String nameOfTag;
 	
-	private Tag(String nameOfTag) {
+	Tag(String nameOfTag) {
 		this.nameOfTag = nameOfTag;
 	}
 	

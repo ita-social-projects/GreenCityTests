@@ -27,13 +27,9 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
         return new Object[][]{
                 {
                         "GC-594",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "events", "education", "news"}).build(),
                         new DetailedErrorMessage(
@@ -44,13 +40,9 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-631",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/png", getNormalImage())
-                                .source(getProperSource())
                         ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(CONTENT_EKO_LAVKA.getString())
-                                .image(null)
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
                                 .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "ads", "events"}).build(),
                         new DetailedErrorMessage(

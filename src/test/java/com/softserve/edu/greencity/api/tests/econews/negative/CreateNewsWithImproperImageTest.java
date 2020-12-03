@@ -13,23 +13,23 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 public class CreateNewsWithImproperImageTest extends EcoNewsApiTestRunner {
 
     @DataProvider(name = "images in PNG and JPEG formats")
     private Object[] getEconewsWithPngAndJpegFormats() {
         return new Object[]{
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/png", getTooBigPngImage())
-                                .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image("image/png", IMAGE_TOO_BIG_PNG.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "events"}).build(),
 
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image("image/jpeg", getTooBigJpegImage())
-                                .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image("image/jpeg", IMAGE_TOO_BIG_JPEG.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "events"}).build()
         };
     }
@@ -66,10 +66,10 @@ public class CreateNewsWithImproperImageTest extends EcoNewsApiTestRunner {
         logger.info("running GC-624: createNewsWithImproperImageFile");
 
         EcoNewsPOSTdto ecoNews = ecoNewsDtoWith()
-                .title(getShortTitle())
-                .text(getMediumText())
-                .image("text/plain", getNotAnImage())
-                .source(getProperSource())
+                .title(TITLE_EKO_LAVKA.getString())
+                .text(CONTENT_EKO_LAVKA.getString())
+                .image("text/plain", IMAGE_NOT_AN_IMAGE.getString())
+                .source(SOURCE_EKO_LAVKA.getString())
                 .tags(new String[]{"ads", "events"}).build();
 
         Response created = ecoNewsClient.postNews(ecoNews);
@@ -94,10 +94,10 @@ public class CreateNewsWithImproperImageTest extends EcoNewsApiTestRunner {
         logger.info("running GC-635: createNewsWithInappropriateImageFormat");
 
         EcoNewsPOSTdto ecoNews = ecoNewsDtoWith()
-                .title(getShortTitle())
-                .text(getMediumText())
-                .image("image/gif", getGifImage())
-                .source(getProperSource())
+                .title(TITLE_EKO_LAVKA.getString())
+                .text(CONTENT_EKO_LAVKA.getString())
+                .image("image/gif", IMAGE_GIF.getString())
+                .source(SOURCE_EKO_LAVKA.getString())
                 .tags(new String[]{"ads", "events"}).build();
 
         Response created = ecoNewsClient.postNews(ecoNews);
