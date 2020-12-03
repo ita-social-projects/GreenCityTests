@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite" parallel="classes" thread-count="5">
+<suite name="Suite" parallel="classes" thread-count="4">
 
     <test name="Quick_tests" thread-count="6">
     <!-- API and other tests that run quickly (1 minute and less) -->
@@ -12,11 +12,11 @@
             <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithDetailedResponseTest"/>
             <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithShortResponseTest"/>
 
-            <class name="com.softserve.edu.greencity.api.tests.signin.SignInApiTest"/>
+            <class name="com.softserve.edu.greencity.api.tests.ownsecurity.signin.SignInApiTest"/>
         </classes>
     </test>
 
-    <test name="Registration_and_login" thread-count="5">
+    <test name="Registration_and_login" thread-count="4">
         <classes>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegisterPageTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.signup.RegistrationTests"/>

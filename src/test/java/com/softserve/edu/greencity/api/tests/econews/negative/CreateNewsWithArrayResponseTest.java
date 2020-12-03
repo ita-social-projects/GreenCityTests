@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 /**
  * This test is called so because it returns JSON array with error messages
@@ -46,6 +46,9 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                                 .text(getMediumText())
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("title", "must not be empty")
@@ -57,6 +60,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                                 .text(getLongText())
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_MAXIMAL.getString() + TITLE_MINIMAL.getString())
+                                .text(CONTENT_LONG_EKO_LAVKA.getString())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("title", "size must be between 1 and 170")
@@ -68,6 +75,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                                 .text(getMediumText())
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[0]).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("tags", "must not be empty")
@@ -75,10 +86,12 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-600",
-                        ecoNewsDtoWith().title(getShortTitle())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(null)
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("text", "must not be empty")
@@ -90,6 +103,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                                 .text(getTooShortText())
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_SHORT_FOO.getString())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("text", "size must be between 20 and 63206")

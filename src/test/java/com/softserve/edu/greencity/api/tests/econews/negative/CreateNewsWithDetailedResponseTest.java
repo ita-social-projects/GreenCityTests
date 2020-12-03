@@ -14,8 +14,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.getProperSource;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
 /**
  * This test is called so because requests have a lot of data inside
@@ -32,6 +31,10 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                                 .text(getMediumText())
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "events", "education", "news"}).build(),
                         new DetailedErrorMessage(
                                 500,
@@ -45,6 +48,10 @@ public class CreateNewsWithDetailedResponseTest extends EcoNewsApiTestRunner {
                                 .text(getMediumText())
                                 .image("image/png", getNormalImage())
                                 .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image(null)
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads", "ads", "events"}).build(),
                         new DetailedErrorMessage(
                                 500,

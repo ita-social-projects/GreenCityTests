@@ -2,6 +2,8 @@ package com.softserve.edu.greencity.api.clients;
 
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.restassured.RestAssured.given;
 
@@ -9,10 +11,12 @@ public abstract class BaseClient {
     public final static String BASE_URL = "https://greencity.azurewebsites.net";
     public final ContentType contentType;
     public final String entity; //the first part of URL after BASE_URL (without slash)
+    protected Logger logger;
 
     public BaseClient(ContentType contentType, String entity) {
         this.contentType = contentType;
         this.entity = entity;
+        logger = LoggerFactory.getLogger(entity + "Client" + contentType.toString());
     }
 
     public BaseClient(String contentType, String entity) {
@@ -26,6 +30,7 @@ public abstract class BaseClient {
                 break;
         }
         this.entity = entity;
+        logger = LoggerFactory.getLogger(entity + "Client" + contentType);
     }
 
     /**
@@ -33,6 +38,7 @@ public abstract class BaseClient {
      * @return RequestSpecification which allows you to use .pathParams, .get and other
      */
     protected RequestSpecification prepareRequest() {
+        logger.debug("Preparing request...");
         return given()
                 .baseUri(BASE_URL)
                 .contentType(contentType)

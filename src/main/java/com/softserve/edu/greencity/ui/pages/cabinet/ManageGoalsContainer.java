@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.softserve.edu.greencity.ui.data.Goal;
+import com.softserve.edu.greencity.data.goals.Goal;
 
 public class ManageGoalsContainer extends GoalsContainerPart {
 
@@ -34,7 +34,6 @@ public class ManageGoalsContainer extends GoalsContainerPart {
 
     /**
      * Delete goal.
-     * @param title
      * @return ManageGoalsContainer
      */
     public ManageGoalsContainer deleteGoalComponent(Goal goal) {

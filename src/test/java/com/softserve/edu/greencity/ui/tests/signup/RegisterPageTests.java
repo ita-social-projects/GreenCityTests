@@ -1,15 +1,14 @@
 package com.softserve.edu.greencity.ui.tests.signup;
 
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tests.runner.RetryAnalyzerImpl;
-import com.softserve.edu.greencity.ui.tools.ElementsCustomMethods;
+import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import io.qameta.allure.Description;
 import org.openqa.selenium.By;
@@ -465,14 +464,14 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     @Test(testName = "GC-213", description = "GC-213", dataProvider = "unregisterCredentials", retryAnalyzer = RetryAnalyzerImpl.class)
     @Description("Verify that user sees popup about successfully registration after registration on the site")
     public void successRegistrationPopUpDisplayed(User userLoginCredentials) {
-        loadApplication();
-        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
-        registerComponent.getManualRegisterComponent().registerUser(userLoginCredentials);
-        Assert.assertTrue(
-                registerComponent
-                        .getManualRegisterComponent()
-                        .GetSackfulRegistrationPopUp()
-                        .isDisplayed());
+       Boolean isDisplayed = loadApplication()
+               .signUp()
+               .getManualRegisterComponent()
+                .registerUser(userLoginCredentials)
+               .getSackfulRegistrationPopUp()
+               .isDisplayed();
+
+        Assert.assertTrue(isDisplayed);
     }
 
     @Test(testName = "GC-212", description = "GC-212")
