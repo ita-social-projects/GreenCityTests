@@ -11,7 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.softserve.edu.greencity.ui.data.HabitCard;
+import com.softserve.edu.greencity.data.habits.HabitCard;
 
 public class HabitCardsContainer {
 

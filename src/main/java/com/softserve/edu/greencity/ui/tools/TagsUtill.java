@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.tools;
 
-import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 
 import java.util.function.Function;

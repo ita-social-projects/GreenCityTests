@@ -11,23 +11,27 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
+/**
+ * This test is called so because it returns JSON array with error messages
+ * which look like PairErrorMessage
+ */
 public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
 
     @DataProvider(name = "improperNewsWithArrayResponse")
     private Object[] getImproperNewsWithArrayResponse() {
         return new Object[][]{
-                //TODO: replace image=null  to proper image data
                 {
                         "GC-571",
                         ecoNewsDtoWith().title(null)
                                 .text(null)
-                                .image(null)
+                                .image(null, null)
                                 .source(null).
                                 tags(new String[0]).build(),
                         new PairErrorMessage[] {
@@ -39,9 +43,9 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 {
                         "GC-572",
                         ecoNewsDtoWith().title(null)
-                                .text(getMediumText())
-                                .image(null)
-                                .source(getProperSource())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("title", "must not be empty")
@@ -49,10 +53,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-581",
-                        ecoNewsDtoWith().title(getTooLongTitle())
-                                .text(getLongText())
-                                .image(null)
-                                .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_MAXIMAL.getString() + TITLE_MINIMAL.getString())
+                                .text(CONTENT_LONG_EKO_LAVKA.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("title", "size must be between 1 and 170")
@@ -60,10 +64,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-585",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image(null)
-                                .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[0]).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("tags", "must not be empty")
@@ -71,10 +75,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-600",
-                        ecoNewsDtoWith().title(getShortTitle())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
                                 .text(null)
-                                .image(null)
-                                .source(getProperSource())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("text", "must not be empty")
@@ -82,10 +86,10 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
                 },
                 {
                         "GC-601",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getTooShortText())
-                                .image(null)
-                                .source(getProperSource())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_SHORT_FOO.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new PairErrorMessage[] {
                                 new PairErrorMessage("text", "size must be between 20 and 63206")
@@ -94,16 +98,22 @@ public class CreateNewsWithArrayResponseTest extends EcoNewsApiTestRunner {
         };
     }
 
+    /**
+     * Use this command to run ONLY THIS test from terminal:
+     * mvn -Dtest=CreateNewsWithArrayResponseTest#createNewsWithArrayResponseTest test
+     */
     @Test(dataProvider = "improperNewsWithArrayResponse",
             testName = "GC-571, GC-572, GC-581, GC-585, GC-600, GC-601",
-            description = "GC-571, GC-572, GC-581, GC-585, GC-600, GC-601")
+            description = "Tests which get response in array format")
     public void createNewsWithArrayResponseTest(String testId, EcoNewsPOSTdto ecoNews, PairErrorMessage[] expectedError) {
         logger.info("Running createNewsWithArrayResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);
         BaseAssertion assertCreated = new BaseAssertion(created);
+
+        ArrayList<PairErrorMessage> errorList = new ArrayList<>(Arrays.asList(expectedError));
         ErrorAssertions.arrayEquals(
                 created,
-                Arrays.asList(expectedError));
+                errorList);
         assertCreated.statusCode(400);
 
         List<EcoNewsEntity> list = ecoNewsService.getNewsByTitle(ecoNews.title);

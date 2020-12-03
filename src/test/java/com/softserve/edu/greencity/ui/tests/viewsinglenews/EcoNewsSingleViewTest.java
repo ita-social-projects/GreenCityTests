@@ -2,11 +2,11 @@ package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
 import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
-import com.softserve.edu.greencity.ui.data.User;
-import com.softserve.edu.greencity.ui.data.UserRepository;
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
-import com.softserve.edu.greencity.ui.data.econews.NewsDataRepository;
-import com.softserve.edu.greencity.ui.data.econews.Tag;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -16,7 +16,6 @@ import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -138,7 +137,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     public void presentSourceIfItWasSpecified() {
         logger.info("presentSourceIfItWasSpecified starts");
 
-        NewsData newsWithSource = NewsDataRepository.get().getNewsWithSource();
+        NewsData newsWithSource = NewsDataRepository.get().getNewsWithValidSourceField();
         try {
             SingleNewsPage singleNewsPage = loadApplication()
                     .loginIn(UserRepository.get().temporary())
@@ -166,7 +165,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     public void noSourceIfItWasntSpecified() {
         logger.info("noSourceIfItWasntSpecified starts");
 
-        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithoutSource();
+        NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithEmptySourceField2();
         try {
             SingleNewsPage singleNewsPage = loadApplication()
                     .loginIn(UserRepository.get().temporary())

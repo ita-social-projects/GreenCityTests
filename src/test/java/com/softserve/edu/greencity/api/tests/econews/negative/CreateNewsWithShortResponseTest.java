@@ -14,9 +14,12 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.getLinkWithImproperHttpPos;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 
+/**
+ * It is called so because requests in this test return error in "short format"
+ * See ErrorMessage class
+ */
 public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
 
     @DataProvider(name = "improperNewsWithShortResponse")
@@ -24,26 +27,32 @@ public class CreateNewsWithShortResponseTest extends EcoNewsApiTestRunner {
         return new Object[][]{
                 {
                         "GC-596",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image(null)
-                                .source(getSourceWithoutHttp())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_NO_HTTP_NEWS_COM.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
                 },
                 {
                         "GC-598",
-                        ecoNewsDtoWith().title(getShortTitle())
-                                .text(getMediumText())
-                                .image(null)
-                                .source(getLinkWithImproperHttpPos())
+                        ecoNewsDtoWith().title(TITLE_EKO_LAVKA.getString())
+                                .text(CONTENT_EKO_LAVKA.getString())
+                                .image("image/png", IMAGE_ECO_LAVKA.getString())
+                                .source(SOURCE_HTTP_INSIDE_EKO_LAVKA.getString())
                                 .tags(new String[]{"ads"}).build(),
                         new ErrorMessage("Malformed URL. The string could not be parsed.")
                 }
         };
     }
 
-    @Test(dataProvider = "improperNewsWithShortResponse", testName = "GC-596, GC-598", description = "GC-596, GC-598")
+    /**
+     * Use this command to run only this test from terminal:
+     * mvn -Dtest=CreateNewsWithShortResponseTest#createNewsWithShortResponseTest test
+     */
+    @Test(dataProvider = "improperNewsWithShortResponse",
+            testName = "GC-596, GC-598",
+            description = "Tests which get response in short format")
     public void createNewsWithShortResponseTest(String testId, EcoNewsPOSTdto ecoNews, ErrorMessage expectedError){
         logger.info("Running createNewsWithShortResponseTest: {}", testId);
         Response created = ecoNewsClient.postNews(ecoNews);

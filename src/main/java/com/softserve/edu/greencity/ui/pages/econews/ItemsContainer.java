@@ -3,18 +3,16 @@ package com.softserve.edu.greencity.ui.pages.econews;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.softserve.edu.greencity.ui.data.econews.NewsData;
+import com.softserve.edu.greencity.data.econews.NewsData;
 
 /**
  * Contains all itemsComponents (news cards) that are present on page

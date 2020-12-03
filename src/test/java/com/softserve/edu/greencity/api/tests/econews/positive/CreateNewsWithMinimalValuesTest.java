@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static com.softserve.edu.greencity.api.builders.econews.EcoNewsDtoBuilder.ecoNewsDtoWith;
-import static com.softserve.edu.greencity.api.data.econews.NewsRepository.*;
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.*;
 import static com.softserve.edu.greencity.api.assertions.EcoNewsAssertion.*;
 
 public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
@@ -23,14 +23,18 @@ public class CreateNewsWithMinimalValuesTest extends EcoNewsApiTestRunner {
     private Object[] getMinimalValues() {
         return new Object[]
                 {
-                        ecoNewsDtoWith().title(getMinimalTitle())
-                                .text(getMinimalText())
-                                .image(null)
+                        ecoNewsDtoWith().title(TITLE_MINIMAL.getString())
+                                .text(CONTENT_MINIMAL.getString())
+                                .image(null, null)
                                 .source("")
                                 .tags(new String[]{"news"}).build()
                 };
     }
 
+    /**
+     * Use thi command to run this test from terminal
+     * mvn -Dtest=CreateNewsWithMinimalValuesTest#createNewsWithMinimalValuesTest test
+     */
     @Test(testName = "GC-605", description = "GC-605", dataProvider = "minimalDataNews")
     @Description("Verify that news will be created with min symbols entered in all editable fields")
     public void createNewsWithMinimalValuesTest(EcoNewsPOSTdto news) {
