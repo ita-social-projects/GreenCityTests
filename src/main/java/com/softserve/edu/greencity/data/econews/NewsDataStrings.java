@@ -69,7 +69,7 @@ public enum NewsDataStrings {
     CONTENT_MINIMAL("12345678901234567890"),
 
     TITLE_MAXIMAL("This title contains one hundred and seventy characters! "
-            + " This title contains one hundred and seventy characters!! "
+            + "This title contains one hundred and seventy characters!! "
             + "This title contains one hundred and seventy characters!!!"),
 
     CONTENT_MAXIMAL(readFromFile("src/test/resources/texts/maximalText.txt")),

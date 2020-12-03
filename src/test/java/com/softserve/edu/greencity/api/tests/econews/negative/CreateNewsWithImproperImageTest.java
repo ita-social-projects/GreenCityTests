@@ -60,6 +60,10 @@ public class CreateNewsWithImproperImageTest extends EcoNewsApiTestRunner {
         Assert.assertTrue(list.isEmpty());
     }
 
+    /**
+     * Use this command to run this test from terminal
+     * mvn -Dtest=CreateNewsWithImproperImageTest#createNewsWithImproperImageFile test
+     */
     @Test(testName = "GC-624",
             description = "Verify that system doesn’t allow to add file of another format in ‘Image’ field")
     public void createNewsWithImproperImageFile() {
@@ -87,6 +91,7 @@ public class CreateNewsWithImproperImageTest extends EcoNewsApiTestRunner {
      * This test fails, because server returns 201, but have to return 400 or 500(depends on devs)
      * And also news is being created, but requirements says, that only .jpeg and .png are acceptable
      * Probably, requirements have changed and now we are going to have possibility to load GIF images
+     * mvn -Dtest=CreateNewsWithImproperImageTest#createNewsWithInappropriateImageFormat test
      */
     @Test(testName = "GC-635",
             description = "Verify that system doesn’t allow to add image of inappropriate format")

@@ -31,6 +31,10 @@ public class CreateNewsWithIntermediateValuesTest extends EcoNewsApiTestRunner {
                 };
     }
 
+    /**
+     * Use this command to run teest from terminal
+     * mvn -Dtest=CreateNewsWithIntermediateValuesTest#createNewsWithIntermediateValuesTest test
+     */
     @Test(testName = "GC-625", description = "GC-625", dataProvider = "intermediateDataNews")
     @Description("Verify that news will be created with intermediate number of symbols entered in all fields")
     public void createNewsWithIntermediateValuesTest(EcoNewsPOSTdto news) {
