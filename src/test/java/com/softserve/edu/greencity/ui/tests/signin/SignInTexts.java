@@ -10,7 +10,7 @@ public enum SignInTexts {
     FORGOT_PASS_SUB_TITLE("Enter your email address and we'll send you a link to regain access to your account."),
     EMAIL_PLACEHOLDER_TEXT("example@email.com"),
     FORGOT_PASS_EMAIL_VALIDATION_ERROR("Please check that your e-mail address is indicated correctly"),
-    EMPTY_EMAIL_ERROR_MESSAGE("This field is required"),
+    EMPTY_EMAIL_ERROR_MESSAGE("Email is required"),
     WRONG_EMAIL_OR_PASS_ERROR("Bad email or password"),
     NOT_EXISTING_EMAIL_MESSAGE("The user does not exist by this email:"),
     BACK_TO_SIGN_IN_LABEL("Remember your password? Back to Sign-in"),
@@ -21,7 +21,7 @@ public enum SignInTexts {
 
     SIGN_UP_TITLE("Hello!"),
     ADD_NEW_HABIT_BUTTON_TEXT("Add new habit"),
-    TOP_USER_NAME("Prosto Leleka");
+    TOP_USER_NAME("Lv549 Lviv");
 
     private final String text;
 
