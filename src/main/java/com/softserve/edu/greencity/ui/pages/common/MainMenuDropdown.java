@@ -14,13 +14,13 @@ public class MainMenuDropdown implements StableWebElementSearch {
     private WebDriver driver;
     protected WebDriverWait wait;
     private By naviconButton = By.cssSelector("div.menu-icon");
-    private By menuEcoNews = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']");
-    private By menuTipsTricks = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/tips']");
-    private By menuMap = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/map']");
-    private By menuAbout = By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/about']");
-    private By menuMyHabits = By.cssSelector(".navigation-menu-left > ul > li > a[href*='/profile']");
+    private By menuEcoNews = By.cssSelector("ul > li > a[href*='/news']");
+    private By menuTipsTricks = By.cssSelector("ul > li > a[href*='/tips']");
+    private By menuMap = By.cssSelector("ul > li > a[href*='/map']");
+    private By menuAbout = By.cssSelector("ul > li > a[href*='/about']");
+    private By menuMyHabits = By.cssSelector("ul > li > a[href*='/profile']");
     private By footerEcoNews = By.cssSelector("app-footer a[href*='/news']");
-    private By footerTipsTricks = By.xpath("//div[@class = 'links']//a[contains(text(),'Tips & Tricks')]");
+    private By footerTipsTricks = By.cssSelector("app-footer a[href*='/tips']");
     private By footerPlaces = By.cssSelector("app-footer a[href*='/map']");
     private By footerMyHabits = By.cssSelector("app-footer a[href*='/profile']");
     private By footerAbout = By.cssSelector("app-footer a[href*='/about']");
@@ -63,7 +63,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     @Step
     public void clickMenuEcoNews() {
         new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.elementToBeClickable(By.cssSelector("div.navigation-menu-left > ul > li > a[href*='/news']")));
+                .until(ExpectedConditions.elementToBeClickable(By.cssSelector("ul > li:nth-child(1) > a")));
         getMenuEcoNews().click();
     }
     @Step

@@ -20,8 +20,8 @@ public class ProfileDropdown {
 	private void initElements() {
 		// init elements
 		//favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
-		userSettings = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li a"));
-		signout = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li + li a"));
+		userSettings = driver.findElement(By.cssSelector("li.tertiary-global-button > a"));
+		signout = driver.findElement(By.cssSelector("#header_user-wrp > li:nth-child(3) > a"));
 	}
 
 	// Page Object
