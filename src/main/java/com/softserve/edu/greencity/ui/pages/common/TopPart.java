@@ -72,7 +72,7 @@ public abstract class TopPart implements StableWebElementSearch {
     }
 
     public WebElement getCopyright() {
-        return copyright = driver.findElement(By.cssSelector("div.bottom-part"));
+        return copyright = driver.findElement(By.cssSelector(".footer_bottom-part"));
     }
 
     public String getCopyrightText() {
