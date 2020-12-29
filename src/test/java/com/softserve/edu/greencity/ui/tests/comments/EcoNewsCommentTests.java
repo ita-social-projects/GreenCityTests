@@ -38,6 +38,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
 
         SingleNewsPage page = loadApplication()
                 .navigateMenuEcoNews()
+                .refreshPage() //fresh news might not be displayed unless you refresh
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .addComment(comment);
