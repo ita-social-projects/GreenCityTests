@@ -466,7 +466,7 @@ public class CreateNewsPage extends TopPart {
     public class CancelFrame {
 
         protected WebDriverWait wait;
-        private By continueEditingButton = By.cssSelector("div.continue-btn > button");
+        private By continueEditingButton = By.cssSelector("button.secondary-global-button");
         private By cancelEditingButton = By.cssSelector("button.primary-global-button");
 
         public CancelFrame(WebDriver driver) {
