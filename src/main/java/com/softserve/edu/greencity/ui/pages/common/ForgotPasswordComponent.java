@@ -84,9 +84,7 @@ public class ForgotPasswordComponent extends TopPart {
     }
 
     public String getEmailValidationErrorText() {
-        String s =getEmailValidationError().getText();
-        System.out.println(s);
-        return s;
+        return getEmailValidationError().getText();
     }
 
     public boolean isSuccessfulEmailValidation() {
