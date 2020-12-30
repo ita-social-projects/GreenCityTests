@@ -34,7 +34,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
-                .clickPublishButton();
+                .publishNews();
 
         SingleNewsPage page = loadApplication()
                 .navigateMenuEcoNews()
