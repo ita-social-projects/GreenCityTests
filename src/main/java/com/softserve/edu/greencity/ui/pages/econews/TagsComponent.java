@@ -114,6 +114,7 @@ public class TagsComponent implements StableWebElementSearch {
     public void selectTag(Tag newsfilter) {
         if (!isTagActive(newsfilter)) {
             getWebElementByTagName(newsfilter).click();
+            initElements();
         }
 
     }
