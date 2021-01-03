@@ -488,7 +488,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertEquals(
                 registerComponent
                         .getUserNameFieldAttribute("placeholder"),
-                "User name is required",
+                "User name",
                 "wrong placeholder");
         softAssert.assertEquals(
                 registerComponent
