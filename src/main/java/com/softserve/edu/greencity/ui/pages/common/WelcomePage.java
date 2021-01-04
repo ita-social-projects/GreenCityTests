@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 @Getter
 public class WelcomePage extends TopPart {
-private By myHabitsUnsignedLink = By.cssSelector("div.navigation-menu-left>ul>li:nth-child(5)");
+private By myHabitsUnsignedLink = By.cssSelector("ul > li > a[href*='/profile']");
     public WelcomePage(WebDriver driver) {
         super(driver);
         initElements();
