@@ -127,6 +127,7 @@ public class TagsComponent implements StableWebElementSearch {
     public void deselectTag(Tag tag) {
         if (isTagActive(tag)) {
             getWebElementByTagName(tag).click();
+            initElements();
         }
     }
 
