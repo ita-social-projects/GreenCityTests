@@ -6,9 +6,11 @@ import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import io.qameta.allure.Description;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.*;
 
 public class ForgotPasswordTests extends GreenCityTestRunner {
@@ -17,7 +19,7 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
 
     @BeforeClass
     public void beforeClass() {
-        cssBorderColorProperty = "border-color";
+        cssBorderColorProperty = "borderColor";
         expectedBorderColorRBG = "rgb(240, 49, 39)"; //Red
     }
 
@@ -136,8 +138,11 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .clickForgotPasswordLink()
                 .unsuccessfullySubmit(user);
 
-        String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
-        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG); //fails, bug, expected color = red, actual = gray
+        // wait until the red color appears
+        WebDriverWait wait=new WebDriverWait(driver, 1);
+        WebElement emailTextColor = wait.until(ExpectedConditions.visibilityOf(forgotPasswordComponent.getEmailValidationError()));
+        String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue("borderColor");
+        softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
         softAssert.assertTrue(forgotPasswordComponent.getEmailValidationErrorText().contains(NOT_EXISTING_EMAIL_MESSAGE.getText()));
 
         googleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
