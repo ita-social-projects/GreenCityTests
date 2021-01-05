@@ -15,6 +15,8 @@ import com.softserve.edu.greencity.ui.tools.EcoNewsUtils;
 import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -124,8 +126,11 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews();
-        int suitableNews = EcoNewsUtils.getNumberOfNewsNotCreatedBy(user.getUserName(),
-                ecoNewsPage.getItemsContainer());
+
+        WebElement name = driver.findElement(By.cssSelector("#header_user-wrp span"));
+        String userName = name.getText();
+
+        int suitableNews = EcoNewsUtils.getNumberOfNewsNotCreatedBy(userName, ecoNewsPage.getItemsContainer());
         boolean editButtonExists = ecoNewsPage
                 .switchToSingleNewsPageByNumber(suitableNews)
                 .editNewsButtonExist();

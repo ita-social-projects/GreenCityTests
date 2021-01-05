@@ -10,7 +10,7 @@ public enum ItemComponentLocators implements Locator {
     CONTENT(By.cssSelector(".list-text p")),
     CONTENT_WRAP(By.cssSelector(".list-text")),
     DATE_OF_CREATION(By.cssSelector(".user-data-text-date")),
-    AUTHOR(By.cssSelector(".user-data-added-news > p:nth-child(2)")),
+    AUTHOR(By.cssSelector("li:nth-of-type(1) > .ng-star-inserted .user-data-added-news > p:nth-of-type(2)")),
     DATE_AND_AUTHOR_CONTAINER(By.cssSelector(".user-data-added-news"));
     
     private final By path;
