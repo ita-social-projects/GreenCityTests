@@ -1,12 +1,12 @@
 package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
-import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
-import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
+import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -129,8 +129,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
         WebElement name = driver.findElement(By.cssSelector("#header_user-wrp span"));
         String userName = name.getText();
-
-        int suitableNews = EcoNewsUtils.getNumberOfNewsNotCreatedBy(userName, ecoNewsPage.getItemsContainer());
+        int suitableNews = new EcoNewsUtils(driver).getNumberOfNewsNotCreatedBy(userName, ecoNewsPage.getItemsContainer());
         boolean editButtonExists = ecoNewsPage
                 .switchToSingleNewsPageByNumber(suitableNews)
                 .editNewsButtonExist();
