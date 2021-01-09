@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -65,8 +64,8 @@ public class CommentComponent {
 
     public CommentComponent clickDeleteCommentButton() {
         getDeleteButton().click();
-        waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.invisibilityOf(getDeleteButton()));
+        CommentPopUpComponent commentPopUpComponent = new CommentPopUpComponent(driver);
+        commentPopUpComponent.clickConfirmButton();
         return this;
     }
 

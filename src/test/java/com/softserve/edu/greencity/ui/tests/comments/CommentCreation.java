@@ -138,7 +138,13 @@ public class CommentCreation extends GreenCityTestRunner {
                 .addComment(commentText)
                 .chooseCommentByNumber(0)
                 .clickDeleteCommentButton();
-        softAssert.assertFalse(commentComponent.isCommentPresent());
+
+        String lastCommentText = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(news)
+                .getCommentPart()
+                .chooseCommentByNumber(0).getCommentText();
+        softAssert.assertNotEquals(lastCommentText, commentText);
         softAssert.assertAll();
     }
 
@@ -158,5 +164,4 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertEquals(numberBeforePublish + 1, numberAfterPublish);
         softAssert.assertAll();
     }
-
 }
