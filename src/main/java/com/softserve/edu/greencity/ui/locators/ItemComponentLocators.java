@@ -14,7 +14,7 @@ public enum ItemComponentLocators implements Locator {
     DATE_AND_AUTHOR_CONTAINER(By.cssSelector(".user-data-added-news")),
 
     TAGS_LISTVIEW(By.cssSelector(".filter-tag span")),
-    IMAGE_LISTVIEW(By.cssSelector(".eco-news_list-content")),
+    IMAGE_LISTVIEW(By.className("eco-news_list-img")),
     TITLE_LISTVIEW(By.cssSelector(".eco-news_list-content-title p")),
     CONTENT_LISTVIEW(By.cssSelector(".eco-news_list-content-text p")),
     CONTENT_WRAP_LISTVIEW(By.cssSelector(".eco-news_list-content-text")),

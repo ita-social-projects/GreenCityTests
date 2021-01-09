@@ -41,7 +41,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         expectedHoveredByMouseColorRGBA =  "rgba(5, 107, 51, 1)"; //darker
         screenWidthWithContent = Arrays.asList(1440, 1200);
         screenWidthWithoutContent = Arrays.asList(1024, 768, 667);
-        screenWidthWithoutImages = Arrays.asList(576, 575);
+        screenWidthWithoutImages = Arrays.asList(576, 590);
         screenWidthForTitleTests = Arrays.asList(1440, 1024, 768, 576);
         screenWidth1 = Arrays.asList(1400, 1024, 768);
         screenWidth2 = Arrays.asList(576, 360);
@@ -188,7 +188,6 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("dateformat " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
             logger.info("author " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
-
         }
 
         for (Integer integer : screenWidthWithoutContent) {
@@ -196,8 +195,6 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("set width = "+integer);
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
             ecoNewsPage.switchToListView();
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
-            logger.info("image " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedImage());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
             logger.info("tags " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
             softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
