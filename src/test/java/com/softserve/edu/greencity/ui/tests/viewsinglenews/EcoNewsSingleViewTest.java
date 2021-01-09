@@ -1,12 +1,12 @@
 package com.softserve.edu.greencity.ui.tests.viewsinglenews;
 
-import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
-import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
+import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -15,6 +15,8 @@ import com.softserve.edu.greencity.ui.tools.EcoNewsUtils;
 import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -124,8 +126,10 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews();
-        int suitableNews = EcoNewsUtils.getNumberOfNewsNotCreatedBy(user.getUserName(),
-                ecoNewsPage.getItemsContainer());
+
+        WebElement name = driver.findElement(By.cssSelector("#header_user-wrp span"));
+        String userName = name.getText();
+        int suitableNews = new EcoNewsUtils(driver).getNumberOfNewsNotCreatedBy(userName, ecoNewsPage.getItemsContainer());
         boolean editButtonExists = ecoNewsPage
                 .switchToSingleNewsPageByNumber(suitableNews)
                 .editNewsButtonExist();
