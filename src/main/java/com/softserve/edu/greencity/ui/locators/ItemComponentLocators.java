@@ -9,7 +9,7 @@ public enum ItemComponentLocators implements Locator {
     TITLE(By.cssSelector(".title-list p")),
     CONTENT(By.cssSelector(".list-text p")),
     CONTENT_WRAP(By.cssSelector(".list-text")),
-    DATE_OF_CREATION(By.cssSelector(".user-data-text-date")),
+    DATE_OF_CREATION(By.cssSelector(".user-data-added-news > p:nth-child(1)")),
     AUTHOR(By.cssSelector(".user-data-added-news > p:nth-of-type(2)")),
     DATE_AND_AUTHOR_CONTAINER(By.cssSelector(".user-data-added-news")),
 
