@@ -4,17 +4,18 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class EcoNewsCommentTests extends GreenCityTestRunner {
     private NewsData newsData;
@@ -117,6 +118,23 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
     @Test(testName = "GC-862", description = "GC-862")
     @Description("Unlogged users can not edit their own comments on the 'News' page.")
     public void unloggedUsersCanNotEditComments() {
-        throw new SkipException("This test is not implemented!");
+        User user = UserRepository.get().temporary();
+        String comment = "You can't delete this comment because you are logged out";
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        page.getCommentPart()
+                .addComment(comment);
+        page.signOut();
+        SingleNewsPage newsPage = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        List<CommentComponent> commentComponents = newsPage.getCommentPart().getCommentComponents();
+        for (CommentComponent commentComponent : commentComponents) {
+            softAssert.assertFalse(commentComponent.isEditButtonDisplayed());
+        }
     }
 }
