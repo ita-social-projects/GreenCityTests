@@ -68,7 +68,7 @@ public class CommentComponent {
 
     public CommentComponent setTextInEditAria(String editedText){
         clickEditButton().getEditTextAria().clear();
-        clickEditButton().getEditTextAria().sendKeys(editedText);
+        getEditTextAria().sendKeys(editedText);
         return this;
     }
 
