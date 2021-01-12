@@ -137,4 +137,15 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
             softAssert.assertFalse(commentComponent.isEditButtonDisplayed());
         }
     }
+
+    @Test(testName = "GC-966", description = "GC-966")
+    @Description("Verify that unlogged user cannot add reply to the comment on News Single Page.")
+    public void verifyUnloggedUserCanAddReplyToComment(){
+        CommentComponent comment = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+        Assert.assertFalse(comment.isAddReplyDisplayed(), "the 'Reply' button should not be displayed, if user is unlogged");
+    }
 }
