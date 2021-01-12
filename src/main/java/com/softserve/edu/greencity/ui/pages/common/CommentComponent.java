@@ -49,12 +49,26 @@ public class CommentComponent {
         return commentItem.findElement(COMMENT_EDIT_BUTTON.getPath());
     }
 
+    public WebElement getEditTextAria(){
+        return commentItem.findElement(COMMENT_EDIT_TEXT_AREA.getPath());
+    }
+
+    public WebElement getSaveEditButton(){
+        return commentItem.findElement(COMMENT_SAVE_CHANGES_BUTTON.getPath());
+    }
+
     public boolean isEditButtonDisplayed() {
         return commentItem.findElements(COMMENT_EDIT_BUTTON.getPath()).size() > 0;
     }
 
     public CommentComponent clickEditButton() {
         getEditButton().click();
+        return this;
+    }
+
+    public CommentComponent setTextInEditAria(String editedText){
+        clickEditButton().getEditTextAria().clear();
+        clickEditButton().getEditTextAria().sendKeys(editedText);
         return this;
     }
 
