@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.tests.comments;
 
 import com.softserve.edu.greencity.data.econews.NewsData;
-import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
@@ -15,28 +15,28 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     private NewsData newsData;
+
+    private User getTemporaryUser() {
+        return UserRepository.get().temporary();
+    }
+
     @BeforeClass
     public void creatingCommentAndReplyToNews() {
         String comment = "different news";
-        User user = UserRepository.get().temporary();
-
-        newsData = new NewsData(Arrays.asList(Tag.ADS), "Comment, please!",
-                "I need a lot of comments! Comment, go on!");
+        newsData = NewsDataRepository.get().getNewsWithValidData();
 
         loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
+                .successfullyLogin(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
                 .publishNews();
-
         SingleNewsPage page = loadApplication()
                 .navigateMenuEcoNews()
                 .refreshPage() //fresh news might not be displayed unless you refresh
@@ -67,8 +67,26 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .clickReplyButton()
                 .setReplyText(String.join("", Collections.nCopies(8010, "z")));
         Assert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
-        commentComponent.clickAddReplyButton().getShowReplyButton().click();
+        commentComponent.clickAddReplyButton().getShowReplyButton().click();// bug  "system can't cuts everything after 8000 characters"
         ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
         Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
+    }
+
+    @Test
+    @Description("GC-958")
+    public void loggedUserCanPublishReply() {
+        logger.info("Verify that logged user can publish reply starts");
+
+        String replyText = "Test reply";
+        ReplyComponent replyComponent = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .addReply(replyText).openReply().chooseReplyByNumber(0);
+
+        softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
+        softAssert.assertAll();
     }
 }
