@@ -52,6 +52,23 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
+    @Test(testName = "GC-866", description = "866")
+    @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
+    public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
+        User user = UserRepository.get().temporary();
+        String emptyCommentField = "";
+        CommentComponent comment =
+                loadApplication()
+                        .signIn()
+                        .getManualLoginComponent()
+                        .successfullyLogin(user)
+                        .navigateMenuEcoNews()
+                        .switchToSingleNewsPageByParameters(newsData)
+                        .getCommentPart()
+                        .chooseCommentByNumber(0).setTextInEditAria(emptyCommentField);
+        Assert.assertFalse(comment.getSaveEditButton().isEnabled());
+    }
+
     @Test(testName = "GC-961", description = "GC-961")
     @Description("This test case verifies that logged user cannot add a reply with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {

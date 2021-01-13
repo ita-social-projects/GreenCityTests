@@ -137,21 +137,4 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
             softAssert.assertFalse(commentComponent.isEditButtonDisplayed());
         }
     }
-
-    @Test(testName = "GC-866", description = "866")
-    @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
-    public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
-        User user = UserRepository.get().temporary();
-        String emptyCommentField = "";
-        CommentComponent comment =
-                loadApplication()
-                        .signIn()
-                        .getManualLoginComponent()
-                        .successfullyLogin(user)
-                        .navigateMenuEcoNews()
-                        .switchToSingleNewsPageByParameters(newsData)
-                        .getCommentPart()
-                        .chooseCommentByNumber(0).setTextInEditAria(emptyCommentField);
-        Assert.assertFalse(comment.getSaveEditButton().isEnabled());
-    }
 }
