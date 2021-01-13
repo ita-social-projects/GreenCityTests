@@ -51,6 +51,9 @@ public class CredentialProperties {
         properties.setProperty("googleEmail",ValueProvider.getgoogleEmail());
         properties.setProperty("passwordForRegistration",ValueProvider.getdefaultPass());
 
+        properties.setProperty("existUser",ValueProvider.getExistUser());
+        properties.setProperty("existUserPassword",ValueProvider.getExistUserPassword());
+
         FileOutputStream out = new FileOutputStream("src/test/resources/credentials.properties");
         properties.store(out,"Please setup credentials");   }
 
@@ -64,5 +67,4 @@ public class CredentialProperties {
     private boolean isCredentialsPropertiesExist()  {
         return new File("src/test/resources/credentials.properties").isFile();
     }
-
 }
