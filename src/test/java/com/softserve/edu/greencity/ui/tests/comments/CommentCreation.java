@@ -21,6 +21,10 @@ public class CommentCreation extends GreenCityTestRunner {
         return UserRepository.get().temporary();
     }
 
+    private User getExistUser() {
+        return UserRepository.get().exist();
+    }
+
     private EcoNewsService getEcoNewsService() {
         return new EcoNewsService();
     }
@@ -123,6 +127,7 @@ public class CommentCreation extends GreenCityTestRunner {
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0).getCommentText();
+
         softAssert.assertNotEquals(lastCommentText, commentText);
         softAssert.assertAll();
     }
@@ -141,6 +146,21 @@ public class CommentCreation extends GreenCityTestRunner {
         int numberAfterPublish = commentPart.addComment(commentText).getNumberOfComment();
 
         softAssert.assertEquals(numberBeforePublish + 1, numberAfterPublish);
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-824")
+    public void loggedUserCantDeleteNotHisComment() {
+        logger.info("Verify that logged user can't delete not his comment");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getExistUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(news)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+
+        softAssert.assertFalse(commentComponent.isDeleteCommentButtonDisplayed());
         softAssert.assertAll();
     }
 }
