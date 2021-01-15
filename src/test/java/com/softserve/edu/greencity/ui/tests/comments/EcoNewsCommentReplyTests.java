@@ -58,12 +58,11 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     @Test(testName = "GC-866", description = "866")
     @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
     public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
-        User user = UserRepository.get().temporary();
         String emptyCommentField = "";
         CommentComponent comment = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
+                .successfullyLogin(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
@@ -74,11 +73,10 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     @Test(testName = "GC-961", description = "GC-961")
     @Description("This test case verifies that logged user cannot add a reply with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
-        User user = UserRepository.get().temporary();
         CommentComponent commentComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
+                .successfullyLogin(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
@@ -116,5 +114,22 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
         softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-870", description = "GC-870")
+    @Description("verify that logged user can't edit reply of the other user on the 'News' page.")
+    public void loggedUserCanNotEditNoHisReply(){
+        logger.info("verify that logged user can't edit reply of the other user on the 'News' page.");
+        User user = UserRepository.get().exist();
+        boolean canEdit = loadApplication()
+                .loginIn(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .isEditReplyButtonDisplayed();
+        Assert.assertFalse(canEdit,"Edit button on the reply shouldn't be displayed");
     }
 }
