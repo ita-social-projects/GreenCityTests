@@ -217,23 +217,4 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-998", description = "GC-998")
-    @Description("Verify that logged user cannot reply to other replies on News Single Page")
-    public void loggedUserCannotReplyToOtherReply(){
-        logger.info("Verify that logged user cannot reply to other replies on News Single Page starts");
-
-        boolean isReplyButtonDisplayed = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(news)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .clickReplyButton()
-                .openReply()
-                .chooseReplyByNumber(0)
-                .isReplyButtonDisplayed();
-        softAssert.assertFalse(isReplyButtonDisplayed);
-        softAssert.assertAll();
-    }
-
 }
