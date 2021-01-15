@@ -75,8 +75,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
     }
 
-    @Test
-    @Description("GC-958")
+    @Test(testName = "GC-958", description = "GC-958")
     public void loggedUserCanPublishReply() {
         logger.info("Verify that logged user can publish reply starts");
         ReplyComponent replyComponent = loadApplication()
