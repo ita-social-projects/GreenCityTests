@@ -71,4 +71,15 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
         Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
     }
+
+    @Test(testName = "GC-966", description = "GC-966")
+    @Description("Verify that unlogged user cannot add reply to the comment on News Single Page.")
+    public void verifyUnloggedUserCanAddReplyToComment(){
+        CommentComponent comment = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+        Assert.assertFalse(comment.isAddReplyDisplayed(), "the 'Reply' button should not be displayed, if user is unlogged");
+    }
 }
