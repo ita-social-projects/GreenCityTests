@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.tests.comments;
 
 import com.softserve.edu.greencity.data.econews.NewsData;
-import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
@@ -15,23 +15,24 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     private NewsData newsData;
+    private String replyText = "Test reply";
+
+    private User getTemporaryUser() {
+        return UserRepository.get().temporary();
+    }
+
     @BeforeClass
     public void creatingCommentAndReplyToNews() {
         String comment = "different news";
-        User user = UserRepository.get().temporary();
-
-        newsData = new NewsData(Arrays.asList(Tag.ADS), "Comment, please!",
-                "I need a lot of comments! Comment, go on!");
-
+        newsData = NewsDataRepository.get().getNewsWithValidData();
         loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
+                .successfullyLogin(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
@@ -42,7 +43,9 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .refreshPage() //fresh news might not be displayed unless you refresh
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
-                .addComment(comment);
+                .addComment(comment)
+                .chooseCommentByNumber(0)
+                .addReply(replyText);
         page.signOut();
     }
 
@@ -66,6 +69,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseCommentByNumber(0)
                 .clickReplyButton()
                 .setReplyText(String.join("", Collections.nCopies(8010, "z")));
+
         Assert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
         commentComponent.clickAddReplyButton().getShowReplyButton().click();
         ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
@@ -74,12 +78,27 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-966", description = "GC-966")
     @Description("Verify that unlogged user cannot add reply to the comment on News Single Page.")
-    public void verifyUnloggedUserCanAddReplyToComment(){
+    public void verifyUnloggedUserCanAddReplyToComment() {
         CommentComponent comment = loadApplication()
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
         Assert.assertFalse(comment.isAddReplyDisplayed(), "the 'Reply' button should not be displayed, if user is unlogged");
+    }
+
+    @Test(testName = "GC-958", description = "GC-958")
+    public void loggedUserCanPublishReply() {
+        logger.info("Verify that logged user can publish reply starts");
+        ReplyComponent replyComponent = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply().chooseReplyByNumber(0);
+
+        softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
+        softAssert.assertAll();
     }
 }
