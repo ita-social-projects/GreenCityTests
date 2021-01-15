@@ -57,15 +57,14 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
         User user = UserRepository.get().temporary();
         String emptyCommentField = "";
-        CommentComponent comment =
-                loadApplication()
-                        .signIn()
-                        .getManualLoginComponent()
-                        .successfullyLogin(user)
-                        .navigateMenuEcoNews()
-                        .switchToSingleNewsPageByParameters(newsData)
-                        .getCommentPart()
-                        .chooseCommentByNumber(0).setTextInEditAria(emptyCommentField);
+        CommentComponent comment = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0).setTextInEditAria(emptyCommentField);
         Assert.assertFalse(comment.getSaveEditButton().isEnabled());
     }
 
