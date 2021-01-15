@@ -37,6 +37,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
                 .publishNews();
+
         SingleNewsPage page = loadApplication()
                 .navigateMenuEcoNews()
                 .refreshPage() //fresh news might not be displayed unless you refresh
@@ -70,9 +71,20 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .setReplyText(String.join("", Collections.nCopies(8010, "z")));
 
         Assert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
-        commentComponent.clickAddReplyButton().getShowReplyButton().click();// bug  "system can't cuts everything after 8000 characters"
+        commentComponent.clickAddReplyButton().getShowReplyButton().click();
         ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
         Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
+    }
+
+    @Test(testName = "GC-966", description = "GC-966")
+    @Description("Verify that unlogged user cannot add reply to the comment on News Single Page.")
+    public void verifyUnloggedUserCanAddReplyToComment() {
+        CommentComponent comment = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+        Assert.assertFalse(comment.isAddReplyDisplayed(), "the 'Reply' button should not be displayed, if user is unlogged");
     }
 
     @Test(testName = "GC-958", description = "GC-958")
