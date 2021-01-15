@@ -117,4 +117,23 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-971", description = "GC-971")
+    @Description("Verify that logged users can review and hide all related to the comment replies on News Single Page")
+    public void loggedUserCanReviewAndHideReplies(){
+        logger.info("Verify that logged users can review and hide all related to the comment replies on News Single Page starts");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply();
+        softAssert.assertTrue(commentComponent.isReplyComponentPresent());
+        boolean isRepliesHide = commentComponent
+                .closeReply()
+                .isReplyComponentPresent();
+        softAssert.assertFalse(isRepliesHide);
+        softAssert.assertAll();
+    }
 }
