@@ -117,4 +117,20 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-999", description = "GC-999")
+    @Description("Verify that unlogged user cannot reply to other replies on News Single Page ")
+    public void notLoggedUserCannotReplyToOtherReply(){
+        logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
+        boolean isReplyButtonDisplayed = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .isReplyButtonDisplayed();
+        softAssert.assertFalse(isReplyButtonDisplayed);
+        softAssert.assertAll();
+    }
 }
