@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -68,11 +69,10 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .clickReplyButton()
                 .setReplyText(String.join("", Collections.nCopies(8010, "z")));
 
-        softAssert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
+        Assert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
         commentComponent.clickAddReplyButton().getShowReplyButton().click();// bug  "system can't cuts everything after 8000 characters"
         ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
-        softAssert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
-        softAssert.assertAll();
+        Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
     }
 
     @Test
