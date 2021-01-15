@@ -217,22 +217,5 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-995", description = "GC-955")
-    @Description("Verify that unlogged user can review and hide all related to the comment replies on News Single Page")
-    public void notLoggedUserCanReviewAndHideReplies(){
-        logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
-        CommentComponent commentComponent = loadApplication()
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(news)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .openReply();
-        softAssert.assertTrue(commentComponent.isReplyComponentPresent());
-        boolean isRepliesHide = commentComponent
-                .closeReply()
-                .isReplyComponentPresent();
-        softAssert.assertFalse(isRepliesHide);
-        softAssert.assertAll();
 
-    }
 }
