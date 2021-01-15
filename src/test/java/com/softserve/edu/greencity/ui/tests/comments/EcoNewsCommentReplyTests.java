@@ -117,4 +117,20 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-963", description = "GC-963")
+    @Description("Verify that logged user cannot add reply with empty field on News Single Page")
+    public void loggedUserCannotReplyWithEmptyFields(){
+        logger.info("Verify that logged user cannot add reply with empty field on News Single Page starts");
+        boolean isReplyButtonActive = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .clickReplyButton()
+                .isAddReplyButtonEnable();
+        softAssert.assertFalse(isReplyButtonActive);
+        softAssert.assertAll();
+    }
 }
