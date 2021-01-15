@@ -217,7 +217,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-971", description = "GC-955")
+    @Test(testName = "GC-971", description = "GC-971")
     @Description("Verify that logged users can review and hide all related to the comment replies on News Single Page")
     public void loggedUserCanReviewAndHideReplies(){
         logger.info("Verify that logged users can review and hide all related to the comment replies on News Single Page starts");
