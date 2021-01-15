@@ -217,5 +217,4 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-
 }
