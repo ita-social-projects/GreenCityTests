@@ -21,6 +21,10 @@ public class ReplyComponent {
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
+    public WebElement getReplyEditField(){
+        return replyItem.findElement(REPLY_EDIT_TEXTAREA.getPath());
+    }
+
     public WebElement getReplyComment() {
         return replyItem.findElement(REPLY_CURRENT_TEXT.getPath());
     }
@@ -51,6 +55,12 @@ public class ReplyComponent {
 
     public ReplyComponent clickReplyLikeButton() {
         getReplyLikeButton().click();
+        return this;
+    }
+
+    public ReplyComponent setTextIntoReplyEditField(String replyEditText){
+        getReplyEditField().clear();
+        getReplyEditField().sendKeys(replyEditText);
         return this;
     }
 

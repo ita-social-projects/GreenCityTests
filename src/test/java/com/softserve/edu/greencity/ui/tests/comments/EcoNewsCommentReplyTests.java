@@ -8,8 +8,10 @@ import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -116,5 +118,39 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
         softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-874", description = "Gc-874")
+    @Description("verify that system saves the changes after click ‘Reply’ button on the ‘News’ page")
+    public void systemSavesChangesAfterClickReply() {
+        logger.info("verify that system saves the changes after click ‘Reply’ button on the ‘News’ page");
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver, 5, 5);
+        String replyEditText = "text for editing reply";
+        SingleNewsPage newsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .clickReplyEditButton()
+                .setTextIntoReplyEditField(replyEditText);
+
+        driver.navigate().refresh();
+
+         waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(newsPage.getCommentPart()
+                 .chooseCommentByNumber(0)
+                 .getShowReplyButton()));
+
+        String contentInReplyAfterRefresh = newsPage
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText();
+        softAssert.assertEquals(replyText, contentInReplyAfterRefresh, "system shouldn't saved reply without 'edit' click ");
+
     }
 }
