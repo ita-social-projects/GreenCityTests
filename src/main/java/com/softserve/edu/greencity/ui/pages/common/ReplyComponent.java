@@ -29,6 +29,10 @@ public class ReplyComponent {
         return replyItem.findElement(REPLY_CURRENT_TEXT.getPath());
     }
 
+    public WebElement getReplySaveChangesButton(){
+        return replyItem.findElement(REPLY_SAVE_CHANGES_BUTTON.getPath());
+    }
+
     public String getReplyText() {
         return getReplyComment().getText();
     }
@@ -58,10 +62,19 @@ public class ReplyComponent {
         return this;
     }
 
-    public ReplyComponent setTextIntoReplyEditField(String replyEditText){
+    public ReplyComponent setTextIntoReplyEditField(String replyEditedText){
         getReplyEditField().clear();
-        getReplyEditField().sendKeys(replyEditText);
+        getReplyEditField().sendKeys(replyEditedText);
         return this;
+    }
+
+    public void clickReplaySaveChanges(){
+        getReplySaveChangesButton().click();
+    }
+
+    public ReplyComponent editReply(String replyEditedText){
+      clickReplyEditButton().setTextIntoReplyEditField(replyEditedText).clickReplaySaveChanges();
+      return this;
     }
 
     public boolean isReplyLikesButtonDisplayed() {

@@ -21,7 +21,7 @@ import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     private NewsData newsData;
-    private String replyText = "Test reply";
+    private final String replyText = "Test reply";
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -120,37 +120,55 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-874", description = "Gc-874")
-    @Description("verify that system saves the changes after click ‘Reply’ button on the ‘News’ page")
+    @Test(testName = "GC-874", description = "GC-874")
+    @Description("verify that system saves the changes after click ‘Save’ button on the ‘News’ page")
     public void systemSavesChangesAfterClickReply() {
-        logger.info("verify that system saves the changes after click ‘Reply’ button on the ‘News’ page");
-        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver, 5, 5);
-        String replyEditText = "text for editing reply";
+        logger.info("verify that system saves the changes after click ‘Save’ button on the ‘News’ page");
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        String textToEditTheReply = "reply has been changed";
         SingleNewsPage newsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
-
+        logger.info("Set text into reply edit field");
         newsPage.getCommentPart()
                 .chooseCommentByNumber(0)
                 .openReply()
                 .chooseReplyByNumber(0)
                 .clickReplyEditButton()
-                .setTextIntoReplyEditField(replyEditText);
-
+                .setTextIntoReplyEditField(textToEditTheReply);
+        logger.info("refresh page");
         driver.navigate().refresh();
-
-         waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(newsPage.getCommentPart()
-                 .chooseCommentByNumber(0)
-                 .getShowReplyButton()));
-
-        String contentInReplyAfterRefresh = newsPage
+        logger.info("wait for page elements to load");
+        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOf(newsPage.getCommentPart().getCommentCounter()));
+        logger.info("check that changes have not been saved");
+        String replyTextAfterRefresh = newsPage
                 .getCommentPart()
                 .chooseCommentByNumber(0)
                 .openReply()
                 .chooseReplyByNumber(0)
                 .getReplyText();
-        softAssert.assertEquals(replyText, contentInReplyAfterRefresh, "system shouldn't saved reply without 'edit' click ");
-
+        softAssert.assertEquals(replyText, replyTextAfterRefresh, "Fail, system shouldn't saved reply without 'edit' click ");
+        logger.info("Edit reply");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .chooseReplyByNumber(0)
+                .editReply(textToEditTheReply);
+        logger.info("refresh page");
+        driver.navigate().refresh();
+        logger.info("wait for page elements to load");
+        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOf(newsPage.getCommentPart()
+                .chooseCommentByNumber(0).getShowReplyButton()));
+        logger.info("check changes after editing");
+        String  textEditedReply = newsPage
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText();
+        softAssert.assertEquals(textEditedReply,textToEditTheReply,"Fail, system should save changes after editing reply");
+        softAssert.assertAll();
     }
+
+
 }
