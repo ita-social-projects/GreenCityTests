@@ -52,6 +52,37 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
+    @Test
+    @Description("GC-822")
+    public void loggedUserCanDeleteReplyToComment() {
+        logger.info("Verify that logged user can delete his own reply on the 'Single News' page");
+        User user = UserRepository.get().temporary();
+        String commentText = "Test comment";
+        String replyText ="Test reply";
+        ReplyComponent replyComponent = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .addComment(commentText)
+                .chooseCommentByNumber(0)
+                .clickReplyButton()
+                .setReplyText(replyText)
+                .clickAddReplyButton()
+                .openReply()
+                .chooseReplyByNumber(0)
+//                .clickReplyDeleteButton()
+//                .clickDConfirmButton();
+                .clickDeleteReplyButtonCancel();
+        softAssert.assertTrue(replyComponent.isReplyPresent());
+        replyComponent.clickDeleteReplyButtonCancel();
+        softAssert.assertFalse(replyComponent.isReplyPresent());
+        softAssert.assertAll();
+    }
+
+
     @Test(testName = "GC-961", description = "GC-961")
     @Description("This test case verifies that logged user cannot add a reply with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
