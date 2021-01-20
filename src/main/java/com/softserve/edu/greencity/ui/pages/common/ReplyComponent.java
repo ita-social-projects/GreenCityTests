@@ -25,27 +25,12 @@ public class ReplyComponent {
         return replyItem.findElement(REPLY_EDIT_TEXTAREA.getPath());
     }
 
-    public WebElement getReplySaveChangesButton(){
-        return replyItem.findElement(REPLY_SAVE_CHANGES_BUTTON.getPath());
-    }
-
-    public ReplyComponent setTextIntoReplyEditField(String replyEditedText){
-        getReplyEditField().clear();
-        getReplyEditField().sendKeys(replyEditedText);
-        return this;
-    }
-
-    public void clickReplaySaveChanges(){
-        getReplySaveChangesButton().click();
-    }
-
-    public ReplyComponent editReply(String replyEditedText){
-        clickReplyEditButton().setTextIntoReplyEditField(replyEditedText).clickReplaySaveChanges();
-        return this;
-    }
-
     public WebElement getReplyComment() {
         return replyItem.findElement(REPLY_CURRENT_TEXT.getPath());
+    }
+
+    public WebElement getReplySaveChangesButton(){
+        return replyItem.findElement(REPLY_SAVE_CHANGES_BUTTON.getPath());
     }
 
     public String getReplyText() {
@@ -75,6 +60,21 @@ public class ReplyComponent {
     public ReplyComponent clickReplyLikeButton() {
         getReplyLikeButton().click();
         return this;
+    }
+
+    public ReplyComponent setTextIntoReplyEditField(String replyEditedText){
+        getReplyEditField().clear();
+        getReplyEditField().sendKeys(replyEditedText);
+        return this;
+    }
+
+    public void clickReplaySaveChanges(){
+        getReplySaveChangesButton().click();
+    }
+
+    public ReplyComponent editReply(String replyEditedText){
+      clickReplyEditButton().setTextIntoReplyEditField(replyEditedText).clickReplaySaveChanges();
+      return this;
     }
 
     public boolean isReplyLikesButtonDisplayed() {

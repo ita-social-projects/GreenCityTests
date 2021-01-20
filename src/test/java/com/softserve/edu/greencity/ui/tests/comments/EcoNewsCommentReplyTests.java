@@ -26,7 +26,7 @@ import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     private NewsData newsData;
-    private String replyText = "Test reply";
+    private final String replyText = "Test reply";
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -65,12 +65,11 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     @Test(testName = "GC-866", description = "866")
     @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
     public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
-        User user = UserRepository.get().temporary();
         String emptyCommentField = "";
         CommentComponent comment = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
+                .successfullyLogin(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
@@ -81,11 +80,10 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     @Test(testName = "GC-961", description = "GC-961")
     @Description("This test case verifies that logged user cannot add a reply with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
-        User user = UserRepository.get().temporary();
         CommentComponent commentComponent = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
+                .successfullyLogin(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
@@ -122,6 +120,66 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply().chooseReplyByNumber(0);
 
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-870", description = "GC-870")
+    @Description("verify that logged user can't edit reply of the other user on the 'News' page.")
+    public void loggedUserCanNotEditNoHisReply(){
+        logger.info("verify that logged user can't edit reply of the other user on the 'News' page.");
+        User user = UserRepository.get().exist();
+        boolean canEdit = loadApplication()
+                .loginIn(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .isEditReplyButtonDisplayed();
+        Assert.assertFalse(canEdit,"Edit button on the reply shouldn't be displayed");
+    }
+
+    @Test(testName = "GC-874", description = "GC-874")
+    @Description("verify that system saves the changes after click ‘Save’ button on the ‘News’ page")
+    public void systemSavesChangesAfterClickReply() {
+        logger.info("verify that system saves the changes after click ‘Save’ button on the ‘News’ page");
+        String textToEditTheReply = "reply has been changed";
+        SingleNewsPage newsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        logger.info("Set text into reply edit field");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .clickReplyEditButton()
+                .setTextIntoReplyEditField(textToEditTheReply);
+        logger.info("leave page and check that changes have not been saved");
+        String replyTextAfterRefresh = newsPage
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText();
+        softAssert.assertEquals(replyText, replyTextAfterRefresh, "Fail, system shouldn't saved reply without 'edit' click ");
+        logger.info("Edit reply");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .chooseReplyByNumber(0)
+                .editReply(textToEditTheReply);
+        logger.info("refresh page");
+        driver.navigate().refresh();
+        ReplyComponent replyAfterEdit = newsPage
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        logger.info("check changes after editing");
+        softAssert.assertEquals(replyAfterEdit.getReplyText(),textToEditTheReply,"Fail, system should save changes after editing reply");
         softAssert.assertAll();
     }
 
