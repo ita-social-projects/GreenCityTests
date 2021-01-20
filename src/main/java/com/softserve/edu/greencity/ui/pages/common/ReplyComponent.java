@@ -109,6 +109,10 @@ public class ReplyComponent {
         return replyItem.findElements(REPLY_EDIT_BUTTON.getPath()).size() > 0;
     }
 
+    public boolean isaAvatarDisplayed(){
+      return replyItem.findElement(REPLY_AUTHOR_AVATAR.getPath()).isDisplayed();
+    }
+
     public boolean isReplyButtonDisplayed() {
         return replyItem.findElements(REPLY_REPLY_BUTTON.getPath()).size() > 0;
     }

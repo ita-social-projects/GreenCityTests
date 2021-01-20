@@ -13,8 +13,10 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
@@ -178,7 +180,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-998", description = "GC-998")
     @Description("Verify that logged user cannot reply to other replies on News Single Page")
-    public void loggedUserCannotReplyToOtherReply(){
+    public void loggedUserCannotReplyToOtherReply() {
         logger.info("Verify that logged user cannot reply to other replies on News Single Page starts");
         boolean isReplyButtonDisplayed = loadApplication()
                 .loginIn(getTemporaryUser())
@@ -196,7 +198,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-999", description = "GC-999")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page ")
-    public void notLoggedUserCannotReplyToOtherReply(){
+    public void notLoggedUserCannotReplyToOtherReply() {
         logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
         boolean isReplyButtonDisplayed = loadApplication()
                 .navigateMenuEcoNews()
@@ -212,7 +214,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-995", description = "GC-955")
     @Description("Verify that unlogged user can review and hide all related to the comment replies on News Single Page")
-    public void notLoggedUserCanReviewAndHideReplies(){
+    public void notLoggedUserCanReviewAndHideReplies() {
         logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
         CommentComponent commentComponent = loadApplication()
                 .navigateMenuEcoNews()
@@ -230,7 +232,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-971", description = "GC-971")
     @Description("Verify that logged users can review and hide all related to the comment replies on News Single Page")
-    public void loggedUserCanReviewAndHideReplies(){
+    public void loggedUserCanReviewAndHideReplies() {
         logger.info("Verify that logged users can review and hide all related to the comment replies on News Single Page starts");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
@@ -249,7 +251,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-963", description = "GC-963")
     @Description("Verify that logged user cannot add reply with empty field on News Single Page")
-    public void loggedUserCannotReplyWithEmptyFields(){
+    public void loggedUserCannotReplyWithEmptyFields() {
         logger.info("Verify that logged user cannot add reply with empty field on News Single Page starts");
         boolean isReplyButtonActive = loadApplication()
                 .loginIn(getTemporaryUser())
@@ -261,5 +263,37 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .isAddReplyButtonEnable();
         softAssert.assertFalse(isReplyButtonActive);
         softAssert.assertAll();
+    }
+
+    @Test(dataProvider = "setStringLength", testName = "GC-1132", description = "GC-1132")
+    @Description("Logged user can 'Edit' his reply on 'News' page")
+    public void loggedUserCanEditHisReply(int stringLength) {
+        ReplyComponent replyComponent = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+
+        String textForReplyEditing = String.join("", Collections.nCopies(stringLength, "a"));
+        replyComponent.editReply(textForReplyEditing);
+        String timeStamp = new SimpleDateFormat("MMM dd, yyyy").format(Calendar.getInstance().getTime());
+
+        softAssert.assertEquals(replyComponent.getReplyText(), textForReplyEditing);
+        softAssert.assertTrue(replyComponent.getReplyDate().contains(timeStamp));
+        softAssert.assertTrue(replyComponent.isaAvatarDisplayed());
+        softAssert.assertAll();
+    }
+
+    @DataProvider
+    public Object[][] setStringLength() {
+        Object[][] length = new Object[][]{
+                {1}, {4444}, {8000}
+        };
+        return length;
     }
 }
