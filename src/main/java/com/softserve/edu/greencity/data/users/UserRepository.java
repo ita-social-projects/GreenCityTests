@@ -34,17 +34,24 @@ public final class UserRepository {
     @SneakyThrows
     public User temporary() {
         return new User(
-                (String) gettemporaryLoginName(),
-                (String) gettemporaryPass());
+                gettemporaryLoginName(),
+                gettemporaryPass());
+    }
+
+    @SneakyThrows
+    public User exist(){
+        return new User(
+                getExistUser(),
+                getExistUserPassword());
     }
 
     @SneakyThrows
     public User defaultUserCredentials() {
         return new User(
-                (String) getdefaultName(),
-                (String) getdefaultEmail(),
-                (String) getdefaultPass(),
-                (String) getdefaultPass());
+                getdefaultName(),
+                getdefaultEmail(),
+                getdefaultPass(),
+                getdefaultPass());
     }
 
     @SneakyThrows

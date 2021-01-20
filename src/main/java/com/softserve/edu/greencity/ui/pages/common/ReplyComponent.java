@@ -105,6 +105,10 @@ public class ReplyComponent {
         return replyItem.findElements(REPLY_EDIT_BUTTON.getPath()).size() > 0;
     }
 
+    public boolean isReplyButtonDisplayed() {
+        return replyItem.findElements(REPLY_REPLY_BUTTON.getPath()).size() > 0;
+    }
+
     public String getReplyLikesNumber() {
         return replyItem.findElement(REPLY_LIKE_AMOUNT.getPath()).getText();
     }

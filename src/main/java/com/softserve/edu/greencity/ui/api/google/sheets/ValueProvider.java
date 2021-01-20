@@ -95,6 +95,12 @@ public class ValueProvider {
     public static String getComfUnregisterEmailPassword() {return (String) getRow(24).get(1);}
 
     @SneakyThrows
+    public static String getExistUser() {return (String) getRow(29).get(1);}
+
+    @SneakyThrows
+    public static String getExistUserPassword() {return (String) getRow(30).get(1);}
+
+    @SneakyThrows
     public static Boolean remote() {
         try {
             logger.info("remote: " + Boolean.valueOf((String) getRow(25).get(1)));
@@ -165,6 +171,10 @@ public class ValueProvider {
         System.out.println(remote());
         System.out.println("<===============================================================>");
         System.out.println(getBaseUrl());
+        System.out.println("<===============================================================>");
+        System.out.println(getExistUser());
+        System.out.println("<===============================================================>");
+        System.out.println(getExistUserPassword());
         System.out.println("<===============================================================>");
     }
 }
