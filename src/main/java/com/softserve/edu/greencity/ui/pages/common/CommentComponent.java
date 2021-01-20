@@ -72,6 +72,14 @@ public class CommentComponent {
         return this;
     }
 
+    public CommentComponent setTextInEditAriaAndClick(String editedText){
+        clickEditButton().getEditTextAria().clear();
+        getEditTextAria().sendKeys(editedText);
+        getSaveEditButton().click();
+
+        return this;
+    }
+
     public WebElement getDeleteButton() {
         return commentItem.findElement(COMMENT_DELETE_BUTTON.getPath());
     }
@@ -144,6 +152,7 @@ public class CommentComponent {
     }
 
     public CommentComponent setReplyText(String replyText) {
+        getReplyField().clear();
         getReplyField().sendKeys(replyText);
         return this;
     }

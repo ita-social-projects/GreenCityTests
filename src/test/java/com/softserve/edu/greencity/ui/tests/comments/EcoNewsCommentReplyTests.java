@@ -14,7 +14,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
@@ -204,4 +210,42 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         softAssert.assertFalse(isReplyButtonActive);
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-1132", description = "GC-1132")
+    @Description("Logged user can 'Edit' his reply on 'News' page")
+    public void loggedUserCanEditHisReply(){
+        //User user = UserRepository.get().temporary();
+        ReplyComponent replyComponent = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+
+        replyComponent.editReply(String.join("",Collections.nCopies(1, "AAAAAAAAAA")));
+        String textReplyAfterEdit =  replyComponent.getReplyText();
+        String timeStamp = new SimpleDateFormat("MMM dd, yyyy").format(Calendar.getInstance().getTime());
+
+        softAssert.assertEquals(textReplyAfterEdit, "AAAAAAAAAA");
+        softAssert.assertTrue(replyComponent.getReplyDate().contains(timeStamp));
+        softAssert.assertTrue(replyComponent.isaAvatarDisplayed());
+        softAssert.assertAll();
+
+//
+//        SoftAssert
+//        Assert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
+//
+//
+//
+//        commentComponent.clickAddReplyButton().getShowReplyButton().click();
+//
+//        ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
+//        Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
+
+    }
+
 }
