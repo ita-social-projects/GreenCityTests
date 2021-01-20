@@ -163,6 +163,4 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertFalse(commentComponent.isDeleteCommentButtonDisplayed());
         softAssert.assertAll();
     }
-
-
 }

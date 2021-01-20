@@ -72,14 +72,6 @@ public class CommentComponent {
         return this;
     }
 
-    public CommentComponent setTextInEditAriaAndClick(String editedText){
-        clickEditButton().getEditTextAria().clear();
-        getEditTextAria().sendKeys(editedText);
-        getSaveEditButton().click();
-
-        return this;
-    }
-
     public WebElement getDeleteButton() {
         return commentItem.findElement(COMMENT_DELETE_BUTTON.getPath());
     }
