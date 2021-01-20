@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     private NewsData newsData;
-    private String replyText = "Test reply";
+    private final String replyText = "Test reply";
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -115,6 +115,49 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply().chooseReplyByNumber(0);
 
         softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-874", description = "GC-874")
+    @Description("verify that system saves the changes after click ‘Save’ button on the ‘News’ page")
+    public void systemSavesChangesAfterClickReply() {
+        logger.info("verify that system saves the changes after click ‘Save’ button on the ‘News’ page");
+        String textToEditTheReply = "reply has been changed";
+        SingleNewsPage newsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        logger.info("Set text into reply edit field");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .clickReplyEditButton()
+                .setTextIntoReplyEditField(textToEditTheReply);
+        logger.info("leave page and check that changes have not been saved");
+        String replyTextAfterRefresh = newsPage
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText();
+        softAssert.assertEquals(replyText, replyTextAfterRefresh, "Fail, system shouldn't saved reply without 'edit' click ");
+        logger.info("Edit reply");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .chooseReplyByNumber(0)
+                .editReply(textToEditTheReply);
+        logger.info("refresh page");
+        driver.navigate().refresh();
+        ReplyComponent replyAfterEdit = newsPage
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        logger.info("check changes after editing");
+        softAssert.assertEquals(replyAfterEdit.getReplyText(),textToEditTheReply,"Fail, system should save changes after editing reply");
         softAssert.assertAll();
     }
 
