@@ -144,6 +144,7 @@ public class CommentComponent {
     }
 
     public CommentComponent setReplyText(String replyText) {
+        getReplyField().clear();
         getReplyField().sendKeys(replyText);
         return this;
     }

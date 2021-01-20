@@ -19,7 +19,7 @@ import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     private NewsData newsData;
-    private String replyText = "Test reply";
+    private final String replyText = "Test reply";
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -131,5 +131,135 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseReplyByNumber(0)
                 .isEditReplyButtonDisplayed();
         Assert.assertFalse(canEdit,"Edit button on the reply shouldn't be displayed");
+    }
+
+    @Test(testName = "GC-874", description = "GC-874")
+    @Description("verify that system saves the changes after click ‘Save’ button on the ‘News’ page")
+    public void systemSavesChangesAfterClickReply() {
+        logger.info("verify that system saves the changes after click ‘Save’ button on the ‘News’ page");
+        String textToEditTheReply = "reply has been changed";
+        SingleNewsPage newsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        logger.info("Set text into reply edit field");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .clickReplyEditButton()
+                .setTextIntoReplyEditField(textToEditTheReply);
+        logger.info("leave page and check that changes have not been saved");
+        String replyTextAfterRefresh = newsPage
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText();
+        softAssert.assertEquals(replyText, replyTextAfterRefresh, "Fail, system shouldn't saved reply without 'edit' click ");
+        logger.info("Edit reply");
+        newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .chooseReplyByNumber(0)
+                .editReply(textToEditTheReply);
+        logger.info("refresh page");
+        driver.navigate().refresh();
+        ReplyComponent replyAfterEdit = newsPage
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        logger.info("check changes after editing");
+        softAssert.assertEquals(replyAfterEdit.getReplyText(),textToEditTheReply,"Fail, system should save changes after editing reply");
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-998", description = "GC-998")
+    @Description("Verify that logged user cannot reply to other replies on News Single Page")
+    public void loggedUserCannotReplyToOtherReply(){
+        logger.info("Verify that logged user cannot reply to other replies on News Single Page starts");
+        boolean isReplyButtonDisplayed = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .clickReplyButton()
+                .openReply()
+                .chooseReplyByNumber(0)
+                .isReplyButtonDisplayed();
+        softAssert.assertFalse(isReplyButtonDisplayed);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-999", description = "GC-999")
+    @Description("Verify that unlogged user cannot reply to other replies on News Single Page ")
+    public void notLoggedUserCannotReplyToOtherReply(){
+        logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
+        boolean isReplyButtonDisplayed = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0)
+                .isReplyButtonDisplayed();
+        softAssert.assertFalse(isReplyButtonDisplayed);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-995", description = "GC-955")
+    @Description("Verify that unlogged user can review and hide all related to the comment replies on News Single Page")
+    public void notLoggedUserCanReviewAndHideReplies(){
+        logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
+        CommentComponent commentComponent = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply();
+        softAssert.assertTrue(commentComponent.isReplyComponentPresent());
+        boolean isRepliesHide = commentComponent
+                .closeReply()
+                .isReplyComponentPresent();
+        softAssert.assertFalse(isRepliesHide);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-971", description = "GC-971")
+    @Description("Verify that logged users can review and hide all related to the comment replies on News Single Page")
+    public void loggedUserCanReviewAndHideReplies(){
+        logger.info("Verify that logged users can review and hide all related to the comment replies on News Single Page starts");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply();
+        softAssert.assertTrue(commentComponent.isReplyComponentPresent());
+        boolean isRepliesHide = commentComponent
+                .closeReply()
+                .isReplyComponentPresent();
+        softAssert.assertFalse(isRepliesHide);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-963", description = "GC-963")
+    @Description("Verify that logged user cannot add reply with empty field on News Single Page")
+    public void loggedUserCannotReplyWithEmptyFields(){
+        logger.info("Verify that logged user cannot add reply with empty field on News Single Page starts");
+        boolean isReplyButtonActive = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .clickReplyButton()
+                .isAddReplyButtonEnable();
+        softAssert.assertFalse(isReplyButtonActive);
+        softAssert.assertAll();
     }
 }
