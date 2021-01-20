@@ -11,9 +11,12 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.Collections;
 
 public class CommentCreation extends GreenCityTestRunner {
     private NewsData news;
@@ -83,6 +86,29 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertEquals(commentText, commentPart.chooseCommentByNumber(0).getCommentText());
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-820", description = "GC-820")
+    @Description("This test case verifies that logged user cannot add a comments with 8001+ characters on News Single Page")
+    public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
+        User user = UserRepository.get().temporary();
+        String commentText = String.join("", Collections.nCopies(8001, "c"));
+        CommentPart commentPart = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(news)
+                .getCommentPart()
+                .setCommentText(commentText);
+        Assert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
+
+        commentPart.clickPublishCommentButton();
+        CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
+        Assert.assertEquals(commentComponent.getComment().getText().length(), 8000);
+
+    }
+
+
 
     @Test
     @Description("GC-821")
