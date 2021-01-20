@@ -20,6 +20,10 @@ import java.util.List;
 public class EcoNewsCommentTests extends GreenCityTestRunner {
     private NewsData newsData;
 
+    private User getExistUser() {
+        return UserRepository.get().exist();
+    }
+
     @BeforeClass
     public void creatingCommentToNews() {
         String comment = "different news";
@@ -136,5 +140,20 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
         for (CommentComponent commentComponent : commentComponents) {
             softAssert.assertFalse(commentComponent.isEditButtonDisplayed());
         }
+    }
+
+    @Test(testName = "GC-863", description = "GC-863")
+    @Description("Verify that logged user can not edit not him/her comment on the ‘News’ page")
+    public void loggedUsersCanNotEditNotHimComment() {
+        logger.info("logged user can not edit not him comment on the ‘News’ page");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getExistUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+
+        softAssert.assertFalse(commentComponent.isEditButtonDisplayed(),"Button shouldn't displayed");
+        softAssert.assertAll();
     }
 }
