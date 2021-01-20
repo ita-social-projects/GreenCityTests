@@ -90,7 +90,6 @@ public class CommentCreation extends GreenCityTestRunner {
     @Test(testName = "GC-820", description = "GC-820")
     @Description("This test case verifies that logged user cannot add a comments with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
-        //User user = UserRepository.get().temporary();
         String commentText = String.join("", Collections.nCopies(8001, "c"));
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
