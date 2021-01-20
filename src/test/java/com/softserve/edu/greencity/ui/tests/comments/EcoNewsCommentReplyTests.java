@@ -137,12 +137,10 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseReplyByNumber(0)
                 .clickReplyEditButton()
                 .setTextIntoReplyEditField(textToEditTheReply);
-        logger.info("refresh page");
-        driver.navigate().refresh();
-        logger.info("wait for page elements to load");
-        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOf(newsPage.getCommentPart().getCommentCounter()));
-        logger.info("check that changes have not been saved");
+        logger.info("leave page and check that changes have not been saved");
         String replyTextAfterRefresh = newsPage
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
                 .openReply()
@@ -156,19 +154,13 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .editReply(textToEditTheReply);
         logger.info("refresh page");
         driver.navigate().refresh();
-        logger.info("wait for page elements to load");
-        waitsSwitcher.setExplicitWait(7, ExpectedConditions.visibilityOf(newsPage.getCommentPart()
-                .chooseCommentByNumber(0).getShowReplyButton()));
-        logger.info("check changes after editing");
-        String  textEditedReply = newsPage
+        ReplyComponent replyAfterEdit = newsPage
                 .getCommentPart()
                 .chooseCommentByNumber(0)
                 .openReply()
-                .chooseReplyByNumber(0)
-                .getReplyText();
-        softAssert.assertEquals(textEditedReply,textToEditTheReply,"Fail, system should save changes after editing reply");
+                .chooseReplyByNumber(0);
+        logger.info("check changes after editing");
+        softAssert.assertEquals(replyAfterEdit.getReplyText(),textToEditTheReply,"Fail, system should save changes after editing reply");
         softAssert.assertAll();
     }
-
-
 }
