@@ -284,11 +284,11 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply()
                 .chooseReplyByNumber(0);
 
-        String textForReplyEdditing = String.join("", Collections.nCopies(stringLength, "a"));
-        replyComponent.editReply(textForReplyEdditing);
+        String textForReplyEditing = String.join("", Collections.nCopies(stringLength, "a"));
+        replyComponent.editReply(textForReplyEditing);
         String timeStamp = new SimpleDateFormat("MMM dd, yyyy").format(Calendar.getInstance().getTime());
 
-        softAssert.assertEquals(replyComponent.getReplyText(), textForReplyEdditing);
+        softAssert.assertEquals(replyComponent.getReplyText(), textForReplyEditing);
         softAssert.assertTrue(replyComponent.getReplyDate().contains(timeStamp));
         softAssert.assertTrue(replyComponent.isaAvatarDisplayed());
         softAssert.assertAll();
@@ -296,7 +296,6 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @DataProvider
     public Object[][] setStringLength() {
-
         Object[][] length = new Object[][]{
                 {1}, {4444}, {8000}
         };
