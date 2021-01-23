@@ -25,7 +25,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
 
     @Test(testName = "GC-1159", description = "GC-1159")
     @Description("Unregister user can`t delete any comment on the 'News' page.")
-    public void loggedUserCanDeleteNotHisOwnComment() {
+    public void unloggedUserCanNotDeleteComment() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responsePostComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment for 1159"));
         parentCommentId = responsePostComment.as(CommentModel.class).id;
