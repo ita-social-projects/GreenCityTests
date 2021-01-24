@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.api.tests.comments;
 
+import com.gargoylesoftware.htmlunit.Page;
 import com.softserve.edu.greencity.api.assertions.BaseAssertion;
 import com.softserve.edu.greencity.api.clients.CommentClient;
 import com.softserve.edu.greencity.api.models.comments.CommentDto;
@@ -22,5 +23,17 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion editComment = new BaseAssertion(responseEdit);
         editComment.statusCode(200);
     }
-
+    @Test(testName = "GC-1175",description = "GC-1175")
+    @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
+    public void unloggedUserCannotReplyToOtherReplies(){
+        CommentClient loggedClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = loggedClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = loggedClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
+        int replyId = responseReply.as(CommentModel.class).id;
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responseReplyToReplies = unloggedClient.postComment(ecoNewsId, new CommentDto(replyId,"reply to other replies"));
+        BaseAssertion replyToReplies = new BaseAssertion(responseReplyToReplies);
+        replyToReplies.statusCode(401);
+    }
 }
