@@ -23,4 +23,16 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         editComment.statusCode(200);
     }
 
+    @Test(testName = "GC-1173",description = "GC-1173")
+    @Description("Verify that logged user cannot reply to other replies on News Single Page")
+    public void loggedUserCannotReplyToOtherReplies(){
+        CommentClient loggedClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = loggedClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = loggedClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
+        int replyId = responseReply.as(CommentModel.class).id;
+        Response responseReplyToReplies = loggedClient.postComment(ecoNewsId, new CommentDto(replyId,"reply to other replies"));
+        BaseAssertion replyToReplies = new BaseAssertion(responseReplyToReplies);
+        replyToReplies.statusCode(400);
+    }
 }
