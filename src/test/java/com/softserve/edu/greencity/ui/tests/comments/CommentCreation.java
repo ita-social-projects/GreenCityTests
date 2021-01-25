@@ -1,16 +1,15 @@
 package com.softserve.edu.greencity.ui.tests.comments;
 
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -81,14 +80,14 @@ public class CommentCreation extends GreenCityTestRunner {
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
-        Assert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
+        softAssert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
 
         commentPart.clickPublishCommentButton();
         CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
-        Assert.assertEquals(commentComponent.getComment().getText().length(), 8000);
+        softAssert.assertEquals(commentComponent.getComment().getText().length(), 8000);
+        softAssert.assertAll();
 
     }
-
 
 
     @Test
