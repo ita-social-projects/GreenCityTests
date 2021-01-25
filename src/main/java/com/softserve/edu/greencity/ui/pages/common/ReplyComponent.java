@@ -21,8 +21,16 @@ public class ReplyComponent {
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
+    public WebElement getReplyEditField(){
+        return replyItem.findElement(REPLY_EDIT_TEXTAREA.getPath());
+    }
+
     public WebElement getReplyComment() {
         return replyItem.findElement(REPLY_CURRENT_TEXT.getPath());
+    }
+
+    public WebElement getReplySaveChangesButton(){
+        return replyItem.findElement(REPLY_SAVE_CHANGES_BUTTON.getPath());
     }
 
     public String getReplyText() {
@@ -52,6 +60,21 @@ public class ReplyComponent {
     public ReplyComponent clickReplyLikeButton() {
         getReplyLikeButton().click();
         return this;
+    }
+
+    public ReplyComponent setTextIntoReplyEditField(String replyEditedText){
+        getReplyEditField().clear();
+        getReplyEditField().sendKeys(replyEditedText);
+        return this;
+    }
+
+    public void clickReplaySaveChanges(){
+        getReplySaveChangesButton().click();
+    }
+
+    public ReplyComponent editReply(String replyEditedText){
+      clickReplyEditButton().setTextIntoReplyEditField(replyEditedText).clickReplaySaveChanges();
+      return this;
     }
 
     public boolean isReplyLikesButtonDisplayed() {
@@ -84,6 +107,14 @@ public class ReplyComponent {
 
     public boolean isEditReplyButtonDisplayed() {
         return replyItem.findElements(REPLY_EDIT_BUTTON.getPath()).size() > 0;
+    }
+
+    public boolean isaAvatarDisplayed(){
+      return replyItem.findElement(REPLY_AUTHOR_AVATAR.getPath()).isDisplayed();
+    }
+
+    public boolean isReplyButtonDisplayed() {
+        return replyItem.findElements(REPLY_REPLY_BUTTON.getPath()).size() > 0;
     }
 
     public String getReplyLikesNumber() {

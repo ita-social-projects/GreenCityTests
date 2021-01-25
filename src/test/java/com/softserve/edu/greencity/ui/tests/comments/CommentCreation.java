@@ -6,7 +6,6 @@ import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.CommentPart;
-import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -25,6 +24,10 @@ public class CommentCreation extends GreenCityTestRunner {
         return UserRepository.get().temporary();
     }
 
+    private User getExistUser() {
+        return UserRepository.get().exist();
+    }
+
     private EcoNewsService getEcoNewsService() {
         return new EcoNewsService();
     }
@@ -41,8 +44,7 @@ public class CommentCreation extends GreenCityTestRunner {
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment("First Comment")
-                .chooseCommentByNumber(0)
-                .addReply("First reply");
+                .chooseCommentByNumber(0);
         signOutByStorage();
     }
 
@@ -51,24 +53,6 @@ public class CommentCreation extends GreenCityTestRunner {
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         getEcoNewsService().deleteNewsByTitle(news.getTitle());
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(news.getTitle()));
-    }
-
-    @Test
-    @Description("GC-958")
-    public void loggedUserCanPublishReply() {
-        logger.info("Verify that logged user can publish reply starts");
-
-        String replyText = "Test reply";
-        ReplyComponent replyComponent = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(news)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .addReply(replyText).openReply().chooseReplyByNumber(0);
-
-        softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
-        softAssert.assertAll();
     }
 
     @Test
@@ -161,12 +145,12 @@ public class CommentCreation extends GreenCityTestRunner {
                 .addComment(commentText)
                 .chooseCommentByNumber(0)
                 .clickDeleteCommentButton();
-
         String lastCommentText = loadApplication()
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0).getCommentText();
+
         softAssert.assertNotEquals(lastCommentText, commentText);
         softAssert.assertAll();
     }
@@ -185,6 +169,21 @@ public class CommentCreation extends GreenCityTestRunner {
         int numberAfterPublish = commentPart.addComment(commentText).getNumberOfComment();
 
         softAssert.assertEquals(numberBeforePublish + 1, numberAfterPublish);
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Description("GC-824")
+    public void loggedUserCantDeleteNotHisComment() {
+        logger.info("Verify that logged user can't delete not his comment");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getExistUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(news)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+
+        softAssert.assertFalse(commentComponent.isDeleteCommentButtonDisplayed());
         softAssert.assertAll();
     }
 }

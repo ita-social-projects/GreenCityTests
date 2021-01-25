@@ -6,7 +6,7 @@ public enum ItemComponentLocators implements Locator {
     TAGS(By.cssSelector(".filter-tag div")),
     TAGS_CONTAINER(By.cssSelector(".filter-tag")),
     IMAGE(By.cssSelector(".list-image-content")),
-    TITLE(By.cssSelector(".list-wrapper [tabindex='0'] h3")),
+    TITLE(By.cssSelector("div.title-list.word-wrap")),
     CONTENT(By.cssSelector(".list-text p")),
     CONTENT_WRAP(By.cssSelector(".list-text")),
     DATE_OF_CREATION(By.cssSelector(".user-data-added-news > p:nth-child(1)")),
