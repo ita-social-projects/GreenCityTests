@@ -15,6 +15,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
@@ -120,7 +121,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-870", description = "GC-870")
     @Description("verify that logged user can't edit reply of the other user on the 'News' page.")
-    public void loggedUserCanNotEditNoHisReply(){
+    public void loggedUserCanNotEditNoHisReply() {
         logger.info("verify that logged user can't edit reply of the other user on the 'News' page.");
         User user = UserRepository.get().exist();
         boolean canEdit = loadApplication()
@@ -132,7 +133,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply()
                 .chooseReplyByNumber(0)
                 .isEditReplyButtonDisplayed();
-        Assert.assertFalse(canEdit,"Edit button on the reply shouldn't be displayed");
+        Assert.assertFalse(canEdit, "Edit button on the reply shouldn't be displayed");
     }
 
     @Test(testName = "GC-874", description = "GC-874")
@@ -174,7 +175,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply()
                 .chooseReplyByNumber(0);
         logger.info("check changes after editing");
-        softAssert.assertEquals(replyAfterEdit.getReplyText(),textToEditTheReply,"Fail, system should save changes after editing reply");
+        softAssert.assertEquals(replyAfterEdit.getReplyText(), textToEditTheReply, "Fail, system should save changes after editing reply");
         softAssert.assertAll();
     }
 
@@ -246,6 +247,20 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .closeReply()
                 .isReplyComponentPresent();
         softAssert.assertFalse(isRepliesHide);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-823", description = "GC-823")
+    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
+    public void verifyUnloggedUserCanDeleteReplyToComment() {
+        ReplyComponent comment = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
         softAssert.assertAll();
     }
 
