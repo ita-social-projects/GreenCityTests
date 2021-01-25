@@ -29,7 +29,29 @@ public class CommentClient extends BaseClient {
     public Response postComment(String id, CommentDto comment) {
         return prepareRequest()
                 .body(comment)
-                .pathParam("econewsId",id)
+                .header("Authorization", authToken)
+                .pathParam("econewsId", id)
                 .post("/{entity}/{econewsId}");
+    }
+
+    public Response updateComment(String commentId, String text) {
+        return prepareRequest()
+                .header("Authorization", authToken)
+                .queryParam("id", commentId)
+                .queryParam("text", text)
+                .patch("/{entity}");
+    }
+
+    public Response deleteComment(String commentId) {
+        return prepareRequest()
+                .header("Authorization", authToken)
+                .queryParam("id", commentId)
+                .delete("/{entity}");
+    }
+
+    public Response getAllActiveReplyToComment(String commentId) {
+        return prepareRequest()
+                .pathParam("parentCommentId", commentId)
+                .get("/{entity}/replies/active/{parentCommentId}");
     }
 }

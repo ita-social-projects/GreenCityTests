@@ -19,7 +19,8 @@ public enum ReplyLocator implements Locator {
     REPLY_SAVE_CHANGES_BUTTON(By.cssSelector(".cta-btn.save-edit")),
     REPLY_CANCEL_CHANGES_BUTTON(By.cssSelector(".cta-btn.cancel-edit")),
     REPLY_REPLY_BUTTON(By.cssSelector(".cta-btn.reply")),
-    REPLY_DELETE_BUTTON(By.cssSelector(".cta-btn.delete"));
+    REPLY_DELETE_BUTTON(By.cssSelector(".cta-btn.delete")),
+    REPLY_AUTHOR_AVATAR(By.cssSelector("app-user-profile-image > img"));
 
     private final By path;
 
