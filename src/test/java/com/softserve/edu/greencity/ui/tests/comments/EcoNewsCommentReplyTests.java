@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
+import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
@@ -66,26 +67,31 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         User user = UserRepository.get().temporary();
         String commentText = "Test comment";
         String replyText ="Test reply";
-        ReplyComponent replyComponent = loadApplication()
+        CommentPart comment = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
-                .addComment(commentText)
-                .chooseCommentByNumber(0)
+                .addComment(commentText);
+                comment.chooseCommentByNumber(0)
                 .clickReplyButton()
                 .setReplyText(replyText)
                 .clickAddReplyButton()
                 .openReply()
                 .chooseReplyByNumber(0)
-//                .clickReplyDeleteButton()
-//                .clickDConfirmButton();
                 .clickDeleteReplyButtonCancel();
-        softAssert.assertTrue(replyComponent.isReplyPresent());
-        replyComponent.clickDeleteReplyButtonCancel();
-        softAssert.assertFalse(replyComponent.isReplyPresent());
+                 CommentComponent reply = comment.chooseCommentByNumber(0)
+                        .openReply();
+        softAssert.assertTrue(reply.chooseReplyByNumber(0).isReplyPresent());
+       reply.chooseReplyByNumber(0).clickDeleteReplyButtonCancel();
+        driver.navigate().refresh();
+        ReplyComponent deleteReply = comment
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        softAssert.assertFalse(deleteReply.isReplyPresent());
         softAssert.assertAll();
     }
 
