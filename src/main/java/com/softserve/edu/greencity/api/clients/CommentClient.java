@@ -6,13 +6,14 @@ import io.restassured.response.Response;
 
 public class CommentClient extends BaseClient {
     private String authToken;
+    private static final String url = "https://greencity.azurewebsites.net";
 
     public CommentClient(ContentType contentType) {
-        super(contentType, "econews/comments");
+        super(contentType, "econews/comments",url);
     }
 
     public CommentClient(String contentType) {
-        super(contentType, "econews/comments");
+        super(contentType, "econews/comments",url);
     }
 
     /**
@@ -22,7 +23,7 @@ public class CommentClient extends BaseClient {
      * @param authToken   unique token. Use OwnSecurityClient to get it
      */
     public CommentClient(ContentType contentType, String authToken) {
-        super(contentType, "econews/comments");
+        super(contentType, "econews/comments",url);
         this.authToken = "Bearer " + authToken;
     }
 
