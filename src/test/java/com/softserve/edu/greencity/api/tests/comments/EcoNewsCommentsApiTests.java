@@ -25,7 +25,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
 
     @Test(testName = "GC-1155", description = "GC-1155")
     @Description("Verify that logged user can delete his own comment on the 'News' page.")
-    public void loggedUserCanDeleteHisOwnComment(){
+    public void loggedUserCanDeleteHisOwnComment() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
         parentCommentId = responseComment.as(CommentModel.class).id;
@@ -34,17 +34,18 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(200);
     }
 
-    @Test(testName = "GC-1175",description = "GC-1175")
+    @Test(testName = "GC-1175", description = "GC-1175")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
-    public void unloggedUserCannotReplyToOtherReplies(){
+    public void unloggedUserCannotReplyToOtherReplies() {
         CommentClient loggedClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = loggedClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
         parentCommentId = responseComment.as(CommentModel.class).id;
         Response responseReply = loggedClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
         int replyId = responseReply.as(CommentModel.class).id;
         CommentClient unloggedClient = new CommentClient(ContentType.JSON);
-        Response responseReplyToReplies = unloggedClient.postComment(ecoNewsId, new CommentDto(replyId,"reply to other replies"));
+        Response responseReplyToReplies = unloggedClient.postCommentForUnloggedUser(ecoNewsId, new CommentDto(replyId, "reply to other replies"));
         BaseAssertion replyToReplies = new BaseAssertion(responseReplyToReplies);
-        replyToReplies.statusCode(401);
+        replyToReplies.statusCode(401)
+                .bodyValueContains("message", "Authorize first");
     }
 }
