@@ -50,6 +50,13 @@ public class CommentClient extends BaseClient {
                 .patch("/{entity}");
     }
 
+    public Response updateCommentByNotLoggedUser(String commentId, String text) {
+        return prepareRequest()
+                .queryParam("id", commentId)
+                .queryParam("text", text)
+                .patch("/{entity}");
+    }
+
     public Response deleteComment(String commentId) {
         return prepareRequest()
                 .header("Authorization", authToken)
