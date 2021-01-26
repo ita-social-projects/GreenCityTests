@@ -34,4 +34,15 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(200);
     }
 
+    @Test(testName = "GC-1193", description = "GC-1193")
+    @Description("Verify that not logged user can’t edit comments on the ‘Eco news’ page API")
+    public void notLoggedUserCanNotEditComments() {
+        CommentClient commentClientLogged = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientLogged.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
+        Response responseTryToEditComment = commentClientNotLogged.updateCommentByNotLoggedUser(parentCommentId.toString(), "new%20comment");
+        BaseAssertion notEditedComment = new BaseAssertion(responseTryToEditComment);
+        notEditedComment.statusCode(401);
+    }
 }
