@@ -53,7 +53,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         CommentClient existClient = new CommentClient(ContentType.JSON, existUserData.accessToken);
         Response responseDeleteComment = existClient.deleteComment(parentCommentId.toString());
         BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
-        deleteComment.statusCode(401)
-        .bodyValueContains("message","Authorize first.");
+        deleteComment.statusCode(400)
+        .bodyValueContains("message","Current user has no permission for this action");
     }
 }
