@@ -81,4 +81,15 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion deleteComment = new BaseAssertion(responseEdit);
         deleteComment.statusCode(400);
     }
+    @Test(testName = "GC-1196", description = "GC-1196")
+    @Description("Verify that unlogged user can see the replies to the comment on the ‘Eco news’ page")
+    public void loggedUserCanSeeReplyToComment() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "check api reply"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
+        Response responseReply = commentClientNotLogged.getAllActiveReplyToComment(parentCommentId.toString());
+        BaseAssertion seeReply = new BaseAssertion(responseReply);
+        seeReply.statusCode(200);
+    }
 }
