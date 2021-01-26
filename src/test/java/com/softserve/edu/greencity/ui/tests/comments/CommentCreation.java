@@ -1,9 +1,9 @@
 package com.softserve.edu.greencity.ui.tests.comments;
 
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
@@ -13,6 +13,8 @@ import io.qameta.allure.Description;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.Collections;
 
 public class CommentCreation extends GreenCityTestRunner {
     private NewsData news;
@@ -67,6 +69,26 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertEquals(commentText, commentPart.chooseCommentByNumber(0).getCommentText());
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-820", description = "GC-820")
+    @Description("This test case verifies that logged user cannot add a comments with 8001+ characters on News Single Page")
+    public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
+        String commentText = String.join("", Collections.nCopies(8001, "c"));
+        CommentPart commentPart = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(news)
+                .getCommentPart()
+                .setCommentText(commentText);
+        softAssert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
+
+        commentPart.clickPublishCommentButton();
+        CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
+        softAssert.assertEquals(commentComponent.getComment().getText().length(), 8000);
+        softAssert.assertAll();
+
+    }
+
 
     @Test
     @Description("GC-821")
