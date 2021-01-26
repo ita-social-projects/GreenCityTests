@@ -44,6 +44,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         int replyId = responseReply.as(CommentModel.class).id;
         Response responseReplyToReplies = loggedClient.postComment(ecoNewsId, new CommentDto(replyId,"reply to other replies"));
         BaseAssertion replyToReplies = new BaseAssertion(responseReplyToReplies);
-        replyToReplies.statusCode(400);
+        replyToReplies.statusCode(400)
+        .bodyValueContains("message", "Can not make a reply to a reply");
     }
 }
