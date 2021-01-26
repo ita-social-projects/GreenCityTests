@@ -127,6 +127,15 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first");
     }
 
+    @Test(testName = "GC-1188",description = "GC-1188")
+    @Description("Verify that logged user cannot add comment with empty field on News Single Page")
+    public void loggedUserCannotAddCommentWithEmptyField(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseAddComment = commentClient.postComment(ecoNewsId, new CommentDto(0, ""));
+        BaseAssertion addComment = new BaseAssertion(responseAddComment);
+        addComment.statusCode(400);
+    }
+
     @Test(testName = "GC-1193", description = "GC-1193")
     @Description("Verify that not logged user can’t edit comments on the ‘Eco news’ page API")
     public void notLoggedUserCanNotEditComments() {
