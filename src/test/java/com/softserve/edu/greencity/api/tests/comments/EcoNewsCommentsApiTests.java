@@ -53,6 +53,17 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         .bodyValueContains("message","Authorize first.");
     }
 
+    @Test(testName = "GC-1160", description = "GC-1160")
+    @Description("Verify that logged user can add comment on News Single Page")
+    public void loggedUserCanAddHisOwnComment() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseAddComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        BaseAssertion addComment = new BaseAssertion(responseAddComment);
+        addComment.statusCode(201);
+    }
+
     @Test(testName = "GC-1163",description = "1163")
     @Description("Verify that logged user can publish reply on News Single Page")
     public void loggedUserCanPublishReply(){
@@ -198,5 +209,18 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         Response responseReply = commentClient.getAllActiveReplyToComment(parentCommentId.toString());
         BaseAssertion seeReply = new BaseAssertion(responseReply);
         seeReply.statusCode(200);
+    }
+
+    @Test(testName = "GC-1202", description = "GC-1202")
+    @Description("Verify that logged user can`t edit not his own replay on the ‘Eco news’ page.")
+    public void loggedUserCantEditNotHisOwnReply() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,"commentReply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        Response responseEditReply = commentClient.updateComment(parentCommentId.toString(), "new%20comment%20api");
+        BaseAssertion editComment = new BaseAssertion(responseEditReply);
+        editComment.statusCode(400);
     }
 }
