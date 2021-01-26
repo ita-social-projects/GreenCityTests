@@ -13,7 +13,6 @@ import io.qameta.allure.Description;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
 import static com.softserve.edu.greencity.data.econews.NewsDataStrings.CONTENT_COMMENT_8001_CHARACTERS;
 
 public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
@@ -114,6 +113,20 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(200);
     }
 
+    @Test(testName = "GC-1173",description = "GC-1173")
+    @Description("Verify that logged user cannot reply to other replies on News Single Page")
+    public void loggedUserCannotReplyToOtherReplies(){
+        CommentClient loggedClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = loggedClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = loggedClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
+        int replyId = responseReply.as(CommentModel.class).id;
+        Response responseReplyToReplies = loggedClient.postComment(ecoNewsId, new CommentDto(replyId,"reply to other replies"));
+        BaseAssertion replyToReplies = new BaseAssertion(responseReplyToReplies);
+        replyToReplies.statusCode(400)
+        .bodyValueContains("message", "Can not make a reply to a reply");
+    }
+
     @Test(testName = "GC-1175", description = "GC-1175")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
     public void unloggedUserCannotReplyToOtherReplies() {
@@ -158,6 +171,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion notEditedComment = new BaseAssertion(responseTryToEditComment);
         notEditedComment.statusCode(401);
     }
+
     @Test(testName = "GC-1194", description = "GC-1194")
     @Description("Verify that logged user can’t edit not his own comment on the ‘Eco news’ page")
     public void loggedUserCanNotEditNotHisOwnComment() {
