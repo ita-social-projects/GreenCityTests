@@ -75,4 +75,11 @@ public class CommentClient extends BaseClient {
                 .pathParam("parentCommentId", commentId)
                 .get("/{entity}/replies/active/{parentCommentId}");
     }
+
+    public Response postLikeTheCommentOrReplyForUnloggedUser(String commentOrReplyId){
+        return prepareRequest()
+                .queryParam("parentCommentId", commentOrReplyId)
+                .post("/{entity}/like");
+    }
+
 }
