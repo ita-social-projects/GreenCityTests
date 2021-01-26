@@ -48,8 +48,10 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         CommentClient unloggedClient = new CommentClient(ContentType.JSON);
         Response responseDeleteComment = unloggedClient.deleteCommentForUnloggedUser(parentCommentId.toString());
         BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
-        deleteComment.statusCode(401);
+        deleteComment.statusCode(401)
+        .bodyValueContains("message","Authorize first.");
     }
+
     @Test(testName = "GC-1175", description = "GC-1175")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
     public void unloggedUserCannotReplyToOtherReplies() {
