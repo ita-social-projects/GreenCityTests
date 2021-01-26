@@ -199,4 +199,17 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion seeReply = new BaseAssertion(responseReply);
         seeReply.statusCode(200);
     }
+
+    @Test(testName = "GC-1200", description = "GC-1200")
+    @Description("Verify that logged user can edit its own replay on the ‘Eco news’ page.")
+    public void loggedUserCanEditHisOwnReply(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,"commentReply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        Response responseEditReply = commentClient.updateComment(parentCommentId.toString(), "new%20comment%20api");
+        BaseAssertion editComment = new BaseAssertion(responseEditReply);
+        editComment.statusCode(200);
+    }
 }
