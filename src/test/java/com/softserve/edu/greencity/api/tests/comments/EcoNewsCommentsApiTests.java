@@ -54,6 +54,17 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first");
     }
 
+    @Test(testName = "GC-1185",description = "GC-1185")
+    @Description("Verify that after comment was published, system recalculates the total comments number on News Single Page")
+    public void verifyThatSystemRecalculatesCommentsNumber(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response countOfComments =  commentClient.countComments(ecoNewsId);
+        BaseAssertion countCommentsAssertion = new BaseAssertion(countOfComments);
+        countCommentsAssertion.statusCode(200);
+
+
+    }
+
     @Test(testName = "GC-1193", description = "GC-1193")
     @Description("Verify that not logged user can’t edit comments on the ‘Eco news’ page API")
     public void notLoggedUserCanNotEditComments() {

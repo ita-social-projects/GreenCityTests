@@ -69,4 +69,10 @@ public class CommentClient extends BaseClient {
                 .pathParam("parentCommentId", commentId)
                 .get("/{entity}/replies/active/{parentCommentId}");
     }
+
+    public Response countComments(String ecoNewsId) {
+        return prepareRequest()
+                .pathParam("ecoNewsId",ecoNewsId)
+                .get("/{entity}/count/comments/{ecoNewsId}");
+    }
 }
