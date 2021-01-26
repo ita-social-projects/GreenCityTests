@@ -14,6 +14,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import static com.softserve.edu.greencity.data.econews.NewsDataStrings.CONTENT_COMMENT_8001_CHARACTERS;
+
 public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
     protected Integer parentCommentId;
 
@@ -132,6 +134,15 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
     public void loggedUserCannotAddCommentWithEmptyField(){
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseAddComment = commentClient.postComment(ecoNewsId, new CommentDto(0, ""));
+        BaseAssertion addComment = new BaseAssertion(responseAddComment);
+        addComment.statusCode(400);
+    }
+
+    @Test(testName = "GC-1189",description = "GC-1189")
+    @Description("Verify that logged user cannot add comment with invalid number of characters on News Single Page ")
+    public void loggedUserCannotAddCommentWithInvalidNumberOfCharacters(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseAddComment = commentClient.postComment(ecoNewsId, new CommentDto(0, CONTENT_COMMENT_8001_CHARACTERS.getString()));
         BaseAssertion addComment = new BaseAssertion(responseAddComment);
         addComment.statusCode(400);
     }

@@ -114,6 +114,7 @@ public enum NewsDataStrings {
             "Та й на посаду TAQC!\n" +
             "Із курсів автотестування\n" +
             "Та й на посаду TAQC!\n"),
+    CONTENT_COMMENT_8001_CHARACTERS(readFromFile("src/test/resources/texts/testData8001characters.txt")),
 
 
     IMAGE_TOO_BIG_PNG("src/test/resources/images/tooLargePng.png"),
