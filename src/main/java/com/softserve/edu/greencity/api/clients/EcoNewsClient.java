@@ -15,14 +15,15 @@ import static io.restassured.RestAssured.given;
 public class EcoNewsClient extends BaseClient {
 
     private final String authToken;
+    private static final String url = "https://greencity.azurewebsites.net";
 
     public EcoNewsClient(ContentType contentType) {
-        super(contentType, "econews");
+        super(contentType, "econews",url);
         authToken = "";
     }
 
     public EcoNewsClient(String contentType) {
-        super(contentType, "econews");
+        super(contentType, "econews",url);
         authToken = "";
     }
 
@@ -32,7 +33,7 @@ public class EcoNewsClient extends BaseClient {
      * @param authToken   unique token. Use OwnSecurityClient to get it
      */
     public EcoNewsClient(ContentType contentType, String authToken) {
-        super(contentType, "econews");
+        super(contentType, "econews",url);
         this.authToken = "Bearer " + authToken;
     }
 
@@ -49,7 +50,7 @@ public class EcoNewsClient extends BaseClient {
      */
     public Response postNews(EcoNewsPOSTdto news) {
         return given()
-                .baseUri(BASE_URL)
+                .baseUri(url)
                 .accept(contentType)
                 .pathParam("entity", entity)
                 .header("Authorization", authToken)
