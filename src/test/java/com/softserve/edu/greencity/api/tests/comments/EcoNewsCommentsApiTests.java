@@ -39,6 +39,41 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(200);
     }
 
+    @Test(testName = "GC-1159", description = "GC-1159")
+    @Description("Unregister user can`t delete any comment on the 'News' page.")
+    public void unloggedUserCanNotDeleteComment() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responsePostComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment for 1159"));
+        parentCommentId = responsePostComment.as(CommentModel.class).id;
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responseDeleteComment = unloggedClient.deleteCommentForUnloggedUser(parentCommentId.toString());
+        BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
+        deleteComment.statusCode(401)
+        .bodyValueContains("message","Authorize first.");
+    }
+
+    @Test(testName = "GC-1163",description = "1163")
+    @Description("Verify that logged user can publish reply on News Single Page")
+    public void loggedUserCanPublishReply(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseCommentReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,"gc-1163_reply"));
+        BaseAssertion publishReply = new BaseAssertion(responseCommentReply);
+        publishReply.statusCode(201);
+    }
+
+    @Test(testName = "GC-1169",description = "1169")
+    @Description("Verify that logged user cannot add reply with empty field on News Single Page")
+    public void loggedUserCanNotAddReplyWithEmptyField(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseCommentReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,""));
+        BaseAssertion publishReply = new BaseAssertion(responseCommentReply);
+        publishReply.statusCode(400);
+    }
+
     @Test(testName = "GC-1175", description = "GC-1175")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
     public void unloggedUserCannotReplyToOtherReplies() {
@@ -81,9 +116,20 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion deleteComment = new BaseAssertion(responseEdit);
         deleteComment.statusCode(400);
     }
+
+    @Test(testName = "GC-1195", description = "GC-1195")
+    @Description("Verify that logged user can see the replies to the comment on the ‘Eco news’ page")
+    public void loggedUserCanSeeReplyToComment() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "check api reply"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClient.getAllActiveReplyToComment(parentCommentId.toString());
+        BaseAssertion seeReply = new BaseAssertion(responseReply);
+        seeReply.statusCode(200);
+    }
     @Test(testName = "GC-1196", description = "GC-1196")
     @Description("Verify that unlogged user can see the replies to the comment on the ‘Eco news’ page")
-    public void loggedUserCanSeeReplyToComment() {
+    public void unloggedUserCanSeeReplyToComment() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "check api reply"));
         parentCommentId = responseComment.as(CommentModel.class).id;
