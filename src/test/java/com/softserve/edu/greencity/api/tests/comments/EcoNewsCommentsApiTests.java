@@ -63,6 +63,17 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         publishReply.statusCode(201);
     }
 
+    @Test(testName = "GC-1169",description = "1169")
+    @Description("Verify that logged user cannot add reply with empty field on News Single Page")
+    public void loggedUserCanNotAddReplyWithEmptyField(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseCommentReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,""));
+        BaseAssertion publishReply = new BaseAssertion(responseCommentReply);
+        publishReply.statusCode(400);
+    }
+
     @Test(testName = "GC-1175", description = "GC-1175")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
     public void unloggedUserCannotReplyToOtherReplies() {
