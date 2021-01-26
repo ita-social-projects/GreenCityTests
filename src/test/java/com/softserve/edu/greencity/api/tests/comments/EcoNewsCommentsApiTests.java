@@ -57,7 +57,6 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         CommentClient commentClientTemporary = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = commentClientTemporary.postComment(ecoNewsId, new CommentDto(0, "api comment"));
         parentCommentId = responseComment.as(CommentModel.class).id;
-
         OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
         User existUser = UserRepository.get().exist();
         Response signedIn = authorizationClient
