@@ -127,6 +127,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion seeReply = new BaseAssertion(responseReply);
         seeReply.statusCode(200);
     }
+
     @Test(testName = "GC-1196", description = "GC-1196")
     @Description("Verify that unlogged user can see the replies to the comment on the ‘Eco news’ page")
     public void unloggedUserCanSeeReplyToComment() {
