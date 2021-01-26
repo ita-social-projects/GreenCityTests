@@ -64,6 +64,12 @@ public class CommentClient extends BaseClient {
                 .delete("/{entity}");
     }
 
+    public Response deleteCommentForUnloggedUser(String commentId) {
+        return prepareRequest()
+                .queryParam("id", commentId)
+                .delete("/{entity}");
+    }
+
     public Response getAllActiveReplyToComment(String commentId) {
         return prepareRequest()
                 .pathParam("parentCommentId", commentId)
