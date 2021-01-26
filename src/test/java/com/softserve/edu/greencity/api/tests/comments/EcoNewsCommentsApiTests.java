@@ -142,6 +142,32 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first");
     }
 
+    @Test(testName = "GC-1180", description = "GC-1180")
+    @Description("Verify that logged user can like/dislike the comment/reply on News Single Page")
+    public void loggedUserCanLikeTheCommentOrReply(){
+        CommentClient commentClientTemporary = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientTemporary.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClientTemporary.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
+        User existUser = UserRepository.get().exist();
+        Response signedIn = authorizationClient
+                .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
+        OwnSecurityModel existUserData = signedIn.as(OwnSecurityModel.class);
+        CommentClient commentClientExist = new CommentClient(ContentType.JSON, existUserData.accessToken);
+        Response responsePostLikeTheComment = commentClientExist
+                .postLikeTheCommentOrReplyForUnloggedUser(parentCommentId.toString());
+        BaseAssertion postLikeTheComment = new BaseAssertion(responsePostLikeTheComment);
+        postLikeTheComment.statusCode(200);
+        Response responsePostLikeTheReply = commentClientExist
+                .postLikeTheCommentOrReplyForUnloggedUser(replyId.toString());
+        BaseAssertion postLikeTheReply = new BaseAssertion(responsePostLikeTheReply);
+        postLikeTheReply.statusCode(200);
+    }
+
+
+
     @Test(testName = "GC-1188",description = "GC-1188")
     @Description("Verify that logged user cannot add comment with empty field on News Single Page")
     public void loggedUserCannotAddCommentWithEmptyField(){
