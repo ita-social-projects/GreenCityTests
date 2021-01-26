@@ -46,7 +46,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         Response responsePostComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment for 1159"));
         parentCommentId = responsePostComment.as(CommentModel.class).id;
         CommentClient unloggedClient = new CommentClient(ContentType.JSON);
-        Response responseDeleteComment = unloggedClient.deleteComment(parentCommentId.toString());
+        Response responseDeleteComment = unloggedClient.deleteCommentForUnloggedUser(parentCommentId.toString());
         BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
         deleteComment.statusCode(401);
     }
