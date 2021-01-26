@@ -34,4 +34,13 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(200);
     }
 
+    @Test(testName = "GC-1188",description = "GC-1188")
+    @Description("Verify that logged user cannot add comment with empty field on News Single Page")
+    public void loggedUserCannotAddCommentWithEmptyField(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseAddComment = commentClient.postComment(ecoNewsId, new CommentDto(0, ""));
+        BaseAssertion addComment = new BaseAssertion(responseAddComment);
+        addComment.statusCode(400);
+    }
+
 }
