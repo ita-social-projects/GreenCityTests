@@ -86,6 +86,19 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         getAllActiveReplies.statusCode(200);
     }
 
+    @Test(testName = "GC-1172",description = "1172")
+    @Description("Unlogged users can review all active replies comments on 'News' Page")
+    public void notLoggedUserCanReviewAllActiveReplies(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,"gc-1163_reply"));
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responseGetAllActiveReplies = unloggedClient.getAllActiveReplyToComment(parentCommentId.toString());
+        BaseAssertion getAllActiveReplies = new BaseAssertion(responseGetAllActiveReplies);
+        getAllActiveReplies.statusCode(200);
+    }
+
     @Test(testName = "GC-1175", description = "GC-1175")
     @Description("Verify that unlogged user cannot reply to other replies on News Single Page")
     public void unloggedUserCannotReplyToOtherReplies() {
