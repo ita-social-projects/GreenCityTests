@@ -8,18 +8,19 @@ import org.slf4j.LoggerFactory;
 import static io.restassured.RestAssured.given;
 
 public abstract class BaseClient {
-    public final static String BASE_URL = "https://greencity.azurewebsites.net";
+    public final String url;
     public final ContentType contentType;
     public final String entity; //the first part of URL after BASE_URL (without slash)
     protected Logger logger;
 
-    public BaseClient(ContentType contentType, String entity) {
+    public BaseClient(ContentType contentType, String entity,String url) {
+        this.url=url;
         this.contentType = contentType;
         this.entity = entity;
         logger = LoggerFactory.getLogger(entity + "Client" + contentType.toString());
     }
 
-    public BaseClient(String contentType, String entity) {
+    public BaseClient(String contentType, String entity,String url) {
         switch (contentType.toUpperCase()) {
             case "XML":
                 this.contentType = ContentType.XML;
@@ -29,6 +30,7 @@ public abstract class BaseClient {
                 this.contentType = ContentType.JSON;
                 break;
         }
+        this.url=url;
         this.entity = entity;
         logger = LoggerFactory.getLogger(entity + "Client" + contentType);
     }
@@ -40,7 +42,7 @@ public abstract class BaseClient {
     protected RequestSpecification prepareRequest() {
         logger.debug("Preparing request...");
         return given()
-                .baseUri(BASE_URL)
+                .baseUri(url)
                 .contentType(contentType)
                 .accept(contentType) //By default it doesn't accept response in the same content type
                 .pathParam("entity", entity) //just write /{entity}/ instead of /user/ etc. in your requests
