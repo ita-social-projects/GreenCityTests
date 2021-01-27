@@ -54,6 +54,16 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first.");
     }
 
+
+    @Test(testName = "GC-1160", description = "GC-1160")
+    @Description("Verify that logged user can add comment on News Single Page")
+    public void loggedUserCanAddHisOwnComment() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        BaseAssertion addComment = new BaseAssertion(responseComment);
+        addComment.statusCode(201);
+    }
+
     @Test(testName = "GC-1163", description = "1163")
     @Description("Verify that logged user can publish reply on News Single Page")
     public void loggedUserCanPublishReply() {
