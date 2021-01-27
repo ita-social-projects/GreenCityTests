@@ -199,4 +199,18 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion seeReply = new BaseAssertion(responseReply);
         seeReply.statusCode(200);
     }
+
+    @Test(testName = "GC-1201", description = "GC-1201")
+    @Description("Verify that unlogged user can`t edit replay on the ‘Eco news’ page.")
+    public void notLoggedUserCantEditReply() {
+        CommentClient commentClientLogged = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientLogged.postComment(ecoNewsId, new CommentDto(0, "API comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClientLogged.postComment(ecoNewsId,new CommentDto(parentCommentId,"Comment Reply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
+        Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "New reply");
+        BaseAssertion notEditedReply = new BaseAssertion(responseTryToEditReply);
+        notEditedReply.statusCode(401);
+    }
 }
