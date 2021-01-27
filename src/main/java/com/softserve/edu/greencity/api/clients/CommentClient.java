@@ -78,8 +78,20 @@ public class CommentClient extends BaseClient {
 
     public Response postLikeTheCommentOrReplyForUnloggedUser(String commentOrReplyId){
         return prepareRequest()
-                .queryParam("parentCommentId", commentOrReplyId)
+                .queryParam("id", commentOrReplyId)
                 .post("/{entity}/like");
     }
 
+    public Response postLikeTheCommentOrReply(String commentOrReplyId){
+        return prepareRequest()
+                .header("Authorization", authToken)
+                .queryParam("id", commentOrReplyId)
+                .post("/{entity}/like");
+    }
+
+    public Response getCountComments(String ecoNewsId) {
+        return prepareRequest()
+                .pathParam("ecoNewsId",ecoNewsId)
+                .get("/{entity}/count/comments/{ecoNewsId}");
+    }
 }
