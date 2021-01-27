@@ -172,8 +172,6 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         postLikeTheReply.statusCode(200);
     }
 
-
-    @Test(testName = "GC-1188", description = "GC-1188")
     @Test(testName = "GC-1181", description = "GC-1181")
     @Description("Verify that unlogged user cannot like/dislike the comment/reply on 'News' Page")
     public void notLoggedUserCannotLikeTheCommentOrReply(){
