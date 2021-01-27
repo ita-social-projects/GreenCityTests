@@ -14,6 +14,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
 import static com.softserve.edu.greencity.data.econews.NewsDataStrings.CONTENT_COMMENT_8001_CHARACTERS;
 
 public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
@@ -53,7 +54,6 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(401)
                 .bodyValueContains("message", "Authorize first.");
     }
-
 
     @Test(testName = "GC-1160", description = "GC-1160")
     @Description("Verify that logged user can add comment on News Single Page")
@@ -185,7 +185,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
 
     @Test(testName = "GC-1181", description = "GC-1181")
     @Description("Verify that unlogged user cannot like/dislike the comment/reply on 'News' Page")
-    public void notLoggedUserCannotLikeTheCommentOrReply(){
+    public void notLoggedUserCannotLikeTheCommentOrReply() {
         CommentClient loggedClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = loggedClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
         parentCommentId = responseComment.as(CommentModel.class).id;
@@ -204,19 +204,19 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first.");
     }
 
-    @Test(testName = "GC-1185",description = "GC-1185")
+    @Test(testName = "GC-1185", description = "GC-1185")
     @Description("Verify that after comment was published, system recalculates the total comments number on News Single Page")
-    public void verifyThatSystemRecalculatesCommentsNumber(){
+    public void verifyThatSystemRecalculatesCommentsNumber() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
-        Response countOfComments =  commentClient.getCountComments(ecoNewsId);
+        Response countOfComments = commentClient.getCountComments(ecoNewsId);
         int commentsNumberBeforeCreation = Integer.parseInt(countOfComments.print());
         commentClient.postComment(ecoNewsId, new CommentDto(0, "comment1"));
-        countOfComments =  commentClient.getCountComments(ecoNewsId);
+        countOfComments = commentClient.getCountComments(ecoNewsId);
         int commentsNumberAfterCreation = Integer.parseInt(countOfComments.print());
-        Assert.assertEquals(commentsNumberAfterCreation,commentsNumberBeforeCreation+1);
+        Assert.assertEquals(commentsNumberAfterCreation, commentsNumberBeforeCreation + 1);
     }
 
-    @Test(testName = "GC-1188",description = "GC-1188")
+    @Test(testName = "GC-1188", description = "GC-1188")
     @Description("Verify that logged user cannot add comment with empty field on News Single Page")
     public void loggedUserCannotAddCommentWithEmptyField() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
@@ -281,24 +281,44 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         CommentClient commentClientLogged = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = commentClientLogged.postComment(ecoNewsId, new CommentDto(0, "API comment"));
         parentCommentId = responseComment.as(CommentModel.class).id;
-        Response responseReply = commentClientLogged.postComment(ecoNewsId,new CommentDto(parentCommentId,"Comment Reply"));
+        Response responseReply = commentClientLogged.postComment(ecoNewsId, new CommentDto(parentCommentId, "Comment Reply"));
         Integer replyId = responseReply.as(CommentModel.class).id;
         CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
         Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "New reply");
         BaseAssertion notEditedReply = new BaseAssertion(responseTryToEditReply);
         notEditedReply.statusCode(401);
+    }
 
     @Test(testName = "GC-1200", description = "GC-1200")
     @Description("Verify that logged user can edit its own replay on the ‘Eco news’ page.")
-    public void loggedUserCanEditHisOwnReply(){
+    public void loggedUserCanEditHisOwnReply() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
         Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
         parentCommentId = responseComment.as(CommentModel.class).id;
-        Response responseReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,"commentReply"));
+        Response responseReply = commentClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
         Integer replyId = responseReply.as(CommentModel.class).id;
         Response responseEditReply = commentClient.updateComment(replyId.toString(), "new%20reply%20api");
         BaseAssertion editReply = new BaseAssertion(responseEditReply);
         editReply.statusCode(200);
 
+    }
+
+    @Test(testName = "GC-1202", description = "GC-1202")
+    @Description("Verify that logged user can`t edit not his own replay on the ‘Eco news’ page.")
+    public void loggedUserCanNotEditNotHisOwnReply() {
+        CommentClient commentClientLogged = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientLogged.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClientLogged.postComment(ecoNewsId, new CommentDto(parentCommentId, "Comment Reply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
+        User existUser = UserRepository.get().exist();
+        Response signedIn = authorizationClient
+                .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
+        OwnSecurityModel existUserData = signedIn.as(OwnSecurityModel.class);
+        CommentClient commentClientExist = new CommentClient(ContentType.JSON, existUserData.accessToken);
+        Response responseEdit = commentClientExist.updateComment(replyId.toString(), "new%20reply%20api");
+        BaseAssertion deleteComment = new BaseAssertion(responseEdit);
+        deleteComment.statusCode(400);
     }
 }
