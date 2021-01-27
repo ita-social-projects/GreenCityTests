@@ -13,7 +13,6 @@ import io.qameta.allure.Description;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
-
 import static com.softserve.edu.greencity.data.econews.NewsDataStrings.CONTENT_COMMENT_8001_CHARACTERS;
 
 public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
@@ -175,6 +174,28 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
 
 
     @Test(testName = "GC-1188", description = "GC-1188")
+    @Test(testName = "GC-1181", description = "GC-1181")
+    @Description("Verify that unlogged user cannot like/dislike the comment/reply on 'News' Page")
+    public void notLoggedUserCannotLikeTheCommentOrReply(){
+        CommentClient loggedClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = loggedClient.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = loggedClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "commentReply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responsePostLikeTheComment = unloggedClient
+                .postLikeTheCommentOrReplyForUnloggedUser(parentCommentId.toString());
+        BaseAssertion postLikeTheComment = new BaseAssertion(responsePostLikeTheComment);
+        postLikeTheComment.statusCode(401)
+                .bodyValueContains("message", "Authorize first.");
+        Response responsePostLikeTheReply = unloggedClient
+                .postLikeTheCommentOrReplyForUnloggedUser(replyId.toString());
+        BaseAssertion postLikeTheReply = new BaseAssertion(responsePostLikeTheReply);
+        postLikeTheReply.statusCode(401)
+                .bodyValueContains("message", "Authorize first.");
+    }
+
+    @Test(testName = "GC-1188",description = "GC-1188")
     @Description("Verify that logged user cannot add comment with empty field on News Single Page")
     public void loggedUserCannotAddCommentWithEmptyField() {
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
