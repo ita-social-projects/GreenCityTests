@@ -220,4 +220,22 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion seeReply = new BaseAssertion(responseReply);
         seeReply.statusCode(200);
     }
+    @Test(testName = "GC-1202", description = "GC-1202")
+    @Description("Verify that logged user can`t edit not his own replay on the ‘Eco news’ page.")
+    public void loggedUserCanNotEditNotHisOwnReply() {
+        CommentClient commentClientLogged = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientLogged.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClientLogged.postComment(ecoNewsId,new CommentDto(parentCommentId,"Comment Reply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
+        User existUser = UserRepository.get().exist();
+        Response signedIn = authorizationClient
+                .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
+        OwnSecurityModel existUserData = signedIn.as(OwnSecurityModel.class);
+        CommentClient commentClientExist = new CommentClient(ContentType.JSON, existUserData.accessToken);
+        Response responseEdit = commentClientExist.updateComment(replyId.toString(), "new%20comment%20api");
+        BaseAssertion deleteComment = new BaseAssertion(responseEdit);
+        deleteComment.statusCode(400);
+    }
 }
