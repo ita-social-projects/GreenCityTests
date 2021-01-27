@@ -168,10 +168,10 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
     @Description("Verify that after comment was published, system recalculates the total comments number on News Single Page")
     public void verifyThatSystemRecalculatesCommentsNumber(){
         CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
-        Response countOfComments =  commentClient.countComments(ecoNewsId);
+        Response countOfComments =  commentClient.getCountComments(ecoNewsId);
         int commentsNumberBeforeCreation = Integer.parseInt(countOfComments.print());
         commentClient.postComment(ecoNewsId, new CommentDto(0, "comment1"));
-        countOfComments =  commentClient.countComments(ecoNewsId);
+        countOfComments =  commentClient.getCountComments(ecoNewsId);
         int commentsNumberAfterCreation = Integer.parseInt(countOfComments.print());
         Assert.assertEquals(commentsNumberAfterCreation,commentsNumberBeforeCreation+1);
     }
