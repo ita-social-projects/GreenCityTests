@@ -234,7 +234,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
         OwnSecurityModel existUserData = signedIn.as(OwnSecurityModel.class);
         CommentClient commentClientExist = new CommentClient(ContentType.JSON, existUserData.accessToken);
-        Response responseEdit = commentClientExist.updateComment(replyId.toString(), "new%20comment%20api");
+        Response responseEdit = commentClientExist.updateComment(replyId.toString(), "new%20reply%20api");
         BaseAssertion deleteComment = new BaseAssertion(responseEdit);
         deleteComment.statusCode(400);
     }
