@@ -208,8 +208,8 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         parentCommentId = responseComment.as(CommentModel.class).id;
         Response responseReply = commentClient.postComment(ecoNewsId,new CommentDto(parentCommentId,"commentReply"));
         Integer replyId = responseReply.as(CommentModel.class).id;
-        Response responseEditReply = commentClient.updateComment(parentCommentId.toString(), "new%20comment%20api");
-        BaseAssertion editComment = new BaseAssertion(responseEditReply);
-        editComment.statusCode(200);
+        Response responseEditReply = commentClient.updateComment(replyId.toString(), "new%20reply%20api");
+        BaseAssertion editReply = new BaseAssertion(responseEditReply);
+        editReply.statusCode(200);
     }
 }
