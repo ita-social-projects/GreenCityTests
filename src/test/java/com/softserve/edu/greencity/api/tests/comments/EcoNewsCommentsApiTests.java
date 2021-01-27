@@ -264,6 +264,20 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         seeReply.statusCode(200);
     }
 
+
+    @Test(testName = "GC-1201", description = "GC-1201")
+    @Description("Verify that unlogged user can`t edit replay on the ‘Eco news’ page.")
+    public void notLoggedUserCantEditReply() {
+        CommentClient commentClientLogged = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientLogged.postComment(ecoNewsId, new CommentDto(0, "API comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClientLogged.postComment(ecoNewsId,new CommentDto(parentCommentId,"Comment Reply"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
+        Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "New reply");
+        BaseAssertion notEditedReply = new BaseAssertion(responseTryToEditReply);
+        notEditedReply.statusCode(401);
+
     @Test(testName = "GC-1200", description = "GC-1200")
     @Description("Verify that logged user can edit its own replay on the ‘Eco news’ page.")
     public void loggedUserCanEditHisOwnReply(){
@@ -275,5 +289,6 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         Response responseEditReply = commentClient.updateComment(replyId.toString(), "new%20reply%20api");
         BaseAssertion editReply = new BaseAssertion(responseEditReply);
         editReply.statusCode(200);
+
     }
 }
