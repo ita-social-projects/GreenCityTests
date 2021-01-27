@@ -82,4 +82,9 @@ public class CommentClient extends BaseClient {
                 .post("/{entity}/like");
     }
 
+    public Response getCountComments(String ecoNewsId) {
+        return prepareRequest()
+                .pathParam("ecoNewsId",ecoNewsId)
+                .get("/{entity}/count/comments/{ecoNewsId}");
+    }
 }

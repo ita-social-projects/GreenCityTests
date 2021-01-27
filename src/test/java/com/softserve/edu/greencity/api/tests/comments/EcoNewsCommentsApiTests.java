@@ -12,6 +12,7 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import io.qameta.allure.Description;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import static com.softserve.edu.greencity.data.econews.NewsDataStrings.CONTENT_COMMENT_8001_CHARACTERS;
 
@@ -161,6 +162,18 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion postLikeTheReply = new BaseAssertion(responsePostLikeTheReply);
         postLikeTheReply.statusCode(401)
                 .bodyValueContains("message", "Authorize first.");
+    }
+
+    @Test(testName = "GC-1185",description = "GC-1185")
+    @Description("Verify that after comment was published, system recalculates the total comments number on News Single Page")
+    public void verifyThatSystemRecalculatesCommentsNumber(){
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response countOfComments =  commentClient.getCountComments(ecoNewsId);
+        int commentsNumberBeforeCreation = Integer.parseInt(countOfComments.print());
+        commentClient.postComment(ecoNewsId, new CommentDto(0, "comment1"));
+        countOfComments =  commentClient.getCountComments(ecoNewsId);
+        int commentsNumberAfterCreation = Integer.parseInt(countOfComments.print());
+        Assert.assertEquals(commentsNumberAfterCreation,commentsNumberBeforeCreation+1);
     }
 
     @Test(testName = "GC-1188",description = "GC-1188")
