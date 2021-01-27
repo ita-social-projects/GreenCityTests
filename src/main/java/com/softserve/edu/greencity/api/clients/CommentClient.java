@@ -76,7 +76,13 @@ public class CommentClient extends BaseClient {
                 .get("/{entity}/replies/active/{parentCommentId}");
     }
 
-    public Response countComments(String ecoNewsId) {
+    public Response postLikeTheCommentOrReplyForUnloggedUser(String commentOrReplyId){
+        return prepareRequest()
+                .queryParam("parentCommentId", commentOrReplyId)
+                .post("/{entity}/like");
+    }
+
+    public Response getCountComments(String ecoNewsId) {
         return prepareRequest()
                 .pathParam("ecoNewsId",ecoNewsId)
                 .get("/{entity}/count/comments/{ecoNewsId}");
