@@ -163,12 +163,12 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         CommentClient existClient = new CommentClient(ContentType.JSON, existUserData.accessToken);
         logger.info("like the comment");
         Response responsePostLikeTheComment = existClient
-                .postLikeTheCommentOrReplyForUnloggedUser(parentCommentId.toString());
+                .postLikeTheCommentOrReply(parentCommentId.toString());
         BaseAssertion postLikeTheComment = new BaseAssertion(responsePostLikeTheComment);
-        postLikeTheComment.statusCode(200);//.bodyValueContains("message", "dfgdfgdg");
+        postLikeTheComment.statusCode(200);
         logger.info("like the reply");
         Response responsePostLikeTheReply = existClient
-                .postLikeTheCommentOrReplyForUnloggedUser(replyId.toString());
+                .postLikeTheCommentOrReply(replyId.toString());
         BaseAssertion postLikeTheReply = new BaseAssertion(responsePostLikeTheReply);
         postLikeTheReply.statusCode(200);
     }
