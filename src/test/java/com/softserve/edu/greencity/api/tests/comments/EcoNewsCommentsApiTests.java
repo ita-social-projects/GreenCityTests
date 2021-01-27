@@ -234,6 +234,18 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         addComment.statusCode(400);
     }
 
+    @Test(testName = "GC-1190", description = "GC-1190")
+    @Description("Unlogged user can`t add comment on the 'News' page.")
+    public void unloggedUserCanNotAddComment() {
+
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responseAddComment = unloggedClient.postCommentForUnloggedUser(ecoNewsId, new CommentDto(0, "GC-1190"));
+        BaseAssertion addComment = new BaseAssertion(responseAddComment);
+        addComment.statusCode(401)
+                .bodyValueContains("message", "Authorize first.");
+    }
+
+
     @Test(testName = "GC-1193", description = "GC-1193")
     @Description("Verify that not logged user can’t edit comments on the ‘Eco news’ page API")
     public void notLoggedUserCanNotEditComments() {
