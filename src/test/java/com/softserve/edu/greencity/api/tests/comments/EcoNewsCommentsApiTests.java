@@ -153,6 +153,26 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first");
     }
 
+    @Test(testName = "GC-1176", description = "GC-1176")
+    @Description("Verify that logged user cann`t delete not his own comment on the 'News' page.")
+    public void loggedUserCanNotDeleteNotHisOwnComment() {
+
+        CommentClient commentClientTemp = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClientTemp.postComment(ecoNewsId, new CommentDto(0, "api comment"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+
+        OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
+        User existUser = UserRepository.get().exist();
+        Response signedIn = authorizationClient
+                .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
+        OwnSecurityModel existUserData = signedIn.as(OwnSecurityModel.class);
+
+        CommentClient commentClientExist = new CommentClient(ContentType.JSON, existUserData.accessToken);
+        Response responseDeleteComment = commentClientExist.deleteComment(parentCommentId.toString());
+        BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
+        deleteComment.statusCode(400);
+    }
+
     @Test(testName = "GC-1180", description = "GC-1180")
     @Description("Verify that logged user can like/dislike the comment/reply on News Single Page")
     public void loggedUserCanLikeTheCommentOrReply() {
