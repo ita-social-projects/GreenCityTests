@@ -86,7 +86,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseCommentByNumber(0)
                 .openReply().chooseReplyByNumber(0);
         softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
-        softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
+        softAssert.assertNotEquals(reply2, replyComponent.getReplyComment().getText());
     }
 
     @Test(testName = "GC-866", description = "866")
