@@ -254,7 +254,6 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
     @Test(testName = "GC-1190", description = "GC-1190")
     @Description("Unlogged user can`t add comment on the 'News' page.")
     public void unloggedUserCanNotAddComment() {
-
         CommentClient unloggedClient = new CommentClient(ContentType.JSON);
         Response responseAddComment = unloggedClient.postCommentForUnloggedUser(ecoNewsId, new CommentDto(0, "GC-1190"));
         BaseAssertion addComment = new BaseAssertion(responseAddComment);
