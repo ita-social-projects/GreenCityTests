@@ -156,4 +156,27 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
         softAssert.assertFalse(commentComponent.isEditButtonDisplayed(),"Button shouldn't displayed");
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-873", description = "GC-873")
+    @Description("User who is the author of comment can’t edit reply to her/his comment on the ‘News’ page")
+    public void cantEditReplyToHisComment() {
+        logger.info("User who is the author of comment can’t edit reply to her/his comment on the ‘News’ page");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getExistUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .addReply("reply");
+        signOutByStorage();
+        User user = UserRepository.get().temporary();
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        Assert.assertFalse(page.getCommentPart().chooseCommentByNumber(0).openReply()
+                .chooseReplyByNumber(0).isEditReplyButtonDisplayed());
+    }
 }
