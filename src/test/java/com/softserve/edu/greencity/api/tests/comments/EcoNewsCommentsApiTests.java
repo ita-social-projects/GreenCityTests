@@ -153,6 +153,21 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first");
     }
 
+    @Test(testName = "GC-1178", description = "GC-1178")
+    @Description("Verify that unlogged user cann`t delete replay on the 'News' page.")
+    public void unloggedUserCanNotDeleteReplay() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment for GC-1178"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseCommentReply = commentClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "reply for GC-1178"));
+        Integer replyId = responseCommentReply.as(CommentModel.class).id;
+
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responseDeleteReply = unloggedClient.deleteCommentForUnloggedUser(replyId.toString());
+        BaseAssertion deleteComment = new BaseAssertion(responseDeleteReply);
+        deleteComment.statusCode(401);
+    }
+
     @Test(testName = "GC-1180", description = "GC-1180")
     @Description("Verify that logged user can like/dislike the comment/reply on News Single Page")
     public void loggedUserCanLikeTheCommentOrReply() {
