@@ -8,8 +8,10 @@ import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -21,8 +23,8 @@ import java.util.Calendar;
 import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
-    private NewsData newsData;
     private final String replyText = "Test reply";
+    private NewsData newsData;
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -196,6 +198,11 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseCommentByNumber(0)
                 .chooseReplyByNumber(0)
                 .editReply(textToEditTheReply);
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .chooseReplyByNumber(0)
+                .getReplyEditButton()));
         logger.info("refresh page");
         driver.navigate().refresh();
         ReplyComponent replyAfterEdit = newsPage
