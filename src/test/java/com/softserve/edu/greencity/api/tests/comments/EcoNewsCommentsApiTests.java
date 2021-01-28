@@ -42,6 +42,23 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         deleteComment.statusCode(200);
     }
 
+    @Test(testName = "GC-1158", description = "GC-1158")
+    @Description("Verify that logged user can`t delete not his own comment on the 'News' page.")
+    public void loggedUserCanDeleteNotHisOwnComment() {
+        CommentClient temporaryClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responsePostComment = temporaryClient.postComment(ecoNewsId, new CommentDto(0, "Comment by temporary user"));
+        parentCommentId = responsePostComment.as(CommentModel.class).id;
+        User existUser = UserRepository.get().exist();
+        OwnSecurityClient authorizationExistClient = new OwnSecurityClient(ContentType.JSON);
+        Response signIn = authorizationExistClient
+                .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
+        OwnSecurityModel existUserData = signIn.as(OwnSecurityModel.class);
+        CommentClient existClient = new CommentClient(ContentType.JSON, existUserData.accessToken);
+        Response responseDeleteComment = existClient.deleteComment(parentCommentId.toString());
+        BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
+        deleteComment.statusCode(403);
+    }
+
     @Test(testName = "GC-1159", description = "GC-1159")
     @Description("Unregister user can`t delete any comment on the 'News' page.")
     public void unloggedUserCanNotDeleteComment() {
@@ -152,7 +169,26 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         replyToReplies.statusCode(401)
                 .bodyValueContains("message", "Authorize first");
     }
-
+  
+    @Test(testName = "GC-1176", description = "GC-1176")
+    @Description("Verify that logged user cann`t delete not his own replay on the 'News' page.")
+    public void loggedUserCanNotDeleteNotHisOwnReplay() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "api comment for GC-1176"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        Response responseReply = commentClient.postComment(ecoNewsId, new CommentDto(parentCommentId, "reply for GC-1176"));
+        Integer replyId = responseReply.as(CommentModel.class).id;
+        OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
+        User existUser = UserRepository.get().exist();
+        Response signedIn = authorizationClient
+                .signIn(new SignInDto(existUser.getEmail(), existUser.getPassword()));
+        OwnSecurityModel existUserData = signedIn.as(OwnSecurityModel.class);
+        CommentClient commentClientExist = new CommentClient(ContentType.JSON, existUserData.accessToken);
+        Response responseDeleteComment = commentClientExist.deleteComment(replyId.toString());
+        BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
+        deleteComment.statusCode(403);
+    }
+  
     @Test(testName = "GC-1178", description = "GC-1178")
     @Description("Verify that unlogged user cann`t delete replay on the 'News' page.")
     public void unloggedUserCanNotDeleteReplay() {
@@ -167,7 +203,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion deleteComment = new BaseAssertion(responseDeleteReply);
         deleteComment.statusCode(401);
     }
-
+  
     @Test(testName = "GC-1180", description = "GC-1180")
     @Description("Verify that logged user can like/dislike the comment/reply on News Single Page")
     public void loggedUserCanLikeTheCommentOrReply() {
@@ -249,6 +285,16 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         addComment.statusCode(400);
     }
 
+    @Test(testName = "GC-1190", description = "GC-1190")
+    @Description("Unlogged user can`t add comment on the 'News' page.")
+    public void unloggedUserCanNotAddComment() {
+        CommentClient unloggedClient = new CommentClient(ContentType.JSON);
+        Response responseAddComment = unloggedClient.postCommentForUnloggedUser(ecoNewsId, new CommentDto(0, "GC-1190"));
+        BaseAssertion addComment = new BaseAssertion(responseAddComment);
+        addComment.statusCode(401)
+                .bodyValueContains("message", "Authorize first.");
+    }
+
     @Test(testName = "GC-1193", description = "GC-1193")
     @Description("Verify that not logged user can’t edit comments on the ‘Eco news’ page API")
     public void notLoggedUserCanNotEditComments() {
@@ -289,6 +335,18 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         seeReply.statusCode(200);
     }
 
+    @Test(testName = "GC-1196", description = "GC-1196")
+    @Description("Verify that unlogged user can see the replies to the comment on the ‘Eco news’ page")
+    public void unloggedUserCanSeeReplyToComment() {
+        CommentClient commentClient = new CommentClient(ContentType.JSON, userData.accessToken);
+        Response responseComment = commentClient.postComment(ecoNewsId, new CommentDto(0, "check api reply"));
+        parentCommentId = responseComment.as(CommentModel.class).id;
+        CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
+        Response responseReply = commentClientNotLogged.getAllActiveReplyToComment(parentCommentId.toString());
+        BaseAssertion seeReply = new BaseAssertion(responseReply);
+        seeReply.statusCode(200);
+    }
+
 
     @Test(testName = "GC-1201", description = "GC-1201")
     @Description("Verify that unlogged user can`t edit replay on the ‘Eco news’ page.")
@@ -299,7 +357,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         Response responseReply = commentClientLogged.postComment(ecoNewsId, new CommentDto(parentCommentId, "Comment Reply"));
         Integer replyId = responseReply.as(CommentModel.class).id;
         CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
-        Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "New reply");
+        Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "new%20reply%20api");
         BaseAssertion notEditedReply = new BaseAssertion(responseTryToEditReply);
         notEditedReply.statusCode(401);
     }

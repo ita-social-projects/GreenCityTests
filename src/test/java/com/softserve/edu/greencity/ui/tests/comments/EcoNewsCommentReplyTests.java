@@ -8,20 +8,23 @@ import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 
 public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
-    private NewsData newsData;
     private final String replyText = "Test reply";
+    private NewsData newsData;
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -55,6 +58,35 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
     public void clearUp() {
         EcoNewsService ecoNewsService = new EcoNewsService();
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
+    }
+
+    @Test(testName = "GC-828", description = "828")
+    @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
+    public void deleteCommentWithAllReplies() {
+        String comment = "different news";
+        String reply2 = "added second reply";
+        CommentComponent commentComponent = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .addReply(reply2);
+        SingleNewsPage page = loadApplication()
+                .navigateMenuEcoNews()
+                .refreshPage() //fresh news might not be displayed unless you refresh
+                .switchToSingleNewsPageByParameters(newsData);
+        page.getCommentPart()
+                .chooseCommentByNumber(0)
+                .clickDeleteCommentButton();
+        ReplyComponent replyComponent = page
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply().chooseReplyByNumber(0);
+        softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
+        softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
     }
 
     @Test(testName = "GC-866", description = "866")
@@ -120,7 +152,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
     @Test(testName = "GC-870", description = "GC-870")
     @Description("verify that logged user can't edit reply of the other user on the 'News' page.")
-    public void loggedUserCanNotEditNoHisReply(){
+    public void loggedUserCanNotEditNoHisReply() {
         logger.info("verify that logged user can't edit reply of the other user on the 'News' page.");
         User user = UserRepository.get().exist();
         boolean canEdit = loadApplication()
@@ -132,7 +164,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply()
                 .chooseReplyByNumber(0)
                 .isEditReplyButtonDisplayed();
-        Assert.assertFalse(canEdit,"Edit button on the reply shouldn't be displayed");
+        Assert.assertFalse(canEdit, "Edit button on the reply shouldn't be displayed");
     }
 
     @Test(testName = "GC-874", description = "GC-874")
@@ -166,6 +198,11 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseCommentByNumber(0)
                 .chooseReplyByNumber(0)
                 .editReply(textToEditTheReply);
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(newsPage.getCommentPart()
+                .chooseCommentByNumber(0)
+                .chooseReplyByNumber(0)
+                .getReplyEditButton()));
         logger.info("refresh page");
         driver.navigate().refresh();
         ReplyComponent replyAfterEdit = newsPage
@@ -174,7 +211,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .openReply()
                 .chooseReplyByNumber(0);
         logger.info("check changes after editing");
-        softAssert.assertEquals(replyAfterEdit.getReplyText(),textToEditTheReply,"Fail, system should save changes after editing reply");
+        softAssert.assertEquals(replyAfterEdit.getReplyText(), textToEditTheReply, "Fail, system should save changes after editing reply");
         softAssert.assertAll();
     }
 
@@ -246,6 +283,20 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .closeReply()
                 .isReplyComponentPresent();
         softAssert.assertFalse(isRepliesHide);
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-823", description = "GC-823")
+    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
+    public void verifyUnloggedUserCanDeleteReplyToComment() {
+        ReplyComponent comment = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
         softAssert.assertAll();
     }
 
