@@ -261,7 +261,6 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
                 .bodyValueContains("message", "Authorize first.");
     }
 
-
     @Test(testName = "GC-1193", description = "GC-1193")
     @Description("Verify that not logged user can’t edit comments on the ‘Eco news’ page API")
     public void notLoggedUserCanNotEditComments() {
