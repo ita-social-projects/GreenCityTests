@@ -284,7 +284,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         Response responseReply = commentClientLogged.postComment(ecoNewsId, new CommentDto(parentCommentId, "Comment Reply"));
         Integer replyId = responseReply.as(CommentModel.class).id;
         CommentClient commentClientNotLogged = new CommentClient(ContentType.JSON);
-        Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "New reply");
+        Response responseTryToEditReply = commentClientNotLogged.updateCommentByNotLoggedUser(replyId.toString(), "new%20reply%20api");
         BaseAssertion notEditedReply = new BaseAssertion(responseTryToEditReply);
         notEditedReply.statusCode(401);
     }
