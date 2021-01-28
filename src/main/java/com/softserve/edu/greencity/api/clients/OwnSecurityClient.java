@@ -10,14 +10,15 @@ import io.restassured.response.Response;
 public class OwnSecurityClient extends BaseClient {
 
     private final String authToken;
+    private static final String url = "https://greencity-user.azurewebsites.net";
 
     public OwnSecurityClient(ContentType contentType) {
-        super(contentType, "ownSecurity");
+        super(contentType, "ownSecurity",url);
         authToken = "";
     }
 
     public OwnSecurityClient(String contentType) {
-        super(contentType, "ownSecurity");
+        super(contentType, "ownSecurity",url);
         authToken = "";
     }
 
@@ -28,7 +29,7 @@ public class OwnSecurityClient extends BaseClient {
      * @param authToken   unique token. Use OwnSecurityClient to get it
      */
     public OwnSecurityClient(ContentType contentType, String authToken) {
-        super(contentType, "econews");
+        super(contentType, "econews",url);
         this.authToken = "Bearer " + authToken;
     }
 
