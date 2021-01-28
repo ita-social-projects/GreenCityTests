@@ -53,8 +53,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         CommentClient existClient = new CommentClient(ContentType.JSON, existUserData.accessToken);
         Response responseDeleteComment = existClient.deleteComment(parentCommentId.toString());
         BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
-        deleteComment.statusCode(400)
-        .bodyValueContains("message","Current user has no permission for this action");
+        deleteComment.statusCode(403);
     }
 
     @Test(testName = "GC-1159", description = "GC-1159")
@@ -67,7 +66,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         Response responseDeleteComment = unloggedClient.deleteCommentForUnloggedUser(parentCommentId.toString());
         BaseAssertion deleteComment = new BaseAssertion(responseDeleteComment);
         deleteComment.statusCode(401)
-        .bodyValueContains("message","Authorize first.");
+                .bodyValueContains("message", "Authorize first.");
     }
 
     @Test(testName = "GC-1175", description = "GC-1175")
@@ -96,6 +95,7 @@ public class EcoNewsCommentsApiTests extends CommentsApiTestRunner {
         BaseAssertion notEditedComment = new BaseAssertion(responseTryToEditComment);
         notEditedComment.statusCode(401);
     }
+
     @Test(testName = "GC-1194", description = "GC-1194")
     @Description("Verify that logged user can’t edit not his own comment on the ‘Eco news’ page")
     public void loggedUserCanNotEditNotHisOwnComment() {
