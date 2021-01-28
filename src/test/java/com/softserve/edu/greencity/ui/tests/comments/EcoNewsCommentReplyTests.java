@@ -57,6 +57,35 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
+    @Test(testName = "GC-828", description = "828")
+    @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
+    public void deleteCommentWithAllReplies() {
+        String comment = "different news";
+        String reply2 = "added second reply";
+        CommentComponent commentComponent = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .addReply(reply2);
+        SingleNewsPage page = loadApplication()
+                .navigateMenuEcoNews()
+                .refreshPage() //fresh news might not be displayed unless you refresh
+                .switchToSingleNewsPageByParameters(newsData);
+        page.getCommentPart()
+                .chooseCommentByNumber(0)
+                .clickDeleteCommentButton();
+        ReplyComponent replyComponent = page
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply().chooseReplyByNumber(0);
+        softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
+        softAssert.assertEquals(replyText, replyComponent.getReplyComment().getText());
+    }
+
     @Test(testName = "GC-866", description = "866")
     @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
     public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
