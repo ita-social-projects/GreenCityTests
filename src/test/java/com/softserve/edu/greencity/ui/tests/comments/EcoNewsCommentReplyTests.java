@@ -68,31 +68,22 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         User user = UserRepository.get().temporary();
         String commentText = "Test comment";
         String replyText ="Test reply";
-        CommentPart comment = loadApplication()
+        ReplyComponent comment = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
-                .addComment(commentText);
-                comment.chooseCommentByNumber(0)
+                .addComment(commentText)
+                .chooseCommentByNumber(0)
                 .clickReplyButton()
                 .setReplyText(replyText)
                 .clickAddReplyButton()
                 .openReply()
-                .chooseReplyByNumber(0)
-                .clickDeleteReplyButtonCancel();
-                 CommentComponent reply = comment.chooseCommentByNumber(0)
-                        .openReply();
-        softAssert.assertTrue(reply.chooseReplyByNumber(0).isReplyPresent());
-       reply.chooseReplyByNumber(0).clickDeleteReplyButtonCancel();
-        driver.navigate().refresh();
-        ReplyComponent deleteReply = comment
-                .chooseCommentByNumber(0)
-                .openReply()
                 .chooseReplyByNumber(0);
-        softAssert.assertFalse(deleteReply.isReplyPresent());
+        softAssert.assertTrue(comment .clickDeleteReplyButtonCancel().isReplyPresent());
+        softAssert.assertFalse(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
         softAssert.assertAll();
     }
 
