@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
+import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
@@ -59,6 +60,33 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         EcoNewsService ecoNewsService = new EcoNewsService();
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
+
+    @Test
+    @Description("GC-822")
+    public void loggedUserCanDeleteReplyToComment() {
+        logger.info("Verify that logged user can delete his own reply on the 'Single News' page");
+        User user = UserRepository.get().temporary();
+        String commentText = "Test comment";
+        String replyText ="Test reply";
+        ReplyComponent comment = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .addComment(commentText)
+                .chooseCommentByNumber(0)
+                .clickReplyButton()
+                .setReplyText(replyText)
+                .clickAddReplyButton()
+                .openReply()
+                .chooseReplyByNumber(0);
+        softAssert.assertTrue(comment .clickDeleteReplyButtonCancel().isReplyPresent());
+        softAssert.assertFalse(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
+        softAssert.assertAll();
+    }
+
 
     @Test(testName = "GC-828", description = "828")
     @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")

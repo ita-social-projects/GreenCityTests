@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -14,6 +15,7 @@ public class ReplyComponent {
     protected WebDriverWait wait;
     private WebDriver driver;
     private WaitsSwitcher waitsSwitcher;
+
 
     public ReplyComponent(WebDriver driver, WebElement replyItem) {
         this.driver = driver;
@@ -101,6 +103,23 @@ public class ReplyComponent {
         return this;
     }
 
+
+    public ReplyComponent clickDeleteReplyButtonConfirm() {
+        getReplyDeleteButton().click();
+        CommentPopUpComponent commentPopUpComponent = new CommentPopUpComponent(driver);
+        commentPopUpComponent.clickConfirmButton();
+        return this;
+    }
+
+    public ReplyComponent clickDeleteReplyButtonCancel() {
+        getReplyDeleteButton().click();
+        CommentPopUpComponent commentPopUpComponent = new CommentPopUpComponent(driver);
+        commentPopUpComponent.clickCancelButton();
+        return this;
+    }
+
+
+
     public boolean isDeleteReplyButtonDisplayed() {
         return replyItem.findElements(REPLY_DELETE_BUTTON.getPath()).size() > 0;
     }
@@ -123,5 +142,15 @@ public class ReplyComponent {
 
     public String getReplyDate() {
         return replyItem.findElement(REPLY_DATE.getPath()).getText();
+    }
+
+    public boolean isReplyPresent() {
+        try {
+            waitsSwitcher.setExplicitWait(5,
+                    ExpectedConditions.visibilityOf(getReplyComment()));
+            return true;
+        } catch (StaleElementReferenceException e) {
+            return false;
+        }
     }
 }
