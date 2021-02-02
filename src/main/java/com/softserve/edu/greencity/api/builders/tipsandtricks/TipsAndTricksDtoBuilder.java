@@ -27,7 +27,7 @@ public class TipsAndTricksDtoBuilder {
         return this;
     }
 
-    public TipsAndTricksBuilder text(String text) {
+    public TipsAndTricksDtoBuilder text(String text) {
         this.tipsAndTricks.text = text;
         return this;
     }
@@ -66,7 +66,7 @@ public class TipsAndTricksDtoBuilder {
         return this;
     }
 
-    public TipsAndTricksBuilder tags(String[] tags) {
+    public TipsAndTricksDtoBuilder tags(String[] tags) {
         this.tipsAndTricks.tags = tags;
         return this;
     }
