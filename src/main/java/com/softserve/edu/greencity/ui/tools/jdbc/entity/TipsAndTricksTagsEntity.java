@@ -21,7 +21,7 @@ import java.util.List;
     public class TipsAndTricksTagsEntity {
         public static final String SELECT_ALL = "SELECT * FROM tips_and_tricks_tags;";
         public static final String SELECT_BY_FIELD = "SELECT * FROM tips_and_tricks_tags WHERE %s='%s';";
-        public static final String DELETE_BY_ECO_NEWS_ID = "DELETE FROM tips_and_tricks_tags WHERE eco_news_id=%s;";
+        public static final String DELETE_BY_TIPS_AND_TRICKS_ID = "DELETE FROM tips_and_tricks_tags WHERE eco_news_id=%s;";
         //
         private long TipsAndTricksId;
         private long tagsId;
