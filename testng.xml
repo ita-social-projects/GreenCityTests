@@ -11,7 +11,8 @@
             <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithArrayResponseTest"/>
             <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithDetailedResponseTest"/>
             <class name="com.softserve.edu.greencity.api.tests.econews.negative.CreateNewsWithShortResponseTest"/>
-            <class name="EcoNewsCommentsApiTests"/>
+            <class name="com.softserve.edu.greencity.api.tests.comments.econews.EcoNewsCommentsApiTests"/>
+            <class name="com.softserve.edu.greencity.api.tests.comments.tipsandtricks.TipsAndTricksCommentsApi"/>
             <class name="com.softserve.edu.greencity.api.tests.ownsecurity.signin.SignInApiTest"/>
         </classes>
     </test>
