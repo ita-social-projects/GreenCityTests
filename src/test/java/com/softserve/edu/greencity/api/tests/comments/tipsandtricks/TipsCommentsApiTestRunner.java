@@ -9,6 +9,7 @@ import com.softserve.edu.greencity.api.models.tipsandtricks.TipsAndTricksPOSTdto
 import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.TipsAndTricksService;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterClass;
@@ -19,7 +20,7 @@ import static com.softserve.edu.greencity.api.builders.tipsandtricks.TipsAndTric
 
 public class TipsCommentsApiTestRunner extends GreenCityAPITestRunner {
     protected TipsAndTricksClient tipsAndTricksClient;
-    //protected EcoNewsService ecoNewsService;
+    protected TipsAndTricksService tipsAndTricksService;
     protected OwnSecurityModel userData;
     protected String tipsAndTricksId;
 
@@ -32,17 +33,17 @@ public class TipsCommentsApiTestRunner extends GreenCityAPITestRunner {
         userData = signedIn.as(OwnSecurityModel.class);
 
         tipsAndTricksClient = new TipsAndTricksClient(ContentType.JSON, userData.accessToken);
-      //  ecoNewsService = new EcoNewsService();
-      //  ecoNewsService.getNewsByTitle(createTips().title);
+        tipsAndTricksService = new TipsAndTricksService();
+        tipsAndTricksService.getNewsByTitle(createTips().title);
         Response created = tipsAndTricksClient.postTipsAndTricks(createTips());
         TipsAndTricksModel expectedTipsAndTricks = created.as(TipsAndTricksModel.class);
         tipsAndTricksId = expectedTipsAndTricks.id.toString();
     }
 
     @AfterClass
- //   public void deleteNews() {
-  //      ecoNewsService.deleteNewsById(Integer.parseInt(tipsAndTricksId));
-  //  }
+    public void deleteNews() {
+        tipsAndTricksService.deleteNewsById(Integer.parseInt(tipsAndTricksId));
+    }
 
     private TipsAndTricksPOSTdto createTips() {
         return tipsAndTricksDtoWith().title("API Title")
