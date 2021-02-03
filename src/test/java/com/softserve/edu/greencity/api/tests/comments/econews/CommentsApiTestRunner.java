@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.tests.comments;
+package com.softserve.edu.greencity.api.tests.comments.econews;
 
 import com.softserve.edu.greencity.api.clients.EcoNewsClient;
 import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
