@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.tests.comments;
+package com.softserve.edu.greencity.api.tests.comments.econews;
 
 import com.softserve.edu.greencity.api.assertions.BaseAssertion;
 import com.softserve.edu.greencity.api.clients.CommentClient;
@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.api.models.comments.CommentDto;
 import com.softserve.edu.greencity.api.models.comments.CommentModel;
 import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
+import com.softserve.edu.greencity.api.tests.comments.econews.CommentsApiTestRunner;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import io.qameta.allure.Description;
