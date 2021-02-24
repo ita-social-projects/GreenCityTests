@@ -4,20 +4,25 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class EcoNewsCommentTests extends GreenCityTestRunner {
     private NewsData newsData;
+
+    private User getExistUser() {
+        return UserRepository.get().exist();
+    }
 
     @BeforeClass
     public void creatingCommentToNews() {
@@ -34,7 +39,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
-                .clickPublishButton();
+                .publishNews();
 
         SingleNewsPage page = loadApplication()
                 .navigateMenuEcoNews()
@@ -117,6 +122,61 @@ public class EcoNewsCommentTests extends GreenCityTestRunner {
     @Test(testName = "GC-862", description = "GC-862")
     @Description("Unlogged users can not edit their own comments on the 'News' page.")
     public void unloggedUsersCanNotEditComments() {
-        throw new SkipException("This test is not implemented!");
+        User user = UserRepository.get().temporary();
+        String comment = "You can't delete this comment because you are logged out";
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        page.getCommentPart()
+                .addComment(comment);
+        page.signOut();
+        SingleNewsPage newsPage = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        List<CommentComponent> commentComponents = newsPage.getCommentPart().getCommentComponents();
+        for (CommentComponent commentComponent : commentComponents) {
+            softAssert.assertFalse(commentComponent.isEditButtonDisplayed());
+        }
+    }
+
+    @Test(testName = "GC-863", description = "GC-863")
+    @Description("Verify that logged user can not edit not him/her comment on the ‘News’ page")
+    public void loggedUsersCanNotEditNotHimComment() {
+        logger.info("logged user can not edit not him comment on the ‘News’ page");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getExistUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0);
+
+        softAssert.assertFalse(commentComponent.isEditButtonDisplayed(),"Button shouldn't displayed");
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-873", description = "GC-873")
+    @Description("User who is the author of comment can’t edit reply to her/his comment on the ‘News’ page")
+    public void cantEditReplyToHisComment() {
+        logger.info("User who is the author of comment can’t edit reply to her/his comment on the ‘News’ page");
+        CommentComponent commentComponent = loadApplication()
+                .loginIn(getExistUser())
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .addReply("reply");
+        signOutByStorage();
+        User user = UserRepository.get().temporary();
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData);
+        Assert.assertFalse(page.getCommentPart().chooseCommentByNumber(0).openReply()
+                .chooseReplyByNumber(0).isEditReplyButtonDisplayed());
     }
 }

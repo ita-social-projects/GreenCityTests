@@ -5,6 +5,7 @@ import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 import com.softserve.edu.greencity.ui.locators.ItemComponentLocators;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -30,22 +31,38 @@ public final class ItemComponent {
     private final WebElement newsItem;
     private WaitsSwitcher waitsSwitcher;
     private Logger logger;
+    private By path;
+    private Boolean isListViewActive;
+
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
         this.driver = driver;
         this.newsItem = newsItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
         logger = LoggerFactory.getLogger("ItemComponent");
+        isListViewActive = null;
+    }
+
+    public boolean isListView() {
+        if (isListViewActive==null){
+            isListViewActive= new EcoNewsPage(driver).isActiveListView();
+        }
+        return isListViewActive;
     }
 
     public List<WebElement> getTags() {
-        return newsItem.findElements(TAGS.getPath());
+        if (isListView()) {
+            path = TAGS_LISTVIEW.getPath();
+        } else {
+            path = TAGS.getPath();
+        }
+        return newsItem.findElements(path);
     }
 
     public WebElement getTagsContainer() {
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.visibilityOfElementLocated(TAGS_CONTAINER.getPath()));
-        return findFromItemWithStaleReferenceWrap(TAGS_CONTAINER);
+        return findFromItemWithStaleReferenceWrap(TAGS_CONTAINER.getPath());
     }
 
     public boolean isDisplayedTags() {
@@ -69,7 +86,13 @@ public final class ItemComponent {
 
     //Image
     public WebElement getImage() {
-        return findFromItemWithStaleReferenceWrap(IMAGE);
+        if (isListView()){
+            path = IMAGE_LISTVIEW.getPath();
+        }
+        else{
+            path = IMAGE.getPath();
+        }
+        return findFromItemWithStaleReferenceWrap(path);
     }
 
     public boolean isDisplayedImage() {
@@ -78,9 +101,15 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
+        if (isListView()){
+            path = TITLE_LISTVIEW.getPath();
+        }
+        else{
+            path = TITLE.getPath();
+        }
         waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.visibilityOfElementLocated(TITLE.getPath()));
-        return findFromItemWithStaleReferenceWrap(TITLE);
+                ExpectedConditions.visibilityOfElementLocated(path));
+        return findFromItemWithStaleReferenceWrap(path);
     }
 
     public String getTitleText() {
@@ -113,7 +142,13 @@ public final class ItemComponent {
 
     //Content
     public WebElement getContent() {
-        return findFromItemWithStaleReferenceWrap(CONTENT);
+        if (isListView()){
+            path = CONTENT_LISTVIEW.getPath();
+        }
+        else{
+            path = CONTENT.getPath();
+        }
+        return findFromItemWithStaleReferenceWrap(path);
     }
 
     public String getContentText() {
@@ -135,7 +170,12 @@ public final class ItemComponent {
     }
 
     public int getContentWrapHeight() {
-        return driver.findElement(CONTENT_WRAP.getPath()).getSize().getHeight();
+        if (isListView()) {
+            path = CONTENT_WRAP_LISTVIEW.getPath();
+        } else {
+            path = CONTENT_WRAP.getPath();
+        }
+        return driver.findElement(path).getSize().getHeight();
     }
 
     protected void clickContent() {
@@ -149,15 +189,27 @@ public final class ItemComponent {
 
     //DateOfCreation
     public WebElement getDateOfCreation() {
+        if (isListView()){
+            path = DATE_OF_CREATION_LISTVIEW.getPath();
+        }
+        else{
+            path = DATE_OF_CREATION.getPath();
+        }
         waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.visibilityOfElementLocated(DATE_OF_CREATION.getPath()));
-        return findFromItemWithStaleReferenceWrap(DATE_OF_CREATION);
+                ExpectedConditions.visibilityOfElementLocated(path));
+        return findFromItemWithStaleReferenceWrap(path);
     }
 
     public WebElement getDateAndAuthorContainer() {
+        if (isListView()){
+            path = DATE_AND_AUTHOR_CONTAINER_LISTVIEW.getPath();
+        }
+        else{
+            path = DATE_AND_AUTHOR_CONTAINER.getPath();
+        }
         waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.visibilityOfElementLocated(DATE_AND_AUTHOR_CONTAINER.getPath()));
-        return findFromItemWithStaleReferenceWrap(DATE_AND_AUTHOR_CONTAINER);
+                ExpectedConditions.visibilityOfElementLocated(path));
+        return findFromItemWithStaleReferenceWrap(path);
     }
 
     public Date getCreationDate() {
@@ -195,7 +247,13 @@ public final class ItemComponent {
 
     //Author
     private WebElement getAuthor() {
-        return findFromItemWithStaleReferenceWrap(AUTHOR);
+        if (isListView()){
+            path = AUTHOR_LISTVIEW.getPath();
+        }
+        else{
+            path = AUTHOR.getPath();
+        }
+        return findFromItemWithStaleReferenceWrap(path);
     }
 
     public String getAuthorText() {
@@ -222,6 +280,7 @@ public final class ItemComponent {
 
     /**
      * Checks if at least one of tags provided is present in news
+     *
      * @param tags tags to check
      * @return
      */
@@ -246,11 +305,11 @@ public final class ItemComponent {
         return false;
     }
 
-    private WebElement findFromItemWithStaleReferenceWrap(ItemComponentLocators locator) {
+    private WebElement findFromItemWithStaleReferenceWrap(By path) {
         int retriesLeft = 5;
         do {
             try {
-                return newsItem.findElement(locator.getPath());
+                return newsItem.findElement(path);
             } catch (StaleElementReferenceException error) {
                 logger.warn("StaleElementReferenceException caught, retrying...");
                 WaitsSwitcher.sleep(100);
@@ -259,6 +318,6 @@ public final class ItemComponent {
             retriesLeft--;
         } while (retriesLeft > 0);
 
-        return newsItem.findElement(locator.getPath());
+        return newsItem.findElement(path);
     }
 }

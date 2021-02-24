@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TopGuestComponent implements StableWebElementSearch {
     private WebDriver driver;
-    private By signInLink = By.cssSelector("li.sign-in-link.tertiary-global-button a");
-    private By signUpLink = By.cssSelector("li.sign-up-link.ng-star-inserted div");
+    private By signInLink = By.xpath("//a[@class='header_sign-in-link tertiary-global-button ng-star-inserted']");
+    private By signUpLink = By.xpath("//div[@class='header_sign-up-btn secondary-global-button']");
 
     public TopGuestComponent(WebDriver driver) {
         this.driver = driver;
