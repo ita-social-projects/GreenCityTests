@@ -16,4 +16,8 @@ public class ButtonElement extends BaseElement{
     public ButtonElement(WebElement element) {
         super(element);
     }
+
+    public void click(){
+        this.element.click();
+    }
 }
