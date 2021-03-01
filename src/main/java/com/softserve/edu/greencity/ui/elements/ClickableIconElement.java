@@ -24,4 +24,12 @@ public class ClickableIconElement extends IconElement{
     public boolean isDisplayed(){
         return this.element.isDisplayed();
     }
+
+    public int getIconWidth(){
+        return this.element.getSize().width;
+    }
+
+    public int getIconHeigth(){
+        return this.element.getSize().height;
+    }
 }
