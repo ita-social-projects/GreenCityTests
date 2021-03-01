@@ -16,4 +16,9 @@ public class DropDownElement extends BaseElement{
     public DropDownElement(WebElement element) {
         super(element);
     }
+
+    public void click(){
+        this.element.click();
+    }
+
 }
