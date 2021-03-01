@@ -16,4 +16,30 @@ public class InputTextElement extends BaseElement{
     public InputTextElement(WebElement element) {
         super(element);
     }
+
+    public void click(){
+        this.element.click();
+    }
+
+    public void enterText(String text){
+        this.element.sendKeys(text);
+    }
+
+    public void clearText(){
+        this.element.clear();
+    }
+
+    public void reEnterText(String newText){
+        this.element.click();
+        this.element.clear();
+        this.element.sendKeys(newText);
+    }
+
+    public String getTextFromInput(){
+        return element.getAttribute("value");
+    }
+
+    public boolean isEmpty(){
+        return this.element.getAttribute("value").isEmpty();
+    }
 }

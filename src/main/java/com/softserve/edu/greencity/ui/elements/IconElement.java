@@ -16,4 +16,16 @@ public class IconElement extends BaseElement{
     public IconElement(WebElement element) {
         super(element);
     }
+
+    public int getIconWidth(){
+        return this.element.getSize().width;
+    }
+
+    public int getIconHeigth(){
+        return this.element.getSize().height;
+    }
+
+    public boolean isDisplayed(){
+        return this.element.isDisplayed();
+    }
 }
