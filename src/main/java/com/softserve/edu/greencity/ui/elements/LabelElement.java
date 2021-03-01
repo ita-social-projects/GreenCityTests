@@ -21,7 +21,7 @@ public class LabelElement extends BaseElement{
     public boolean isDisplayedLabel(){return this.element.isDisplayed();} ///
 
     public String getColor(){return this.element.getCssValue("color");}
-    public String getColorHex(){Color.fromString(getColor()).asHex();}
+    public String getColorHex(){return Color.fromString(getColor()).asHex();}
 
 
 }
