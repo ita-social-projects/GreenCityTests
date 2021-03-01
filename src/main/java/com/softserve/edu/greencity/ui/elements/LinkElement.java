@@ -16,4 +16,12 @@ public class LinkElement extends BaseElement{
     public LinkElement(WebElement element) {
         super(element);
     }
+
+    public void click(){
+        this.element.click();
+    }
+
+    public boolean isDisplayed(){
+        return this.element.isDisplayed();
+    }
 }
