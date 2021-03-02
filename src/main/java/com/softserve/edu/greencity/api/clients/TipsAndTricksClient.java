@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.clients;
 
-import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
+import com.softserve.edu.greencity.api.models.tipsandtricks.TipsAndTricksPOSTdto;
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -12,18 +12,17 @@ import java.nio.charset.StandardCharsets;
 
 import static io.restassured.RestAssured.given;
 
-public class EcoNewsClient extends BaseClient {
-
+public class TipsAndTricksClient extends BaseClient{
     private final String authToken;
     private static final String url = "https://greencity.azurewebsites.net";
 
-    public EcoNewsClient(ContentType contentType) {
-        super(contentType, "econews",url);
+    public TipsAndTricksClient(ContentType contentType) {
+        super(contentType, "tipsandtricks",url);
         authToken = "";
     }
 
-    public EcoNewsClient(String contentType) {
-        super(contentType, "econews",url);
+    public TipsAndTricksClient(String contentType) {
+        super(contentType, "tipsandtricks",url);
         authToken = "";
     }
 
@@ -32,14 +31,14 @@ public class EcoNewsClient extends BaseClient {
      * @param contentType content type of response and request
      * @param authToken   unique token. Use OwnSecurityClient to get it
      */
-    public EcoNewsClient(ContentType contentType, String authToken) {
-        super(contentType, "econews",url);
+    public TipsAndTricksClient(ContentType contentType, String authToken) {
+        super(contentType, "tipsandtricks",url);
         this.authToken = "Bearer " + authToken;
     }
 
-    private MultiPartSpecification getMultiPart(EcoNewsPOSTdto news) {
+    private MultiPartSpecification getMultiPart(TipsAndTricksPOSTdto news) {
         return new MultiPartSpecBuilder(news.toString().getBytes(StandardCharsets.UTF_8))
-                .controlName("addEcoNewsDtoRequest")
+                .controlName("tipsAndTricksDtoRequest")
                 .fileName(null)
                 .build();
     }
@@ -48,7 +47,7 @@ public class EcoNewsClient extends BaseClient {
      * Allowed only for authorized clients
      * Pass authorization token in proper constructor
      */
-    public Response postNews(EcoNewsPOSTdto news) {
+    public Response postTipsAndTricks(TipsAndTricksPOSTdto news) {
         return given()
                 .baseUri(url)
                 .accept(contentType)

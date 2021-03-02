@@ -12,14 +12,14 @@ public enum CommentLocator implements Locator {
     COMMENT_CURRENT_TEXT(By.cssSelector(".comment-text")),
 
     COMMENT_EDIT_BUTTON(By.cssSelector(".cta-btn.edit")),
-    COMMENT_EDIT_TEXTAREA(By.cssSelector(".edit-text-input")),
+    COMMENT_EDIT_TEXT_AREA(By.cssSelector("div.comment-main-text > div > textarea")),
     COMMENT_SAVE_CHANGES_BUTTON(By.cssSelector(".cta-btn.save-edit")),
     COMMENT_CANCEL_CHANGES_BUTTON(By.cssSelector(".cta-btn.cancel-edit")),
 
     COMMENT_DELETE_BUTTON(By.cssSelector(".cta-btn.delete")),
 
     COMMENT_REPLY_BUTTON(By.cssSelector(".cta-btn.reply")),
-    ADD_REPLY_TEXTAREA(By.cssSelector(".input-submit textarea")),
+    ADD_REPLY_TEXTAREA(By.cssSelector(".wrapper-reply .ng-pristine")),
     ADD_REPLY_BUTTON(By.cssSelector(".input-submit button")),
 
     COMMENT_LIKE_BUTTON(By.cssSelector(".cta-btn.like")),

@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,6 +49,14 @@ public class CommentComponent {
         return commentItem.findElement(COMMENT_EDIT_BUTTON.getPath());
     }
 
+    public WebElement getEditTextAria(){
+        return commentItem.findElement(COMMENT_EDIT_TEXT_AREA.getPath());
+    }
+
+    public WebElement getSaveEditButton(){
+        return commentItem.findElement(COMMENT_SAVE_CHANGES_BUTTON.getPath());
+    }
+
     public boolean isEditButtonDisplayed() {
         return commentItem.findElements(COMMENT_EDIT_BUTTON.getPath()).size() > 0;
     }
@@ -59,14 +66,20 @@ public class CommentComponent {
         return this;
     }
 
+    public CommentComponent setTextInEditAria(String editedText){
+        clickEditButton().getEditTextAria().clear();
+        getEditTextAria().sendKeys(editedText);
+        return this;
+    }
+
     public WebElement getDeleteButton() {
         return commentItem.findElement(COMMENT_DELETE_BUTTON.getPath());
     }
 
     public CommentComponent clickDeleteCommentButton() {
         getDeleteButton().click();
-        waitsSwitcher.setExplicitWait(5,
-                ExpectedConditions.invisibilityOf(getDeleteButton()));
+        CommentPopUpComponent commentPopUpComponent = new CommentPopUpComponent(driver);
+        commentPopUpComponent.clickConfirmButton();
         return this;
     }
 
@@ -131,6 +144,7 @@ public class CommentComponent {
     }
 
     public CommentComponent setReplyText(String replyText) {
+        getReplyField().clear();
         getReplyField().sendKeys(replyText);
         return this;
     }
