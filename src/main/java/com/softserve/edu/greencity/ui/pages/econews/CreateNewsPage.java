@@ -405,6 +405,8 @@ public class CreateNewsPage extends TopPart {
             new WebDriverWait(driver, 10)
                     .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
         } catch (Exception e) {
+            //TODO handle show error message with new create news
+            driver.navigate().refresh();
             navigateMenuEcoNews();
         }
         return navigateMenuEcoNews();
