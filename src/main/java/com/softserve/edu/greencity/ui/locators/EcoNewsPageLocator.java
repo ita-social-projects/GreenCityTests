@@ -14,7 +14,7 @@ public enum EcoNewsPageLocator implements Locator {
     TAGS(By.cssSelector("app-tag-filter>div.wrapper>ul>a")),
     ACTIVE_TAGS(By.cssSelector("li.global-tag-clicked")),
     UNCHECK_TAG_BUTTONS(By.cssSelector(".global-tag-close-icon")),
-    ARTICLES_FOUND_COUNTER(By.cssSelector("app-remaining-count>p")),
+    ARTICLES_FOUND_COUNTER(By.cssSelector("app-remaining-count>h2")),
     DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),
     DISPLAYED_ARTICLES_TITLES(By.xpath("//div[@class = 'title-list word-wrap']")),
     ARTICLE_IMAGE(By.cssSelector(" div.list-image>img")),
