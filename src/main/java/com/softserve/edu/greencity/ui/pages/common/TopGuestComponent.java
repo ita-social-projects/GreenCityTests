@@ -26,7 +26,7 @@ public class TopGuestComponent implements StableWebElementSearch {
     //Sign In link
     @Step
     public WebElement getSignInLink() {
-        return searchElementByCss(signInLink);
+        return  searchElementByXpath(signInLink);
     }
     @Step
     public boolean isDisplayedSignInLink() {
