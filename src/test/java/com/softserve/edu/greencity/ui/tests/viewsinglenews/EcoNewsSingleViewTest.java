@@ -190,6 +190,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
 
+    //TODO testcase check only date of creation without tag`s
     @Test(testName = "GC-713", description = "GC-713")
     @Description("Verify that User sees the last 3 news with the same tag in the News recommendations" +
             " widget, if there are more than 3 news with this tag")
@@ -197,10 +198,12 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews();
 
+        //.getSuitableTag click on tag button
         Tag suitableTag = TagsUtill.getSuitableTag(ecoNewsPage, (e) -> (e.getNumberOfItemComponent() > 3));
         if (suitableTag != null) {
             ItemsContainer suggestedNews = ecoNewsPage
-                    .selectFilter(suitableTag)
+                    //.getSuitableTag already click
+                    //.selectFilter(suitableTag)
                     .switchToSingleNewsPageByNumber(0)
                     .suggestedNews();
             Assert.assertEquals(suggestedNews.getItemComponentsCount(), 3);

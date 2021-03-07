@@ -15,13 +15,13 @@ public class EcoNewsSuggestionsAssertion {
         if(!ascendingOrder) {
             for (int i = 0; i < suggestions.getItemComponentsCount() - 1; i++) {
                 Assert.assertTrue(suggestions.chooseNewsByNumber(i).getCreationDate()
-                        .compareTo(suggestions.chooseNewsByNumber(i + 1).getCreationDate()) > 0);
+                        .compareTo(suggestions.chooseNewsByNumber(i + 1).getCreationDate()) >= 0);
             }
         }
         else {
             for (int i = 0; i < suggestions.getItemComponentsCount() - 1; i++) {
                 Assert.assertTrue(suggestions.chooseNewsByNumber(i).getCreationDate()
-                        .compareTo(suggestions.chooseNewsByNumber(i + 1).getCreationDate()) < 0);
+                        .compareTo(suggestions.chooseNewsByNumber(i + 1).getCreationDate()) <= 0);
             }
         }
     }
