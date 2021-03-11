@@ -259,6 +259,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getManualRegisterComponent()
                 .fillFieldsWithoutRegistration(userLoginCredentials);
         softAssert.assertFalse(manualRegisterComponent.isSignUpSubmitButtonEnabled(),"Is SignUp Button enabled ?");
+        softAssert.assertAll();
     }
 
 
