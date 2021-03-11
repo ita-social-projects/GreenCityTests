@@ -511,6 +511,20 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
         softAssert.assertAll();
     }
 
+    @Test(dataProvider = "invalidPassLengthUserCreds", testName = "GC-1902", description = "Check if the correct error message appears when user tries to login with incorrect pass length")
+    public void invalidPassLengthErrorMessageCheck(User userLoginCredentials) {
+        logger.info("Starting checkInvalidFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+        ManualRegisterComponent manualRegisterComponent = loadApplication()
+                .signUp()
+                .getManualRegisterComponent()
+                .fillFieldsWithoutRegistration(userLoginCredentials);
+        softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+                "Password must be at least 8 characters in length",
+                "The validation message is not equal to the expected one");
+        softAssert.assertAll();
+    }
+
     @Override
     public WebDriver setDriver() {
         return this.driver;
