@@ -27,9 +27,17 @@ public class ItemsContainer implements StableWebElementSearch {
     private WebDriver driver;
     private List<ItemComponent> itemComponents;
     private By items = DISPLAYED_ARTICLES.getPath();
+    private boolean isVertical;
 
     public ItemsContainer(WebDriver driver) {
         this.driver = driver;
+        isVertical = false;
+        checkElements();
+    }
+
+    public ItemsContainer(WebDriver driver, boolean isVertical) {
+        this.driver = driver;
+        this.isVertical = isVertical;
         checkElements();
     }
 
@@ -40,7 +48,7 @@ public class ItemsContainer implements StableWebElementSearch {
     private List<ItemComponent> getItemComponents() {
         itemComponents = new ArrayList<>();
         for (WebElement current : getItems()) {
-            itemComponents.add(new ItemComponent(driver, current));
+            itemComponents.add(new ItemComponent(driver, current, isVertical));
         }
 
 

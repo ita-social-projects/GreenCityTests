@@ -33,9 +33,11 @@ public final class ItemComponent {
     private Logger logger;
     private By path;
     private Boolean isListViewActive;
+    private Boolean isVertical;
 
 
-    public ItemComponent(WebDriver driver, WebElement newsItem) {
+    public ItemComponent(WebDriver driver, WebElement newsItem, boolean isVertical) {
+        this.isVertical = isVertical;
         this.driver = driver;
         this.newsItem = newsItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
@@ -43,15 +45,33 @@ public final class ItemComponent {
         isListViewActive = null;
     }
 
-    public boolean isListView() {
-        if (isListViewActive==null){
-            isListViewActive= new EcoNewsPage(driver).isActiveListView();
-        }
-        return isListViewActive;
+    public ItemComponent(WebDriver driver, WebElement newsItem) {
+        this.isVertical = false;
+        this.driver = driver;
+        this.newsItem = newsItem;
+        this.waitsSwitcher = new WaitsSwitcher(driver);
+        logger = LoggerFactory.getLogger("ItemComponent");
+        isListViewActive = null;
+    }
+
+//    public boolean isListView() {
+//        if (isListViewActive==null){
+//            try{
+//                isListViewActive= new EcoNewsPage(driver).isActiveListView();
+//            }
+//            catch(Exception ex){
+//                isListViewActive = false;
+//            }
+//        }
+//        return isListViewActive;
+//    }
+
+    public boolean isListViewSingle() {
+        return false;
     }
 
     public List<WebElement> getTags() {
-        if (isListView()) {
+        if (isVertical) {
             path = TAGS_LISTVIEW.getPath();
         } else {
             path = TAGS.getPath();
@@ -86,7 +106,7 @@ public final class ItemComponent {
 
     //Image
     public WebElement getImage() {
-        if (isListView()){
+        if (isVertical){
             path = IMAGE_LISTVIEW.getPath();
         }
         else{
@@ -101,7 +121,7 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        if (isListView()){
+        if (isVertical){
             path = TITLE_LISTVIEW.getPath();
         }
         else{
@@ -142,7 +162,7 @@ public final class ItemComponent {
 
     //Content
     public WebElement getContent() {
-        if (isListView()){
+        if (isVertical){
             path = CONTENT_LISTVIEW.getPath();
         }
         else{
@@ -170,7 +190,7 @@ public final class ItemComponent {
     }
 
     public int getContentWrapHeight() {
-        if (isListView()) {
+        if (isVertical) {
             path = CONTENT_WRAP_LISTVIEW.getPath();
         } else {
             path = CONTENT_WRAP.getPath();
@@ -189,7 +209,19 @@ public final class ItemComponent {
 
     //DateOfCreation
     public WebElement getDateOfCreation() {
-        if (isListView()){
+        if (isVertical){
+            path = DATE_OF_CREATION_LISTVIEW.getPath();
+        }
+        else{
+            path = DATE_OF_CREATION.getPath();
+        }
+        waitsSwitcher.setExplicitWait(5,
+                ExpectedConditions.visibilityOfElementLocated(path));
+        return findFromItemWithStaleReferenceWrap(path);
+    }
+
+    public WebElement getDateOfCreationSingle() {
+        if (isListViewSingle()){
             path = DATE_OF_CREATION_LISTVIEW.getPath();
         }
         else{
@@ -201,7 +233,7 @@ public final class ItemComponent {
     }
 
     public WebElement getDateAndAuthorContainer() {
-        if (isListView()){
+        if (isVertical){
             path = DATE_AND_AUTHOR_CONTAINER_LISTVIEW.getPath();
         }
         else{
@@ -222,8 +254,22 @@ public final class ItemComponent {
         }
     }
 
+    public Date getCreationDateSingle() {
+        String date = getDateOfCreationTextSingle().replace(",", "").toUpperCase();
+        DateFormat format = new SimpleDateFormat("MMM d yyyy", Locale.ENGLISH);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
     public String getDateOfCreationText() {
         return getDateOfCreation().getText();
+    }
+
+    public String getDateOfCreationTextSingle() {
+        return getDateOfCreationSingle().getText();
     }
 
     public Date getDateOfCreationDateFormat() {
@@ -247,7 +293,7 @@ public final class ItemComponent {
 
     //Author
     private WebElement getAuthor() {
-        if (isListView()){
+        if (isVertical){
             path = AUTHOR_LISTVIEW.getPath();
         }
         else{

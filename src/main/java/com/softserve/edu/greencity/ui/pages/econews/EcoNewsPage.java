@@ -43,8 +43,8 @@ public class EcoNewsPage extends TopPart {
 
     private void checkElements() {
         checkNewsDisplayed();
-        //waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getGridView()));
-        //waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getListView()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getGridView()));
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(getListView()));
     }
 
     private void checkNewsDisplayed() {
@@ -232,7 +232,8 @@ public class EcoNewsPage extends TopPart {
         // TODO add here some waiter for uploading news
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        return new ItemsContainer(driver);
+        boolean isVertical = true;
+        return new ItemsContainer(driver, isVertical);
     }
 
     /**
