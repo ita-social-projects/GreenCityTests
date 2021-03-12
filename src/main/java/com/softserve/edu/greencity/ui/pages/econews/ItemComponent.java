@@ -46,7 +46,7 @@ public final class ItemComponent {
     }
 
     public ItemComponent(WebDriver driver, WebElement newsItem) {
-        this.isVertical = false;
+        this.isVertical = true;
         this.driver = driver;
         this.newsItem = newsItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
