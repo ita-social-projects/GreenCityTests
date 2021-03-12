@@ -361,7 +361,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         testNewsTitles.add(newsData.getTitle());
 
-        ecoNewsPage.changeWindowWidth(1400);
+        ecoNewsPage.changeWindowWidth(1024);
 
         ecoNewsPage.switchToListView();
 
@@ -393,7 +393,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         testNewsTitles.add(newsData.getTitle());
 
-        ecoNewsPage.changeWindowWidth(1400);
+        ecoNewsPage.changeWindowWidth(1440);
 
         ecoNewsPage.switchToListView();
 
