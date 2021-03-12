@@ -8,6 +8,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
+import com.sun.xml.bind.v2.TODO;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -361,7 +362,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         testNewsTitles.add(newsData.getTitle());
 
-        ecoNewsPage.changeWindowWidth(1400);
+        ecoNewsPage.changeWindowWidth(1024);
 
         ecoNewsPage.switchToListView();
 
@@ -393,7 +394,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         testNewsTitles.add(newsData.getTitle());
 
-        ecoNewsPage.changeWindowWidth(1400);
+        ecoNewsPage.changeWindowWidth(1440);
 
         ecoNewsPage.switchToListView();
 
