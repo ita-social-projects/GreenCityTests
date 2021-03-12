@@ -88,7 +88,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         softAssert.assertTrue(registerComponent.getCongratsModal().isDisplayed());
 
         //TMind that now the login window doesn't appear automatically
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.invisibilityOf(registerComponent.getCongratsModal()));
+        waitsSwitcher.setExplicitWait(15, ExpectedConditions.invisibilityOf(registerComponent.getCongratsModal()));
         ManualLoginComponent manualLoginComponent = (new TopGuestComponent(driver)).clickSignInLink().getManualLoginComponent();
 
         manualLoginComponent.unsuccessfullyLogin(userLoginCredentials);
