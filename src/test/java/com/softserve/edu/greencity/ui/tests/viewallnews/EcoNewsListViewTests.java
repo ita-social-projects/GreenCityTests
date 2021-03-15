@@ -21,7 +21,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
     String cssColorProperty;
     String expectedColorRGBA;
     String expectedHoveredByMouseColorRGBA;
-    List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutContent, screenWidthWithoutImages, screenWidthForTitleTests;
+    List<Integer> screenWidth1, screenWidth2, screenWidthWithContent, screenWidthWithoutImagesAndContent, screenWidthForTitleTests;
 
     private final String DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/default-image-list-view.png";
     private static List<String> testNewsTitles = new ArrayList<>();
@@ -39,9 +39,8 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         cssColorProperty = "color";
         expectedColorRGBA = "rgba(19, 170, 87, 1)"; //lighter
         expectedHoveredByMouseColorRGBA =  "rgba(5, 107, 51, 1)"; //darker
-        screenWidthWithContent = Arrays.asList(1440, 1200);
-        screenWidthWithoutContent = Arrays.asList(1024, 768, 667);
-        screenWidthWithoutImages = Arrays.asList(576, 590);
+        screenWidthWithContent = Arrays.asList(1440, 1200, 1024, 768);
+        screenWidthWithoutImagesAndContent = Arrays.asList(667, 576, 590);
         screenWidthForTitleTests = Arrays.asList(1440, 1024, 768, 576);
         screenWidth1 = Arrays.asList(1400, 1024, 768);
         screenWidth2 = Arrays.asList(576, 360);
@@ -190,26 +189,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("author " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
         }
 
-        for (Integer integer : screenWidthWithoutContent) {
-            ecoNewsPage.changeWindowWidth(integer);
-            logger.info("set width = "+integer);
-            logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
-            ecoNewsPage.switchToListView();
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
-            logger.info("tags " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
-            logger.info("title " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
-            softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
-            logger.info("content " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
-            logger.info("date " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
-            logger.info("dateformat " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isCorrectDateFormat(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getDateOfCreationText()));
-            softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
-            logger.info("author " +ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedAuthor());
-
-        }
-        for (Integer integer : screenWidthWithoutImages) {
+        for (Integer integer : screenWidthWithoutImagesAndContent) {
             ecoNewsPage.changeWindowWidth(integer);
             logger.info("set width = "+integer);
             logger.info("script width = "+ecoNewsPage.getWindowWidth(integer));
