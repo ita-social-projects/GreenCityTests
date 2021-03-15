@@ -207,7 +207,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                     .switchToSingleNewsPageByNumber(0)
                     .suggestedNews();
             Assert.assertEquals(suggestedNews.getItemComponentsCount(), 3);
-            EcoNewsSuggestionsAssertion.assertSuggestionsByDate(suggestedNews, false);
+            EcoNewsSuggestionsAssertion.assertSuggestionsByDate(suggestedNews,suitableTag, false);
         } else {
             Assert.fail("Couldn't find suitable tag");
         }
