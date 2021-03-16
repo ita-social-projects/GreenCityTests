@@ -1,14 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.data.econews.Tag;
-import  static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
+
+import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.*;
 
 import com.softserve.edu.greencity.ui.locators.ItemComponentLocators;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -44,8 +43,12 @@ public final class ItemComponent {
     }
 
     public boolean isListView() {
-        if (isListViewActive==null){
-            isListViewActive= new EcoNewsPage(driver).isActiveListView();
+        if (isListViewActive == null) {
+            try {
+                isListViewActive = new EcoNewsPage(driver).isActiveListView();
+            } catch (NoSuchElementException | TimeoutException e) {
+                return false;
+            }
         }
         return isListViewActive;
     }
@@ -86,10 +89,9 @@ public final class ItemComponent {
 
     //Image
     public WebElement getImage() {
-        if (isListView()){
+        if (isListView()) {
             path = IMAGE_LISTVIEW.getPath();
-        }
-        else{
+        } else {
             path = IMAGE.getPath();
         }
         return findFromItemWithStaleReferenceWrap(path);
@@ -101,10 +103,9 @@ public final class ItemComponent {
 
     //Title
     public WebElement getTitle() {
-        if (isListView()){
+        if (isListView()) {
             path = TITLE_LISTVIEW.getPath();
-        }
-        else{
+        } else {
             path = TITLE.getPath();
         }
         waitsSwitcher.setExplicitWait(5,
@@ -142,10 +143,9 @@ public final class ItemComponent {
 
     //Content
     public WebElement getContent() {
-        if (isListView()){
+        if (isListView()) {
             path = CONTENT_LISTVIEW.getPath();
-        }
-        else{
+        } else {
             path = CONTENT.getPath();
         }
         return findFromItemWithStaleReferenceWrap(path);
@@ -189,10 +189,9 @@ public final class ItemComponent {
 
     //DateOfCreation
     public WebElement getDateOfCreation() {
-        if (isListView()){
+        if (isListView()) {
             path = DATE_OF_CREATION_LISTVIEW.getPath();
-        }
-        else{
+        } else {
             path = DATE_OF_CREATION.getPath();
         }
         waitsSwitcher.setExplicitWait(5,
@@ -201,10 +200,9 @@ public final class ItemComponent {
     }
 
     public WebElement getDateAndAuthorContainer() {
-        if (isListView()){
+        if (isListView()) {
             path = DATE_AND_AUTHOR_CONTAINER_LISTVIEW.getPath();
-        }
-        else{
+        } else {
             path = DATE_AND_AUTHOR_CONTAINER.getPath();
         }
         waitsSwitcher.setExplicitWait(5,
@@ -247,10 +245,9 @@ public final class ItemComponent {
 
     //Author
     private WebElement getAuthor() {
-        if (isListView()){
+        if (isListView()) {
             path = AUTHOR_LISTVIEW.getPath();
-        }
-        else{
+        } else {
             path = AUTHOR.getPath();
         }
         return findFromItemWithStaleReferenceWrap(path);
