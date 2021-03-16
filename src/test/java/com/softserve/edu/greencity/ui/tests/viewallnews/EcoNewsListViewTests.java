@@ -351,7 +351,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         ecoNewsPage.switchToListView();
 
-        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 128);
+        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 104);
         softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleNumberRow(), 4);
         softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContent().isDisplayed());
         softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContentNumberVisibleRow(), 0);
