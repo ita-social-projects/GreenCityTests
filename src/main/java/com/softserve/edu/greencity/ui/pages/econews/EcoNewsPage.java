@@ -232,7 +232,7 @@ public class EcoNewsPage extends TopPart {
         // TODO add here some waiter for uploading news
         waitsSwitcher.setExplicitWait(5,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
-        return new ItemsContainer(driver);
+        return new ItemsContainer(driver, isActiveListView());
     }
 
     /**
