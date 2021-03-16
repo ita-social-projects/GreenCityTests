@@ -17,24 +17,12 @@ public class InputTextWithImageElement extends InputTextElement {
         super(element);
     }
 
-    public void click() {
-        this.element.click();
-    }
-
     public void enterText(String text) {
         this.element.sendKeys(text);
     }
 
     public String getTextFromInput() {
         return element.getAttribute("value");
-    }
-
-    public void clearInput() {
-        this.element.clear();
-    }
-
-    public boolean isEmpty() {
-        return this.element.getAttribute("value").isEmpty();
     }
 
     public void changeText(String newText) {
