@@ -22,7 +22,7 @@ public class ForgotPasswordComponent extends TopPart {
     private By submitButton = By.cssSelector(".send-btn");
     private By googleSignInButton = By.cssSelector(".google-sign-in");
     private By backLink = By.cssSelector(".mentioned-password .sign-in-link");
-    private By backLinkLabel = By.cssSelector(".mentioned-password p");
+    private By backLinkLabel = By.cssSelector(".mentioned-password h3");
     private By closeFormButton = By.cssSelector(".cross-btn");
     protected By forgotPasswordComponent = By.cssSelector(".cdk-overlay-pane");
     protected By picture = By.cssSelector("img.main-picture");

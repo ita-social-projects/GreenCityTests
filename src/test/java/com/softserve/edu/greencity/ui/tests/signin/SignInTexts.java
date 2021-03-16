@@ -13,7 +13,7 @@ public enum SignInTexts {
     EMPTY_EMAIL_ERROR_MESSAGE("Email is required"),
     WRONG_EMAIL_OR_PASS_ERROR("Bad email or password"),
     NOT_EXISTING_EMAIL_MESSAGE("The user does not exist by this email:"),
-    BACK_TO_SIGN_IN_LABEL("Remember your password? Back to Sign-in"),
+    BACK_TO_SIGN_IN_LABEL("Remember your password?"),
     RESTORE_EMAIL_ERROR_MESSAGE("Password restore link already sent, please check your email:"),
     FORGOT_PASS_MAIL_SUBJECT("Confirm restoring password"),
     SIGN_IN_EMAIL_VALIDATION_ERROR("Please check that your e-mail address is indicated correctly"),

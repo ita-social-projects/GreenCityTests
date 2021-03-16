@@ -54,20 +54,11 @@ public final class ItemComponent {
         isListViewActive = null;
     }
 
-//    public boolean isListView() {
-//        if (isListViewActive==null){
-//            try{
-//                isListViewActive= new EcoNewsPage(driver).isActiveListView();
-//            }
-//            catch(Exception ex){
-//                isListViewActive = false;
-//            }
-//        }
-//        return isListViewActive;
-//    }
-
-    public boolean isListViewSingle() {
-        return false;
+    public boolean isListView() {
+        if (isListViewActive==null){
+            isListViewActive= new EcoNewsPage(driver).isActiveListView();
+        }
+        return isListViewActive;
     }
 
     public List<WebElement> getTags() {
@@ -254,22 +245,8 @@ public final class ItemComponent {
         }
     }
 
-    public Date getCreationDateSingle() {
-        String date = getDateOfCreationTextSingle().replace(",", "").toUpperCase();
-        DateFormat format = new SimpleDateFormat("MMM d yyyy", Locale.ENGLISH);
-        try {
-            return format.parse(date);
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
     public String getDateOfCreationText() {
         return getDateOfCreation().getText();
-    }
-
-    public String getDateOfCreationTextSingle() {
-        return getDateOfCreationSingle().getText();
     }
 
     public Date getDateOfCreationDateFormat() {

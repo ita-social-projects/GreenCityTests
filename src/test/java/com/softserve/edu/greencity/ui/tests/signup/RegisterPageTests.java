@@ -250,7 +250,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
     }
 
 
-    @Test(dataProvider = "invalidPassLengthUserCreds", description = "GC-198")
+    @Test(dataProvider = "invalidPassLengthUserCreds", testName = "GC-198", description = "Verify that user can't register using invalid pass length")
     public void invalidPassLengthValidation(User userLoginCredentials) {
         logger.info("Starting checkInvalidFieldsValidation. Input values = "
                 + userLoginCredentials.toString());
@@ -259,9 +259,6 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getManualRegisterComponent()
                 .fillFieldsWithoutRegistration(userLoginCredentials);
         softAssert.assertFalse(manualRegisterComponent.isSignUpSubmitButtonEnabled(),"Is SignUp Button enabled ?");
-        softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
-                "Password must be at least 8 characters in length",
-                "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }
 
@@ -508,6 +505,20 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                         .getSubtitleString(),
                 "Please enter your details to sign up",
                 "This is not a register modal:(");
+        softAssert.assertAll();
+    }
+
+    @Test(dataProvider = "invalidPassLengthUserCreds", testName = "GC-1902", description = "Check if the correct error message appears when user tries to login with incorrect pass length")
+    public void invalidPassLengthErrorMessageCheck(User userLoginCredentials) {
+        logger.info("Starting checkInvalidFieldsValidation. Input values = "
+                + userLoginCredentials.toString());
+        ManualRegisterComponent manualRegisterComponent = loadApplication()
+                .signUp()
+                .getManualRegisterComponent()
+                .fillFieldsWithoutRegistration(userLoginCredentials);
+        softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
+                "Password must be at least 8 characters in length",
+                "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }
 
