@@ -267,7 +267,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
     //TODO Modify after UI bug fixed
     @Test(testName = "GC-703", description = "GC-703")
-    @Description("Verify that Title and Content text can be not higher than 136 px.")
+    @Description("Verify that Title and Content text can be not higher than 104 px.")
     public void isTitleAndContentNotHigherThan() {
         logger.info("isTitleAndContentNotHigherThan");
         User user = UserRepository.get().temporary();
@@ -291,7 +291,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("titleHeight " + firstItemTitle.getTitleHeight() + "+ contentHeight " + firstItemTitle.getContentHeight() + " = " + (firstItemTitle.getTitleHeight() + firstItemTitle.getContentHeight()));
             int TitleAndContentHeight = (firstItemTitle.getTitleHeight() + firstItemTitle.getContentHeight());
             logger.info("Height = " + TitleAndContentHeight);
-            softAssert.assertEquals(TitleAndContentHeight, 136);
+            softAssert.assertTrue(89 <= TitleAndContentHeight && TitleAndContentHeight <= 104);
         }
         ecoNewsPage.maximizeWindow();
         ecoNewsPage.signOut();
