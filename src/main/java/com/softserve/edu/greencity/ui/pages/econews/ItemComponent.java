@@ -212,7 +212,7 @@ public final class ItemComponent {
     }
 
     public WebElement getDateOfCreationSingle() {
-        if (isListViewSingle()){
+        if (isVertical){
             path = DATE_OF_CREATION_LISTVIEW.getPath();
         }
         else{
