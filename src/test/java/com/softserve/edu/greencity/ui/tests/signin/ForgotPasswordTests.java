@@ -185,6 +185,8 @@ public class ForgotPasswordTests extends GreenCityTestRunner {
                 .unsuccessfullySubmit(user)
                 .clickPicture();
 
+        WebDriverWait wait = new WebDriverWait(driver, 1);
+        WebElement emailTextColor = wait.until(ExpectedConditions.visibilityOf(forgotPasswordComponent.getEmailValidationError()));
         String emailFieldBorderColor = forgotPasswordComponent.getEmailField().getCssValue(cssBorderColorProperty);
 
         softAssert.assertEquals(emailFieldBorderColor, expectedBorderColorRBG);
