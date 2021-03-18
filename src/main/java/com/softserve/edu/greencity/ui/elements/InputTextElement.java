@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class InputTextElement extends BaseElement{
+public class InputTextElement extends InputElement{
     public InputTextElement(WebDriver driver, Locator locator) {
         super(driver, locator);
     }
@@ -17,16 +17,8 @@ public class InputTextElement extends BaseElement{
         super(element);
     }
 
-    public void click(){
-        this.element.click();
-    }
-
     public void enterText(String text){
         this.element.sendKeys(text);
-    }
-
-    public void clearText(){
-        this.element.clear();
     }
 
     public void reEnterText(String newText){
@@ -39,7 +31,4 @@ public class InputTextElement extends BaseElement{
         return element.getAttribute("value");
     }
 
-    public boolean isEmpty(){
-        return this.element.getAttribute("value").isEmpty();
-    }
 }
