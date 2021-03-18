@@ -150,8 +150,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
                 8, "Height between title and tags");
         softAssert.assertEquals(itemComponent.getContent().getLocation().y - (itemComponent.getTitle().getLocation().y + itemComponent.getTitleHeight()),
                 10, "Height between content and title"); // Requirements could be changed
-        softAssert.assertEquals(itemComponent.getDateOfCreation().getLocation().y - (itemComponent.getContent().getLocation().y + itemComponent.getContentHeight()),
-                16, "Height between date and content");
+        softAssert.assertEquals( (itemComponent.getDateOfCreation().getLocation().y - itemComponent.getContent().getLocation().y - itemComponent.getContentHeight()),
+                (165 - itemComponent.getContentHeight()), "Height between date and content"); //165->y.date - y.component
         softAssert.assertEquals(itemComponent.getTitle().getLocation().x - itemComponent.getImage().getLocation().x,
                 24, "Width between image and title (left side)");
         softAssert.assertEquals(itemComponent.getTagsContainer().getLocation().x - itemComponent.getImage().getLocation().x,
@@ -167,12 +167,12 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertEquals((itemComponent.getImage().getLocation().x + itemComponent.getImage().getSize().width) - (itemComponent.getContent().getLocation().x + itemComponent.getContent().getSize().width),
                 24, "Width between image and content (right side)");
         softAssert.assertEquals((itemComponent.getImage().getLocation().x + itemComponent.getImage().getSize().width) - (itemComponent.getDateAndAuthorContainer().getLocation().x + itemComponent.getDateAndAuthorContainer().getSize().width),
-                24, "Width between image and date with author container (right side)");
+                (335-itemComponent.getDateAndAuthorContainer().getSize().width), "Width between image and date with author container (right side)"); //335-> x.image - x.cont + w.image
         softAssert.assertAll();
     }
 
     @Test
-    @Description("GC-339")
+        @Description("GC-339")
     public void verifyDefaultImageTest() {
         logger.info("Verify that news article has default image if it was not uploaded");
         User user = UserRepository.get().temporary();
