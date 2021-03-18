@@ -77,6 +77,12 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .switchToEcoNewsPageBack();
 
         EcoNewsTagsAssertion.assertNewsFilteredByTags(ecoNewsPage.getItemsContainer(), multipleTags);
+
+        ecoNewsPage = ecoNewsPage
+                .switchToSingleNewsPageByNumber(0)
+                .switchToEcoNewsPageBack()
+                .selectFilters(singleTag)
+                .selectFilters(multipleTags);
     }
 
     @Test(testName = "GC-672", description = "GC-672")
@@ -199,15 +205,18 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .navigateMenuEcoNews();
 
         //.getSuitableTag click on tag button
-        Tag suitableTag = TagsUtill.getSuitableTag(ecoNewsPage, (e) -> (e.getNumberOfItemComponent() > 3));
+        Tag suitableTag = Tag.ADS;
         if (suitableTag != null) {
             ItemsContainer suggestedNews = ecoNewsPage
-                    //.getSuitableTag already click
-                    //.selectFilter(suitableTag)
+                    .selectFilter(suitableTag)
                     .switchToSingleNewsPageByNumber(0)
                     .suggestedNews();
             Assert.assertEquals(suggestedNews.getItemComponentsCount(), 3);
             EcoNewsSuggestionsAssertion.assertSuggestionsByDate(suggestedNews,suitableTag, false);
+            ecoNewsPage
+                    .switchToSingleNewsPageByNumber(0)
+                    .switchToEcoNewsPageBack()
+                    .selectFilter(suitableTag);
         } else {
             Assert.fail("Couldn't find suitable tag");
         }
