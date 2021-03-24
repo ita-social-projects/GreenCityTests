@@ -1,15 +1,15 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
-import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -32,6 +32,25 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
 
     private EcoNewsService getEcoNewsService() {
         return new EcoNewsService();
+    }
+
+    @Test(testName = "GC-584", description = "GC-584")
+    @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
+    public void verifyImpossibleToAddImageMore10Mb() {
+
+        logger.info("verifyImpossibleToAddImageMore10Mb starts");
+
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+                .uploadTooLargeImage();
+
+        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR.getText());
+
+        createNewsPage.signOut();
+
     }
 
     @Test(testName = "GC-593", description = "GC-593")
