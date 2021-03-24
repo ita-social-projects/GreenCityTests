@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.CREATE_NEWS_TITLE;
+import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.CONFIRMATION_HEADER_MESSAGE;
+import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.CONFIRMATION_DESCRIPTON_MESSAGE;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
 public class CreateNewsPositiveTest extends GreenCityTestRunner {
@@ -386,7 +388,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         SingleNewsPage singleNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
+                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews()
                 .switchToSingleNewsPageByNumber(0);
@@ -396,5 +398,24 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         getEcoNewsService().deleteNewsByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle());
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-597", description = "Verify that after news was created pop-up appears with valid language")
+    @Description("Verify that after news was created pop-up appears with valid language")
+    public void verifyPopupLanguageAfterSuccessfulNewsCreation() {
+        logger.info("verifyPopupLanguageAfterSuccessfulNewsCreation starts");
+
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getAllFieldsNews());
+        createNewsPage.clickPublishButton();
+
+        softAssert.assertEquals(createNewsPage.getConfirmationHeaderText(), CONFIRMATION_HEADER_MESSAGE.getText());
+        softAssert.assertEquals(createNewsPage.getConfirmationDescriptionText(), CONFIRMATION_DESCRIPTON_MESSAGE.getText());
+        softAssert.assertAll();
+
+        createNewsPage.signOut();
     }
 }
