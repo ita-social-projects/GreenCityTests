@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
@@ -23,6 +24,12 @@ import org.slf4j.LoggerFactory;
 
 import io.qameta.allure.Step;
 
+import java.awt.*;
+import java.util.List;
+
+import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.LANGUAGE_BUTTONS;
+import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.LANGUAGE_SWITCHER;
+
 /**
  * Base Abstract Class of Header and Footer.
  * All page classes should extend this class
@@ -38,6 +45,10 @@ public abstract class TopPart implements StableWebElementSearch {
 
     private Select languageSwitcher;
     private WebElement copyright;
+    private WebElement language;
+    private ButtonElement enButton;
+    private ButtonElement ruButton;
+    private ButtonElement uaButton;
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
@@ -52,7 +63,7 @@ public abstract class TopPart implements StableWebElementSearch {
     }
 
     public Select getLanguageSwitcher() {
-        return languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
+        return languageSwitcher = new Select(driver.findElement(LANGUAGE_SWITCHER.getPath()));
     }
 
     public WebElement getLanguageSwitcherWebElement() {
@@ -69,6 +80,30 @@ public abstract class TopPart implements StableWebElementSearch {
 
     protected void clickLanguageSwitcher() {
         getLanguageSwitcherWebElement().click();
+    }
+
+    public WebElement getLanguageSwitchWebElement() {
+        return language = driver.findElement(By.cssSelector("ul.header_lang-switcher-wrp"));
+    }
+
+    public void setLanguage(String text) {
+        getLanguageSwitchWebElement();
+        initLanguageButtons();
+        switch (text){
+            case "En":
+                enButton.click();
+                break;
+            case "Ua":
+                uaButton.click();
+                break;
+            case "Ru":
+                ruButton.click();
+                break;
+        }
+    }
+
+    public void clickLanguageSwitch() {
+        getLanguageSwitchWebElement().click();
     }
 
     public WebElement getCopyright() {
@@ -160,6 +195,31 @@ public abstract class TopPart implements StableWebElementSearch {
         clickLanguageSwitcher();
         setLanguageSwitcher(language.toString());
     }
+    @Step("choose Language")
+    protected void chooseLanguages(Languages language) {
+        clickLanguageSwitch();
+        setLanguage(language.toString());
+    }
+
+    @Step
+    public void initLanguageButtons(){
+        List<WebElement> elements = driver.findElements(LANGUAGE_BUTTONS.getPath());
+
+        for(WebElement element : elements){
+            switch (element.getText()){
+                case "En":
+                    enButton = new ButtonElement(element);
+                    break;
+                case "Ua":
+                    uaButton = new ButtonElement(element);
+                    break;
+                case "Ru":
+                    ruButton = new ButtonElement(element);
+                    break;
+            }
+        }
+    }
+
     @Step("verifying that Menu Clickable")
     protected boolean isMenuClickable() {
         return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
