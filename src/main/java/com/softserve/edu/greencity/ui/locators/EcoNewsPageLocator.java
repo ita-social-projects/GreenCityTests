@@ -39,7 +39,7 @@ public enum EcoNewsPageLocator implements Locator {
     NEWS_INFO_TEXT(By.cssSelector("div.news-text-content")),
     NEWS_INFO_SOURCE(By.cssSelector("div.source-field")),
     LANGUAGE_BUTTONS(By.cssSelector("ul.header_lang-switcher-wrp.header_navigation-menu-right-list li")),
-    LANGUAGE_SWITCHER(By.cssSelector("select.language-switcher"));
+    LANGUAGE_SWITCHER(By.cssSelector("ul.header_lang-switcher-wrp.header_navigation-menu-right-list"));
 
     EcoNewsPageLocator(By path) {
         this.path = path;

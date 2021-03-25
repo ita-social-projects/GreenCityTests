@@ -63,7 +63,7 @@ public abstract class TopPart implements StableWebElementSearch {
     }
 
     public Select getLanguageSwitcher() {
-        return languageSwitcher = new Select(driver.findElement(LANGUAGE_SWITCHER.getPath()));
+        return languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
     }
 
     public WebElement getLanguageSwitcherWebElement() {
@@ -83,7 +83,7 @@ public abstract class TopPart implements StableWebElementSearch {
     }
 
     public WebElement getLanguageSwitchWebElement() {
-        return language = driver.findElement(By.cssSelector("ul.header_lang-switcher-wrp"));
+        return language = driver.findElement(LANGUAGE_SWITCHER.getPath());
     }
 
     public void setLanguage(String text) {
