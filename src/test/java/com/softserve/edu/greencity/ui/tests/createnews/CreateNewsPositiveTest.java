@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
+import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
@@ -22,9 +23,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.CREATE_NEWS_TITLE;
-import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.CONFIRMATION_HEADER_MESSAGE;
-import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.CONFIRMATION_DESCRIPTON_MESSAGE;
+import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
 public class CreateNewsPositiveTest extends GreenCityTestRunner {
@@ -388,7 +387,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         SingleNewsPage singleNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                 .gotoCreateNewsPage()
+                .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews()
                 .switchToSingleNewsPageByNumber(0);
@@ -408,6 +407,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         CreateNewsPage createNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
+                .switchLanguage(Languages.ENGLISH)
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getAllFieldsNews());
         createNewsPage.clickPublishButton();

@@ -314,12 +314,12 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get validation header text")
     public String getConfirmationHeaderText() {
-        return searchElementByXpath(CONFIRMATION_POPUP_HEADER.getPath()).getText();
+        return searchElementByCss(CONFIRMATION_POPUP_HEADER.getPath()).getText();
     }
 
     @Step("Get validation description text")
     public String getConfirmationDescriptionText() {
-        return searchElementByXpath(CONFIRMATION_POPUP_DESCRIPTION.getPath()).getText();
+        return searchElementByCss(CONFIRMATION_POPUP_DESCRIPTION.getPath()).getText();
     }
 
     @Step("Upload file")
