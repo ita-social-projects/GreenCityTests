@@ -13,6 +13,7 @@ public enum CreateNewsPageLocators implements Locator {
     PREVIEW_BUTTON(By.cssSelector("div.submit-buttons > :first-child+button")),
     PUBLISH_BUTTON(By.cssSelector("div.submit-buttons > button[type='submit']")),
     DROP_AREA(By.cssSelector("div.text-wrapper, div.ng-star-inserted > img")),
+    INPUT_ELEMENT(By.cssSelector("input[id='upload']")),
     TITLE_DESCRIPTION(By.cssSelector("input[formcontrolname='title'] + span")),
     TAGS_DESCRIPTION(By.cssSelector("div.tags > button + p")),
     SOURCE_DESCRIPTION(By.cssSelector("input[formcontrolname='source'] + span")),
