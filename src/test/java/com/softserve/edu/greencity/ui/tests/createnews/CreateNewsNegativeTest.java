@@ -34,15 +34,21 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         return new EcoNewsService();
     }
 
-    @Test(testName = "GC-593", description = "GC-593")
-    @Description("Verify that create news button is invisible for unregistered user")
-    public void checkInvisibilityOfCreateNewsButtonForGuest() {
-        logger.info("checkInvisibilityOfCreateNewsButtonForGuest starts");
+    @Test(testName = "GC-584", description = "GC-584")
+    @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
+    public void verifyImpossibleToAddImageMore10Mb() {
+        logger.info("verifyImpossibleToAddImageMore10Mb");
 
-        EcoNewsPage ecoNewsPage = loadApplication()
-                .navigateMenuEcoNews();
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+                .uploadTooLargeImage();
 
-        Assert.assertFalse(ecoNewsPage.isCreateNewsButtonPresent());
+        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(),IMAGE_ERROR.getText());
+
+        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-592", description = "GC-592")
@@ -60,6 +66,17 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         Assert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR.getText());
 
         createNewsPage.signOut();
+    }
+
+    @Test(testName = "GC-593", description = "GC-593")
+    @Description("Verify that create news button is invisible for unregistered user")
+    public void checkInvisibilityOfCreateNewsButtonForGuest() {
+        logger.info("checkInvisibilityOfCreateNewsButtonForGuest starts");
+
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .navigateMenuEcoNews();
+
+        Assert.assertFalse(ecoNewsPage.isCreateNewsButtonPresent());
     }
 
     @Test(testName = "GC-645", description = "GC-645")
