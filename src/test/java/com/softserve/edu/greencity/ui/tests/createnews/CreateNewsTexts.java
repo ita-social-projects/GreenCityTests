@@ -7,7 +7,9 @@ public enum CreateNewsTexts {
     IMAGE_ERROR("Download PNG or JPG only. File size should be less than 10MB"),
     VALID_TITLE("Green Day Test"),
     VALID_CONTENT("Content = description"),
-    TAGS_ERROR("Only 3 tags can be added");
+    TAGS_ERROR("Only 3 tags can be added"),
+    CONFIRMATION_HEADER_MESSAGE("Please wait while loading..."),
+    CONFIRMATION_DESCRIPTON_MESSAGE("Your news is loading to the website. Please wait until the page refreshes");
 
     private final String text;
 

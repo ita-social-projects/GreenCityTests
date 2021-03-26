@@ -22,7 +22,9 @@ public enum CreateNewsPageLocators implements Locator {
     CONTENT_ERROR(By.xpath("//*[@class = 'textarea-description']")),
     INVALID_SOURCE_ERROR(By.xpath("//*[@class = 'warning']")),
     INVALID_IMAGE_ERROR(By.cssSelector(".warning.ng-star-inserted")),
-    TAGS_ERROR(By.xpath("//p[@class = 'warning']"));
+    TAGS_ERROR(By.xpath("//p[@class = 'warning']")),
+    CONFIRMATION_POPUP_HEADER(By.cssSelector("app-post-news-loader > div > p.header")),
+    CONFIRMATION_POPUP_DESCRIPTION(By.cssSelector("app-post-news-loader > div > p.description"));
 
     private final By path;
 

@@ -330,6 +330,16 @@ public class CreateNewsPage extends TopPart {
 //        return this;
 //    }
 
+    @Step("Get validation header text")
+    public String getConfirmationHeaderText() {
+        return searchElementByCss(CONFIRMATION_POPUP_HEADER.getPath()).getText();
+    }
+
+    @Step("Get validation description text")
+    public String getConfirmationDescriptionText() {
+        return searchElementByCss(CONFIRMATION_POPUP_DESCRIPTION.getPath()).getText();
+    }
+
     @Step("Upload file")
     public CreateNewsPage uploadFile(WebElement dropArea, String path){
         String absolutePath = new File(path).getAbsolutePath();
