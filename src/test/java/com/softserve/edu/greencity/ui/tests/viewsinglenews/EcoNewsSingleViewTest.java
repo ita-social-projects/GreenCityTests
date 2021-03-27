@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
+import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -222,4 +223,45 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
 
+    @Test(testName = "GC-590", description = "GC-590")
+    @Description("Verify that system doesn’t allow to add file of inappropriate format in ‘Image’ field")
+    public void addingPDFformatIntoImageField(){
+        logger.info("log");
+
+        //Entering
+        User user = UserRepository.get().temporary();
+        NewsData news = NewsDataRepository.get().getNewsWithValidData("Test for upload PNG11");
+
+        try
+        {
+            CreateNewsPage createNewsPage = loadApplication()
+                    .signIn()
+                    .getManualLoginComponent()
+                    .successfullyLogin(user)
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage();
+
+            boolean warningMessageExist = createNewsPage
+                    .uploadPDFFile()
+                    .isPictureDescriptionWarning();
+
+            softAssert.assertTrue(warningMessageExist);
+
+            boolean isDefaultPicture = createNewsPage
+                    .fillFields(news)
+                    .publishNews()
+                    .switchToSingleNewsPageByParameters(news)
+                    .isDefaultPicture();
+            softAssert.assertTrue(isDefaultPicture);
+            softAssert.assertAll();
+
+            createNewsPage.signOut();
+        }
+
+        finally
+        {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(news.getTitle());
+        }
+    }
 }
