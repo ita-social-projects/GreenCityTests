@@ -13,7 +13,7 @@ public enum CreateNewsPageLocators implements Locator {
     PREVIEW_BUTTON(By.cssSelector("div.submit-buttons > :first-child+button")),
     PUBLISH_BUTTON(By.cssSelector("div.submit-buttons > button[type='submit']")),
     DROP_AREA(By.cssSelector("div.text-wrapper, div.ng-star-inserted > img")),
-    TITLE_DESCRIPTION(By.cssSelector("input[formcontrolname='title'] + span")),
+        TITLE_DESCRIPTION(By.cssSelector("input[formcontrolname='title'] + span")),
     TAGS_DESCRIPTION(By.cssSelector("div.tags > button + p")),
     SOURCE_DESCRIPTION(By.cssSelector("input[formcontrolname='source'] + span")),
     CONTENT_DESCRIPTION(By.cssSelector("p.textarea-description")),
@@ -21,7 +21,19 @@ public enum CreateNewsPageLocators implements Locator {
     CONTENT_ERROR(By.xpath("//*[@class = 'textarea-description']")),
     INVALID_SOURCE_ERROR(By.xpath("//*[@class = 'warning']")),
     INVALID_IMAGE_ERROR(By.cssSelector(".warning.ng-star-inserted")),
-    TAGS_ERROR(By.xpath("//p[@class = 'warning']"));
+    TAGS_ERROR(By.xpath("//p[@class = 'warning']")),
+
+//    LANGUAGE_DROP_DOWN(By.cssSelector(".header_lang-switcher-wrp li"))
+    CURRENT_LANGUAGE_BUTTON(By.cssSelector(".header_lang-switcher-wrp li:only-child")),
+    LANGUAGE_OPTIONS_BUTTON(By.cssSelector(".header_lang-switcher-wrp li")),
+    NAME_TITLE_LABEL(By.cssSelector(".left-form-column .item-block label> h3")),
+    TAGS_TITLE_LABEL(By.cssSelector(".left-form-column .item-block  >h3")),
+    PICTURE_TITLE_LABEL(By.cssSelector(".form-container .right-form-column h3")),
+    DATE_TITLE_LABEL(By.cssSelector(".date :first-child span:first-child")),
+    AUTHOR_TITLE_LABEL(By.cssSelector(".date :last-child span:first-child")),
+    CONTENT_TITLE_LABEL(By.cssSelector(".textarea-wrapper h3")),
+    SOURCE_TITLE_LABEL(By.cssSelector(".left-form-column > div:last-child h3")),
+    ;
 
     private final By path;
 

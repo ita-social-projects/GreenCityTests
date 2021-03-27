@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
+import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
@@ -51,6 +52,18 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         createNewsPage.signOut();
     }
 
+    @Test(testName = "GC-583", description = "GC-583")
+    @Description("Checking of ukrainian translation of labels On CreateNews page")
+    public void checkUkrainianTranslationOfLabelsOnCreateNewsPage(){
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .changeLanguageToUkrainian();
+                createNewsPage.checkLabels();
+                createNewsPage.signOut();
+    }
+    
     @Test(testName = "GC-591", description = "GC-591")
     @Description("Verify that create news button is visible for registered user")
     public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {
