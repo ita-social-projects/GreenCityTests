@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.QuantityItems;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.*;
 
@@ -48,7 +49,9 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkNewsDisplayed() {
-        WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
+        WebDriverWait wait = new WebDriverWait(driver,20);
+        WebElement firstItem = wait.until(ExpectedConditions.presenceOfElementLocated(DISPLAYED_ARTICLES.getPath()) );
+//        WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
         /* Only try-catch works, since FluentWait doesn't ignore TimeoutException */
         try {
             waitsSwitcher.setExplicitWait(2, ExpectedConditions.stalenessOf(firstItem));
@@ -58,6 +61,10 @@ public class EcoNewsPage extends TopPart {
         }
 
         waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
+    }
+    public EcoNewsPage switchLanguages(Languages language) {
+        chooseLanguage(language);
+        return new EcoNewsPage(driver);
     }
 
     public List<WebElement> getTopicsInPage() {

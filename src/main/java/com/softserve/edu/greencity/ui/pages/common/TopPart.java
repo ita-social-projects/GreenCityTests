@@ -164,7 +164,7 @@ public abstract class TopPart implements StableWebElementSearch {
     protected boolean isMenuClickable() {
         return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
     }
-    @Step("navigate to MenuEconews")
+    @Step("navigate to Menu EcoNews")
     public EcoNewsPage navigateMenuEcoNews() {
         logger.debug("go to EcoNews page");
         logger.trace("click MenuEcoNews link");
@@ -251,11 +251,23 @@ public abstract class TopPart implements StableWebElementSearch {
     public void googleAccountSignOut() {
         getGoogleAccountManagerPage().googleAccountSignOut();
     }
+
     @Step("change Window Width")
     public void changeWindowWidth(int width) {
         WindowManager windowManager = new WindowManager(driver);
         windowManager.changeWindowWidth(width);
     }
+    @Step("change Window Height")
+    public void changeWindowHeight(int height) {
+        WindowManager windowManager = new WindowManager(driver);
+        windowManager.changeWindowHeight(height);
+    }
+    @Step("set custom window dimensions")
+    public void setWindowsDimensions(int width, int height){
+        WindowManager windowManager = new WindowManager(driver);
+        windowManager.setWindowsDimensions(width,height);
+    }
+
     @Step("maximize Window")
     public void maximizeWindow() {
         WindowManager windowManager = new WindowManager(driver);

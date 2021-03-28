@@ -255,4 +255,15 @@ public final class NewsDataRepository {
         tags.add(Tag.EVENTS);
         return tags;
     }
+
+    public NewsData getWrappedNews() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS);
+        return new NewsData(tags, TITLE_WO_SPACES.getString(), CONTENT_WO_SPACES.getString());
+    }
+
+    public  NewsData getWrappedNewsWithSpaces(){
+        List<Tag> tags = new ArrayList<>();
+        return new NewsData(tags, TITLE_WITH_SPACES.getString(), CONTENT_WITH_SPACES.getString());
+    }
 }

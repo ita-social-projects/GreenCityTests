@@ -39,7 +39,6 @@ public enum NewsDataStrings {
             "Ut wisi enim ad minim ven"),
 
 
-
     SOURCE_GOOD_NEWS("https://goodnews.com"),
 
     TITLE_LONG_LOSS_OF_SPECIES("The loss of any species is devastating. However, the decline or " +
@@ -51,6 +50,23 @@ public enum NewsDataStrings {
     CONTENT_TOLOKA("25 серпня запрошуємо на велику толоку в парку Горіховий гай. Початок о 9:00."),
 
     TITLE_31W("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"), //This is exactly 1 row of the title field
+
+    TITLE_WO_SPACES("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                    "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                    "WWWWWWWWWWWWWWWWWWWWWW"),
+    CONTENT_WO_SPACES("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                      "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                      "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                      "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW" +
+                      "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"),
+    TITLE_WITH_SPACES("a a a a a a a a a a a a a a a a a a a a a a a a a a a" +
+                       " a a a a a a a a a a a a a a a a a a a a a a a a a a a" +
+                         " a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a"),
+    CONTENT_WITH_SPACES("a a a a a a a a a a a a a a a a a a a a a a a a a a a" +
+                         " a a a a a a a a a a a a a a a a a a a a a a a a a a" +
+                         " a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a a"),
 
     TITLE_EKO_LAVKA("Еко лавка"),
     CONTENT_EKO_LAVKA("Мережа магазинів спеціалізованих на реалізації натуральної та екологічно чистої продукції, "

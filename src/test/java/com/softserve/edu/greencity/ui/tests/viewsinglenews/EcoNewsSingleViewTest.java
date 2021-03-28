@@ -173,7 +173,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
     @Test(testName = "GC-731", description = "GC-731")
     @Description("Source field doesn't appear if User hasn't specified Source in the Create news form.")
     public void noSourceIfItWasntSpecified() {
-        logger.info("noSourceIfItWasntSpecified starts");
+        logger.info("noSourceIfItWasn'tSpecified starts");
 
         NewsData newsWithEmptySource = NewsDataRepository.get().getNewsWithEmptySourceField2();
         try {

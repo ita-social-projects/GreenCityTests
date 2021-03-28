@@ -2,13 +2,12 @@ package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+
 import static com.softserve.edu.greencity.ui.locators.PreviewPageLocators.*;
-import org.openqa.selenium.WebElement;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,12 +15,14 @@ import java.util.*;
 
 /**
  * The page you get to after clicking "Preview" on creating news
+ *
  * @author lv-519 Taqc/Java
  */
 public class PreviewPage extends TopPart {
 
     protected WebDriverWait wait;
     private List<WebElement> tagsFields;
+    JavascriptExecutor javascript = (JavascriptExecutor) driver;
 
     public PreviewPage(WebDriver driver) {
         super(driver);
@@ -47,6 +48,18 @@ public class PreviewPage extends TopPart {
     public String getTitleFieldText() {
         return getTitleField().getText();
     }
+    @Step("Get title line height")
+    public int getTitleLineHeight() {
+        return Integer.parseInt(getTitleField().getCssValue("line-height").split("px")[0]); }
+
+    @Step("Get title height")
+    public int getTitleHeight() {
+        return getTitleField().getSize().getHeight();
+    }
+
+    @Step("Get title number of rows")
+    public int getTitleNumberRow() {
+        return getTitleHeight() / getTitleLineHeight(); }
 
     @Step("Get date field")
     public WebElement getDateField() {
@@ -59,8 +72,7 @@ public class PreviewPage extends TopPart {
         do {
             if (!getDateField().getText().contains("Date:")) { //The page displays a placeholder for milliseconds
                 return getDateField().getText();
-            }
-            else {
+            } else {
                 WaitsSwitcher.sleep(100);
                 retriesLeft--;
             }
@@ -87,6 +99,19 @@ public class PreviewPage extends TopPart {
     public String getContentFieldText() {
         return getContentField().getText();
     }
+
+    @Step("Get content line height")
+    public int getContentLineHeight() {
+        return Integer.parseInt(getContentField().getCssValue("line-height").split("px")[0]); }
+
+    @Step("Get content height")
+    public int getContentHeight() {
+        return getContentField().getSize().getHeight();
+    }
+
+    @Step("Get content number of rows")
+    public int getContentNumberRows() {
+        return getContentHeight() / getContentLineHeight(); }
 
     @Step("Get twitter image link")
     public WebElement getImgTwitterLink() {
@@ -142,10 +167,16 @@ public class PreviewPage extends TopPart {
     public boolean isPublishButtonPresent() {
         try {
             return getPublishButton().isEnabled();
-        }
-        catch (TimeoutException er) {
+        } catch (TimeoutException er) {
             return false;
         }
+    }
+
+    @Step("Check if horizontal scroll is present")
+    public boolean isHorizontalScrollPresent() {
+        boolean b1 = (boolean) javascript
+                .executeScript("return document.documentElement.scrollWidth>document.documentElement.clientWidth;");
+        return b1;
     }
 
     @Step("Click on publish button")
