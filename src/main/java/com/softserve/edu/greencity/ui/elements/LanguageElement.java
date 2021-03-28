@@ -12,7 +12,7 @@ public class LanguageElement extends BaseElement {
     }
 
     public void initLanguageButtons(WebElement element){
-            switch (this.element.getText()){
+            switch (element.getText()){
                 case "En":
                     enButton = new ButtonElement(this.element);
                     break;
