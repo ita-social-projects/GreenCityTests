@@ -39,7 +39,7 @@ public class MyCabinetPage extends TopPart  {
 
     @Step("Switch language")
     public MyCabinetPage switchLanguage(Languages language) {
-        chooseLanguages(language);
+        chooseLanguage(language);
         return new MyCabinetPage(driver);
     }
 }
