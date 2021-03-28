@@ -110,7 +110,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .clickCancelButton();
 
-
+        //TODO add asserts after fixing bug with cancel button
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
         softAssert.assertAll();
