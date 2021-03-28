@@ -261,6 +261,12 @@ public class CreateNewsPage extends TopPart {
         return searchElementByCss(DROP_AREA.getPath());
     }
 
+    @Step("Get upload area")
+    public WebElement getUploadArea() {
+        //TODO refactor searchElementByCss
+        return driver.findElement(By.cssSelector("input[id='upload']"));
+    }
+
     @Step("Check if picture is uploaded")
     public Boolean isPictureUploaded() {
         return getDropArea().getAttribute(CLASS_ATTRIBUTE).contains("ng-star-inserted");
@@ -346,11 +352,33 @@ public class CreateNewsPage extends TopPart {
         return searchElementByCss(INVALID_IMAGE_ERROR.getPath()).getText();
     }
 
+//    @Step("Upload file")
+//    public CreateNewsPage uploadFile(WebElement dropArea, String path) {
+//        String absolutePath = new File(path).getAbsolutePath();
+//        UploadFileUtil.DropFile(new File(absolutePath), dropArea, 0, 0);
+//        try {
+//            driver.findElements(By.cssSelector(".cropper-buttons button")).get(0).click();
+//        } catch (IndexOutOfBoundsException e) {
+//            e.printStackTrace();
+//        }
+//        return this;
+//    }
+
+    @Step("Get validation header text")
+    public String getConfirmationHeaderText() {
+        return searchElementByCss(CONFIRMATION_POPUP_HEADER.getPath()).getText();
+    }
+
+    @Step("Get validation description text")
+    public String getConfirmationDescriptionText() {
+        return searchElementByCss(CONFIRMATION_POPUP_DESCRIPTION.getPath()).getText();
+    }
+
     @Step("Upload file")
-    public CreateNewsPage uploadFile(WebElement dropArea, String path) {
+    public CreateNewsPage uploadFile(WebElement dropArea, String path){
         String absolutePath = new File(path).getAbsolutePath();
-        UploadFileUtil.DropFile(new File(absolutePath), dropArea, 0, 0);
-        try {
+        dropArea.sendKeys(absolutePath);
+        try{
             driver.findElements(By.cssSelector(".cropper-buttons button")).get(0).click();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -360,25 +388,40 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Upload GIF image")
     public CreateNewsPage uploadGIFImage() {
-        uploadFile(getDropArea(),"src/test/resources/images/gifImage.gif");
+        uploadFile(getUploadArea(),"src/test/resources/images/gifImage.gif");
         return this;
     }
 
+    @Step("Upload PDF file")
+    public CreateNewsPage uploadPDFFile(){
+        uploadFile(getUploadArea(),"src/test/resources/images/PDFFile.pdf");
+        return this;
+    }
+
+//    @Step("Upload PDF file")
+//    public CreateNewsPage uploadPDFFile(){
+//        String path = "src/test/resources/images/PDFFile.pdf";
+//        String absolutePath = new File(path).getAbsolutePath();
+//        WebElement element = driver.findElement(By.id("upload"));
+//        element.sendKeys(absolutePath);
+//        return this;
+//    }
+
     @Step("Upload too large image")
     public CreateNewsPage uploadTooLargeImage() {
-        uploadFile(getDropArea(), "src/test/resources/images/tooLargeImage.jpg");
+        uploadFile(getUploadArea(), "src/test/resources/images/tooLargeImage.jpg");
         return this;
     }
 
     @Step("Upload PNG image")
     public CreateNewsPage uploadPNGImage() {
-        uploadFile(getDropArea(), "src/test/resources/images/pngValidImage.png");
+        uploadFile(getUploadArea(), "src/test/resources/images/pngValidImage.png");
         return this;
     }
 
     @Step("Upload JPG image")
     public CreateNewsPage uploadJPGImage() {
-        uploadFile(getDropArea(), "src/test/resources/images/jpgValidImage.jpg");
+        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
         return this;
     }
 
@@ -400,7 +443,7 @@ public class CreateNewsPage extends TopPart {
             setSourceField(newsData.getSource());
         }
         if (!newsData.getFilePath().equals("")) {
-            uploadFile(getDropArea(), newsData.getFilePath());
+            uploadFile(getUploadArea(), newsData.getFilePath());
         }
         tagsComponent.selectTags(newsData.getTags());
         return this;

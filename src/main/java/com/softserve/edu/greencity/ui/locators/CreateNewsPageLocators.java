@@ -13,6 +13,7 @@ public enum CreateNewsPageLocators implements Locator {
     PREVIEW_BUTTON(By.cssSelector("div.submit-buttons > :first-child+button")),
     PUBLISH_BUTTON(By.cssSelector("div.submit-buttons > button[type='submit']")),
     DROP_AREA(By.cssSelector("div.text-wrapper, div.ng-star-inserted > img")),
+    INPUT_ELEMENT(By.cssSelector("input[id='upload']")),
     TITLE_DESCRIPTION(By.cssSelector("input[formcontrolname='title'] + span")),
     TAGS_BUTTON(By.cssSelector(".tags button:not(.filters-color)")),
     TAGS_DESCRIPTION(By.cssSelector("div.tags > button + p")),
@@ -35,7 +36,10 @@ public enum CreateNewsPageLocators implements Locator {
     SOURCE_TITLE_LABEL(By.cssSelector(".left-form-column > div:last-child h3")),
     UPLOAD_IMAGE_INPUT(By.cssSelector("#upload")),
     SUBMIT_PHOTO_BUTTON(By.cssSelector(".cropper-buttons button:first-child")),
-    ;
+  
+    CONFIRMATION_POPUP_HEADER(By.cssSelector("app-post-news-loader > div > p.header")),
+    CONFIRMATION_POPUP_DESCRIPTION(By.cssSelector("app-post-news-loader > div > p.description"));
+
 
     private final By path;
 
