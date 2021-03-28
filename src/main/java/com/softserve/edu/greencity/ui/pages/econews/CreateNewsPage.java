@@ -4,7 +4,9 @@ import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
 import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
+import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
@@ -20,6 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,10 +42,7 @@ public class CreateNewsPage extends TopPart {
     private ButtonElement previewButton;
     private ButtonElement publishButton;
     private ButtonElement currentLanguageButton;
-
-
     private List<WebElement> languageOptions;
-
     private LabelElement createNewsMainTitleLabel;
     private LabelElement tagsDescriptionLabel;
     private LabelElement nameTitleLabel;
@@ -52,6 +52,13 @@ public class CreateNewsPage extends TopPart {
     private LabelElement contentTitleLabel;
     private LabelElement dateTitleLabel;
     private LabelElement authorTitleLabel;
+
+    private TextAreaElement titleField;
+    private List<ButtonElement> tags;
+    private InputElement sourceField;
+    private TextAreaElement contentField;
+    private InputElement uploadImageInput;
+    private ButtonElement submitPhotoButton;
 
     public CreateNewsPage(WebDriver driver) {
         super(driver);
@@ -472,6 +479,20 @@ public class CreateNewsPage extends TopPart {
         action.moveToElement(element).perform();
     }
 
+    private void clickTagByName(String tagName) {
+        /**
+         * Method searches tag element (ButtonElement) with defined name and clicks it
+         * @param tagName text in the tag element
+         */
+        for(ButtonElement buttonElement: tags) {
+            if(buttonElement.getInnerText().trim().equals(tagName)) {
+                buttonElement.click();
+                initTagsButtons();
+                break;
+            }
+        }
+    }
+
     /**
      * Method that resized 'Content' field
      * Get width (x) and height (y) of content field, divided it by 2 because getContentField method return
@@ -558,6 +579,22 @@ public class CreateNewsPage extends TopPart {
         return new CreateNewsPage(driver);
     }
 
+    public void postingNews(String titleText, String[] tags, String contentText, String sourceText, String imagePath){
+        titleField.enterText(titleText);
+        sourceField.sendKeys(sourceText);
+        contentField.enterText(contentText);
+        for(String tag: tags) {
+            clickTagByName(tag);
+        }
+        uploadImageInput.sendKeys(imagePath);
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.elementToBeClickable(SUBMIT_PHOTO_BUTTON.getPath()));
+        submitPhotoButton = new ButtonElement(driver, SUBMIT_PHOTO_BUTTON);
+        submitPhotoButton.click();
+        publishButton.click();
+    }
+
+
+
     public void checkLabels(){
         for(CreateNewsUaExpectedText fieldName: CreateNewsUaExpectedText.values()) {
             String locatorEnum = fieldName.toString().replace("_UA_LANG", "");
@@ -580,6 +617,19 @@ public class CreateNewsPage extends TopPart {
         contentTitleLabel = new LabelElement(driver, CONTENT_TITLE_LABEL);
         dateTitleLabel = new LabelElement(driver, DATE_TITLE_LABEL);
         authorTitleLabel = new LabelElement(driver, AUTHOR_TITLE_LABEL);
+
+        titleField = new TextAreaElement(driver, TITLE_FIELD);
+        initTagsButtons();
+        sourceField = new InputElement(driver, SOURCE_FIELD);
+        contentField = new TextAreaElement(driver, CONTENT_FIELD);
+        uploadImageInput = new InputElement(driver, UPLOAD_IMAGE_INPUT);
+    }
+
+    private void initTagsButtons() {
+        tags = new ArrayList<>();
+        for(WebElement buttonElement: driver.findElements(TAGS_BUTTON.getPath())) {
+            tags.add(new ButtonElement(buttonElement));
+        }
     }
 
 }

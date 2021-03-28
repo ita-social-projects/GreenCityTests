@@ -28,4 +28,6 @@ public class InputElement extends BaseElement {
     public boolean isEmpty() {
         return this.element.getAttribute("value").isEmpty();
     }
+
+    public void sendKeys(String text) { this.element.sendKeys(text); }
 }

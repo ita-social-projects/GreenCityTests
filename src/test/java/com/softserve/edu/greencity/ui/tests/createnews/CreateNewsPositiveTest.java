@@ -11,6 +11,10 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsDao;
+import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsTagsDao;
+import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;
+import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsTagsEntity;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -54,16 +58,42 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     @Test(testName = "GC-583", description = "GC-583")
     @Description("Checking of ukrainian translation of labels On CreateNews page")
-    public void checkUkrainianTranslationOfLabelsOnCreateNewsPage(){
+    public void checkUkrainianTranslationOfLabelsOnCreateNewsPage() {
         CreateNewsPage createNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .changeLanguageToUkrainian();
-                createNewsPage.checkLabels();
-                createNewsPage.signOut();
+        createNewsPage.checkLabels();
+        createNewsPage.signOut();
     }
-    
+
+    //This test required Article 1.jpg here: \src\main\java\com\softserve\edu\greencity\data\Article_1.jpg"
+    @Test(testName = "GC-405", description = "GC-405", groups = "createNews")
+    @Description("Posting news test")
+    public void postingNewsTest() {
+        CreateNewsPage createNewsPage = loadApplication()
+            .loginIn(getTemporaryUser())
+            .navigateMenuEcoNews()
+            .gotoCreateNewsPage();
+        final String titleText = "Plastic’ bags";
+        final String contentText = "Ukrainian scientist invents eco-friendly ‘plastic’ bags";
+        final String sourceText = "https://www.kyivpost.com/lifestyle/ukrainian-scientist-invents-eco-friendly-plastic-bags.html?cn-reloaded=1";
+        final String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\softserve\\edu\\greencity\\data\\Article_1.jpg";
+        final String[] tags = {"News","Education"};
+        createNewsPage.postingNews(titleText, tags, contentText, sourceText, imagePath);
+
+        EcoNewsService ecoNewsDao = new EcoNewsService();
+        EcoNewsEntity lastNews = ecoNewsDao.getAllNewsOrderByDate().get(0);
+        long lastNewsId = lastNews.getId();
+        String actualResult = lastNews.getTitle();
+        ecoNewsDao.deleteNewsById(lastNewsId);
+        System.out.println("chekayu="+titleText);
+
+        Assert.assertEquals(titleText, actualResult);
+        createNewsPage.signOut();
+    }
+
     @Test(testName = "GC-591", description = "GC-591")
     @Description("Verify that create news button is visible for registered user")
     public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {

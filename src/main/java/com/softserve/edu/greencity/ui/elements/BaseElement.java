@@ -32,5 +32,6 @@ public abstract class BaseElement {
         return  Arrays.asList(element.getAttribute("class").split(" "));
     }
     public String getText(){return this.element.getText();}
+    public String getInnerText(){return this.element.getAttribute("innerText");}
 }
 
