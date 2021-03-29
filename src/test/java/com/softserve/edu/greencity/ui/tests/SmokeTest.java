@@ -28,7 +28,7 @@ public class SmokeTest extends GreenCityTestRunner {
     public void checkElements(final User user) {
         TipsTricksPage tipstrickspage = loadApplication()
                 .navigateMenuTipsTricks()
-                .switchLanguage(Languages.UKRAINIAN)
+                .switchUaLanguage()
                 .navigateMenuEcoNews()
                 .navigateMenuTipsTricks()
                 .navigateMenuMap()

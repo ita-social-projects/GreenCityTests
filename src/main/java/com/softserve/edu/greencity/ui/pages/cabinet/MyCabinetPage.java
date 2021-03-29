@@ -15,6 +15,7 @@ public class MyCabinetPage extends TopPart  {
     private By addNewHabitButton = By.xpath("//*[@id = 'create-button']");
     private HabitsContainer habitsContainer;
     private MyGoalsContainer goalsContainer;
+    private LanguageComponents languageSwitcher;
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
@@ -37,9 +38,10 @@ public class MyCabinetPage extends TopPart  {
         return searchElementByXpath(addNewHabitButton);
     }
 
-    @Step("Switch language")
-    public MyCabinetPage switchLanguage(Languages language) {
-        chooseLanguage(language);
+    @Step("Switch RU language")
+    public MyCabinetPage switchRuLanguage() {
+        languageSwitcher = new LanguageComponents(driver);
+        languageSwitcher.clickRuLanguage();
         return new MyCabinetPage(driver);
     }
 }

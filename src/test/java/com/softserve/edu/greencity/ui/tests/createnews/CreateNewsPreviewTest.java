@@ -106,7 +106,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
 
         CreateNewsPage.CancelFrame cancelFrame = loadApplication()
                 .loginIn(getTemporaryUser())
-                .switchLanguage(Languages.RUSSIAN)
+                .switchRuLanguage()
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())

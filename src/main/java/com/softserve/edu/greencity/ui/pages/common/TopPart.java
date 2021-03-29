@@ -1,9 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.LanguageElement;
+import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
@@ -19,17 +17,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.qameta.allure.Step;
-
-import java.awt.*;
-import java.util.List;
-
-import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.LANGUAGE_BUTTONS;
-import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.LANGUAGE_SWITCHER;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -45,8 +36,7 @@ public abstract class TopPart implements StableWebElementSearch {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private WebElement copyright;
-    private WebElement language;
-    private LanguageElement languageSwitch;
+    private LanguageComponents languageSwitch;
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
@@ -61,21 +51,7 @@ public abstract class TopPart implements StableWebElementSearch {
     }
 
     public String getLanguageSwitcherText() {
-        return getLanguageSwitchWebElement().getText();
-    }
-
-    public WebElement getLanguageSwitchWebElement() {
-        return language = driver.findElement(LANGUAGE_SWITCHER.getPath());
-    }
-
-    public void setLanguage(String text) {
-        getLanguageSwitchWebElement().click();
-        List<WebElement> elements = driver.findElements(LANGUAGE_BUTTONS.getPath());
-        for(WebElement element: elements) {
-            languageSwitch = new LanguageElement(element);
-            languageSwitch.initLanguageButtons(element);
-        }
-        languageSwitch.clickLanguage(text);
+        return languageSwitch.getLanguageSwitchWebElement().getText();
     }
 
     public WebElement getCopyright() {
@@ -161,10 +137,6 @@ public abstract class TopPart implements StableWebElementSearch {
         final Actions actions = new Actions(driver);
         actions.moveToElement(element);
         actions.build().perform();
-    }
-    @Step("choose Language")
-    protected void chooseLanguage(Languages language) {
-        setLanguage(language.toString());
     }
 
     @Step("verifying that Menu Clickable")
