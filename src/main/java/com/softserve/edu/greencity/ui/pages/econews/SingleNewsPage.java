@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.softserve.edu.greencity.ui.pages.common.CommentPart;
@@ -21,7 +22,7 @@ public class SingleNewsPage extends TopPart {
     protected WebDriverWait wait;
 
 
-    private final String NEWS_DEFAULT_IMAGE ="https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/news-default-large.png";
+    private final String NEWS_DEFAULT_IMAGE = "https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/news-default-large.png";
     private List<WebElement> tagsList = driver.findElements(TAGS_LIST.getPath());
     private ItemsContainer itemsContainer;
 
@@ -50,6 +51,15 @@ public class SingleNewsPage extends TopPart {
     private List<WebElement> getTagsList() {
         return tagsList;
     }
+
+    public List<String> getTagsListText() {
+        List<String> tags = new ArrayList<>();
+        for (int i = 0; i < getTagsList().size(); i++) {
+            tags.add(getTagsList().get(i).getText());
+        }
+        return tags;
+    }
+
 
     private WebElement getTitle() {
         return searchElementByCss(TITLE.getPath());
@@ -91,13 +101,15 @@ public class SingleNewsPage extends TopPart {
         return getSourceTitle().getText();
     }
 
-    public WebElement getPicture() {return  searchElementByCss(PICTURE.getPath());}
-
-    public String getPictureSource() {
-         return getPicture().getAttribute("src");
+    public WebElement getPicture() {
+        return searchElementByCss(PICTURE.getPath());
     }
 
-    public boolean isDefaultPicture(){
+    public String getPictureSource() {
+        return getPicture().getAttribute("src");
+    }
+
+    public boolean isDefaultPicture() {
         return getPictureSource().equals(NEWS_DEFAULT_IMAGE);
     }
 
@@ -146,6 +158,7 @@ public class SingleNewsPage extends TopPart {
 
     /**
      * Return to EcoNewsPage
+     *
      * @return EcoNewsPage
      */
     public EcoNewsPage switchToEcoNewsPageBack() {
@@ -155,6 +168,7 @@ public class SingleNewsPage extends TopPart {
 
     /**
      * Gives a list of suggested news in the bottom of page
+     *
      * @return ItemsContainer with suggested news
      */
     public ItemsContainer suggestedNews() {
@@ -171,9 +185,10 @@ public class SingleNewsPage extends TopPart {
 
     /**
      * Get comment part of SingleNewsPage
+     *
      * @return comment part
      */
-    public CommentPart getCommentPart(){
+    public CommentPart getCommentPart() {
         return new CommentPart(driver);
     }
 

@@ -98,6 +98,24 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         Assert.assertFalse(editButtonExist, "Edit button exists");
     }
 
+    @Test(testName = "GC-673", description = "GC-673")
+    @Description("Verify that tags are displayed according to User`s selection")
+    public void verifyTagsDisplayed() {
+        logger.info("verifyTagsDisplayed starts");
+
+        List<Tag> multipleTags = new ArrayList<Tag>();
+        multipleTags.add(Tag.NEWS);
+        multipleTags.add(Tag.ADS);
+        multipleTags.add(Tag.EVENTS);
+
+        List<String> tagsDisplayed = loadApplication()
+                .navigateMenuEcoNews()
+                .selectFilters(multipleTags)
+                .switchToSingleNewsPageByNumber(0)
+                .getTagsListText();
+        softAssert.assertTrue(multipleTags.contains(tagsDisplayed));
+    }
+
     @Test(testName = "GC-691", description = "GC-691")
     @Description("Verify that ‘Edit’ button is available for registered User in case " +
             "he/she has submitted this particular piece of news ")
