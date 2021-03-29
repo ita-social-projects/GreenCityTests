@@ -98,6 +98,25 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
+    @Test(testName = "GC-608", description = "GC-608")
+    @Description("Verify that pop-up notification interface meets the mock-up specification")
+    public void verifyThatPopUpNotificationInterfaceMeetsMockUp() {
+        logger.info("verifyThatPopUpNotificationInterfaceMeetsMockUp");
+
+        CreateNewsPage.CancelFrame cancelFrame = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                .clickCancelButton();
+
+        //TODO add asserts after fixing bug with cancel button
+        softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
+        softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
+        softAssert.assertAll();
+
+    }
+
     @Test(testName = "GC-403", description = "GC-403")
     @Description("Verify that User can go back to editing news by following ‘Back to editing’ link")
     public void verifyPossibilityOfGoingBackToEditNews() {
