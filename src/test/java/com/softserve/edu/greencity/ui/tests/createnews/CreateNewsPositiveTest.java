@@ -144,19 +144,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
     }
 
-    @Test(testName = "GC-591", description = "GC-591")
-    @Description("Verify that create news button is visible for registered user")
-    public void checkVisibilityOfCreateNewsButtonForRegisteredUser() {
-        logger.info("checkVisibilityOfCreateNewsButtonForRegisteredUser starts");
 
-        EcoNewsPage econewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews();
-
-        Assert.assertTrue(econewsPage.isCreateNewsButtonDisplayed());
-
-        econewsPage.signOut();
-    }
 
     @Test(testName = "GC-623", description = "GC-623")
     @Description("Verify possibility of choosing tags")
