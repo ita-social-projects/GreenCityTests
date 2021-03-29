@@ -624,6 +624,10 @@ public class EcoNewsPage extends TopPart {
                 .replace("Dec", "12");
     }
 
+    public int articleDisplayedCount() {
+        return articleExistCount = getElements(DISPLAYED_ARTICLES.getPath()).size();
+    }
+
     public String formatChronologicalDateFromDB(String topic) {
         Pattern pattern = Pattern.compile("creation_date=[^\"]+");
         final Matcher m = pattern.matcher(topic);
