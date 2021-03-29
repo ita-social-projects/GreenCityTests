@@ -298,17 +298,6 @@ public class EcoNewsPage extends TopPart {
     }
 
     /**
-     * Choose language
-     * @param language
-     * @return EcoNewsPage
-     */
-    @Step("Switch language")
-    public EcoNewsPage switchLanguage(Languages language) {
-        chooseLanguage(language);
-        return new EcoNewsPage(driver);
-    }
-
-    /**
      * News are displayed as grid
      * @return EcoNewsPage
      */
