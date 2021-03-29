@@ -593,16 +593,6 @@ public class CreateNewsPage extends TopPart {
         publishButton.click();
     }
 
-
-
-    public void checkLabels(){
-        for(CreateNewsUaExpectedText fieldName: CreateNewsUaExpectedText.values()) {
-            String locatorEnum = fieldName.toString().replace("_UA_LANG", "");
-            String actualResult = driver.findElement(CreateNewsPageLocators.valueOf(locatorEnum).getPath()).getText();
-            Assert.assertEquals(actualResult.trim(), fieldName.getString().trim());
-        }
-    }
-
     public void init() {
         cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
         previewButton = new ButtonElement(driver, PREVIEW_BUTTON);

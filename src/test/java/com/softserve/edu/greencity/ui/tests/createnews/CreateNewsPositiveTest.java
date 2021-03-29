@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -23,6 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import com.softserve.edu.greencity.data.econews.NewsDataStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,12 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
                 .navigateMenuEcoNews()
                 .gotoCreateNewsPage()
                 .changeLanguageToUkrainian();
-        createNewsPage.checkLabels();
+
+                for(CreateNewsUaExpectedText fieldName: CreateNewsUaExpectedText.values()) {
+            String locatorEnum = fieldName.toString().replace("_UA_LANG", "");
+            String actualResult = driver.findElement(CreateNewsPageLocators.valueOf(locatorEnum).getPath()).getText();
+            Assert.assertEquals(actualResult.trim(), fieldName.getString().trim());
+        }
         createNewsPage.signOut();
     }
 
@@ -79,17 +86,15 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         final String titleText = "Plastic’ bags";
         final String contentText = "Ukrainian scientist invents eco-friendly ‘plastic’ bags";
         final String sourceText = "https://www.kyivpost.com/lifestyle/ukrainian-scientist-invents-eco-friendly-plastic-bags.html?cn-reloaded=1";
-        final String imagePath = System.getProperty("user.dir") + "\\src\\main\\java\\com\\softserve\\edu\\greencity\\data\\Article_1.jpg";
+        NewsDataStrings imagePath = NewsDataStrings.IMAGE_MAN_WITH_BAGS;
+        final String imagePathFinal = System.getProperty("user.dir") + NewsDataStrings.IMAGE_MAN_WITH_BAGS;;
         final String[] tags = {"News","Education"};
-        createNewsPage.postingNews(titleText, tags, contentText, sourceText, imagePath);
-
+        createNewsPage.postingNews(titleText, tags, contentText, sourceText, imagePathFinal);
         EcoNewsService ecoNewsDao = new EcoNewsService();
         EcoNewsEntity lastNews = ecoNewsDao.getAllNewsOrderByDate().get(0);
         long lastNewsId = lastNews.getId();
         String actualResult = lastNews.getTitle();
         ecoNewsDao.deleteNewsById(lastNewsId);
-        System.out.println("chekayu="+titleText);
-
         Assert.assertEquals(titleText, actualResult);
         createNewsPage.signOut();
     }
