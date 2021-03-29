@@ -20,6 +20,8 @@ public class SingleNewsPage extends TopPart {
 
     protected WebDriverWait wait;
 
+
+    private final String NEWS_DEFAULT_IMAGE ="https://ita-social-projects.github.io/GreenCityClient/assets/img/icon/econews/news-default-large.png";
     private List<WebElement> tagsList = driver.findElements(TAGS_LIST.getPath());
     private ItemsContainer itemsContainer;
 
@@ -87,6 +89,16 @@ public class SingleNewsPage extends TopPart {
 
     public String getSourceTitleText() {
         return getSourceTitle().getText();
+    }
+
+    public WebElement getPicture() {return  searchElementByCss(PICTURE.getPath());}
+
+    public String getPictureSource() {
+         return getPicture().getAttribute("src");
+    }
+
+    public boolean isDefaultPicture(){
+        return getPictureSource().equals(NEWS_DEFAULT_IMAGE);
     }
 
     private WebElement getSourceLink() {

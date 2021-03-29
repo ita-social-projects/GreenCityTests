@@ -99,6 +99,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
+
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
     public void verifyThatRussianLocalizationIsDisplayedAfterCancel() {
@@ -114,6 +115,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         //TODO tu add an assert after fixing bug with cancel button
 
         softAssert.assertAll();
+
     }
 
     @Test(testName = "GC-403", description = "GC-403")

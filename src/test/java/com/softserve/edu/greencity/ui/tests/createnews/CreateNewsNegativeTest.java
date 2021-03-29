@@ -34,6 +34,23 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         return new EcoNewsService();
     }
 
+    @Test(testName = "GC-584", description = "GC-584")
+    @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
+    public void verifyImpossibleToAddImageMore10Mb() {
+        logger.info("verifyImpossibleToAddImageMore10Mb");
+
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+                .uploadTooLargeImage();
+
+        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(),IMAGE_ERROR.getText());
+
+        createNewsPage.signOut();
+    }
+
     @Test(testName = "GC-593", description = "GC-593")
     @Description("Verify that create news button is invisible for unregistered user")
     public void checkInvisibilityOfCreateNewsButtonForGuest() {
