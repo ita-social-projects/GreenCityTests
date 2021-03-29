@@ -18,7 +18,7 @@ import static com.softserve.edu.greencity.ui.locators.comments.CommentLocator.*;
  */
 public class CommentComponent {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private  Logger logger = LoggerFactory.getLogger(this.getClass());
     private final WebDriver driver;
     private final WebElement commentItem;
     private final WaitsSwitcher waitsSwitcher;

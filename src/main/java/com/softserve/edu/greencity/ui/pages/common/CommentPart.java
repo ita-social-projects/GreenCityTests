@@ -22,7 +22,7 @@ import static com.softserve.edu.greencity.ui.locators.comments.CommentComponentL
 public class CommentPart implements StableWebElementSearch {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final WaitsSwitcher waitsSwitcher;
+    private  WaitsSwitcher waitsSwitcher;
     protected WebDriver driver;
     private List<CommentComponent> commentComponents;
 
