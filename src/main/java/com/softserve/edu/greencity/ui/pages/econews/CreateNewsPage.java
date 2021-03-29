@@ -1,9 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
 import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
-import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.util.List;
+
+import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;
 
 /**
  * A class that handles this page: https://ita-social-projects.github.io/GreenCityClient/#/news/create-news
@@ -49,19 +50,44 @@ public class CreateNewsPage extends TopPart {
         return searchElementByCss(CREATE_NEWS_MAIN_TITLE.getPath()).getText();
     }
 
+    @Step("Get title label")
+    public LabelElement getTitleLabel() {
+        return (LabelElement) searchElementByXpath(TITLE_LABELS.getPath());
+    }
+
+    @Step("Get tags label")
+    public LabelElement getTagsLabel() {
+        return (LabelElement) searchElementByXpath(TAGS_LABELS.getPath());
+    }
+
+    @Step("Get source label")
+    public LabelElement getSourceLabel() {
+        return (LabelElement) searchElementByXpath(SOURCE_LABELS.getPath());
+    }
+
+    @Step("Get picture label")
+    public LabelElement getPictureLabel() {
+        return (LabelElement) searchElementByXpath(PICTURE_LABELS.getPath());
+    }
+
+    @Step("Get content label")
+    public LabelElement getContentLabel() {
+        return (LabelElement) searchElementByXpath(CONTENT_LABELS.getPath());
+    }
+
     @Step("Get title field")
-    private WebElement getTitleField() {
+    public WebElement getTitleField() {
         return searchElementByCss(TITLE_FIELD.getPath());
     }
 
     @Step("Set title field")
     public CreateNewsPage setTitleField(String text) {
         getTitleField().sendKeys(text);
-        return  this;
+        return this;
     }
 
     @Step("Get title field height")
-    public int getTitleFieldHeight(){
+    public int getTitleFieldHeight() {
         return getTitleField().getSize().getHeight();
     }
 
@@ -137,7 +163,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Get content field height")
-    public int getContentHeight(){
+    public int getContentHeight() {
         return getContentField().getSize().getHeight();
     }
 
@@ -341,10 +367,10 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Upload file")
-    public CreateNewsPage uploadFile(WebElement dropArea, String path){
+    public CreateNewsPage uploadFile(WebElement dropArea, String path) {
         String absolutePath = new File(path).getAbsolutePath();
         dropArea.sendKeys(absolutePath);
-        try{
+        try {
             driver.findElements(By.cssSelector(".cropper-buttons button")).get(0).click();
         } catch (IndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -354,13 +380,13 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Upload GIF image")
     public CreateNewsPage uploadGIFImage() {
-        uploadFile(getUploadArea(),"src/test/resources/images/gifImage.gif");
+        uploadFile(getUploadArea(), "src/test/resources/images/gifImage.gif");
         return this;
     }
 
     @Step("Upload PDF file")
-    public CreateNewsPage uploadPDFFile(){
-        uploadFile(getUploadArea(),"src/test/resources/images/PDFFile.pdf");
+    public CreateNewsPage uploadPDFFile() {
+        uploadFile(getUploadArea(), "src/test/resources/images/PDFFile.pdf");
         return this;
     }
 
@@ -491,10 +517,11 @@ public class CreateNewsPage extends TopPart {
      * Method that resized 'Content' field
      * Get width (x) and height (y) of content field, divided it by 2 because getContentField method return
      * the central coordinates of the element. Minus 2 for navigation exactly on resize element by X and Y coordinate
+     *
      * @param resizeDown - the number of pixels on which content field resize
      */
     @Step("Action")
-    public CreateNewsPage changeContentFieldSize(int resizeDown){
+    public CreateNewsPage changeContentFieldSize(int resizeDown) {
         Actions action = new Actions(driver);
         action.moveToElement(getCopyright()).perform();
         int x = getContentWidth() / 2 - 2;
@@ -511,8 +538,8 @@ public class CreateNewsPage extends TopPart {
     public class CancelFrame {
 
         protected WebDriverWait wait;
-        private By continueEditingButton = By.cssSelector("button.secondary-global-button");
-        private By cancelEditingButton = By.cssSelector("button.primary-global-button");
+        private final By continueEditingButton = By.cssSelector("button.secondary-global-button");
+        private final By cancelEditingButton = By.cssSelector("button.primary-global-button");
 
         public CancelFrame(WebDriver driver) {
             checkElements(driver);

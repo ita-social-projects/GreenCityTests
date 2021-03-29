@@ -18,7 +18,7 @@ import static com.softserve.edu.greencity.ui.locators.comments.CommentLocator.*;
  */
 public class CommentComponent {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final WebDriver driver;
     private final WebElement commentItem;
     private final WaitsSwitcher waitsSwitcher;
@@ -157,11 +157,11 @@ public class CommentComponent {
         boolean isShowReplyButtonDisplayed = isShowReplyDisplayed();
         getAddReplyButton().click();
         if (isShowReplyButtonDisplayed) {
-            waitsSwitcher.setExplicitWait(5,
+            waitsSwitcher.setExplicitWait(15,
                     ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
                             Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
         } else {
-            waitsSwitcher.setExplicitWait(5,
+            waitsSwitcher.setExplicitWait(15,
                     ExpectedConditions.visibilityOf(getShowReplyButton()));
         }
 

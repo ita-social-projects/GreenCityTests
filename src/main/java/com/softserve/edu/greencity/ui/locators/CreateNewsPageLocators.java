@@ -4,6 +4,11 @@ import org.openqa.selenium.By;
 
 public enum CreateNewsPageLocators implements Locator {
     CREATE_NEWS_MAIN_TITLE(By.cssSelector(".title h2")),
+    TITLE_LABELS(By.xpath("//h3[contains(text(),'Title')]")),
+    TAGS_LABELS(By.xpath("//h3[contains(text(),'Pick tags for news')]")),
+    SOURCE_LABELS(By.xpath("//h3[contains(text(),'Source')]")),
+    PICTURE_LABELS(By.xpath("//h3[contains(text(),'Picture')]")),
+    CONTENT_LABELS(By.xpath("//h3[contains(text(),'Content')]")),
     TITLE_FIELD(By.cssSelector("textarea[formcontrolname='title']")),
     SOURCE_FIELD(By.cssSelector("input[formcontrolname='source']")),
     CONTENT_FIELD(By.cssSelector("div.textarea-wrapper > textarea")),
