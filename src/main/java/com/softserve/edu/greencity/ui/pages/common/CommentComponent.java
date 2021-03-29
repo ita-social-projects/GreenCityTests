@@ -157,11 +157,11 @@ public class CommentComponent {
         boolean isShowReplyButtonDisplayed = isShowReplyDisplayed();
         getAddReplyButton().click();
         if (isShowReplyButtonDisplayed) {
-            waitsSwitcher.setExplicitWait(15,
+            waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
                             Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
         } else {
-            waitsSwitcher.setExplicitWait(15,
+            waitsSwitcher.setExplicitWait(5,
                     ExpectedConditions.visibilityOf(getShowReplyButton()));
         }
 
