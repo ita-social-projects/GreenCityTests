@@ -291,7 +291,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
             logger.info("titleHeight " + firstItemTitle.getTitleHeight() + "+ contentHeight " + firstItemTitle.getContentHeight() + " = " + (firstItemTitle.getTitleHeight() + firstItemTitle.getContentHeight()));
             int TitleAndContentHeight = (firstItemTitle.getTitleHeight() + firstItemTitle.getContentHeight());
             logger.info("Height = " + TitleAndContentHeight);
-            softAssert.assertTrue(89 <= TitleAndContentHeight && TitleAndContentHeight <= 104);
+            softAssert.assertTrue(89 <= TitleAndContentHeight && TitleAndContentHeight <= 104); //TitleAndContentHeight block should be max 104 due to new requirements, but mock-up not updated yet, so cant open bug. Title should be 26px (1 row, max 4 rows -> 26*4=104. Content 21px (firstly displays all title rows, if there are free place(less then 4 title rows), only then content will be displayed). So, we have 104px (is max) if 4 rows of title and 89 px (is min size of block) if 1 row of title and other content (104 - 26px (title) = 78 -> 78:21 = 3.7 -> 3 rows of content -> 26 + 21*3 = 89)
         }
         ecoNewsPage.maximizeWindow();
         ecoNewsPage.signOut();
@@ -351,7 +351,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
 
         ecoNewsPage.switchToListView();
 
-        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 104);
+        softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleHeight(), 104);//mock-up not updated yet, but requirements changed (ask Vika and Alex, for sure), so cant open bug. Title should be 26px (1 row, max 4 rows -> 26*4=104. Content 21px (firstly displays all title rows, if there are free place(less then 4 title rows), only then content will be displayed).
         softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getTitleNumberRow(), 4);
         softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContent().isDisplayed());
         softAssert.assertEquals(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).getContentNumberVisibleRow(), 0);
@@ -384,7 +384,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 78);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 78);//mock-up not updated yet, but requirements changed (ask Vika and Alex, for sure), so cant open bug. Title should be 26px (1 row, max 4 rows -> 26*4=104. Content 21px (firstly displays all title rows, if there are free place(less then 4 title rows), only then content will be displayed). So 26*3+21=99 all, title 26*3=78
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 3);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 1);
 
@@ -416,7 +416,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 52);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 52);//mock-up not updated yet, but requirements changed (ask Vika and Alex, for sure), so cant open bug. Title should be 26px (1 row, max 4 rows -> 26*4=104. Content 21px (firstly displays all title rows, if there are free place(less then 4 title rows), only then content will be displayed). 26*2+21*2=94 all, 52 title
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 2);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 2);
 
@@ -448,7 +448,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ecoNewsPage.switchToListView();
 
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
-        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 26);
+        softAssert.assertEquals(firstItemTitle.getTitleHeight(), 26);//mock-up not updated yet, but requirements changed (ask Vika and Alex, for sure), so cant open bug. Title should be 26px (1 row, max 4 rows -> 26*4=104. Content 21px (firstly displays all title rows, if there are free place(less then 4 title rows), only then content will be displayed). 26+21*3=89 all, 26 title
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 1);
         softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 3);
 
