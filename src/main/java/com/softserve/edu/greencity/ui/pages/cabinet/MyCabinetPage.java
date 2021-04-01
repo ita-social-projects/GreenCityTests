@@ -1,6 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +15,7 @@ public class MyCabinetPage extends TopPart  {
     private By addNewHabitButton = By.xpath("//*[@id = 'create-button']");
     private HabitsContainer habitsContainer;
     private MyGoalsContainer goalsContainer;
+    private LanguageComponents languageSwitcher;
 
     public MyCabinetPage(WebDriver driver) {
         super(driver);
@@ -33,5 +36,12 @@ public class MyCabinetPage extends TopPart  {
     @Step
     public WebElement getAddNewHabitButton() {
         return searchElementByXpath(addNewHabitButton);
+    }
+
+    @Step("Switch RU language")
+    public MyCabinetPage switchRuLanguage() {
+        languageSwitcher = new LanguageComponents(driver);
+        languageSwitcher.clickRuLanguage();
+        return new MyCabinetPage(driver);
     }
 }

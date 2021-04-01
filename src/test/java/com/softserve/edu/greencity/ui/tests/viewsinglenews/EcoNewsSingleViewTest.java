@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsSuggestionsAssertion;
 import com.softserve.edu.greencity.ui.assertions.EcoNewsTagsAssertion;
+import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -22,6 +23,8 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.TAGS_CONTAINER;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
@@ -95,6 +98,35 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .switchToSingleNewsPageByNumber(0)
                 .editNewsButtonExist();
         Assert.assertFalse(editButtonExist, "Edit button exists");
+    }
+
+
+    @Test(testName = "GC-673", description = "GC-673")
+    @Description("Verify that tags are displayed according to User`s selection")
+    public void verifyTagsDisplayed() {
+        logger.info("verifyTagsDisplayed starts");
+
+        List<Tag> multipleTags = new ArrayList<Tag>();
+        multipleTags.add(Tag.NEWS);
+        multipleTags.add(Tag.ADS);
+        multipleTags.add(Tag.EVENTS);
+
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .navigateMenuEcoNews()
+                .selectFilters(multipleTags)
+                .scrollDown();
+        List<String> tagsList = new ArrayList<>();
+        for (int i = 1; i <= ecoNewsPage.articleDisplayedCount(); i++) {
+            String locator = "ul > li.gallery-view-li-active.ng-star-inserted:nth-child("+i+")";
+            tagsList.add(ecoNewsPage.searchElementByCss(locator)
+                    .findElement(TAGS_CONTAINER.getPath()).getText());
+        }
+        for (String tagsData : tagsList) {
+            softAssert.assertTrue(tagsData.contains(multipleTags.get(0).toString().toUpperCase()) ||
+                    tagsData.contains(multipleTags.get(1).toString().toUpperCase()) ||
+                    tagsData.contains(multipleTags.get(2).toString().toUpperCase()));
+        }
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-691", description = "GC-691")
@@ -222,4 +254,45 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
 
+    @Test(testName = "GC-590", description = "GC-590")
+    @Description("Verify that system doesn’t allow to add file of inappropriate format in ‘Image’ field")
+    public void addingPDFformatIntoImageField(){
+        logger.info("log");
+
+        //Entering
+        User user = UserRepository.get().temporary();
+        NewsData news = NewsDataRepository.get().getNewsWithValidData("Test for upload PNG11");
+
+        try
+        {
+            CreateNewsPage createNewsPage = loadApplication()
+                    .signIn()
+                    .getManualLoginComponent()
+                    .successfullyLogin(user)
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage();
+
+            boolean warningMessageExist = createNewsPage
+                    .uploadPDFFile()
+                    .isPictureDescriptionWarning();
+
+            softAssert.assertTrue(warningMessageExist);
+
+            boolean isDefaultPicture = createNewsPage
+                    .fillFields(news)
+                    .publishNews()
+                    .switchToSingleNewsPageByParameters(news)
+                    .isDefaultPicture();
+            softAssert.assertTrue(isDefaultPicture);
+            softAssert.assertAll();
+
+            createNewsPage.signOut();
+        }
+
+        finally
+        {
+            EcoNewsService ecoNewsService = new EcoNewsService();
+            ecoNewsService.deleteNewsByTitle(news.getTitle());
+        }
+    }
 }
