@@ -527,9 +527,19 @@ public class CreateNewsPage extends TopPart {
             return searchElementByCss(continueEditingButton);
         }
 
+        @Step("Check if continue editting button is displayed")
+        public boolean isContinueEditingButtonDisplayed() {
+            return getContinueEditingButton().isDisplayed();
+        }
+
         @Step("Get cancel editing button")
         private WebElement getCancelEditingButton() {
             return searchElementByCss(cancelEditingButton);
+        }
+
+        @Step("Check if cancel editting button is displayed")
+        public boolean isCancelEditingButtonDisplayed() {
+            return getCancelEditingButton().isDisplayed();
         }
 
         /**

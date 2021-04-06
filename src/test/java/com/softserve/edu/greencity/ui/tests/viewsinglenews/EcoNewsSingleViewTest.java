@@ -26,6 +26,8 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.TAGS_CONTAINER;
+
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
     @DataProvider(name = "data-provider")
@@ -103,6 +105,35 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
                 .switchToSingleNewsPageByNumber(0)
                 .editNewsButtonExist();
         Assert.assertFalse(editButtonExist, "Edit button exists");
+    }
+
+
+    @Test(testName = "GC-673", description = "GC-673")
+    @Description("Verify that tags are displayed according to User`s selection")
+    public void verifyTagsDisplayed() {
+        logger.info("verifyTagsDisplayed starts");
+
+        List<Tag> multipleTags = new ArrayList<Tag>();
+        multipleTags.add(Tag.NEWS);
+        multipleTags.add(Tag.ADS);
+        multipleTags.add(Tag.EVENTS);
+
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .navigateMenuEcoNews()
+                .selectFilters(multipleTags)
+                .scrollDown();
+        List<String> tagsList = new ArrayList<>();
+        for (int i = 1; i <= ecoNewsPage.articleDisplayedCount(); i++) {
+            String locator = "ul > li.gallery-view-li-active.ng-star-inserted:nth-child("+i+")";
+            tagsList.add(ecoNewsPage.searchElementByCss(locator)
+                    .findElement(TAGS_CONTAINER.getPath()).getText());
+        }
+        for (String tagsData : tagsList) {
+            softAssert.assertTrue(tagsData.contains(multipleTags.get(0).toString().toUpperCase()) ||
+                    tagsData.contains(multipleTags.get(1).toString().toUpperCase()) ||
+                    tagsData.contains(multipleTags.get(2).toString().toUpperCase()));
+        }
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-691", description = "GC-691")

@@ -298,17 +298,6 @@ public class EcoNewsPage extends TopPart {
     }
 
     /**
-     * Choose language
-     * @param language
-     * @return EcoNewsPage
-     */
-    @Step("Switch language")
-    public EcoNewsPage switchLanguage(Languages language) {
-        chooseLanguage(language);
-        return new EcoNewsPage(driver);
-    }
-
-    /**
      * News are displayed as grid
      * @return EcoNewsPage
      */
@@ -633,6 +622,10 @@ public class EcoNewsPage extends TopPart {
                 .replace("Oct", "10")
                 .replace("Nov", "11")
                 .replace("Dec", "12");
+    }
+
+    public int articleDisplayedCount() {
+        return articleExistCount = getElements(DISPLAYED_ARTICLES.getPath()).size();
     }
 
     public String formatChronologicalDateFromDB(String topic) {
