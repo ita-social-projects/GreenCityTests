@@ -17,14 +17,21 @@ import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EcoNewsSingleViewTest extends GreenCityTestRunner {
+
+    @DataProvider(name = "data-provider")
+    public Object[][] dataProviderMethod() {
+        return new Object[][] { {1024,1310}, {768, 1621}, {576, 1675}, {320, 2099} };
+    }
 
     @Test(testName = "GC-670", description = "GC-670")
     @Description("Verify that User can return to News from single view by clicking ‘Back to news’ button")
@@ -263,5 +270,64 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             EcoNewsService ecoNewsService = new EcoNewsService();
             ecoNewsService.deleteNewsByTitle(news.getTitle());
         }
+    }
+
+    @Test(testName = "GC-580", description = "GC-590", dataProvider = "data-provider")
+    @Description("Verify UI of the ‘Create news’ page for different screen resolutions")
+    public void verificationUIoder(int[] dimension){
+        logger.info("login");
+        User user = UserRepository.get().temporary();
+
+        CreateNewsPage createNewsPage = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(user)
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage();
+        createNewsPage.setWindowsDimensions(dimension[0],dimension[1]);
+
+        //Block`s in sequential order
+        Point titleFieldLocation = createNewsPage.getTitleField().getLocation();
+        Point sourceFieldLocation = createNewsPage.getSourceField().getLocation();
+        Point contentFieldLocation = createNewsPage.getContentField().getLocation();
+
+        softAssert.assertTrue(locationEqualifier(titleFieldLocation,sourceFieldLocation),"Title<Source");
+        softAssert.assertTrue(locationEqualifier(sourceFieldLocation,contentFieldLocation),"Source<Content");
+
+        //Tags
+        List<WebElement> tags = createNewsPage.getTagsComponent().searchElementsByCss("button.ng-star-inserted");
+        ArrayList<Point> tagLocation = new ArrayList<>();
+        for(WebElement tag : tags){
+            tagLocation.add(tag.getLocation());
+        }
+
+        //Picture
+        Point pictureFieldLocation = createNewsPage.getDropArea().getLocation();
+
+        softAssert.assertTrue(locationEqualifier(pictureFieldLocation, contentFieldLocation),"Picture<Content");
+
+        //Date and author
+        Point dateLocation = createNewsPage.getDateField().getLocation();
+        Point authorLocation = createNewsPage.getAuthorField().getLocation();
+
+        softAssert.assertTrue(locationEqualifier(dateLocation,authorLocation),"Date<Author");
+
+        //Cancel, preview, publish buttons
+        Point cancelButtonLocation = createNewsPage.getCancelButton().getLocation();
+        Point previewButtonLocation = createNewsPage.getPreviewButton().getLocation();
+        Point publishButtonLocation = createNewsPage.getPublishButton().getLocation();
+
+        softAssert.assertTrue(locationEqualifier(cancelButtonLocation,previewButtonLocation),"Cancel<Preview");
+        softAssert.assertTrue(locationEqualifier(previewButtonLocation,publishButtonLocation),"Preview<Publish");
+
+        softAssert.assertAll();
+    }
+    public boolean locationEqualifier(Point firstElement, Point secondElement){
+        if(firstElement.y == secondElement.y) {
+            if(firstElement.x < secondElement.x) return true;
+            return false;
+        }
+        if(firstElement.y < secondElement.y) return true;
+        return false;
     }
 }

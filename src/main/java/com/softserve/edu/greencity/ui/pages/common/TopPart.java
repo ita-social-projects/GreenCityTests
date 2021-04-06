@@ -251,11 +251,23 @@ public abstract class TopPart implements StableWebElementSearch {
     public void googleAccountSignOut() {
         getGoogleAccountManagerPage().googleAccountSignOut();
     }
+
     @Step("change Window Width")
     public void changeWindowWidth(int width) {
         WindowManager windowManager = new WindowManager(driver);
         windowManager.changeWindowWidth(width);
     }
+    @Step("change Window Height")
+    public void changeWindowHeight(int height) {
+        WindowManager windowManager = new WindowManager(driver);
+        windowManager.changeWindowHeight(height);
+    }
+    @Step("set custom window dimensions")
+    public void setWindowsDimensions(int width, int height){
+        WindowManager windowManager = new WindowManager(driver);
+        windowManager.setWindowsDimensions(width,height);
+    }
+
     @Step("maximize Window")
     public void maximizeWindow() {
         WindowManager windowManager = new WindowManager(driver);
@@ -266,6 +278,12 @@ public abstract class TopPart implements StableWebElementSearch {
         String windowSize = js.executeScript("return (window.outerWidth - window.innerWidth + "+width+"); ").toString();
         width = Integer.parseInt((windowSize));
         return width;
+    }
+    public int getWindowHeight(int height){
+        JavascriptExecutor js= (JavascriptExecutor)driver;
+        String windowSize = js.executeScript("return (window.outerHeight - window.innerHeight + "+height+"); ").toString();
+        height = Integer.parseInt((windowSize));
+        return height;
     }
     @Override
     public WebDriver setDriver() {
