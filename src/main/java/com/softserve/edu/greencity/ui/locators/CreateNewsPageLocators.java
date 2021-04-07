@@ -8,7 +8,7 @@ public enum CreateNewsPageLocators implements Locator {
     SOURCE_FIELD(By.cssSelector("input[formcontrolname='source']")),
     CONTENT_FIELD(By.cssSelector("div.textarea-wrapper > textarea")),
     DATE_FIELD(By.cssSelector("div.date > p:first-child > span:last-child")),
-    AUTHOR_FIELD(By.cssSelector("div.date > :nth-child(2n) > span")),
+    AUTHOR_FIELD(By.cssSelector("div.date > p:nth-child(2n) > span:last-child")),
     CANCEL_BUTTON(By.cssSelector("div.submit-buttons > :first-child")),
     PREVIEW_BUTTON(By.cssSelector("div.submit-buttons > :first-child+button")),
     PUBLISH_BUTTON(By.cssSelector("div.submit-buttons > button[type='submit']")),
@@ -16,6 +16,7 @@ public enum CreateNewsPageLocators implements Locator {
     INPUT_ELEMENT(By.cssSelector("input[id='upload']")),
     TITLE_DESCRIPTION(By.cssSelector("input[formcontrolname='title'] + span")),
     TAGS_BUTTON(By.cssSelector(".tags button:not(.filters-color)")),
+    TITLE_DESCRIPTION(By.cssSelector("textarea[formcontrolname='title'] + span")),
     TAGS_DESCRIPTION(By.cssSelector("div.tags > button + p")),
     SOURCE_DESCRIPTION(By.cssSelector("input[formcontrolname='source'] + span")),
     CONTENT_DESCRIPTION(By.cssSelector("p.textarea-description")),
@@ -36,7 +37,9 @@ public enum CreateNewsPageLocators implements Locator {
     CONTENT_TITLE_LABEL(By.cssSelector(".textarea-wrapper h3")),
     SOURCE_TITLE_LABEL(By.cssSelector(".left-form-column > div:last-child h3")),
     UPLOAD_IMAGE_INPUT(By.cssSelector("#upload")),
-    SUBMIT_PHOTO_BUTTON(By.cssSelector(".cropper-buttons button:first-child"));
+    SUBMIT_PHOTO_BUTTON(By.cssSelector(".cropper-buttons button:first-child")),
+    CONFIRMATION_POPUP_HEADER(By.cssSelector("app-post-news-loader > div > p.header")),
+    CONFIRMATION_POPUP_DESCRIPTION(By.cssSelector("app-post-news-loader > div > p.description"));
 
     private final By path;
 

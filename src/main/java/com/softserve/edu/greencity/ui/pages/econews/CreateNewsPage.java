@@ -84,7 +84,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Get title field")
-    private WebElement getTitleField() {
+    public WebElement getTitleField() {
         return searchElementByCss(TITLE_FIELD.getPath());
     }
 
@@ -306,7 +306,6 @@ public class CreateNewsPage extends TopPart {
     public boolean isContentDescriptionWarning() {
         return getContentField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
-
     @Step("Get picture description")
     public WebElement getPictureDescription() {
         return searchElementByXpath(PICTURE_DESCRIPTION.getPath());
