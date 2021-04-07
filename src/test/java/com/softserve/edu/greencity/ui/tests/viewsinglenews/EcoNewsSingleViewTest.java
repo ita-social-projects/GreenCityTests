@@ -302,7 +302,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
             ecoNewsService.deleteNewsByTitle(news.getTitle());
         }
     }
-
+  
     @Test(testName = "GC-580", description = "GC-590", dataProvider = "data-provider")
     @Description("Verify UI of the ‘Create news’ page for different screen resolutions")
     public void verificationUIoder(int[] dimension){
@@ -361,4 +361,5 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         if(firstElement.y < secondElement.y) return true;
         return false;
     }
+
 }

@@ -454,7 +454,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         CreateNewsPage createNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                //.switchLanguage(Languages.ENGLISH)
+                .switchLanguage(Languages.ENGLISH)
                 .gotoCreateNewsPage()
                 .fillFields(NewsDataRepository.get().getAllFieldsNews());
         createNewsPage.clickPublishButton();
@@ -486,4 +486,5 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
 
         createNewsPage.signOut();
     }
+
 }

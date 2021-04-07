@@ -99,6 +99,21 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         ecoNewsPage.signOut();
     }
 
+    @Test(testName = "GC-608", description = "GC-608")
+    @Description("Verify that pop-up notification interface meets the mock-up specification")
+    public void verifyThatPopUpNotificationInterfaceMeetsMockUp() {
+        logger.info("verifyThatPopUpNotificationInterfaceMeetsMockUp");
+
+        CreateNewsPage.CancelFrame cancelFrame = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                .clickCancelButton();
+
+        //TODO add asserts after fixing bug with cancel button
+        softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
+        softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
 
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
@@ -113,7 +128,6 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
                 .fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
                 .clickCancelButton();
         //TODO tu add an assert after fixing bug with cancel button
-
         softAssert.assertAll();
 
     }
