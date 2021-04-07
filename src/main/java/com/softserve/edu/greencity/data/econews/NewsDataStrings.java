@@ -121,7 +121,8 @@ public enum NewsDataStrings {
     IMAGE_TOO_BIG_JPEG("src/test/resources/images/tooLargeImage.jpg"),
     IMAGE_NOT_AN_IMAGE("src/test/resources/images/notAnImage.txt"),
     IMAGE_GIF("src/test/resources/images/gifImage.gif"),
-    IMAGE_MAXIMAL("src/test/resources/images/maximalImage.png");
+    IMAGE_MAXIMAL("src/test/resources/images/maximalImage.png"),
+    IMAGE_MAN_WITH_BAGS("\\src\\main\\java\\com\\softserve\\edu\\greencity\\data\\Article_1.jpg");
 
     private static String readFromFile(String filePath) {
         String str = null;

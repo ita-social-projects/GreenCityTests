@@ -1,16 +1,21 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
-
+import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
 import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsDao;
+import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsTagsDao;
+import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;
+import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsTagsEntity;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -19,6 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import com.softserve.edu.greencity.data.econews.NewsDataStrings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +55,47 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertTrue(createNewsPage.isPublishButtonDisplayed());
         softAssert.assertAll();
 
+        createNewsPage.signOut();
+    }
+
+    @Test(testName = "GC-583", description = "GC-583")
+    @Description("Checking of ukrainian translation of labels On CreateNews page")
+    public void checkUkrainianTranslationOfLabelsOnCreateNewsPage() {
+        CreateNewsPage createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage()
+                .changeLanguageToUkrainian();
+
+                for(CreateNewsUaExpectedText fieldName: CreateNewsUaExpectedText.values()) {
+            String locatorEnum = fieldName.toString().replace("_UA_LANG", "");
+            String actualResult = driver.findElement(CreateNewsPageLocators.valueOf(locatorEnum).getPath()).getText();
+            Assert.assertEquals(actualResult.trim(), fieldName.getString().trim());
+        }
+        createNewsPage.signOut();
+    }
+
+    //This test required Article 1.jpg here: \src\main\java\com\softserve\edu\greencity\data\Article_1.jpg"
+    @Test(testName = "GC-405", description = "GC-405", groups = "createNews")
+    @Description("Posting news test")
+    public void postingNewsTest() {
+        CreateNewsPage createNewsPage = loadApplication()
+            .loginIn(getTemporaryUser())
+            .navigateMenuEcoNews()
+            .gotoCreateNewsPage();
+        final String titleText = "Plastic’ bags";
+        final String contentText = "Ukrainian scientist invents eco-friendly ‘plastic’ bags";
+        final String sourceText = "https://www.kyivpost.com/lifestyle/ukrainian-scientist-invents-eco-friendly-plastic-bags.html?cn-reloaded=1";
+        NewsDataStrings imagePath = NewsDataStrings.IMAGE_MAN_WITH_BAGS;
+        final String imagePathFinal = System.getProperty("user.dir") + NewsDataStrings.IMAGE_MAN_WITH_BAGS;;
+        final String[] tags = {"News","Education"};
+        createNewsPage.postingNews(titleText, tags, contentText, sourceText, imagePathFinal);
+        EcoNewsService ecoNewsDao = new EcoNewsService();
+        EcoNewsEntity lastNews = ecoNewsDao.getAllNewsOrderByDate().get(0);
+        long lastNewsId = lastNews.getId();
+        String actualResult = lastNews.getTitle();
+        ecoNewsDao.deleteNewsById(lastNewsId);
+        Assert.assertEquals(titleText, actualResult);
         createNewsPage.signOut();
     }
 

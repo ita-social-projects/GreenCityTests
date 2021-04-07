@@ -48,6 +48,7 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkNewsDisplayed() {
+        waitsSwitcher.setExplicitWait(40, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
         WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
         /* Only try-catch works, since FluentWait doesn't ignore TimeoutException */
         try {
@@ -56,8 +57,6 @@ public class EcoNewsPage extends TopPart {
         } catch (TimeoutException error) {
             ; //Everything is OK
         }
-
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 
     public List<WebElement> getTopicsInPage() {
