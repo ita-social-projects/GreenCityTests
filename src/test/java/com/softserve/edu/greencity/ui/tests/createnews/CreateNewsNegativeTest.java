@@ -34,7 +34,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
 
     private CreateNewsPage createNewsPage;
 
-    @BeforeTest
+    @BeforeMethod
     public void OpenCreateNewsPage() {
         createNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
@@ -42,7 +42,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
                 .gotoCreateNewsPage();
     }
 
-    @AfterTest
+    @AfterMethod
     public void signOut() {
         createNewsPage.signOut();
     }
