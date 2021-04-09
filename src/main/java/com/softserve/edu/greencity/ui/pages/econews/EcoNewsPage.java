@@ -48,6 +48,7 @@ public class EcoNewsPage extends TopPart {
     }
 
     private void checkNewsDisplayed() {
+        waitsSwitcher.setExplicitWait(40, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
         WebElement firstItem = driver.findElement(DISPLAYED_ARTICLES.getPath());
         /* Only try-catch works, since FluentWait doesn't ignore TimeoutException */
         try {
@@ -56,8 +57,6 @@ public class EcoNewsPage extends TopPart {
         } catch (TimeoutException error) {
             ; //Everything is OK
         }
-
-        waitsSwitcher.setExplicitWait(10, ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_ARTICLES.getPath()));
     }
 
     public List<WebElement> getTopicsInPage() {
@@ -294,17 +293,6 @@ public class EcoNewsPage extends TopPart {
         logger.info("Deselect filter");
         getTagsComponent().deselectTag(tag);
 
-        return new EcoNewsPage(driver);
-    }
-
-    /**
-     * Choose language
-     * @param language
-     * @return EcoNewsPage
-     */
-    @Step("Switch language")
-    public EcoNewsPage switchLanguage(Languages language) {
-        chooseLanguage(language);
         return new EcoNewsPage(driver);
     }
 
@@ -633,6 +621,10 @@ public class EcoNewsPage extends TopPart {
                 .replace("Oct", "10")
                 .replace("Nov", "11")
                 .replace("Dec", "12");
+    }
+
+    public int articleDisplayedCount() {
+        return articleExistCount = getElements(DISPLAYED_ARTICLES.getPath()).size();
     }
 
     public String formatChronologicalDateFromDB(String topic) {

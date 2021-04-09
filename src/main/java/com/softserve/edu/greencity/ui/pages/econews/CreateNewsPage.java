@@ -1,6 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
+import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.InputElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
+import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import io.qameta.allure.Step;
@@ -11,8 +18,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;
@@ -30,10 +39,35 @@ public class CreateNewsPage extends TopPart {
     private final String CLASS_ATTRIBUTE = "class";
     private TagsComponent tagsComponent;
 
+    private ButtonElement cancelButton;
+    private ButtonElement previewButton;
+    private ButtonElement publishButton;
+    private ButtonElement currentLanguageButton;
+    private List<WebElement> languageOptions;
+    private LabelElement createNewsMainTitleLabel;
+    private LabelElement tagsDescriptionLabel;
+    private LabelElement nameTitleLabel;
+    private LabelElement tagsTitleLabel;
+    private LabelElement pictureTitleLabel;
+    private LabelElement sourceTitleLabel;
+    private LabelElement contentTitleLabel;
+    private LabelElement dateTitleLabel;
+    private LabelElement authorTitleLabel;
+
+    private TextAreaElement titleField;
+    private List<ButtonElement> tags;
+    private InputElement sourceField;
+    private TextAreaElement contentField;
+    private InputElement uploadImageInput;
+    private ButtonElement submitPhotoButton;
+
     public CreateNewsPage(WebDriver driver) {
         super(driver);
         checkElements();
+        init();
     }
+
+
 
     private void checkElements() {
         tagsComponent = new TagsComponent(driver);
@@ -298,7 +332,6 @@ public class CreateNewsPage extends TopPart {
     public boolean isContentDescriptionWarning() {
         return getContentField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
-
     @Step("Get picture description")
     public WebElement getPictureDescription() {
         return searchElementByXpath(PICTURE_DESCRIPTION.getPath());
@@ -513,6 +546,20 @@ public class CreateNewsPage extends TopPart {
         action.moveToElement(element).perform();
     }
 
+    private void clickTagByName(String tagName) {
+        /**
+         * Method searches tag element (ButtonElement) with defined name and clicks it
+         * @param tagName text in the tag element
+         */
+        for(ButtonElement buttonElement: tags) {
+            if(buttonElement.getInnerText().trim().equals(tagName)) {
+                buttonElement.click();
+                initTagsButtons();
+                break;
+            }
+        }
+    }
+
     /**
      * Method that resized 'Content' field
      * Get width (x) and height (y) of content field, divided it by 2 because getContentField method return
@@ -538,8 +585,8 @@ public class CreateNewsPage extends TopPart {
     public class CancelFrame {
 
         protected WebDriverWait wait;
-        private  By continueEditingButton = By.cssSelector("button.secondary-global-button");
-        private  By cancelEditingButton = By.cssSelector("button.primary-global-button");
+        private By continueEditingButton = By.cssSelector("button.secondary-global-button");
+        private By cancelEditingButton = By.cssSelector("button.primary-global-button");
 
         public CancelFrame(WebDriver driver) {
             checkElements(driver);
@@ -555,9 +602,19 @@ public class CreateNewsPage extends TopPart {
             return searchElementByCss(continueEditingButton);
         }
 
+        @Step("Check if continue editting button is displayed")
+        public boolean isContinueEditingButtonDisplayed() {
+            return getContinueEditingButton().isDisplayed();
+        }
+
         @Step("Get cancel editing button")
         private WebElement getCancelEditingButton() {
             return searchElementByCss(cancelEditingButton);
+        }
+
+        @Step("Check if cancel editting button is displayed")
+        public boolean isCancelEditingButtonDisplayed() {
+            return getCancelEditingButton().isDisplayed();
         }
 
         /**
@@ -582,4 +639,65 @@ public class CreateNewsPage extends TopPart {
             return new EcoNewsPage(driver);
         }
     }
+
+    public CreateNewsPage changeLanguageToUkrainian(){
+        return changeLanguageTo(Languages.UKRAINIAN.toString());
+    }
+
+    public CreateNewsPage changeLanguageTo(String lang) {
+        currentLanguageButton.click();
+        languageOptions = driver.findElements(LANGUAGE_OPTIONS_BUTTON.getPath());
+        for(WebElement element: languageOptions) {
+            ButtonElement currentButton = new ButtonElement(element);
+            if(currentButton.getText().equals(lang)){
+                currentButton.click();
+                break;
+            }
+        }
+        return new CreateNewsPage(driver);
+    }
+
+    public void postingNews(String titleText, String[] tags, String contentText, String sourceText, String imagePath){
+        titleField.enterText(titleText);
+        sourceField.sendKeys(sourceText);
+        contentField.enterText(contentText);
+        for(String tag: tags) {
+            clickTagByName(tag);
+        }
+        uploadImageInput.sendKeys(imagePath);
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.elementToBeClickable(SUBMIT_PHOTO_BUTTON.getPath()));
+        submitPhotoButton = new ButtonElement(driver, SUBMIT_PHOTO_BUTTON);
+        submitPhotoButton.click();
+        publishButton.click();
+    }
+
+    public void init() {
+        cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
+        previewButton = new ButtonElement(driver, PREVIEW_BUTTON);
+        publishButton = new ButtonElement(driver, PUBLISH_BUTTON);
+        currentLanguageButton = new ButtonElement(driver, CURRENT_LANGUAGE_BUTTON);
+        createNewsMainTitleLabel = new LabelElement(driver, CREATE_NEWS_MAIN_TITLE);
+        tagsDescriptionLabel = new LabelElement(driver, TAGS_DESCRIPTION);
+        nameTitleLabel = new LabelElement(driver, NAME_TITLE_LABEL);
+        tagsTitleLabel = new LabelElement(driver, TAGS_TITLE_LABEL);
+        pictureTitleLabel = new LabelElement(driver, PICTURE_TITLE_LABEL);
+        sourceTitleLabel = new LabelElement(driver, SOURCE_TITLE_LABEL);
+        contentTitleLabel = new LabelElement(driver, CONTENT_TITLE_LABEL);
+        dateTitleLabel = new LabelElement(driver, DATE_TITLE_LABEL);
+        authorTitleLabel = new LabelElement(driver, AUTHOR_TITLE_LABEL);
+
+        titleField = new TextAreaElement(driver, TITLE_FIELD);
+        initTagsButtons();
+        sourceField = new InputElement(driver, SOURCE_FIELD);
+        contentField = new TextAreaElement(driver, CONTENT_FIELD);
+        uploadImageInput = new InputElement(driver, UPLOAD_IMAGE_INPUT);
+    }
+
+    private void initTagsButtons() {
+        tags = new ArrayList<>();
+        for(WebElement buttonElement: driver.findElements(TAGS_BUTTON.getPath())) {
+            tags.add(new ButtonElement(buttonElement));
+        }
+    }
+
 }

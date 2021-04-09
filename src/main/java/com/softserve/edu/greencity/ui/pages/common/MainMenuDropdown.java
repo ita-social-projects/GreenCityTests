@@ -62,7 +62,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public void clickMenuEcoNews() {
-        new WebDriverWait(driver, 10)
+        new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector("ul > li:nth-child(1) > a")));
         getMenuEcoNews().click();
     }
