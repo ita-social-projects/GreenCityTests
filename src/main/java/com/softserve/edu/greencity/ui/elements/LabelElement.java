@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 
-public class LabelElement extends BaseElement{
+public class LabelElement extends BaseElement {
     public LabelElement(WebDriver driver, Locator locator) {
         super(driver, locator);
     }
@@ -21,7 +21,6 @@ public class LabelElement extends BaseElement{
     public boolean isDisplayedLabel(){return this.element.isDisplayed();} ///
 
     public String getColor(){return this.element.getCssValue("color");}
-
     public String getColorHex(){return Color.fromString(getColor()).asHex();}
 
     public String getText(){return this.element.getText();}

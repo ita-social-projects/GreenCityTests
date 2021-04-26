@@ -1,22 +1,20 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
+import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
-import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,24 +32,34 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         return new EcoNewsService();
     }
 
+    private CreateNewsPage createNewsPage;
+
+    @BeforeMethod
+    public void OpenCreateNewsPage() {
+        createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage();
+    }
+
+    @AfterMethod
+    public void signOut() {
+        createNewsPage.signOut();
+    }
+
     @Test(testName = "GC-584", description = "GC-584")
     @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
     public void verifyImpossibleToAddImageMore10Mb() {
         logger.info("verifyImpossibleToAddImageMore10Mb");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+        createNewsPage.fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadTooLargeImage();
 
-        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(),IMAGE_ERROR.getText());
+        Assert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR.getText());
 
-        createNewsPage.signOut();
     }
 
-    @Test(testName = "GC-593", description = "GC-593")
+    //@Test(testName = "GC-593", description = "GC-593")
     @Description("Verify that create news button is invisible for unregistered user")
     public void checkInvisibilityOfCreateNewsButtonForGuest() {
         logger.info("checkInvisibilityOfCreateNewsButtonForGuest starts");
@@ -67,16 +75,11 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingNewsWithTooShortContent() {
         logger.info("verifyImpossibilityOfCreatingNewsWithTooShortContent starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithInvalidContentField());
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithInvalidContentField());
 
         Assert.assertFalse(createNewsPage.isPublishButtonClickable());
         Assert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR.getText());
 
-        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-645", description = "GC-645")
@@ -84,17 +87,12 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingTestWithIncorrectUrlInSourceField() {
         logger.info("verifyImpossibilityOfCreatingTestWithIncorrectUrlInSourceField starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithInvalidSourceField());
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithInvalidSourceField());
 
         softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
         softAssert.assertEquals(createNewsPage.getInvalidSourceErrorText(), INVALID_SOURCE_ERROR.getText());
         softAssert.assertAll();
 
-        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-637", description = "GC-637")
@@ -102,14 +100,8 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingNewsWithEmptyFields() {
         logger.info("verifyImpossibilityOfCreatingNewsWithEmptyFields starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage();
-
         Assert.assertFalse(createNewsPage.isPublishButtonClickable());
 
-        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-642", description = "GC-642")
@@ -117,17 +109,12 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingNewsWithoutAnyTags() {
         logger.info("verifyImpossibilityOfCreatingNewsWithoutAnyTags starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getRequiredFieldsNews());
+        createNewsPage.fillFields(NewsDataRepository.get().getRequiredFieldsNews());
         createNewsPage.getTagsComponent().deselectTag(Tag.NEWS);
         createNewsPage.getTagsComponent().deselectTag(Tag.EVENTS);
 
         Assert.assertFalse(createNewsPage.isPublishButtonClickable());
 
-        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-644", description = "GC-644")
@@ -135,16 +122,11 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingNewsWithEmptyTitle() {
         logger.info("verifyImpossibilityOfCreatingNewsWithEmptyTitle starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithInvalidTitleField());
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithInvalidTitleField());
 
         softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
         softAssert.assertAll();
 
-        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-638", description = "GC-638")
@@ -152,17 +134,12 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityOfCreatingNewsWithEmptyContent() {
         logger.info("verifyImpossibilityOfCreatingNewsWithEmptyContent starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithEmptyContentField());
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithEmptyContentField());
 
         softAssert.assertFalse(createNewsPage.isPublishButtonClickable());
         softAssert.assertEquals(createNewsPage.getContentErrorText(), CONTENT_ERROR.getText());
         softAssert.assertAll();
 
-        createNewsPage.signOut();
     }
 
     @LocalOnly
@@ -172,16 +149,10 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
 
         logger.info("verifyImpossibilityOfUploadingGifImage starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+        createNewsPage.fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadGIFImage();
+
         Assert.assertEquals(createNewsPage.getInvalidImageErrorText(), IMAGE_ERROR.getText());
-
-        createNewsPage.signOut();
-
 
     }
 
@@ -192,11 +163,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
 
         logger.info("verifyImpossibilityOfUploadingTooLargeImage starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+        createNewsPage.fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .uploadTooLargeImage();
         try {
             String errorMsg = createNewsPage.getInvalidImageErrorText();
@@ -205,9 +172,6 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         } catch (TimeoutException | NoSuchElementException er) {
             Assert.fail("No error message appeared");
         }
-
-        createNewsPage.signOut();
-
 
     }
 
@@ -251,11 +215,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyPossibilityOfMaxThreeTagsWhenCreateNews(List<Tag> tags) {
         logger.info("verifyPossibilityOfMaxThreeTagsWhenCreateNews starts with parameter : " + tags.toString());
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithInvalidTags(tags));
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithInvalidTags(tags));
 
         softAssert.assertTrue(createNewsPage.isTagsErrorDisplayed());
         softAssert.assertEquals(createNewsPage.getTagsErrorText(), TAGS_ERROR.getText());
@@ -295,11 +255,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void verifyImpossibilityToSelectOneTagTwice(ArrayList<Tag> tags) {
         logger.info("verifyImpossibilityToSelectOneTagTwice starts with parameters : " + tags.toString());
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getNewsWithValidData());
+        createNewsPage.fillFields(NewsDataRepository.get().getNewsWithValidData());
 
         createNewsPage.goToPreViewPage().backToCreateNewsPage();
         createNewsPage.getTagsComponent().deselectTags(tags);
