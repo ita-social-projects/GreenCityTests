@@ -152,6 +152,14 @@ public final class NewsDataRepository {
                 SOURCE_GOOD_NEWS.getString());
     }
 
+    public NewsData getAllFieldsNewsRussian() {
+        List<Tag> tags = new ArrayList<>();
+        tags.add(Tag.NEWS_RU);
+        tags.add(Tag.EVENTS_RU);
+        return new NewsData(tags, TITLE_GREEN_DAY.getString(), SOURCE_GOOD_NEWS.getString(),
+                SOURCE_GOOD_NEWS.getString());
+    }
+
     public NewsData getNewsWithInvalidData() {
         List<Tag> tags = new ArrayList<>();
         tags.add(Tag.EVENTS);

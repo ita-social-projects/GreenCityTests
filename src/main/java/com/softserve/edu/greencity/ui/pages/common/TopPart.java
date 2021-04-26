@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
@@ -17,7 +17,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +35,8 @@ public abstract class TopPart implements StableWebElementSearch {
     protected final String OPTION_NULL_MESSAGE = "DropdownComponent is null";
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private Select languageSwitcher;
     private WebElement copyright;
+    private LanguageComponents languageSwitch;
     private MainMenuDropdown mainMenuDropdown;
     private TopGuestComponent topGuestComponent;
     private TopUserComponent topUserComponent;
@@ -51,24 +50,8 @@ public abstract class TopPart implements StableWebElementSearch {
         this.waitsSwitcher = new WaitsSwitcher(driver, 5, 10);
     }
 
-    public Select getLanguageSwitcher() {
-        return languageSwitcher = new Select(driver.findElement(By.cssSelector("select.language-switcher")));
-    }
-
-    public WebElement getLanguageSwitcherWebElement() {
-        return getLanguageSwitcher().getWrappedElement();
-    }
-
     public String getLanguageSwitcherText() {
-        return getLanguageSwitcher().getFirstSelectedOption().getText();
-    }
-
-    protected void setLanguageSwitcher(String text) {
-        getLanguageSwitcher().selectByVisibleText(text);
-    }
-
-    protected void clickLanguageSwitcher() {
-        getLanguageSwitcherWebElement().click();
+        return languageSwitch.getLanguageSwitchWebElement().getText();
     }
 
     public WebElement getCopyright() {
@@ -155,11 +138,7 @@ public abstract class TopPart implements StableWebElementSearch {
         actions.moveToElement(element);
         actions.build().perform();
     }
-    @Step("choose Language")
-    protected void chooseLanguage(Languages language) {
-        clickLanguageSwitcher();
-        setLanguageSwitcher(language.toString());
-    }
+
     @Step("verifying that Menu Clickable")
     protected boolean isMenuClickable() {
         return driver.manage().window().getSize().height > WINDOW_HEIGHT_TO_CLICK_FOOTER;
@@ -251,11 +230,23 @@ public abstract class TopPart implements StableWebElementSearch {
     public void googleAccountSignOut() {
         getGoogleAccountManagerPage().googleAccountSignOut();
     }
+
     @Step("change Window Width")
     public void changeWindowWidth(int width) {
         WindowManager windowManager = new WindowManager(driver);
         windowManager.changeWindowWidth(width);
     }
+    @Step("change Window Height")
+    public void changeWindowHeight(int height) {
+        WindowManager windowManager = new WindowManager(driver);
+        windowManager.changeWindowHeight(height);
+    }
+    @Step("set custom window dimensions")
+    public void setWindowsDimensions(int width, int height){
+        WindowManager windowManager = new WindowManager(driver);
+        windowManager.setWindowsDimensions(width,height);
+    }
+
     @Step("maximize Window")
     public void maximizeWindow() {
         WindowManager windowManager = new WindowManager(driver);
@@ -266,6 +257,12 @@ public abstract class TopPart implements StableWebElementSearch {
         String windowSize = js.executeScript("return (window.outerWidth - window.innerWidth + "+width+"); ").toString();
         width = Integer.parseInt((windowSize));
         return width;
+    }
+    public int getWindowHeight(int height){
+        JavascriptExecutor js= (JavascriptExecutor)driver;
+        String windowSize = js.executeScript("return (window.outerHeight - window.innerHeight + "+height+"); ").toString();
+        height = Integer.parseInt((windowSize));
+        return height;
     }
     @Override
     public WebDriver setDriver() {

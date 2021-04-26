@@ -1,9 +1,15 @@
 package com.softserve.edu.greencity.ui.pages.econews;
 
+import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
+import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.econews.NewsData;
+import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.InputElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
+import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.UploadFileUtil;
-import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +18,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators.*;
 
 /**
  * A class that handles this page: https://ita-social-projects.github.io/GreenCityClient/#/news/create-news
@@ -29,10 +39,35 @@ public class CreateNewsPage extends TopPart {
     private final String CLASS_ATTRIBUTE = "class";
     private TagsComponent tagsComponent;
 
+    private ButtonElement cancelButton;
+    private ButtonElement previewButton;
+    private ButtonElement publishButton;
+    private ButtonElement currentLanguageButton;
+    private List<WebElement> languageOptions;
+    private LabelElement createNewsMainTitleLabel;
+    private LabelElement tagsDescriptionLabel;
+    private LabelElement nameTitleLabel;
+    private LabelElement tagsTitleLabel;
+    private LabelElement pictureTitleLabel;
+    private LabelElement sourceTitleLabel;
+    private LabelElement contentTitleLabel;
+    private LabelElement dateTitleLabel;
+    private LabelElement authorTitleLabel;
+
+    private TextAreaElement titleField;
+    private List<ButtonElement> tags;
+    private InputElement sourceField;
+    private TextAreaElement contentField;
+    private InputElement uploadImageInput;
+    private ButtonElement submitPhotoButton;
+
     public CreateNewsPage(WebDriver driver) {
         super(driver);
         checkElements();
+        init();
     }
+
+
 
     private void checkElements() {
         tagsComponent = new TagsComponent(driver);
@@ -49,19 +84,44 @@ public class CreateNewsPage extends TopPart {
         return searchElementByCss(CREATE_NEWS_MAIN_TITLE.getPath()).getText();
     }
 
+    @Step("Get title label")
+    public LabelElement getTitleLabel() {
+        return (LabelElement) searchElementByXpath(TITLE_LABELS.getPath());
+    }
+
+    @Step("Get tags label")
+    public LabelElement getTagsLabel() {
+        return (LabelElement) searchElementByXpath(TAGS_LABELS.getPath());
+    }
+
+    @Step("Get source label")
+    public LabelElement getSourceLabel() {
+        return (LabelElement) searchElementByXpath(SOURCE_LABELS.getPath());
+    }
+
+    @Step("Get picture label")
+    public LabelElement getPictureLabel() {
+        return (LabelElement) searchElementByXpath(PICTURE_LABELS.getPath());
+    }
+
+    @Step("Get content label")
+    public LabelElement getContentLabel() {
+        return (LabelElement) searchElementByXpath(CONTENT_LABELS.getPath());
+    }
+
     @Step("Get title field")
-    private WebElement getTitleField() {
+    public WebElement getTitleField() {
         return searchElementByCss(TITLE_FIELD.getPath());
     }
 
     @Step("Set title field")
     public CreateNewsPage setTitleField(String text) {
         getTitleField().sendKeys(text);
-        return  this;
+        return this;
     }
 
     @Step("Get title field height")
-    public int getTitleFieldHeight(){
+    public int getTitleFieldHeight() {
         return getTitleField().getSize().getHeight();
     }
 
@@ -137,7 +197,7 @@ public class CreateNewsPage extends TopPart {
     }
 
     @Step("Get content field height")
-    public int getContentHeight(){
+    public int getContentHeight() {
         return getContentField().getSize().getHeight();
     }
 
@@ -227,6 +287,12 @@ public class CreateNewsPage extends TopPart {
         return searchElementByCss(DROP_AREA.getPath());
     }
 
+    @Step("Get upload area")
+    public WebElement getUploadArea() {
+        //TODO refactor searchElementByCss
+        return driver.findElement(By.cssSelector("input[id='upload']"));
+    }
+
     @Step("Check if picture is uploaded")
     public Boolean isPictureUploaded() {
         return getDropArea().getAttribute(CLASS_ATTRIBUTE).contains("ng-star-inserted");
@@ -266,7 +332,6 @@ public class CreateNewsPage extends TopPart {
     public boolean isContentDescriptionWarning() {
         return getContentField().getAttribute(CLASS_ATTRIBUTE).contains("invalid");
     }
-
     @Step("Get picture description")
     public WebElement getPictureDescription() {
         return searchElementByXpath(PICTURE_DESCRIPTION.getPath());
@@ -312,10 +377,32 @@ public class CreateNewsPage extends TopPart {
         return searchElementByCss(INVALID_IMAGE_ERROR.getPath()).getText();
     }
 
+//    @Step("Upload file")
+//    public CreateNewsPage uploadFile(WebElement dropArea, String path) {
+//        String absolutePath = new File(path).getAbsolutePath();
+//        UploadFileUtil.DropFile(new File(absolutePath), dropArea, 0, 0);
+//        try {
+//            driver.findElements(By.cssSelector(".cropper-buttons button")).get(0).click();
+//        } catch (IndexOutOfBoundsException e) {
+//            e.printStackTrace();
+//        }
+//        return this;
+//    }
+
+    @Step("Get validation header text")
+    public String getConfirmationHeaderText() {
+        return searchElementByCss(CONFIRMATION_POPUP_HEADER.getPath()).getText();
+    }
+
+    @Step("Get validation description text")
+    public String getConfirmationDescriptionText() {
+        return searchElementByCss(CONFIRMATION_POPUP_DESCRIPTION.getPath()).getText();
+    }
+
     @Step("Upload file")
     public CreateNewsPage uploadFile(WebElement dropArea, String path) {
         String absolutePath = new File(path).getAbsolutePath();
-        UploadFileUtil.DropFile(new File(absolutePath), dropArea, 0, 0);
+        dropArea.sendKeys(absolutePath);
         try {
             driver.findElements(By.cssSelector(".cropper-buttons button")).get(0).click();
         } catch (IndexOutOfBoundsException e) {
@@ -326,25 +413,40 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Upload GIF image")
     public CreateNewsPage uploadGIFImage() {
-        uploadFile(getDropArea(),"src/test/resources/images/gifImage.gif");
+        uploadFile(getUploadArea(), "src/test/resources/images/gifImage.gif");
         return this;
     }
 
+    @Step("Upload PDF file")
+    public CreateNewsPage uploadPDFFile() {
+        uploadFile(getUploadArea(), "src/test/resources/images/PDFFile.pdf");
+        return this;
+    }
+
+//    @Step("Upload PDF file")
+//    public CreateNewsPage uploadPDFFile(){
+//        String path = "src/test/resources/images/PDFFile.pdf";
+//        String absolutePath = new File(path).getAbsolutePath();
+//        WebElement element = driver.findElement(By.id("upload"));
+//        element.sendKeys(absolutePath);
+//        return this;
+//    }
+
     @Step("Upload too large image")
     public CreateNewsPage uploadTooLargeImage() {
-        uploadFile(getDropArea(), "src/test/resources/images/tooLargeImage.jpg");
+        uploadFile(getUploadArea(), "src/test/resources/images/tooLargeImage.jpg");
         return this;
     }
 
     @Step("Upload PNG image")
     public CreateNewsPage uploadPNGImage() {
-        uploadFile(getDropArea(), "src/test/resources/images/pngValidImage.png");
+        uploadFile(getUploadArea(), "src/test/resources/images/pngValidImage.png");
         return this;
     }
 
     @Step("Upload JPG image")
     public CreateNewsPage uploadJPGImage() {
-        uploadFile(getDropArea(), "src/test/resources/images/jpgValidImage.jpg");
+        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
         return this;
     }
 
@@ -365,7 +467,7 @@ public class CreateNewsPage extends TopPart {
             setSourceField(newsData.getSource());
         }
         if (!newsData.getFilePath().equals("")) {
-            uploadFile(getDropArea(), newsData.getFilePath());
+            uploadFile(getUploadArea(), newsData.getFilePath());
         }
         tagsComponent.selectTags(newsData.getTags());
         return this;
@@ -405,6 +507,8 @@ public class CreateNewsPage extends TopPart {
             new WebDriverWait(driver, 10)
                     .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
         } catch (Exception e) {
+            //TODO handle show error message with new create news
+            driver.navigate().refresh();
             navigateMenuEcoNews();
         }
         return navigateMenuEcoNews();
@@ -442,14 +546,29 @@ public class CreateNewsPage extends TopPart {
         action.moveToElement(element).perform();
     }
 
+    private void clickTagByName(String tagName) {
+        /**
+         * Method searches tag element (ButtonElement) with defined name and clicks it
+         * @param tagName text in the tag element
+         */
+        for(ButtonElement buttonElement: tags) {
+            if(buttonElement.getInnerText().trim().equals(tagName)) {
+                buttonElement.click();
+                initTagsButtons();
+                break;
+            }
+        }
+    }
+
     /**
      * Method that resized 'Content' field
      * Get width (x) and height (y) of content field, divided it by 2 because getContentField method return
      * the central coordinates of the element. Minus 2 for navigation exactly on resize element by X and Y coordinate
+     *
      * @param resizeDown - the number of pixels on which content field resize
      */
     @Step("Action")
-    public CreateNewsPage changeContentFieldSize(int resizeDown){
+    public CreateNewsPage changeContentFieldSize(int resizeDown) {
         Actions action = new Actions(driver);
         action.moveToElement(getCopyright()).perform();
         int x = getContentWidth() / 2 - 2;
@@ -483,9 +602,19 @@ public class CreateNewsPage extends TopPart {
             return searchElementByCss(continueEditingButton);
         }
 
+        @Step("Check if continue editting button is displayed")
+        public boolean isContinueEditingButtonDisplayed() {
+            return getContinueEditingButton().isDisplayed();
+        }
+
         @Step("Get cancel editing button")
         private WebElement getCancelEditingButton() {
             return searchElementByCss(cancelEditingButton);
+        }
+
+        @Step("Check if cancel editting button is displayed")
+        public boolean isCancelEditingButtonDisplayed() {
+            return getCancelEditingButton().isDisplayed();
         }
 
         /**
@@ -510,4 +639,65 @@ public class CreateNewsPage extends TopPart {
             return new EcoNewsPage(driver);
         }
     }
+
+    public CreateNewsPage changeLanguageToUkrainian(){
+        return changeLanguageTo(Languages.UKRAINIAN.toString());
+    }
+
+    public CreateNewsPage changeLanguageTo(String lang) {
+        currentLanguageButton.click();
+        languageOptions = driver.findElements(LANGUAGE_OPTIONS_BUTTON.getPath());
+        for(WebElement element: languageOptions) {
+            ButtonElement currentButton = new ButtonElement(element);
+            if(currentButton.getText().equals(lang)){
+                currentButton.click();
+                break;
+            }
+        }
+        return new CreateNewsPage(driver);
+    }
+
+    public void postingNews(String titleText, String[] tags, String contentText, String sourceText, String imagePath){
+        titleField.enterText(titleText);
+        sourceField.sendKeys(sourceText);
+        contentField.enterText(contentText);
+        for(String tag: tags) {
+            clickTagByName(tag);
+        }
+        uploadImageInput.sendKeys(imagePath);
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.elementToBeClickable(SUBMIT_PHOTO_BUTTON.getPath()));
+        submitPhotoButton = new ButtonElement(driver, SUBMIT_PHOTO_BUTTON);
+        submitPhotoButton.click();
+        publishButton.click();
+    }
+
+    public void init() {
+        cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
+        previewButton = new ButtonElement(driver, PREVIEW_BUTTON);
+        publishButton = new ButtonElement(driver, PUBLISH_BUTTON);
+        currentLanguageButton = new ButtonElement(driver, CURRENT_LANGUAGE_BUTTON);
+        createNewsMainTitleLabel = new LabelElement(driver, CREATE_NEWS_MAIN_TITLE);
+        tagsDescriptionLabel = new LabelElement(driver, TAGS_DESCRIPTION);
+        nameTitleLabel = new LabelElement(driver, NAME_TITLE_LABEL);
+        tagsTitleLabel = new LabelElement(driver, TAGS_TITLE_LABEL);
+        pictureTitleLabel = new LabelElement(driver, PICTURE_TITLE_LABEL);
+        sourceTitleLabel = new LabelElement(driver, SOURCE_TITLE_LABEL);
+        contentTitleLabel = new LabelElement(driver, CONTENT_TITLE_LABEL);
+        dateTitleLabel = new LabelElement(driver, DATE_TITLE_LABEL);
+        authorTitleLabel = new LabelElement(driver, AUTHOR_TITLE_LABEL);
+
+        titleField = new TextAreaElement(driver, TITLE_FIELD);
+        initTagsButtons();
+        sourceField = new InputElement(driver, SOURCE_FIELD);
+        contentField = new TextAreaElement(driver, CONTENT_FIELD);
+        uploadImageInput = new InputElement(driver, UPLOAD_IMAGE_INPUT);
+    }
+
+    private void initTagsButtons() {
+        tags = new ArrayList<>();
+        for(WebElement buttonElement: driver.findElements(TAGS_BUTTON.getPath())) {
+            tags.add(new ButtonElement(buttonElement));
+        }
+    }
+
 }

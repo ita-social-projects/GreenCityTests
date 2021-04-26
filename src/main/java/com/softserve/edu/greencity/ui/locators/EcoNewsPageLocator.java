@@ -14,20 +14,20 @@ public enum EcoNewsPageLocator implements Locator {
     TAGS(By.cssSelector("app-tag-filter>div.wrapper>ul>a")),
     ACTIVE_TAGS(By.cssSelector("li.global-tag-clicked")),
     UNCHECK_TAG_BUTTONS(By.cssSelector(".global-tag-close-icon")),
-    ARTICLES_FOUND_COUNTER(By.cssSelector("app-remaining-count>p")),
+    ARTICLES_FOUND_COUNTER(By.cssSelector("app-remaining-count>h2")),
     DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),
     DISPLAYED_ARTICLES_TITLES(By.xpath("//div[@class = 'title-list word-wrap']")),
     ARTICLE_IMAGE(By.cssSelector(" div.list-image>img")),
     ARTICLE_ECO_BUTTON(By.cssSelector("div.filter-tag>div.ul-eco-buttons")),
-    ARTICLE_TITLE(By.cssSelector("div.added-data>div.title-list>p")),
+    ARTICLE_TITLE(By.cssSelector("div.added-data>div.title-list>h3")),
     ARTICLE_TEXT(By.cssSelector(" div.added-data>div.list-text>p")),
     ARTICLE_CREATION_DATE(By.cssSelector("div.user-data-added-news>p:first-child")),
     ARTICLE_AUTHOR_NAME(By.cssSelector("div.user-data-added-news>p:last-child")),
     GALLERY_VIEW_BUTTON(By.cssSelector(".btn-tiles")),
-    GALLERY_VIEW_BUTTON_HOVER(By.cssSelector(".btn-tiles>i")),
+    GALLERY_VIEW_BUTTON_HOVER(By.cssSelector(".btn-tiles>em")),
     GALLERY_VIEW_WRAPPER(By.cssSelector(".btn-tiles-active")),
     LIST_VIEW_BUTTON(By.cssSelector(".btn-bars")),
-    LIST_VIEW_BUTTON_HOVER(By.cssSelector(".btn-bars>i")),
+    LIST_VIEW_BUTTON_HOVER(By.cssSelector(".btn-bars>em")),
     LIST_VIEW_WRAPPER(By.cssSelector(".btn-bars-active")),
     OPEN_TOPICS_TAGS(By.cssSelector("div.tags>div.tags-item")),
     NEWS_TITLE(By.cssSelector("div.news-title")),
@@ -37,7 +37,9 @@ public enum EcoNewsPageLocator implements Locator {
     NEWS_INFO_IMAGE(By.cssSelector("div>img.news-image-img")),
     NEWS_INFO_SOCIAL_LINKS_IMG(By.cssSelector("div.news-links-images")),
     NEWS_INFO_TEXT(By.cssSelector("div.news-text-content")),
-    NEWS_INFO_SOURCE(By.cssSelector("div.source-field"));
+    NEWS_INFO_SOURCE(By.cssSelector("div.source-field")),
+    LANGUAGE_BUTTONS(By.cssSelector("ul.header_lang-switcher-wrp.header_navigation-menu-right-list li")),
+    LANGUAGE_SWITCHER(By.cssSelector("ul.header_lang-switcher-wrp.header_navigation-menu-right-list"));
 
     EcoNewsPageLocator(By path) {
         this.path = path;

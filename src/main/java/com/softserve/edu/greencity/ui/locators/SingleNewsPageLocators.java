@@ -8,7 +8,7 @@ public enum SingleNewsPageLocators implements Locator {
     TITLE(By.cssSelector("div.news-title")),
     DATA(By.cssSelector("div.news-info > div.news-info-date")),
     AUTHOR(By.cssSelector("div.news-info > div.news-info-author")),
-    PICTURE(By.cssSelector("div.news-image > img.news-image-img")),
+    PICTURE(By.cssSelector("div.news-content > img.news-image-img")),
     CONTENT(By.cssSelector("div.news-text")),
     TAGS_LIST(By.cssSelector("div.tags > div")),
     SOURCE_TITLE(By.cssSelector("div.source-title")),

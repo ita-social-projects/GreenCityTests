@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
-import com.softserve.edu.greencity.data.Languages;
+import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
@@ -32,6 +32,7 @@ public class TipsTricksPage extends TopPart {
     private WebElement allNewsLink;
 
     private WebDriverWait wait;
+    private LanguageComponents languageSwitcher;
 
     public TipsTricksPage(WebDriver driver) {
         super(driver);
@@ -229,8 +230,9 @@ public class TipsTricksPage extends TopPart {
         return new QuantityItems().quantityItems(getAmountCupsText());
     }
 
-    public TipsTricksPage switchLanguage(Languages language) {
-        chooseLanguage(language);
+    public TipsTricksPage switchUaLanguage() {
+        languageSwitcher = new LanguageComponents(driver);
+        languageSwitcher.clickUaLanguage();
         return new TipsTricksPage(driver);
     }
 
