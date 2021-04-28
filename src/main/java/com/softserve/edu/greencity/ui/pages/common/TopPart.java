@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
 import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
@@ -12,7 +13,6 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -55,7 +55,7 @@ public abstract class TopPart implements StableWebElementSearch {
     }
 
     public WebElement getCopyright() {
-        return copyright = driver.findElement(By.cssSelector(".footer_bottom-part"));
+        return copyright = driver.findElement(MenuElementsLocators.COPYRIGHT.getPath());
     }
 
     public String getCopyrightText() {
@@ -211,7 +211,8 @@ public abstract class TopPart implements StableWebElementSearch {
     public WelcomePage signOut() {
         logger.debug("start signout()");
         logger.trace("click Signout link from ProfileDropdown");
-        createTopUserComponent().clickProfileDropdownSignout();
+        createTopUserComponent().clickUserNameButton().clickSignout();
+//                .clickProfileDropdownSignout();
         logger.trace("close TopUserComponent");
         closeTopUserComponent();
         logger.trace("create TopGuestComponent");

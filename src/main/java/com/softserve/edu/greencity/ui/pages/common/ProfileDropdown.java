@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import org.openqa.selenium.By;
+import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -11,19 +11,19 @@ public class ProfileDropdown {
 	//private WebElement favoritePlaces; //removed from UI
 	private WebElement userSettings;
 	private WebElement signout;
-	private WebElement favoritePlaces;
+//	private WebElement favoritePlaces;
 
 	public ProfileDropdown(WebDriver driver) {
 		this.driver = driver;
-		initElements();
+		//initElements();
 	}
 
-	private void initElements() {
-		// init elements
-		favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
-		userSettings = driver.findElement(By.cssSelector("li.tertiary-global-button > a"));
-		signout = driver.findElement(By.cssSelector("#header_user-wrp > li:nth-child(3) > a"));
-	}
+//	private void initElements() {
+//		// init elements
+//		//favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
+//		userSettings = driver.findElement(By.cssSelector("li.tertiary-global-button > a"));
+//		signout = driver.findElement(By.cssSelector("#header_user-wrp > li:nth-child(3) > a"));
+//	}
 
 	// Page Object
 
@@ -44,6 +44,9 @@ public class ProfileDropdown {
 	// userSettings
 
 	public WebElement getUserSettings() {
+		if(userSettings == null){
+			userSettings = driver.findElement(MenuElementsLocators.USER_SETTINGS.getPath());
+		}
 		return userSettings;
 	}
 
@@ -58,6 +61,9 @@ public class ProfileDropdown {
 	// signout
 
 	public WebElement getSignout() {
+		if(signout == null){
+			signout = driver.findElement(MenuElementsLocators.USER_SIGNOUT.getPath());
+		}
 		return signout;
 	}
 

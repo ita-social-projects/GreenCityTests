@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.locators.menu.MainMenuDropdownLocators;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
@@ -13,17 +14,6 @@ public class MainMenuDropdown implements StableWebElementSearch {
 
     private WebDriver driver;
     protected WebDriverWait wait;
-    private By naviconButton = By.cssSelector("div.menu-icon");
-    private By menuEcoNews = By.cssSelector("ul > li > a[href*='/news']");
-    private By menuTipsTricks = By.cssSelector("ul > li > a[href*='/tips']");
-    private By menuMap = By.cssSelector("ul > li > a[href*='/map']");
-    private By menuAbout = By.cssSelector("ul > li > a[href*='/about']");
-    private By menuMyHabits = By.cssSelector("ul > li > a[href*='/profile']");
-    private By footerEcoNews = By.cssSelector("app-footer a[href*='/news']");
-    private By footerTipsTricks = By.cssSelector("app-footer a[href*='/tips']");
-    private By footerPlaces = By.cssSelector("app-footer a[href*='/map']");
-    private By footerMyHabits = By.cssSelector("app-footer a[href*='/profile']");
-    private By footerAbout = By.cssSelector("app-footer a[href*='/about']");
 
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
@@ -36,7 +26,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getNaviconButton() {
-        return searchElementByCss(naviconButton);
+        return searchElementByCss(MainMenuDropdownLocators.NAVICON_BUTTON.getPath());
     }
     @Step
     public String getNaviconButtonText() {
@@ -54,7 +44,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getMenuEcoNews() {
-        return searchElementByCss(menuEcoNews);
+        return searchElementByCss(MainMenuDropdownLocators.MENU_ECO_NEWS.getPath());
     }
     @Step
     public String getMenuEcoNewsText() {
@@ -72,7 +62,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getMenuTipsTricks() {
-        return searchElementByCss(menuTipsTricks);
+        return searchElementByCss(MainMenuDropdownLocators.MENU_TIPS_TRICS.getPath());
     }
     @Step
     public String getMenuTipsTricksText() {
@@ -80,7 +70,6 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public void clickMenuTipsTricks() {
-
         getMenuTipsTricks().click();
     }
     @Step
@@ -88,27 +77,27 @@ public class MainMenuDropdown implements StableWebElementSearch {
         return getMenuTipsTricks().isDisplayed();
     }
     @Step
-    public WebElement getMenuMap() {
-        return searchElementByCss(menuMap);
+    public WebElement getMenuPlaces() {
+        return searchElementByCss(MainMenuDropdownLocators.MENU_PLACES.getPath());
     }
     @Step
     public String getMenuMapText() {
-        return getMenuMap().getText();
+        return getMenuPlaces().getText();
     }
     @Step
     public void clickMenuMap() {
-        getMenuMap().click();
+        getMenuPlaces().click();
     }
     @Step
     public boolean isDisplayedMenuMap() {
-        return getMenuMap().isDisplayed();
+        return getMenuPlaces().isDisplayed();
     }
     @Step
     public WebElement getMenuMyHabits() {
         if (!isDisplayedMenuMyCabinet()) {
             clickNaviconButton();
         }
-        return searchElementByCss(menuMyHabits);
+        return searchElementByCss(MainMenuDropdownLocators.MENU_MY_HABITS.getPath());
     }
     @Step
     public String getMenuMyCabinetText() {
@@ -124,7 +113,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getMenuAbout() {
-        return searchElementByCss(menuAbout);
+        return searchElementByCss(MainMenuDropdownLocators.MENU_ABOUT.getPath());
     }
     @Step
     public String getMenuAboutText() {
@@ -140,7 +129,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getFooterEcoNews() {
-        return searchElementByCss(footerEcoNews);
+        return searchElementByCss(MainMenuDropdownLocators.FOOTER_ECO_NEWS.getPath());
     }
     @Step
     public String getFooterEcoNewsText() {
@@ -152,7 +141,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getFooterTipsTricks() {
-        return searchElementByCss(footerTipsTricks);
+        return searchElementByCss(MainMenuDropdownLocators.FOOTER_TIPS_TRICS.getPath());
     }
     @Step
     public String getFooterTipsTricksText() {
@@ -164,7 +153,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getFooterPlaces() {
-        return searchElementByCss(footerPlaces);
+        return searchElementByCss(MainMenuDropdownLocators.FOOTER_PLACES.getPath());
     }
     @Step
     public String getFooterPlacesText() {
@@ -176,7 +165,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getFooterMyHabits() {
-        return searchElementByCss(footerMyHabits);
+        return searchElementByCss(MainMenuDropdownLocators.FOOTER_MY_HABITS.getPath());
     }
     @Step
     public String getFooterMyCabinetText() {
@@ -188,7 +177,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public WebElement getFooterAbout() {
-        return searchElementByCss(footerAbout);
+        return searchElementByCss(MainMenuDropdownLocators.FOOTER_ABOUT.getPath());
     }
     @Step
     public String getFooterAboutText() {
