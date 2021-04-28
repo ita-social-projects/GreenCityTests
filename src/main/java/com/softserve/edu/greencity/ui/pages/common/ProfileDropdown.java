@@ -11,6 +11,7 @@ public class ProfileDropdown {
 	//private WebElement favoritePlaces; //removed from UI
 	private WebElement userSettings;
 	private WebElement signout;
+	private WebElement favoritePlaces;
 
 	public ProfileDropdown(WebDriver driver) {
 		this.driver = driver;
@@ -19,7 +20,7 @@ public class ProfileDropdown {
 
 	private void initElements() {
 		// init elements
-		//favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
+		favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));
 		userSettings = driver.findElement(By.cssSelector("li.tertiary-global-button > a"));
 		signout = driver.findElement(By.cssSelector("#header_user-wrp > li:nth-child(3) > a"));
 	}

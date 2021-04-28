@@ -16,7 +16,7 @@ public class TopUserComponent {
 	protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
 	//
 	private final String TAG_ATTRIBUTE_CLASS = "class";
-	private final String USER_NAME_CSS = "#header_user-wrp > li.tertiary-global-button > a"; //"div#user-avatar-wrapper li.tertiary-global-button > a";
+	private final String USER_NAME_CSS = "#header_user-wrp"; //"div#user-avatar-wrapper li.tertiary-global-button > a";
 	//
 	private WebDriver driver;
 	//
@@ -40,7 +40,7 @@ public class TopUserComponent {
 
 	public WebElement getProfileButton() {
 
-		profileButton = driver.findElement(By.cssSelector("#header_user-wrp > li.tertiary-global-button > a"));
+		profileButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
 		return profileButton;
 	}
 
