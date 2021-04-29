@@ -22,6 +22,6 @@ public enum MenuElementsLocators implements Locator {
 
     @Override
     public By getPath() {
-        return null;
+        return path;
     }
 }
