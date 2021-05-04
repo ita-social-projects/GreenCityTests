@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 
 import io.qameta.allure.Step;
 
+import java.util.Locale;
+
 /**
  * Base Abstract Class of Header and Footer.
  * All page classes should extend this class
@@ -49,6 +51,8 @@ public abstract class TopPart implements StableWebElementSearch {
         this.driver = driver;
         this.waitsSwitcher = new WaitsSwitcher(driver, 5, 10);
     }
+
+    public Locale getLanguageLocale(){ return languageSwitch.getLanguageLocale(); }
 
     public String getLanguageSwitcherText() {
         return languageSwitch.getLanguageSwitchWebElement().getText();

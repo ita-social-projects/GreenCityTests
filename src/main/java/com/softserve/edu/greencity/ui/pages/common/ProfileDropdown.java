@@ -5,17 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class ProfileDropdown {
-	//
+
 	private WebDriver driver;
-	//
-	//private WebElement favoritePlaces; //removed from UI
 	private WebElement userSettings;
 	private WebElement signout;
-//	private WebElement favoritePlaces;
 
 	public ProfileDropdown(WebDriver driver) {
 		this.driver = driver;
-		//initElements();
 	}
 
 //	private void initElements() {

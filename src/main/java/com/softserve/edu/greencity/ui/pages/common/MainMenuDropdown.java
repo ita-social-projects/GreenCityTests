@@ -17,8 +17,10 @@ public class MainMenuDropdown implements StableWebElementSearch {
 
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
+        // TODO: delete method from constructor
         checkElements();
     }
+
     @Step
     private void checkElements() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
@@ -52,8 +54,8 @@ public class MainMenuDropdown implements StableWebElementSearch {
     }
     @Step
     public void clickMenuEcoNews() {
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.elementToBeClickable(By.cssSelector("ul > li:nth-child(1) > a")));
+        new WebDriverWait(driver, 40)
+                .until(ExpectedConditions.elementToBeClickable(MainMenuDropdownLocators.MENU_ECO_NEWS.getPath()));
         getMenuEcoNews().click();
     }
     @Step

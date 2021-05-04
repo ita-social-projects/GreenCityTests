@@ -25,6 +25,7 @@ public class TagsComponent implements StableWebElementSearch {
 
     public TagsComponent(WebDriver driver) {
         this.driver = driver;
+        // TODO remove from constructor
         initElements();
     }
 

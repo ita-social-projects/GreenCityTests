@@ -11,20 +11,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class TopUserComponent {
 	protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
-	//
 	private final String TAG_ATTRIBUTE_CLASS = "class";
 
-	//
 	private WebDriver driver;
-	//
 	private WebElement profileButton;
 	private WebElement userNameButton;
-	//
 	private ProfileDropdown profileDropdown;
 
 	public TopUserComponent(WebDriver driver) {
 		this.driver = driver;
-		initElements();
+		//initElements();
 	}
 
 	private void initElements() {
@@ -36,7 +32,6 @@ public class TopUserComponent {
 	// profileButton
 
 	public WebElement getProfileButton() {
-
 		profileButton = driver.findElement(MenuElementsLocators.USER_NAME_MENU.getPath());
 		return profileButton;
 	}

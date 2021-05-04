@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
  */
 public enum ReplyLocator implements Locator {
     REPLY_AUTHOR(By.cssSelector(".author-name")),
-    REPLY_DATE(By.cssSelector(".comment-date-month")),
+    REPLY_DATE(By.xpath("//span[@class='comment-date-month']")),
     REPLY_CURRENT_TEXT(By.cssSelector(".comment-text")),
 
     REPLY_LIKE_BUTTON(By.cssSelector(".cta-btn.like")),
@@ -20,7 +20,7 @@ public enum ReplyLocator implements Locator {
     REPLY_CANCEL_CHANGES_BUTTON(By.cssSelector(".cta-btn.cancel-edit")),
     REPLY_REPLY_BUTTON(By.cssSelector(".cta-btn.reply")),
     REPLY_DELETE_BUTTON(By.cssSelector(".cta-btn.delete")),
-    REPLY_AUTHOR_AVATAR(By.cssSelector("app-user-profile-image > img"));
+    REPLY_AUTHOR_AVATAR(By.cssSelector("app-user-profile-image"));
 
     private final By path;
 

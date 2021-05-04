@@ -38,6 +38,7 @@ public class EcoNewsPage extends TopPart {
 
     public EcoNewsPage(WebDriver driver) {
         super(driver);
+        // TODO remove from constructor
         checkElements();
     }
 
