@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
@@ -49,14 +49,14 @@ public class SmallWidthPart extends TopPart {
     }
 
     @Override
-    public MyCabinetPage navigateMenuMyCabinet() {
+    public MyHabitPage navigateMenuMyCabinet() {
         scrollToElementByAction(getCopyright());
         if (isMenuClickable()) {
             return super.navigateMenuMyCabinet();
         }
         getMainMenuDropdown().closeNaviconButton();
         driver.get("https://ita-social-projects.github.io/GreenCityClient/#/auth");
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
 
     @Override

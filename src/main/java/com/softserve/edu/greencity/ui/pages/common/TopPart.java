@@ -5,7 +5,7 @@ import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
 import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
@@ -176,11 +176,11 @@ public abstract class TopPart implements StableWebElementSearch {
         return new MapPage(driver);
     }
     @Step("navigate to Menu MyCabinetGuest")
-    public MyCabinetPage navigateMenuMyCabinet() {
+    public MyHabitPage navigateMenuMyCabinet() {
         logger.debug("go to MyCabinet");
         logger.trace("click MyCabinet link");
         getMainMenuDropdown().clickMenuMyCabinet();
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
     @Step("navigate to Menu MyCabinet Guest")
     public LoginComponent navigateMenuMyCabinetGuest() {
@@ -224,12 +224,12 @@ public abstract class TopPart implements StableWebElementSearch {
         return new WelcomePage(driver);
     }
     @Step("loginIn")
-    public MyCabinetPage loginIn(User user) {
+    public MyHabitPage loginIn(User user) {
         signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
 
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
     @Step("google Account SignOut")
     public void googleAccountSignOut() {

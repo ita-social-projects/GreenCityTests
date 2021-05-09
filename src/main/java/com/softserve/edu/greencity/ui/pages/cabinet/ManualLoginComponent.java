@@ -162,11 +162,11 @@ public class ManualLoginComponent extends LoginComponent implements StableWebEle
 
     //Login
     @Step
-    public MyCabinetPage successfullyLogin(User user) {
+    public MyHabitPage successfullyLogin(User user) {
         fillFields(user);
         clickSignInButton();
         //TODO check if user logged in
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
     @Step
     public ManualLoginComponent unsuccessfullyLogin(User user) {

@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.tipstricks;
 
 import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
@@ -54,14 +54,14 @@ public class TipsTricksPage extends TopPart {
                 .findElement(By.xpath("//div[@id='header-left']//button[@class='button primary-global-button']"));
     }
 
-    public MyCabinetPage clickStartHabitTop() {
+    public MyHabitPage clickStartHabitTop() {
         waiting(2);
 
         scrollToElementByAction(getStartHabitTop());
 
         getStartHabitTop().click();
 
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
 
     public boolean isDisplayedStartHabitTop() {
@@ -242,9 +242,9 @@ public class TipsTricksPage extends TopPart {
      *
      * @return open My cabinet
      */
-    public MyCabinetPage navigateMyCabinet() {
+    public MyHabitPage navigateMyCabinet() {
         clickStartHabitTop();
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
 
     /**

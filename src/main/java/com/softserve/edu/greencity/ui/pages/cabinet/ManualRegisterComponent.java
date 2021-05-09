@@ -432,8 +432,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         return this;
     }
 
-    public MyCabinetPage getMyCabinetPage(){
-        return new MyCabinetPage(driver);
+    public MyHabitPage getMyCabinetPage(){
+        return new MyHabitPage(driver);
     }
 
     @Override

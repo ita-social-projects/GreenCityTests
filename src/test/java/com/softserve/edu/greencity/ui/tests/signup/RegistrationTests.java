@@ -159,7 +159,7 @@ public class RegistrationTests extends GreenCityTestRunner {
                 .getText();
 
         Assert.assertEquals(newHabitButtonText, ADD_NEW_HABIT_BUTTON_TEXT.getText());
-        new MyCabinetPage(driver).signOut();
+        new MyHabitPage(driver).signOut();
 
 
     }

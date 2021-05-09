@@ -20,4 +20,6 @@ public class    ButtonElement extends BaseElement{
     public void click(){
         this.element.click();
     }
+
+    public boolean isActive(){ return this.element.isEnabled();}
 }
