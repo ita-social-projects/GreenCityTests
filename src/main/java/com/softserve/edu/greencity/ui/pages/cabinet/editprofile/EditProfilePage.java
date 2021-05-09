@@ -1,13 +1,18 @@
 package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
+import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.ButtonWithIconElement;
 import com.softserve.edu.greencity.ui.elements.CheckBoxElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
 /**
@@ -15,11 +20,6 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
  * (available only for logged in users)
  */
 public class EditProfilePage extends TopPart {
-
-
-    protected WebDriverWait wait;
-    private WebDriver driver;
-    private WaitsSwitcher waitsSwitcher;
 
     private ButtonElement editPictureButton;
     private TextAreaElement nameField;
@@ -30,6 +30,11 @@ public class EditProfilePage extends TopPart {
     private CheckBoxElement showLocation;
     private CheckBoxElement showEcoPlaces;
     private CheckBoxElement showShoppingList;
+
+    private ButtonElement cancelButton;
+    private ButtonElement saveButton;
+
+    private SocialNetworkComponent socialNetworkComponent;
 
     public EditProfilePage(WebDriver driver) {
         super(driver);
@@ -69,10 +74,11 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get add social network button")
     public ButtonElement getAddSocialNetworkButton(){
-        if(addSocialNetworkButton == null){
-            addSocialNetworkButton = new ButtonElement(driver, ADD_SOCIAL_NETWORKS_BUTTON);
-        }
+//        if(addSocialNetworkButton == null){
+            addSocialNetworkButton = new ButtonWithIconElement(driver, ADD_SOCIAL_NETWORKS_BUTTON);
+//        }
         return addSocialNetworkButton;
+//        return (ButtonElement) searchElementByCss(ADD_SOCIAL_NETWORKS_BUTTON.getPath());
     }
 
     @Step("Get show location check box")
@@ -99,6 +105,19 @@ public class EditProfilePage extends TopPart {
         return showShoppingList;
     }
 
+    public ButtonElement getCancelButton(){
+        if(cancelButton == null){
+            cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
+        }
+        return cancelButton;
+    }
+
+    public ButtonElement getSaveButton() {
+        if(saveButton == null){
+            saveButton = new ButtonElement(driver, SAVE_BUTTON);
+        }
+        return  saveButton;
+    }
     public void fillNameField(String name){
         getNameField().enterText(name);
     }
@@ -127,4 +146,87 @@ public class EditProfilePage extends TopPart {
     public void clickShowShoppingListCheckBox(){
         getShowShoppingListCheckBox().click();
     }
+
+    //TODO add popup element to return CancelEditingPopUp
+    public MyHabitPage clickCancelButton(){
+        getCancelButton().click();
+        return new MyHabitPage(driver);
+    }
+
+    public MyHabitPage clickSaveButton(){
+        if(isSaveButtonActive()){
+            getSaveButton().click();
+            waitsSwitcher.setImplicitWait(30);
+        } else {
+            clickCancelButton();
+        }
+        return new MyHabitPage(driver);
+    }
+
+    public boolean isSaveButtonActive(){
+        return getSaveButton().isActive();
+    }
+
+    public void clearNameField(){
+        getNameField().clearText();
+    }
+
+    public void clearCityField(){
+        getCityField().clearText();
+    }
+
+    public void cleatCredoField(){
+        getCredoField().clearText();
+    }
+
+    public EditProfilePage fillAllRequiredFields(EditProfileData editProfileData){
+        clearNameField();
+        fillNameField(editProfileData.getName());
+        clearCityField();
+        fillCityField(editProfileData.getCity());
+        cleatCredoField();
+        fillCredoField(editProfileData.getCredo());
+        return this;
+    }
+
+    public boolean isAddSocialNetworkButtonActive(){
+        try {
+            return getAddSocialNetworkButton().isActive();
+        }
+        catch (TimeoutException er) {
+            return false;
+        }
+    }
+
+    public AddedSocialNetworkContainer getSocialNetworksContainer() {
+        AddedSocialNetworkContainer addedSocialNetworkContainer
+                = new AddedSocialNetworkContainer(driver);
+        try {
+            waitsSwitcher.setExplicitWait(10,
+                    ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_LINKS.getPath()));
+        }catch (TimeoutException e){
+            addedSocialNetworkContainer.setSocialNetworksSize(0);
+        }
+        return addedSocialNetworkContainer;
+    }
+
+    public EditProfilePage resetFields(EditProfileData editProfileData){
+        fillAllRequiredFields(editProfileData);
+        int socialNetworkContainerSize = getSocialNetworksContainer().getSocialNetworksSize();
+        if(socialNetworkContainerSize > 0){
+            for (int i = 0; i < socialNetworkContainerSize; i++){
+                getSocialNetworksContainer()
+                        .chooseSocialNetworkByNumber(i)
+                        .clickDeleteButton()
+                        .clickYesDeleteButton();
+            }
+        }
+        return this;
+    }
+
+    //TODO add check if data in fields have been changed, if yes after clicking cancel button pop up is shown else no
+//    public boolean isDataHaveBeenChanged(){
+//        getNameField().getText()
+//    }
+
 }
