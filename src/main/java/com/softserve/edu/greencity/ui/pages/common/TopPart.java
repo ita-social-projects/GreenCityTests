@@ -179,7 +179,7 @@ public abstract class TopPart implements StableWebElementSearch {
     public MyHabitPage navigateMenuMyCabinet() {
         logger.debug("go to MyCabinet");
         logger.trace("click MyCabinet link");
-        getMainMenuDropdown().clickMenuMyCabinet();
+        getMainMenuDropdown().clickMyHabits();
         return new MyHabitPage(driver);
     }
     @Step("navigate to Menu MyCabinet Guest")
@@ -187,7 +187,7 @@ public abstract class TopPart implements StableWebElementSearch {
         logger.debug("go to Login Page as Guest");
         logger.trace("click MyCabinet link as Guest");
         logger.info("go to Login Page as a Guest");
-        getMainMenuDropdown().clickMenuMyCabinet();
+        getMainMenuDropdown().clickMyHabits();
         return new LoginComponent(driver);
     }
     @Step("navigate to Menu About")

@@ -4,9 +4,11 @@ import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.ButtonWithIconElement;
 import com.softserve.edu.greencity.ui.elements.CheckBoxElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +23,8 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
  */
 public class EditProfilePage extends TopPart {
 
+    private LabelElement titleLabel;
+
     private ButtonElement editPictureButton;
     private TextAreaElement nameField;
     private TextAreaElement cityField;
@@ -31,13 +35,23 @@ public class EditProfilePage extends TopPart {
     private CheckBoxElement showEcoPlaces;
     private CheckBoxElement showShoppingList;
 
+    private SocialNetworkComponent socialNetworkComponent;
+
     private ButtonElement cancelButton;
     private ButtonElement saveButton;
-
-    private SocialNetworkComponent socialNetworkComponent;
+    private ButtonElement confirmCancelingButton;
 
     public EditProfilePage(WebDriver driver) {
         super(driver);
+    }
+
+
+    @Step("Get title label")
+    public LabelElement getTitleOnEditPage() {
+        if (titleLabel == null) {
+            titleLabel = new LabelElement(driver, TITLE_LABEL);
+        }
+        return titleLabel;
     }
 
     @Step("Get edit picture button")
@@ -56,6 +70,17 @@ public class EditProfilePage extends TopPart {
         return nameField;
     }
 
+    @Step("Clear name field")
+    public EditProfilePage clearNameField() {
+        getNameField().clearText();
+        return this;
+    }
+    @Step("Fill name field")
+    public EditProfilePage fillNameField(String name){
+        getNameField().enterText(name);
+        return this;
+    }
+
     @Step("Get city field")
     public TextAreaElement getCityField(){
         if(cityField == null){
@@ -64,12 +89,36 @@ public class EditProfilePage extends TopPart {
         return cityField;
     }
 
+    @Step("Clear city field")
+    public EditProfilePage clearCityField() {
+        getCityField().clearText();
+        return this;
+    }
+
+    @Step("Fill city field")
+    public EditProfilePage fillCityField(String city){
+        getCityField().enterText(city);
+        return this;
+    }
+
     @Step("Get credo field")
     public TextAreaElement getCredoField(){
         if(credoField == null){
             credoField = new TextAreaElement(driver, CREDO_FIELDS);
         }
         return credoField;
+    }
+
+    @Step("Clear credo field")
+    public EditProfilePage clearCredoField() {
+        getCredoField().clearText();
+        return this;
+    }
+
+    @Step("Fill credo field")
+    public EditProfilePage fillCredoField(String credo){
+        getCredoField().enterText(credo);
+        return this;
     }
 
     @Step("Get add social network button")
@@ -105,6 +154,15 @@ public class EditProfilePage extends TopPart {
         return showShoppingList;
     }
 
+    @Step("Get 'Save' button")
+    public ButtonElement getSaveButton(){
+        if(saveButton == null){
+            saveButton = new ButtonElement(driver, SAVE_BUTTON);
+        }
+        return saveButton;
+    }
+
+    @Step("Get 'Cancel' button")
     public ButtonElement getCancelButton(){
         if(cancelButton == null){
             cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
@@ -112,23 +170,37 @@ public class EditProfilePage extends TopPart {
         return cancelButton;
     }
 
-    public ButtonElement getSaveButton() {
-        if(saveButton == null){
-            saveButton = new ButtonElement(driver, SAVE_BUTTON);
+    @Step("Click 'Save' button")
+    public MyHabitPage clickSaveButton(){
+        if(isSaveButtonActive()){
+            getSaveButton().click();
+            waitsSwitcher.setImplicitWait(30);
+        } else {
+            clickCancelButton();
         }
-        return  saveButton;
-    }
-    public void fillNameField(String name){
-        getNameField().enterText(name);
+        return new MyHabitPage(driver);
     }
 
-    public void fillCityField(String city){
-        getCityField().enterText(city);
+    @Step("Click 'Cancel' button")  //TODO add popup element to return CancelEditingPopUp
+    public EditProfilePage clickCancelButton(){
+        getCancelButton().click();
+        return new EditProfilePage(driver);
     }
 
-    public void fillCredoField(String credo){
-        getCredoField().enterText(credo);
+    @Step("Click 'Yes, Cancel' on popup after clicking 'Cancel' button")
+    public MyHabitPage ClickConfirmationButtonAfterCancelButtonPopup(){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (confirmCancelingButton == null){
+            confirmCancelingButton = new ButtonElement(driver, CONFIRM_CANCEL_PROFILE_EDITING);
+        }
+        confirmCancelingButton.click();
+        return new MyHabitPage(driver);
     }
+
 
     public SocialNetworkComponent clickAddSocialNetworksButton(){
         getAddSocialNetworkButton().click();
@@ -147,44 +219,21 @@ public class EditProfilePage extends TopPart {
         getShowShoppingListCheckBox().click();
     }
 
-    //TODO add popup element to return CancelEditingPopUp
-    public MyHabitPage clickCancelButton(){
-        getCancelButton().click();
-        return new MyHabitPage(driver);
-    }
 
-    public MyHabitPage clickSaveButton(){
-        if(isSaveButtonActive()){
-            getSaveButton().click();
-            waitsSwitcher.setImplicitWait(30);
-        } else {
-            clickCancelButton();
-        }
-        return new MyHabitPage(driver);
-    }
+
+
 
     public boolean isSaveButtonActive(){
         return getSaveButton().isActive();
     }
 
-    public void clearNameField(){
-        getNameField().clearText();
-    }
-
-    public void clearCityField(){
-        getCityField().clearText();
-    }
-
-    public void cleatCredoField(){
-        getCredoField().clearText();
-    }
 
     public EditProfilePage fillAllRequiredFields(EditProfileData editProfileData){
         clearNameField();
         fillNameField(editProfileData.getName());
         clearCityField();
         fillCityField(editProfileData.getCity());
-        cleatCredoField();
+        clearCredoField();
         fillCredoField(editProfileData.getCredo());
         return this;
     }

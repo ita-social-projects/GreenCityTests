@@ -65,17 +65,17 @@ public class SocialNetworkLinkTest extends GreenCityTestRunner {
         Assert.assertFalse(newEditProfilePage.isAddSocialNetworkButtonActive(), "'Add social network' button should be disabled");
     }
 
-    @Test(testName = "GC-1514")
-    @Description("After click 'Cancel' button last edits in 'Social network' module are not saved")
-    public void verifyNetworkNotSavedAfterClickCancel(){
-        MyHabitPage myHabitPage = editProfilePage
-                .clickAddSocialNetworksButton()
-                .fillSocialNetworkField(EditProfileDataRepository.get().getSocialNetworkFacebook())
-                .clickAddButton()
-                .clickCancelButton();
-
-        Assert.assertFalse(myHabitPage.isSocialIconPresent());
-    }
+//    @Test(testName = "GC-1514")
+//    @Description("After click 'Cancel' button last edits in 'Social network' module are not saved")
+//    public void verifyNetworkNotSavedAfterClickCancel(){
+//        MyHabitPage myHabitPage = editProfilePage
+//                .clickAddSocialNetworksButton()
+//                .fillSocialNetworkField(EditProfileDataRepository.get().getSocialNetworkFacebook())
+//                .clickAddButton()
+//                .clickCancelButton();
+//
+//        Assert.assertFalse(myHabitPage.isSocialIconPresent());
+//    }
 
     @Test(testName = "GC-1515")
     @Description("User can edit social network links")

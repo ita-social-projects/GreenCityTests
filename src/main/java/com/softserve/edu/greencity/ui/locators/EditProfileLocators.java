@@ -3,13 +3,17 @@ package com.softserve.edu.greencity.ui.locators;
 import org.openqa.selenium.By;
 
 public enum EditProfileLocators implements Locator{
+    TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
+
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
     EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
     UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
     DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
 
-    NAME_FIELD(By.cssSelector("#name")),
+    //NAME_FIELD(By.cssSelector("#name")),
+    //NAME_FIELD(By.xpath("//input[@class='ng-pristine ng-valid ng-touched']")),
+    NAME_FIELD(By.id("name")),
     CITY_FIELD(By.cssSelector("#city")),
     CREDO_FIELDS(By.cssSelector("#credo")),
 
@@ -37,7 +41,8 @@ public enum EditProfileLocators implements Locator{
     //Remove social networks link pop up locators
     CANCEL_DELETING_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.secondary-global-button")),
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
-    CLOSE_DELETING_BUTTON(By.cssSelector(".close"))
+    CLOSE_DELETING_BUTTON(By.cssSelector(".close")),
+    CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']"))
     ;
 
     private final By path;
