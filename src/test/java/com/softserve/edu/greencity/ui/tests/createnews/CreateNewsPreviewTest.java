@@ -116,47 +116,47 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
     }
 
-    @Test(testName = "GC-614", description = "GC-614")
-    @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
-    public void verifyThatRussianLocalizationIsDisplayedAfterCancel() {
-        logger.info("verifyThatUserCanCancelNewsCreation starts");
+        @Test(testName = "GC-614", description = "GC-614")
+        @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
+        public void verifyThatRussianLocalizationIsDisplayedAfterCancel () {
+            logger.info("verifyThatUserCanCancelNewsCreation starts");
 
-        CreateNewsPage.CancelFrame cancelFrame = loadApplication()
-                .loginIn(getTemporaryUser())
-                .switchRuLanguage()
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
-                .clickCancelButton();
-        //TODO tu add an assert after fixing bug with cancel button
-        softAssert.assertAll();
+            CreateNewsPage.CancelFrame cancelFrame = loadApplication()
+                    .loginIn(getTemporaryUser())
+                    .switchRuLanguage()
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
+                    .clickCancelButton();
+            //TODO tu add an assert after fixing bug with cancel button
+            softAssert.assertAll();
+
+        }
+
+        @Test(testName = "GC-403", description = "GC-403")
+        @Description("Verify that User can go back to editing news by following ‘Back to editing’ link")
+        public void verifyPossibilityOfGoingBackToEditNews () {
+            logger.info("verifyPossibilityOfGoingBackToEditNews starts");
+
+            PreviewPage preViewPage = loadApplication()
+                    .loginIn(getTemporaryUser())
+                    .navigateMenuEcoNews()
+                    .gotoCreateNewsPage()
+                    .fillFields(NewsDataRepository.get().getAllFieldsNews())
+                    .goToPreViewPage();
+
+            softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
+            CreateNewsPage createNewsPage = preViewPage.backToCreateNewsPage();
+            softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS)); //TODO BUG WITH TAGS
+            softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
+            createNewsPage.navigateMenuEcoNews().gotoCreateNewsPage();
+            softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
+            softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
+            softAssert.assertAll();
+
+            createNewsPage.signOut();
+        }
+
+        //TODO add some test on publishing news right from preview page
 
     }
-
-    @Test(testName = "GC-403", description = "GC-403")
-    @Description("Verify that User can go back to editing news by following ‘Back to editing’ link")
-    public void verifyPossibilityOfGoingBackToEditNews() {
-        logger.info("verifyPossibilityOfGoingBackToEditNews starts");
-
-        PreviewPage preViewPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
-                .goToPreViewPage();
-
-        softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
-        CreateNewsPage createNewsPage = preViewPage.backToCreateNewsPage();
-        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS)); //TODO BUG WITH TAGS
-        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
-        createNewsPage.navigateMenuEcoNews().gotoCreateNewsPage();
-        softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
-        softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
-        softAssert.assertAll();
-
-        createNewsPage.signOut();
-    }
-
-    //TODO add some test on publishing news right from preview page
-
-}

@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import org.openqa.selenium.WebDriver;
 
@@ -16,6 +17,8 @@ public class CancelEditingPopUpComponent {
     private ButtonElement continueEditingButton;
     private ButtonElement cancelEditingButton;
     private ButtonElement closeButton;
+    private String titleOfCancelComponent;
+    private String subTitleOfCancelComponent;
 
     public CancelEditingPopUpComponent(WebDriver driver) {
         this.driver = driver;
@@ -49,5 +52,15 @@ public class CancelEditingPopUpComponent {
     public EditProfilePage clickCloseButton(){
         getCloseButton().click();
         return new EditProfilePage(driver);
+    }
+
+    public String getTitleOfCancelPopUpComponent(){
+        titleOfCancelComponent = new LabelElement(driver, TITLE_CANCEL_POP_UP).getText();
+        return titleOfCancelComponent;
+    }
+
+    public String getSubTitleOfCancelComponent(){
+        subTitleOfCancelComponent = new LabelElement(driver, SUB_TITLE_CANCEL_POP_UP).getText();
+        return subTitleOfCancelComponent;
     }
 }

@@ -37,12 +37,15 @@ public enum EditProfileLocators implements Locator{
     CONTINUE_EDITING_BUTTON(By.cssSelector("div.buttons-container > button.secondary-global-button")),
     CANCEL_EDITING(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_EDITING_BUTTON(By.cssSelector(".close")),
+    TITLE_CANCEL_POP_UP(By.xpath("//*[contains(@class,'warning-title')]")),
+    SUB_TITLE_CANCEL_POP_UP(By.xpath("//*[contains(@class,'warning-subtitle')]")),
+
 
     //Remove social networks link pop up locators
     CANCEL_DELETING_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.secondary-global-button")),
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_DELETING_BUTTON(By.cssSelector(".close")),
-    CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']"))
+    CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']")),
     ;
 
     private final By path;

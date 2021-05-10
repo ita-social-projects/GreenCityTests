@@ -26,6 +26,4 @@ public class TextAreaElement extends BaseElement {
 
     public String getText(){return this.element.getAttribute("value");}
 
-
-
 }

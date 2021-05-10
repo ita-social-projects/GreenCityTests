@@ -1,15 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.data.editprofile.EditProfileData;
-import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.ButtonWithIconElement;
-import com.softserve.edu.greencity.ui.elements.CheckBoxElement;
-import com.softserve.edu.greencity.ui.elements.LabelElement;
-import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.elements.*;
+import com.softserve.edu.greencity.ui.locators.EditProfileLocators;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -97,6 +95,11 @@ public class EditProfilePage extends TopPart {
 
     @Step("Fill city field")
     public EditProfilePage fillCityField(String city){
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         getCityField().enterText(city);
         return this;
     }
@@ -182,9 +185,9 @@ public class EditProfilePage extends TopPart {
     }
 
     @Step("Click 'Cancel' button")  //TODO add popup element to return CancelEditingPopUp
-    public EditProfilePage clickCancelButton(){
+    public CancelEditingPopUpComponent clickCancelButton(){
         getCancelButton().click();
-        return new EditProfilePage(driver);
+        return new CancelEditingPopUpComponent(driver);
     }
 
     @Step("Click 'Yes, Cancel' on popup after clicking 'Cancel' button")

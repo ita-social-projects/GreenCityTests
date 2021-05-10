@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class ProfileDropdown {
+public class 	ProfileDropdown {
 
 	private WebDriver driver;
 	private WebElement userSettings;
