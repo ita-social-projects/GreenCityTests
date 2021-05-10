@@ -26,4 +26,15 @@ public class CreateNewsUnregisteredUser extends GreenCityTestRunner {
 
         econewsPage.signOut();
     }
+
+    @Test(testName = "GC-593", description = "GC-593")
+    @Description("Verify that create news button is invisible for unregistered user")
+    public void checkInvisibilityOfCreateNewsButtonForGuest() {
+        logger.info("checkInvisibilityOfCreateNewsButtonForGuest starts");
+
+        EcoNewsPage ecoNewsPage = loadApplication()
+                .navigateMenuEcoNews();
+
+        Assert.assertFalse(ecoNewsPage.isCreateNewsButtonPresent());
+    }
 }

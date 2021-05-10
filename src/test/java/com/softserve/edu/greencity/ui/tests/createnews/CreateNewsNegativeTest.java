@@ -59,17 +59,6 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
 
     }
 
-    //@Test(testName = "GC-593", description = "GC-593")
-    @Description("Verify that create news button is invisible for unregistered user")
-    public void checkInvisibilityOfCreateNewsButtonForGuest() {
-        logger.info("checkInvisibilityOfCreateNewsButtonForGuest starts");
-
-        EcoNewsPage ecoNewsPage = loadApplication()
-                .navigateMenuEcoNews();
-
-        Assert.assertFalse(ecoNewsPage.isCreateNewsButtonPresent());
-    }
-
     @Test(testName = "GC-592", description = "GC-592")
     @Description("Verify that news would not be created if content is too short")
     public void verifyImpossibilityOfCreatingNewsWithTooShortContent() {
@@ -180,12 +169,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
     public void checkImpossibleToCreateNewsWithoutFillingMandatoryFields() {
         logger.info("checkImpossibleToCreateNewsWithoutFillingMandatoryFields starts");
 
-        EcoNewsPage ecoNewsPage =
-//        loadApplication()
-//                .loginIn(getTemporaryUser())
-//                .navigateMenuEcoNews()
-//                .gotoCreateNewsPage()
-                createNewsPage.fillFields(NewsDataRepository.get().getNewsWithValidData())
+        EcoNewsPage ecoNewsPage = createNewsPage.fillFields(NewsDataRepository.get().getNewsWithValidData())
                 .publishNews();
 
         softAssert.assertTrue(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
@@ -193,7 +177,6 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         softAssert.assertAll();
 
-        ecoNewsPage.signOut();
     }
 
 
@@ -236,7 +219,6 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithInvalidTags(tags).getTitle()));
         softAssert.assertAll();
 
-        ecoNewsPage.signOut();
     }
 
 
@@ -269,7 +251,6 @@ public class CreateNewsNegativeTest extends GreenCityTestRunner {
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(NewsDataRepository.get().getNewsWithValidData().getTitle()));
         softAssert.assertAll();
 
-        ecoNewsPage.signOut();
     }
 
 }
