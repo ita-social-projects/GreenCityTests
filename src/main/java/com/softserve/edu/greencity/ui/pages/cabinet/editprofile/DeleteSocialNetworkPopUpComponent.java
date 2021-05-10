@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import org.openqa.selenium.WebDriver;
 
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
@@ -12,12 +13,18 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 public class DeleteSocialNetworkPopUpComponent {
 
     private WebDriver driver;
+    private LabelElement warningText;
     private ButtonElement yesDeleteButton;
     private ButtonElement cancelDeletingButton;
     private ButtonElement closeButton;
 
     public DeleteSocialNetworkPopUpComponent(WebDriver driver) {
         this.driver = driver;
+    }
+
+    private LabelElement getWarningLabel(){
+        warningText = new LabelElement(driver, POP_UP_WARNING_TEXT);
+        return warningText;
     }
 
     private ButtonElement getYesDeleteButton() {
@@ -48,5 +55,17 @@ public class DeleteSocialNetworkPopUpComponent {
     public EditProfilePage clickCloseButton(){
         getCloseButton().click();
         return new EditProfilePage(driver);
+    }
+
+    public String getWarningText(){
+        return getWarningLabel().getText();
+    }
+
+    public String getCancelButtonText(){
+        return getCancelDeletingButton().getText();
+    }
+
+    public String getYesDeletingButtonText(){
+        return getYesDeleteButton().getText();
     }
 }

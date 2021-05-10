@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +24,7 @@ public class SocialNetworkComponent{
     private TextAreaElement linkField;
     private ButtonElement cancelButton;
     private ButtonElement addButton;
+    private LabelElement invalidLinkErrorText;
 
     public SocialNetworkComponent(WebDriver driver) {
         this.driver = driver;
@@ -32,9 +34,9 @@ public class SocialNetworkComponent{
 
     private TextAreaElement getLinkField(){
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        if(linkField == null){
-            linkField = new TextAreaElement(driver, SOCIAL_NETWORK_LINK_FIELD);
-        }
+//        if(linkField == null){
+        linkField = new TextAreaElement(driver, SOCIAL_NETWORK_LINK_FIELD);
+//        }
         return linkField;
         //return socialNetworkLayout.findElement(SOCIAL_NETWORK_LINK_FIELD.getPath());
 //        return (TextAreaElement) searchElementByCss(SOCIAL_NETWORK_LINK_FIELD.getPath());
@@ -60,6 +62,11 @@ public class SocialNetworkComponent{
 //        return (ButtonElement) searchElementByCss(ADD_SOCIAL_NETWORK_BUTTON.getPath());
     }
 
+    private LabelElement getInvalidLinkErrorText(){
+        invalidLinkErrorText = new LabelElement(driver, INVALID_LINK_TEXT_ERROR);
+        return invalidLinkErrorText;
+    }
+
     public void clickCancelButton(){
         getCancelButton().click();
     }
@@ -67,10 +74,23 @@ public class SocialNetworkComponent{
     public EditProfilePage clickAddButton(){
         if(isAddButtonActive()) {
             getAddButton().click();
+            logger.info("add button was clicked");
+            waitsSwitcher.setImplicitWait(10);
         } else {
             logger.warn("Add button is not clickable");
         }
         return new EditProfilePage(driver);
+    }
+
+    public SocialNetworkComponent clickAddButtonWithTheSameLink(){
+        if(isAddButtonActive()) {
+            waitsSwitcher.setImplicitWait(5);
+            getAddButton().click();
+            waitsSwitcher.setImplicitWait(5);
+        } else {
+            logger.warn("Add button is not clickable");
+        }
+        return new SocialNetworkComponent(driver);
     }
 
     private boolean isAddButtonActive(){
@@ -86,9 +106,15 @@ public class SocialNetworkComponent{
     }
 
     public EditProfilePage fillUpToFiveSocialNetworksFields(EditProfileData editProfileData){
+        int count = 0;
         for (String link: editProfileData.getSocialNetworks()) {
             fillSocialNetworkField(link);
-            clickAddButton().clickAddSocialNetworksButton();
+            count++;
+            if(count < 5){
+                clickAddButton().clickAddSocialNetworksButton();
+            } else if (count == 5){
+                clickAddButton();
+            }
         }
 
         return new EditProfilePage(driver);
@@ -102,5 +128,13 @@ public class SocialNetworkComponent{
         clearSocialNetworkField();
         getLinkField().enterText(editProfileData.getSocialNetwork());
         return this;
+    }
+
+    public String getInvalidLinkTextError(){
+        return getInvalidLinkErrorText().getText();
+    }
+
+    public String getColorOfInvalidLinkTextError(){
+        return getInvalidLinkErrorText().getColorHex();
     }
 }

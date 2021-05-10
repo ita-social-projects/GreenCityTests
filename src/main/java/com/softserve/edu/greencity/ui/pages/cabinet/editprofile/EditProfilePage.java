@@ -2,16 +2,12 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.*;
-import com.softserve.edu.greencity.ui.locators.EditProfileLocators;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
-import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
@@ -34,7 +30,6 @@ public class EditProfilePage extends TopPart {
     private CheckBoxElement showShoppingList;
 
     private SocialNetworkComponent socialNetworkComponent;
-
     private ButtonElement cancelButton;
     private ButtonElement saveButton;
     private ButtonElement confirmCancelingButton;
@@ -184,10 +179,17 @@ public class EditProfilePage extends TopPart {
         return new MyHabitPage(driver);
     }
 
-    @Step("Click 'Cancel' button")  //TODO add popup element to return CancelEditingPopUp
-    public CancelEditingPopUpComponent clickCancelButton(){
+    @Step("Click 'Cancel' button")
+    public CancelEditingPopUpComponent clickCancelButtonWithPopUp(){
         getCancelButton().click();
         return new CancelEditingPopUpComponent(driver);
+    }
+
+
+    @Step("Click 'Cancel' button")
+    public MyHabitPage clickCancelButton(){
+        getCancelButton().click();
+        return new MyHabitPage(driver);
     }
 
     @Step("Click 'Yes, Cancel' on popup after clicking 'Cancel' button")
@@ -204,9 +206,13 @@ public class EditProfilePage extends TopPart {
         return new MyHabitPage(driver);
     }
 
-
     public SocialNetworkComponent clickAddSocialNetworksButton(){
+        logger.info("wait to click add social networks icon");
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions
+                .elementToBeClickable(ADD_SOCIAL_NETWORKS_BUTTON.getPath()));
         getAddSocialNetworkButton().click();
+        logger.info("add social networks icon was clicked");
+        waitsSwitcher.setImplicitWait(5);
         return new SocialNetworkComponent(driver);
     }
 
@@ -221,10 +227,6 @@ public class EditProfilePage extends TopPart {
     public void clickShowShoppingListCheckBox(){
         getShowShoppingListCheckBox().click();
     }
-
-
-
-
 
     public boolean isSaveButtonActive(){
         return getSaveButton().isActive();

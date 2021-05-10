@@ -75,4 +75,18 @@ public class LanguageComponents {
         }
         return locale;
     }
+
+    public void changeLanguage(String language){
+        switch(language){
+            case "ua":
+                clickUaLanguage();
+                break;
+            case "en":
+                clickEnLanguage();
+                break;
+            case "ru":
+                clickRuLanguage();
+                break;
+        }
+    }
 }

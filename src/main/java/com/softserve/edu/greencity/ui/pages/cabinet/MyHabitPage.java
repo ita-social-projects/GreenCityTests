@@ -99,6 +99,15 @@ public class MyHabitPage extends TopPart  {
         }
     }
 
+    public boolean isSocialIconClickable(){
+        try {
+            waitsSwitcher.setExplicitWait(ExpectedConditions.elementToBeClickable(SOCIAL_MEDIA_ICON.getPath()));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
     @Step("Go to edit profile")
     public EditProfilePage goToEditProfile(){
         getEditButton().click();

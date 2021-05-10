@@ -25,6 +25,7 @@ public enum EditProfileLocators implements Locator{
     EDIT_SOCIAL_NETWORK(By.cssSelector(".edit-button-img")),
     SOCIAL_NETWORK_LINK(By.xpath("//app-social-networks/div/a/p")),
     DISPLAYED_LINKS(By.cssSelector(".social_network-link-text")),
+    INVALID_LINK_TEXT_ERROR(By.cssSelector(".social_network-input-error")),
 
     SHOW_LOCATION_CHECK_BOX(By.cssSelector("li:nth-child(1) > label > span")),
     SHOW_ECO_PLACES_CHECK_BOX(By.cssSelector("li:nth-child(2) > label > span")),
@@ -42,6 +43,7 @@ public enum EditProfileLocators implements Locator{
 
 
     //Remove social networks link pop up locators
+    POP_UP_WARNING_TEXT(By.cssSelector("div.warning-text > div")),
     CANCEL_DELETING_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.secondary-global-button")),
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_DELETING_BUTTON(By.cssSelector(".close")),

@@ -40,7 +40,6 @@ public class AddedSocialNetworksComponent {
         return socialNetworkLinkElement;
     }
 
-    //TODO add return pop up
     public DeleteSocialNetworkPopUpComponent clickDeleteButton(){
         getDeleteLinkButton().click();
         return new DeleteSocialNetworkPopUpComponent(driver);
@@ -52,7 +51,7 @@ public class AddedSocialNetworksComponent {
     }
 
     public String getSocialNetworkLinkElementText(){
-        return getSocialNetworkLinkElement().getText();
+        return getSocialNetworkLinkElement().getInnerText();
     }
 
 }

@@ -54,6 +54,15 @@ public abstract class TopPart implements StableWebElementSearch {
 
     public Locale getLanguageLocale(){ return languageSwitch.getLanguageLocale(); }
 
+    public LanguageComponents createLanguageSwitchComponent(){
+        languageSwitch = new LanguageComponents(driver);
+        return languageSwitch;
+    }
+
+//    public LanguageComponents getLanguageSwitcher(){
+//        return (LanguageComponents) createLanguageSwitchComponent().getLanguageSwitchWebElement();
+//    }
+
     public String getLanguageSwitcherText() {
         return languageSwitch.getLanguageSwitchWebElement().getText();
     }
