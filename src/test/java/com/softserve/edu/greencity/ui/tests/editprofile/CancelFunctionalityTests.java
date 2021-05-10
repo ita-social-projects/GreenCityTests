@@ -22,7 +22,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
                 .loginIn(getTemporaryUser())
                 .goToEditProfile()
                 .fillCityField("LvivLvivLviv")
-                .clickCancelButton();
+                .clickCancelButtonWithPopUp();
 
         String titleOfPopUpOnEn = cancelPopUp.getTitleOfCancelPopUpComponent();
         String subTitleOfPopUpOnEn = cancelPopUp.getSubTitleOfCancelComponent();
