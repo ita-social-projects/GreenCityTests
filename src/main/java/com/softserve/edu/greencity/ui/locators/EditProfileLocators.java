@@ -6,10 +6,12 @@ public enum EditProfileLocators implements Locator{
     TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
-    EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
+    EDIT_AVATAR_BUTTON(By.cssSelector("button.edit-image-button")),
     UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
     DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
+    CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
+    TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
 
     //NAME_FIELD(By.cssSelector("#name")),
     //NAME_FIELD(By.xpath("//input[@class='ng-pristine ng-valid ng-touched']")),

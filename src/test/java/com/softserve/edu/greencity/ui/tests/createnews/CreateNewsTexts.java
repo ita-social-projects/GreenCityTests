@@ -9,7 +9,7 @@ public enum CreateNewsTexts {
     VALID_CONTENT("Content = description"),
     TAGS_ERROR("Only 3 tags can be added"),
     CONFIRMATION_HEADER_MESSAGE("Please wait while loading..."),
-    CONFIRMATION_DESCRIPTON_MESSAGE("Your news is loading to the website. Please wait until the page refreshes");
+    CONFIRMATION_DESCRIPTON_MESSAGE("Your news is loading to the website. Please wait until the page refreshes.");
 
     private final String text;
 

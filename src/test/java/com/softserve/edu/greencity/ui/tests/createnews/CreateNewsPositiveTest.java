@@ -156,7 +156,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-
+@Ignore
     @Test(testName = "GC-583", description = "GC-583")
     @Description("Checking of ukrainian translation of labels On CreateNews page")
     public void checkUkrainianTranslationOfLabelsOnCreateNewsPage() {

@@ -47,14 +47,6 @@ public class EditProfilePage extends TopPart {
         return titleLabel;
     }
 
-    @Step("Get edit picture button")
-    public ButtonElement getEditPictureButton(){
-        if(editPictureButton == null){
-            editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
-        }
-        return editPictureButton;
-    }
-
     @Step("Get name field")
     public TextAreaElement getNameField(){
         if(nameField == null){
@@ -283,4 +275,17 @@ public class EditProfilePage extends TopPart {
 //        getNameField().getText()
 //    }
 
+    @Step("Get edit picture button")
+    public ButtonElement getEditPictureButton(){
+        if(editPictureButton == null){
+            editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
+        }
+        return editPictureButton;
+    }
+
+    @Step("Click 'Edit Photo' button")
+    public EditPicturePopUpComponent clickEditPhotoButton(){
+        getEditPictureButton().click();
+        return new EditPicturePopUpComponent(driver);
+    }
 }

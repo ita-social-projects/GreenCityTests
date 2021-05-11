@@ -15,7 +15,28 @@ public enum EditProfileTexts {
     YES_DELETE_SOCIAL_NETWORK_BUTTON_TEXT_UA("Так"),
 
     INVALID_LINK_ERROR("This link has been already added"),
-    INVALID_LINK_ERROR_COLOR("#f03127")
+    INVALID_LINK_ERROR_COLOR("#f03127"),
+
+    //Pop up element which appears when user click 'Edit Picture' icon under the profile photo
+    EDIT_PICTURE_BUTTON_TEXT_EN("Edit Picture"),
+    EDIT_PICTURE_BUTTON_TEXT_UA("Змінити Фотографію"),
+    EDIT_PICTURE_BUTTON_TEXT_RU("Изменить Изображение"),
+
+    EDIT_PICTURE_POP_UP_QUESTION_TEXT_EN("Do you want to change your profile picture?"),
+    EDIT_PICTURE_POP_UP_QUESTION_TEXT_UA("Ви хочете змінити свою фотографію профілю?"),
+    EDIT_PICTURE_POP_UP_QUESTION_TEXT_RU("Вы хотите изменить изображение своего профиля?"),
+
+    CANCEL_EDITING_PROFILE_PHOTO_BUTTON_TEXT_EN("Cancel"),
+    CANCEL_EDITING_PROFILE_PHOTO_BUTTON_TEXT_RU("Скасувати"),
+    CANCEL_EDITING_PROFILE_PHOTO_BUTTON_TEXT_UA("Отменить"),
+
+    DELETING_PROFILE_PHOTO_BUTTON_TEXT_EN("Delete photo"),
+    DELETING_PROFILE_PHOTO_BUTTON_TEXT_UA("Видалити фото"),
+    DELETING_PROFILE_PHOTO_BUTTON_TEXT_RU("Удалить фото"),
+
+    UPLOAD_NEW_PROFILE_PHOTO_BUTTON_TEXT_EN("Upload new photo"),
+    UPLOAD_NEW_PROFILE_PHOTO_BUTTON_TEXT_UA("Завантажити нове фото"),
+    UPLOAD_NEW_PROFILE_PHOTO_BUTTON_TEXT_RU("Загрузить новое фото"),
     ;
 
     private final String text;

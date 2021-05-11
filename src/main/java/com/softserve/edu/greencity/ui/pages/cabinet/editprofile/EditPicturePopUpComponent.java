@@ -1,9 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
@@ -14,15 +12,25 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 public class EditPicturePopUpComponent {
     protected WebDriverWait wait;
     private WebDriver driver;
-    private WaitsSwitcher waitsSwitcher;
+//    private WaitsSwitcher waitsSwitcher;
 
+    private ButtonElement titleInPopUpEditPicture;
     private ButtonElement cancelButton;
     private ButtonElement deletePhotoButton;
     private ButtonElement uploadNewPhotoButton;
+    private ButtonElement closePopUpEditPhotoButton;
+    private ButtonElement editPictureButton;
 
-    public EditPicturePopUpComponent(WebDriver driver, WaitsSwitcher waitsSwitcher) {
+    public EditPicturePopUpComponent(WebDriver driver) {
         this.driver = driver;
-        this.waitsSwitcher = new WaitsSwitcher(driver);
+//        this.waitsSwitcher = new WaitsSwitcher(driver);
+    }
+
+    public ButtonElement getTitleInPopUpEditPicture(){
+        if(titleInPopUpEditPicture == null){
+            titleInPopUpEditPicture = new ButtonElement(driver, TITLE_POP_UP_IN_EDIT_PICTURE);
+        }
+        return titleInPopUpEditPicture;
     }
 
     public ButtonElement getCancelButton(){
@@ -46,8 +54,32 @@ public class EditPicturePopUpComponent {
         return uploadNewPhotoButton;
     }
 
+    public ButtonElement getClosePopUpEditPhotoButton(){
+        if(closePopUpEditPhotoButton == null){
+            closePopUpEditPhotoButton = new ButtonElement(driver, CLOSE_POP_UP_EDIT_PHOTO_BUTTON);
+        }
+        return closePopUpEditPhotoButton;
+    }
+
     public EditProfilePage clickCancelButton(){
         getCancelButton().click();
         return new EditProfilePage(driver);
     }
+
+    public EditProfilePage clickDeletePhotoButton(){
+        getDeletePhotoButton().click();
+        return new EditProfilePage(driver);
+    }
+
+    public EditProfilePage clickUploadNewPhotoButton(){
+        getUploadNewPhotoButton().click();
+        return new EditProfilePage(driver);
+    }
+
+    public EditProfilePage clickClosePopUpButton(){
+        getClosePopUpEditPhotoButton().click();
+        return new EditProfilePage(driver);
+    }
+
+
 }
