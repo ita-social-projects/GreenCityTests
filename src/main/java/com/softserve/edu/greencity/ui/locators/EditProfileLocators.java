@@ -6,12 +6,23 @@ public enum EditProfileLocators implements Locator{
     TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
-    EDIT_AVATAR_BUTTON(By.cssSelector("button.edit-image-button")),
+    EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
+
+    //EditPictureButtonPopUpComponent locators
+    EDIT_PICTURE_POP_UP_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
     UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
     DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
     CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
+
+    CHANGE_PHOTO_INPUT(By.cssSelector("label > input[type=file]")),
+    SAVE_PHOTO_BUTTON(By.cssSelector("app-edit-photo-pop-up > div > div > div > div.buttons > button")),
+
+    //VerifyDeletingPhotoPopUpComponent
+    VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
+    VERIFY_DELETING_CONTINUE_EDITING_BUTTON(By.cssSelector("button.primary-global-button")),
+    VERIFY_DELETING_YES_BUTTON(By.cssSelector("button.secondary-global-button")),
 
     //NAME_FIELD(By.cssSelector("#name")),
     //NAME_FIELD(By.xpath("//input[@class='ng-pristine ng-valid ng-touched']")),
@@ -28,6 +39,7 @@ public enum EditProfileLocators implements Locator{
     SOCIAL_NETWORK_LINK(By.xpath("//app-social-networks/div/a/p")),
     DISPLAYED_LINKS(By.cssSelector(".social_network-link-text")),
     INVALID_LINK_TEXT_ERROR(By.cssSelector(".social_network-input-error")),
+    SOCIAL_NETWORKS_TEXT(By.cssSelector("div.social_network-add-input-wrp > label")),
 
     SHOW_LOCATION_CHECK_BOX(By.cssSelector("li:nth-child(1) > label > span")),
     SHOW_ECO_PLACES_CHECK_BOX(By.cssSelector("li:nth-child(2) > label > span")),

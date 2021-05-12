@@ -21,6 +21,7 @@ public class SocialNetworkItemsContainer {
 
     public SocialNetworkItemsContainer(WebDriver driver) {
         this.driver = driver;
+        socialNetworkItemsContainerSize = 0;
     }
 
     private List<WebElement> getSocialNetworkIcons() {
@@ -42,15 +43,8 @@ public class SocialNetworkItemsContainer {
         return getSocialNetworkItemComponents().get(number);
     }
 
-    public int setSocialNetworkItemsSize(int size) {
-        socialNetworkItemsContainerSize = size;
-        return size;
-    }
 
     public int getSocialNetworksSize() {
-        if(socialNetworkItemsContainerSize == null){
-            return getSocialNetworkIcons().size();
-        }
-        return socialNetworkItemsContainerSize;
+        return getSocialNetworkIcons().size();
     }
 }

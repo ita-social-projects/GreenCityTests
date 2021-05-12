@@ -145,15 +145,13 @@ public class MyHabitPage extends TopPart  {
     }
 
     public SocialNetworkItemsContainer getSocialNetworkItemsContainer() {
-        SocialNetworkItemsContainer socialNetworkItemsContainer
-                = new SocialNetworkItemsContainer(driver);
         try {
             waitsSwitcher.setExplicitWait(60,
                     ExpectedConditions.presenceOfAllElementsLocatedBy(SOCIAL_NETWORK_CONTAINER.getPath()));
         }catch (TimeoutException e){
-            socialNetworkItemsContainer.setSocialNetworkItemsSize(0);
+            logger.warn("icons not exists");
         }
-        return socialNetworkItemsContainer;
+        return new SocialNetworkItemsContainer(driver);
     }
 
     public boolean isUserImageDefault(){

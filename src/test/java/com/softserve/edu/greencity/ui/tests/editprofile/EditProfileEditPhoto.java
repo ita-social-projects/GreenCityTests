@@ -62,7 +62,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
         editProfilePage.createLanguageSwitchComponent()
                 .changeLanguage(languages);
 
-        EditPicturePopUpComponent editPicturePopUpComponent = editProfilePage.clickEditPhotoButton();
+        EditPicturePopUpComponent editPicturePopUpComponent = editProfilePage.clickEditPictureButton();
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpEditPicture(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getCancelButton(), cancel);
         softAssert.assertEquals(editPicturePopUpComponent.getDeletePhotoButton(), delete);

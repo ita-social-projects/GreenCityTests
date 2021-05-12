@@ -2,7 +2,9 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
@@ -13,6 +15,7 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 public class DeleteSocialNetworkPopUpComponent {
 
     private WebDriver driver;
+    private WaitsSwitcher waitsSwitcher;
     private LabelElement warningText;
     private ButtonElement yesDeleteButton;
     private ButtonElement cancelDeletingButton;
@@ -20,6 +23,7 @@ public class DeleteSocialNetworkPopUpComponent {
 
     public DeleteSocialNetworkPopUpComponent(WebDriver driver) {
         this.driver = driver;
+        waitsSwitcher = new WaitsSwitcher(driver);
     }
 
     private LabelElement getWarningLabel(){
@@ -43,11 +47,13 @@ public class DeleteSocialNetworkPopUpComponent {
     }
 
     public EditProfilePage clickYesDeleteButton(){
+        waitsSwitcher.setExplicitWait(ExpectedConditions.elementToBeClickable(YES_DELETE_SOCIAL_NETWORK.getPath()));
         getYesDeleteButton().click();
         return new EditProfilePage(driver);
     }
 
     public EditProfilePage clickCancelDeletingButton(){
+        waitsSwitcher.setExplicitWait(ExpectedConditions.elementToBeClickable(CANCEL_BUTTON.getPath()));
         getCancelDeletingButton().click();
         return new EditProfilePage(driver);
     }

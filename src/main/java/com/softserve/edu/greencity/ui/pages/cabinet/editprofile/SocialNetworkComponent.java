@@ -25,6 +25,7 @@ public class SocialNetworkComponent{
     private ButtonElement cancelButton;
     private ButtonElement addButton;
     private LabelElement invalidLinkErrorText;
+    private LabelElement socialNetworkTitle;
 
     public SocialNetworkComponent(WebDriver driver) {
         this.driver = driver;
@@ -34,32 +35,15 @@ public class SocialNetworkComponent{
 
     private TextAreaElement getLinkField(){
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//        if(linkField == null){
-        linkField = new TextAreaElement(driver, SOCIAL_NETWORK_LINK_FIELD);
-//        }
-        return linkField;
-        //return socialNetworkLayout.findElement(SOCIAL_NETWORK_LINK_FIELD.getPath());
-//        return (TextAreaElement) searchElementByCss(SOCIAL_NETWORK_LINK_FIELD.getPath());
+        return new TextAreaElement(driver, SOCIAL_NETWORK_LINK_FIELD);
     }
 
     private ButtonElement getCancelButton(){
-        if(cancelButton == null){
-            cancelButton = new ButtonElement(driver, CANCEL_SOCIAL_NETWORK_BUTTON);
-        }
-        return cancelButton;
-//        return socialNetworkLayout.findElement(CANCEL_SOCIAL_NETWORK_BUTTON.getPath());
-//        return (ButtonElement) searchElementByCss(CANCEL_SOCIAL_NETWORK_BUTTON.getPath());
+        return new ButtonElement(driver, CANCEL_SOCIAL_NETWORK_BUTTON);
     }
 
     private ButtonElement getAddButton(){
-//        waitsSwitcher.setExplicitWait(10, ExpectedConditions.
-//                visibilityOf((WebElement) ADD_SOCIAL_NETWORK_BUTTON.getPath()));
-//        if(addButton == null){
-            addButton = new ButtonElement(driver, ADD_SOCIAL_NETWORK_BUTTON);
-//        }
-        return addButton;
-//        return socialNetworkLayout.findElement(ADD_SOCIAL_NETWORK_BUTTON.getPath());
-//        return (ButtonElement) searchElementByCss(ADD_SOCIAL_NETWORK_BUTTON.getPath());
+        return new ButtonElement(driver, ADD_SOCIAL_NETWORK_BUTTON);
     }
 
     private LabelElement getInvalidLinkErrorText(){
@@ -67,22 +51,34 @@ public class SocialNetworkComponent{
         return invalidLinkErrorText;
     }
 
-    public void clickCancelButton(){
+    private LabelElement getSocialNetworkTitle(){
+        socialNetworkTitle = new LabelElement(driver, SOCIAL_NETWORKS_TEXT);
+        return socialNetworkTitle;
+    }
+
+    public SocialNetworkComponent clickSocialNetworkTitle(){
+        getSocialNetworkTitle().click();
+        return new SocialNetworkComponent(driver);
+    }
+
+    public EditProfilePage clickCancelButton(){
         getCancelButton().click();
+        return new EditProfilePage(driver);
     }
 
     public EditProfilePage clickAddButton(){
         if(isAddButtonActive()) {
+            waitsSwitcher.sleep(5000);
             getAddButton().click();
             logger.info("add button was clicked");
-            waitsSwitcher.setImplicitWait(10);
+
         } else {
             logger.warn("Add button is not clickable");
         }
         return new EditProfilePage(driver);
     }
 
-    public SocialNetworkComponent clickAddButtonWithTheSameLink(){
+    public SocialNetworkComponent clickAddButtonWithTheInvalidLink(){
         if(isAddButtonActive()) {
             waitsSwitcher.setImplicitWait(5);
             getAddButton().click();
@@ -93,7 +89,7 @@ public class SocialNetworkComponent{
         return new SocialNetworkComponent(driver);
     }
 
-    private boolean isAddButtonActive(){
+    public boolean isAddButtonActive(){
         return getAddButton().isActive();
     }
 
@@ -101,23 +97,10 @@ public class SocialNetworkComponent{
         getLinkField().enterText(link);
     }
 
-    public void fillSocialNetworkField(String link){
+    public SocialNetworkComponent fillSocialNetworkField(String link){
+        clearSocialNetworkField();
         getLinkField().enterText(link);
-    }
-
-    public EditProfilePage fillUpToFiveSocialNetworksFields(EditProfileData editProfileData){
-        int count = 0;
-        for (String link: editProfileData.getSocialNetworks()) {
-            fillSocialNetworkField(link);
-            count++;
-            if(count < 5){
-                clickAddButton().clickAddSocialNetworksButton();
-            } else if (count == 5){
-                clickAddButton();
-            }
-        }
-
-        return new EditProfilePage(driver);
+        return this;
     }
 
     public void clearSocialNetworkField(){

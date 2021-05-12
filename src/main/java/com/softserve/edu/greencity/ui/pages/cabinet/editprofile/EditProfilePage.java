@@ -34,10 +34,11 @@ public class EditProfilePage extends TopPart {
     private ButtonElement saveButton;
     private ButtonElement confirmCancelingButton;
 
+    private final int MAX_SOCIAL_NETWORKS = 5;
+
     public EditProfilePage(WebDriver driver) {
         super(driver);
     }
-
 
     @Step("Get title label")
     public LabelElement getTitleOnEditPage() {
@@ -47,17 +48,31 @@ public class EditProfilePage extends TopPart {
         return titleLabel;
     }
 
+    @Step("Get edit picture button")
+    public ButtonElement getEditPictureButton(){
+        if(editPictureButton == null){
+            editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
+        }
+        return editPictureButton;
+    }
+
+    @Step("Click 'Edit Photo' button")
+    public EditPicturePopUpComponent clickEditPictureButton(){
+        getEditPictureButton().click();
+        return new EditPicturePopUpComponent(driver);
+    }
+
     @Step("Get name field")
     public TextAreaElement getNameField(){
-        if(nameField == null){
-            nameField = new TextAreaElement(driver, NAME_FIELD);
-        }
-        return nameField;
+        return new TextAreaElement(driver, NAME_FIELD);
     }
 
     @Step("Clear name field")
     public EditProfilePage clearNameField() {
-        getNameField().clearText();
+        TextAreaElement element = getNameField();
+        while (!element.getText().equals("")){
+            getNameField().clearText();
+        }
         return this;
     }
     @Step("Fill name field")
@@ -68,15 +83,15 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get city field")
     public TextAreaElement getCityField(){
-        if(cityField == null){
-            cityField = new TextAreaElement(driver, CITY_FIELD);
-        }
-        return cityField;
+        return new TextAreaElement(driver, CITY_FIELD);
     }
 
     @Step("Clear city field")
     public EditProfilePage clearCityField() {
-        getCityField().clearText();
+        TextAreaElement element = getCityField();
+        while (!element.getText().equals("")){
+            getCityField().clearText();
+        }
         return this;
     }
 
@@ -93,15 +108,15 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get credo field")
     public TextAreaElement getCredoField(){
-        if(credoField == null){
-            credoField = new TextAreaElement(driver, CREDO_FIELDS);
-        }
-        return credoField;
+        return new TextAreaElement(driver, CREDO_FIELDS);
     }
 
     @Step("Clear credo field")
     public EditProfilePage clearCredoField() {
-        getCredoField().clearText();
+        TextAreaElement element = getCredoField();
+        while (!element.getText().equals("")){
+            getCredoField().clearText();
+        }
         return this;
     }
 
@@ -113,11 +128,7 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get add social network button")
     public ButtonElement getAddSocialNetworkButton(){
-//        if(addSocialNetworkButton == null){
-            addSocialNetworkButton = new ButtonWithIconElement(driver, ADD_SOCIAL_NETWORKS_BUTTON);
-//        }
-        return addSocialNetworkButton;
-//        return (ButtonElement) searchElementByCss(ADD_SOCIAL_NETWORKS_BUTTON.getPath());
+        return new ButtonWithIconElement(driver, ADD_SOCIAL_NETWORKS_BUTTON);
     }
 
     @Step("Get show location check box")
@@ -164,7 +175,7 @@ public class EditProfilePage extends TopPart {
     public MyHabitPage clickSaveButton(){
         if(isSaveButtonActive()){
             getSaveButton().click();
-            waitsSwitcher.setImplicitWait(30);
+            waitsSwitcher.sleep(10);
         } else {
             clickCancelButton();
         }
@@ -208,12 +219,14 @@ public class EditProfilePage extends TopPart {
         return new SocialNetworkComponent(driver);
     }
 
-    public void clickShowLocationCheckBox(){
+    public EditProfilePage clickShowLocationCheckBox(){
         getShowLocationCheckBox().click();
+        return this;
     }
 
-    public void clickShowEcoPlacesCheckBox(){
+    public EditProfilePage clickShowEcoPlacesCheckBox(){
         getShowEcoPlacesCheckBox().click();
+        return this;
     }
 
     public void clickShowShoppingListCheckBox(){
@@ -245,47 +258,39 @@ public class EditProfilePage extends TopPart {
     }
 
     public AddedSocialNetworkContainer getSocialNetworksContainer() {
-        AddedSocialNetworkContainer addedSocialNetworkContainer
-                = new AddedSocialNetworkContainer(driver);
         try {
             waitsSwitcher.setExplicitWait(10,
                     ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_LINKS.getPath()));
         }catch (TimeoutException e){
-            addedSocialNetworkContainer.setSocialNetworksSize(0);
+            logger.warn("No social links exists");
         }
-        return addedSocialNetworkContainer;
+        return new AddedSocialNetworkContainer(driver);
     }
 
     public EditProfilePage resetFields(EditProfileData editProfileData){
         fillAllRequiredFields(editProfileData);
-        int socialNetworkContainerSize = getSocialNetworksContainer().getSocialNetworksSize();
-        if(socialNetworkContainerSize > 0){
-            for (int i = 0; i < socialNetworkContainerSize; i++){
-                getSocialNetworksContainer()
-                        .chooseSocialNetworkByNumber(i)
-                        .clickDeleteButton()
-                        .clickYesDeleteButton();
-            }
+
+        while (getSocialNetworksContainer().getSocialNetworksSize() != 0) {
+            getSocialNetworksContainer()
+                    .chooseSocialNetworkByNumber(0)
+                    .clickDeleteButton()
+                    .clickYesDeleteButton();
         }
         return this;
     }
 
-    //TODO add check if data in fields have been changed, if yes after clicking cancel button pop up is shown else no
-//    public boolean isDataHaveBeenChanged(){
-//        getNameField().getText()
-//    }
+    public EditProfilePage fillUpToFiveSocialNetworksFields(EditProfileData editProfileData){
+        int count = 0;
+        for (String link: editProfileData.getSocialNetworks()) {
+            clickAddSocialNetworksButton()
+                    .fillSocialNetworkField(link)
+                    .clickAddButton();
 
-    @Step("Get edit picture button")
-    public ButtonElement getEditPictureButton(){
-        if(editPictureButton == null){
-            editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
+            count++;
+            if(count >= MAX_SOCIAL_NETWORKS){
+                break;
+            }
         }
-        return editPictureButton;
-    }
-
-    @Step("Click 'Edit Photo' button")
-    public EditPicturePopUpComponent clickEditPhotoButton(){
-        getEditPictureButton().click();
-        return new EditPicturePopUpComponent(driver);
+        return this;
     }
 }

@@ -24,7 +24,6 @@ public class EditPicturePopUpComponent {
     private ButtonElement deletePhotoButton;
     private ButtonElement uploadNewPhotoButton;
     private ButtonElement closePopUpEditPhotoButton;
-    private ButtonElement editPictureButton;
 
     public EditPicturePopUpComponent(WebDriver driver) {
         this.driver = driver;

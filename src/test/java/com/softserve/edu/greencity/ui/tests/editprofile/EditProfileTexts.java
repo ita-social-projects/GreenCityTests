@@ -17,6 +17,8 @@ public enum EditProfileTexts {
     INVALID_LINK_ERROR("This link has been already added"),
     INVALID_LINK_ERROR_COLOR("#f03127"),
 
+    INCORRECT_URL_ERROR_MESSAGE("Your URL seems to be incorrect"),
+
     //Pop up element which appears when user click 'Edit Picture' icon under the profile photo
     EDIT_PICTURE_BUTTON_TEXT_EN("Edit Picture"),
     EDIT_PICTURE_BUTTON_TEXT_UA("Змінити Фотографію"),

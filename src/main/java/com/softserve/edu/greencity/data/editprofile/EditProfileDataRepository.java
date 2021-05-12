@@ -17,7 +17,7 @@ public class EditProfileDataRepository {
     }
 
     public static EditProfileData getDefault() {
-        return get().getAllFieldsEditProfile();
+        return get().getRequiredDefaultFieldsEditProfile();
     }
 
     public static EditProfileDataRepository get() {
@@ -29,10 +29,6 @@ public class EditProfileDataRepository {
             }
         }
         return instance;
-    }
-
-    public EditProfileData getAllFieldsEditProfile() {
-        return new EditProfileData(NAME.getString(), CITY.getString(), CREDO.getString());
     }
 
     public EditProfileData getRequiredFieldsEditProfile() {
@@ -59,5 +55,17 @@ public class EditProfileDataRepository {
 
     public EditProfileData getSocialNetworkInstagram(){
         return new EditProfileData(SOCIAL_NETWORK_INSTAGRAM_VALID.getString());
+    }
+
+    public EditProfileData getSocialNetworkTwitter(){
+        return new EditProfileData(SOCIAL_NETWORK_TWITTER_VALID.getString());
+    }
+
+    public EditProfileData getSocialNetworkTikTok(){
+        return new EditProfileData(SOCIAL_NETWORK_TIKTOK_VALID.getString());
+    }
+
+    public EditProfileData getSocialNetworkWithInvalidLink(){
+        return new EditProfileData(SOCIAL_NETWORK_FACEBOOK_INVALID.getString());
     }
 }
