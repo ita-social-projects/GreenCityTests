@@ -1,8 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.io.File;
+
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
 /**
@@ -10,9 +15,9 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
  * 'Edit Picture' button on 'Edit Profile' page.
  */
 public class EditPicturePopUpComponent {
-    protected WebDriverWait wait;
+
     private WebDriver driver;
-//    private WaitsSwitcher waitsSwitcher;
+    private WaitsSwitcher waitsSwitcher;
 
     private ButtonElement titleInPopUpEditPicture;
     private ButtonElement cancelButton;
@@ -23,7 +28,7 @@ public class EditPicturePopUpComponent {
 
     public EditPicturePopUpComponent(WebDriver driver) {
         this.driver = driver;
-//        this.waitsSwitcher = new WaitsSwitcher(driver);
+        this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
     public ButtonElement getTitleInPopUpEditPicture(){
@@ -66,11 +71,6 @@ public class EditPicturePopUpComponent {
         return new EditProfilePage(driver);
     }
 
-    public EditProfilePage clickDeletePhotoButton(){
-        getDeletePhotoButton().click();
-        return new EditProfilePage(driver);
-    }
-
     public EditProfilePage clickUploadNewPhotoButton(){
         getUploadNewPhotoButton().click();
         return new EditProfilePage(driver);
@@ -81,5 +81,42 @@ public class EditPicturePopUpComponent {
         return new EditProfilePage(driver);
     }
 
+    public VerifyDeletingPhotoPopUpComponent clickDeletePhotoButton(){
+        if(isDeleteButtonClickable()) {
+            getDeletePhotoButton().click();
+        }
+        return new VerifyDeletingPhotoPopUpComponent(driver);
+    }
 
+    public boolean isDeleteButtonClickable(){
+        try {
+            waitsSwitcher.setExplicitWait(5, ExpectedConditions.elementToBeClickable(DELETE_PHOTO_BUTTON.getPath()));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    public WebElement getUploadArea() {
+        //TODO refactor searchElementByCss
+        return driver.findElement(CHANGE_PHOTO_INPUT.getPath());
+    }
+
+    @Step("Upload PNG image")
+    public SavePicturePopUpComponent uploadPNGImage() {
+        uploadFile(getUploadArea(), "src/test/resources/images/pngValidImage.png");
+        return new SavePicturePopUpComponent(driver);
+    }
+
+    @Step("Upload PNG image")
+    public EditPicturePopUpComponent uploadJPGImage() {
+        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
+        return this;
+    }
+
+    public EditPicturePopUpComponent uploadFile(WebElement dropArea, String path) {
+        String absolutePath = new File(path).getAbsolutePath();
+        dropArea.sendKeys(absolutePath);
+        return this;
+    }
 }
