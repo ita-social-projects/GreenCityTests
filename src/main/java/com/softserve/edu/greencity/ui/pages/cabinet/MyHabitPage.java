@@ -118,7 +118,7 @@ public class MyHabitPage extends TopPart  {
     }
 
     @Step("Go to edit profile")
-    public EditProfilePage goToEditProfile(){
+    public EditProfilePage clickEditButton(){
         getEditButton().click();
         waitsSwitcher.setImplicitWait(20);
         return new EditProfilePage(driver);

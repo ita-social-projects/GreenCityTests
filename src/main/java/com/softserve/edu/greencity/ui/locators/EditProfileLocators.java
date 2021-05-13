@@ -24,9 +24,7 @@ public enum EditProfileLocators implements Locator{
     VERIFY_DELETING_CONTINUE_EDITING_BUTTON(By.cssSelector("button.primary-global-button")),
     VERIFY_DELETING_YES_BUTTON(By.cssSelector("button.secondary-global-button")),
 
-    //NAME_FIELD(By.cssSelector("#name")),
-    //NAME_FIELD(By.xpath("//input[@class='ng-pristine ng-valid ng-touched']")),
-    NAME_FIELD(By.id("name")),
+    NAME_FIELD(By.cssSelector("#name")),
     CITY_FIELD(By.cssSelector("#city")),
     CREDO_FIELDS(By.cssSelector("#credo")),
 
@@ -62,6 +60,10 @@ public enum EditProfileLocators implements Locator{
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_DELETING_BUTTON(By.cssSelector(".close")),
     CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']")),
+
+    NOTIFICATION_FOR_NAME_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[1]")),
+    NOTIFICATION_FOR_CITY_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[2]")),
+    NOTIFICATION_FOR_CREDO_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[3]"))
     ;
 
     private final By path;

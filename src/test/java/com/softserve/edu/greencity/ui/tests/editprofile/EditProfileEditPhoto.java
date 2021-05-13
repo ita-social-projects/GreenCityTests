@@ -5,10 +5,8 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditPicturePopUpComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
-import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -28,7 +26,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
     public void OpenCreateNewsPage() {
         editProfilePage = loadApplication()
                 .loginIn(getTemporaryUser())
-                .goToEditProfile();
+                .clickEditButton();
     }
 
 //    @AfterMethod

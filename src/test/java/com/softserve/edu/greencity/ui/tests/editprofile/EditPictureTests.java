@@ -23,13 +23,13 @@ public class EditPictureTests extends GreenCityTestRunner {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .goToEditProfile();
+                .clickEditButton();
     }
 
     @AfterMethod
     public void deleteImage(){
         new MyHabitPage(driver)
-                .goToEditProfile()
+                .clickEditButton()
                 .clickEditPictureButton()
                 .clickDeletePhotoButton()
                 .clickYesDeleteButton();

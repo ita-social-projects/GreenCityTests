@@ -4,12 +4,17 @@ import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.awt.*;
+
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
+import static com.softserve.edu.greencity.ui.locators.MyHabitLocators.SOCIAL_MEDIA_ICON;
 
 /**
  * A class that handles this page: https://ita-social-projects.github.io/GreenCityClient/#/profile/{userId}/edit
@@ -36,9 +41,14 @@ public class EditProfilePage extends TopPart {
 
     private final int MAX_SOCIAL_NETWORKS = 5;
 
+    private LabelElement nameNotification;
+    private LabelElement cityNotification;
+    private LabelElement credoNotification;
+
     public EditProfilePage(WebDriver driver) {
         super(driver);
     }
+
 
     @Step("Get title label")
     public LabelElement getTitleOnEditPage() {
@@ -46,6 +56,11 @@ public class EditProfilePage extends TopPart {
             titleLabel = new LabelElement(driver, TITLE_LABEL);
         }
         return titleLabel;
+    }
+
+    @Step("Get title label")
+    public String getTextTitleOnEditPage() {
+        return getTitleOnEditPage().getText();
     }
 
     @Step("Get edit picture button")
@@ -62,6 +77,11 @@ public class EditProfilePage extends TopPart {
         return new EditPicturePopUpComponent(driver);
     }
 
+    public EditProfilePage clickOnTitleOnEditPage(){
+        getTitleOnEditPage().click();
+        return this;
+    }
+
     @Step("Get name field")
     public TextAreaElement getNameField(){
         return new TextAreaElement(driver, NAME_FIELD);
@@ -69,12 +89,27 @@ public class EditProfilePage extends TopPart {
 
     @Step("Clear name field")
     public EditProfilePage clearNameField() {
+        WaitsSwitcher.sleep(3000);
         TextAreaElement element = getNameField();
         while (!element.getText().equals("")){
             getNameField().clearText();
         }
         return this;
     }
+
+    @Step("Clear name field using backspase")
+    public  EditProfilePage clearNameFieldWithBackspase(){
+        WaitsSwitcher.sleep(3000);
+        TextAreaElement element = getNameField();
+        System.out.println(element.getText());
+        element.click();
+        int x = element.getText().length();
+        for (int i = 0; i < x; i++){
+            getNameField().enterText("" + Keys.BACK_SPACE);
+        }
+        return this;
+    }
+
     @Step("Fill name field")
     public EditProfilePage fillNameField(String name){
         getNameField().enterText(name);
@@ -117,6 +152,11 @@ public class EditProfilePage extends TopPart {
         while (!element.getText().equals("")){
             getCredoField().clearText();
         }
+        return this;
+    }
+
+    public EditProfilePage clickCityTextArea(){
+        getCityField().click();
         return this;
     }
 
@@ -258,6 +298,8 @@ public class EditProfilePage extends TopPart {
     }
 
     public AddedSocialNetworkContainer getSocialNetworksContainer() {
+        AddedSocialNetworkContainer addedSocialNetworkContainer
+                = new AddedSocialNetworkContainer(driver);
         try {
             waitsSwitcher.setExplicitWait(10,
                     ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_LINKS.getPath()));
@@ -285,12 +327,81 @@ public class EditProfilePage extends TopPart {
             clickAddSocialNetworksButton()
                     .fillSocialNetworkField(link)
                     .clickAddButton();
-
             count++;
             if(count >= MAX_SOCIAL_NETWORKS){
                 break;
             }
         }
         return this;
+        }
+
+    @Step("Get name notification label")
+    public LabelElement getNameNotification() {
+        if (nameNotification == null) {
+            nameNotification = new LabelElement(driver, NOTIFICATION_FOR_NAME_FIELD_TEXT);
+        }
+        WaitsSwitcher.sleep(1000);
+        return nameNotification;
     }
+
+    @Step("Get text from name notification label")
+    public String getTextFromNameNotification() {
+        return getNameNotification().getText();
+    }
+
+    @Step("Get city notification label")
+    public LabelElement getCityNotification() {
+        if (cityNotification == null) {
+            cityNotification = new LabelElement(driver, NOTIFICATION_FOR_CITY_FIELD_TEXT);
+        }
+        return cityNotification;
+    }
+
+    @Step("Get text from city notification label")
+    public String getTextFromCityNotification() {
+        return getCityNotification().getText();
+    }
+
+    @Step("Get credo notification label")
+    public LabelElement getCredoNotification() {
+        if (credoNotification == null) {
+            credoNotification = new LabelElement(driver, NOTIFICATION_FOR_CREDO_FIELD_TEXT);
+        }
+        return credoNotification;
+    }
+
+    @Step("Get text from credo notification label")
+    public String getTextFromCredoNotification() {
+        return getCredoNotification().getText();
+    }
+
+    @Step("Get color from name notification label")
+    public String getColorFromNameNotificationLabel(){
+        return getNameNotification().getColorHex();
+    }
+
+    @Step("Get color from city notification label")
+    public String getColorFromCityNotificationLabel(){
+        return getCityNotification().getColorHex();
+    }
+
+    @Step("Get color from credo notification label")
+    public String getColorFromCredoNotificationLabel(){
+        return getCredoNotification().getColorHex();
+    }
+
+    public boolean saveButtonClickable(){
+        try {
+            waitsSwitcher.setExplicitWait(ExpectedConditions.elementToBeClickable(SAVE_BUTTON.getPath()));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    //TODO add check if data in fields have been changed, if yes after clicking cancel button pop up is shown else no
+//    public boolean isDataHaveBeenChanged(){
+//        getNameField().getText()
+//    }
 }
+

@@ -28,7 +28,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunner {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .goToEditProfile();
+                .clickEditButton();
     }
 
 //    @AfterMethod
@@ -178,7 +178,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunner {
                 .fillSocialNetworkField(EditProfileDataRepository.get().getSocialNetworkInstagram())
                 .clickAddButton()
                 .clickSaveButton()
-                .goToEditProfile()
+                .clickEditButton()
                 .getSocialNetworksContainer()
                 .chooseSocialNetworkByNumber(0)
                 .clickDeleteButton()

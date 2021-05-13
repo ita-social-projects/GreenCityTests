@@ -3,13 +3,11 @@ package com.softserve.edu.greencity.ui.tests.editprofile;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
-import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class EditTextFieldsTest extends GreenCityTestRunner {
 
@@ -17,27 +15,32 @@ public class EditTextFieldsTest extends GreenCityTestRunner {
         return UserRepository.get().temporary();
     }
 
-    @Test(testName = "GC-1542", description = "GC-1542")
+    @BeforeMethod
+    public void logInToTheSite(){
+        loadApplication()
+                .loginIn(getTemporaryUser());
+    }
+
+    @Test(testName = "GC-1542")
     @Description("User is redirected to 'Edit profile' after clicks the 'Edit' icon")
     public void verifyEditButtonOnMyHabitsPage(){
         logger.info("Starting verifyEditButtonOnMyHabitsPage");
-        String actualTitleText = loadApplication()
-                .loginIn(getTemporaryUser())
-                .goToEditProfile()
-                .getTitleOnEditPage()
-                .getText();
+
+        String actualTitleText = new MyHabitPage(driver)
+                .clickEditButton()
+                .getTextTitleOnEditPage();
 
         String expectedTitleText = "Edit Profile";
-        Assert.assertEquals(actualTitleText, expectedTitleText);
+        Assert.assertEquals(actualTitleText, expectedTitleText, "Failed to verify that user go to editing page");
     }
 
-    @Test(testName = "GC-1488", description = "GC-1488")
+    @Test(testName = "GC-1488")
     @Description("User can edit his profile with valid data")
     public void editProfileInfoWithValidData(){
         logger.info("Starting editProfileInfoWithValidData");
-        MyHabitPage actualTitleText = loadApplication()
-                .loginIn(getTemporaryUser())
-                .goToEditProfile()
+
+        MyHabitPage openMyHabitPage = new MyHabitPage(driver)
+                .clickEditButton()
                 .clearNameField()
                 .fillNameField("Jackie Chan")
                 .clearCityField()
@@ -47,44 +50,43 @@ public class EditTextFieldsTest extends GreenCityTestRunner {
                 .clickSaveButton();
 
         String expectedUserName = "Jackie Chan";
-        String actualUserName = actualTitleText.getUsernameLabelText();
+        String actualUserName = openMyHabitPage.getUsernameLabelText();
         String expectedUserCity = "Lviv";
-        String actualUserCity = actualTitleText.getCityLabelText();
+        String actualUserCity = openMyHabitPage.getCityLabelText();
         String expectedUserCredo = "Some credo";
-        String actualUserCredo = actualTitleText.getCredoLabelText();
+        String actualUserCredo = openMyHabitPage.getCredoLabelText();
 
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(actualUserName, expectedUserName);
-        softAssert.assertEquals(actualUserCity, expectedUserCity);
-        softAssert.assertEquals(actualUserCredo, expectedUserCredo);
+        Assert.assertEquals(actualUserName, expectedUserName, "Actual user name and expected do not match");
+        Assert.assertEquals(actualUserCity, expectedUserCity, "Actual user city and expected do not match");
+        Assert.assertEquals(actualUserCredo, expectedUserCredo, "Actual user credo and expected do not match");
     }
 
-    @Test(testName = "GC-1494", description = "GC-1494")
+    @Test(testName = "GC-1494")
     @Description("Verify that system doesn't save edited information after clicking on 'Cancel' button")
     public void verifyChangesDoNotSavesAfterCancelButton(){
         logger.info("Starting verifyChangesDoNotSavesAfterCancelButton");
-//        MyHabitPage actualTitleText = loadApplication()
-//                .loginIn(getTemporaryUser())
-//                .goToEditProfile()
-//                .clearNameField()
-//                .fillNameField("No name")
-//                .clearCityField()
-//                .fillCityField("Shepetivka")
-//                .clearCredoField()
-//                .fillCredoField("Some bad credo")
-//                .clickCancelButton();
-////                .ClickConfirmationButtonAfterCancelButtonPopup();
-//
-//        String expectedUserName = "No name";
-//        String actualUserName = actualTitleText.getUsernameLabelText();
-//        String expectedUserCity = "Shepetivka";
-//        String actualUserCity = actualTitleText.getCityLabelText();
-//        String expectedUserCredo = "Some bad credo";
-//        String actualUserCredo = actualTitleText.getCredoLabelText();
-//
-//        SoftAssert softAssert = new SoftAssert();
-//        softAssert.assertNotEquals(actualUserName, expectedUserName);
-//        softAssert.assertNotEquals(actualUserCity, expectedUserCity);
-//        softAssert.assertNotEquals(actualUserCredo, expectedUserCredo);
+
+        MyHabitPage goTiMyHabitPage = new MyHabitPage(driver)
+                .clickEditButton()
+                .clearNameField()
+                .fillNameField("No name")
+                .clearCityField()
+                .fillCityField("Shepetivka")
+                .clearCredoField()
+                .fillCredoField("Some bad credo")
+                .clickCancelButtonWithPopUp()
+                .clickCancelButton();
+
+        String expectedUserName = "No name";
+        String actualUserName = goTiMyHabitPage.getUsernameLabelText();
+        String expectedUserCity = "Shepetivka";
+        String actualUserCity = goTiMyHabitPage.getCityLabelText();
+        String expectedUserCredo = "Some bad credo";
+        String actualUserCredo = goTiMyHabitPage.getCredoLabelText();
+
+        softAssert.assertNotEquals(actualUserName, expectedUserName, "The system was saved the name what wan`t saved");
+        softAssert.assertNotEquals(actualUserCity, expectedUserCity, "The system was saved the city what wan`t saved");
+        softAssert.assertNotEquals(actualUserCredo, expectedUserCredo, "The system was saved the credo what wan`t saved");
+        softAssert.assertAll();
     }
 }
