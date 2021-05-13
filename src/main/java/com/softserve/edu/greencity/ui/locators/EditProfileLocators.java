@@ -2,16 +2,28 @@ package com.softserve.edu.greencity.ui.locators;
 
 import org.openqa.selenium.By;
 
-public enum EditProfileLocators implements Locator{
+public enum EditProfileLocators implements Locator {
     TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
     EDIT_AVATAR_BUTTON(By.cssSelector("button.edit-image-button")),
-    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
-    DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
+    //    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
+    UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//label[@class='secondary-global-button']")),
+    //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
+    DELETE_PHOTO_BUTTON(By.xpath("//button[@class=\"primary-global-button delete\"]")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
     CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
+
+    //Pop up element which appears when user click 'Delete photo' in Edit Picture
+    TITLE_POP_UP_QUESTION_IN_DELETE_PHOTO(By.cssSelector("div > div > p")),
+    CONTINUE_EDITING_IN_DELETE_PHOTO_BUTTON(By.cssSelector("div > div > button:nth-child(1)")),
+    YES_DELETE_IN_DELETE_PHOTO_BUTTON(By.cssSelector("div > div > button:nth-child(2)")),
+
+    //Pop up element which appears when user click 'Upload new photo' in Edit Picture
+    SAVE_PHOTO_BUTTON(By.cssSelector("button.secondary-global-button")),
+    CHANGE_PHOTO_BUTTON(By.cssSelector("label.primary-global-button")),
+    ERROR_TEXT_WHEN_INVALID_IMAGE(By.cssSelector("p.warning")),
 
     //NAME_FIELD(By.cssSelector("#name")),
     //NAME_FIELD(By.xpath("//input[@class='ng-pristine ng-valid ng-touched']")),

@@ -20,6 +20,8 @@ public class    ButtonElement extends BaseElement{
     public void click(){
         this.element.click();
     }
-
+    public void sendKeys(String keys) {
+        this.element.sendKeys(keys);
+    }
     public boolean isActive(){ return this.element.isEnabled();}
 }

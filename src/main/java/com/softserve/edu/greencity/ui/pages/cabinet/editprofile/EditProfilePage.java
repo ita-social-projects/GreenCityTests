@@ -20,6 +20,8 @@ public class EditProfilePage extends TopPart {
     private LabelElement titleLabel;
 
     private ButtonElement editPictureButton;
+    private ButtonElement deletePhotoButton;
+    private ButtonElement uploadNewPhotoButton;
     private TextAreaElement nameField;
     private TextAreaElement cityField;
     private TextAreaElement credoField;
@@ -283,9 +285,37 @@ public class EditProfilePage extends TopPart {
         return editPictureButton;
     }
 
+    @Step("Get delete photo button")
+    public ButtonElement getDeletePhotoButton(){
+        if(deletePhotoButton == null){
+            deletePhotoButton = new ButtonElement(driver, DELETE_PHOTO_BUTTON);
+        }
+        return deletePhotoButton;
+    }
+
     @Step("Click 'Edit Photo' button")
     public EditPicturePopUpComponent clickEditPhotoButton(){
         getEditPictureButton().click();
+        return new EditPicturePopUpComponent(driver);
+    }
+
+    @Step("Click 'Delete photo' button")
+    public EditPicturePopUpComponent clickDeletePhotoButton(){
+        getDeletePhotoButton().click();
+        return new EditPicturePopUpComponent(driver);
+    }
+
+    @Step("Get upload new photo button")
+    public ButtonElement getUploadNewPhotoButton(){
+        if(uploadNewPhotoButton == null){
+            uploadNewPhotoButton = new ButtonElement(driver, UPLOAD_NEW_PHOTO_BUTTON);
+        }
+        return uploadNewPhotoButton;
+    }
+
+    @Step("Click 'Upload new photo' button")
+    public EditPicturePopUpComponent clickUploadNewPhotoButton(){
+        getUploadNewPhotoButton().click();
         return new EditPicturePopUpComponent(driver);
     }
 }
