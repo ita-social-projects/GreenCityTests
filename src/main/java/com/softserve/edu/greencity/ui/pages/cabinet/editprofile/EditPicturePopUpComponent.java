@@ -3,8 +3,6 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -18,7 +16,7 @@ import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
  * 'Edit Picture' button on 'Edit Profile' page.
  */
 public class EditPicturePopUpComponent {
-    protected WebDriverWait wait;
+
     private WebDriver driver;
     private WaitsSwitcher waitsSwitcher;
 
@@ -34,12 +32,10 @@ public class EditPicturePopUpComponent {
     private ButtonElement uploadNewPhotoButton;
     private ButtonElement closePopUpEditPhotoButton;
     private ButtonElement editPictureButton;
-    private ButtonElement browseButton;
-    private ButtonElement errorTextWhenInvalidImage;
 
     public EditPicturePopUpComponent(WebDriver driver) {
         this.driver = driver;
-//        this.waitsSwitcher = new WaitsSwitcher(driver);
+        this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
 
@@ -64,16 +60,15 @@ public class EditPicturePopUpComponent {
         return titleInPopUpEditPicture;
     }
 
-
-    public ButtonElement getCancelButton() {
-        if (cancelButton == null) {
+    public ButtonElement getCancelButton(){
+        if(cancelButton == null){
             cancelButton = new ButtonElement(driver, CANCEL_ADDING_PHOTO_BUTTON);
         }
         return cancelButton;
     }
 
-    public ButtonElement getDeletePhotoButton() {
-        if (deletePhotoButton == null) {
+    public ButtonElement getDeletePhotoButton(){
+        if(deletePhotoButton == null){
             deletePhotoButton = new ButtonElement(driver, DELETE_PHOTO_BUTTON);
         }
         return deletePhotoButton;
@@ -107,14 +102,14 @@ public class EditPicturePopUpComponent {
         return uploadNewPhotoButton;
     }
 
-    public ButtonElement getClosePopUpEditPhotoButton() {
-        if (closePopUpEditPhotoButton == null) {
+    public ButtonElement getClosePopUpEditPhotoButton(){
+        if(closePopUpEditPhotoButton == null){
             closePopUpEditPhotoButton = new ButtonElement(driver, CLOSE_POP_UP_EDIT_PHOTO_BUTTON);
         }
         return closePopUpEditPhotoButton;
     }
 
-    public EditProfilePage clickCancelButton() {
+    public EditProfilePage clickCancelButton(){
         getCancelButton().click();
         return new EditProfilePage(driver);
     }
@@ -254,4 +249,15 @@ public class EditPicturePopUpComponent {
     }
 
 
+    @Step("Upload PNG image")
+    public EditPicturePopUpComponent uploadJPGImage() {
+        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
+        return this;
+    }
+
+    public EditPicturePopUpComponent uploadFile(WebElement dropArea, String path) {
+        String absolutePath = new File(path).getAbsolutePath();
+        dropArea.sendKeys(absolutePath);
+        return this;
+    }
 }

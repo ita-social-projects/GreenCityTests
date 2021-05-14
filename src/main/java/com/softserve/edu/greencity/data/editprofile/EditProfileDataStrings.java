@@ -7,17 +7,18 @@ package com.softserve.edu.greencity.data.editprofile;
  */
 public enum EditProfileDataStrings {
     NAME("taqcTestName"),
-    CITY("Lviv"),
-    CREDO("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "),
+    CITY("Kyiv"),
+    CREDO("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."),
     SOCIAL_NETWORK_FACEBOOK_VALID("https://www.facebook.com/greencitysocialproject"),
     SOCIAL_NETWORK_FACEBOOK_VALID_GREENCITYTEST("https://facebook.com/greencitytest"),
     SOCIAL_NETWORK_INSTAGRAM_VALID("https://instagram.com/greencitysocialproject"),
     SOCIAL_NETWORK_TWITTER_VALID("https://twitter.com/?lang=uk"),
     SOCIAL_NETWORK_TIKTOK_VALID("https://www.tiktok.com/uk-UA/"),
+    SOCIAL_NETWORK_FACEBOOK_INVALID("www.facebook.com/greencitysocialproject"),
 
     NAME_BY_DEFAULT("taqcUser"),
     CITY_BY_DEFAULT("Lviv"),
-    CREDO_BY_DEFAULT("This is account created ny tagc command for testing")
+    CREDO_BY_DEFAULT("This is account created by tagc command for testing")
     ;
 
     private final String str;

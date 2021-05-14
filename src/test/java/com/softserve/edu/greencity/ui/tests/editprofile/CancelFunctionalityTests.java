@@ -20,7 +20,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
         logger.info("Starting verifyPopUpMessageTestOnEditProfileCancel");
         CancelEditingPopUpComponent cancelPopUp = loadApplication()
                 .loginIn(getTemporaryUser())
-                .goToEditProfile()
+                .clickEditButton()
                 .fillCityField("LvivLvivLviv")
                 .clickCancelButtonWithPopUp();
 
@@ -29,7 +29,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
 
         cancelPopUp.clickCancelButton()
                 .switchRuLanguage()
-                .goToEditProfile()
+                .clickEditButton()
                 .fillCityField("LvivL")
                 .clickCancelButton();
 
@@ -38,7 +38,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
 
         cancelPopUp.clickCancelButton()
                 .switchUaLanguage()
-                .goToEditProfile()
+                .clickEditButton()
                 .fillCityField("ASgasga")
                 .clickCancelButton();
 

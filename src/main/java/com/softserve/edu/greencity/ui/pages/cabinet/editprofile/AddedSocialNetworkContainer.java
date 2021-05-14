@@ -21,12 +21,13 @@ public class AddedSocialNetworkContainer {
 
     public AddedSocialNetworkContainer(WebDriver driver) {
         this.driver = driver;
+        socialNetworkContainerSize = 0;
     }
 
     private List<WebElement> getSocialNetworks() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
 
-        return waitsSwitcher.setExplicitWait(5,
+        return waitsSwitcher.setExplicitWait(10,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(DISPLAYED_LINKS.getPath()));
     }
 
@@ -40,15 +41,7 @@ public class AddedSocialNetworkContainer {
     }
 
     public int getSocialNetworksSize() {
-        if(socialNetworkContainerSize == null){
-            return getSocialNetworks().size();
-        }
-        return socialNetworkContainerSize;
-    }
-
-    public int setSocialNetworksSize(int size) {
-        socialNetworkContainerSize = size;
-        return size;
+        return getSocialNetworks().size();
     }
 
     public AddedSocialNetworksComponent chooseSocialNetworkByNumber(int number) {

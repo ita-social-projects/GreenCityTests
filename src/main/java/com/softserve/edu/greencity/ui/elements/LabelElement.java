@@ -31,4 +31,8 @@ public class LabelElement extends BaseElement {
     public String getSize() {
         return this.element.getSize().toString();
     }
+
+    public void click(){
+        this.element.click();
+    }
 }

@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class    ButtonElement extends BaseElement{
+public class ButtonElement extends BaseElement{
     public ButtonElement(WebDriver driver, Locator locator) {
         super(driver, locator);
     }
@@ -24,4 +24,6 @@ public class    ButtonElement extends BaseElement{
         this.element.sendKeys(keys);
     }
     public boolean isActive(){ return this.element.isEnabled();}
+
+    public void sendKeys(String key){ this.element.sendKeys(key);}
 }

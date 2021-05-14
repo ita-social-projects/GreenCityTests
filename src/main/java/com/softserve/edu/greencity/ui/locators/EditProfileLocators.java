@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.ui.locators;
 
 import org.openqa.selenium.By;
 
-public enum EditProfileLocators implements Locator {
+public enum EditProfileLocators implements Locator{
     TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
@@ -11,23 +11,25 @@ public enum EditProfileLocators implements Locator {
     UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//label[@class='secondary-global-button']")),
     //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
     DELETE_PHOTO_BUTTON(By.xpath("//button[@class=\"primary-global-button delete\"]")),
+    EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
+
+    //EditPictureButtonPopUpComponent locators
+    EDIT_PICTURE_POP_UP_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
+    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
+    DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
     CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
 
-    //Pop up element which appears when user click 'Delete photo' in Edit Picture
-    TITLE_POP_UP_QUESTION_IN_DELETE_PHOTO(By.cssSelector("div > div > p")),
-    CONTINUE_EDITING_IN_DELETE_PHOTO_BUTTON(By.cssSelector("div > div > button:nth-child(1)")),
-    YES_DELETE_IN_DELETE_PHOTO_BUTTON(By.cssSelector("div > div > button:nth-child(2)")),
+    CHANGE_PHOTO_INPUT(By.cssSelector("label > input[type=file]")),
+    SAVE_PHOTO_BUTTON(By.cssSelector("app-edit-photo-pop-up > div > div > div > div.buttons > button")),
 
-    //Pop up element which appears when user click 'Upload new photo' in Edit Picture
-    SAVE_PHOTO_BUTTON(By.cssSelector("button.secondary-global-button")),
-    CHANGE_PHOTO_BUTTON(By.cssSelector("label.primary-global-button")),
-    ERROR_TEXT_WHEN_INVALID_IMAGE(By.cssSelector("p.warning")),
+    //VerifyDeletingPhotoPopUpComponent
+    VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
+    VERIFY_DELETING_CONTINUE_EDITING_BUTTON(By.cssSelector("button.primary-global-button")),
+    VERIFY_DELETING_YES_BUTTON(By.cssSelector("button.secondary-global-button")),
 
-    //NAME_FIELD(By.cssSelector("#name")),
-    //NAME_FIELD(By.xpath("//input[@class='ng-pristine ng-valid ng-touched']")),
-    NAME_FIELD(By.id("name")),
+    NAME_FIELD(By.cssSelector("#name")),
     CITY_FIELD(By.cssSelector("#city")),
     CREDO_FIELDS(By.cssSelector("#credo")),
 
@@ -40,6 +42,7 @@ public enum EditProfileLocators implements Locator {
     SOCIAL_NETWORK_LINK(By.xpath("//app-social-networks/div/a/p")),
     DISPLAYED_LINKS(By.cssSelector(".social_network-link-text")),
     INVALID_LINK_TEXT_ERROR(By.cssSelector(".social_network-input-error")),
+    SOCIAL_NETWORKS_TEXT(By.cssSelector("div.social_network-add-input-wrp > label")),
 
     SHOW_LOCATION_CHECK_BOX(By.cssSelector("li:nth-child(1) > label > span")),
     SHOW_ECO_PLACES_CHECK_BOX(By.cssSelector("li:nth-child(2) > label > span")),
@@ -62,6 +65,10 @@ public enum EditProfileLocators implements Locator {
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_DELETING_BUTTON(By.cssSelector(".close")),
     CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']")),
+
+    NOTIFICATION_FOR_NAME_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[1]")),
+    NOTIFICATION_FOR_CITY_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[2]")),
+    NOTIFICATION_FOR_CREDO_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[3]"))
     ;
 
     private final By path;

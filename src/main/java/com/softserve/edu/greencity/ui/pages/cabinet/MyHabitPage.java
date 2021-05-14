@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
 import com.softserve.edu.greencity.ui.elements.IconElement;
+import com.softserve.edu.greencity.ui.elements.ImageElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
@@ -19,10 +20,13 @@ public class MyHabitPage extends TopPart  {
     private MyGoalsContainer goalsContainer;
     private LanguageComponents languageSwitcher;
 
+    private ImageElement userImage;
     private LabelElement usernameLabel;
     private LabelElement cityLabel;
     private LabelElement credoLabel;
     private IconElement socialIcon;
+
+    private final String SRC_ATTRIBUTE = "src";
 
     public MyHabitPage(WebDriver driver) {
         super(driver);
@@ -48,6 +52,11 @@ public class MyHabitPage extends TopPart  {
     @Step
     public WebElement getEditButton() {
         return searchElementByCss(EDIT_PROFILE_BUTTON.getPath());
+    }
+
+    public ImageElement getUserImage(){
+        userImage = new ImageElement(driver, USER_IMAGE);
+        return userImage;
     }
 
     public LabelElement getUsernameLabel(){
@@ -109,7 +118,7 @@ public class MyHabitPage extends TopPart  {
     }
 
     @Step("Go to edit profile")
-    public EditProfilePage goToEditProfile(){
+    public EditProfilePage clickEditButton(){
         getEditButton().click();
         waitsSwitcher.setImplicitWait(20);
         return new EditProfilePage(driver);
@@ -133,5 +142,24 @@ public class MyHabitPage extends TopPart  {
         languageSwitcher = new LanguageComponents(driver);
         languageSwitcher.clickUaLanguage();
         return new MyHabitPage(driver);
+    }
+
+    public SocialNetworkItemsContainer getSocialNetworkItemsContainer() {
+        try {
+            waitsSwitcher.setExplicitWait(60,
+                    ExpectedConditions.presenceOfAllElementsLocatedBy(SOCIAL_NETWORK_CONTAINER.getPath()));
+        }catch (TimeoutException e){
+            logger.warn("icons not exists");
+        }
+        return new SocialNetworkItemsContainer(driver);
+    }
+
+    public boolean isUserImageDefault(){
+        try{
+            getUserImage().getAttribute(SRC_ATTRIBUTE);
+            return false;
+        } catch (Exception e){
+            return true;
+        }
     }
 }

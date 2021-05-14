@@ -17,6 +17,22 @@ public enum EditProfileTexts {
     INVALID_LINK_ERROR("This link has been already added"),
     INVALID_LINK_ERROR_COLOR("#f03127"),
 
+    INCORRECT_URL_ERROR_MESSAGE("Your URL seems to be incorrect"),
+
+    NOTIFICATION_FOR_NAME_FIELD_UA("Поле повинне містити до 30 символів"),
+    NOTIFICATION_FOR_NAME_FIELD_EN("Should contain maximum 30 symbols"),
+    NOTIFICATION_FOR_NAME_FIELD_RU("Поле должно содержать не более 30 символов"),
+
+    NOTIFICATION_FOR_CITY_FIELD_UA("Поле має містити максимум 85 символів і може містити літери (a-z) та наступні спеціальні символи '()!,-’'"),
+    NOTIFICATION_FOR_CITY_FIELD_EN("Should contain maximum 85 symbols and may contain letters(a-z), and next special characters '()!,-’'"),
+    NOTIFICATION_FOR_CITY_FIELD_RU("Поле должно содержать не более 85 символов и может содержать буквы (a-z) и следующие специальные символы '()!,-’'"),
+
+    NOTIFICATION_FOR_CREDO_FIELD_UA("Поле повинне містити до 170 символів"),
+    NOTIFICATION_FOR_CREDO_FIELD_EN("Should contain maximum 170 symbols"),
+    NOTIFICATION_FOR_CREDO_FIELD_RU("Поле должно содержать не более 170 символов"),
+
+    COLOR_FOR_NOTIFICATIONS("#ff0000"),
+
     //Pop up element which appears when user click 'Edit Picture' icon under the profile photo
     EDIT_PICTURE_BUTTON_TEXT_EN("Edit Picture"),
     EDIT_PICTURE_BUTTON_TEXT_UA("Змінити Фотографію"),

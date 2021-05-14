@@ -28,4 +28,8 @@ public class IconElement extends BaseElement{
     public boolean isDisplayed(){
         return this.element.isDisplayed();
     }
+
+    public void click(){ this.element.click();}
+
+    public String getAttribute(String attribute) {return this.element.getAttribute(attribute);}
 }
