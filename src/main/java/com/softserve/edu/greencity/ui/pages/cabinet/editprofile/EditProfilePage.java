@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
@@ -404,7 +405,7 @@ public class EditProfilePage extends TopPart {
 //    public boolean isDataHaveBeenChanged(){
 //        getNameField().getText()
 //    }
-}
+
 
     @Step("Get delete photo button")
     public ButtonElement getDeletePhotoButton(){

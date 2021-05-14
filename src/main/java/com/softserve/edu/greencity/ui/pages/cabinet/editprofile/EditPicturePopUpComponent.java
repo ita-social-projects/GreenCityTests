@@ -3,6 +3,8 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,6 +34,7 @@ public class EditPicturePopUpComponent {
     private ButtonElement uploadNewPhotoButton;
     private ButtonElement closePopUpEditPhotoButton;
     private ButtonElement editPictureButton;
+    private ButtonElement errorTextWhenInvalidImage;
 
     public EditPicturePopUpComponent(WebDriver driver) {
         this.driver = driver;
@@ -76,21 +79,21 @@ public class EditPicturePopUpComponent {
 
     public ButtonElement getTitleInPopUpInDeletePhoto() {
         if (titleInPopUpDeletePhoto == null) {
-            titleInPopUpDeletePhoto = new ButtonElement(driver, TITLE_POP_UP_QUESTION_IN_DELETE_PHOTO);
+            titleInPopUpDeletePhoto = new ButtonElement(driver, VERIFY_DELETING_TEXT);
         }
         return titleInPopUpDeletePhoto;
     }
 
     public ButtonElement getContinueEditingButtonInDeletePhotoPopUp() {
         if (continueEditingButtonInDeletePhotoPopUp == null) {
-            continueEditingButtonInDeletePhotoPopUp = new ButtonElement(driver, CONTINUE_EDITING_IN_DELETE_PHOTO_BUTTON);
+            continueEditingButtonInDeletePhotoPopUp = new ButtonElement(driver, VERIFY_DELETING_CONTINUE_EDITING_BUTTON);
         }
         return continueEditingButtonInDeletePhotoPopUp;
     }
 
     public ButtonElement getYesDeleteButtonInDeletePhotoPopUp() {
         if (yesDeleteButtonInDeletePhotoPopUp == null) {
-            yesDeleteButtonInDeletePhotoPopUp = new ButtonElement(driver, YES_DELETE_IN_DELETE_PHOTO_BUTTON);
+            yesDeleteButtonInDeletePhotoPopUp = new ButtonElement(driver, VERIFY_DELETING_YES_BUTTON);
         }
         return yesDeleteButtonInDeletePhotoPopUp;
     }
@@ -161,93 +164,75 @@ public class EditPicturePopUpComponent {
 //        return this;
 //    }
 
-    @Step("Get upload area")
+//    @Step("Get upload area")
+//    public WebElement getUploadArea() {
+//        return driver.findElement(By.cssSelector("label.secondary-global-button"));
+//    }
+//
+//
+//    public ButtonElement getErrorTextWhenInvalidImage() {
+//        if (errorTextWhenInvalidImage == null) {
+//            errorTextWhenInvalidImage = new ButtonElement(driver, ERROR_TEXT_WHEN_INVALID_IMAGE);
+//        }
+//        return errorTextWhenInvalidImage;
+//    }
+//
+//    @Step("Check if Save button in 'Upload new photo' is clickable")
+//    public boolean isSaveButtonClickable() {
+//        try {
+//            return getSavePhotoButton().isActive();
+//        } catch (TimeoutException er) {
+//            return false;
+//        }
+//    }
+//
+//    @Step("Check if Delete button is clickable")
+//    public boolean isDeleteButtonClickable() {
+//        try {
+//            return getDeletePhotoButton().isActive();
+//        } catch (TimeoutException er) {
+//            return false;
+//        }
+//
+//    }
+//
+//    @Step("Get edit picture button")
+//    public ButtonElement getEditPictureButton(){
+//        if(editPictureButton == null){
+//            editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
+//        }
+//        return editPictureButton;
+//    }
+//
+//    @Step("Click 'Edit Photo' button")
+//    public EditPicturePopUpComponent clicksEditPhotoButton(){
+//        getEditPictureButton().click();
+//        return new EditPicturePopUpComponent(driver);
+//    }
+//
+//
+//    @Step("Upload PNG image")
+//    public EditPicturePopUpComponent uploadJPGImage() {
+//        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
+//        return this;
+//    }
+
+//    public EditPicturePopUpComponent uploadFile(WebElement dropArea, String path) {
+//        String absolutePath = new File(path).getAbsolutePath();
+//        dropArea.sendKeys(absolutePath);
+//        return this;
+//    }
+
     public WebElement getUploadArea() {
-        return driver.findElement(By.cssSelector("label.secondary-global-button"));
-    }
-
-    @Step("Upload file")
-    public EditPicturePopUpComponent uploadFile(WebElement dropArea, String path) {
-        String absolutePath = new File(path).getAbsolutePath();
-        dropArea.sendKeys(absolutePath);
-        try {
-            driver.findElements(By.cssSelector("label.secondary-global-button")).get(0).click();
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-        }
-        return this;
-    }
-
-    @Step("Upload GIF image")
-    public EditPicturePopUpComponent uploadGIFImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/gifImage.gif");
-        return this;
-    }
-
-    @Step("Upload too large JPEG image")
-    public EditPicturePopUpComponent uploadTooLargeJPEGImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/tooLargeImage.jpg");
-        return this;
-    }
-
-    @Step("Upload too large PNG image")
-    public EditPicturePopUpComponent uploadTooLargePNGImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/tooLargePng.jpg");
-        return this;
+        //TODO refactor searchElementByCss
+        return driver.findElement(CHANGE_PHOTO_INPUT.getPath());
     }
 
     @Step("Upload PNG image")
-    public EditPicturePopUpComponent uploadPNGImage() {
+    public SavePicturePopUpComponent uploadPNGImage() {
         uploadFile(getUploadArea(), "src/test/resources/images/pngValidImage.png");
-        return this;
+        return new SavePicturePopUpComponent(driver);
     }
-
-    @Step("Upload JPG image")
-    public EditPicturePopUpComponent uploadJPGImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
-        return this;
-    }
-
-    public ButtonElement getErrorTextWhenInvalidImage() {
-        if (errorTextWhenInvalidImage == null) {
-            errorTextWhenInvalidImage = new ButtonElement(driver, ERROR_TEXT_WHEN_INVALID_IMAGE);
-        }
-        return errorTextWhenInvalidImage;
-    }
-
-    @Step("Check if Save button in 'Upload new photo' is clickable")
-    public boolean isSaveButtonClickable() {
-        try {
-            return getSavePhotoButton().isActive();
-        } catch (TimeoutException er) {
-            return false;
-        }
-    }
-
-    @Step("Check if Delete button is clickable")
-    public boolean isDeleteButtonClickable() {
-        try {
-            return getDeletePhotoButton().isActive();
-        } catch (TimeoutException er) {
-            return false;
-        }
-
-    }
-
-    @Step("Get edit picture button")
-    public ButtonElement getEditPictureButton(){
-        if(editPictureButton == null){
-            editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
-        }
-        return editPictureButton;
-    }
-
-    @Step("Click 'Edit Photo' button")
-    public EditPicturePopUpComponent clicksEditPhotoButton(){
-        getEditPictureButton().click();
-        return new EditPicturePopUpComponent(driver);
-    }
-
 
     @Step("Upload PNG image")
     public EditPicturePopUpComponent uploadJPGImage() {

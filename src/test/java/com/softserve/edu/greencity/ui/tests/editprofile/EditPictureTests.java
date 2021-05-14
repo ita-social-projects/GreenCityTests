@@ -32,18 +32,19 @@ public class EditPictureTests extends GreenCityTestRunner {
                 .clickEditButton()
                 .clickEditPictureButton()
                 .clickDeletePhotoButton()
-                .clickYesDeleteButton();
+                .clickYesDeleteButtonInDeletePhotoPopUp();
     }
 
     @Test(testName = "GC-1566")
     @Description("User can add photo with valid parameters for the first time.")
     public void verifyAddPhotoWithValidParameters(){
         MyHabitPage myHabitPage = editProfilePage
-                .fillCredoField("credo")
+//                .fillCredoField("credo")
                 .clickEditPictureButton()
                 .uploadPNGImage()
                 .clickSavePhotoButton()
-                .clickSaveButton();
+                .clickSaveButton()
+                ;
 
         softAssert.assertFalse(myHabitPage.isUserImageDefault());
         softAssert.assertAll();

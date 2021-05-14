@@ -29,7 +29,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
     public void OpenCreateNewsPage() {
         editProfilePage = loadApplication()
                 .loginIn(getTemporaryUser())
-                .goToEditProfile();
+                .clickEditButton();
     }
 
 //    @AfterMethod
@@ -78,6 +78,8 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
 
         editProfilePage.createLanguageSwitchComponent()
                 .changeLanguage(languages);
+
+//        editProfilePage.clickEditPhotoButton().uploadPNGImage().clickSavePhotoButton();
 
         EditPicturePopUpComponent editPicturePopUpComponent = editProfilePage.clickEditPhotoButton();
 

@@ -11,12 +11,12 @@ public enum EditProfileLocators implements Locator{
     UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//label[@class='secondary-global-button']")),
     //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
     DELETE_PHOTO_BUTTON(By.xpath("//button[@class=\"primary-global-button delete\"]")),
-    EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
+   // EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
 
     //EditPictureButtonPopUpComponent locators
     EDIT_PICTURE_POP_UP_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
-    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
-    DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
+    //UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
+  //  DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
     CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
@@ -28,6 +28,7 @@ public enum EditProfileLocators implements Locator{
     VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
     VERIFY_DELETING_CONTINUE_EDITING_BUTTON(By.cssSelector("button.primary-global-button")),
     VERIFY_DELETING_YES_BUTTON(By.cssSelector("button.secondary-global-button")),
+    ERROR_TEXT_WHEN_INVALID_IMAGE(By.cssSelector("")),
 
     NAME_FIELD(By.cssSelector("#name")),
     CITY_FIELD(By.cssSelector("#city")),
