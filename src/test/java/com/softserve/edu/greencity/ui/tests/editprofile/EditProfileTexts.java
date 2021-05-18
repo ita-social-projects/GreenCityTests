@@ -31,7 +31,8 @@ public enum EditProfileTexts {
     NOTIFICATION_FOR_CREDO_FIELD_EN("Should contain maximum 170 symbols"),
     NOTIFICATION_FOR_CREDO_FIELD_RU("Поле должно содержать не более 170 символов"),
 
-    COLOR_FOR_NOTIFICATIONS("#ff0000"),
+    COLOR_FOR_ERROR_NOTIFICATIONS("#ff0000"),
+    COLOR_FOR_NOTIFICATIONS("#878787"),
 
     //Pop up element which appears when user click 'Edit Picture' icon under the profile photo
     EDIT_PICTURE_BUTTON_TEXT_EN("Edit Picture"),
@@ -53,6 +54,16 @@ public enum EditProfileTexts {
     UPLOAD_NEW_PROFILE_PHOTO_BUTTON_TEXT_EN("Upload new photo"),
     UPLOAD_NEW_PROFILE_PHOTO_BUTTON_TEXT_UA("Завантажити нове фото"),
     UPLOAD_NEW_PROFILE_PHOTO_BUTTON_TEXT_RU("Загрузить новое фото"),
+
+    CITY_FIELD_VALID_TEXT_WITH_BRACKETS("New York City (NYC)"),
+    CITY_FIELD_VALID_TEXT_WITH_DASH("Тель-Авив-яффа"),
+    CITY_FIELD_VALID_TEXT_WITH_EXCLAMATION_MARK("Львів!"),
+    CITY_FIELD_VALID_TEXT_WITH_COMMA("Lviv, Kiev"),
+
+    CITY_FIELD_INVALID_TEXT_WITH_BRACKETS("(NYC) New York City"),
+    CITY_FIELD_INVALID_TEXT_WITH_DASH("-Mexico"),
+    CITY_FIELD_INVALID_TEXT_WITH_EXCLAMATION_MARK("!Львів"),
+    CITY_FIELD_INVALID_TEXT_WITH_COMMA(",Lviv")
     ;
 
     private final String text;

@@ -124,6 +124,7 @@ public class EditProfilePage extends TopPart {
     @Step("Clear city field")
     public EditProfilePage clearCityField() {
         TextAreaElement element = getCityField();
+        WaitsSwitcher.sleep(1000);
         while (!element.getText().equals("")){
             getCityField().clearText();
         }
