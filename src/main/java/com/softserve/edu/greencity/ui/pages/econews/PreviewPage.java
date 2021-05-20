@@ -25,6 +25,7 @@ public class PreviewPage extends TopPart {
 
     public PreviewPage(WebDriver driver) {
         super(driver);
+        // TODO remove from constructor
         checkElements();
     }
 

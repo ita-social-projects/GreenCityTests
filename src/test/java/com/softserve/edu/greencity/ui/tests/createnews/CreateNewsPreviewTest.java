@@ -11,8 +11,7 @@ import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import io.qameta.allure.Description;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
@@ -22,22 +21,32 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         return UserRepository.get().temporary();
     }
 
+    private CreateNewsPage createNewsPage;
+
+    @BeforeMethod
+    public void OpenCreateNewsPage() {
+        createNewsPage = loadApplication()
+                .loginIn(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .gotoCreateNewsPage();
+    }
+
+    @AfterMethod
+    public void signOut() {
+        createNewsPage.signOut();
+    }
+
     @Test(testName = "GC-621", description = "GC-621")
     @Description("Verify that user can go to preview page")
     public void verifyPossibilityOfPreViewingNewsPage() {
         logger.info("verifyPossibilityOfPreViewingNewsPage starts");
 
-        PreviewPage preViewPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+        PreviewPage preViewPage = createNewsPage.fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .goToPreViewPage();
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
         softAssert.assertAll();
 
-        preViewPage.signOut();
     }
 
     @Test(testName = "GC-633", description = "GC-633")
@@ -45,19 +54,13 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
     public void verifyThatPreViewIsDisplayedCorrectly() {
         logger.info("verifyThatPreViewIsDisplayedCorrectly starts");
 
-        PreviewPage preViewPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getRequiredFieldsNews())
+        PreviewPage preViewPage = createNewsPage.fillFields(NewsDataRepository.get().getRequiredFieldsNews())
                 .goToPreViewPage();
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
         softAssert.assertEquals(preViewPage.getTitleFieldText(), VALID_TITLE.getText());
         softAssert.assertEquals(preViewPage.getContentFieldText().trim(), VALID_CONTENT.getText());
         softAssert.assertAll();
-
-        preViewPage.signOut();
     }
 
     @Test(testName = "GC-606", description = "GC-606")
@@ -65,18 +68,13 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
     public void verifyThatUserCanContinueNewsCreations() {
         logger.info("verifyThatUserCanContinueNewsCreations starts");
 
-        CreateNewsPage createNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+        CreateNewsPage createNews = createNewsPage.fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .clickCancelButton()
                 .clickContinueEditingButton();
 
-        softAssert.assertEquals(createNewsPage.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE.getText());
+        softAssert.assertEquals(createNews.getCreateNewsMainTitleText(), CREATE_NEWS_TITLE.getText());
         softAssert.assertAll();
 
-        createNewsPage.signOut();
     }
 
     @Test(testName = "GC-607", description = "GC-607")
@@ -84,11 +82,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
     public void verifyThatUserCanCancelNewsCreation() {
         logger.info("verifyThatUserCanCancelNewsCreation starts");
 
-        EcoNewsPage ecoNewsPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+        EcoNewsPage ecoNewsPage = createNewsPage.fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .clickCancelButton()
                 .clickCancelEditingButton();
 
@@ -96,36 +90,28 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         softAssert.assertFalse(ecoNewsPage.isNewsDisplayedByTitle(NewsDataRepository.get().getAllFieldsNews().getTitle()));
         softAssert.assertAll();
 
-        ecoNewsPage.signOut();
     }
-
+@Ignore //TODO activate this test after fixing bug with cancel button
     @Test(testName = "GC-608", description = "GC-608")
     @Description("Verify that pop-up notification interface meets the mock-up specification")
     public void verifyThatPopUpNotificationInterfaceMeetsMockUp() {
         logger.info("verifyThatPopUpNotificationInterfaceMeetsMockUp");
 
-        CreateNewsPage.CancelFrame cancelFrame = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+        CreateNewsPage.CancelFrame cancelFrame = createNewsPage.fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .clickCancelButton();
 
         //TODO add asserts after fixing bug with cancel button
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
+    }
 
+    @Ignore
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
     public void verifyThatRussianLocalizationIsDisplayedAfterCancel() {
         logger.info("verifyThatUserCanCancelNewsCreation starts");
 
-        CreateNewsPage.CancelFrame cancelFrame = loadApplication()
-                .loginIn(getTemporaryUser())
-                .switchRuLanguage()
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
+        CreateNewsPage.CancelFrame cancelFrame = createNewsPage.fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
                 .clickCancelButton();
         //TODO tu add an assert after fixing bug with cancel button
         softAssert.assertAll();
@@ -137,11 +123,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
     public void verifyPossibilityOfGoingBackToEditNews() {
         logger.info("verifyPossibilityOfGoingBackToEditNews starts");
 
-        PreviewPage preViewPage = loadApplication()
-                .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .gotoCreateNewsPage()
-                .fillFields(NewsDataRepository.get().getAllFieldsNews())
+        PreviewPage preViewPage = createNewsPage.fillFields(NewsDataRepository.get().getAllFieldsNews())
                 .goToPreViewPage();
 
         softAssert.assertTrue(preViewPage.isBackToEditingButtonDisplayed());
@@ -153,7 +135,6 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
         softAssert.assertAll();
 
-        createNewsPage.signOut();
     }
 
     //TODO add some test on publishing news right from preview page

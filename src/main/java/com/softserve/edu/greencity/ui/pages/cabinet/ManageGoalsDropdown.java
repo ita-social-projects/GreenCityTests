@@ -125,23 +125,23 @@ public class ManageGoalsDropdown {
      * Save changes from  ManageGoalsDropdown.
      * @return MyCabinetPage
      */
-    public MyCabinetPage updateManageGoalsDropdown() {
+    public MyHabitPage updateManageGoalsDropdown() {
         if(isDisplayedUpdateGoalsButton()) {
             clickUpdateGoalsButton();
         }
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
 
     /**
      * Close ManageGoalsDropdown without saving changes.
      * @return MyCabinetPage
      */
-    public MyCabinetPage closeManageGoalsDropdown() {
+    public MyHabitPage closeManageGoalsDropdown() {
         //do not close
         if(isDisplayedUpdateGoalsButton()) {
             clickCloseButton();
         }
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
 
     /**

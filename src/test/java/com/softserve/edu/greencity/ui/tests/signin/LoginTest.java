@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
@@ -30,17 +30,17 @@ public class LoginTest extends GreenCityTestRunner {
     public void signInWithValidCredentials() {
         logger.info("Starting signInWithValidCredentials");
         User user = UserRepository.get().temporary();
-        MyCabinetPage myCabinetPage = loadApplication()
+        MyHabitPage myHabitPage = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
 
 
-        String newHabitButton = myCabinetPage
+        String newHabitButton = myHabitPage
                 .getAddNewHabitButton()
                 .getText();
 
-        myCabinetPage.signOut();
+        myHabitPage.signOut();
 
         Assert.assertEquals(newHabitButton, ADD_NEW_HABIT_BUTTON_TEXT.getText());
     }

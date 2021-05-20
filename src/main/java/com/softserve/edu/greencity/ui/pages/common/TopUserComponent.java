@@ -1,33 +1,26 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
+import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * Header for signed in user
  */
 public class TopUserComponent {
 	protected final String PROFILE_DROPDOWN_NULL_MESSAGE = "ProfileDropdown is null";
-	//
 	private final String TAG_ATTRIBUTE_CLASS = "class";
-	private final String USER_NAME_CSS = "#header_user-wrp > li.tertiary-global-button > a"; //"div#user-avatar-wrapper li.tertiary-global-button > a";
-	//
+
 	private WebDriver driver;
-	//
 	private WebElement profileButton;
 	private WebElement userNameButton;
-	//
 	private ProfileDropdown profileDropdown;
 
 	public TopUserComponent(WebDriver driver) {
 		this.driver = driver;
-		initElements();
+		//initElements();
 	}
 
 	private void initElements() {
@@ -39,8 +32,7 @@ public class TopUserComponent {
 	// profileButton
 
 	public WebElement getProfileButton() {
-
-		profileButton = driver.findElement(By.cssSelector("#header_user-wrp > li.tertiary-global-button > a"));
+		profileButton = driver.findElement(MenuElementsLocators.USER_NAME_MENU.getPath());
 		return profileButton;
 	}
 
@@ -49,17 +41,22 @@ public class TopUserComponent {
 	public WebElement getUserNameButton() {
 		WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
 		waitsSwitcher.setExplicitWait(7,
-				ExpectedConditions.visibilityOfElementLocated(By.cssSelector(USER_NAME_CSS)));
+				ExpectedConditions.visibilityOfElementLocated(MenuElementsLocators.USER_NAME_MENU.getPath()));
 
-		return userNameButton = driver.findElement(By.cssSelector(USER_NAME_CSS));
+		return userNameButton = driver.findElement(MenuElementsLocators.USER_NAME_MENU.getPath());
 	}
 
 	public String getUserNameButtonText() {
 		return getUserNameButton().getText();
 	}
 
-	public void clickUserNameButton() {
+//	public void clickUserNameButton() {
+//		getUserNameButton().click();
+//	}
+
+	public ProfileDropdown clickUserNameButton() {
 		getUserNameButton().click();
+		return new ProfileDropdown(driver);
 	}
 
 	public boolean isDisplayedUserNameButton() {
@@ -96,6 +93,10 @@ public class TopUserComponent {
 		profileDropdown = new ProfileDropdown(driver);
 		return getProfileDropdown();
 	}
+
+//	public void clickDropdownMenu(){
+//		getProfileButton().click();
+//	}
 	/*Removed from UI
 	protected void clickProfileDropdownFavoritePlaces() {
 		createProfileDropdown().clickFavoritePlaces();

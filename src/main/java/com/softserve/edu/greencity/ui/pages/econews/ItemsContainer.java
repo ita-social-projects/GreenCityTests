@@ -32,6 +32,7 @@ public class ItemsContainer implements StableWebElementSearch {
     public ItemsContainer(WebDriver driver) {
         this.driver = driver;
         isVertical = false;
+        // TODO remove from constructor
         checkElements();
     }
 

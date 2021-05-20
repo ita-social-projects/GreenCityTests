@@ -103,7 +103,6 @@ public class ReplyComponent {
         return this;
     }
 
-
     public ReplyComponent clickDeleteReplyButtonConfirm() {
         getReplyDeleteButton().click();
         CommentPopUpComponent commentPopUpComponent = new CommentPopUpComponent(driver);
@@ -117,8 +116,6 @@ public class ReplyComponent {
         commentPopUpComponent.clickCancelButton();
         return this;
     }
-
-
 
     public boolean isDeleteReplyButtonDisplayed() {
         return replyItem.findElements(REPLY_DELETE_BUTTON.getPath()).size() > 0;
