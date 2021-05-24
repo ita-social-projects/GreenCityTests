@@ -8,27 +8,31 @@ import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.DeleteSocialNetw
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.SocialNetworkComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EditProfileService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 
 public class SocialNetworkLinkTest extends GreenCityTestRunner {
     private EditProfilePage editProfilePage;
+    private User user = UserRepository.get().temporary();
 
     @BeforeMethod
     public void openEditProfilePage() {
         logger.info("Starting signInWithValidCredentials");
-        User user = UserRepository.get().temporary();
         editProfilePage = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .clickEditButton();
+    }
+
+    @AfterMethod
+    public void clearUp() {
+        EditProfileService editProfileService = new EditProfileService();
+        editProfileService.updateUserEditProfileToDefaultByEmail(user.getEmail());
     }
 
 //    @AfterMethod
@@ -201,11 +205,14 @@ public class SocialNetworkLinkTest extends GreenCityTestRunner {
                 .clickDeleteButton()
                 .clickCancelDeletingButton();
 
-        softAssert.assertEquals(newEditProfilePage.getSocialNetworksContainer().getSocialNetworksSize(), 1);
-        softAssert.assertEquals("https://" + newEditProfilePage
-                        .getSocialNetworksContainer()
-                        .chooseSocialNetworkByNumber(0)
-                        .getSocialNetworkLinkElementText(),
+        int networksSize = newEditProfilePage.getSocialNetworksContainer().getSocialNetworksSize();
+        String socialNetworkLink = "https://" + newEditProfilePage
+                .getSocialNetworksContainer()
+                .chooseSocialNetworkByNumber(0)
+                .getSocialNetworkLinkElementText();
+
+        softAssert.assertEquals(networksSize, 1);
+        softAssert.assertEquals(socialNetworkLink,
                 EditProfileDataRepository.get().getSocialNetworkFacebook().getSocialNetwork());
         softAssert.assertTrue(newEditProfilePage.clickSaveButton().isSocialIconPresent());
         softAssert.assertAll();
