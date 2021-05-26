@@ -143,6 +143,45 @@ public class EditProfilePage extends TopPart {
         getCityField().enterText(city);
         return this;
     }
+    @Step("Check 'Show Location' checkbox")
+    public EditProfilePage clickShowLocationCheckBoxCheck(){
+        if (showLocation == null){
+            showLocation = new CheckBoxElement(driver, SHOW_LOCATION_CHECK_BOX);
+        }
+        if(!showLocation.isChecked())
+            showLocation.click();
+        return new EditProfilePage(driver);
+    }
+    @Step("Uncheck 'Show Location' checkbox")
+    public EditProfilePage clickShowLocationCheckBoxUncheck(){
+        if (showLocation == null){
+            showLocation = new CheckBoxElement(driver, SHOW_LOCATION_CHECK_BOX);
+        }
+        if(showLocation.isChecked())
+            showLocation.click();
+        return new EditProfilePage(driver);
+    }
+    @Step("Check 'Show Shopping List' checkbox")
+    public EditProfilePage clickShowShoppingListCheckBoxCheck(){
+        if (showShoppingList == null){
+            showShoppingList = new CheckBoxElement(driver, SHOW_SHOPPING_LIST_CHECK_BOX);
+        }
+        if (!showShoppingList.isChecked()){
+            showShoppingList.click();
+        }
+        return new EditProfilePage(driver);
+    }
+
+    @Step("Uncheck 'Show Shopping List' checkbox")
+    public EditProfilePage clickShowShoppingListCheckBoxCheckUncheck(){
+        if (showShoppingList == null){
+            showShoppingList = new CheckBoxElement(driver, SHOW_SHOPPING_LIST_CHECK_BOX);
+        }
+        if (showShoppingList.isChecked()){
+            showShoppingList.click();
+        }
+        return new EditProfilePage(driver);
+    }
 
     @Step("Get credo field")
     public TextAreaElement getCredoField(){
