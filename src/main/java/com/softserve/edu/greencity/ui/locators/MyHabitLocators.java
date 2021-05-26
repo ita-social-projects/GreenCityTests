@@ -8,6 +8,7 @@ public enum MyHabitLocators implements Locator {
     CITY_LABEL(By.cssSelector(".location")),
     CREDO_LABEL(By.cssSelector(".credo")),
     SOCIAL_MEDIA_ICON(By.cssSelector(".social.ng-star-inserted")),
+    SHOPPING_LIST_LABEL(By.cssSelector("app-shopping-list > div > div")),
 
     ADD_NEW_HABIT_BUTTON(By.xpath("//*[@id = 'create-button']")),
     EDIT_PROFILE_BUTTON(By.cssSelector(".edit-icon")),

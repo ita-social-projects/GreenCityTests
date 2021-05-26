@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static com.softserve.edu.greencity.ui.locators.MyHabitLocators.*;
+import static com.softserve.edu.greencity.ui.locators.MyHabitLocators.SHOPPING_LIST_LABEL;
 
 public class MyHabitPage extends TopPart  {
     protected WebDriverWait wait;
@@ -24,6 +25,7 @@ public class MyHabitPage extends TopPart  {
     private LabelElement usernameLabel;
     private LabelElement cityLabel;
     private LabelElement credoLabel;
+    private LabelElement shoppingListLabel;
     private IconElement socialIcon;
 
     private final String SRC_ATTRIBUTE = "src";
@@ -79,6 +81,12 @@ public class MyHabitPage extends TopPart  {
         }
         return credoLabel;
     }
+    public LabelElement getShoppingListLabel(){
+        if(shoppingListLabel == null){
+            shoppingListLabel = new LabelElement(driver, SHOPPING_LIST_LABEL);
+        }
+        return  shoppingListLabel;
+    }
 
     public IconElement getSocialIcon(){
         if(socialIcon == null){
@@ -97,6 +105,23 @@ public class MyHabitPage extends TopPart  {
 
     public String getCredoLabelText(){
         return getCredoLabel().getText();
+    }
+
+    public boolean isShoppingListPresent(){
+        try {
+            return getShoppingListLabel().isDisplayedLabel();
+        }
+        catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+    public boolean isCityLabelPresent(){
+        try {
+            return getCityLabel().isDisplayedLabel();
+        }
+        catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
     }
 
     public boolean isSocialIconPresent(){
