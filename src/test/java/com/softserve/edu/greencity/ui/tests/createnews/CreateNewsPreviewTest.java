@@ -114,6 +114,7 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         //TODO add asserts after fixing bug with cancel button
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
+    }
 
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")

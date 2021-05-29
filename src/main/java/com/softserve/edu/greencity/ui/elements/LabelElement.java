@@ -18,11 +18,13 @@ public class LabelElement extends BaseElement {
         super(element);
     }
 
-    public boolean isDisplayedLabel(){return this.element.isDisplayed();} ///
+    public boolean isDisplayedLabel(){return this.element.isDisplayed();}
 
     public String getColor(){return this.element.getCssValue("color");}
     public String getColorHex(){return Color.fromString(getColor()).asHex();}
 
     public String getText(){return this.element.getText();}
+
+    //TODO add getFont(), getSize() methods
 
 }
