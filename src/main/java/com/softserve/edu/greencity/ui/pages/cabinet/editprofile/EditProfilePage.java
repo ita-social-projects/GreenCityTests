@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 
 import com.softserve.edu.greencity.data.editprofile.EditProfileData;
 import com.softserve.edu.greencity.ui.elements.*;
+import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
@@ -46,6 +47,8 @@ public class EditProfilePage extends TopPart {
     private LabelElement nameNotification;
     private LabelElement cityNotification;
     private LabelElement credoNotification;
+
+    private LanguageComponents languageSwitcher;
 
     public EditProfilePage(WebDriver driver) {
         super(driver);
@@ -120,7 +123,10 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get city field")
     public TextAreaElement getCityField(){
-        return new TextAreaElement(driver, CITY_FIELD);
+        if(cityField == null){
+            cityField = new TextAreaElement(driver, CITY_FIELD);
+        }
+        return cityField;
     }
 
     @Step("Clear city field")
@@ -151,10 +157,7 @@ public class EditProfilePage extends TopPart {
 
     @Step("Clear credo field")
     public EditProfilePage clearCredoField() {
-        TextAreaElement element = getCredoField();
-        while (!element.getText().equals("")){
-            getCredoField().clearText();
-        }
+        getCredoField().clearText();
         return this;
     }
 
@@ -228,6 +231,31 @@ public class EditProfilePage extends TopPart {
     @Step("Click 'Cancel' button")
     public CancelEditingPopUpComponent clickCancelButtonWithPopUp(){
         getCancelButton().click();
+        return new CancelEditingPopUpComponent(driver);
+    }
+
+    @Step("Switch RU language")
+    public EditProfilePage switchRuLanguage() {
+        languageSwitcher = new LanguageComponents(driver);
+        languageSwitcher.clickRuLanguage();
+        return new EditProfilePage(driver);
+    }
+
+    @Step("Switch EN language")
+    public EditProfilePage switchENLanguage() {
+        languageSwitcher = new LanguageComponents(driver);
+        languageSwitcher.clickEnLanguage();
+        return new EditProfilePage(driver);
+    }
+    @Step("Switch UA language")
+    public EditProfilePage switchUaLanguage() {
+        languageSwitcher = new LanguageComponents(driver);
+        languageSwitcher.clickUaLanguage();
+        return new EditProfilePage(driver);
+    }
+    @Step("Navigate To Eco News")
+    public CancelEditingPopUpComponent clickEcoNewsButton(){
+        getMainMenuDropdown().clickMenuEcoNews();
         return new CancelEditingPopUpComponent(driver);
     }
 
