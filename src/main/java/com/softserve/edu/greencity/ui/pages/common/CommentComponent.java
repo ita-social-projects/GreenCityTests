@@ -154,8 +154,10 @@ public class CommentComponent {
     }
 
     public CommentComponent clickAddReplyButton() {
+        logger.info("Click add reply button");
         boolean isShowReplyButtonDisplayed = isShowReplyDisplayed();
         getAddReplyButton().click();
+        waitsSwitcher.sleep(5000);
         //TODO Clarify
 //        if (isShowReplyButtonDisplayed) {
 //            waitsSwitcher.setExplicitWait(10,
@@ -178,6 +180,7 @@ public class CommentComponent {
     }
 
     public CommentComponent openReply() {
+        logger.info("Open reply");
         getShowReplyButton().click();
         return this;
     }

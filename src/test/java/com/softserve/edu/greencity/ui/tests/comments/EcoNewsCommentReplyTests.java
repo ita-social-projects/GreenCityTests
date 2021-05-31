@@ -145,18 +145,21 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .chooseCommentByNumber(0)
                 .clickReplyButton()
                 .setReplyText(String.join("", Collections.nCopies(8010, "z")));
-//                .clickAddReplyButton();
 
-        //TODO Check test
-//        String actual = commentComponent.getReplyField().getText();
-        int actual = commentComponent.clickAddReplyButton().openReply().chooseReplyByNumber(0).getReplyText().length();
-//        int actual = commentComponent.getReplyField().getAttribute("value").length();
-        Assert.assertEquals(actual, 8000, "system should cuts everything after 8000 characters");
+        int actualLengthFromReplyField = commentComponent
+                .getReplyField()
+                .getAttribute("value")
+                .length();
+        Assert.assertEquals(actualLengthFromReplyField, 8000, "system should cuts everything after 8000 characters");
 
-//        commentComponent.clickAddReplyButton().getShowReplyButton().click();
-//        ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
-//        int text = replyComponent.getReplyComment().getText().length();
-//        Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
+        int actualLengthOfReply = commentComponent
+                .clickAddReplyButton()
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText()
+                .length();
+
+        Assert.assertEquals(actualLengthOfReply, 8000, "the text cannot contain more than 8000 characters");
     }
 
     @Test(testName = "GC-966", description = "GC-966")
