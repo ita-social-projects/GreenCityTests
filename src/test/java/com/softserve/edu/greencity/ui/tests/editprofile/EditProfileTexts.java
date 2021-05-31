@@ -9,6 +9,13 @@ public enum EditProfileTexts {
     CANCEL_DELETING_SOCIAL_NETWORK_BUTTON_TEXT_EN("Cancel"),
     CANCEL_DELETING_SOCIAL_NETWORK_BUTTON_TEXT_RU("Отменить"),
     CANCEL_DELETING_SOCIAL_NETWORK_BUTTON_TEXT_UA("Скасувати"),
+    TITLE_OF_CANCEL_POP_UP_TEXT_EN("All created content will be lost."),
+    SUBTITLE_OF_CANCEL_POP_UP_TEXT_EN("Do you still want to cancel profile editing?"),
+    TITLE_OF_CANCEL_POP_UP_TEXT_RU("Все изменения будут потеряны."),
+    SUBTITLE_OF_CANCEL_POP_UP_TEXT_RU("Отменить редактирование профиля?"),
+    TITLE_OF_CANCEL_POP_UP_TEXT_UA("Внесені зміни будуть втрачені."),
+    SUBTITLE_OF_CANCEL_POP_UP_TEXT_UA("Скасувати редагування профілю?"),
+
 
     YES_DELETE_SOCIAL_NETWORK_BUTTON_TEXT_EN("Yes"),
     YES_DELETE_SOCIAL_NETWORK_BUTTON_TEXT_RU("Да"),

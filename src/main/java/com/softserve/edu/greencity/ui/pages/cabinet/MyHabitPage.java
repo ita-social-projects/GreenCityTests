@@ -149,25 +149,7 @@ public class MyHabitPage extends TopPart  {
         return new EditProfilePage(driver);
     }
 
-    @Step("Switch RU language")
-    public MyHabitPage switchRuLanguage() {
-        languageSwitcher = new LanguageComponents(driver);
-        languageSwitcher.clickRuLanguage();
-        return new MyHabitPage(driver);
-    }
 
-    @Step("Switch EN language")
-    public MyHabitPage switchENLanguage() {
-        languageSwitcher = new LanguageComponents(driver);
-        languageSwitcher.clickEnLanguage();
-        return new MyHabitPage(driver);
-    }
-    @Step("Switch UA language")
-    public MyHabitPage switchUaLanguage() {
-        languageSwitcher = new LanguageComponents(driver);
-        languageSwitcher.clickUaLanguage();
-        return new MyHabitPage(driver);
-    }
 
     public SocialNetworkItemsContainer getSocialNetworkItemsContainer() {
         try {
