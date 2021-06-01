@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.api.models.EditProfile;
+package com.softserve.edu.greencity.api.models.editProfile;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -34,7 +34,6 @@ public class EditProfileModel {
     public String userCredo;
 
     public EditProfileModel(){
-        super();
         this.city = "";
         this.firstName = "";
         this.showEcoPlace = false;
@@ -43,19 +42,9 @@ public class EditProfileModel {
         this.socialNetworks = null;
         this.userCredo = "";
     }
-    /**
-     *
-     * @param city
-     * @param firstName
-     * @param showEcoPlace
-     * @param showLocation
-     * @param showShoppingList
-     * @param socialNetworks
-     * @param userCredo
-     */
+
 
     public EditProfileModel (String city, String firstName, boolean showEcoPlace, boolean showLocation, boolean showShoppingList, List socialNetworks, String userCredo){
-        super();
         this.city = city;
         this.firstName = firstName;
         this.showEcoPlace = showEcoPlace;

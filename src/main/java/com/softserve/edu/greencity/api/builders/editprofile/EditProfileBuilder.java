@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.api.builders.editprofile;
 
-import com.softserve.edu.greencity.api.models.EditProfile.EditProfileModel;
-import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
+import com.softserve.edu.greencity.api.models.editProfile.EditProfileModel;
 
 import java.util.List;
 
