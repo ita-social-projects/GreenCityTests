@@ -35,16 +35,6 @@ public class SocialNetworkLinkTest extends GreenCityTestRunner {
         editProfileService.updateUserEditProfileToDefaultByEmail(user.getEmail());
     }
 
-//    @AfterMethod
-//    public void signOut(){
-//        //TODO delete from db
-//        new MyHabitPage(driver)
-//                .goToEditProfile()
-//                .resetFields(EditProfileDataRepository.get().getRequiredDefaultFieldsEditProfile())
-//                .clickSaveButton()
-//                .signOut();
-//    }
-
     @DataProvider(name="popUpTexts")
     public Object[][] textsForDeleteLinkPopUp() {
         return new Object[][]{
@@ -79,23 +69,23 @@ public class SocialNetworkLinkTest extends GreenCityTestRunner {
     @Description("User can add to profile up to 5 any social network links")
     @Ignore
     public void verifyPossibilityToAddUpToFiveNetworks(){
-//        logger.info("Starting verifyPossibilityToAddUpToFiveNetworks");
-//        MyHabitPage myHabitPage = editProfilePage
-////                .fillUpToFiveSocialNetworksFields(EditProfileDataRepository.get().getUpToFiveSocialNetworks())
-////                .clickSaveButton();
-//
-//        Assert.assertEquals(myHabitPage.getSocialNetworkItemsContainer().getSocialNetworksSize(), 5);
+        logger.info("Starting verifyPossibilityToAddUpToFiveNetworks");
+        MyHabitPage myHabitPage = editProfilePage
+                .fillMaximumSocialNetworksFields(EditProfileDataRepository.get().getUpToFiveSocialNetworks())
+                .clickSaveButton();
+
+        Assert.assertEquals(myHabitPage.getSocialNetworkItemsContainer().getSocialNetworksSize(), 5);
     }
 
     @Test(testName = "GC-1512")
     @Description("User cannot add more than 5 social network links")
     public void verifyImpossibilityToMoreThanFiveNetworks(){
-//        logger.info("Starting verifyImpossibilityToMoreThanFiveNetworks");
-//        EditProfilePage newEditProfilePage = editProfilePage
-////                .fillUpToFiveSocialNetworksFields(EditProfileDataRepository.get().getUpToFiveSocialNetworks());
-//
-//        Assert.assertFalse(newEditProfilePage.isAddSocialNetworkButtonActive(), "'Add social network' button should be disabled");
-//        newEditProfilePage.clickCancelButton();
+        logger.info("Starting verifyImpossibilityToMoreThanFiveNetworks");
+        EditProfilePage newEditProfilePage = editProfilePage
+                .fillMaximumSocialNetworksFields(EditProfileDataRepository.get().getUpToFiveSocialNetworks());
+
+        Assert.assertFalse(newEditProfilePage.isAddSocialNetworkButtonActive(), "'Add social network' button should be disabled");
+        newEditProfilePage.clickCancelButton();
     }
 
     @Test(testName = "GC-1513")

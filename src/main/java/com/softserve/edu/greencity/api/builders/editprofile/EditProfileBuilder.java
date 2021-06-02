@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.api.builders.editprofile;
 
-import com.softserve.edu.greencity.api.models.EditProfile.EditProfileModel;
-import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
+import com.softserve.edu.greencity.api.models.editProfile.EditProfileModel;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class EditProfileBuilder {
         editProfileModel.showShoppingList = showShoppingList;
         return this;
     }
-    public EditProfileBuilder socialNetworks (List<String> socialNetworks){
+    public EditProfileBuilder socialNetworks (String[] socialNetworks){
         editProfileModel.socialNetworks = socialNetworks;
         return this;
     }
