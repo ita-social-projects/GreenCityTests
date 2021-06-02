@@ -32,7 +32,7 @@ public class EditProfileBuilder {
         editProfileModel.showShoppingList = showShoppingList;
         return this;
     }
-    public EditProfileBuilder socialNetworks (List<String> socialNetworks){
+    public EditProfileBuilder socialNetworks (String[] socialNetworks){
         editProfileModel.socialNetworks = socialNetworks;
         return this;
     }

@@ -11,7 +11,7 @@ public class EditProfileDto {
         public Boolean showEcoPlace;
         public Boolean showLocation;
         public Boolean showShoppingList;
-        public List<String> socialNetworks = null;
+        public String[] socialNetworks;
         public String userCredo;
 
         public EditProfileDto(){
@@ -20,7 +20,7 @@ public class EditProfileDto {
             this.showEcoPlace = false;
             this.showLocation = false;
             this.showShoppingList = false;
-            this.socialNetworks = null;
+            this.socialNetworks = new String[0];
             this.userCredo = "";
         }
     @Override

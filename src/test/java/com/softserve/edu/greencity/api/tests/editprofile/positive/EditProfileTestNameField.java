@@ -19,7 +19,7 @@ public class EditProfileTestNameField extends EditProfileAPIRunner {
             .showEcoPlace(true)
             .showLocation(true)
             .showShoppingList(true)
-            .socialNetworks(null)
+            .socialNetworks(new String[0])
             .userCredo(EditProfileDataStrings.CREDO.getString())
             .build();
 
@@ -33,7 +33,7 @@ public class EditProfileTestNameField extends EditProfileAPIRunner {
                                 .showEcoPlace(true)
                                 .showLocation(true)
                                 .showShoppingList(true)
-                                .socialNetworks(null)
+                                .socialNetworks(new String[0])
                                 .userCredo(EditProfileDataStrings.CREDO.getString())
                                 .build()
                 };

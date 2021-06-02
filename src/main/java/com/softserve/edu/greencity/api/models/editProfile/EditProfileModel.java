@@ -29,7 +29,7 @@ public class EditProfileModel {
     @JsonProperty("showShoppingList")
     public Boolean showShoppingList;
     @JsonProperty("socialNetworks")
-    public List<String> socialNetworks;
+    public String[] socialNetworks;
     @JsonProperty("userCredo")
     public String userCredo;
 
@@ -39,12 +39,12 @@ public class EditProfileModel {
         this.showEcoPlace = false;
         this.showLocation = false;
         this.showShoppingList = false;
-        this.socialNetworks = null;
+        this.socialNetworks = new String[0];
         this.userCredo = "";
     }
 
 
-    public EditProfileModel (String city, String firstName, boolean showEcoPlace, boolean showLocation, boolean showShoppingList, List socialNetworks, String userCredo){
+    public EditProfileModel (String city, String firstName, boolean showEcoPlace, boolean showLocation, boolean showShoppingList, String[] socialNetworks, String userCredo){
         this.city = city;
         this.firstName = firstName;
         this.showEcoPlace = showEcoPlace;

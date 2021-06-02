@@ -40,7 +40,7 @@ public class EditProfileDtoBuilder {
         editProfileDto.showShoppingList = showShoppingList;
         return this;
     }
-    public EditProfileDtoBuilder socialNetworks (List<String> socialNetworks){
+    public EditProfileDtoBuilder socialNetworks (String[] socialNetworks){
         editProfileDto.socialNetworks = socialNetworks;
         return this;
     }

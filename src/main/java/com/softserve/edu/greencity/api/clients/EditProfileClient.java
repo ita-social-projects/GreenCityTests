@@ -42,15 +42,9 @@ public class EditProfileClient extends BaseClient{
     }
 
     public Response updateInformationAboutUser (EditProfileDto changeProfileInformation){
-        return given().log().all()
-                .baseUri(url)
-                .accept(contentType)
-                .pathParam("entity", entity)
+        return prepareRequest()
                 .header("Authorization", authToken)
-                .config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig()
-                        .encodeContentTypeAs("multipart/form-data", ContentType.TEXT)))
-                .contentType("multipart/form-data; boundary=--MyBoundary")
-                .multiPart(getMultiPart(changeProfileInformation))
+                .body(changeProfileInformation)
                 .put("{entity}/profile");
     }
 }
