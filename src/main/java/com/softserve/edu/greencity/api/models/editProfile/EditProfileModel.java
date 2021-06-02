@@ -29,7 +29,7 @@ public class EditProfileModel {
     @JsonProperty("showShoppingList")
     public Boolean showShoppingList;
     @JsonProperty("socialNetworks")
-    public List<String> socialNetworks = null;
+    public List<String> socialNetworks;
     @JsonProperty("userCredo")
     public String userCredo;
 

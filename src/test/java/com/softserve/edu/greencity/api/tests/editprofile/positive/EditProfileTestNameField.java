@@ -13,22 +13,34 @@ import static com.softserve.edu.greencity.api.builders.editprofile.EditProfileDt
 
 public class EditProfileTestNameField extends EditProfileAPIRunner {
 
+    EditProfileDto name = editProfileDtoWith()
+            .city(EditProfileDataStrings.CITY.getString())
+            .firstName(EditProfileDataStrings.NAME.getString())
+            .showEcoPlace(true)
+            .showLocation(true)
+            .showShoppingList(true)
+            .socialNetworks(null)
+            .userCredo(EditProfileDataStrings.CREDO.getString())
+            .build();
+
     @DataProvider(name = "minimalName")
     private Object[] getMinimalValuesForName() {
         return new Object[]
                 {
-                        editProfileDtoWith().city(EditProfileDataStrings.CITY.getString())
+                        editProfileDtoWith()
+                                .city(EditProfileDataStrings.CITY.getString())
                                 .firstName(EditProfileDataStrings.NAME.getString())
-                        .showEcoPlace(true)
-                        .showLocation(true)
-                        .showShoppingList(true)
-                        .socialNetworks(null)
-                        .userCredo(EditProfileDataStrings.CREDO.getString())
+                                .showEcoPlace(true)
+                                .showLocation(true)
+                                .showShoppingList(true)
+                                .socialNetworks(null)
+                                .userCredo(EditProfileDataStrings.CREDO.getString())
+                                .build()
                 };
     }
 
-    @Test (dataProvider = "minimalName")
-    public void changeName(EditProfileDto name){
+    @Test ()
+    public void changeName(){
         EditProfileClient editProfileClient = new EditProfileClient(ContentType.JSON, userData.accessToken);
         Response response = editProfileClient.updateInformationAboutUser(name);
         BaseAssertion editProfile = new BaseAssertion(response);

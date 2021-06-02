@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.api.builders.editprofile;
 
+import com.softserve.edu.greencity.api.models.econews.EcoNewsPOSTdto;
 import com.softserve.edu.greencity.api.models.editProfile.EditProfileDto;
 
 import java.util.List;
@@ -46,5 +47,9 @@ public class EditProfileDtoBuilder {
     public EditProfileDtoBuilder userCredo (String userCredo){
         editProfileDto.userCredo = userCredo;
         return this;
+    }
+
+    public EditProfileDto build() {
+        return editProfileDto;
     }
 }

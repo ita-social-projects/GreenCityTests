@@ -391,7 +391,7 @@ public class EditProfilePage extends TopPart {
         return this;
     }
 
-    public EditProfilePage fillUpToFiveSocialNetworksFields(EditProfileData editProfileData){
+    public EditProfilePage fillMaximumSocialNetworksFields(EditProfileData editProfileData){
         int count = 0;
         for (String link: editProfileData.getSocialNetworks()) {
             clickAddSocialNetworksButton()

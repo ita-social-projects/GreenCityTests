@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.api.clients;
 
 import com.softserve.edu.greencity.api.models.editProfile.EditProfileDto;
+import com.softserve.edu.greencity.api.models.ownsecurity.UpdatePasswordDto;
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -19,17 +20,17 @@ public class EditProfileClient extends BaseClient{
 
 
     public EditProfileClient(ContentType contentType) {
-        super(contentType, "editProfile",url);
+        super(contentType, "user",url);
         authToken = "";
     }
 
     public EditProfileClient(ContentType contentType, String authToken) {
-        super(contentType, "econews",url);
+        super(contentType, "user", url);
         this.authToken = "Bearer " + authToken;
     }
 
     public EditProfileClient(String contentType) {
-        super(contentType, "editProfile",url);
+        super(contentType, "user",url);
         authToken = "";
     }
 
@@ -41,10 +42,11 @@ public class EditProfileClient extends BaseClient{
     }
 
     public Response updateInformationAboutUser (EditProfileDto changeProfileInformation){
-        return given()
+        return given().log().all()
                 .baseUri(url)
                 .accept(contentType)
                 .pathParam("entity", entity)
+                .header("Authorization", authToken)
                 .config(RestAssured.config().encoderConfig(EncoderConfig.encoderConfig()
                         .encodeContentTypeAs("multipart/form-data", ContentType.TEXT)))
                 .contentType("multipart/form-data; boundary=--MyBoundary")
