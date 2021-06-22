@@ -1,10 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.data.users.User;
+import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
 import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.GoogleAccountManagerPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
@@ -12,7 +13,6 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +21,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.qameta.allure.Step;
+
+import java.util.Locale;
 
 /**
  * Base Abstract Class of Header and Footer.
@@ -50,12 +52,23 @@ public abstract class TopPart implements StableWebElementSearch {
         this.waitsSwitcher = new WaitsSwitcher(driver, 5, 10);
     }
 
+    public Locale getLanguageLocale(){ return languageSwitch.getLanguageLocale(); }
+
+    public LanguageComponents createLanguageSwitchComponent(){
+        languageSwitch = new LanguageComponents(driver);
+        return languageSwitch;
+    }
+
+//    public LanguageComponents getLanguageSwitcher(){
+//        return (LanguageComponents) createLanguageSwitchComponent().getLanguageSwitchWebElement();
+//    }
+
     public String getLanguageSwitcherText() {
         return languageSwitch.getLanguageSwitchWebElement().getText();
     }
 
     public WebElement getCopyright() {
-        return copyright = driver.findElement(By.cssSelector(".footer_bottom-part"));
+        return copyright = driver.findElement(MenuElementsLocators.COPYRIGHT.getPath());
     }
 
     public String getCopyrightText() {
@@ -172,18 +185,18 @@ public abstract class TopPart implements StableWebElementSearch {
         return new MapPage(driver);
     }
     @Step("navigate to Menu MyCabinetGuest")
-    public MyCabinetPage navigateMenuMyCabinet() {
+    public MyHabitPage navigateMenuMyCabinet() {
         logger.debug("go to MyCabinet");
         logger.trace("click MyCabinet link");
-        getMainMenuDropdown().clickMenuMyCabinet();
-        return new MyCabinetPage(driver);
+        getMainMenuDropdown().clickMyHabits();
+        return new MyHabitPage(driver);
     }
     @Step("navigate to Menu MyCabinet Guest")
     public LoginComponent navigateMenuMyCabinetGuest() {
         logger.debug("go to Login Page as Guest");
         logger.trace("click MyCabinet link as Guest");
         logger.info("go to Login Page as a Guest");
-        getMainMenuDropdown().clickMenuMyCabinet();
+        getMainMenuDropdown().clickMyHabits();
         return new LoginComponent(driver);
     }
     @Step("navigate to Menu About")
@@ -211,7 +224,8 @@ public abstract class TopPart implements StableWebElementSearch {
     public WelcomePage signOut() {
         logger.debug("start signout()");
         logger.trace("click Signout link from ProfileDropdown");
-        createTopUserComponent().clickProfileDropdownSignout();
+        createTopUserComponent().clickUserNameButton().clickSignout();
+//                .clickProfileDropdownSignout();
         logger.trace("close TopUserComponent");
         closeTopUserComponent();
         logger.trace("create TopGuestComponent");
@@ -219,12 +233,12 @@ public abstract class TopPart implements StableWebElementSearch {
         return new WelcomePage(driver);
     }
     @Step("loginIn")
-    public MyCabinetPage loginIn(User user) {
+    public MyHabitPage loginIn(User user) {
         signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
 
-        return new MyCabinetPage(driver);
+        return new MyHabitPage(driver);
     }
     @Step("google Account SignOut")
     public void googleAccountSignOut() {

@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
@@ -26,16 +26,16 @@ public class TipsTricksTest extends GreenCityTestRunner {
 
     @Test(dataProvider = "getUser", invocationCount = 10)
     public void checkHabitButtonTop(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
+        MyHabitPage myHabitPage = loadApplication()
                 .loginIn(user)
                 .navigateMenuTipsTricks()
                 .clickStartHabitTop();
 
-        String newHabitButtonText = myCabinetPage
+        String newHabitButtonText = myHabitPage
                 .getAddNewHabitButton()
                 .getText();
 
-        myCabinetPage.signOut();
+        myHabitPage.signOut();
 
         Assert.assertEquals(newHabitButtonText, "Add new habit");
     }

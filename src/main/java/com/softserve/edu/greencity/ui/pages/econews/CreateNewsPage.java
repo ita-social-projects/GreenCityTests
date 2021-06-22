@@ -504,7 +504,7 @@ public class CreateNewsPage extends TopPart {
         scrollToElement(getPublishButton());
         clickPublishButton();
         try {
-            new WebDriverWait(driver, 10)
+            new WebDriverWait(driver, 30)
                     .until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector("div.container div.people-img"))));
         } catch (Exception e) {
             //TODO handle show error message with new create news

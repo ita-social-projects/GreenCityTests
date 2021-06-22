@@ -80,7 +80,7 @@ public interface StableWebElementSearch {
     @Description("short explicit wait visibility Of element")
     default public <V> V explicitSearch(Function<? super WebDriver, V> condition){
         setDriver().manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        V element = (new WebDriverWait(setDriver(),20)).until(condition);
+        V element = (new WebDriverWait(setDriver(),25)).until(condition);
         setDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return element;
     }

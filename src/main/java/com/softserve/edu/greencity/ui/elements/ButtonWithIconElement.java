@@ -24,4 +24,6 @@ public class ButtonWithIconElement extends ButtonElement{
     public boolean isDisplayed(){
         return this.element.isDisplayed();
     }
+
+    public boolean isActive(){ return this.element.isEnabled();}
 }

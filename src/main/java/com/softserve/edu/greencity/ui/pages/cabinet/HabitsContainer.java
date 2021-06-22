@@ -15,6 +15,7 @@ public class HabitsContainer {
 
     public List<HabitComponent> getHabitComponents() {
         final List<HabitComponent> habitComponents = new ArrayList<>();
+        //.body > app-one-habit.ng-star-inserted
         driver.findElements(By.cssSelector(".habits-in-progress > .ng-star-inserted"))
                 .forEach(habit -> habitComponents.add(new HabitComponent(habit)));
 

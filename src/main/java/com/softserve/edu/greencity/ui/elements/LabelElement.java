@@ -24,5 +24,15 @@ public class LabelElement extends BaseElement {
     public String getColorHex(){return Color.fromString(getColor()).asHex();}
 
     public String getText(){return this.element.getText();}
+    public String getFont() {
+        return this.element.getCssValue("font");
+    }
 
+    public String getSize() {
+        return this.element.getSize().toString();
+    }
+
+    public void click(){
+        this.element.click();
+    }
 }

@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.Locale;
 
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.LANGUAGE_BUTTONS;
 import static com.softserve.edu.greencity.ui.locators.EcoNewsPageLocator.LANGUAGE_SWITCHER;
@@ -56,6 +57,36 @@ public class LanguageComponents {
                     ruButton = new ButtonElement(element);
                     break;
             }
+        }
+    }
+
+    public Locale getLanguageLocale(){
+        String languageButton = driver.findElement(LANGUAGE_BUTTONS.getPath()).getText();
+        Locale locale;
+        switch (languageButton){
+            case "Ua":
+                locale = new Locale("uk", "UA");
+                break;
+            case "Ru":
+                locale = new Locale("ru", "RU");
+                break;
+            default:
+                locale = Locale.ENGLISH;
+        }
+        return locale;
+    }
+
+    public void changeLanguage(String language){
+        switch(language){
+            case "ua":
+                clickUaLanguage();
+                break;
+            case "en":
+                clickEnLanguage();
+                break;
+            case "ru":
+                clickRuLanguage();
+                break;
         }
     }
 }

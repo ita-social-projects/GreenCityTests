@@ -154,16 +154,19 @@ public class CommentComponent {
     }
 
     public CommentComponent clickAddReplyButton() {
+        logger.info("Click add reply button");
         boolean isShowReplyButtonDisplayed = isShowReplyDisplayed();
         getAddReplyButton().click();
-        if (isShowReplyButtonDisplayed) {
-            waitsSwitcher.setExplicitWait(5,
-                    ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
-                            Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
-        } else {
-            waitsSwitcher.setExplicitWait(5,
-                    ExpectedConditions.visibilityOf(getShowReplyButton()));
-        }
+        waitsSwitcher.sleep(5000);
+        //TODO Clarify
+//        if (isShowReplyButtonDisplayed) {
+//            waitsSwitcher.setExplicitWait(10,
+//                    ExpectedConditions.textToBePresentInElement(getShowReplyButton(),
+//                            Integer.toString((Integer.parseInt(getShowReplyButton().getText().split(" ")[1])) + 1)));
+//        } else {
+//            waitsSwitcher.setExplicitWait(10,
+//                    ExpectedConditions.visibilityOf(getShowReplyButton()));
+//        }
 
         return this;
     }
@@ -177,6 +180,7 @@ public class CommentComponent {
     }
 
     public CommentComponent openReply() {
+        logger.info("Open reply");
         getShowReplyButton().click();
         return this;
     }

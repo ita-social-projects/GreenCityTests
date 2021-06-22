@@ -4,8 +4,8 @@ import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
-import com.softserve.edu.greencity.ui.pages.common.CommentPart;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
@@ -82,8 +82,8 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .clickAddReplyButton()
                 .openReply()
                 .chooseReplyByNumber(0);
-        softAssert.assertTrue(comment .clickDeleteReplyButtonCancel().isReplyPresent());
-        softAssert.assertFalse(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
+        softAssert.assertTrue(comment.clickDeleteReplyButtonCancel().isReplyPresent());
+        softAssert.assertTrue(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
         softAssert.assertAll();
     }
 
@@ -146,10 +146,20 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
                 .clickReplyButton()
                 .setReplyText(String.join("", Collections.nCopies(8010, "z")));
 
-        Assert.assertEquals(commentComponent.getReplyField().getAttribute("value").length(), 8000, "system should cuts everything after 8000 characters");
-        commentComponent.clickAddReplyButton().getShowReplyButton().click();
-        ReplyComponent replyComponent = commentComponent.getReplyComponents().get(0);
-        Assert.assertEquals(replyComponent.getReplyComment().getText().length(), 8000, "the text cannot contain more than 8000 characters");
+        int actualLengthFromReplyField = commentComponent
+                .getReplyField()
+                .getAttribute("value")
+                .length();
+        Assert.assertEquals(actualLengthFromReplyField, 8000, "system should cuts everything after 8000 characters");
+
+        int actualLengthOfReply = commentComponent
+                .clickAddReplyButton()
+                .openReply()
+                .chooseReplyByNumber(0)
+                .getReplyText()
+                .length();
+
+        Assert.assertEquals(actualLengthOfReply, 8000, "the text cannot contain more than 8000 characters");
     }
 
     @Test(testName = "GC-966", description = "GC-966")
@@ -360,11 +370,14 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
 
         String textForReplyEditing = String.join("", Collections.nCopies(stringLength, "a"));
         replyComponent.editReply(textForReplyEditing);
-        String timeStamp = new SimpleDateFormat("MMM dd, yyyy").format(Calendar.getInstance().getTime());
+        // TODO method for getting local depending on site language
+        String timeStamp = new SimpleDateFormat("MMM d, yyyy",
+                new LanguageComponents(driver).getLanguageLocale())
+                .format(Calendar.getInstance().getTime());
 
-        softAssert.assertEquals(replyComponent.getReplyText(), textForReplyEditing);
-        softAssert.assertTrue(replyComponent.getReplyDate().contains(timeStamp));
-        softAssert.assertTrue(replyComponent.isaAvatarDisplayed());
+        softAssert.assertEquals(replyComponent.getReplyText(), textForReplyEditing, "Inserted and posted text should be the same");
+        softAssert.assertEquals(replyComponent.getReplyDate(), timeStamp, "Reply should contain date");
+        softAssert.assertTrue(replyComponent.isaAvatarDisplayed(), "Avatar should be displayed");
         softAssert.assertAll();
     }
 

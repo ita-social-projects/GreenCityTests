@@ -27,6 +27,7 @@ public class SingleNewsPage extends TopPart {
 
     public SingleNewsPage(WebDriver driver) {
         super(driver);
+        // TODO remove from constructor
         checkElements();
     }
 

@@ -21,6 +21,7 @@ import org.testng.asserts.SoftAssert;
  * TODO merge with other classes and then delete this class
  * @author lv-493
  */
+@Ignore
 public class CreateNewsLegacyTest extends GreenCityTestRunner {
     User defaultUser;
 

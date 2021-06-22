@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.MyCabinetPage;
+import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
 public class SmokeTest extends GreenCityTestRunner {
@@ -43,28 +43,28 @@ public class SmokeTest extends GreenCityTestRunner {
 
     @Test(dataProvider = "users")
     public void checkLogin(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
+        MyHabitPage myHabitPage = loadApplication()
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user);
 
-        String userName = myCabinetPage.getTopUserName();
+        String userName = myHabitPage.getTopUserName();
 
-        myCabinetPage.signOut();
+        myHabitPage.signOut();
 
         Assert.assertEquals(userName, "temp");
     }
 
     @Test(dataProvider = "users")
     public void checkCabinet(User user) {
-        MyCabinetPage myCabinetPage = loadApplication()
+        MyHabitPage myHabitPage = loadApplication()
                 .loginIn(user);
 
-        String newHabitButtonText = myCabinetPage
+        String newHabitButtonText = myHabitPage
                 .getAddNewHabitButton()
                 .getText();
 
-        myCabinetPage.signOut();
+        myHabitPage.signOut();
 
         Assert.assertEquals(newHabitButtonText, "Add new habit");
     }

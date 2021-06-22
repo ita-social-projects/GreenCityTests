@@ -56,7 +56,7 @@ public class CommentPart implements StableWebElementSearch {
         int currentCount = getCommentComponents().size();
         getPublishCommentButton().click();
         //Mind pagination! Only 10 comments are displayed
-            waitsSwitcher.setExplicitWait(10,
+            waitsSwitcher.setExplicitWait(40,
                     ExpectedConditions.numberOfElementsToBe(COMMENTS_LIST.getPath(), currentCount + 1));
         return new CommentPart(driver);
     }
