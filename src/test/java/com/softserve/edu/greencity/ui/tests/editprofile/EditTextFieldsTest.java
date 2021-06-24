@@ -42,14 +42,14 @@ public class EditTextFieldsTest extends GreenCityTestRunner {
         MyHabitPage openMyHabitPage = new MyHabitPage(driver)
                 .clickEditButton()
                 .clearNameField()
-                .fillNameField("Jackie Chan")
+                .fillNameField("Jackie")
                 .clearCityField()
                 .fillCityField("Lviv")
                 .clearCredoField()
                 .fillCredoField("Some credo")
                 .clickSaveButton();
 
-        String expectedUserName = "Jackie Chan";
+        String expectedUserName = "Jackie";
         String actualUserName = openMyHabitPage.getUsernameLabelText();
         String expectedUserCity = "Lviv";
         String actualUserCity = openMyHabitPage.getCityLabelText();
