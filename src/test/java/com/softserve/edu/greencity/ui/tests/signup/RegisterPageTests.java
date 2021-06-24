@@ -517,7 +517,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
                 .getManualRegisterComponent()
                 .fillFieldsWithoutRegistration(userLoginCredentials);
         softAssert.assertEquals(manualRegisterComponent.getPasswordValidatorText(),
-                "Password must be at least 8 characters in length",
+                "Password must be at least 8 characters long",
                 "The validation message is not equal to the expected one");
         softAssert.assertAll();
     }
