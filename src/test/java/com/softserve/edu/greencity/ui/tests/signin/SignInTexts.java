@@ -20,7 +20,7 @@ public enum SignInTexts {
     SIGN_IN_PASSWORD_VALIDATION_ERROR("Password must be at least 8 characters long"),
 
     SIGN_UP_TITLE("Hello!"),
-    ADD_NEW_HABIT_BUTTON_TEXT("Add new habit"),
+    ADD_NEW_HABIT_BUTTON_TEXT("Add New Habit"),
     TOP_USER_NAME("Lv549 Lviv");
 
     private final String text;
