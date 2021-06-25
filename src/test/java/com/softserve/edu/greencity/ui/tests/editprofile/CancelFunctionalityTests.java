@@ -23,6 +23,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
         CancelEditingPopUpComponent cancelPopUp = loadApplication()
                 .loginIn(getTemporaryUser())
                 .clickEditButton()
+                .clearCityField()
                 .fillCityField("LvivLvivLviv")
                 .clickCancelButtonWithPopUp();
 
@@ -31,6 +32,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
 
         cancelPopUp.clickContinueEditingButton()
                 .switchRuLanguage()
+                .clearCityField()
                 .fillCityField("LvivL")
                 .clickCancelButtonWithPopUp();
 
@@ -39,12 +41,9 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
 
         cancelPopUp.clickContinueEditingButton()
                 .switchUaLanguage()
-                .clearNameField()
+                .clearCityField()
                 .fillCityField("LvivLv")
-                .clickCancelButtonWithPopUp()
-                .clickContinueEditingButton()
-                .fillCityField("ASgasga")
-                .clickCancelButton();
+                .clickCancelButtonWithPopUp();
 
         String titleOfPopUpOnUa = cancelPopUp.getTitleOfCancelPopUpComponent();
         String subTitleOfPopUpOnUa = cancelPopUp.getSubTitleOfCancelComponent();
