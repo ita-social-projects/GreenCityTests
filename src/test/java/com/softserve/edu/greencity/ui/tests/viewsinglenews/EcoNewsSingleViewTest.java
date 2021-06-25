@@ -120,6 +120,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews()
+                .switchToGridView()
                 .selectFilters(multipleTags)
                 .scrollDown();
         List<String> tagsList = new ArrayList<>();
