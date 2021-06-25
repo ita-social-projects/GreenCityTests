@@ -56,7 +56,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
 
     @Test(testName = "GC-671", description = "GC-671")
-    @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
+        @Description("Verify that User can return to News filtered by tags from single view by clicking ‘Back to news’ button")
     public void returnToFilteredNews() {
         logger.info("Starting returnToFilteredNews");
 
@@ -120,6 +120,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews()
+                .switchToGridView()
                 .selectFilters(multipleTags)
                 .scrollDown();
         List<String> tagsList = new ArrayList<>();
