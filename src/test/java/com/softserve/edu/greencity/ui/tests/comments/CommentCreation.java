@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -80,12 +81,24 @@ public class CommentCreation extends GreenCityTestRunner {
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
-        softAssert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
 
-        commentPart.clickPublishCommentButton();
-        CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
-        softAssert.assertEquals(commentComponent.getComment().getText().length(), 8000);
-        softAssert.assertAll();
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+       // Assert.assertEquals(true,commentPart.getPublishCommentButton().getAttribute("disabled"));
+       // Assert.assertTrue(commentPart.getPublishCommentButton().getAttribute("disabled")=="disabled");
+
+        Assert.assertEquals(false,commentPart.getPublishCommentButton().isEnabled());
+
+
+
+        // softAssert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
+            //commentPart.clickPublishCommentButton();
+            //CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
+            // softAssert.assertEquals(commentComponent.getComment().getText().length(), 8000);
+            //softAssert.assertAll();
 
     }
 
