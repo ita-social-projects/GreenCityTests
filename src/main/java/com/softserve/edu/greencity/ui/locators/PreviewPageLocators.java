@@ -13,7 +13,7 @@ public enum PreviewPageLocators implements Locator {
     IMG_TWITTER_LINK(By.xpath("//img[contains(@src,'twitter.svg')]")),
     IMG_LINKEDIN_LINK(By.xpath("//img[contains(@src,'linkedin.svg')]")),
     IMG_FACEBOOK_LINK(By.xpath("//img[contains(@src,'facebook.svg')]")),
-    BACK_TO_EDITING_BUTTON(By.cssSelector("div.button-text")),
+    BACK_TO_EDITING_BUTTON(By.xpath("//div[@class = 'button-text']")),
     PUBLISH_BUTTON(By.cssSelector("button[type='submit']")),
     TAGS_FIELDS(By.cssSelector("div.tags > div"));
 
