@@ -81,7 +81,7 @@ public class GoogleMailAPI  {
         }
 
         String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
-        Pattern pattern = Pattern.compile("https://greencity[^\"]+");
+        Pattern pattern = Pattern.compile("https://ita-social-projects[^\"]+");
         final Matcher m = pattern.matcher(mailContent);
         m.find();
         link = mailContent.substring( m.start(), m.end() )

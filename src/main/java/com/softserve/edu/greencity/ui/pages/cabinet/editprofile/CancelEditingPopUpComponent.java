@@ -3,6 +3,9 @@ package com.softserve.edu.greencity.ui.pages.cabinet.editprofile;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
+import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -57,6 +60,7 @@ public class CancelEditingPopUpComponent {
     }
 
     public String getTitleOfCancelPopUpComponent(){
+        WaitsSwitcher.sleep(500);
         titleOfCancelComponent = new LabelElement(driver, TITLE_CANCEL_POP_UP).getText();
         return titleOfCancelComponent;
     }
@@ -75,5 +79,15 @@ public class CancelEditingPopUpComponent {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ENTER).build().perform();
         return new MyHabitPage(driver);
+    }
+    public WelcomePage signOutFromEditProfile(){
+         new TopPart(driver) {
+            @Override
+            public WelcomePage signOut() {
+                return super.signOut();
+            }
+        };
+         clickCancelButton();
+         return new WelcomePage(driver);
     }
 }

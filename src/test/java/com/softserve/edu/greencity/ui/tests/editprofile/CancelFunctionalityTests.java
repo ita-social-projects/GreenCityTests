@@ -7,6 +7,8 @@ import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,6 +25,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
         CancelEditingPopUpComponent cancelPopUp = loadApplication()
                 .loginIn(getTemporaryUser())
                 .clickEditButton()
+                .clearCityField()
                 .fillCityField("LvivLvivLviv")
                 .clickCancelButtonWithPopUp();
 
@@ -31,6 +34,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
 
         cancelPopUp.clickContinueEditingButton()
                 .switchRuLanguage()
+                .clearCityField()
                 .fillCityField("LvivL")
                 .clickCancelButtonWithPopUp();
 
@@ -39,23 +43,21 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
 
         cancelPopUp.clickContinueEditingButton()
                 .switchUaLanguage()
-                .clearNameField()
+                .clearCityField()
                 .fillCityField("LvivLv")
-                .clickCancelButtonWithPopUp()
-                .clickContinueEditingButton()
-                .fillCityField("ASgasga")
-                .clickCancelButton();
+                .clickCancelButtonWithPopUp();
 
         String titleOfPopUpOnUa = cancelPopUp.getTitleOfCancelPopUpComponent();
         String subTitleOfPopUpOnUa = cancelPopUp.getSubTitleOfCancelComponent();
 
-        SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(titleOfPopUpOnEn, EditProfileTexts.TITLE_OF_CANCEL_POP_UP_TEXT_EN.getText());
         softAssert.assertEquals(subTitleOfPopUpOnEn, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_EN.getText());
         softAssert.assertEquals(titleOfPopUpOnRu, EditProfileTexts.TITLE_OF_CANCEL_POP_UP_TEXT_RU.getText());
         softAssert.assertEquals(subTitleOfPopUpOnRu, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_RU.getText());
         softAssert.assertEquals(titleOfPopUpOnUa, EditProfileTexts.TITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
         softAssert.assertEquals(subTitleOfPopUpOnUa, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
+        cancelPopUp.signOutFromEditProfile();
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-1554")
@@ -147,10 +149,18 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
         String city = checkingAllFilledFields.getCityField().getText();
         String credo = checkingAllFilledFields.getCredoField().getText();
 
-        SoftAssert softAssert = new SoftAssert();
+
         softAssert.assertEquals(name, NAME);
         softAssert.assertEquals(city, CITY);
         softAssert.assertEquals(credo, CREDO);
         softAssert.assertAll();
+    }
+    @AfterMethod
+    public void afterMethod() {
+        driver.manage().deleteAllCookies();
+    }
+    @BeforeMethod
+    public void setUp() {
+        softAssert = new SoftAssert();
     }
 }
