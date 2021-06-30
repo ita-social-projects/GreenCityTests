@@ -55,6 +55,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
         softAssert.assertEquals(subTitleOfPopUpOnRu, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_RU.getText());
         softAssert.assertEquals(titleOfPopUpOnUa, EditProfileTexts.TITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
         softAssert.assertEquals(subTitleOfPopUpOnUa, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-1554")
