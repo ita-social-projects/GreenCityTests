@@ -81,15 +81,11 @@ public class GoogleMailAPI  {
         }
 
         String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
-        Pattern pattern = Pattern.compile("https://ita-social-projects[^\"]+");
+        Pattern pattern = Pattern.compile(">https://ita-social-projects[^\"<]+");
         final Matcher m = pattern.matcher(mailContent);
         m.find();
         link = mailContent.substring( m.start(), m.end() )
-                .replace("3D","")
-                .replace("amp;","")
-                .replace("=","")
-                .replace("token","token=")
-                .replace("user_id","user_id=");
+                .replace(">","");
 
         return link;
     }
