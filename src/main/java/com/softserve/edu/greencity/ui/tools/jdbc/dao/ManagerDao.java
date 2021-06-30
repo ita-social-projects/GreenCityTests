@@ -31,9 +31,9 @@ public final class ManagerDao {
 
     //TODO hide log info
     private void readProperties() {
-        username = System.getenv().get(property.getProperty("JDBC_USERNAME"));
-        password = System.getProperty("JDBC_PASSWROD");
-        url = System.getProperty("JDBC_URL");
+        username =  System.getenv().get("JDBC_USERNAME");
+        password = System.getenv().get("JDBC_PASSWROD");
+        url = System.getenv().get("JDBC_URL");
         /*-
         username =  System.getenv().get(property.getProperty("JDBC_USERNAME"));
         password = System.getProperty("JDBC_PASSWROD");
