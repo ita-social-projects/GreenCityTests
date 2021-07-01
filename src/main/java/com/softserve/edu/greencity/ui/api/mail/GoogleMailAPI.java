@@ -84,11 +84,9 @@ public class GoogleMailAPI  {
         Pattern pattern = Pattern.compile(">https://ita-social-projects[^\"<]+");
         final Matcher m = pattern.matcher(mailContent);
         m.find();
-        link = mailContent.substring( m.start(), m.end() )
-                .replace(">","")
-                .replace("amp;","");
-
-
+        link = mailContent.substring(m.start(), m.end())
+                .replace("amp;","")
+                .replace(">","");
         return link;
     }
 
