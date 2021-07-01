@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.By;
 
 public enum CommentComponentLocators implements Locator {
-    NUMBERS_OF_COMMENTS(By.cssSelector(".counter > p")),
+    NUMBERS_OF_COMMENTS(By.xpath("//div[@class='counter ng-star-inserted']/div[@class='wrapper']/p/following-sibling::p")),
     ADD_COMMENT_TEXTAREA(By.cssSelector(".input-submit textarea")),
     ADD_COMMENT_BUTTON(By.cssSelector(".input-submit button")),
     COMMENTS_BLOCK(By.cssSelector("app-comments-list")),

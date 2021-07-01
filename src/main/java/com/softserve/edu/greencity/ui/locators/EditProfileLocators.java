@@ -48,6 +48,7 @@ public enum EditProfileLocators implements Locator{
     SHOW_LOCATION_CHECK_BOX(By.cssSelector("li:nth-child(1) > label > span")),
     SHOW_ECO_PLACES_CHECK_BOX(By.cssSelector("li:nth-child(2) > label > span")),
     SHOW_SHOPPING_LIST_CHECK_BOX(By.cssSelector("li:nth-child(3) > label > span")),
+    CHECKBOX_SHOPPING_LIST(By.xpath("//input[@formcontrolname= 'showShoppingList']")),
 
     CANCEL_BUTTON(By.cssSelector("div.buttons > button:nth-child(1)")),
     SAVE_BUTTON(By.xpath("//button[@type='submit']")),

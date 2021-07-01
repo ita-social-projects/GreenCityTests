@@ -32,6 +32,8 @@ public class EditProfilePage extends TopPart {
     private CheckBoxElement showLocation;
     private CheckBoxElement showEcoPlaces;
     private CheckBoxElement showShoppingList;
+    private CheckBoxElement checkBoxShoppingList;
+
     private SocialNetworkComponent socialNetworkComponent;
     private ButtonElement cancelButton;
     private ButtonElement saveButton;
@@ -177,8 +179,13 @@ public class EditProfilePage extends TopPart {
     public EditProfilePage clickShowShoppingListCheckBoxCheckUncheck() {
         if (showShoppingList == null) {
             showShoppingList = new CheckBoxElement(driver, SHOW_SHOPPING_LIST_CHECK_BOX);
+            checkBoxShoppingList = new CheckBoxElement(driver,CHECKBOX_SHOPPING_LIST);
         }
-        if (showShoppingList.isChecked()) {
+
+        if (checkBoxShoppingList.getAtribute("checked") == null){
+            return new EditProfilePage(driver);
+        }
+        else {
             showShoppingList.click();
         }
         return new EditProfilePage(driver);
