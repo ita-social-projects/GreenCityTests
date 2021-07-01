@@ -350,7 +350,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private RegisterComponent verifyRegistration(User user) {
-        driver.get( new GoogleMailAPI().getconfirmURL(user.getEmail(),user.getPassword(), 20));
+        String link = new GoogleMailAPI().getconfirmURL(user.getEmail(),user.getPassword(),20);
+        driver.get(link);
         return this;}
 
     @Step
