@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
@@ -127,9 +128,9 @@ public class EditPicturePopUpComponent {
         return new EditPicturePopUpComponent(driver);
     }
 
-    public EditPicturePopUpComponent clickClosePopUpButton() {
+    public EditProfilePage clickClosePopUpButton() {
         getClosePopUpEditPhotoButton().click();
-        return new EditPicturePopUpComponent(driver);
+        return new EditProfilePage(driver);
     }
 
     public EditProfilePage clickContinueEditingButtonInDeletePhotoPopUp() {
@@ -146,15 +147,17 @@ public class EditPicturePopUpComponent {
 
     public ButtonElement getSavePhotoButton() {
         if (savePhotoButton == null) {
-            savePhotoButton = new ButtonElement(driver, SAVE_BUTTON);
+            savePhotoButton = new ButtonElement(driver, SAVE_PHOTO_BUTTON);
         }
         return savePhotoButton;
     }
 
-    public EditPicturePopUpComponent clickSavePhotoButton() {
+    public EditProfilePage clickSavePhotoButton() {
         getSavePhotoButton().click();
-        return new EditPicturePopUpComponent(driver);
+        waitsSwitcher.setExplicitWait(3,ExpectedConditions.invisibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
+        return new EditProfilePage(driver);
     }
+
 
 //    public EditPicturePopUpComponent browseImage(String img){
 //        if (browseButton == null) {

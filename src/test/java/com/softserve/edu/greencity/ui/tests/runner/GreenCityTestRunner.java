@@ -118,6 +118,7 @@ public abstract class GreenCityTestRunner {
 
     /**
      * The first method your tests should start with.
+     *
      * @return WelcomePage page object
      */
     protected WelcomePage loadApplication() {
