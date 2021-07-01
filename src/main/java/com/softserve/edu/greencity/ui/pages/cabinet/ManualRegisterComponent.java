@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import lombok.Getter;
 import org.openqa.selenium.*;
@@ -34,7 +35,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By showPasswordConfirmButtonSelector = By.cssSelector("#repeatPassword + img");
     private By passwordConfirmValidatorSelector = By.xpath("//input[@id='repeatPassword']/../following-sibling::div[contains(@class, 'error-message')]");
     private By errorMessages = By.cssSelector("div.error-message");
-    private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
+    private By signUpErrorsMsg = By.cssSelector(".error-message.error-message-show");//app-sign-up div.error-message-show
     private By successfulRegistrationPopUp = By.cssSelector("app-submit-email div.submit-email");
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
@@ -210,8 +211,10 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         return driver.findElements(signUpErrorsMsg);
     }
     @Step
-    public String getSignUpErrorsMsg(int errorNumber){
-        return driver.findElements(signUpErrorsMsg).get(errorNumber-1).getText();
+    public String getSignUpErrorsMsg(){
+        WaitsSwitcher.sleep(30000);
+       // waitsSwitcher.setExplicitWait(30, ExpectedConditions.visibilityOf(driver.findElement(signUpErrorsMsg)));
+        return driver.findElement(signUpErrorsMsg).getText();
     }
     @Step
     public String getPasswordConfirmValidatorText() {
@@ -380,7 +383,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
                 .waitForConfirmationEmail()
-                .verifyRegistration(userData);
+                 .verifyRegistration(userData);
     }
 
     @Step
