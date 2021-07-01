@@ -82,7 +82,9 @@ public class CommentCreation extends GreenCityTestRunner {
                 .getCommentPart()
                 .setCommentText(commentText);
 
-        Assert.assertTrue(commentPart.getPublishCommentButton().getAttribute("disabled")!=null);
+        softAssert.assertNotNull(commentPart.getPublishCommentButton().getAttribute("disabled"));
+        softAssert.assertAll();
+
 
 
     }
