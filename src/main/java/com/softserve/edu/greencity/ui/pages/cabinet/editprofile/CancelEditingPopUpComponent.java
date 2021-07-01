@@ -7,8 +7,10 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
@@ -44,17 +46,28 @@ public class CancelEditingPopUpComponent {
         return closeButton;
     }
 
-    public EditProfilePage clickContinueEditingButton(){
+    public boolean isCancelEditPageButtonIsExists() {
+        try {
+            getCancelEditingButton();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public EditProfilePage clickContinueEditingButton() {
         getContinueEditingButton().click();
         return new EditProfilePage(driver);
     }
 
-    public MyHabitPage clickCancelButton(){
-        getCancelEditingButton().click();
+    public MyHabitPage clickCancelButton() {
+        if (isCancelEditPageButtonIsExists()) {
+            getCancelEditingButton().click();
+        }
         return new MyHabitPage(driver);
     }
 
-    public EditProfilePage clickCloseButton(){
+    public EditProfilePage clickCloseButton() {
         getCloseButton().click();
         return new EditProfilePage(driver);
     }
@@ -65,17 +78,18 @@ public class CancelEditingPopUpComponent {
         return titleOfCancelComponent;
     }
 
-    public String getSubTitleOfCancelComponent(){
+    public String getSubTitleOfCancelComponent() {
         subTitleOfCancelComponent = new LabelElement(driver, SUB_TITLE_CANCEL_POP_UP).getText();
         return subTitleOfCancelComponent;
     }
 
-    public EditProfilePage clickEsc(){
+    public EditProfilePage clickEsc() {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ESCAPE).build().perform();
         return new EditProfilePage(driver);
     }
-    public MyHabitPage clickEnter(){
+
+    public MyHabitPage clickEnter() {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ENTER).build().perform();
         return new MyHabitPage(driver);
