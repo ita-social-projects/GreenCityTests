@@ -85,6 +85,7 @@ public class GoogleMailAPI  {
         final Matcher m = pattern.matcher(mailContent);
         m.find();
         link = mailContent.substring( m.start(), m.end() )
+                .replace("amp;","")
                 .replace(">","");
 
         return link;
