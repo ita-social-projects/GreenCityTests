@@ -82,23 +82,8 @@ public class CommentCreation extends GreenCityTestRunner {
                 .getCommentPart()
                 .setCommentText(commentText);
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-       // Assert.assertEquals(true,commentPart.getPublishCommentButton().getAttribute("disabled"));
-       // Assert.assertTrue(commentPart.getPublishCommentButton().getAttribute("disabled")=="disabled");
+        Assert.assertTrue(commentPart.getPublishCommentButton().getAttribute("disabled")!=null);
 
-        Assert.assertEquals(false,commentPart.getPublishCommentButton().isEnabled());
-
-
-
-        // softAssert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
-            //commentPart.clickPublishCommentButton();
-            //CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
-            // softAssert.assertEquals(commentComponent.getComment().getText().length(), 8000);
-            //softAssert.assertAll();
 
     }
 
