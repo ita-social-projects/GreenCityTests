@@ -22,7 +22,7 @@ public class RegisterComponent extends TopPart {
     private By googleSignUpButtonClass = By.cssSelector(".google-sign-in");
     private By titleCss = By.cssSelector("app-sign-up h1.title-text");
     private By subtitleCss = By.cssSelector(".subtitle-text");
-    private By congratsModalCss = By.cssSelector(".main-container .submit-email");
+    private By congratsModalCss = By.cssSelector(".mat-simple-snackbar");
     private By signInLinkCss = By.cssSelector("div.exist-account a");
     private By emailFieldSelector = By.cssSelector("input[name='email']");
     private By userNameFieldSelector = By.cssSelector("input[name='firstName']");
