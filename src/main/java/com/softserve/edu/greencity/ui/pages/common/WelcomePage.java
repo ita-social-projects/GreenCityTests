@@ -7,16 +7,17 @@ import org.openqa.selenium.WebDriver;
 
 @Getter
 public class WelcomePage extends TopPart {
-private By myHabitsUnsignedLink = By.cssSelector("ul > li > a[href*='/profile']");
+private By myHabitsUnsignedLink;
     public WelcomePage(WebDriver driver) {
         super(driver);
         initElements();
     }
 
     private void initElements() {
-        // init elements
+
     }
     public LoginComponent clickMyHabitsUnsignedLink(){
+        myHabitsUnsignedLink = By.cssSelector("header ul > li > a[href*='/profile']");
         logger.info("Unsigned user click My habits ");
         searchElementByCss(myHabitsUnsignedLink).click();
         return new  LoginComponent(driver);
