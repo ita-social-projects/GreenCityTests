@@ -35,7 +35,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By passwordConfirmValidatorSelector = By.xpath("//input[@id='repeatPassword']/../following-sibling::div[contains(@class, 'error-message')]");
     private By errorMessages = By.cssSelector("div.error-message");
     private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
-    private By successfulRegistrationPopUp = By.cssSelector("app-submit-email div.submit-email");
+    private By successfulRegistrationPopUp = By.xpath("//div[contains(text(),'You have successfully registered on the site.')]");
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
         this.driver = driver;
