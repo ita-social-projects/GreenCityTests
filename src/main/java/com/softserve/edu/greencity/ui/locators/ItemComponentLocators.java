@@ -5,13 +5,15 @@ import org.openqa.selenium.By;
 public enum ItemComponentLocators implements Locator {
     TAGS(By.cssSelector(".filter-tag div")),
     TAGS_CONTAINER(By.cssSelector(".filter-tag")),
-    IMAGE(By.cssSelector(".list-image-content")),
+    IMAGE(By.cssSelector (".list-image-content")),
+            //(".eco-news_list-img")),
+            //(".list-image-content")),it's first
     TITLE(By.cssSelector("div.title-list.word-wrap")),
-            //(".eco-news_list-content-title.one-row")),
-            //("div.title-list.word-wrap")),
+                    //(".eco-news_list-content-title.one-row")),
+            //("div.title-list.word-wrap")) it was first,
     CONTENT(By.cssSelector(".list-text p")),
                     //(".eco-news_list-content-text.tree-row p")),
-                    //(".list-text p")),
+                    //(".list-text p")),first
     CONTENT_WRAP(By.cssSelector(".list-text")),
     DATE_OF_CREATION(By.cssSelector(".user-data-added-news > p:nth-child(1)")),
     AUTHOR(By.cssSelector(".user-data-added-news > p:nth-of-type(2)")),

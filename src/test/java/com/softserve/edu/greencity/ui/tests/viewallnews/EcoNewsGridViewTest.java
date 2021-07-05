@@ -28,7 +28,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @BeforeClass
     public void widthData() {
-        screenWidth = Arrays.asList(1140, 1024, 1007, 1005, 992, 991, 576, 575, 320);
+        screenWidth = Arrays.asList(1140, 1024, 1007, 1005, 992, 991, 576,575, 320);
 
     }
 
