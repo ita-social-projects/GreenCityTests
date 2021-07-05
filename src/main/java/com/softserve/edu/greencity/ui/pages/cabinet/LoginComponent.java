@@ -131,6 +131,4 @@ public class LoginComponent extends TopPart  {
         ElementsCustomMethods elementsCustomMethods = new ElementsCustomMethods(driver);
         return elementsCustomMethods.waitTillElementGone(driver, loginComponent, 6000);
     }
-
-
 }

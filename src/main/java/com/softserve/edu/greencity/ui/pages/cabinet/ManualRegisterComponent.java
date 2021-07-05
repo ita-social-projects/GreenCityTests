@@ -433,10 +433,6 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         return this;
     }
 
-    public MyHabitPage getMyCabinetPage(){
-        return new MyHabitPage(driver);
-    }
-
     @Override
     public WebDriver setDriver() {
         return this.driver;

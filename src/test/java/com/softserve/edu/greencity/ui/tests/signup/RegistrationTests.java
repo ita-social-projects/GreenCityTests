@@ -150,17 +150,21 @@ public class RegistrationTests extends GreenCityTestRunner {
     @Description("Verify that User is redirected to My habits as a Registered User after he has entered valid credentials")
     public void registrationCheckIsUserRedirected(User userLoginCredentials) {
         logger.info("Starting registrationCheckIsUserRedirected");
+        new GoogleMailAPI().clearMail(userLoginCredentials.getEmail(), userLoginCredentials.getPassword());
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+        manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
+
         String newHabitButtonText = loadApplication()
-                .signUp()
-                .getManualRegisterComponent()
-                .registerUser(userLoginCredentials)
-                .getMyCabinetPage()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(userLoginCredentials)
                 .getAddNewHabitButton()
                 .getText();
 
         Assert.assertEquals(newHabitButtonText, ADD_NEW_HABIT_BUTTON_TEXT.getText());
         new MyHabitPage(driver).signOut();
-
 
     }
 }
