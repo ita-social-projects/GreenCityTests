@@ -565,10 +565,6 @@ public class EcoNewsPage extends TopPart {
         int lineHeight = Integer.parseInt(element.findElement(ARTICLE_TEXT.getPath()).getCssValue("line-height").replace("px",""));
         double height = element.findElement(ARTICLE_TEXT.getPath()).getSize().getHeight();
         softAssert.assertTrue(height<lineHeight*4,"assert text field size is <= 4 lines. height: "+element.findElement(ARTICLE_TEXT.getPath()).getSize().getHeight());
-//                element.findElement(ARTICLE_TEXT.getPath()).getText().trim()
-//                        .replace("\\s", "").length() < 201,
-//                "Assert that text length < 200. Title: " +
-//                        element.findElement(ARTICLE_TEXT.getPath()).getText());
     }
 
     @Step("Verification that all content in the list of articles displayed")
