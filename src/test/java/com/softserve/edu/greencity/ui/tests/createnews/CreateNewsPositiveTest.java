@@ -473,8 +473,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         logger.info("verifyThatImageIsDisplayedWithoutChangesInSize starts");
         createNewsPage.uploadJPGImage();
 
-        int imageWindowHeight = 212; //Expected window size according to a mockup
-        int imageWindowWidth = 456;
+        int imageWindowHeight = 231; //Expected window size according to a mockup
+        int imageWindowWidth = 426;
 
         softAssert.assertEquals(imageWindowHeight, createNewsPage.getDropArea().getSize().getHeight());
         softAssert.assertEquals(imageWindowWidth, createNewsPage.getDropArea().getSize().getWidth());

@@ -419,7 +419,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Upload PDF file")
     public CreateNewsPage uploadPDFFile() {
-        uploadFile(getUploadArea(), "src/test/resources/images/PDFFile.pdf");
+        uploadFile(getUploadArea(), "src/test/resources/images/pdfFileFormat.pdf");
         return this;
     }
 

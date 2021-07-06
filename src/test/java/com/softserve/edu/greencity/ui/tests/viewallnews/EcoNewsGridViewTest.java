@@ -55,7 +55,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test(description = "GC-334")
+    @Test(testName = "GC-334", description = "GC-334")
     @Description("Open eco news")
     public void NavigateToEcoNews() {
         logger.info("NavigateToEcoNews starts");
@@ -65,7 +65,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-336")
+    @Test(testName = "GC-336", description = "GC-336")
     public void twelveNewsDisplayed() {
         logger.info("twelveNewsDisplayed starts");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
@@ -75,7 +75,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test
+    @Test(testName = "GC-666", description = "GC-666")
     @Description("GC-666")
     public void datePxLengthTest() {
         logger.info("Date px length test");
@@ -92,7 +92,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test(retryAnalyzer = RetryAnalyzerImpl.class ,testName = "GC-666", description = "GC-666")
     @Description("GC-666")
     public void authorPxLengthTest() {
         logger.info("Author px length test");
@@ -187,8 +187,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
-        @Description("GC-339")
+    @Test(testName = "GC-339", description = "GC-339")
+    @Description("GC-339")
     public void verifyDefaultImageTest() {
         logger.info("Verify that news article has default image if it was not uploaded");
         User user = UserRepository.get().temporary();
@@ -211,7 +211,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
-    @Test(retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test(retryAnalyzer = RetryAnalyzerImpl.class,testName = "GC-341", description = "GC-341")
     @Description("GC-341")
     public void topicIsClickableTest() {
         logger.info("topicIsClickableTest test");
@@ -225,7 +225,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test
+    @Test(testName = "GC-674", description = "GC-674")
     @Description("GC-674")
     public void newsAligningTest() {
         logger.info("News aligning starts");
@@ -244,7 +244,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
-    @Test
+    @Test(testName = "GC-341", description = "GC-341")
     @Description("GC-341")
     public void openTopicTest() {
         logger.info("openTopicTest test");
@@ -276,7 +276,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test
+    @Test(testName = "GC-675", description = "GC-675")
     @Description("Verify that at least text content displayed in each article displayed GC-675")
     public void allTextContentDisplayedTest() {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
@@ -286,7 +286,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
     @LocalOnly //On remote machine the time differs
-    @Test
+    @Test(testName = "GC-337", description = "GC-337")
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
         logger.info("ChronologicalNewsTest");
