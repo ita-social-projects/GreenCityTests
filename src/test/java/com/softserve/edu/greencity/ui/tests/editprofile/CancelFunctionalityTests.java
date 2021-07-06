@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.CancelEditingPop
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
+import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -56,40 +57,38 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
         softAssert.assertEquals(subTitleOfPopUpOnRu, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_RU.getText());
         softAssert.assertEquals(titleOfPopUpOnUa, EditProfileTexts.TITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
         softAssert.assertEquals(subTitleOfPopUpOnUa, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
+
     }
 
     @Test(testName = "GC-1554")
     @Description("Verify that the User stays on the edit form after clicking 'Cancel' and then 'Continue editing' buttons")
     public void staysOnEditingPage() {
         logger.info("Starting verifyUserStaysOnEditFormAfterClickingContinueEditing");
-        String checkUserStaysOnEditingPage = loadApplication()
+        boolean checkUserStaysOnEditingPage = loadApplication()
                         .loginIn(getTemporaryUser())
                         .clickEditButton()
                         .clearNameField()
                         .fillNameField("NewName")
                         .clickCancelButtonWithPopUp()
                         .clickContinueEditingButton()
-                        .getTitleOnEditPage()
-                        .getText();
-
-        Assert.assertEquals(checkUserStaysOnEditingPage,"Edit Profile");
+                        .isElementPresent(By.xpath("//div[@class='main-container']"));
+                        Assert.assertFalse(checkUserStaysOnEditingPage, "Button 'Cancel' doesn't work");
     }
 
     @Test(testName = "GC-1554")
     @Description("Verify possibility of pressing 'Escape' when the 'Cancel' pop-up notification is opened")
     public void pressEscOnKeyboardOnCancelPopUpEditingProfile() {
         logger.info("Starting verifyUserCanPressEscOnKeyboardOnCancelPopUp");
-        String verifyUserCanUseEsc = loadApplication()
+        boolean checkUserStaysOnEditingPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .clickEditButton()
                 .clearNameField()
                 .fillNameField("NewNewName")
                 .clickCancelButtonWithPopUp()
                 .clickEsc()
-                .getTitleOnEditPage()
-                .getText();
+                .isElementPresent(By.xpath("//div[@class='main-container']"));
+                Assert.assertFalse(checkUserStaysOnEditingPage, "Button 'Escape' doesn't work");
 
-        Assert.assertEquals(verifyUserCanUseEsc, "Edit Profile");
     }
     @Test(testName = "GC-1638")
     @Description("Verify the warning about losing unsaved changes when User goes to another page")

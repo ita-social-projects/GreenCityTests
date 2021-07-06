@@ -7,9 +7,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.awt.*;
@@ -50,6 +48,7 @@ public class EditProfilePage extends TopPart {
     private LabelElement credoNotification;
 
     private LanguageComponents languageSwitcher;
+    private IconElement cancelEditingPopUp;
 
     public EditProfilePage(WebDriver driver) {
         super(driver);
@@ -138,6 +137,20 @@ public class EditProfilePage extends TopPart {
             getCityField().clearText();
         }
         return this;
+    }
+
+    public boolean isElementPresent(By by) {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     @Step("Fill city field")
