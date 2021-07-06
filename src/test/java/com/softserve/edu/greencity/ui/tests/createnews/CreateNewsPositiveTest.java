@@ -98,9 +98,6 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         String CreateNewsLabelsFontSize = "18px";
         String ContentLabelSize = "12px";
         String CreateNewsLabelsFontColor = "#494a49";
-        String fontToCheck = createNewsPage.getTitleLabel().getFont();
-        String FontSize = createNewsPage.getTitleLabel().getSize();
-        String FontColor = createNewsPage.getTitleLabel().getColorHex();
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getTitleLabel().getFont());
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getTagsLabel().getFont());
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getSourceLabel().getFont());
