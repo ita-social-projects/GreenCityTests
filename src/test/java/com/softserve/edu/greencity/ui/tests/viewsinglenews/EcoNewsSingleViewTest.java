@@ -120,6 +120,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
 
         EcoNewsPage ecoNewsPage = loadApplication()
                 .navigateMenuEcoNews()
+                .switchToGridView()
                 .selectFilters(multipleTags)
                 .scrollDown();
         List<String> tagsList = new ArrayList<>();
@@ -303,7 +304,7 @@ public class EcoNewsSingleViewTest extends GreenCityTestRunner {
         }
     }
   
-    @Test(testName = "GC-580", description = "GC-590", dataProvider = "data-provider")
+    @Test(testName = "GC-580", description = "GC-580", dataProvider = "data-provider")
     @Description("Verify UI of the ‘Create news’ page for different screen resolutions")
     public void verificationUIoder(int[] dimension){
         logger.info("login");

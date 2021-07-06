@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -54,7 +55,7 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(news.getTitle()));
     }
 
-    @Test
+    @Test(testName = "GC-817", description = "GC-817")
     @Description("GC-817")
     public void loggedUserCanAddComment() {
         logger.info("Verify that logged user can add comment starts");
@@ -80,17 +81,16 @@ public class CommentCreation extends GreenCityTestRunner {
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
-        softAssert.assertEquals(commentPart.getCommentField().getAttribute("value").length(), 8000);
 
-        commentPart.clickPublishCommentButton();
-        CommentComponent commentComponent = commentPart.getCommentComponents().get(0);
-        softAssert.assertEquals(commentComponent.getComment().getText().length(), 8000);
+        softAssert.assertNotNull(commentPart.getPublishCommentButton().getAttribute("disabled"));
         softAssert.assertAll();
+
+
 
     }
 
 
-    @Test
+    @Test(testName = "GC-821", description = "GC-821")
     @Description("GC-821")
     public void loggedUserCannotAddEmptyComment() {
         logger.info("Verify that logged user cannot add empty comment starts");
@@ -106,7 +106,7 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-826", description = "GC-826")
     @Description("GC-826")
     public void unloggedUserCannotDeleteCommentAndReply() {
         logger.info("Verify that unregistered user can’t delete comment/reply starts");
@@ -131,7 +131,7 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-819", description = "GC-819")
     @Description("GC-819")
     public void loggedUserCanDeleteHisComment() {
         logger.info("Verify that logged user can add comment starts");
@@ -154,7 +154,7 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-827", description = "GC-827")
     @Description("GC-827")
     public void systemRecalculatesTheTotalCommentsNumber() {
         logger.info("Verify that after comment was published, system recalculates the total com.softserve.edu.greencity.api.comments number starts");
@@ -171,7 +171,7 @@ public class CommentCreation extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-824", description = "GC-824")
     @Description("GC-824")
     public void loggedUserCantDeleteNotHisComment() {
         logger.info("Verify that logged user can't delete not his comment");

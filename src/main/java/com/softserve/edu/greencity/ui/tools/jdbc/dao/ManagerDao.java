@@ -31,9 +31,9 @@ public final class ManagerDao {
 
     //TODO hide log info
     private void readProperties() {
-        username =  System.getenv().get("greencity_admin@greencity-data");
-        password = System.getenv().get("GbCAq5MU8asY0gxOmoQX8/V5vcbWgnRkzWAmZTZU5qo=");
-        url = System.getenv().get("jdbc:postgresql://greencity-data.postgres.database.azure.com:5432/greencity");
+        username =  System.getenv().get("JDBC_USERNAME");
+        password = System.getenv().get("JDBC_PASSWROD");
+        url = System.getenv().get("JDBC_URL");
         /*-
         username =  System.getenv().get(property.getProperty("JDBC_USERNAME"));
         password = System.getProperty("JDBC_PASSWROD");

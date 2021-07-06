@@ -2,10 +2,8 @@ package com.softserve.edu.greencity.ui.tests.editprofile;
 
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditPicturePopUpComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
-import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
@@ -13,17 +11,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.io.File;
-
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 
 public class EditProfileEditPhoto extends GreenCityTestRunner {
+    private EditProfilePage editProfilePage;
+    private EditPicturePopUpComponent editPicturePopUpComponent;
+
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
-
-    private EditProfilePage editProfilePage;
-    private EditPicturePopUpComponent editPicturePopUpComponent;
 
     @BeforeMethod
     public void OpenCreateNewsPage() {
@@ -32,10 +28,11 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
                 .clickEditButton();
     }
 
-//    @AfterMethod
-//    private void signOut() {
-//        editProfilePage.signOut();
-//    }
+    @AfterMethod
+    private void goOutFromEditProfilePage() {
+        editProfilePage = editPicturePopUpComponent.clickClosePopUpButton();
+        editProfilePage.clickCancelButtonWithPopUp().clickCancelButton();
+    }
 
     @DataProvider(name = "editPhotoPopUpTexts")
     private Object[][] textsForEditPhotoPopUp() {
@@ -81,13 +78,12 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
 
 //        editProfilePage.clickEditPhotoButton().uploadPNGImage().clickSavePhotoButton();
 
-        EditPicturePopUpComponent editPicturePopUpComponent = editProfilePage.clickEditPhotoButton();
+        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton();
 
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpEditPicture(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getCancelButton(), cancel);
         softAssert.assertEquals(editPicturePopUpComponent.getDeletePhotoButton(), delete);
         softAssert.assertEquals(editPicturePopUpComponent.getUploadNewPhotoButton(), upload);
-
     }
 
     @Test(testName = "GC-1597", dataProvider = "deletePhotoPopUpTexts")
@@ -100,12 +96,16 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
         editProfilePage.createLanguageSwitchComponent()
                 .changeLanguage(languages);
 
-        EditPicturePopUpComponent editPicturePopUpComponent =
-                editProfilePage.clickEditPhotoButton().clickDeletePhotoButton();
+        editPicturePopUpComponent =
+                editProfilePage.clickEditPhotoButton()
+                        .uploadJPGImage()
+                        .clickSavePhotoButton()
+                        .clickEditPhotoButton()
+                        .clickDeletePhotoButton();
 
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpInDeletePhoto(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getContinueEditingButtonInDeletePhotoPopUp(), continueEditing);
-        softAssert.assertEquals(editPicturePopUpComponent.getYesDeleteButtonInDeletePhotoPopUp(), yes_delete);
+        softAssert.assertEquals(editPicturePopUpComponent.getYesDeleteButtonInDeletePhotoPopUp().getText(), yes_delete);
 
     }
 
@@ -122,10 +122,10 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
 //
     }
 
-        @Test
-        @Description("Verify that system doesn't allow to add GIF image")
-        public void verifyImpossibleToAddGIFImage () {
-            logger.info("Starting verifyImpossibleToAddGIFImage");
+    @Test
+    @Description("Verify that system doesn't allow to add GIF image")
+    public void verifyImpossibleToAddGIFImage() {
+        logger.info("Starting verifyImpossibleToAddGIFImage");
 //        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton()
 //                .clickUploadNewPhotoButton()
 //                .uploadGIFImage();
@@ -133,12 +133,12 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
 //        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImage(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 //        editPicturePopUpComponent.clickClosePopUpButton();
 //
-        }
+    }
 
-        @Test
-        @Description("Verify that system doesn't allow to add JPEG image more than 10 MB")
-        public void verifyImpossibleToAddJPEGImageMore10Mb () {
-            logger.info("Starting verifyImpossibleToAddJPEGImageMore10Mb");
+    @Test
+    @Description("Verify that system doesn't allow to add JPEG image more than 10 MB")
+    public void verifyImpossibleToAddJPEGImageMore10Mb() {
+        logger.info("Starting verifyImpossibleToAddJPEGImageMore10Mb");
 //        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton()
 //                .clickUploadNewPhotoButton()
 //                .uploadTooLargeJPEGImage();
@@ -146,12 +146,12 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
 //        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImage(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 //        editPicturePopUpComponent.clickClosePopUpButton();
 //
-        }
+    }
 
-        @Test(testName = "GC-1594")
-        @Description("User can delete uploaded photo but can not delete default photo")
-        public void userCanNotDeleteDefaultPhoto() {
-            logger.info("Starting userCanNotDeleteDefaultPhoto");
+    @Test(testName = "GC-1594")
+    @Description("User can delete uploaded photo but can not delete default photo")
+    public void userCanNotDeleteDefaultPhoto() {
+        logger.info("Starting userCanNotDeleteDefaultPhoto");
 
 //        editProfilePage.clickEditPhotoButton()
 //                .clickUploadNewPhotoButton()
@@ -165,7 +165,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunner {
 //        Assert.assertFalse(editPicturePopUpComponent.isDeleteButtonClickable());
 //        editPicturePopUpComponent.clickClosePopUpButton();
 
-        }
+    }
 
 }
 

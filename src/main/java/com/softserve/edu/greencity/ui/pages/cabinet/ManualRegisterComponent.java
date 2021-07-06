@@ -3,15 +3,16 @@ package com.softserve.edu.greencity.ui.pages.cabinet;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import lombok.Getter;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -34,8 +35,9 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private By showPasswordConfirmButtonSelector = By.cssSelector("#repeatPassword + img");
     private By passwordConfirmValidatorSelector = By.xpath("//input[@id='repeatPassword']/../following-sibling::div[contains(@class, 'error-message')]");
     private By errorMessages = By.cssSelector("div.error-message");
-    private By signUpErrorsMsg = By.cssSelector("app-sign-up div.error-message-show");
-    private By successfulRegistrationPopUp = By.cssSelector("app-submit-email div.submit-email");
+    private By signUpErrorsMsg = By.cssSelector(".error-message.error-message-show");//app-sign-up div.error-message-show
+    private By successfulRegistrationPopUp = By.xpath("//div[contains(text(),'You have successfully registered on the site.')]");
+
     public ManualRegisterComponent(WebDriver driver) {
         super(driver);
         this.driver = driver;
@@ -210,8 +212,10 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
         return driver.findElements(signUpErrorsMsg);
     }
     @Step
-    public String getSignUpErrorsMsg(int errorNumber){
-        return driver.findElements(signUpErrorsMsg).get(errorNumber-1).getText();
+    public String getSignUpErrorsMsg(){
+        WaitsSwitcher.sleep(30000);
+       // waitsSwitcher.setExplicitWait(30, ExpectedConditions.visibilityOf(driver.findElement(signUpErrorsMsg)));
+        return driver.findElement(signUpErrorsMsg).getText();
     }
     @Step
     public String getPasswordConfirmValidatorText() {
@@ -350,7 +354,8 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
 
     @Step
     private RegisterComponent verifyRegistration(User user) {
-        driver.get( new GoogleMailAPI().getconfirmURL(user.getEmail(),user.getPassword(), 20));
+        String link = new GoogleMailAPI().getconfirmURL(user.getEmail(),user.getPassword(),20);
+        driver.get(link);
         return this;}
 
     @Step
@@ -379,7 +384,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .fillPasswordConfirmField(userData.getConfirmPassword())
                 .clickSignUpButton()
                 .waitForConfirmationEmail()
-                .verifyRegistration(userData);
+                 .verifyRegistration(userData);
     }
 
     @Step
@@ -428,7 +433,7 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     }
 
     private ManualRegisterComponent waitForConfirmationEmail() {
-        new GoogleMailAPI().waitForMassagesWithSubject("Verify your email address",true,5,30);
+        new GoogleMailAPI().waitForMessagesWithSubject("Verify your email address",true,5,30);
         return this;
     }
 
