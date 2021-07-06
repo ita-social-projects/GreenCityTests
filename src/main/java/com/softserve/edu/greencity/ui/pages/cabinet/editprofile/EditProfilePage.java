@@ -134,11 +134,7 @@ public class EditProfilePage extends TopPart {
 
     public boolean isElementPresent(By by) {
         try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
+            WaitsSwitcher.sleep(100);
             driver.findElement(by);
             return true;
         } catch (NoSuchElementException e) {

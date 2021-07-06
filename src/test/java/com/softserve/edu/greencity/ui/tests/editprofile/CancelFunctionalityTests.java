@@ -79,7 +79,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
     @Description("Verify possibility of pressing 'Escape' when the 'Cancel' pop-up notification is opened")
     public void pressEscOnKeyboardOnCancelPopUpEditingProfile() {
         logger.info("Starting verifyUserCanPressEscOnKeyboardOnCancelPopUp");
-        String verifyUserCanUseEsc = loadApplication()
+        boolean checkUserStaysOnEditingPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .clickEditButton()
                 .clearNameField()
@@ -89,7 +89,6 @@ public class CancelFunctionalityTests extends GreenCityTestRunner {
                 .isElementPresent(By.xpath("//div[@class='main-container']"));
                 Assert.assertFalse(checkUserStaysOnEditingPage, "Button 'Escape' doesn't work");
 
-        Assert.assertEquals(verifyUserCanUseEsc, "Edit Profile");
     }
     @Test(testName = "GC-1638")
     @Description("Verify the warning about losing unsaved changes when User goes to another page")
