@@ -24,7 +24,8 @@ public enum EcoNewsPageLocator implements Locator {
     ARTICLE_TITLE(By.cssSelector("div.added-data>div.title-list>h3")),
             //("div.eco-news_list-content-title.one-row>p")),
 
-    ARTICLE_TEXT(By.cssSelector(" div.added-data>div.list-text>p")),
+    ARTICLE_TEXT(By.xpath("//div[@class='list-text word-wrap']/p")),
+            //(By.cssSelector("div.added-data>div.list-text>p")),
             //("div.filter-tag+div")),
 
     ARTICLE_CREATION_DATE(By.cssSelector("div.user-data-added-news>p:first-child")),
