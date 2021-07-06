@@ -18,22 +18,11 @@ public enum EcoNewsPageLocator implements Locator {
     DISPLAYED_ARTICLES(By.cssSelector("ul.list>li")),
     DISPLAYED_ARTICLES_TITLES(By.xpath("//div[@class = 'title-list word-wrap']")),
     ARTICLE_IMAGE(By.cssSelector (".list-gallery img.list-image-content")),
-            //("div.eco-news_list-view-wrp>img")),
-
     ARTICLE_ECO_BUTTON(By.cssSelector("div.filter-tag>div.ul-eco-buttons")),
     ARTICLE_TITLE(By.cssSelector("div.added-data>div.title-list>h3")),
-            //("div.eco-news_list-content-title.one-row>p")),
-
     ARTICLE_TEXT(By.xpath("//div[@class='list-text word-wrap']/p")),
-            //(By.cssSelector("div.added-data>div.list-text>p")),
-            //("div.filter-tag+div")),
-
     ARTICLE_CREATION_DATE(By.cssSelector("div.user-data-added-news>p:first-child")),
-            //("div.eco-news_list-autors>p.eco-news_data-text-date")),
-
     ARTICLE_AUTHOR_NAME(By.xpath("//div[@class='user-data-added-news']//p//img[@alt='user icon']")),
-            //("div.user-data-added-news>p:last-child")),
-
     GALLERY_VIEW_BUTTON(By.cssSelector(".btn-tiles")),
     GALLERY_VIEW_BUTTON_HOVER(By.cssSelector(".btn-tiles>em")),
     GALLERY_VIEW_WRAPPER(By.cssSelector(".btn-tiles-active")),
