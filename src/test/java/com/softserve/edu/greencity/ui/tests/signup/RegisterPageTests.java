@@ -464,7 +464,7 @@ public class RegisterPageTests extends GreenCityTestRunner implements StableWebE
        Boolean isDisplayed = loadApplication()
                .signUp()
                .getManualRegisterComponent()
-                .registerUser(userLoginCredentials)
+               .registerUser(userLoginCredentials)
                .getSackfulRegistrationPopUp()
                .isDisplayed();
 

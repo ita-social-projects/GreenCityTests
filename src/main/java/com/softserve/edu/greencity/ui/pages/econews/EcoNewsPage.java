@@ -561,12 +561,10 @@ public class EcoNewsPage extends TopPart {
                         searchElementByCss(ARTICLE_CREATION_DATE.getPath()).isDisplayed() &&
                         searchElementByCss(ARTICLE_AUTHOR_NAME.getPath()).isDisplayed()
                 , "Assert that all text content is displayed in article");
-        logger.info("assert text length < 200");
-        softAssert.assertTrue(
-                element.findElement(ARTICLE_TEXT.getPath()).getText().trim()
-                        .replace("\\s", "").length() < 201,
-                "Assert that text length < 200. Title: " +
-                        element.findElement(ARTICLE_TEXT.getPath()).getText());
+        logger.info("assert text field size is <= 4 lines");
+        int lineHeight = Integer.parseInt(element.findElement(ARTICLE_TEXT.getPath()).getCssValue("line-height").replace("px",""));
+        double height = element.findElement(ARTICLE_TEXT.getPath()).getSize().getHeight();
+        softAssert.assertTrue(height<lineHeight*4,"assert text field size is <= 4 lines. height: "+element.findElement(ARTICLE_TEXT.getPath()).getSize().getHeight());
     }
 
     @Step("Verification that all content in the list of articles displayed")
