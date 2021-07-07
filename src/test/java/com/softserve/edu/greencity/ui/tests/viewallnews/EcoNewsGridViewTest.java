@@ -290,6 +290,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     @Test(testName = "GC-337", description = "GC-337")
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
+        logger.info("ChronologicalNewsTest");
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         logger.info("Get dates from DB in chronological order");
         List<String> datesDB = new ArrayList<>();
@@ -297,17 +298,16 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         ecoNewsService.getAllNewsOrderByDate().forEach(d -> datesDB.add(String.valueOf(d)));
         List<String> pureDateDB = new ArrayList<>();
         datesDB.forEach(d -> pureDateDB.add(econewsPage.formatChronologicalDateFromDB(d)));
-        logger.info("compare  dates order in DB and front");
+        logger.info("Get dates from Front in chronological order");
         List<String> dates = getDates(econewsPage);
         while(dates.size()!= pureDateDB.size()){
             econewsPage.refreshPage();
             econewsPage.navigateMenuEcoNews();
             dates = getDates(econewsPage);
         }
+        logger.info("compare  dates order in DB and front");
         softAssert.assertEquals(dates, pureDateDB,
                 "assert dates order in DB and front");
-        logger.info("ChronologicalNewsTest");
-        logger.info("Get dates from Front in chronological order");
         softAssert.assertAll();
     }
 
