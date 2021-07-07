@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -55,7 +56,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test(description = "GC-334")
+    @Test(testName = "GC-334", description = "GC-334")
     @Description("Open eco news")
     public void NavigateToEcoNews() {
         logger.info("NavigateToEcoNews starts");
@@ -65,7 +66,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(description = "GC-336")
+    @Test(testName = "GC-336", description = "GC-336")
     public void twelveNewsDisplayed() {
         logger.info("twelveNewsDisplayed starts");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
@@ -75,7 +76,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     }
 
 
-    @Test
+    @Test(testName = "GC-666", description = "GC-666")
     @Description("GC-666")
     public void datePxLengthTest() {
         logger.info("Date px length test");
@@ -92,7 +93,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test(retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test(retryAnalyzer = RetryAnalyzerImpl.class ,testName = "GC-666", description = "GC-666")
     @Description("GC-666")
     public void authorPxLengthTest() {
         logger.info("Author px length test");
@@ -187,8 +188,8 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
-        @Description("GC-339")
+    @Test(testName = "GC-339", description = "GC-339")
+    @Description("GC-339")
     public void verifyDefaultImageTest() {
         logger.info("Verify that news article has default image if it was not uploaded");
         User user = UserRepository.get().temporary();
@@ -211,7 +212,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
-    @Test(retryAnalyzer = RetryAnalyzerImpl.class)
+    @Test(retryAnalyzer = RetryAnalyzerImpl.class,testName = "GC-341", description = "GC-341")
     @Description("GC-341")
     public void topicIsClickableTest() {
         logger.info("topicIsClickableTest test");
@@ -225,7 +226,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         }
     }
 
-    @Test
+    @Test(testName = "GC-674", description = "GC-674")
     @Description("GC-674")
     public void newsAligningTest() {
         logger.info("News aligning starts");
@@ -244,7 +245,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     }
 
-    @Test
+    @Test(testName = "GC-341", description = "GC-341")
     @Description("GC-341")
     public void openTopicTest() {
         logger.info("openTopicTest test");
@@ -272,41 +273,52 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
-        econewsPage.isArticleContentDisplayed(elements);
+        econewsPage.switchToGridView().isArticleContentDisplayed(elements);
     }
 
 
-    @Test
+    @Test(testName = "GC-675", description = "GC-675")
     @Description("Verify that at least text content displayed in each article displayed GC-675")
     public void allTextContentDisplayedTest() {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
-        econewsPage.isArticleTextContentDisplayed(elements);
+        econewsPage.switchToGridView().isArticleTextContentDisplayed(elements);
     }
 
     @LocalOnly //On remote machine the time differs
-    @Test
+    @Test(testName = "GC-337", description = "GC-337")
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
         logger.info("ChronologicalNewsTest");
-        logger.info("Get dates from Front in chronological order");
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
-        econewsPage.updateArticlesExistCount().scrollDown();
-        List<WebElement> elements = econewsPage.getDisplayedArticles();
-        List<String> dates = new ArrayList<>();
-        for (WebElement element : elements)
-            dates.add(econewsPage.getArticleCreationDate(element));
         logger.info("Get dates from DB in chronological order");
         List<String> datesDB = new ArrayList<>();
         EcoNewsService ecoNewsService = new EcoNewsService();
         ecoNewsService.getAllNewsOrderByDate().forEach(d -> datesDB.add(String.valueOf(d)));
         List<String> pureDateDB = new ArrayList<>();
         datesDB.forEach(d -> pureDateDB.add(econewsPage.formatChronologicalDateFromDB(d)));
+        logger.info("Get dates from Front in chronological order");
+        List<String> dates = getDates(econewsPage);
+        while(dates.size()!= pureDateDB.size()){
+            econewsPage.refreshPage();
+            econewsPage.navigateMenuEcoNews();
+            dates = getDates(econewsPage);
+        }
         logger.info("compare  dates order in DB and front");
         softAssert.assertEquals(dates, pureDateDB,
                 "assert dates order in DB and front");
         softAssert.assertAll();
+    }
+
+    private List<String> getDates(EcoNewsPage econewsPage) {
+        econewsPage.updateArticlesExistCount().scrollDown();
+        WaitsSwitcher.sleep(3000);
+        List<WebElement> elements = econewsPage.getDisplayedArticles();
+        List<String> dates = new ArrayList<>();
+        for (WebElement element : elements)
+            dates.add(econewsPage.getArticleCreationDate(element));
+        return dates;
     }
     /*<======================================Front Bug==========================================>*/
 

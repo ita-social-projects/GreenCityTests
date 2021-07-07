@@ -75,7 +75,7 @@ public class ForgotPasswordApiTest {
         assertion.statusCode(404) //400 in Jira
                 .bodyValueContains("message", message);
 
-        new GoogleMailAPI().waitForMassagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
+        new GoogleMailAPI().waitForMessagesWithSubject(FORGOT_PASS_MAIL_SUBJECT.getText(),
                 true, 3, 10, email, password);
         int numberOfEmail = new GoogleMailAPI().getNumberMailsBySubject(email, password,
                 FORGOT_PASS_MAIL_SUBJECT.getText(), 50);

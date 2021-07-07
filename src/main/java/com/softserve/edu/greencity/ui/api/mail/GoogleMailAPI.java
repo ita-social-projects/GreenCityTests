@@ -42,7 +42,7 @@ public class GoogleMailAPI  {
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
     public Message[] getMassagesBySubject(String subject, boolean unread, int maxToSearch, long timeToWait){
-        waitForMassagesWithSubject(subject,unread,maxToSearch,timeToWait);
+        waitForMessagesWithSubject(subject,unread,maxToSearch,timeToWait);
         return emailUtils.getMessagesBySubject(subject, unread,  maxToSearch);
     }
 
@@ -68,7 +68,7 @@ public class GoogleMailAPI  {
     @SneakyThrows(Exception.class)
     public String getconfirmURL(String mail, String pass,int maxTries) {
         connectToEmail(mail,pass);
-        waitForMassagesWithSubject("Verify your email address",true,5,30);
+        waitForMessagesWithSubject("Verify your email address",true,5,30);
         String link = "";
         int count = 0;
         Message[] email;
@@ -81,16 +81,12 @@ public class GoogleMailAPI  {
         }
 
         String mailContent = emailUtils.getMessageContent(email[0]).trim().replaceAll("\\s+", "");
-        Pattern pattern = Pattern.compile("https://greencity[^\"]+");
+        Pattern pattern = Pattern.compile(">https://ita-social-projects[^\"<]+");
         final Matcher m = pattern.matcher(mailContent);
         m.find();
-        link = mailContent.substring( m.start(), m.end() )
-                .replace("3D","")
+        link = mailContent.substring(m.start(), m.end())
                 .replace("amp;","")
-                .replace("=","")
-                .replace("token","token=")
-                .replace("user_id","user_id=");
-
+                .replace(">","");
         return link;
     }
 
@@ -98,7 +94,7 @@ public class GoogleMailAPI  {
     @SneakyThrows(Exception.class)
     public String getconfirmURL(String subject, String mail, String pass, String regex, int maxTries) {
         connectToEmail(mail,pass);
-        waitForMassagesWithSubject(subject,true,5,30);
+        waitForMessagesWithSubject(subject,true,5,30);
         String link = "";
         int count = 0;
         Message[] email;
@@ -140,7 +136,7 @@ public class GoogleMailAPI  {
 
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
-    public void waitForMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds){
+    public void waitForMessagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds){
         logger.info("Wait for email with subject: " + subject);
         User user = UserRepository.get().googleUserCredentials();
         connectToEmail(user.getEmail(),user.getPassword());
@@ -159,7 +155,7 @@ public class GoogleMailAPI  {
 
     @SneakyThrows(Exception.class)
     @Step("get array of messages")
-    public void waitForMassagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds, String email, String emailPassword){
+    public void waitForMessagesWithSubject(String subject, boolean unread, int maxToSearch, long timeToWaitInSeconds, String email, String emailPassword){
         logger.info("Wait for email with subject: " + subject);
         long start = System.nanoTime()/ 1000000000;
         long end = start + ((long) timeToWaitInSeconds);

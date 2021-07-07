@@ -61,7 +61,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunner {
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
-    @Test
+    @Test(testName = "GC-822", description = "GC-822")
     @Description("GC-822")
     public void loggedUserCanDeleteReplyToComment() {
         logger.info("Verify that logged user can delete his own reply on the 'Single News' page");

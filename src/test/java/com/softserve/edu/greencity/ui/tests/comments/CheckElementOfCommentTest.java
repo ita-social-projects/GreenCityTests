@@ -52,7 +52,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-908", description = "GC-908")
     @Description("GC-908")
     public void notLoggedInUserCannotLikeTheCommentAndReply() {
         logger.info("Verify that not logged in user cannot like the comment/reply on News Single Page starts");
@@ -69,7 +69,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
     }
 
 
-    @Test
+    @Test(testName = "GC-914", description = "GC-914")
     @Description("GC-914")
     public void notLoggedInUserCanReviewReply() {
         logger.info("Verify that not logged in user can review the replies to the comment starts");
@@ -84,7 +84,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-895", description = "GC-895")
     @Description("GC-895")
     public void loggedUserCanReviewReply() {
         logger.info("Verify that logged user can review the replies to the comment starts");
@@ -100,7 +100,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-920", description = "GC-920")
     @Description("GC-920")
     public void notLoggedInUserCanSeeLikes() {
         logger.info("Verify that not logged in user can see the total likes number related to the comments and/or replies");
@@ -117,7 +117,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-917", description = "GC-917")
     @Description("GC-917")
     public void loggedUserCanSeeLikes() {
         logger.info("Verify that logged user can see the total likes number related to the comments and/or replies");
@@ -135,7 +135,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-922", description = "GC-922")
     @Description("GC-922")
     public void repliesToTheCommentAreHidden() {
         logger.info("Verify that replies to the comment are hidden by default for all users(logged and not logged)");
@@ -160,7 +160,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
 
     }
 
-    @Test
+    @Test(testName = "GC-826", description = "GC-826")
     @Description("GC-826")
     public void unregisteredUserCannotDeleteTheCommentAndReply() {
         logger.info("Verify that unregistered user can’t delete comment/reply starts");
@@ -176,7 +176,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-864", description = "GC-864")
     @Description("GC-864")
     public void changesAreNotSavedWhenLeavePage() {
         logger.info("Changes are not saved if logged user leaves the ‘News’ page without pressing ‘Comment’ button starts");
@@ -198,7 +198,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    @Test
+    @Test(testName = "GC-865", description = "GC-865")
     @Description("GC-865")
     public void changesAreNotSavedWhenUpdatePage() {
         logger.info("Changes are not saved if logged user updates the ‘News’ page without pressing ‘Comment’ button starts");
