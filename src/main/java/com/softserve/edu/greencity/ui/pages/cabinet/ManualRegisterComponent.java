@@ -356,6 +356,12 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
     private RegisterComponent verifyRegistration(User user) {
         String link = new GoogleMailAPI().getconfirmURL(user.getEmail(),user.getPassword(),20);
         driver.get(link);
+         //ToDo add wait to show verify email message
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return this;}
 
     @Step
