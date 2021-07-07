@@ -43,8 +43,7 @@ public class EditPictureTests extends GreenCityTestRunner {
                 .clickEditPictureButton()
                 .uploadPNGImage()
                 .clickSavePhotoButton()
-                .clickSaveButton()
-                ;
+                .clickSaveButton();
 
         softAssert.assertFalse(myHabitPage.isUserImageDefault());
         softAssert.assertAll();

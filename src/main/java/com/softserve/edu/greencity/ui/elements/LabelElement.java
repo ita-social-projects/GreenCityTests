@@ -25,11 +25,11 @@ public class LabelElement extends BaseElement {
 
     public String getText(){return this.element.getText();}
     public String getFont() {
-        return this.element.getCssValue("font");
+        return this.element.getCssValue("font-family");
     }
 
     public String getSize() {
-        return this.element.getSize().toString();
+        return this.element.getCssValue("font-size");
     }
 
     public void click(){
