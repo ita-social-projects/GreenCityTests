@@ -79,7 +79,7 @@ public class CommentPart implements StableWebElementSearch {
     public List<WebElement> getComments() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         try{
-            return waitsSwitcher.setExplicitWait(2,
+            return waitsSwitcher.setExplicitWait(4,
                     ExpectedConditions.visibilityOfAllElementsLocatedBy(COMMENTS_LIST.getPath()));
         }catch (TimeoutException e){
             logger.info("Comments are not present");
