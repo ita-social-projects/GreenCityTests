@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.PaymentPageLocators;
 import org.openqa.selenium.WebDriver;
 
 public class PaymentPage extends UBSCourierBasePage {
@@ -16,21 +17,21 @@ public class PaymentPage extends UBSCourierBasePage {
 
     private ButtonElement getOrderButton() {
         if (orderButton == null) {
-            orderButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
+            orderButton = new ButtonElement(driver, PaymentPageLocators.ORDER_BUTTON);
         }
         return orderButton;
     }
 
     private ButtonElement getCancelButton() {
         if (cancelButton == null) {
-            cancelButton = new ButtonElement(driver, OrderDetailsPageLocators.CANCEL);
+            cancelButton = new ButtonElement(driver, PaymentPageLocators.CANCEL_BUTTON);
         }
         return cancelButton;
     }
 
     private ButtonElement getBackButton() {
         if (backButton == null) {
-            backButton = new ButtonElement(driver, OrderDetailsPageLocators.CANCEL);
+            backButton = new ButtonElement(driver, PaymentPageLocators.BACK_BUTTON);
         }
         return backButton;
     }
