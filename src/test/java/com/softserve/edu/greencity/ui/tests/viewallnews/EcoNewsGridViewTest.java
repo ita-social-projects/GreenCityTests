@@ -139,7 +139,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         final int dateHeight = 21;
         final int heightBetweenImageAndTags = 8 ;               //Valid result when image height is 206. Requirements could be changed
         final int heightBetweenTitleAndTags = 8;
-        final int heightBetweenContentAndTitle = 10;            // Requirements could be changed
+        final int heightBetweenContentAndTitle = 9;            // Requirements could be changed
         final int widthBetweenImageAndTitleLeftSide = 24;
         final int widthBetweenImageAndTagsLeftSide = 24;
         final int widthBetweenImageAndContentLeftSide = 24;
@@ -150,7 +150,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         ItemComponent itemComponent = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
-        final int heightBetweenDateAndContent = (165 - itemComponent.getContentHeight()); //165->y.date - y.component
+        final int heightBetweenDateAndContent = (194- itemComponent.getContentHeight()); //165->y.date - y.component
         final int widthBetweenImageAndDateWithAuthorContainerRightSide = (335-itemComponent.getDateAndAuthorContainer().getSize().width); //335-> x.image - x.cont + w.image
         softAssert.assertEquals(itemComponent.getImage().getSize().height,
                 imageHeight, "Image height");
