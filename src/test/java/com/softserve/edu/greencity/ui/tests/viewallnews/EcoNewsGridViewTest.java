@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -290,23 +291,34 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
         logger.info("ChronologicalNewsTest");
-        logger.info("Get dates from Front in chronological order");
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
-        econewsPage.updateArticlesExistCount().scrollDown();
-        List<WebElement> elements = econewsPage.getDisplayedArticles();
-        List<String> dates = new ArrayList<>();
-        for (WebElement element : elements)
-            dates.add(econewsPage.getArticleCreationDate(element));
         logger.info("Get dates from DB in chronological order");
         List<String> datesDB = new ArrayList<>();
         EcoNewsService ecoNewsService = new EcoNewsService();
         ecoNewsService.getAllNewsOrderByDate().forEach(d -> datesDB.add(String.valueOf(d)));
         List<String> pureDateDB = new ArrayList<>();
         datesDB.forEach(d -> pureDateDB.add(econewsPage.formatChronologicalDateFromDB(d)));
+        logger.info("Get dates from Front in chronological order");
+        List<String> dates = getDates(econewsPage);
+        while(dates.size()!= pureDateDB.size()){
+            econewsPage.refreshPage();
+            econewsPage.navigateMenuEcoNews();
+            dates = getDates(econewsPage);
+        }
         logger.info("compare  dates order in DB and front");
         softAssert.assertEquals(dates, pureDateDB,
                 "assert dates order in DB and front");
         softAssert.assertAll();
+    }
+
+    private List<String> getDates(EcoNewsPage econewsPage) {
+        econewsPage.updateArticlesExistCount().scrollDown();
+        WaitsSwitcher.sleep(3000);
+        List<WebElement> elements = econewsPage.getDisplayedArticles();
+        List<String> dates = new ArrayList<>();
+        for (WebElement element : elements)
+            dates.add(econewsPage.getArticleCreationDate(element));
+        return dates;
     }
     /*<======================================Front Bug==========================================>*/
 
