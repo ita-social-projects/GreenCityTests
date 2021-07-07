@@ -273,7 +273,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
-        econewsPage.isArticleContentDisplayed(elements);
+        econewsPage.switchToGridView().isArticleContentDisplayed(elements);
     }
 
 
@@ -283,7 +283,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
-        econewsPage.isArticleTextContentDisplayed(elements);
+        econewsPage.switchToGridView().isArticleTextContentDisplayed(elements);
     }
 
     @LocalOnly //On remote machine the time differs
