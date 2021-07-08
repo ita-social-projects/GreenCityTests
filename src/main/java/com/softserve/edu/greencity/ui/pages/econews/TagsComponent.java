@@ -40,6 +40,7 @@ public class TagsComponent implements StableWebElementSearch {
     }
 
     protected List<WebElement> getTags() {
+        initElements();
         return tags;
     }
 
