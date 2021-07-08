@@ -107,7 +107,6 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         softAssert.assertAll();
     }
 
-    //@Ignore
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
     public void verifyThatRussianLocalizationIsDisplayedAfterCancel() {
