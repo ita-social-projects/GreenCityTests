@@ -566,8 +566,7 @@ public class EcoNewsPage extends TopPart {
                 element.findElement(ARTICLE_TEXT.getPath()).getText().trim()
                         .replace("\\s", "").length() < 201,
                 "Assert that text length < 200. Title: " +
-                        element.findElement(ARTICLE_TEXT.getPath()).getText());
-    }
+                        element.findElement(ARTICLE_TEXT.getPath()).getText());}
 
     @Step("Verification that all content in the list of articles displayed")
     public void isArticleContentDisplayed(List<WebElement> elements) {

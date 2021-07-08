@@ -91,7 +91,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-@Ignore //TODO activate this test after fixing bug with cancel button
+
+    //@Ignore //TODO activate this test after fixing bug with cancel button
     @Test(testName = "GC-608", description = "GC-608")
     @Description("Verify that pop-up notification interface meets the mock-up specification")
     public void verifyThatPopUpNotificationInterfaceMeetsMockUp() {
@@ -103,9 +104,9 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         //TODO add asserts after fixing bug with cancel button
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
+        softAssert.assertAll();
     }
 
-//    @Ignore
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
     public void verifyThatRussianLocalizationIsDisplayedAfterCancel() {
@@ -113,9 +114,10 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
 
         CreateNewsPage.CancelFrame cancelFrame = createNewsPage.changeLanguageTo("Ru").fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
                 .clickCancelButton();
-        //TODO tu add an assert after fixing bug with cancel button
+        //TODO to add an assert after fixing bug with cancel button
+        softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
+        softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
         softAssert.assertAll();
-
     }
 
     @Test(testName = "GC-403", description = "GC-403")
