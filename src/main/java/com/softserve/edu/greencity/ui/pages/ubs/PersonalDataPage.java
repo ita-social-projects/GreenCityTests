@@ -1,7 +1,9 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
+import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +14,11 @@ import java.util.List;
 
 public class PersonalDataPage extends UBSCourierBasePage {
 
+    private InputElement nameField;
+    private InputElement surnameField;
+    private InputElement phoneField;
+    private InputElement emailField;
+    private TextAreaElement commentField;
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
     private ButtonElement backButton;
@@ -20,6 +27,49 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
+        initElements();
+    }
+
+    public void initElements() {
+        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
+        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
+        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
+        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
+        commentField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_FIELD);
+        cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
+        nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
+        backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
+        addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
+    }
+
+    private PersonalDataPage inputName(String name) {
+        nameField.clearInput();
+        nameField.sendKeys(name);
+        return this;
+    }
+
+    private PersonalDataPage inputSurname(String surname) {
+        surnameField.clearInput();
+        surnameField.sendKeys(surname);
+        return this;
+    }
+
+    private PersonalDataPage inputPhone(String phone) {
+        phoneField.clearInput();
+        phoneField.sendKeys(phone);
+        return this;
+    }
+
+    private PersonalDataPage inputEmail(String email) {
+        emailField.clearInput();
+        emailField.sendKeys(email);
+        return this;
+    }
+
+    private PersonalDataPage inputComment(String comment) {
+        commentField.clearText();
+        commentField.enterText(comment);
+        return this;
     }
 
     private ButtonElement getNextButton() {
