@@ -5,12 +5,14 @@ import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
+import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class OrderDetailsPage extends UBSCourierBasePage {
@@ -27,7 +29,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private LabelElement certificateMessage;
     private List<AdditionalCertificatesComponents> additionalCertificates;
     private InputElement additionalCertificateInput;
-    private ButtonElement additionalactivateCertificateButton;
+    private ButtonElement additionalActivateCertificateButton;
 
 
     public OrderDetailsPage(WebDriver webDriver) {
@@ -57,7 +59,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
+    private List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
         for (WebElement webElement : getCertificates()) {
             additionalCertificates.add(new AdditionalCertificatesComponents(driver, webElement));
@@ -65,13 +67,26 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return additionalCertificates;
     }
 
-    public List<WebElement> getCertificates() {
+    private List<WebElement> getCertificates() {
         try {
             return waitsSwitcher.setExplicitWait(3,
                     ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.ADDITIONAL_CERTIFICATES.getPath()));
         } catch (TimeoutException e) {
             return new ArrayList<>();
         }
+    }
+
+    private AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
+        //todo remove possible return null!!!
+        AdditionalCertificatesComponents component = null;
+        Iterator<AdditionalCertificatesComponents> iterator = getAdditionalCertificates().iterator();
+        while (iterator.hasNext()) {
+            AdditionalCertificatesComponents next = iterator.next();
+            if (next.getCertificateInput().getText().equalsIgnoreCase(sertificate)) {
+                component = next;
+            }
+        }
+        return component;
     }
 
     private TextAreaElement getCommentTextarea() {
@@ -88,6 +103,49 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private InputElement getCertificateInput() {
         return certificateInput;
+    }
+
+    private ButtonElement getAddCertifircateButton() {
+        addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
+        return addCertifircateButton;
+    }
+
+    private ButtonElement getCancelCertifircateButton() {
+        addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
+        return addCertifircateButton;
+    }
+
+    private LabelElement getCertificateMessage() {
+        certificateMessage = new LabelElement(driver, OrderDetailsPageLocators.CERTIFICATE_MESSAGE);
+        return certificateMessage;
+    }
+
+    private LabelElement getCommentAlertLabel() {
+        commentAlertLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_ALERT_LABEL);
+        return commentAlertLabel;
+    }
+    private OrderDetailsPage inputComment(String comment) {
+        getCommentTextarea().clearText();
+        getCommentTextarea().enterText(comment);
+        return this;
+    }
+    private OrderDetailsPage inputCertificate(String certificate){
+        getCertificateInput().clearInput();
+        getCertificateInput().sendKeys(certificate);
+        return this;
+    }
+    private OrderDetailsPage clickActivateButton(){
+        getAddCertifircateButton().click();
+        return this;
+    }
+    private OrderDetailsPage clickCancelCertificateButton(){
+        getAddCertifircateButton().click();
+        return this;
+    }
+    private OrderDetailsPage clickAddCertificateButton(){
+        getAddCertifircateButton().click();
+        getAdditionalCertificates();
+        return this;
     }
 
     public PersonalDataPage clickOnNextButton() {
