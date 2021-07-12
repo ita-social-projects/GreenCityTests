@@ -8,7 +8,7 @@ public enum PersonalDataPageLocators implements Locator {
     SURNAME_FIELD(By.cssSelector("input.shadow-none.form-control[7]")),
     PHONE_FIELD(By.cssSelector("input.shadow-none.form-control[6]")),
     EMAIL_FIELD(By.cssSelector("input.shadow-none.form-control[8]")),
-    COMMENT_FIELD(By.cssSelector("textarea.form-control.ng-pristine[1]")),
+    COMMENT_ADDRESS_FIELD(By.cssSelector("textarea.form-control.ng-pristine[1]")),
     CANCEL(By.xpath("//app-ubs-personal-information//button[contains(@class, 'cansel')]")),
     NEXT(By.xpath("//app-ubs-personal-information//div[contains(@class, 'content-end')]//button[@type = 'submit']")),
     BACK(By.xpath("//app-ubs-personal-information//button[contains(@class, 'back')]")),

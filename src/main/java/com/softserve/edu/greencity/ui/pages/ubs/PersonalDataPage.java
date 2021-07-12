@@ -18,7 +18,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private InputElement surnameField;
     private InputElement phoneField;
     private InputElement emailField;
-    private TextAreaElement commentField;
+    private TextAreaElement commentToAddressField;
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
     private ButtonElement backButton;
@@ -35,7 +35,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
         phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
         emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
-        commentField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_FIELD);
+        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
         cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
@@ -67,8 +67,8 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     private PersonalDataPage inputComment(String comment) {
-        commentField.clearText();
-        commentField.enterText(comment);
+        commentToAddressField.clearText();
+        commentToAddressField.enterText(comment);
         return this;
     }
 
