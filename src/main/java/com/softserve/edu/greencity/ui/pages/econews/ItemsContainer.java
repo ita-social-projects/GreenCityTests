@@ -59,7 +59,7 @@ public class ItemsContainer implements StableWebElementSearch {
     private List<WebElement> getItems() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
 
-        return waitsSwitcher.setExplicitWait(5,
+        return waitsSwitcher.setExplicitWait(10,
                 ExpectedConditions.presenceOfAllElementsLocatedBy(items));
     }
 
