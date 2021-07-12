@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import org.openqa.selenium.WebDriver;
@@ -19,6 +20,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private InputElement houseInput;
     private InputElement corpInput;
     private InputElement entranceInput;
+    private LabelElement cityLabel;
 
     public AddAddressPopupComponent(WebDriver webDriver) {
         super(webDriver);
@@ -34,7 +36,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         houseInput = new InputElement(driver, AddAddressPopupLocators.HOUSE_INPUT);
         corpInput = new InputElement(driver, AddAddressPopupLocators.CORP_INPUT);
         entranceInput = new InputElement(driver, AddAddressPopupLocators.ENTRANCE_INPUT);
-
+        cityLabel = new LabelElement(driver, AddAddressPopupLocators.CITY_LABEL);
     }
 
     private ButtonElement getCancelButton() {
