@@ -1,10 +1,16 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PaymentPageLocators;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PaymentPage extends UBSCourierBasePage {
 
@@ -12,16 +18,26 @@ public class PaymentPage extends UBSCourierBasePage {
     private ButtonElement orderButton;
     private ButtonElement backButton;
 
-    private LabelElement yourOrder;
+    //private LabelElement yourOrder;
     private LabelElement service;
     private LabelElement volume;
     private LabelElement cost;
     private LabelElement numberOfPackages;
     private LabelElement total;
 
-    private LabelElement oldClothesFirst;
-    private LabelElement oldClothesSecond;
+    private LabelElement oldClothesCheap;
+    private LabelElement oldClothesExpensive;
     private LabelElement recycledMaterials;
+
+    private LabelElement cheapPricePackage;
+    private LabelElement expensivePricePackage;
+    private LabelElement recycledMaterialsPackage;
+    private LabelElement cheapPriceTotalSum;
+    private LabelElement expensivePriceTotalSum;
+    private LabelElement recycledMaterialsTotalSum;
+
+
+
 
     private LabelElement orderAmount;
     private LabelElement certificate;
@@ -41,13 +57,13 @@ public class PaymentPage extends UBSCourierBasePage {
 
     private LabelElement addressOfExportOrderedService;
     private LabelElement town;
-    private LabelElement address;
+    private LabelElement street;
     private LabelElement district;
     private LabelElement commentToAddress;
     private LabelElement commentToOrder;
 
 
-    private LabelElement payment;
+    private DropDownElement payment;
 
 
 
@@ -57,15 +73,23 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public void initElements() {
-        yourOrder=new LabelElement(driver,PaymentPageLocators.YOUR_ORDER_LABEL);
+        //yourOrder=new LabelElement(driver,PaymentPageLocators.YOUR_ORDER_LABEL);
         service=new LabelElement(driver,PaymentPageLocators.SERVICE_LABEL);
         volume= new LabelElement(driver,PaymentPageLocators.VOLUME_LABEL);
         cost=new LabelElement(driver,PaymentPageLocators.COST_LABEL);
         numberOfPackages=new LabelElement(driver,PaymentPageLocators.NUMBER_OF_PACKAGES_LABEL);
         total=new LabelElement(driver,PaymentPageLocators.TOTAL_LABEL);
-        oldClothesFirst=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_FIRST_LABEL);
-        oldClothesSecond=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_SECOND_LABEL);
-        recycledMaterials=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_SECOND_LABEL);
+
+        oldClothesCheap=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_LABEL);
+        oldClothesExpensive=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_PRICE_LABEL);
+        recycledMaterials=new LabelElement(driver,PaymentPageLocators.RECYCLED_MATERIALS_LABEL);
+        cheapPricePackage=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_NUMBER_PACKAGES_LABEL);
+        expensivePricePackage=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_PRICE_NUMBER_PACKAGES_LABEL);
+        recycledMaterialsPackage=new LabelElement(driver,PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_PACKAGES_LABEL);
+        cheapPriceTotalSum=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_TOTAL_SUM_LABEL);
+        expensivePriceTotalSum=new LabelElement(driver,PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_TOTAL_SUM_LABEL);
+        recycledMaterialsTotalSum=new LabelElement(driver,PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_TOTAL_SUM_LABEL);
+
         orderAmount=new LabelElement(driver,PaymentPageLocators.ORDER_AMOUNT_LABEL);
         certificate=new LabelElement(driver,PaymentPageLocators.CERTIFICATE_LABEL);
         amountDue=new LabelElement(driver,PaymentPageLocators.AMOUNT_DUE_LABEL);
@@ -77,10 +101,11 @@ public class PaymentPage extends UBSCourierBasePage {
         gmail=new LabelElement(driver,PaymentPageLocators.GMAIL_LABEL);
         addressOfExportOrderedService=new LabelElement(driver,PaymentPageLocators.ADDRESS_OF_EXPORT_ORDERED_SERVICE_LABEL);
         town=new LabelElement(driver,PaymentPageLocators.TOWN_LABEL);
-        address=new LabelElement(driver,PaymentPageLocators.ADDRESS_LABEL);
+        street=new LabelElement(driver,PaymentPageLocators.STREET_LABEL);
         district=new LabelElement(driver,PaymentPageLocators.DISTRICT_LABEL);
         commentToAddress=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ADDRESS_LABEL);
         commentToOrder=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
+        payment=new DropDownElement(driver,PaymentPageLocators.PAYMENT_METHOD);
         
 
     }
@@ -129,8 +154,27 @@ public class PaymentPage extends UBSCourierBasePage {
     public String getGmail(){
         return gmail.getText();
     }
-//    public void getData(){
+
+
+//public LabelElement service(){
+//        return service;
+}
+//    public void getDatas(){
 //        if(!fullName.getText().isEmpty()&&!phone.getText().isEmpty()&&!gmail.getText().isEmpty());
 //
 //    }
+   // public String getOrderNumbers(){ return orderNumbers.getText(); }
+
+
+
+    public String getTown(){ return town.getText(); }
+    public String getStreet(){ return street.getText(); }
+    public String getDistrict(){ return district.getText(); }
+    public String getCommentToAddress(){ return commentToAddress.getText(); }
+    public String getCommentToOrder(){ return commentToOrder.getText(); }
+
+    public String getOrderAmount(){ return orderAmount.getText(); }
+    public String getCertificate(){ return certificate.getText(); }
+    public String getAmountDue(){ return amountDue.getText(); }
+
 }
