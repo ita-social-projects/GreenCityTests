@@ -33,9 +33,13 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return new PersonalDataPage(driver);
     }
 
-    public CancelOrderPopupComponent clickOnCancelButton() {
+    public CancelOrderPopupComponent clickOnCancelButtonWhenChangesPresent() {
         getCancelButton().click();
-        return new CancelOrderPopupComponent(driver, this);
+        return new CancelOrderPopupComponent(driver, this, new WelcomePage(driver));
     }
 
+    public WelcomePage clickOnCancelButtonWhenChangesAbsent() {
+        getCancelButton().click();
+        return new WelcomePage(driver);
+    }
 }
