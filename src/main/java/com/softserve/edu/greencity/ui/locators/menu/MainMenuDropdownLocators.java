@@ -10,7 +10,7 @@ public enum MainMenuDropdownLocators implements Locator {
     MENU_PLACES(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/map']")), //MENU_MAP
     MENU_ABOUT(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/about']")),
     MENU_MY_HABITS(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/profile']")),
-
+    MENU_UBS_COURIER(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/ubs']")),
     FOOTER_ECO_NEWS(By.cssSelector("app-footer a[href*='/news']")),
     FOOTER_TIPS_TRICS(By.cssSelector("app-footer a[href*='/tips']")),
     FOOTER_PLACES(By.cssSelector("app-footer a[href*='/map']")),
