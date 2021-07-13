@@ -66,6 +66,6 @@ public class SmokeTest extends GreenCityTestRunner {
 
         myHabitPage.signOut();
 
-        Assert.assertEquals(newHabitButtonText, "Add new habit");
+        Assert.assertEquals(newHabitButtonText, "Add New Habit");
     }
 }

@@ -5,12 +5,15 @@ import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
+import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class OrderDetailsPage extends UBSCourierBasePage {
@@ -27,7 +30,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private LabelElement certificateMessage;
     private List<AdditionalCertificatesComponents> additionalCertificates;
     private InputElement additionalCertificateInput;
-    private ButtonElement additionalactivateCertificateButton;
+    private ButtonElement additionalActivateCertificateButton;
 
 
     public OrderDetailsPage(WebDriver webDriver) {
@@ -40,8 +43,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
-        activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
-    }
+       }
 
     private ButtonElement getNextButton() {
         if (nextButton == null) {
@@ -74,20 +76,88 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
     }
 
-    private TextAreaElement getCommentTextarea() {
+    public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
+        //todo remove possible return null!!!
+        AdditionalCertificatesComponents component = null;
+        Iterator<AdditionalCertificatesComponents> iterator = getAdditionalCertificates().iterator();
+        while (iterator.hasNext()) {
+            AdditionalCertificatesComponents next = iterator.next();
+            if (next.getCertificateInput().getText().equalsIgnoreCase(sertificate)) {
+                component = next;
+            }
+        }
+        return component;
+    }
+
+    public TextAreaElement getCommentTextarea() {
         return commentTextarea;
     }
 
-    private LabelElement getCommentLabel() {
+    public LabelElement getCommentLabel() {
         return commentLabel;
     }
 
-    private LabelElement getPointsBalanceLabel() {
+    public LabelElement getPointsBalanceLabel() {
         return pointsBalanceLabel;
     }
 
-    private InputElement getCertificateInput() {
+    public InputElement getCertificateInput() {
         return certificateInput;
+    }
+
+    public ButtonElement getAddCertifircateButton() {
+        addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
+        return addCertifircateButton;
+    }
+
+    public ButtonElement getCancelCertifircateButton() {
+        addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
+        return addCertifircateButton;
+    }
+
+    public LabelElement getCertificateMessage() {
+
+        certificateMessage = new LabelElement(driver, OrderDetailsPageLocators.CERTIFICATE_MESSAGE);
+        return certificateMessage;
+    }
+
+    public WebElement getCommentAlertLabel() {
+       //commentAlertLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_ALERT_LABEL);
+        return waitsSwitcher.setExplicitWait(40,ExpectedConditions
+                .visibilityOf(searchElementByCss(OrderDetailsPageLocators.COMMENT_ALERT_LABEL.getPath())));
+    }
+    public OrderDetailsPage inputComment(String comment) {
+        getCommentTextarea().clearText();
+        getCommentTextarea().enterText(comment);
+        return this;
+    }
+    public OrderDetailsPage inputCertificate(String certificate){
+        getCertificateInput().clearInput();
+        getCertificateInput().sendKeys(certificate);
+        return this;
+    }
+    public ButtonElement getActivateCertificateButton(){
+        activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
+        return  activateCertificateButton;
+    }
+    public OrderDetailsPage clickActivateButton(){
+        getActivateCertificateButton().click();
+        return this;
+    }
+    public OrderDetailsPage clickCancelCertificateButton(){
+        getActivateCertificateButton().click();
+        return this;
+    }
+    public String getActivateButtonColor(){
+      return driver.findElement(OrderDetailsPageLocators.ACTIVATE_BUTTON.getPath()).getCssValue("background");
+    }
+    public boolean isActicateButtonActive(){
+        return getActivateButtonColor().equalsIgnoreCase("#13aa57");
+    }
+    public OrderDetailsPage clickAddCertificateButton(){
+        getAddCertifircateButton().click();
+        getAdditionalCertificates();
+        return this;
     }
 
     public PersonalDataPage clickOnNextButton() {
@@ -95,9 +165,13 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return new PersonalDataPage(driver);
     }
 
-    public CancelOrderPopupComponent clickOnCancelButton() {
+    public CancelOrderPopupComponent clickOnCancelButtonWhenChangesPresent() {
         getCancelButton().click();
-        return new CancelOrderPopupComponent(driver, this);
+        return new CancelOrderPopupComponent(driver, this, new WelcomePage(driver));
     }
 
+    public WelcomePage clickOnCancelButtonWhenChangesAbsent() {
+        getCancelButton().click();
+        return new WelcomePage(driver);
+    }
 }
