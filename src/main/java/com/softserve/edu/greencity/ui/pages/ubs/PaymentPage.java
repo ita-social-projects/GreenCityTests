@@ -4,6 +4,8 @@ import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PaymentPageLocators;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+
 import org.openqa.selenium.WebDriver;
 
 public class PaymentPage extends UBSCourierBasePage {
@@ -113,7 +115,7 @@ public class PaymentPage extends UBSCourierBasePage {
 
     public CancelOrderPopupComponent clickOnCancelButton() {
         getCancelButton().click();
-        return new CancelOrderPopupComponent(driver, this);
+        return new CancelOrderPopupComponent(driver, this, new WelcomePage(driver));
     }
 
     public PersonalDataPage clickOnBackButton() {

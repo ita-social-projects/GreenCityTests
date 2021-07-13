@@ -11,7 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
-public class CancelOrderPopupComponent<T> {
+public class CancelOrderPopupComponent<T, R> {
 
     private WebDriver driver;
     private ButtonElement continueMakingOrderButton;
@@ -20,10 +20,12 @@ public class CancelOrderPopupComponent<T> {
     private String titleOfCancelComponent;
     private String subTitleOfCancelComponent;
     private T currentClass;
+    private R redirectClass;
 
-    public CancelOrderPopupComponent(WebDriver driver, T currentClass) {
+    public CancelOrderPopupComponent(WebDriver driver, T currentClass, R redirectClass) {
         this.driver = driver;
         this.currentClass = currentClass;
+        this.redirectClass = redirectClass;
     }
 
     private ButtonElement getContinueMakingOrderButton() {
@@ -50,23 +52,6 @@ public class CancelOrderPopupComponent<T> {
         return true;
     }
 
-    public EditProfilePage clickContinueMakingOrderButton() {
-        getContinueMakingOrderButton().click();
-        return new EditProfilePage(driver);
-    }
-
-    public WelcomePage clickCancelOrderButton() {
-        if (isCancelEditPageButtonIsExists()) {
-            getCancelOrderButton().click();
-        }
-        return new WelcomePage(driver);
-    }
-
-    public T clickCloseButton() {
-        getCloseButton().click();
-        return currentClass;
-    }
-
     public String getTitleOfCancelPopUpComponent() {
         titleOfCancelComponent = new LabelElement(driver, TITLE_CANCEL_POP_UP).getText();
         return titleOfCancelComponent;
@@ -77,15 +62,32 @@ public class CancelOrderPopupComponent<T> {
         return subTitleOfCancelComponent;
     }
 
+    public T clickCloseButton() {
+        getCloseButton().click();
+        return currentClass;
+    }
+
+    public T clickContinueMakingOrderButton() {
+        getContinueMakingOrderButton().click();
+        return currentClass;
+    }
+
     public T clickEsc() {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ESCAPE).build().perform();
         return currentClass;
     }
 
-    public WelcomePage clickEnter() {
+    public R clickEnter() {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ENTER).build().perform();
-        return new WelcomePage(driver);
+        return redirectClass;
+    }
+
+    public R clickCancelOrderButton() {
+        if (isCancelEditPageButtonIsExists()) {
+            getCancelOrderButton().click();
+        }
+        return redirectClass;
     }
 }
