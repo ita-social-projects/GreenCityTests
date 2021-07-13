@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
@@ -28,7 +29,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
 
     @BeforeClass
     public void widthData() {
-        screenWidth = Arrays.asList(1140, 1024, 1007, 1005, 992, 991, 576, 575, 320);
+        screenWidth = Arrays.asList(1140, 1024, 1007, 1005, 992, 991, 576,575, 320);
 
     }
 
@@ -139,7 +140,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         final int dateHeight = 21;
         final int heightBetweenImageAndTags = 8 ;               //Valid result when image height is 206. Requirements could be changed
         final int heightBetweenTitleAndTags = 8;
-        final int heightBetweenContentAndTitle = 10;            // Requirements could be changed
+        final int heightBetweenContentAndTitle = 9;            // Requirements could be changed
         final int widthBetweenImageAndTitleLeftSide = 24;
         final int widthBetweenImageAndTagsLeftSide = 24;
         final int widthBetweenImageAndContentLeftSide = 24;
@@ -150,7 +151,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         logger.info("Verify Content items UI");
         EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
         ItemComponent itemComponent = ecoNewsPage.getItemsContainer().chooseNewsByNumber(0);
-        final int heightBetweenDateAndContent = (165 - itemComponent.getContentHeight()); //165->y.date - y.component
+        final int heightBetweenDateAndContent = (194- itemComponent.getContentHeight()); //165->y.date - y.component
         final int widthBetweenImageAndDateWithAuthorContainerRightSide = (335-itemComponent.getDateAndAuthorContainer().getSize().width); //335-> x.image - x.cont + w.image
         softAssert.assertEquals(itemComponent.getImage().getSize().height,
                 imageHeight, "Image height");
@@ -272,7 +273,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
-        econewsPage.isArticleContentDisplayed(elements);
+        econewsPage.switchToGridView().isArticleContentDisplayed(elements);
     }
 
 
@@ -282,7 +283,7 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
         econewsPage.updateArticlesExistCount().scrollDown();
         List<WebElement> elements = econewsPage.getDisplayedArticles();
-        econewsPage.isArticleTextContentDisplayed(elements);
+        econewsPage.switchToGridView().isArticleTextContentDisplayed(elements);
     }
 
     @LocalOnly //On remote machine the time differs
@@ -290,23 +291,34 @@ public class EcoNewsGridViewTest extends GreenCityTestRunner {
     @Description("Verify that at least text content displayed in each article displayed GC-337")
     public void chronologicalNewsTest() {
         logger.info("ChronologicalNewsTest");
-        logger.info("Get dates from Front in chronological order");
         EcoNewsPage econewsPage = loadApplication().navigateMenuEcoNews();
-        econewsPage.updateArticlesExistCount().scrollDown();
-        List<WebElement> elements = econewsPage.getDisplayedArticles();
-        List<String> dates = new ArrayList<>();
-        for (WebElement element : elements)
-            dates.add(econewsPage.getArticleCreationDate(element));
         logger.info("Get dates from DB in chronological order");
         List<String> datesDB = new ArrayList<>();
         EcoNewsService ecoNewsService = new EcoNewsService();
         ecoNewsService.getAllNewsOrderByDate().forEach(d -> datesDB.add(String.valueOf(d)));
         List<String> pureDateDB = new ArrayList<>();
         datesDB.forEach(d -> pureDateDB.add(econewsPage.formatChronologicalDateFromDB(d)));
+        logger.info("Get dates from Front in chronological order");
+        List<String> dates = getDates(econewsPage);
+        while(dates.size()!= pureDateDB.size()){
+            econewsPage.refreshPage();
+            econewsPage.navigateMenuEcoNews();
+            dates = getDates(econewsPage);
+        }
         logger.info("compare  dates order in DB and front");
         softAssert.assertEquals(dates, pureDateDB,
                 "assert dates order in DB and front");
         softAssert.assertAll();
+    }
+
+    private List<String> getDates(EcoNewsPage econewsPage) {
+        econewsPage.updateArticlesExistCount().scrollDown();
+        WaitsSwitcher.sleep(3000);
+        List<WebElement> elements = econewsPage.getDisplayedArticles();
+        List<String> dates = new ArrayList<>();
+        for (WebElement element : elements)
+            dates.add(econewsPage.getArticleCreationDate(element));
+        return dates;
     }
     /*<======================================Front Bug==========================================>*/
 

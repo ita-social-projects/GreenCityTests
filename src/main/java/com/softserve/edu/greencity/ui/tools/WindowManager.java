@@ -35,7 +35,7 @@ public class WindowManager {
 //        String windowSizeW = js.executeScript("return (window.outerWidth - window.innerWidth + "+width+"); ").toString();
 //        height = Integer.parseInt((windowSizeH));
 //        width = Integer.parseInt((windowSizeW));
-        driver.manage().window().setSize(new Dimension(width,height));
+//        driver.manage().window().setSize(new Dimension(width,height));
     }
 
 }
