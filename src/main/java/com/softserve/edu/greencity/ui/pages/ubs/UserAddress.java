@@ -3,25 +3,16 @@ package com.softserve.edu.greencity.ui.pages.ubs;
 public class UserAddress {
     private String street;
     private String district;
-    private String house;
-    private String corp;
-    private String entrance;
+    private int house;
+    private int corp;
+    private int entrance;
 
-    public UserAddress(String street, String district, String house, String corp, String entrance) {
+    public UserAddress(String street, String district, int house, int corp, int entrance) {
         this.street = street;
         this.district = district;
         this.house = house;
         this.corp = corp;
         this.entrance = entrance;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    // setters
-    public void setStreet(String street) {
-        this.street = street;
     }
 
     public String getDistrict() {
@@ -32,29 +23,35 @@ public class UserAddress {
         this.district = district;
     }
 
-    public String getHouse() {
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public int getHouse() {
         return house;
     }
 
-    //getters
-
-    public void setHouse(String house) {
+    public void setHouse(int house) {
         this.house = house;
     }
 
-    public String getCorp() {
+    public int getCorp() {
         return corp;
     }
 
-    public void setCorp(String corp) {
+    public void setCorp(int corp) {
         this.corp = corp;
     }
 
-    public String getEntrance() {
+    public int getEntrance() {
         return entrance;
     }
 
-    public void setEntrance(String entrance) {
+    public void setEntrance(int entrance) {
         this.entrance = entrance;
     }
 

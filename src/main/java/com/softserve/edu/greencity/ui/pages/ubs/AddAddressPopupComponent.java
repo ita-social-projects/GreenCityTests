@@ -4,10 +4,8 @@ import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddAddressPopupComponent extends UBSCourierBasePage {
@@ -25,8 +23,9 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private InputElement entranceInput;
 
     private LabelElement cityLabel;
-    private LabelElement cityAlertMessage;
+    private LabelElement streetAlertMessage;
     private LabelElement districtAlertMessage;
+    private LabelElement houseAlertMessage;
 
     public AddAddressPopupComponent(WebDriver webDriver) {
         super(webDriver);
@@ -43,33 +42,64 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         cityLabel = new LabelElement(driver, AddAddressPopupLocators.CITY_LABEL);
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
     }
-    //TODO write crear
-    public WebElement getStreetInputt() {
-        wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(getStreetInput));
-        return driver.findElement(getStreetInput);
-    }
 
-    public AddAddressPopupComponent fillStreet(Street street) {
-        getStreetInput().sendKeys();
+    //TODO write input data
+    public AddAddressPopupComponent fillStreet(UserAddress userAddress) {
+        getStreetInput().sendKeys(userAddress.getStreet());
+        getDistrictInput().click();
         return this;
     }
 
+    public AddAddressPopupComponent fillDistrict(UserAddress userAddress) {
+        getDistrictInput().sendKeys(userAddress.getDistrict());
 
-    //TODO check this method
-    public LabelElement getCityAlertMessage() {
-        if (cityAlertMessage == null) {
-            cityAlertMessage = new LabelElement(driver, AddAddressPopupLocators.CITY_ALERT_MESSAGE);
+        return this;
+    }
+
+    public void fillFields(UserAddress user) {
+
+    }
+
+    //TODO check error message method
+    //error message
+    public LabelElement getStreetAlertMessage() {
+        if (streetAlertMessage == null) {
+            streetAlertMessage = new LabelElement(driver, AddAddressPopupLocators.STREET_ALERT_MESSAGE);
         }
-        return cityAlertMessage;
+        return streetAlertMessage;
     }
 
     public LabelElement getDistrictAlertMessage() {
-        if (cityAlertMessage == null) {
-            cityAlertMessage = new LabelElement(driver, AddAddressPopupLocators.DISTRICT_ALERT_MESSAGE);
+        if (districtAlertMessage == null) {
+            districtAlertMessage = new LabelElement(driver, AddAddressPopupLocators.DISTRICT_ALERT_MESSAGE);
         }
-        return cityAlertMessage;
+        return districtAlertMessage;
     }
+
+    public LabelElement getHouseAlertMessage() {
+        if (houseAlertMessage == null) {
+            houseAlertMessage = new LabelElement(driver, AddAddressPopupLocators.HOUSE_ALERT_MESSAGE);
+        }
+        return houseAlertMessage;
+    }
+
+
+    public boolean isDisplayedStreetErrorMessage() {
+        return getStreetAlertMessage().isDisplayedLabel();
+    }
+
+    public String getStreetValidationErrorText() {
+        return getStreetAlertMessage().getText();
+    }
+
+    public boolean isDisplayedDistrictErrorMessage() {
+        return getDistrictAlertMessage().isDisplayedLabel();
+    }
+
+    public boolean isDisplayedHouseErrorMessage() {
+        return getHouseAlertMessage().isDisplayedLabel();
+    }
+
 
     public WebElement getCityInput() {
         if (cityInput == null) {

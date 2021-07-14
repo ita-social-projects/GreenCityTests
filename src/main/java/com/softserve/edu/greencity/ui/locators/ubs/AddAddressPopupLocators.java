@@ -16,8 +16,10 @@ public enum AddAddressPopupLocators implements Locator {
 
     CITY_LABEL(By.cssSelector(".w-100.city-notice")),
 
-    CITY_ALERT_MESSAGE(By.cssSelector("")),
-    DISTRICT_ALERT_MESSAGE(By.cssSelector(""))
+    STREET_ALERT_MESSAGE(By.cssSelector("")),
+    DISTRICT_ALERT_MESSAGE(By.cssSelector("")),
+    HOUSE_ALERT_MESSAGE(By.cssSelector("")),
+
     ;
 
     private By path;
