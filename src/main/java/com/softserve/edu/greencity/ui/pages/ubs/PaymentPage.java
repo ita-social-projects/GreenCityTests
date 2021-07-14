@@ -107,7 +107,7 @@ public class PaymentPage extends UBSCourierBasePage {
         district=new LabelElement(driver,PaymentPageLocators.DISTRICT_LABEL);
         commentToAddress=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ADDRESS_LABEL);
         commentToOrder=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
-        payment=new DropDownElement(driver,PaymentPageLocators.PAYMENT_METHOD);
+        //payment=new DropDownElement(driver,PaymentPageLocators.PAYMENT_METHOD);
         
 
     }
@@ -147,36 +147,44 @@ public class PaymentPage extends UBSCourierBasePage {
         getBackButton().click();
         return new PersonalDataPage(driver);
     }
-    public String getFullName(){
-        return fullName.getText();
-    }
-    public String getPhone(){
-        return phone.getText();
-    }
-    public String getGmail(){
-        return gmail.getText();
-    }
+
+    public LabelElement getService(){return service;}
+    public LabelElement getVolume(){return volume;}
+    public LabelElement getCost(){return cost;}
+    public LabelElement getNumberOfPackages(){return numberOfPackages;}
+    public LabelElement getTotal(){return total;}
+
+    public LabelElement getOldClothesCheap(){return oldClothesCheap;}
+    public LabelElement getOldClothesExpensive(){return oldClothesExpensive;}
+    public LabelElement getRecycledMaterials(){return recycledMaterials;}
+
+    public LabelElement getCheapPricePackage(){return cheapPricePackage;}
+    public LabelElement getExpensivePricePackage(){return expensivePricePackage;}
+    public LabelElement getRecycledMaterialsPackage(){return recycledMaterialsPackage;}
+    public LabelElement getCheapPriceTotalSum(){return cheapPriceTotalSum;}
+    public LabelElement getExpensivePriceTotalSum(){return expensivePriceTotalSum;}
+    public LabelElement getRecycledMaterialsTotalSum(){return recycledMaterialsTotalSum;}
+
+    public LabelElement getOrderAmount(){ return orderAmount; }
+    public LabelElement getCertificate(){ return certificate; }
+    public LabelElement getAmountDue(){ return amountDue; }
+
+    public LabelElement getOrderNumbers(){return orderNumbers;}
+
+    public LabelElement getFullName(){ return fullName; }
+    public LabelElement getPhone(){ return phone; }
+    public LabelElement getGmail(){ return gmail; }
 
 
-//public LabelElement service(){
-//        return service;
-}
-//    public void getDatas(){
-//        if(!fullName.getText().isEmpty()&&!phone.getText().isEmpty()&&!gmail.getText().isEmpty());
-//
-//    }
-   // public String getOrderNumbers(){ return orderNumbers.getText(); }
+    public LabelElement getTown(){ return town; }
+    public LabelElement getStreet(){ return street; }
+    public LabelElement getDistrict(){ return district; }
+    public LabelElement getCommentToAddress(){ return commentToAddress; }
+    public LabelElement getCommentToOrder(){ return commentToOrder; }
+
+    public WebElement getPaymentField(){ return searchElementByXpath(PaymentPageLocators.PAYMENT_METHOD.getPath());}
 
 
 
-    public String getTown(){ return town.getText(); }
-    public String getStreet(){ return street.getText(); }
-    public String getDistrict(){ return district.getText(); }
-    public String getCommentToAddress(){ return commentToAddress.getText(); }
-    public String getCommentToOrder(){ return commentToOrder.getText(); }
-
-    public String getOrderAmount(){ return orderAmount.getText(); }
-    public String getCertificate(){ return certificate.getText(); }
-    public String getAmountDue(){ return amountDue.getText(); }
 
 }
