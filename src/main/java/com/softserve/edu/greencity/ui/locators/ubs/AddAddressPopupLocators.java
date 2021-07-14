@@ -28,7 +28,6 @@ public enum AddAddressPopupLocators implements Locator {
         this.path = path;
     }
 
-    @Override
     public By getPath() {
         return path;
     }
