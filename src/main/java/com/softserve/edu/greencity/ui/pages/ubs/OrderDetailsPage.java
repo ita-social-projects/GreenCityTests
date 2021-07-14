@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
