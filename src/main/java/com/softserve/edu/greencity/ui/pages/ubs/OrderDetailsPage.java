@@ -33,6 +33,10 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private InputElement additionalCertificateInput;
     private ButtonElement additionalActivateCertificateButton;
 
+    private LabelElement orderAmount;
+    private LabelElement amountDue;
+    private List<WebElement> numberOfPackeges;
+    private List<WebElement> totalLabels;
 
     public OrderDetailsPage(WebDriver webDriver) {
         super(webDriver);
@@ -46,6 +50,43 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
        }
 
+       public OrderDetailsPage clickOnInputNumberOfPackeges(int index){
+        numberOfPackeges.get(index).click();
+        return this;
+       }
+
+       public String getTextOrderAmount(){
+        String amount = getOrderAmount().getText();
+        return amount;
+       }
+
+    public String getTextAmountDue(){
+        String amount = getAmountDue().getText();
+        return amount;
+    }
+
+    public OrderDetailsPage clickUP(){
+        Actions builder = new Actions(driver);
+        builder.sendKeys(Keys.ARROW_UP).build().perform();
+        return this;
+    }
+
+    public OrderDetailsPage clickDown(){
+        Actions builder = new Actions(driver);
+        builder.sendKeys(Keys.ARROW_DOWN).build().perform();
+        return this;
+    }
+
+    public OrderDetailsPage EnterOnInputNumberOfPackeges(int index){
+        numberOfPackeges.get(index).sendKeys();
+        return this;
+    }
+
+    public String getTotalPrice(int index){
+        String total = totalLabels.get(index).getText();
+        return total;
+    }
+
     private ButtonElement getNextButton() {
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
@@ -58,6 +99,20 @@ public class OrderDetailsPage extends UBSCourierBasePage {
             cancelButton = new ButtonElement(driver, OrderDetailsPageLocators.CANCEL);
         }
         return cancelButton;
+    }
+
+    public LabelElement getOrderAmount(){
+        if (orderAmount == null){
+            orderAmount = new LabelElement(driver,OrderDetailsPageLocators.ORDER_AMOUT);
+        }
+        return orderAmount;
+    }
+
+    public LabelElement getAmountDue(){
+        if (amountDue == null){
+            amountDue = new LabelElement(driver,OrderDetailsPageLocators.AMOUNT_DUE);
+        }
+        return amountDue;
     }
 
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
@@ -75,6 +130,22 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         } catch (TimeoutException e) {
             return new ArrayList<>();
         }
+    }
+
+    public List<WebElement> getNumberOfPackeges(){
+        if (numberOfPackeges == null) {
+            numberOfPackeges = new ArrayList<>();
+            numberOfPackeges = driver.findElements(OrderDetailsPageLocators.NUMBER_OF_PACKEGES.getPath());
+        }
+        return numberOfPackeges;
+    }
+
+    public List<WebElement> getTotalLabels(){
+        if (totalLabels == null) {
+            totalLabels = new ArrayList<>();
+            totalLabels = driver.findElements(OrderDetailsPageLocators.TOTAL.getPath());
+        }
+        return numberOfPackeges;
     }
 
     public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
