@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
-import com.softserve.edu.greencity.data.ubs.AddAddressPopupCities;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
