@@ -1,11 +1,13 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
+import com.softserve.edu.greencity.data.ubs.AddAddressPopupCities;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
+import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AddAddressPopupComponent extends UBSCourierBasePage {
@@ -14,7 +16,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private ButtonElement cancelButton;
     private ButtonElement addAddressButton;
 
-    private WebElement cityInput;
+    private DropDownElement cityInput;
 
     private InputElement districtInput;
     private InputElement streetInput;
@@ -35,7 +37,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     public void initElements() {
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
         addAddressButton = new ButtonElement(driver, AddAddressPopupLocators.ADD_ADDRESS_BUTTON);
-        //cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
+        cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         houseInput = new InputElement(driver, AddAddressPopupLocators.HOUSE_INPUT);
         corpInput = new InputElement(driver, AddAddressPopupLocators.CORP_INPUT);
         entranceInput = new InputElement(driver, AddAddressPopupLocators.ENTRANCE_INPUT);
@@ -43,24 +45,36 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
     }
 
-    //TODO write input data
-    public AddAddressPopupComponent fillStreet(UserAddress userAddress) {
+    //input data
+    public AddAddressPopupComponent inputStreet(UserAddress userAddress) {
         getStreetInput().sendKeys(userAddress.getStreet());
+        return this;
+    }
+
+    public AddAddressPopupComponent inputDistrict(UserAddress userAddress) {
         getDistrictInput().click();
-        return this;
-    }
-
-    public AddAddressPopupComponent fillDistrict(UserAddress userAddress) {
         getDistrictInput().sendKeys(userAddress.getDistrict());
-
         return this;
     }
 
-    public void fillFields(UserAddress user) {
-
+    public AddAddressPopupComponent inputHouse(UserAddress userAddress) {
+        houseInput.click();
+        houseInput.sendKeys(String.valueOf(userAddress.getHouse()));
+        return this;
     }
 
-    //TODO check error message method
+    public AddAddressPopupComponent inputCorp(UserAddress userAddress) {
+        corpInput.click();
+        corpInput.sendKeys(userAddress.getCorp());
+        return this;
+    }
+
+    public AddAddressPopupComponent inputEntrance(UserAddress userAddress) {
+        entranceInput.click();
+        entranceInput.sendKeys(String.valueOf(userAddress.getEntrance()));
+        return this;
+    }
+
     //error message
     public LabelElement getStreetAlertMessage() {
         if (streetAlertMessage == null) {
@@ -101,11 +115,11 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     }
 
 
-    public WebElement getCityInput() {
-        if (cityInput == null) {
-            cityInput = driver.findElement(AddAddressPopupLocators.CITY_INPUT.getPath());
-        }
-        return cityInput;
+    public AddAddressPopupComponent chooseCity(AddAddressPopupCities city){
+        cityInput.click();
+        cityInput.choseFromOptions(city.getPath());
+        getStreetInput();
+        return this;
     }
 
     public InputElement getStreetInput() {
@@ -129,13 +143,20 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return addAddressButton;
     }
 
+    public ButtonElement getCancelButton() {
+        if (cancelButton == null) {
+            cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
+        }
+        return cancelButton;
+    }
+
     public AddAddressPopupComponent clickOnAddAddressButton() {
         addAddressButton.click();
         return new AddAddressPopupComponent(driver);
     }
 
-    public AddAddressPopupComponent clickOnCancelButton() {
-        cancelButton.click();
-        return new AddAddressPopupComponent(driver);
+    public WelcomePage clickOnCancelButton() {
+        getCancelButton().click();
+        return new WelcomePage(driver);
     }
 }

@@ -4,10 +4,10 @@ public class UserAddress {
     private String street;
     private String district;
     private int house;
-    private int corp;
+    private String corp;
     private int entrance;
 
-    public UserAddress(String street, String district, int house, int corp, int entrance) {
+    public UserAddress(String street, String district, int house, String corp, int entrance) {
         this.street = street;
         this.district = district;
         this.house = house;
@@ -39,11 +39,11 @@ public class UserAddress {
         this.house = house;
     }
 
-    public int getCorp() {
+    public String getCorp() {
         return corp;
     }
 
-    public void setCorp(int corp) {
+    public void setCorp(String corp) {
         this.corp = corp;
     }
 
