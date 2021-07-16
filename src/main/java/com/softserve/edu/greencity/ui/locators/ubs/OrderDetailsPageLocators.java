@@ -21,6 +21,8 @@ public enum OrderDetailsPageLocators implements Locator {
     NUMBER_OF_PACKEGES(By.xpath("//div[@class='col-2 form-group count']/input")),
     TOTAL(By.xpath("//span[@class='col-3 bag-name text-center']")),
     ORDER_AMOUT(By.xpath("//div[@class = 'totalInfo']/p[position() = 1]//strong")),
+    SERVICES_INPUT(By.cssSelector("input")),
+    SERVICES(By.cssSelector(".main-list_item")),
     AMOUNT_DUE(By.xpath("//div[@class = 'totalInfo']/p[position() = 2]//strong"));
     private By path;
 
