@@ -13,25 +13,35 @@ public abstract class BaseElement {
     protected WebElement element;
     protected WebDriver driver;
 
-    public BaseElement(WebDriver driver, Locator locator){
+    public BaseElement(WebDriver driver, Locator locator) {
         this.driver = driver;
         this.path = locator.getPath();
         this.element = driver.findElement(path);
     }
 
-    public BaseElement(WebElement element, Locator locator){
+    public BaseElement(WebElement element, Locator locator) {
         this.path = locator.getPath();
         this.element = element.findElement(path);
     }
 
-    public BaseElement(WebElement element){
+    public BaseElement(WebElement element) {
         this.element = element;
     }
 
-    public List<String> getCSSClasses(){
-        return  Arrays.asList(element.getAttribute("class").split(" "));
+    public List<String> getCSSClasses() {
+        return Arrays.asList(element.getAttribute("class").split(" "));
     }
-    public String getText(){return this.element.getText();}
-    public String getInnerText(){return this.element.getAttribute("innerText");}
+
+    public String getCSSValue(String key) {
+        return element.getCssValue(key);
+    }
+
+    public String getText() {
+        return this.element.getText();
+    }
+
+    public String getInnerText() {
+        return this.element.getAttribute("innerText");
+    }
 }
 

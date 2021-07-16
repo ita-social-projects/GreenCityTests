@@ -18,7 +18,7 @@ public enum OrderDetailsPageLocators implements Locator {
     COMMENT_LABEL(By.cssSelector("app-ubs-order-details .comment h3")),
     COMMENT_TEXTAREA(By.cssSelector("app-ubs-order-details .comment textarea")),
     COMMENT_ALERT_LABEL(By.cssSelector("app-ubs-order-details .bottom_comment small")),
-    NUMBER_OF_PACKEGES(By.xpath("//div[@class='col-2 form-group count']")),
+    NUMBER_OF_PACKEGES(By.xpath("//div[@class='col-2 form-group count']/input")),
     TOTAL(By.xpath("//span[@class='col-3 bag-name text-center']")),
     ORDER_AMOUT(By.xpath("//div[@class = 'totalInfo']/p[position() = 1]//strong")),
     SERVICES_INPUT(By.cssSelector("input")),
