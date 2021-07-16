@@ -6,11 +6,16 @@ import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+<<<<<<< HEAD
 import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
 import org.openqa.selenium.By;
+=======
+import org.openqa.selenium.Keys;
+>>>>>>> develop
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
@@ -32,19 +37,60 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private List<AdditionalCertificatesComponents> additionalCertificates;
     private InputElement additionalCertificateInput;
     private ButtonElement additionalActivateCertificateButton;
-
+    private List<ServicesComponents> servicesComponents;
+    private LabelElement orderAmount;
+    private LabelElement amountDue;
+    private List<WebElement> numberOfPackeges;
+    private List<WebElement> totalLabels;
 
     public OrderDetailsPage(WebDriver webDriver) {
         super(webDriver);
-        initElements();
+        initOrderDetailsElements();
     }
 
-    public void initElements() {
+    public void initOrderDetailsElements() {
         commentTextarea = new TextAreaElement(driver, OrderDetailsPageLocators.COMMENT_TEXTAREA);
         commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
        }
+
+       public OrderDetailsPage clickOnInputNumberOfPackeges(int index){
+        numberOfPackeges.get(index).click();
+        return this;
+       }
+
+       public String getTextOrderAmount(){
+        String amount = getOrderAmount().getText();
+        return amount;
+       }
+
+    public String getTextAmountDue(){
+        String amount = getAmountDue().getText();
+        return amount;
+    }
+
+    public OrderDetailsPage clickUP(){
+        Actions builder = new Actions(driver);
+        builder.sendKeys(Keys.ARROW_UP).build().perform();
+        return this;
+    }
+
+    public OrderDetailsPage clickDown(){
+        Actions builder = new Actions(driver);
+        builder.sendKeys(Keys.ARROW_DOWN).build().perform();
+        return this;
+    }
+
+    public OrderDetailsPage EnterOnInputNumberOfPackeges(int index){
+        numberOfPackeges.get(index).sendKeys();
+        return this;
+    }
+
+    public String getTotalPrice(int index){
+        String total = totalLabels.get(index).getText();
+        return total;
+    }
 
     private ButtonElement getNextButton() {
         if (nextButton == null) {
@@ -60,6 +106,52 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
+    public LabelElement getOrderAmount(){
+        if (orderAmount == null){
+            orderAmount = new LabelElement(driver,OrderDetailsPageLocators.ORDER_AMOUT);
+        }
+        return orderAmount;
+    }
+
+    public LabelElement getAmountDue(){
+        if (amountDue == null){
+            amountDue = new LabelElement(driver,OrderDetailsPageLocators.AMOUNT_DUE);
+        }
+        return amountDue;
+    }
+
+    public List<ServicesComponents> getServicesComponents() {
+        servicesComponents = new ArrayList<>();
+        for (WebElement webElement : getServices()) {
+            servicesComponents.add(new ServicesComponents(driver, webElement));
+        }
+        return servicesComponents;
+    }
+
+    public List<WebElement> getServices() {
+        try {
+            return waitsSwitcher.setExplicitWait(3,
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.SERVICES.getPath()));
+        } catch (TimeoutException e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public List<WebElement> getNumberOfPackeges(){
+        if (numberOfPackeges == null) {
+            numberOfPackeges = new ArrayList<>();
+            numberOfPackeges = driver.findElements(OrderDetailsPageLocators.NUMBER_OF_PACKEGES.getPath());
+        }
+        return numberOfPackeges;
+    }
+
+    public List<WebElement> getTotalLabels(){
+        if (totalLabels == null) {
+            totalLabels = new ArrayList<>();
+            totalLabels = driver.findElements(OrderDetailsPageLocators.TOTAL.getPath());
+        }
+        return numberOfPackeges;
+    }
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
         for (WebElement webElement : getCertificates()) {
@@ -76,7 +168,6 @@ public class OrderDetailsPage extends UBSCourierBasePage {
             return new ArrayList<>();
         }
     }
-
     public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
         //todo remove possible return null!!!
         AdditionalCertificatesComponents component = null;
