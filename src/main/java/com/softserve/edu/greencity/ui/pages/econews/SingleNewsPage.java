@@ -10,6 +10,8 @@ import com.softserve.edu.greencity.ui.pages.common.TopPart;
 
 import static com.softserve.edu.greencity.ui.locators.SingleNewsPageLocators.*;
 
+import static com.softserve.edu.greencity.ui.locators.comments.CommentComponentLocators.*;
+
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,7 +30,7 @@ public class SingleNewsPage extends TopPart {
     public SingleNewsPage(WebDriver driver) {
         super(driver);
         // TODO remove from constructor
-        checkElements();
+       // checkElements(); with this method  all package Comments doesn't work!!!!!!!!1
     }
 
     private void checkElements() {
@@ -175,6 +177,9 @@ public class SingleNewsPage extends TopPart {
      * @return comment part
      */
     public CommentPart getCommentPart(){
+
+        waitsSwitcher.setExplicitWait(5,
+               ExpectedConditions.presenceOfAllElementsLocatedBy(COMMENTS_BLOCK.getPath()));
         return new CommentPart(driver);
     }
 

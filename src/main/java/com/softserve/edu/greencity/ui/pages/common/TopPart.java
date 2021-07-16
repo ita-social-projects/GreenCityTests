@@ -10,6 +10,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
+import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
@@ -281,5 +282,13 @@ public abstract class TopPart implements StableWebElementSearch {
     @Override
     public WebDriver setDriver() {
         return this.driver;
+    }
+
+    @Step("Navigate to UBS Courier")
+    public OrderDetailsPage navigateMenuUBSCourier() {
+        logger.debug("go to UBS Courier page");
+        logger.trace("click UBS courier link");
+        getMainMenuDropdown().clickMenuUBSCourier();
+        return new OrderDetailsPage(driver);
     }
 }

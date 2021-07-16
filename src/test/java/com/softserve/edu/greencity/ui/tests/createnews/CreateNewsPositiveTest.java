@@ -98,9 +98,6 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         String CreateNewsLabelsFontSize = "18px";
         String ContentLabelSize = "12px";
         String CreateNewsLabelsFontColor = "#494a49";
-        String fontToCheck = createNewsPage.getTitleLabel().getFont();
-        String FontSize = createNewsPage.getTitleLabel().getSize();
-        String FontColor = createNewsPage.getTitleLabel().getColorHex();
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getTitleLabel().getFont());
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getTagsLabel().getFont());
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getSourceLabel().getFont());
@@ -335,7 +332,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-610", description = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
+    @Test(testName = "GC-610", description = "GC-610")
     @Description("Verify that news will be created, when user add PNG image less than 10 MB")
     public void verifyNewsCreationWithPNGImage() {
 

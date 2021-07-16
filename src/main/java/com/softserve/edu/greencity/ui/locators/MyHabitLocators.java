@@ -12,7 +12,6 @@ public enum MyHabitLocators implements Locator {
 
     ADD_NEW_HABIT_BUTTON(By.xpath("//*[@id = 'create-button']")),
     EDIT_PROFILE_BUTTON(By.cssSelector(".edit-icon")),
-
     SOCIAL_NETWORK_CONTAINER(By.cssSelector("div.social.ng-star-inserted > a"));
 
     private final By path;
