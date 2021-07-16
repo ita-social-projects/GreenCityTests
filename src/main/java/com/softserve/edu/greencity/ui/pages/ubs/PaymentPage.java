@@ -71,10 +71,10 @@ public class PaymentPage extends UBSCourierBasePage {
 
     public PaymentPage(WebDriver webDriver) {
         super(webDriver);
-        initElements();
+        initPaymentElements();
     }
 
-    public void initElements() {
+    public void initPaymentElements() {
         //yourOrder=new LabelElement(driver,PaymentPageLocators.YOUR_ORDER_LABEL);
         service=new LabelElement(driver,PaymentPageLocators.SERVICE_LABEL);
         volume= new LabelElement(driver,PaymentPageLocators.VOLUME_LABEL);

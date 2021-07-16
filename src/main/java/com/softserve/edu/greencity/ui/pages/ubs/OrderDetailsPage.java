@@ -6,11 +6,11 @@ import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
-import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
@@ -40,10 +40,10 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     public OrderDetailsPage(WebDriver webDriver) {
         super(webDriver);
-        initElements();
+        initOrderDetailsElements();
     }
 
-    public void initElements() {
+    public void initOrderDetailsElements() {
         commentTextarea = new TextAreaElement(driver, OrderDetailsPageLocators.COMMENT_TEXTAREA);
         commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);

@@ -2,18 +2,14 @@ package com.softserve.edu.greencity.ui.tests.ubscourier;
 
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
-import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
-import com.softserve.edu.greencity.ui.pages.ubs.AddAddressPopupComponent;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
-import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class AddAddressPopupTest extends GreenCityTestRunner {
-    private CreateNewsPage createNewsPage;
+public class AddressListTests extends GreenCityTestRunner {
+
     private OrderDetailsPage orderDetailsPage;
 
     @BeforeMethod
@@ -26,15 +22,11 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
                 .navigateMenuUBSCourier();
     }
 
-    @Test(testName = "GC-", description = "GC-")
+    @Test(testName = "GC-", description = "verify Address")
     @Description("GC-")
-    public void addAddress() {
-        UserAddress userAddress = new UserAddress("Sadova", "Kiev", 1, "1", 2);
-        new AddAddressPopupComponent(driver).inputDistrict(userAddress);
-    }
-
-    @AfterMethod
-    public void signOut() {
-        createNewsPage.signOut();
+    public void verifyDeleteAddress() {
+        orderDetailsPage.getNumberOfPackeges().get(1).click();
+        orderDetailsPage.getNumberOfPackeges().get(1).sendKeys("5");
+        orderDetailsPage.clickOnPersonalDataButton().deleteAddressOfIndex(1);
     }
 }

@@ -28,10 +28,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
-        initElements();
+        initPersonalDataElements();
     }
 
-    public void initElements() {
+    public void initPersonalDataElements() {
         nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
         surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
         phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
