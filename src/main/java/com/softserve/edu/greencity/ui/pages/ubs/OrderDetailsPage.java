@@ -7,10 +7,8 @@ import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private List<AdditionalCertificatesComponents> additionalCertificates;
     private InputElement additionalCertificateInput;
     private ButtonElement additionalActivateCertificateButton;
-
+    private List<ServicesComponents> servicesComponents;
     private LabelElement orderAmount;
     private LabelElement amountDue;
     private List<WebElement> numberOfPackeges;
@@ -115,18 +113,18 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return amountDue;
     }
 
-    public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
-        additionalCertificates = new ArrayList<>();
-        for (WebElement webElement : getCertificates()) {
-            additionalCertificates.add(new AdditionalCertificatesComponents(driver, webElement));
+    public List<ServicesComponents> getServicesComponents() {
+        servicesComponents = new ArrayList<>();
+        for (WebElement webElement : getServices()) {
+            servicesComponents.add(new ServicesComponents(driver, webElement));
         }
-        return additionalCertificates;
+        return servicesComponents;
     }
 
-    public List<WebElement> getCertificates() {
+    public List<WebElement> getServices() {
         try {
             return waitsSwitcher.setExplicitWait(3,
-                    ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.ADDITIONAL_CERTIFICATES.getPath()));
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.SERVICES.getPath()));
         } catch (TimeoutException e) {
             return new ArrayList<>();
         }
@@ -147,7 +145,22 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return numberOfPackeges;
     }
+    public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
+        additionalCertificates = new ArrayList<>();
+        for (WebElement webElement : getCertificates()) {
+            additionalCertificates.add(new AdditionalCertificatesComponents(driver, webElement));
+        }
+        return additionalCertificates;
+    }
 
+    public List<WebElement> getCertificates() {
+        try {
+            return waitsSwitcher.setExplicitWait(3,
+                    ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.ADDITIONAL_CERTIFICATES.getPath()));
+        } catch (TimeoutException e) {
+            return new ArrayList<>();
+        }
+    }
     public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
         //todo remove possible return null!!!
         AdditionalCertificatesComponents component = null;

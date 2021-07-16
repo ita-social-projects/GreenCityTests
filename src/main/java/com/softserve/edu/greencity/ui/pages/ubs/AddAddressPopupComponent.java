@@ -114,12 +114,12 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     }
 
 
-    public AddAddressPopupComponent chooseCity(AddAddressPopupCities city){
-        cityInput.click();
-        cityInput.choseFromOptions(city.getPath());
-        getStreetInput();
-        return this;
-    }
+//    public AddAddressPopupComponent chooseCity(AddAddressPopupCities city){
+//        cityInput.click();
+//        cityInput.choseFromOptions(city.getPath());
+//        getStreetInput();
+//        return this;
+//    }
 
     public InputElement getStreetInput() {
         if (streetInput == null) {
