@@ -332,7 +332,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-610", description = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
+    @Test(testName = "GC-610", description = "GC-610")
     @Description("Verify that news will be created, when user add PNG image less than 10 MB")
     public void verifyNewsCreationWithPNGImage() {
 
