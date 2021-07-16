@@ -76,7 +76,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public OrderDetailsPage EnterOnInputNumberOfPackeges(int index){
-        numberOfPackeges.get(index).sendKeys("20");
+        numberOfPackeges.get(index).sendKeys();
         return this;
     }
 
