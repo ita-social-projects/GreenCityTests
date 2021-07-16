@@ -107,7 +107,7 @@ public class PaymentPage extends UBSCourierBasePage {
         district=new LabelElement(driver,PaymentPageLocators.DISTRICT_LABEL);
         commentToAddress=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ADDRESS_LABEL);
         commentToOrder=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
-        //payment=new DropDownElement(driver,PaymentPageLocators.PAYMENT_METHOD);
+        payment=new DropDownElement(driver,PaymentPageLocators.PAYMENT_METHOD);
         
 
     }
@@ -182,9 +182,7 @@ public class PaymentPage extends UBSCourierBasePage {
     public LabelElement getCommentToAddress(){ return commentToAddress; }
     public LabelElement getCommentToOrder(){ return commentToOrder; }
 
-    public WebElement getPaymentField(){ return searchElementByXpath(PaymentPageLocators.PAYMENT_METHOD.getPath());}
-
-
+    public DropDownElement getPaymentField(){ return payment;}
 
 
 }
