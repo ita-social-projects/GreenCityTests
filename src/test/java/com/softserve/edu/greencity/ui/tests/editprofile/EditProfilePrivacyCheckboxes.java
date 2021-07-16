@@ -89,7 +89,7 @@ public class EditProfilePrivacyCheckboxes extends GreenCityTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(twoCheckboxes.getShoppingListLabel().isDisplayedLabel(), true);
-        softAssert.assertEquals(twoCheckboxes.getCityLabelText(), "Lviv");
+        softAssert.assertAll();
     }
 }
 
