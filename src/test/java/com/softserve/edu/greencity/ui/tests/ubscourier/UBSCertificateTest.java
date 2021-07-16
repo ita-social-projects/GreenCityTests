@@ -24,6 +24,14 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     public void cancelOrder(){
         orderDetailsPage.signOut();
     }
+    @Test
+    public void inputOrder(){
+        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("20");
+        orderDetailsPage.getCertificateInput().sendKeys("55555555");
+        orderDetailsPage.getActivateCertificateButton().click();
+
+        System.out.println("Test passed");
+    }
     @Test(testName = "GC-7000", description = "GC-7000")
     @Description("Verifies that certificate button is not active after entering certificate without order.")
     public void activateCertificate() {
