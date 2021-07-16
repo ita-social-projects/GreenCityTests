@@ -18,9 +18,7 @@ public class DropDownElement extends BaseElement{
         super(element);
     }
 
-    public void click(){
-        this.element.click();
-    }
+    public void click(){ this.element.click(); }
     
     public void choseFromOptions(By choice){this.element.findElement(choice).click();}
 
