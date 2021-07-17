@@ -113,7 +113,6 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return getHouseAlertMessage().isDisplayedLabel();
     }
 
-
     public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city){
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();

@@ -28,10 +28,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
-        initElements();
+        initPersonalDataElements();
     }
 
-    public void initElements() {
+    public void initPersonalDataElements() {
         nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
         surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
         phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
@@ -136,7 +136,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         try {
             currentCity = getListOfAddresses().get(i).getCityText();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The is no element with index #" + i);
+            logger.error("The is no element with index #" + i);
         }
         return currentCity;
     }
@@ -146,7 +146,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         try {
             currentStreet = getListOfAddresses().get(i).getStreetText();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The is no element with index #" + i);
+            logger.error("The is no element with index #" + i);
         }
         return currentStreet;
     }
@@ -154,9 +154,9 @@ public class PersonalDataPage extends UBSCourierBasePage {
     public String getDistinctOfAddressByIndex(int i) {
         String currentDistinct = null;
         try {
-             currentDistinct = getListOfAddresses().get(i).getDistinctText();
+            currentDistinct = getListOfAddresses().get(i).getDistinctText();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The is no element with index #" + i);
+            logger.error("The is no element with index #" + i);
         }
         return currentDistinct;
     }
@@ -166,7 +166,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         try {
             editAddress = getListOfAddresses().get(i).clickOnEditAddressButton();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The is no element with index #" + i);
+            logger.error("The is no element with index #" + i);
         }
         return editAddress;
     }
@@ -175,14 +175,25 @@ public class PersonalDataPage extends UBSCourierBasePage {
         try {
             return getListOfAddresses().get(i).clickOnDeleteAddressButton();
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("The is no element with index #" + i);
+            logger.error("The is no element with index #" + i);
         }
         return this;
+    }
+
+    public ButtonElement getAddAddressButton() {
+        if (addAddressButton == null) {
+            addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
+        }
+        return addAddressButton;
     }
 
     public AddAddressPopupComponent clickOnAddAddressButton() {
         addAddressButton.click();
         return new AddAddressPopupComponent(driver);
+    }
+
+    public boolean isAddAddressButtonActive() {
+        return getAddAddressButton().isActive();
     }
 
 }
