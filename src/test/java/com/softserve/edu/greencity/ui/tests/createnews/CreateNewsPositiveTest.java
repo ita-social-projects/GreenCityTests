@@ -150,7 +150,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-@Ignore
+    //@Ignore
     @Test(testName = "GC-583", description = "GC-583")
     @Description("Checking of ukrainian translation of labels On CreateNews page")
     public void checkUkrainianTranslationOfLabelsOnCreateNewsPage() {
@@ -164,7 +164,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         }
     }
 
-    @Ignore
+    //@Ignore
     //This test required Article 1.jpg here: \src\main\java\com\softserve\edu\greencity\data\Article_1.jpg"
     @Test(testName = "GC-405", description = "GC-405", groups = "createNews")
     @Description("Posting news test")
