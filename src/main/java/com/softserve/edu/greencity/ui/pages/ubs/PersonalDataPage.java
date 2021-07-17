@@ -28,7 +28,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
-        initPersonalDataElements();
+     //   initPersonalDataElements();
     }
 
     public void initPersonalDataElements() {
@@ -75,21 +75,21 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     private ButtonElement getNextButton() {
         if (nextButton == null) {
-            nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
+            nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         }
         return nextButton;
     }
 
     private ButtonElement getCancelButton() {
         if (cancelButton == null) {
-            cancelButton = new ButtonElement(driver, OrderDetailsPageLocators.CANCEL);
+            cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
         }
         return cancelButton;
     }
 
     private ButtonElement getBackButton() {
         if (backButton == null) {
-            backButton = new ButtonElement(driver, OrderDetailsPageLocators.CANCEL);
+            backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         }
         return backButton;
     }
