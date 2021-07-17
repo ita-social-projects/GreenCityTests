@@ -114,7 +114,8 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     }
 
 
-    public AddAddressPopupComponent chooseCity(AddAddressPopupCities city){
+    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city){
+        cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();
         cityInput.choseFromOptions(city.getPath());
         getStreetInput();
