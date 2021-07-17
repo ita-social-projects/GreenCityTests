@@ -13,11 +13,7 @@ public class ManageAddressDropdown {
 
     public ManageAddressDropdown(WebDriver driver) {
         this.driver = driver;
-        initElements();
     }
 
-    private void initElements() {
-//        cityLabel = driver.findElement(By.cssSelector(""));
-//        cityInput = driver.findElement(By.cssSelector(""));
-    }
+
 }

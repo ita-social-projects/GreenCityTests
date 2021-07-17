@@ -295,7 +295,7 @@ public class CreateNewsPage extends TopPart {
     @Step("Get upload area")
     public WebElement getUploadArea() {
         //TODO refactor searchElementByCss
-        return driver.findElement(By.xpath("//label[@for='upload']"));
+        return driver.findElement(By.id("upload"));
     }
 
     @Step("Check if picture is uploaded")
