@@ -335,6 +335,7 @@ public final class ItemComponent {
             } catch (StaleElementReferenceException error) {
                 logger.warn("StaleElementReferenceException caught, retrying...");
                 WaitsSwitcher.sleep(100);
+
                 //TODO need somehow to refresh the newsItem...
             }
             retriesLeft--;
