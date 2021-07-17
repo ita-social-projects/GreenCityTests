@@ -55,8 +55,6 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
         ecoStoreLabel = new LabelElement(driver, OrderDetailsPageLocators.ECO_STORE_LABEL);
-        orderNumberInput = new InputElement(driver, OrderDetailsPageLocators.ORDER_NUMBER_INPUT);
-        incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
     }
 
     private ButtonElement getNextButton() {
@@ -182,7 +180,13 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public InputElement getOrderNumberInput() {
+        orderNumberInput = new InputElement(driver, OrderDetailsPageLocators.ORDER_NUMBER_INPUT);
         return orderNumberInput;
+    }
+
+    public LabelElement getIncorrectOrderMessage(){
+        incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
+        return incorrectOrderMessage;
     }
 
     public ButtonElement getAddAnotherOrderNumberButton() {
