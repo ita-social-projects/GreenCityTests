@@ -24,6 +24,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private InputElement entranceInput;
 
     private LabelElement cityLabel;
+    private LabelElement cityMessageInfo;
     private LabelElement streetAlertMessage;
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
@@ -41,6 +42,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         corpInput = new InputElement(driver, AddAddressPopupLocators.CORP_INPUT);
         entranceInput = new InputElement(driver, AddAddressPopupLocators.ENTRANCE_INPUT);
         cityLabel = new LabelElement(driver, AddAddressPopupLocators.CITY_LABEL);
+        //cityMessageInfo = new LabelElement(driver, AddAddressPopupLocators.CITY_MESSAGE_INFO);
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
     }
 
@@ -89,6 +91,13 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return districtAlertMessage;
     }
 
+    public LabelElement getCityMessageInfo() {
+        if (cityMessageInfo == null) {
+            cityMessageInfo = new LabelElement(driver, AddAddressPopupLocators.CITY_MESSAGE_INFO);
+        }
+        return cityMessageInfo;
+    }
+
     public LabelElement getHouseAlertMessage() {
         if (houseAlertMessage == null) {
             houseAlertMessage = new LabelElement(driver, AddAddressPopupLocators.HOUSE_ALERT_MESSAGE);
@@ -96,13 +105,30 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return houseAlertMessage;
     }
 
+///////////////////////////////////////////////////////////////
+    public String getStreetValidationErrorText() {
+        return getStreetAlertMessage().getText();
+    }
+
+    public String getDistrictValidationErrorText() {
+        return getDistrictAlertMessage().getText();
+    }
+
+    public String getHouseValidationErrorText() {
+        return getHouseAlertMessage().getText();
+    }
+
+    public String getCityValidationTextInfo() {
+        return getCityMessageInfo().getText();
+    }
+
+/////////////////////////////////////////////////////////////
+    public boolean isDisplayedCityMessageInfo() {
+        return getCityMessageInfo().isDisplayedLabel();
+    }
 
     public boolean isDisplayedStreetErrorMessage() {
         return getStreetAlertMessage().isDisplayedLabel();
-    }
-
-    public String getStreetValidationErrorText() {
-        return getStreetAlertMessage().getText();
     }
 
     public boolean isDisplayedDistrictErrorMessage() {
@@ -113,7 +139,8 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return getHouseAlertMessage().isDisplayedLabel();
     }
 
-    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city){
+//////////////////////////////////////////////////////////////////////////////////////////
+    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city) {
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();
         cityInput.choseFromOptions(city.getPath());
