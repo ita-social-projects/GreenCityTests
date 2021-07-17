@@ -74,6 +74,10 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return this;
     }
 
+    public AddAddressPopupComponent fillAllFields() {
+        return
+    }
+
     //error message
     public LabelElement getStreetAlertMessage() {
         if (streetAlertMessage == null) {

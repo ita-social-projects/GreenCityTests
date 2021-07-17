@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.By;
 
 public enum AddressComponentLocators implements Locator {
-    SELECT_ADDRESS(By.xpath(".//input[@type = 'radio']]")),
+    SELECT_ADDRESS(By.xpath(".//input[@type = 'radio']")),
     EDIT(By.xpath(".//img[contains(@alt, 'edit')]")),
     CITY(By.xpath(".//p[position() = 1]")),         //Need to change
     STREET(By.xpath(".//p[position() = 2]")),       //Need to change

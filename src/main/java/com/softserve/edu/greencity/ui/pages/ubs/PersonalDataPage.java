@@ -4,11 +4,14 @@ import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,11 +35,11 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public void initPersonalDataElements() {
-        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
-        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
-        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
-        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
-        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
+//        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
+//        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
+//        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
+//        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
+//        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
         cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
@@ -110,6 +113,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     private List<AddressComponent> getListOfAddresses() {
+        waitsSwitcher.setExplicitWait(2, ExpectedConditions.elementToBeClickable(AddressComponentLocators.DELETE.getPath())); //??
         if (listOfAddresses == null) {
             listOfAddresses = new LinkedList<>();
             List<WebElement> addressesPath = driver.findElements(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath());
@@ -194,6 +198,12 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public boolean isAddAddressButtonActive() {
         return getAddAddressButton().isActive();
+    }
+
+    public PersonalDataPage scrollToAddress() {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(driver.findElement(PersonalDataPageLocators.ADD_ADDRESS.getPath())).perform();
+        return this;
     }
 
 }
