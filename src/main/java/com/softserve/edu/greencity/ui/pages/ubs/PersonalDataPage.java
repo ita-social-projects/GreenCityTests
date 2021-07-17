@@ -28,7 +28,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
-     //   initPersonalDataElements();
+        initPersonalDataElements();
     }
 
     public void initPersonalDataElements() {
