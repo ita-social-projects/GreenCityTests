@@ -8,6 +8,7 @@ public enum AddAddressPopupLocators implements Locator {
     ADD_ADDRESS_BUTTON(By.xpath("//*[@id='mat-dialog-6']/app-ubs-add-address-pop-up/div/button[2]")),
 
     CITY_INPUT(By.cssSelector(".shadow-none.form-control.ng-pristine.ng-valid.ng-touched")),
+    CITY_KIEV(By.xpath("//app-ubs-add-address-pop-up//select[@formcontrolname='city']/option[@value='Kiev']")),
 
     DISTRICT_INPUT(By.xpath("//*[@id='mat-dialog-3']/app-ubs-add-address-pop-up/form/div[2]/input")),
     STREET_INPUT(By.cssSelector(".shadow-none.form-control.ng-untouched.ng-pristine.ng-invalid.pac-target-input")),
