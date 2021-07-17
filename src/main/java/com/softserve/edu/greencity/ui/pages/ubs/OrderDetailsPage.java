@@ -6,12 +6,8 @@ import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-<<<<<<< HEAD
-import com.sun.corba.se.impl.resolver.SplitLocalResolverImpl;
-import org.openqa.selenium.By;
-=======
+
 import org.openqa.selenium.Keys;
->>>>>>> develop
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -253,6 +249,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public PersonalDataPage clickOnNextButton() {
+
         getNextButton().click();
         return new PersonalDataPage(driver);
     }

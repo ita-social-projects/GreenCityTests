@@ -121,6 +121,7 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
 //        return this;
 //    }
 
+
     public InputElement getStreetInput() {
         if (streetInput == null) {
             streetInput = new InputElement(driver, AddAddressPopupLocators.STREET_INPUT);
