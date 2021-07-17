@@ -54,4 +54,12 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getAttribute("value"),"20", "input quantuty mismatch");
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-1975", description = "GC-1975")
+    @Description("Verify first four numeric characters of the certificate,system  enters a dash according to the certificate format")
+    public void dashTest(){
+        orderDetailsPage.getCertificateInput().sendKeys(Certificates.FOUR_DIGITS.getCertificate());
+        Assert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),UBSDataStrings.FOUR_DIGITS.getMessage(),"NotEqual");
+        //TODO WRITE DEFECT REPORT???
+    }
 }
