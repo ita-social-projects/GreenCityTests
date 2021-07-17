@@ -9,7 +9,8 @@ import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AddAddressPopupComponent extends UBSCourierBasePage {
+public class AddAddressPopupComponent {
+    private WebDriver driver;
     private WebDriverWait wait;
 
     private ButtonElement cancelButton;
@@ -28,8 +29,8 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
 
-    public AddAddressPopupComponent(WebDriver webDriver) {
-        super(webDriver);
+    public AddAddressPopupComponent(WebDriver driver) {
+        this.driver = driver;
         initElements();
     }
 
@@ -74,8 +75,13 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return this;
     }
 
-    public AddAddressPopupComponent fillAllFields() {
-        return
+    public AddAddressPopupComponent fillAllFields(UserAddress data) {
+        return chooseCity(data.getCity())
+                .inputStreet(data)
+                .inputDistrict(data)
+                .inputHouse(data)
+                .inputCorp(data)
+                .inputEntrance(data);
     }
 
     //error message
@@ -153,9 +159,9 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    public AddAddressPopupComponent clickOnAddAddressButton() {
-        addAddressButton.click();
-        return new AddAddressPopupComponent(driver);
+    public PersonalDataPage clickOnAddAddressButton() {
+        getAddButton().click();
+        return new PersonalDataPage(driver);
     }
 
     public WelcomePage clickOnCancelButton() {

@@ -2,12 +2,15 @@ package com.softserve.edu.greencity.ui.tests.ubscourier;
 
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
+import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class AddressListTests extends GreenCityTestRunner {
     private OrderDetailsPage orderDetailsPage;
@@ -15,6 +18,7 @@ public class AddressListTests extends GreenCityTestRunner {
 
     @BeforeMethod
     public void signIn() {
+        SoftAssert softAssert = new SoftAssert();
         User user = UserRepository.get().temporary();
         orderDetailsPage = loadApplication()
                 .signIn()
@@ -29,7 +33,9 @@ public class AddressListTests extends GreenCityTestRunner {
     @Description("GC-5001")
     public void verifyDeleteAddress() {
         while(personalDataPage.getQuantityOfAddresses() < 4) {
-            personalDataPage = personalDataPage.clickOnAddAddressButton().
+            UserAddress addressData = new UserAddress(AddAddressPopupLocators.CITY_KIEV).generateRandomAddressValues();
+            personalDataPage = personalDataPage.clickOnAddAddressButton().fillAllFields(addressData).clickOnAddAddressButton();
         }
+        softAssert.assertFalse(personalDataPage.isAddAddressButtonActive());
     }
 }
