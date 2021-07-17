@@ -1,10 +1,13 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+import com.softserve.edu.greencity.data.UBS.Certificates;
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -24,14 +27,15 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     public void cancelOrder(){
         orderDetailsPage.signOut();
     }
-    @Test
+    @Test(testName = "GC-1979", description = "GC-1979")
     public void inputOrder(){
         orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("20");
-        orderDetailsPage.getCertificateInput().sendKeys("55555555");
+        orderDetailsPage.getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
         orderDetailsPage.getActivateCertificateButton().click();
-
-        System.out.println("Test passed");
+        String message = orderDetailsPage.getCertificateMessage().getText();
+        Assert.assertEquals(UBSDataStrings.CORRECT_CERTIFICATE_MESSAGE_ENG.getMessage(), message, "Messages mismatch.");
     }
+
     @Test(testName = "GC-7000", description = "GC-7000")
     @Description("Verifies that certificate button is not active after entering certificate without order.")
     public void activateCertificate() {
