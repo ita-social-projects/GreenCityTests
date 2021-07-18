@@ -22,7 +22,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-    ///Region Comments
+    ///Region [Comments]
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
