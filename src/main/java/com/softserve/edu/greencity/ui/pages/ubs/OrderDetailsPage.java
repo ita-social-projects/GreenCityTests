@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
@@ -21,11 +22,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-
+    ///Region Comments
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
-
+    ///Endregion
     private LabelElement pointsBalanceLabel;
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
@@ -236,10 +237,16 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public ButtonElement getCancelCertificateButton() {
-        addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
-        return addCertifircateButton;
+        activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
+        return activateCertificateButton;
     }
 
+    public Boolean isCancelButtonActive(){
+        getCancelCertificateButton();
+        return (activateCertificateButton.getText().equals(UBSDataStrings.CANCEL_ENG.getMessage())
+                        || activateCertificateButton.getText().equals(UBSDataStrings.CANCEL_RU.getMessage())
+                            || activateCertificateButton.getText().equals(UBSDataStrings.CANCEL_UA.getMessage()));
+    }
     public LabelElement getCertificateMessage() {
         certificateMessage = new LabelElement(driver, OrderDetailsPageLocators.CERTIFICATE_MESSAGE);
         return certificateMessage;
