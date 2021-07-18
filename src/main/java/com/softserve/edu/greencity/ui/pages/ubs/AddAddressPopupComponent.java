@@ -28,6 +28,9 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
 
+
+    private UserAddress userAddress;
+
     public AddAddressPopupComponent(WebDriver webDriver) {
         super(webDriver);
         initElements();
@@ -38,10 +41,10 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         addAddressButton = new ButtonElement(driver, AddAddressPopupLocators.ADD_ADDRESS_BUTTON);
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         houseInput = new InputElement(driver, AddAddressPopupLocators.HOUSE_INPUT);
-        corpInput = new InputElement(driver, AddAddressPopupLocators.CORP_INPUT);
+       corpInput = new InputElement(driver, AddAddressPopupLocators.CORP_INPUT);
         entranceInput = new InputElement(driver, AddAddressPopupLocators.ENTRANCE_INPUT);
-        cityLabel = new LabelElement(driver, AddAddressPopupLocators.CITY_LABEL);
-        cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
+       cityLabel = new LabelElement(driver, AddAddressPopupLocators.CITY_LABEL);
+       cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
     }
 
     //input data
@@ -61,6 +64,14 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         houseInput.sendKeys(String.valueOf(userAddress.getHouse()));
         return this;
     }
+
+    /////////
+    public AddAddressPopupComponent inputHouse(String name) {
+        houseInput.click();
+        houseInput.sendKeys(name);
+        return this;
+    }
+    ////////
 
     public AddAddressPopupComponent inputCorp(UserAddress userAddress) {
         corpInput.click();
@@ -135,6 +146,19 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         }
         return districtInput;
     }
+
+
+
+
+//maybe not the best way
+    public InputElement getHouseInput() {
+        if (districtInput == null) {
+            districtInput = new InputElement(driver, AddAddressPopupLocators.DISTRICT_INPUT);
+        }
+        return districtInput;
+    }
+
+//
 
     public ButtonElement getAddButton() {
         if (addAddressButton == null) {

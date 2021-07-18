@@ -12,9 +12,9 @@ public enum AddAddressPopupLocators implements Locator {
 
     DISTRICT_INPUT(By.xpath("//*[@id='mat-dialog-3']/app-ubs-add-address-pop-up/form/div[2]/input")),
     STREET_INPUT(By.cssSelector(".shadow-none.form-control.ng-untouched.ng-pristine.ng-invalid.pac-target-input")),
-    HOUSE_INPUT(By.xpath("//*[@id=\"mat-dialog-11\"]/app-ubs-add-address-pop-up/form/div[4]/div[1]/input")),
-    CORP_INPUT(By.xpath("//*[@id=\"mat-dialog-11\"]/app-ubs-add-address-pop-up/form/div[4]/div[2]/input")),
-    ENTRANCE_INPUT(By.xpath("//*[@id=\"mat-dialog-11\"]/app-ubs-add-address-pop-up/form/div[4]/div[3]/input")),
+    HOUSE_INPUT(By.xpath("//*[@id='mat-dialog-11']/app-ubs-add-address-pop-up/form/div[4]/div[1]/input")),
+    CORP_INPUT(By.xpath("//*[@id='mat-dialog-11']/app-ubs-add-address-pop-up/form/div[4]/div[2]/input")),
+    ENTRANCE_INPUT(By.xpath("//*[@id='mat-dialog-11']/app-ubs-add-address-pop-up/form/div[4]/div[3]/input")),
 
     CITY_LABEL(By.cssSelector(".w-100.city-notice")),
 

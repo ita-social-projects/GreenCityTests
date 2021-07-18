@@ -40,7 +40,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
 //        cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
 //        nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
 //        backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
-//        addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
+        addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
     }
 
     public PersonalDataPage inputName(String name) {
