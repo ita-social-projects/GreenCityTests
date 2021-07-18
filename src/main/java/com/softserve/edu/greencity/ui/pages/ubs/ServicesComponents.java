@@ -4,8 +4,7 @@ import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import static com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators.ADDITIONAL_CERTIFICATE_INPUT;
-import static com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators.SERVICES_INPUT;
+import static com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators.*;
 
 public class ServicesComponents {
     private final WebDriver driver;
@@ -20,4 +19,13 @@ public class ServicesComponents {
     public WebElement getInput() {
         return servicesItem.findElement(SERVICES_INPUT.getPath());
     }
+    public WebElement getServiceName(){
+        return servicesItem.findElement(SERVICE_NAME.getPath());
+    }
+    public WebElement getTotal(){
+        return servicesItem.findElement(SERVICE_TOTAL.getPath());
+    }
+
+    public WebElement getVolumeOrCost(){return servicesItem.findElement(SERVICE_VOLUME_COST.getPath());}
+
 }
