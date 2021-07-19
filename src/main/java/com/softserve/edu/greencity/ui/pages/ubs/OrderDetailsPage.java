@@ -6,7 +6,6 @@ import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.elements.TextAreaElement;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import javafx.scene.control.RadioButton;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
