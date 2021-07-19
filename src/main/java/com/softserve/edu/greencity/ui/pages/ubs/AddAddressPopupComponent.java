@@ -6,6 +6,7 @@ import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
@@ -167,6 +168,7 @@ public class AddAddressPopupComponent {
     public PersonalDataPage clickOnAddAddressButton() {
         getAddButton().click();
         waitsSwitcher.setExplicitWait(5, ExpectedConditions.invisibilityOfElementLocated(AddAddressPopupLocators.ADD_ADDRESS_BUTTON.getPath()));
+        waitsSwitcher.setExplicitWait(3,ExpectedConditions.numberOfElementsToBe(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath(), new PersonalDataPage(driver).getQuantityOfAddresses() + 1));
         return new PersonalDataPage(driver);
     }
 
