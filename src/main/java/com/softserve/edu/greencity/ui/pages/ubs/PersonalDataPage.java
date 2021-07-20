@@ -35,42 +35,42 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public void initPersonalDataElements() {
-//        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
-//        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
-//        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
-//        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
-//        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
+        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
+        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
+        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
+        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
+        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
         cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
     }
 
-    private PersonalDataPage inputName(String name) {
+    public PersonalDataPage inputName(String name) {
         nameField.clearInput();
         nameField.sendKeys(name);
         return this;
     }
 
-    private PersonalDataPage inputSurname(String surname) {
+    public PersonalDataPage inputSurname(String surname) {
         surnameField.clearInput();
         surnameField.sendKeys(surname);
         return this;
     }
 
-    private PersonalDataPage inputPhone(String phone) {
+    public PersonalDataPage inputPhone(String phone) {
         phoneField.clearInput();
         phoneField.sendKeys(phone);
         return this;
     }
 
-    private PersonalDataPage inputEmail(String email) {
+    public PersonalDataPage inputEmail(String email) {
         emailField.clearInput();
         emailField.sendKeys(email);
         return this;
     }
 
-    private PersonalDataPage inputComment(String comment) {
+    public PersonalDataPage inputComment(String comment) {
         commentToAddressField.clearText();
         commentToAddressField.enterText(comment);
         return this;
