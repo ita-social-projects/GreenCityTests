@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
 import com.softserve.edu.greencity.data.UBS.Certificates;
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
@@ -10,6 +11,8 @@ import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.Random;
 
 public class PaymentPageTest extends GreenCityTestRunner {
 
@@ -38,22 +41,30 @@ public class PaymentPageTest extends GreenCityTestRunner {
     @Description("GC-2059")
     public void orderNumberBlockDisplayedCorrectly() {
         logger.info("Verify that order number in 'Доставка з Еко магазину' block is displayed correctly");
-        orderDetailsPage.fillAllFieldsForServices()
+        orderDetailsPage.fillAllFieldsForServices((new Random().nextInt(2) + 1))
                 .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
-        orderDetailsPage.inputOrderNumber("1111111111");
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.fullPersonalData();
+        orderDetailsPage.getOrderNumberInput().sendKeys(UBSDataStrings.ORDER_NUMBER_ONE.getMessage());
+
+        softAssert.assertTrue(orderDetailsPage.getNextButton().isActive(),"Button from 'Order details page' is not active");
+
+       PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
+        personalDataPage.fullPersonalData("Jack","London","0634567890","Jkl@gmail.com");
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 2))
                 .clickOnAddAddressButton();
-        // .clickOnNextButton();
         //TODO method for wait
+        softAssert.assertTrue(personalDataPage.getNextButton().isActive(),"Button from 'Personal data page' is not active");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
-        softAssert.assertTrue(paymentPage.getOrderNumbers().isDisplayedLabel(), "Order number isn't displayed correctly");
-        //softAssert.assertEquals(personalDataPage.getFullName(), paymentPage.getPhone().getText());
+      //  softAssert.assertTrue(paymentPage.getOrderNumbers().isDisplayedLabel(),"Order number isn't displayed");
+        softAssert.assertEquals(paymentPage.getOrderNumbers().getText(),"1111111111", "Order number isn't displayed correctly");
         softAssert.assertAll();
 
 
@@ -63,14 +74,14 @@ public class PaymentPageTest extends GreenCityTestRunner {
     @Description("GC-2060")
     public void orderNumbersAreDisplayedCorrectly() {
         logger.info("Verify that order numbers are displayed correctly.");
-        orderDetailsPage.fillAllFieldsForServices()
+        orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(2) + 1)
                 .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
-        orderDetailsPage.inputOrderNumber("1111111111");
-        orderDetailsPage.clickAnotherOrderNumberButton().inputSecondOrderNumber("2222222222");
+        orderDetailsPage.getOrderNumberInput().sendKeys(UBSDataStrings.ORDER_NUMBER_ONE.getMessage());
+        orderDetailsPage.getOrderNumberInput().sendKeys(UBSDataStrings.ORDER_NUMBER_TWO.getMessage());
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.fullPersonalData();
+        personalDataPage.fullPersonalData("Jack","London","0634567890","Jkl@gmail.com");
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 2))
@@ -98,13 +109,13 @@ public class PaymentPageTest extends GreenCityTestRunner {
     @Description("GC-2062")
     public void personalDataDisplayedCorrectly() {
         logger.info("Verify that the personal data is displayed correctly");
-        orderDetailsPage.fillAllFieldsForServices()
+        orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(2) + 1)
                 .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
         orderDetailsPage.inputOrderNumber("1111111111").inputComment("First comment");
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.fullPersonalData();
+        personalDataPage.fullPersonalData("Jack","London","0634567890","Jkl@gmail.com");
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
@@ -115,8 +126,8 @@ public class PaymentPageTest extends GreenCityTestRunner {
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify full name");
         softAssert.assertEquals(paymentPage.getFullName().getText(),personalDataPage.getFullName());
-//        logger.info("Verify phone number");
-//        softAssert.assertEquals(paymentPage.getPhone().getText(),personalDataPage.getPhoneNumber());//TODO BUG with phone
+        logger.info("Verify phone number");
+        softAssert.assertEquals(paymentPage.getPhone().getText(),personalDataPage.getPhoneNumber());//TODO BUG with phone
         logger.info("Verify gmail address");
         softAssert.assertEquals(paymentPage.getGmail().getText(),personalDataPage.getEmailAddress());
 

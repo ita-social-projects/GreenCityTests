@@ -16,7 +16,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 public class OrderDetailsPage extends UBSCourierBasePage {
 
@@ -102,7 +101,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return total;
     }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
         }
@@ -154,21 +153,14 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return numberOfPackeges;
     }
-   ///////////////////////
-    public OrderDetailsPage fillAllFieldsForServices() {
+
+    public OrderDetailsPage fillAllFieldsForServices(int value) {
         logger.info("fill all fields for services");
         for (ServicesComponents servicesComponents : getServicesComponents()) {
-            servicesComponents.getInput().sendKeys(Integer.toString(new Random().nextInt(2) + 1));
+            servicesComponents.getInput().sendKeys(Integer.toString(value));
         }
         return this;
     }
-
-    public OrderDetailsPage goToOrderNumberInput() {
-        Actions action = new Actions(driver);
-        action.moveToElement(driver.findElement(OrderDetailsPageLocators.YES_WAITING_ORDER_RADIO_BUTTON.getPath())).perform();
-        return this;
-    }
-/////////////////////
 
     public List<WebElement> getTotalLabels() {
         if (totalLabels == null) {
@@ -290,10 +282,12 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         orderNumberInput = new InputElement(driver, OrderDetailsPageLocators.ORDER_NUMBER_INPUT);
         return orderNumberInput;
     }
+
     public InputElement getOrderNumberSecondInput() {
         orderNumberInput = new InputElement(driver, OrderDetailsPageLocators.ORDER_NUMBER_SECOND_INPUT);
         return orderNumberInput;
     }
+
     public LabelElement getIncorrectOrderMessage() {
         incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
         return incorrectOrderMessage;
@@ -347,6 +341,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         getOrderNumberInput().sendKeys(orderNumber);
         return this;
     }
+
     public OrderDetailsPage inputSecondOrderNumber(String orderNumber) {
         getOrderNumberSecondInput().clearInput();
         getOrderNumberSecondInput().sendKeys(orderNumber);

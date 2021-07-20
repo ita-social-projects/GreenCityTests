@@ -69,9 +69,8 @@ public class PersonalDataPage extends UBSCourierBasePage {
         emailField.sendKeys(email);
         return this;
     }
-//////////
-    public String getFullName(){
 
+    public String getFullName(){
         String fullName=nameField.getValue()+" "+surnameField.getValue();
         return fullName;
 
@@ -83,17 +82,14 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return emailField.getValue();
     }
 
-    public PersonalDataPage fullPersonalData(){
+    public PersonalDataPage fullPersonalData(String name,String surname,String phone,String gmail){
         logger.info("fill full fields for personal data");
-        return inputName("Jack")
-                .inputSurname("London")
-                .inputPhone("0631234567")
-                .inputEmail("JkL@gmail.com");
-
-
-
+        return inputName(name)
+                .inputSurname(surname)
+                .inputPhone(phone)
+                .inputEmail(gmail);
     }
-////////////////
+
 
     public PersonalDataPage inputComment(String comment) {
         commentToAddressField.clearText();
@@ -101,7 +97,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         }
