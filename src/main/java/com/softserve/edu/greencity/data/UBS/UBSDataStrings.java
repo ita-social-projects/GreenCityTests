@@ -5,7 +5,10 @@ public enum UBSDataStrings {
     CANCEL_UA("Відмінити"),
     CANCEL_RU("Отменить"),
     CANCEL_ENG("Cancel"),
-    CORRECT_CERTIFICATE_MESSAGE_ENG("Certificate for 1000 UAH activated. Certificate validity period is up to 2021-09-17");
+    CORRECT_CERTIFICATE_MESSAGE_ENG("Certificate for 1000 UAH activated. Certificate validity period is up to 2021-09-17"),
+    FOUR_DIGITS("2222-"),
+    CORRECT_CERTIFICATE_THREE_ACTIVE("Certificate for 1800 UAH activated. Certificate validity period is up to 2021-11-27");
+
     private final String string;
 
     UBSDataStrings(String str) {
