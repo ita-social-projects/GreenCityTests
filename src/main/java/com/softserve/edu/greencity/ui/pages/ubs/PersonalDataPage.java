@@ -118,8 +118,15 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return backButton;
     }
 
-    public PaymentPage clickOnNextButton() {   //return type?
+    public PaymentPage clickOnNextButton() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
+
         return new PaymentPage(driver);
     }
 

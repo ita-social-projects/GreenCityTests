@@ -385,6 +385,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public OrderDetailsPage inputSecondOrderNumber(String orderNumber) {
+        getAddAnotherOrderNumberButton().click();
         getOrderNumberSecondInput().clearInput();
         getOrderNumberSecondInput().sendKeys(orderNumber);
         return this;

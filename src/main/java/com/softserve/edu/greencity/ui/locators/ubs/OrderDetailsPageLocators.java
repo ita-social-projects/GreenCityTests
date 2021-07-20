@@ -22,7 +22,7 @@ public enum OrderDetailsPageLocators implements Locator {
     YES_WAITING_ORDER_RADIO_BUTTON(By.cssSelector("div.bottom > div:nth-child(3) > label")),
     NO_WAITING_ORDER_RADIO_BUTTON(By.cssSelector("div.bottom > div:nth-child(4) > label")),
     ORDER_NUMBER_INPUT(By.xpath("//app-ubs-order-details/div[1]/div/form/div[4]/div[3]/div[2]/input")),//need find another
-    ORDER_NUMBER_SECOND_INPUT(By.xpath("//app-ubs-order-details/div[1]/div/form/div[4]/div[3]/div[3]/input")),//need find another
+    ORDER_NUMBER_SECOND_INPUT(By.xpath("//*[@id='cdk-step-content-0-0']/app-ubs-order-details/div[1]/div/form/div[4]/div[3]/div[3]/input")),//need find another
             //xpath("//*[@id='cdk-step-content-0-0']/app-ubs-order-details/div[1]/div/form/div[4]/div[3]/div[2]/input")),
             //("//input[@class='shadow-none form-control border-input p-2 eco-store ng-pristine ng-valid ng-touched']")),
             //cssSelector("div.form-group.ng-pristine.ng-valid.ng-star-inserted.ng-touched> input")),
