@@ -43,13 +43,11 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
     public void addAddress() {
         logger.info("check that AddAddressPopupMenu is active");
 
-        String addAddressPopupComponent = personalDataPage.clickOnAddAddressButton()
-                .getCityMessageInfo().getText();
-//
-//        softAssert.assertEquals();
-//        softAssert.assertTrue();
-//        softAssert.assertAll();
+        orderDetailsPage.getNumberOfPackeges().get(1).click();
+        orderDetailsPage.getNumberOfPackeges().get(1).sendKeys("10");
+        personalDataPage.clickOnAddAddressButton().clickOnCityInput().chooseCity(AddAddressPopupLocators.CITY_KIEV);
+        softAssert.assertTrue(addAddressPopupComponent.isDisplayedCityMessageInfo());
+        softAssert.assertEquals("At the moment we serve only the city of Kyiv.",addAddressPopupComponent.getCityMessageInfo().getText());
+        softAssert.assertAll();
     }
-
-
 }

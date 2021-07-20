@@ -176,6 +176,11 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return cancelButton;
     }
 
+    public AddAddressPopupComponent clickOnCityInput() {
+        cityInput.click();
+        return new AddAddressPopupComponent(driver);
+    }
+
     public AddAddressPopupComponent clickOnAddAddressButton() {
         addAddressButton.click();
         return new AddAddressPopupComponent(driver);

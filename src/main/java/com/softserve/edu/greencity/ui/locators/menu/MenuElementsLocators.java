@@ -10,7 +10,7 @@ public enum MenuElementsLocators implements Locator {
 
     COPYRIGHT(By.cssSelector(".footer_bottom-part")),
 
-    SIGN_IN(By.xpath("//a[@class='header_sign-in-link tertiary-global-button ng-star-inserted']")),
+    SIGN_IN(By.xpath("/html/body/app-root/app-main/app-header/header/div/div/div/div/ul/a")),
     SIGN_UP(By.xpath("//div[@class='header_sign-up-btn secondary-global-button']"))
     ;
 
