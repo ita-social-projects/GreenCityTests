@@ -80,6 +80,7 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(String.format(UBSDataStrings.CORRECT_CERTIFICATE_THREE_ACTIVE.getMessage()),message,"messages mismatch");
         softAssert.assertAll();
         System.out.println(message);
+        //Todo report bug
     }
 
 }
