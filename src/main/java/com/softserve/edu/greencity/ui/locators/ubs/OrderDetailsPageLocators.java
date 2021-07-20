@@ -40,7 +40,8 @@ public enum OrderDetailsPageLocators implements Locator {
     ORDER_AMOUT(By.xpath("//div[@class = 'totalInfo']/p[position() = 1]//strong")),
     SERVICES_INPUT(By.cssSelector("input")),
     SERVICES(By.cssSelector(".main-list_item")),
-    AMOUNT_DUE(By.xpath("//div[@class = 'totalInfo']/p[position() = 2]//strong"));
+    SERTIFICATE_LABEL(By.cssSelector("app-ubs-order-details .money-saved")),
+    AMOUNT_DUE(By.cssSelector("app-ubs-order-details .total-content:nth-child(3) strong"));
 
     private By path;
 
