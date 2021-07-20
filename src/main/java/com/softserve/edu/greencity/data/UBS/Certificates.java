@@ -9,7 +9,8 @@ public enum Certificates {
     USED_1000("1111-9994"),
     USED_500("2222-5555"),
     USED_300("3000-3000"),
-    FAKE("2345-5678");
+    FAKE("2345-5678"),
+    FOUR_DIGITS("2222");
     private final String number;
 
     Certificates(String numb) {
