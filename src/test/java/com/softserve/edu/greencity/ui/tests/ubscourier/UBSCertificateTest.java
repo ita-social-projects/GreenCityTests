@@ -14,6 +14,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class UBSCertificateTest extends GreenCityTestRunner {
    private OrderDetailsPage orderDetailsPage;
     @BeforeMethod
@@ -54,4 +57,29 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getAttribute("value"),"20", "input quantuty mismatch");
         softAssert.assertAll();
     }
+    @Test(testName = "GC-1990", description = "GC-1990")
+    @Description("System counts discount after user enters two or more certificates")
+    public void twoCertificatesTest(){
+        orderDetailsPage.getServicesComponents().get(1).getInput().sendKeys("5");
+        orderDetailsPage.getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.clickActivateButton();
+        orderDetailsPage.clickAddCertificateButton();
+        orderDetailsPage.getAdditionalCertificates().get(0).getCertificateInput().sendKeys(Certificates.ACTIVE_500.getCertificate());
+        orderDetailsPage.getAdditionalCertificates().get(0).getActivateCertificateButton().click();
+        orderDetailsPage.clickAddCertificateButton();
+        orderDetailsPage.getAdditionalCertificates().get(1).getCertificateInput().sendKeys(Certificates.ACTIVE_300.getCertificate());
+        orderDetailsPage.getAdditionalCertificates().get(1).getActivateCertificateButton().click();
+        orderDetailsPage.getTextOrderAmount();
+        int due = orderDetailsPage.getAmountDueNumber();
+        int discountFromLabel = orderDetailsPage.getCertificateLabelNumber();
+        String message = orderDetailsPage.getCertificateMessage().getText();
+        int discountFromMessage = orderDetailsPage.getDiscountFromMessage(message);
+        softAssert.assertEquals(discountFromMessage,discountFromLabel);
+        int totalSum = orderDetailsPage.getTotalSum();
+        softAssert.assertEquals(totalSum-discountFromLabel,due);
+        softAssert.assertEquals(String.format(UBSDataStrings.CORRECT_CERTIFICATE_THREE_ACTIVE.getMessage()),message,"messages mismatch");
+        softAssert.assertAll();
+        System.out.println(message);
+    }
+
 }
