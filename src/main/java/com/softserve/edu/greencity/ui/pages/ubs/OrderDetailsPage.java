@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
+import com.softserve.edu.greencity.data.UBS.Certificates;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
@@ -46,6 +47,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private List<ServicesComponents> servicesComponents;
     private LabelElement orderAmount;
     private LabelElement amountDue;
+    private LabelElement sertificateLabel;
     private List<WebElement> numberOfPackeges;
     private List<WebElement> totalLabels;
 
@@ -76,6 +78,16 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     public String getTextAmountDue(){
         String amount = getAmountDue().getText();
         return amount;
+    }
+    public int getAmountDueNumber(){
+        waitsSwitcher.sleep(2000);
+        String [] array = getTextAmountDue().replace("-","").split(" ");
+        return Integer.parseInt(array[0]);
+    }
+    public int getCertificateLabelNumber(){
+        waitsSwitcher.sleep(1000);
+        String[] array = getCertificateLabel().getText().replace("-","").split(" ");
+        return Integer.parseInt(array[0]);
     }
 
     public OrderDetailsPage clickUP(){
@@ -127,6 +139,10 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return amountDue;
     }
+    public  LabelElement getCertificateLabel(){
+       sertificateLabel = new LabelElement( driver,OrderDetailsPageLocators.SERTIFICATE_LABEL);
+        return sertificateLabel;
+    }
 
     public List<ServicesComponents> getServicesComponents() {
         servicesComponents = new ArrayList<>();
@@ -158,7 +174,15 @@ public class OrderDetailsPage extends UBSCourierBasePage {
             totalLabels = new ArrayList<>();
             totalLabels = driver.findElements(OrderDetailsPageLocators.TOTAL.getPath());
         }
-        return numberOfPackeges;
+        return totalLabels;
+    }
+    public int getTotalSum(){
+        int sum = 0;
+        for (WebElement element:getTotalLabels()) {
+            String[] array = element.getText().split( " ");
+            sum+= Integer.parseInt(array[0]);
+        }
+        return sum;
     }
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
@@ -166,6 +190,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
             additionalCertificates.add(new AdditionalCertificatesComponents(driver, webElement));
         }
         return additionalCertificates;
+    }
+    public OrderDetailsPage activateCertificateByPosition(int number, String sertificate){
+        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(sertificate);
+        getAdditionalCertificates().get(number).getActivateCertificateButton().click();
+        return this;
     }
 
     public List<WebElement> getCertificates() {
@@ -233,13 +262,18 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
         return addCertifircateButton;
     }
+    public int getDiscountFromMessage(String message){
+        String[] array = message.split(" ");
+        return Integer.parseInt(array[2]);
 
+    }
     public ButtonElement getCancelCertificateButton() {
         addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
         return addCertifircateButton;
     }
 
     public LabelElement getCertificateMessage() {
+        waitsSwitcher.sleep(1500);
         certificateMessage = new LabelElement(driver, OrderDetailsPageLocators.CERTIFICATE_MESSAGE);
         return certificateMessage;
     }

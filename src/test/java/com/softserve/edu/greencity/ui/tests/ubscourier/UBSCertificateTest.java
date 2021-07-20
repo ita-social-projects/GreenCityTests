@@ -54,4 +54,27 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getAttribute("value"),"20", "input quantuty mismatch");
         softAssert.assertAll();
     }
+    @Test(testName = "GC-1990", description = "GC-1990")
+    @Description("System counts discount after user enters two or more certificates")
+    public void twoCertificatesTest(){
+        orderDetailsPage.getServicesComponents().get(1).getInput().sendKeys("5");
+        orderDetailsPage.getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.clickActivateButton()
+                .clickAddCertificateButton()
+                .activateCertificateByPosition(0,Certificates.ACTIVE_500.getCertificate())
+                .clickAddCertificateButton()
+                .activateCertificateByPosition(1,Certificates.ACTIVE_300.getCertificate());
+        int due = orderDetailsPage.getAmountDueNumber();
+        int discountFromLabel = orderDetailsPage.getCertificateLabelNumber();
+        String message = orderDetailsPage.getCertificateMessage().getText();
+        int discountFromMessage = orderDetailsPage.getDiscountFromMessage(message);
+        softAssert.assertEquals(discountFromMessage,discountFromLabel);
+        int totalSum = orderDetailsPage.getTotalSum();
+        softAssert.assertEquals(totalSum-discountFromLabel,due);
+        softAssert.assertEquals(String.format(UBSDataStrings.CORRECT_CERTIFICATE_THREE_ACTIVE.getMessage()),message,"messages mismatch");
+        softAssert.assertAll();
+        System.out.println(message);
+        //Todo report bug
+    }
+
 }
