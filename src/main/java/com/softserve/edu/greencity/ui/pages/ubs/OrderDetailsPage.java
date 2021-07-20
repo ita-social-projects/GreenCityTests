@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
+import com.softserve.edu.greencity.data.UBS.Certificates;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
@@ -189,6 +190,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
             additionalCertificates.add(new AdditionalCertificatesComponents(driver, webElement));
         }
         return additionalCertificates;
+    }
+    public OrderDetailsPage activateCertificateByPosition(int number, String sertificate){
+        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(sertificate);
+        getAdditionalCertificates().get(number).getActivateCertificateButton().click();
+        return this;
     }
 
     public List<WebElement> getCertificates() {
