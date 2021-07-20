@@ -29,13 +29,9 @@ public class AddAddressPopupComponent {
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
 
+
     public AddAddressPopupComponent(WebDriver driver) {
         this.driver = driver;
-
-    private UserAddress userAddress;
-
-    public AddAddressPopupComponent(WebDriver webDriver) {
-        super(webDriver);
         initElements();
     }
 
@@ -158,18 +154,6 @@ public class AddAddressPopupComponent {
         return districtInput;
     }
 
-
-
-
-//maybe not the best way
-    public InputElement getHouseInput() {
-        if (districtInput == null) {
-            districtInput = new InputElement(driver, AddAddressPopupLocators.DISTRICT_INPUT);
-        }
-        return districtInput;
-    }
-
-//
 
     public ButtonElement getAddButton() {
         if (addAddressButton == null) {

@@ -35,11 +35,11 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public void initPersonalDataElements() {
-//        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
-//        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
-//        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
-//        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
-//        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
+        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
+        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
+        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
+        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
+        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
         cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
@@ -69,8 +69,33 @@ public class PersonalDataPage extends UBSCourierBasePage {
         emailField.sendKeys(email);
         return this;
     }
+//////////
+    public String getFullName(){
 
-    private PersonalDataPage inputComment(String comment) {
+        String fullName=nameField.getValue()+" "+surnameField.getValue();
+        return fullName;
+
+    }
+    public String getPhoneNumber(){
+        return phoneField.getValue();
+    }
+    public String getEmailAddress(){
+        return emailField.getValue();
+    }
+
+    public PersonalDataPage fullPersonalData(){
+        logger.info("fill full fields for personal data");
+        return inputName("Jack")
+                .inputSurname("London")
+                .inputPhone("0631234567")
+                .inputEmail("JkL@gmail.com");
+
+
+
+    }
+////////////////
+
+    public PersonalDataPage inputComment(String comment) {
         commentToAddressField.clearText();
         commentToAddressField.enterText(comment);
         return this;
