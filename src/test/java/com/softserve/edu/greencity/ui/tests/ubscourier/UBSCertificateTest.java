@@ -37,8 +37,8 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     @Test(testName = "GC-1979", description = "GC-1979")
     @Description("Verify that User can apply valid certificate and correct error message appears ")
     public void inputOrder(){
-        orderDetailsPage.getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
-        orderDetailsPage.getActivateCertificateButton().click();
+        orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.clickActivateButton();
         String message = orderDetailsPage.getCertificateMessage().getText();
         Assert.assertEquals(UBSDataStrings.CORRECT_CERTIFICATE_MESSAGE_ENG.getMessage(), message, "Messages mismatch.");
     }
@@ -46,8 +46,8 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     @Test(testName = "GC-1975", description = "GC-1975")
     @Description("Verify that the user can order services when he applies the certificate, and leaves a comment")
     public void certificateAndComment(){
-        orderDetailsPage.getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
-        orderDetailsPage.getActivateCertificateButton().click();
+        orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.clickActivateButton();
         orderDetailsPage.getCommentTextarea().enterText(UBSDataStrings.ORDER_COMMENT.getMessage());
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
         softAssert.assertTrue(personalDataPage.getAddAddressButton().isActive(),"crossing to personaldata page failed, or add addres button is not on the page");
@@ -56,6 +56,15 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(orderDetailsPage.getCertificateInput().getValue().replace("-",""),Certificates.ACTIVE_1000.getCertificate(), "Certificates do not match");
         softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getAttribute("value"),"20", "input quantuty mismatch");
         softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-1975", description = "GC-1975")
+    @Description("Verify that when the certificate is accepted the button “Активувати” switches to button “Відмінити")
+    public void checkActivateCancelCertificateBtn(){
+         orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate());
+         orderDetailsPage.clickActivateButton();
+         Assert.assertTrue(orderDetailsPage.isCancelButtonActive());
+         System.out.println();
     }
 
     @Test(testName = "GC-1975", description = "GC-1975")
