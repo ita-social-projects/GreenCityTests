@@ -5,11 +5,16 @@ import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AddAddressPopupComponent extends UBSCourierBasePage {
+public class AddAddressPopupComponent {
+    private WebDriver driver;
     private WebDriverWait wait;
 
     private ButtonElement cancelButton;
@@ -28,12 +33,14 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
 
-    public AddAddressPopupComponent(WebDriver webDriver) {
-        super(webDriver);
+    private WaitsSwitcher waitsSwitcher;
+    public AddAddressPopupComponent(WebDriver driver) {
+        this.driver = driver;
         initElements();
     }
 
     public void initElements() {
+        waitsSwitcher = new WaitsSwitcher(driver);
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
         addAddressButton = new ButtonElement(driver, AddAddressPopupLocators.ADD_ADDRESS_BUTTON);
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
@@ -72,6 +79,15 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         entranceInput.click();
         entranceInput.sendKeys(String.valueOf(userAddress.getEntrance()));
         return this;
+    }
+
+    public AddAddressPopupComponent fillAllFields(UserAddress data) {
+        return chooseCity(data.getCity())
+                .inputStreet(data)
+                .inputDistrict(data)
+                .inputHouse(data)
+                .inputCorp(data)
+                .inputEntrance(data);
     }
 
     //error message
@@ -149,9 +165,11 @@ public class AddAddressPopupComponent extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    public AddAddressPopupComponent clickOnAddAddressButton() {
-        addAddressButton.click();
-        return new AddAddressPopupComponent(driver);
+    public PersonalDataPage clickOnAddAddressButton() {
+        getAddButton().click();
+        waitsSwitcher.setExplicitWait(5, ExpectedConditions.invisibilityOfElementLocated(AddAddressPopupLocators.ADD_ADDRESS_BUTTON.getPath()));
+        waitsSwitcher.setExplicitWait(3,ExpectedConditions.numberOfElementsToBe(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath(), new PersonalDataPage(driver).getQuantityOfAddresses() + 1));
+        return new PersonalDataPage(driver);
     }
 
     public WelcomePage clickOnCancelButton() {

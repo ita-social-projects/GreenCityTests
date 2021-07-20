@@ -21,7 +21,7 @@ public enum OrderDetailsPageLocators implements Locator {
     ECO_STORE_QUESTION(By.cssSelector("div.bottom > h5")),
     YES_WAITING_ORDER_RADIO_BUTTON(By.cssSelector("div.bottom > div:nth-child(3) > label")),
     NO_WAITING_ORDER_RADIO_BUTTON(By.cssSelector("div.bottom > div:nth-child(4) > label")),
-    ORDER_NUMBER_INPUT(By.cssSelector("div.form-group.ng-star-inserted.ng-dirty.ng-touched.ng-valid > input")),
+    ORDER_NUMBER_INPUT(By.cssSelector("div.ng-pristine> input")),
     INCORRECT_ORDER_NUMBER_MESSAGE(By.cssSelector("small.text-danger ng-star-inserted")),
     ADD_ANOTHER_ORDER_BUTTON(By.cssSelector("div.form-group.shop_submit > button")),
     ANOTHER_ORDER_NUMBER(By.cssSelector("div.form-group.shop_submit")),
@@ -36,7 +36,8 @@ public enum OrderDetailsPageLocators implements Locator {
     ORDER_AMOUT(By.xpath("//div[@class = 'totalInfo']/p[position() = 1]//strong")),
     SERVICES_INPUT(By.cssSelector("input")),
     SERVICES(By.cssSelector(".main-list_item")),
-    AMOUNT_DUE(By.xpath("//div[@class = 'totalInfo']/p[position() = 2]//strong"));
+    SERTIFICATE_LABEL(By.cssSelector("app-ubs-order-details .money-saved")),
+    AMOUNT_DUE(By.cssSelector("app-ubs-order-details .total-content:nth-child(3) strong"));
 
     private By path;
 
