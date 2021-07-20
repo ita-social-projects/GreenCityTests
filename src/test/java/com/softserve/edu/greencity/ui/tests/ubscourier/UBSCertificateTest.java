@@ -15,7 +15,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class UBSCertificateTest extends GreenCityTestRunner {
-   private OrderDetailsPage orderDetailsPage;
+    private OrderDetailsPage orderDetailsPage;
+  
     @BeforeMethod
     public void login(){
         User user = UserRepository.get().temporary();
@@ -27,6 +28,7 @@ public class UBSCertificateTest extends GreenCityTestRunner {
                 .navigateMenuUBSCourier();
         orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("20");
     }
+  
     @AfterMethod
     public void cancelOrder(){
         orderDetailsPage.signOut();
@@ -40,6 +42,7 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         String message = orderDetailsPage.getCertificateMessage().getText();
         Assert.assertEquals(UBSDataStrings.CORRECT_CERTIFICATE_MESSAGE_ENG.getMessage(), message, "Messages mismatch.");
     }
+  
     @Test(testName = "GC-1975", description = "GC-1975")
     @Description("Verify that the user can order services when he applies the certificate, and leaves a comment")
     public void certificateAndComment(){
@@ -54,6 +57,15 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getAttribute("value"),"20", "input quantuty mismatch");
         softAssert.assertAll();
     }
+
+    @Test(testName = "GC-1975", description = "GC-1975")
+    @Description("Verify first four numeric characters of the certificate,system  enters a dash according to the certificate format")
+    public void dashTest(){
+        orderDetailsPage.getCertificateInput().sendKeys(Certificates.FOUR_DIGITS.getCertificate());
+        Assert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),UBSDataStrings.FOUR_DIGITS.getMessage(),"NotEqual");
+        //TODO WRITE DEFECT REPORT???
+    }
+
     @Test(testName = "GC-1990", description = "GC-1990")
     @Description("System counts discount after user enters two or more certificates")
     public void twoCertificatesTest(){
@@ -73,7 +85,6 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(totalSum-discountFromLabel,due);
         softAssert.assertEquals(String.format(UBSDataStrings.CORRECT_CERTIFICATE_THREE_ACTIVE.getMessage()),message,"messages mismatch");
         softAssert.assertAll();
-        System.out.println(message);
         //Todo report bug
     }
 
