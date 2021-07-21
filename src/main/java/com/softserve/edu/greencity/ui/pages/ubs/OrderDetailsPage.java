@@ -15,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,11 +24,9 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
-
     private LabelElement pointsBalanceLabel;
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
@@ -68,8 +67,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         ecoStoreLabel = new LabelElement(driver, OrderDetailsPageLocators.ECO_STORE_LABEL);
     }
 
-
-       public OrderDetailsPage clickOnInputNumberOfPackeges(int index){
+    
+    public OrderDetailsPage clickOnInputNumberOfPackeges(int index) {
            servicesComponents.get(index).getInput().click();
         return this;
        }
@@ -105,7 +104,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         builder.sendKeys(Keys.ARROW_DOWN).build().perform();
         return this;
     }
-
+    
     public OrderDetailsPage enterOnInputNumberOfPackeges(int index, String amount){
         servicesComponents.get(index).getInput().sendKeys(amount);
         return this;
@@ -289,12 +288,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return activateCertificateButton;
     }
 
-    public String getActivateButtonColor() {
-        return driver.findElement(OrderDetailsPageLocators.ACTIVATE_BUTTON.getPath()).getCssValue("background");
-    }
-
     public boolean isActicateButtonActive() {
-        return getActivateButtonColor().equalsIgnoreCase("#13aa57");
+        return getActivateCertificateButton().isActive();
     }
 
     public ButtonElement getYesWaitingOrderButton() {
