@@ -65,11 +65,15 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
+        servicesComponents = new ArrayList<>();
+        servicesComponents = getServicesComponents();
         ecoStoreLabel = new LabelElement(driver, OrderDetailsPageLocators.ECO_STORE_LABEL);
     }
 
+
+
     public OrderDetailsPage clickOnInputNumberOfPackeges(int index) {
-        numberOfPackeges.get(index).click();
+           servicesComponents.get(index).getInput().click();
         return this;
     }
 
@@ -105,17 +109,28 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return this;
     }
 
-    public OrderDetailsPage EnterOnInputNumberOfPackeges(int index) {
-        numberOfPackeges.get(index).sendKeys();
+    public OrderDetailsPage enterOnInputNumberOfPackeges(int index, String amount){
+        servicesComponents.get(index).getInput().sendKeys(amount);
         return this;
     }
 
-    public String getTotalPrice(int index) {
-        String total = totalLabels.get(index).getText();
+    public String getTotalPrice(int index){
+        String total = servicesComponents.get(index).getTotal().getText();
         return total;
     }
 
-    public ButtonElement getNextButton() {
+    public String getServiceName(int index){
+        String name = servicesComponents.get(index).getServiceName().getText();
+        return name;
+    }
+
+    public String getVolume(int index){
+        String name = servicesComponents.get(index).getVolumeOrCost().getText();
+        return name;
+    }
+
+    private ButtonElement getNextButton() {
+
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
         }
