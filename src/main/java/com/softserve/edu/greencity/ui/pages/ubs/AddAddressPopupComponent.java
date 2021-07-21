@@ -49,7 +49,6 @@ public class AddAddressPopupComponent {
         corpInput = new InputElement(driver, AddAddressPopupLocators.CORP_INPUT);
         entranceInput = new InputElement(driver, AddAddressPopupLocators.ENTRANCE_INPUT);
         cityLabel = new LabelElement(driver, AddAddressPopupLocators.CITY_LABEL);
-        //cityMessageInfo = new LabelElement(driver, AddAddressPopupLocators.CITY_MESSAGE_INFO);
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
     }
 
