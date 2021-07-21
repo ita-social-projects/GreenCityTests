@@ -17,6 +17,7 @@ public enum AddAddressPopupLocators implements Locator {
     ENTRANCE_INPUT(By.xpath("//app-ubs-add-address-pop-up/form/div[4]/div[3]/input")),
 
     CITY_LABEL(By.cssSelector(".w-100.city-notice")),
+    CITY_MESSAGE_INFO(By.cssSelector(".w-100.city-notice")),
 
     STREET_ALERT_MESSAGE(By.cssSelector("")),
     DISTRICT_ALERT_MESSAGE(By.cssSelector("")),
