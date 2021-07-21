@@ -24,11 +24,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-    ///Region [Comments]
+    //region [Comments]
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
-    ///Endregion
+    //endregion
     private LabelElement pointsBalanceLabel;
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
@@ -203,8 +203,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return additionalCertificates;
     }
-    public OrderDetailsPage activateCertificateByPosition(int number, String sertificate){
-        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(sertificate);
+    public OrderDetailsPage activateCertificateByPosition(int number, String certificate){
+        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(certificate);
         getAdditionalCertificates().get(number).getActivateCertificateButton().click();
         return this;
     }
@@ -281,6 +281,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     }
     public ButtonElement getCancelCertificateButton() {
+        waitsSwitcher.sleep(1000);
         activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
         return activateCertificateButton;
     }
@@ -302,12 +303,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return activateCertificateButton;
     }
 
-    public String getActivateButtonColor() {
-        return driver.findElement(OrderDetailsPageLocators.ACTIVATE_BUTTON.getPath()).getCssValue("background");
-    }
-
     public boolean isActicateButtonActive() {
-        return getActivateButtonColor().equalsIgnoreCase("#13aa57");
+        return getActivateCertificateButton().isActive();
     }
 
     public ButtonElement getYesWaitingOrderButton() {
