@@ -46,6 +46,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private ButtonElement addAnotherOrderNumber;
     private List<AnotherOrderNumberComponents> anotherOrderNumber;
     private InputElement anotherOrderNumberInput;
+    private LabelElement minimumOrderErrorMassage;
 
     private List<ServicesComponents> servicesComponents;
     private LabelElement orderAmount;
@@ -74,6 +75,10 @@ public class OrderDetailsPage extends UBSCourierBasePage {
        public OrderDetailsPage clickOnInputNumberOfPackeges(int index){
            servicesComponents.get(index).getInput().click();
         return this;
+       }
+
+       public String getTextNumberOfPackeges(int index){
+        return servicesComponents.get(index).getInput().getText();
        }
 
        public String getTextOrderAmount(){
@@ -128,7 +133,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return name;
     }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
         }
@@ -337,6 +342,14 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return incorrectOrderMessage;
     }
 
+    public LabelElement getMinimumErrorMassage(){
+        minimumOrderErrorMassage = new LabelElement(driver,OrderDetailsPageLocators.MINIMUM_ORDER_ERROR_MASSAGE);
+        return minimumOrderErrorMassage;
+    }
+
+    public String getTextOfMinimumErrorMassage(){
+        return getMinimumErrorMassage().getText();
+    }
     public ButtonElement getAddAnotherOrderNumberButton() {
         addAnotherOrderNumber = new ButtonElement(driver, OrderDetailsPageLocators.ADD_ANOTHER_ORDER_BUTTON);
         return addAnotherOrderNumber;

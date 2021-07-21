@@ -16,6 +16,7 @@ public enum OrderDetailsPageLocators implements Locator {
     CERTIFICATE_INPUT(By.cssSelector(".certificate-container input")),
     ACTIVATE_BUTTON(By.cssSelector(".certificate-container button")),
     CERTIFICATE_MESSAGE(By.cssSelector(".messages-container small")),
+    MINIMUM_ORDER_ERROR_MASSAGE(By.xpath("//small[@class='text-danger']")),
 
     ECO_STORE_LABEL(By.cssSelector("div.bottom > h3")),
     ECO_STORE_QUESTION(By.cssSelector("div.bottom > h5")),
