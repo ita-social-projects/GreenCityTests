@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class IconElement extends BaseElement{
+public class IconElement extends BaseElement {
     public IconElement(WebDriver driver, Locator locator) {
         super(driver, locator);
     }

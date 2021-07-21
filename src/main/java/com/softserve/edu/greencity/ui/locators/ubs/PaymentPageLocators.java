@@ -11,7 +11,7 @@ public enum PaymentPageLocators implements Locator {
     YOUR_ORDER_LABEL(By.xpath("//div[@class='container ng-star-inserted']//h3[@class='font-bolt order-title']")),
     SERVICE_LABEL(By.xpath("//app-ubs-submit-order//label[@class='col-3 label m-0']")),
 
-    VOLUME_LABEL(By.xpath("(//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=2]")),// not so good
+    VOLUME_LABEL(By.xpath("//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=2]")),// not so good
     COST_LABEL(By.xpath("//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=3]")),//not so good
     NUMBER_OF_PACKAGES_LABEL(By.xpath("//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=4]")),//not so good
     TOTAL_LABEL(By.xpath("//app-ubs-submit-order//label[@class='col-3 label m-0 text-center']")),

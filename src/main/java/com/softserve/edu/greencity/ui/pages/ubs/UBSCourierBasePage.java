@@ -1,8 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.IconElement;
-import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import org.openqa.selenium.WebDriver;
@@ -59,5 +57,6 @@ public abstract class UBSCourierBasePage extends TopPart {
         }
         return paymentButton;
     }
+
 
 }

@@ -1,12 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
-import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.InputElement;
-import com.softserve.edu.greencity.ui.elements.LabelElement;
-import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +26,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private ButtonElement backButton;
     private List<AddressComponent> listOfAddresses;
     private ButtonElement addAddressButton;
+    private IconElement orderDetailsIconDone;
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
@@ -44,6 +43,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
+        orderDetailsIconDone = new IconElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS_ICON_DONE);
     }
 
     public PersonalDataPage inputName(String name) {
@@ -206,4 +206,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public IconElement getOrderDetailsIconDone() {
+        if (orderDetailsIconDone == null) {
+            orderDetailsIconDone = new IconElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS_ICON_DONE);
+        }
+        return orderDetailsIconDone;
+    }
 }

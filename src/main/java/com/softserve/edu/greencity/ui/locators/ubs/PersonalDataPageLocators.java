@@ -4,11 +4,11 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.By;
 
 public enum PersonalDataPageLocators implements Locator {
-    NAME_FIELD(By.cssSelector("input.shadow-none.form-control[5]")),
-    SURNAME_FIELD(By.cssSelector("input.shadow-none.form-control[7]")),
-    PHONE_FIELD(By.cssSelector("input.shadow-none.form-control[6]")),
-    EMAIL_FIELD(By.cssSelector("input.shadow-none.form-control[8]")),
-    COMMENT_ADDRESS_FIELD(By.cssSelector("textarea.form-control.ng-pristine[1]")),
+    NAME_FIELD(By.xpath("//input[contains(@formcontrolname,'firstName')]")),
+    SURNAME_FIELD(By.xpath("//input[contains(@formcontrolname,'lastName')]")),
+    PHONE_FIELD(By.xpath("//input[contains(@formcontrolname,'phoneNumber')]")),
+    EMAIL_FIELD(By.xpath("//input[contains(@formcontrolname,'email')]")),
+    COMMENT_ADDRESS_FIELD(By.xpath("//textarea[contains(@formcontrolname,'addressComment')]")),
     CANCEL(By.xpath("//app-ubs-personal-information//button[contains(@class, 'cansel')]")),
     NEXT(By.xpath("//app-ubs-personal-information//div[contains(@class, 'content-end')]//button[@type = 'submit']")),
     BACK(By.xpath("//app-ubs-personal-information//button[contains(@class, 'back')]")),
