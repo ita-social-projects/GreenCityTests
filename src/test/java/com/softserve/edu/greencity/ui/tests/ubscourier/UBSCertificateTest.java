@@ -51,7 +51,7 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         personalDataPage.clickOnBackButton();
         softAssert.assertEquals(orderDetailsPage.getCommentTextarea().getText(), UBSDataStrings.ORDER_COMMENT.getMessage(), "comments mismatch");
         softAssert.assertEquals(orderDetailsPage.getCertificateInput().getValue().replace("-",""),Certificates.ACTIVE_1000.getCertificate(), "Certificates do not match");
-        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getAttribute("value"),"20", "input quantuty mismatch");
+        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getValue(),"20", "input quantuty mismatch");
         softAssert.assertAll();
     }
 }
