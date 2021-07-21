@@ -1,5 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
+
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
+import com.softserve.edu.greencity.data.UBS.Certificates;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
@@ -12,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,11 +24,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-
+    //region [Comments]
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
-
+    //endregion
     private LabelElement pointsBalanceLabel;
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
@@ -46,6 +50,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private List<ServicesComponents> servicesComponents;
     private LabelElement orderAmount;
     private LabelElement amountDue;
+    private LabelElement sertificateLabel;
     private List<WebElement> numberOfPackeges;
     private List<WebElement> totalLabels;
 
@@ -66,28 +71,39 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
 
-       public OrderDetailsPage clickOnInputNumberOfPackeges(int index){
+
+    public OrderDetailsPage clickOnInputNumberOfPackeges(int index) {
            servicesComponents.get(index).getInput().click();
         return this;
-       }
+    }
 
-       public String getTextOrderAmount(){
+    public String getTextOrderAmount() {
         String amount = getOrderAmount().getText();
-        return amount;
-       }
-
-    public String getTextAmountDue(){
-        String amount = getAmountDue().getText();
         return amount;
     }
 
-    public OrderDetailsPage clickUP(){
+    public String getTextAmountDue() {
+        String amount = getAmountDue().getText();
+        return amount;
+    }
+    public int getAmountDueNumber(){
+        waitsSwitcher.sleep(2000);
+        String [] array = getTextAmountDue().replace("-","").split(" ");
+        return Integer.parseInt(array[0]);
+    }
+    public int getCertificateLabelNumber(){
+        waitsSwitcher.sleep(1000);
+        String[] array = getCertificateLabel().getText().replace("-","").split(" ");
+        return Integer.parseInt(array[0]);
+    }
+
+    public OrderDetailsPage clickUP() {
         Actions builder = new Actions(driver);
         builder.sendKeys(Keys.ARROW_UP).build().perform();
         return this;
     }
 
-    public OrderDetailsPage clickDown(){
+    public OrderDetailsPage clickDown() {
         Actions builder = new Actions(driver);
         builder.sendKeys(Keys.ARROW_DOWN).build().perform();
         return this;
@@ -114,6 +130,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     private ButtonElement getNextButton() {
+
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
         }
@@ -127,18 +144,22 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    public LabelElement getOrderAmount(){
-        if (orderAmount == null){
-            orderAmount = new LabelElement(driver,OrderDetailsPageLocators.ORDER_AMOUT);
+    public LabelElement getOrderAmount() {
+        if (orderAmount == null) {
+            orderAmount = new LabelElement(driver, OrderDetailsPageLocators.ORDER_AMOUT);
         }
         return orderAmount;
     }
 
-    public LabelElement getAmountDue(){
-        if (amountDue == null){
-            amountDue = new LabelElement(driver,OrderDetailsPageLocators.AMOUNT_DUE);
+    public LabelElement getAmountDue() {
+        if (amountDue == null) {
+            amountDue = new LabelElement(driver, OrderDetailsPageLocators.AMOUNT_DUE);
         }
         return amountDue;
+    }
+    public  LabelElement getCertificateLabel(){
+       sertificateLabel = new LabelElement( driver,OrderDetailsPageLocators.SERTIFICATE_LABEL);
+        return sertificateLabel;
     }
 
     public List<ServicesComponents> getServicesComponents() {
@@ -158,7 +179,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
     }
 
-    public List<WebElement> getNumberOfPackeges(){
+    public List<WebElement> getNumberOfPackeges() {
         if (numberOfPackeges == null) {
             numberOfPackeges = new ArrayList<>();
             numberOfPackeges = driver.findElements(OrderDetailsPageLocators.NUMBER_OF_PACKEGES.getPath());
@@ -166,19 +187,41 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return numberOfPackeges;
     }
 
-    public List<WebElement> getTotalLabels(){
+    public OrderDetailsPage fillAllFieldsForServices(int value) {
+        logger.info("fill all fields for services");
+        for (ServicesComponents servicesComponents : getServicesComponents()) {
+            servicesComponents.getInput().sendKeys(Integer.toString(value));
+        }
+        return this;
+    }
+
+    public List<WebElement> getTotalLabels() {
         if (totalLabels == null) {
             totalLabels = new ArrayList<>();
             totalLabels = driver.findElements(OrderDetailsPageLocators.TOTAL.getPath());
         }
-        return numberOfPackeges;
+        return totalLabels;
     }
+    public int getTotalSum(){
+        int sum = 0;
+        for (WebElement element:getTotalLabels()) {
+            String[] array = element.getText().split( " ");
+            sum+= Integer.parseInt(array[0]);
+        }
+        return sum;
+    }
+
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
         for (WebElement webElement : getCertificates()) {
             additionalCertificates.add(new AdditionalCertificatesComponents(driver, webElement));
         }
         return additionalCertificates;
+    }
+    public OrderDetailsPage activateCertificateByPosition(int number, String certificate){
+        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(certificate);
+        getAdditionalCertificates().get(number).getActivateCertificateButton().click();
+        return this;
     }
 
     public List<WebElement> getCertificates() {
@@ -189,6 +232,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
             return new ArrayList<>();
         }
     }
+
     public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
         //todo remove possible return null!!!
         AdditionalCertificatesComponents component = null;
@@ -246,13 +290,25 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
         return addCertifircateButton;
     }
+    public int getDiscountFromMessage(String message){
+        String[] array = message.split(" ");
+        return Integer.parseInt(array[2]);
 
+    }
     public ButtonElement getCancelCertificateButton() {
-        addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
-        return addCertifircateButton;
+        waitsSwitcher.sleep(1000);
+        activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
+        return activateCertificateButton;
     }
 
+    public Boolean isCancelButtonActive(){
+        getCancelCertificateButton();
+        return (activateCertificateButton.getText().equals(UBSDataStrings.CANCEL_ENG.getMessage())
+                        || activateCertificateButton.getText().equals(UBSDataStrings.CANCEL_RU.getMessage())
+                            || activateCertificateButton.getText().equals(UBSDataStrings.CANCEL_UA.getMessage()));
+    }
     public LabelElement getCertificateMessage() {
+        waitsSwitcher.sleep(1500);
         certificateMessage = new LabelElement(driver, OrderDetailsPageLocators.CERTIFICATE_MESSAGE);
         return certificateMessage;
     }
@@ -262,12 +318,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return activateCertificateButton;
     }
 
-    public String getActivateButtonColor() {
-        return driver.findElement(OrderDetailsPageLocators.ACTIVATE_BUTTON.getPath()).getCssValue("background");
-    }
-
     public boolean isActicateButtonActive() {
-        return getActivateButtonColor().equalsIgnoreCase("#13aa57");
+        return getActivateCertificateButton().isActive();
     }
 
     public ButtonElement getYesWaitingOrderButton() {
@@ -285,7 +337,12 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return orderNumberInput;
     }
 
-    public LabelElement getIncorrectOrderMessage(){
+    public InputElement getOrderNumberSecondInput() {
+        orderNumberInput = new InputElement(driver, OrderDetailsPageLocators.ORDER_NUMBER_SECOND_INPUT);
+        return orderNumberInput;
+    }
+
+    public LabelElement getIncorrectOrderMessage() {
         incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
         return incorrectOrderMessage;
     }
@@ -328,18 +385,25 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return this;
     }
 
-    public OrderDetailsPage clickYesWaitingForAnOrderButton(){
+    public OrderDetailsPage clickYesWaitingForAnOrderButton() {
         getYesWaitingOrderButton().click();
         return this;
     }
 
-    public OrderDetailsPage inputOrderNumber(String orderNumber){
+    public OrderDetailsPage inputOrderNumber(String orderNumber) {
         getOrderNumberInput().clearInput();
         getOrderNumberInput().sendKeys(orderNumber);
         return this;
     }
 
-    public OrderDetailsPage clickAnotherOrderNumberButton(){
+    public OrderDetailsPage inputSecondOrderNumber(String orderNumber) {
+        getAddAnotherOrderNumberButton().click();
+        getOrderNumberSecondInput().clearInput();
+        getOrderNumberSecondInput().sendKeys(orderNumber);
+        return this;
+    }
+
+    public OrderDetailsPage clickAnotherOrderNumberButton() {
         getAddAnotherOrderNumberButton().click();
         getAnotherOrderNumber();
         return this;

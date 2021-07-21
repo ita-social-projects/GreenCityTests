@@ -26,9 +26,6 @@ public class GoogleMailAPI  {
         java.util.logging.Logger
                 .getLogger("com.google.api.client.util.store.FileDataStoreFactory")
                 .setLevel(Level.OFF);
-        java.util.logging.Logger.
-                getLogger("com.google.api.client.util.store.FileDataStoreFactory")
-                .setLevel(Level.OFF);
     }
     private static BaseMailAPI emailUtils;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
