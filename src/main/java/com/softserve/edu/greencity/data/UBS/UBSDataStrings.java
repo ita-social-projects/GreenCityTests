@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.data.UBS;
 
 public enum UBSDataStrings {
     ORDER_COMMENT("Над нами ментори кружили. Спостерігали кожен день, чи з головою ми дружили,чи не творили єрундєнь."),
+    ADDRES_COMMENT("Ремонтується дорога. Під'їзд до будинку доступний зі сторони будинку номер 15"),
     CANCEL_UA("Відмінити"),
     CANCEL_RU("Отменить"),
     CANCEL_ENG("Cancel"),

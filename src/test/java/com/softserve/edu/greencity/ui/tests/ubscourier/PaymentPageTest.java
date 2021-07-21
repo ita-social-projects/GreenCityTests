@@ -116,15 +116,14 @@ public class PaymentPageTest extends GreenCityTestRunner {
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
         orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
-                .inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
+                .inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
         personalDataPage.fullPersonalData(NAME,SURNAME,PHONE,GMAIL);
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .getAddButton().click();//ask about another method
-                //inputComment("Comment to order");
-        personalDataPage.inputComment("Comment to order");
+       // personalDataPage.inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
         //TODO method for wait
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify full name");
@@ -134,6 +133,8 @@ public class PaymentPageTest extends GreenCityTestRunner {
         logger.info("Verify gmail address");
         softAssert.assertEquals(paymentPage.getGmail().getText(),"Jkl@gmail.com");
 
+
+
         softAssert.assertAll();
 
     }
@@ -142,6 +143,34 @@ public class PaymentPageTest extends GreenCityTestRunner {
     @Description("GC-2063")
     public void correctAddressAndCommentsAreDisplayed() {
         logger.info("Verify that the correct address and comments are displayed in 'Адреса вивезення замовлених послуг' block");
+        orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(2) + 1)
+                .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.getActivateCertificateButton().click();
+        orderDetailsPage.getYesWaitingOrderButton().click();
+        orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
+                .inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
+        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
+        personalDataPage.fullPersonalData(NAME,SURNAME,PHONE,GMAIL);
+        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
+        addAddressPopupComponent.fillAllFields(
+                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
+                .getAddButton().click();
+        personalDataPage.inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+
+        //TODO method for wait
+        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        logger.info("Verify address");
+        softAssert.assertEquals(paymentPage.getTown().getText(),"Kiev");
+        softAssert.assertEquals(paymentPage.getStreet().getText(),"Sadova");
+        logger.info("Verify comments");
+        softAssert.assertEquals(paymentPage.getCommentToOrder().getText(),
+                "Comment to the order: Над нами ментори кружили. Спостерігали кожен день, чи з головою ми дружили,чи не творили єрундєнь.");
+        softAssert.assertEquals(paymentPage.getCommentToAddress().getText(),
+                "Comment to the address: Ремонтується дорога. Під'їзд до будинку доступний зі сторони будинку номер 15");
+        softAssert.assertAll();
+
+
+
     }
 
     @Test(testName = "GC-2064", description = "GC-2064")

@@ -84,10 +84,10 @@ public class PaymentPage extends UBSCourierBasePage {
         expensivePriceTotalSum = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_TOTAL_SUM_LABEL);
         recycledMaterialsTotalSum = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_TOTAL_SUM_LABEL);
 
-        orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
-        certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
-        amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
-        // deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
+      //  orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
+       // certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
+       // amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
+     // deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
         orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
         recipient = new LabelElement(driver, PaymentPageLocators.RECIPIENT_LABEL);
         fullName = new LabelElement(driver, PaymentPageLocators.FULL_NAME_LABEL);
@@ -98,7 +98,7 @@ public class PaymentPage extends UBSCourierBasePage {
         street = new LabelElement(driver, PaymentPageLocators.STREET_LABEL);
         district = new LabelElement(driver, PaymentPageLocators.DISTRICT_LABEL);
         commentToAddress = new LabelElement(driver, PaymentPageLocators.COMMENT_TO_ADDRESS_LABEL);
-        //commentToOrder=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
+        commentToOrder=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
         payment = new DropDownElement(driver, PaymentPageLocators.PAYMENT_METHOD);
 
 
@@ -238,6 +238,7 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public LabelElement getCommentToAddress() {
+
         return commentToAddress;
     }
 
