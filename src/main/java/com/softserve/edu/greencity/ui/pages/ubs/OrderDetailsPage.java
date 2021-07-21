@@ -24,11 +24,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-
+    //region [Comments]
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
-
+    //endregion
     private LabelElement pointsBalanceLabel;
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
@@ -71,17 +71,18 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
 
-       public OrderDetailsPage clickOnInputNumberOfPackeges(int index){
+
+    public OrderDetailsPage clickOnInputNumberOfPackeges(int index) {
            servicesComponents.get(index).getInput().click();
         return this;
-       }
+    }
 
-       public String getTextOrderAmount(){
+    public String getTextOrderAmount() {
         String amount = getOrderAmount().getText();
         return amount;
-       }
+    }
 
-    public String getTextAmountDue(){
+    public String getTextAmountDue() {
         String amount = getAmountDue().getText();
         return amount;
     }
@@ -96,13 +97,13 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return Integer.parseInt(array[0]);
     }
 
-    public OrderDetailsPage clickUP(){
+    public OrderDetailsPage clickUP() {
         Actions builder = new Actions(driver);
         builder.sendKeys(Keys.ARROW_UP).build().perform();
         return this;
     }
 
-    public OrderDetailsPage clickDown(){
+    public OrderDetailsPage clickDown() {
         Actions builder = new Actions(driver);
         builder.sendKeys(Keys.ARROW_DOWN).build().perform();
         return this;
@@ -129,6 +130,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     private ButtonElement getNextButton() {
+
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
         }
@@ -142,16 +144,16 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    public LabelElement getOrderAmount(){
-        if (orderAmount == null){
-            orderAmount = new LabelElement(driver,OrderDetailsPageLocators.ORDER_AMOUT);
+    public LabelElement getOrderAmount() {
+        if (orderAmount == null) {
+            orderAmount = new LabelElement(driver, OrderDetailsPageLocators.ORDER_AMOUT);
         }
         return orderAmount;
     }
 
-    public LabelElement getAmountDue(){
-        if (amountDue == null){
-            amountDue = new LabelElement(driver,OrderDetailsPageLocators.AMOUNT_DUE);
+    public LabelElement getAmountDue() {
+        if (amountDue == null) {
+            amountDue = new LabelElement(driver, OrderDetailsPageLocators.AMOUNT_DUE);
         }
         return amountDue;
     }
@@ -177,6 +179,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
     }
 
+
+
     public List<WebElement> getTotalLabels() {
         if (totalLabels == null) {
             totalLabels = new ArrayList<>();
@@ -200,6 +204,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return this;
     }
+
 
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
@@ -332,7 +337,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return orderNumberInput;
     }
 
-    public LabelElement getIncorrectOrderMessage(){
+    public LabelElement getIncorrectOrderMessage() {
         incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
         return incorrectOrderMessage;
     }
@@ -375,12 +380,12 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return this;
     }
 
-    public OrderDetailsPage clickYesWaitingForAnOrderButton(){
+    public OrderDetailsPage clickYesWaitingForAnOrderButton() {
         getYesWaitingOrderButton().click();
         return this;
     }
 
-    public OrderDetailsPage inputOrderNumber(String orderNumber){
+    public OrderDetailsPage inputOrderNumber(String orderNumber) {
         getOrderNumberInput().clearInput();
         getOrderNumberInput().sendKeys(orderNumber);
         return this;
@@ -393,7 +398,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return this;
     }
 
-    public OrderDetailsPage clickAnotherOrderNumberButton(){
+    public OrderDetailsPage clickAnotherOrderNumberButton() {
         getAddAnotherOrderNumberButton().click();
         getAnotherOrderNumber();
         return this;

@@ -43,6 +43,7 @@ public enum OrderDetailsPageLocators implements Locator {
     SERVICE_TOTAL(By.cssSelector(".col-3.bag-name.text-center")),
     SERVICE_VOLUME_COST(By.xpath(".//span[@class='col-2 p-0 m-0 bag-name']")),
     SERVICES(By.xpath("//li[@class='main-list_item d-flex justify-content-between align-items-baseline ng-star-inserted']")),
+
     SERTIFICATE_LABEL(By.cssSelector("app-ubs-order-details .money-saved")),
     AMOUNT_DUE(By.cssSelector("app-ubs-order-details .total-content:nth-child(3) strong"));
 
