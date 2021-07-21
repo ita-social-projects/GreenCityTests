@@ -72,7 +72,6 @@ public class UBSCertificateTest extends GreenCityTestRunner {
          orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
                  .clickActivateButton();
          Assert.assertTrue(orderDetailsPage.isCancelButtonActive());
-         System.out.println();
     }
 
     @Test(testName = "GC-1961", description = "GC-1961")
