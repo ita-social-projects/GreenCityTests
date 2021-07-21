@@ -1,5 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
+import com.softserve.edu.greencity.ui.elements.InputElement;
+import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,16 +18,18 @@ public class ServicesComponents {
         this.servicesItem = certificateItem;
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
-    public WebElement getInput() {
-        return servicesItem.findElement(SERVICES_INPUT.getPath());
+    public InputElement getInput() {
+        return new InputElement(driver, SERVICES_INPUT);
     }
-    public WebElement getServiceName(){
-        return servicesItem.findElement(SERVICE_NAME.getPath());
+    public LabelElement getServiceName(){
+        return new LabelElement(driver, SERVICE_NAME);
     }
-    public WebElement getTotal(){
-        return servicesItem.findElement(SERVICE_TOTAL.getPath());
+    public LabelElement getTotal(){
+        return new LabelElement(driver, SERVICE_TOTAL);
     }
 
-    public WebElement getVolumeOrCost(){return servicesItem.findElement(SERVICE_VOLUME_COST.getPath());}
+    public LabelElement getVolumeOrCost(){
+        return new LabelElement(driver, SERVICE_VOLUME_COST);
+    }
 
 }
