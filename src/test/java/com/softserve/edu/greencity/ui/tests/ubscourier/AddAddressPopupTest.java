@@ -15,7 +15,7 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
     private AddAddressPopupComponent addAddressPopupComponent;
 
     @BeforeMethod
-    public void login() {
+    public void signIn() {
         User user = UserRepository.get().temporary();
         orderDetailsPage = loadApplication()
                 .signIn()
