@@ -54,8 +54,8 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     @Description("Verify that the user can order services when he applies the certificate, and leaves a comment")
     public void certificateAndComment(){
         orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
-                .clickActivateButton();
-        orderDetailsPage.getCommentTextarea()
+                .clickActivateButton()
+                .getCommentTextarea()
                 .enterText(UBSDataStrings.ORDER_COMMENT.getMessage());
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
         softAssert.assertTrue(personalDataPage.getAddAddressButton().isActive(),"crossing to personaldata page failed, or add addres button is not on the page");
