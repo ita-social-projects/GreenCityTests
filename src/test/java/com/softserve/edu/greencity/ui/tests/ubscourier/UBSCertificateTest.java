@@ -19,7 +19,6 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     @BeforeMethod
     public void login(){
         User user = UserRepository.get().temporary();
-        SoftAssert softAssert = new SoftAssert();
         welcomePage = loadApplication();
         orderDetailsPage = welcomePage.signIn()
                 .getManualLoginComponent()
