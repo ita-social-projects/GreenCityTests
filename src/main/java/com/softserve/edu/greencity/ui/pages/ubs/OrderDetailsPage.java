@@ -24,11 +24,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
-    ///Region [Comments]
+    //region [Comments]
     private LabelElement commentLabel;
     private TextAreaElement commentTextarea;
     private LabelElement commentAlertLabel;
-    ///Endregion
+    //endregion
     private LabelElement pointsBalanceLabel;
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
@@ -65,11 +65,15 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
+        servicesComponents = new ArrayList<>();
+        servicesComponents = getServicesComponents();
         ecoStoreLabel = new LabelElement(driver, OrderDetailsPageLocators.ECO_STORE_LABEL);
     }
 
+
+
     public OrderDetailsPage clickOnInputNumberOfPackeges(int index) {
-        numberOfPackeges.get(index).click();
+           servicesComponents.get(index).getInput().click();
         return this;
     }
 
@@ -105,17 +109,28 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return this;
     }
 
-    public OrderDetailsPage EnterOnInputNumberOfPackeges(int index) {
-        numberOfPackeges.get(index).sendKeys();
+    public OrderDetailsPage enterOnInputNumberOfPackeges(int index, String amount){
+        servicesComponents.get(index).getInput().sendKeys(amount);
         return this;
     }
 
-    public String getTotalPrice(int index) {
-        String total = totalLabels.get(index).getText();
+    public String getTotalPrice(int index){
+        String total = servicesComponents.get(index).getTotal().getText();
         return total;
     }
 
-    public ButtonElement getNextButton() {
+    public String getServiceName(int index){
+        String name = servicesComponents.get(index).getServiceName().getText();
+        return name;
+    }
+
+    public String getVolume(int index){
+        String name = servicesComponents.get(index).getVolumeOrCost().getText();
+        return name;
+    }
+
+    private ButtonElement getNextButton() {
+
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
         }
@@ -203,8 +218,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return additionalCertificates;
     }
-    public OrderDetailsPage activateCertificateByPosition(int number, String sertificate){
-        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(sertificate);
+    public OrderDetailsPage activateCertificateByPosition(int number, String certificate){
+        getAdditionalCertificates().get(number).getCertificateInput().sendKeys(certificate);
         getAdditionalCertificates().get(number).getActivateCertificateButton().click();
         return this;
     }
@@ -281,6 +296,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     }
     public ButtonElement getCancelCertificateButton() {
+        waitsSwitcher.sleep(1000);
         activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
         return activateCertificateButton;
     }
@@ -302,12 +318,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return activateCertificateButton;
     }
 
-    public String getActivateButtonColor() {
-        return driver.findElement(OrderDetailsPageLocators.ACTIVATE_BUTTON.getPath()).getCssValue("background");
-    }
-
     public boolean isActicateButtonActive() {
-        return getActivateButtonColor().equalsIgnoreCase("#13aa57");
+        return getActivateCertificateButton().isActive();
     }
 
     public ButtonElement getYesWaitingOrderButton() {
