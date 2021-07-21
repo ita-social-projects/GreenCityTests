@@ -3,10 +3,9 @@ package com.softserve.edu.greencity.ui.pages.ubs;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import static com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import static com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators.*;
 
 public class ServicesComponents {
     private final WebDriver driver;
