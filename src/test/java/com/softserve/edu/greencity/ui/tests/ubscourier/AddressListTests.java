@@ -1,18 +1,18 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+import com.softserve.edu.greencity.data.UBS.AddressesListTexts;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
-import com.softserve.edu.greencity.ui.pages.ubs.PaymentPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
 import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 public class AddressListTests extends GreenCityTestRunner {
     private OrderDetailsPage orderDetailsPage;
@@ -45,7 +45,7 @@ public class AddressListTests extends GreenCityTestRunner {
         softAssert.assertFalse(personalDataPage.isAddAddressButtonActive());
     }
 
-    @Test(testName = "GC-5002", description = "Verify correct message when there is no addresses in list", dataProviderClass = DataProviders_UBS.class, dataProvider = "absenceOfAddressesMessages")
+    @Test(testName = "GC-5002", description = "Verify correct message when there is no addresses in list", dataProvider = "absenceOfAddressesMessages")
     @Description("GC-5002")
     public void verifyMessageOfAbsenceAddresses(String language, String expectedMassage) {
 
@@ -55,5 +55,16 @@ public class AddressListTests extends GreenCityTestRunner {
 
         personalDataPage.createLanguageSwitchComponent().changeLanguage(language);
         softAssert.assertTrue(personalDataPage.getAbsenceAddressesText().equals(expectedMassage), "The messages are not the same!");
+    }
+
+    @DataProvider(name = "absenceOfAddressesMessages")
+    public Object[][] absenceOfAddressesMessages()
+    {
+        return new Object[][]
+                {
+                        {"en", AddressesListTexts.ABSENCE_OF_ADDRESSES_MESSAGE_EN.getText()},
+                        {"ua", AddressesListTexts.ABSENCE_OF_ADDRESSES_MESSAGE_UA.getText()},
+                        {"ru", AddressesListTexts.ABSENCE_OF_ADDRESSES_MESSAGE_RU.getText()},
+                };
     }
 }
