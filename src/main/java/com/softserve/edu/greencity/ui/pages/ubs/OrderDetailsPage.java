@@ -342,6 +342,10 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return incorrectOrderMessage;
     }
 
+    public String getTextIncorrectOrderMassage(){
+        return getIncorrectOrderMessage().getText();
+    }
+
     public LabelElement getMinimumErrorMassage(){
         minimumOrderErrorMassage = new LabelElement(driver,OrderDetailsPageLocators.MINIMUM_ORDER_ERROR_MASSAGE);
         return minimumOrderErrorMassage;

@@ -2,6 +2,7 @@ package com.softserve.edu.greencity.ui.tests.ubscourier;
 
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.pages.common.MainMenuDropdown;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
@@ -110,6 +111,33 @@ public class ServiceTest extends GreenCityTestRunner {
                 .enterOnInputNumberOfPackeges(2,"@#@#@#@");
         softAssert.assertAll();
         // Спитати за провірку введеного в інпут
+    }
+
+    @Test(testName = "GC-2058  ", description = "GC-2058  ")
+    @Description("Verify that when the user switches to a different window within the GreenCity website, the system shows an alert message")
+    public void ErrorMassageAppearsAfterSwitchingWindow(){
+        logger.info("Enter numbers in total inputs'");
+        orderDetailsPage
+                .enterOnInputNumberOfPackeges(0,"5")
+                .enterOnInputNumberOfPackeges(1,"8")
+                .enterOnInputNumberOfPackeges(2,"2");
+        logger.info("Clicked on 'About us'' button");
+        MainMenuDropdown mainMenuDropdown = new MainMenuDropdown(driver);
+        mainMenuDropdown.clickMenuAbout();
+        // Alert doesn't appear
+        // TODO Bug report
+        softAssert.assertAll();
+    }
+
+    @Test(testName = "GC-1974  ", description = "GC-1974  ")
+    @Description("Verify that the user can order services when he applies the certificate, bonus, and leaves a comment")
+    public void CanToOrderServicesAfterCertificateAndComment(){
+        logger.info("Enter numbers in total inputs'");
+        orderDetailsPage
+                .enterOnInputNumberOfPackeges(0,"5")
+                .enterOnInputNumberOfPackeges(1,"8")
+                .enterOnInputNumberOfPackeges(2,"2");
+        Assert.assertEquals(orderDetailsPage.getTextOrderAmount(),"3150 UAH", "Calculating of formula went wrong");
     }
 
 }
