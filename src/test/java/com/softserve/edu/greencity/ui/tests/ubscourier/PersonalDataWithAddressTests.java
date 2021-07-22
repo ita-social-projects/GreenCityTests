@@ -80,24 +80,4 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
     }
 
-    @Test(testName = "GC-2046", description = "GC-2046")
-    @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
-    public void verifyErrorMessageShown() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.clickOnNextButton();
-        String expectedNameMessage = "This field is required";
-        String nameMessage = personalDataPage.getErrorNameMessage();
-        String expectedSurnameMessage = "This field is required";
-        String surnameMessage = personalDataPage.getErrorSurnameMessage();
-        String expectedPhoneMessage = "Enter the full phone number";
-        String phoneMessage = personalDataPage.getErrorPhoneMessage();
-        String expectedEmailMessage = "This field is required";
-        String emailMessage = personalDataPage.getErrorEmailMessage();
-
-        softAssert.assertEquals(nameMessage, expectedNameMessage);
-        softAssert.assertEquals(surnameMessage, expectedSurnameMessage);
-        softAssert.assertEquals(phoneMessage, expectedPhoneMessage);
-        softAssert.assertEquals(emailMessage, expectedEmailMessage);
-    }
-
 }

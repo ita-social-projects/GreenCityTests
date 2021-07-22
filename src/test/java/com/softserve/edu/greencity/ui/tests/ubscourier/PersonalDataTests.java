@@ -55,51 +55,24 @@ public class PersonalDataTests extends GreenCityTestRunner {
         Assert.assertEquals("2\nPersonal data", personalDataButtonText);
     }
 
-    @Test(testName = "GC-2047", description = "GC-2047")
-    @Description("Verify ordering when fields from first section on the 'Personal data' page filled with valid data")
-    public void verifyOrderingWithValidData() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.inputName("Lina")
-                .inputSurname("Serhova")
-                .inputPhone("0961111111")
-                .inputEmail("dcghkv@gmail.com");
-        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-                addAddressPopupComponent.fillAllFields(
-                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .clickOnAddAddressButton();
+    @Test(testName = "GC-2046", description = "GC-2046")
+    @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
+    public void verifyErrorMessageShown() {
+        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
         personalDataPage.clickOnNextButton();
-        String paymentButtonText = paymentPage.getPaymentButton().getText();
-        Assert.assertEquals("3\nConfirmation", paymentButtonText);
-    }
+        String expectedNameMessage = "This field is required";
+        String nameMessage = personalDataPage.getErrorNameMessage();
+        String expectedSurnameMessage = "This field is required";
+        String surnameMessage = personalDataPage.getErrorSurnameMessage();
+        String expectedPhoneMessage = "Enter the full phone number";
+        String phoneMessage = personalDataPage.getErrorPhoneMessage();
+        String expectedEmailMessage = "This field is required";
+        String emailMessage = personalDataPage.getErrorEmailMessage();
 
-    @Test(testName = "GC-2042", description = "GC-2042")
-    @Description("Verify if the system save the order after interrupt the order")
-    public void verifySaveOrderAfterInterrupt() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.inputName("Lina")
-                .inputSurname("Serhova")
-                .inputPhone("0961111111")
-                .inputEmail("dcghkv@gmail.com");
-        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-        addAddressPopupComponent.fillAllFields(
-                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .clickOnAddAddressButton();
-        personalDataPage.clickOnCancelButton().clickCancelOrderButton();
-    }
-
-    @Test(testName = "GC-2041", description = "GC-2041")
-    @Description("Verify if the system erase all entered user data after interrupt the order")
-    public void verifyEraseDataAfterInterrupt() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.inputName("Lina")
-                .inputSurname("Serhova")
-                .inputPhone("0961111111")
-                .inputEmail("dcghkv@gmail.com");
-        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-        addAddressPopupComponent.fillAllFields(
-                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .clickOnAddAddressButton();
-        personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
+        softAssert.assertEquals(nameMessage, expectedNameMessage);
+        softAssert.assertEquals(surnameMessage, expectedSurnameMessage);
+        softAssert.assertEquals(phoneMessage, expectedPhoneMessage);
+        softAssert.assertEquals(emailMessage, expectedEmailMessage);
     }
 
     @Test
