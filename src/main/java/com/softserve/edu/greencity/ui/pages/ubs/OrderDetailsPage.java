@@ -189,7 +189,6 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     public List<WebElement> getTotalLabels() {
         if (totalLabels == null) {
-            totalLabels = new ArrayList<>();
             totalLabels = driver.findElements(OrderDetailsPageLocators.TOTAL.getPath());
         }
         return totalLabels;
@@ -210,6 +209,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return this;
     }
+
     }
     public int getTotalSum(){
         int sum = 0;
@@ -219,6 +219,15 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return sum;
     }
+
+    public OrderDetailsPage fillAllFieldsForServices(int value) {
+        logger.info("fill all fields for services");
+        for (ServicesComponents servicesComponents : getServicesComponents()) {
+            servicesComponents.getInput().sendKeys(Integer.toString(value));
+        }
+        return this;
+    }
+
 
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
