@@ -4,14 +4,14 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 //TODO finish tests
-public class EditPictureTests extends GreenCityTestRunner {
+public class EditPictureTests extends GreenCityTestRunnerWithLoginLogout {
 
     private EditProfilePage editProfilePage;
 

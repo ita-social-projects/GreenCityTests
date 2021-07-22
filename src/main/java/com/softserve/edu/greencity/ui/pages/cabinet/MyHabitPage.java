@@ -1,10 +1,12 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
+import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import com.softserve.edu.greencity.ui.elements.IconElement;
 import com.softserve.edu.greencity.ui.elements.ImageElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
+import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +29,7 @@ public class MyHabitPage extends TopPart  {
     private LabelElement credoLabel;
     private LabelElement shoppingListLabel;
     private IconElement socialIcon;
+    private ImageElement logo;
 
     private final String SRC_ATTRIBUTE = "src";
 
@@ -60,7 +63,10 @@ public class MyHabitPage extends TopPart  {
         userImage = new ImageElement(driver, USER_IMAGE);
         return userImage;
     }
-
+    public ImageElement getLogo(){
+        logo = new ImageElement(driver,LOGO);
+        return logo;
+    }
     public LabelElement getUsernameLabel(){
         if(usernameLabel == null){
             usernameLabel = new LabelElement(driver, USERNAME_LABEL);
@@ -148,7 +154,10 @@ public class MyHabitPage extends TopPart  {
         waitsSwitcher.setImplicitWait(20);
         return new EditProfilePage(driver);
     }
-
+    public WelcomePage navigateToWelcomePage(){
+        getLogo().click();
+        return new WelcomePage(driver);
+    }
 
 
     public SocialNetworkItemsContainer getSocialNetworkItemsContainer() {

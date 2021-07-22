@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditPicturePopUpComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 
-public class EditProfileEditPhoto extends GreenCityTestRunner {
+public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
     private EditProfilePage editProfilePage;
     private EditPicturePopUpComponent editPicturePopUpComponent;
 

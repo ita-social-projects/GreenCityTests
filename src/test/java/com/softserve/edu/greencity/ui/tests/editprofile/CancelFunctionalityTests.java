@@ -4,7 +4,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.CancelEditingPopUpComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-public class CancelFunctionalityTests extends GreenCityTestRunner {
+public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout {
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();

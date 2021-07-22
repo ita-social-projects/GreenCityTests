@@ -1,26 +1,20 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
 import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
-import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
-import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsDao;
-import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsTagsDao;
 import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;
-import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsTagsEntity;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import io.qameta.allure.Description;
@@ -37,7 +31,7 @@ import java.util.List;
 import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
-public class CreateNewsPositiveTest extends GreenCityTestRunner {
+public class CreateNewsPositiveTest extends GreenCityTestRunnerWithLoginLogout {
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }

@@ -129,7 +129,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return name;
     }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
 
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);
@@ -289,6 +289,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     public ButtonElement getAddCertificateButton() {
         addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
         return addCertifircateButton;
+    }
+    public boolean isAddCertificateBtnPresent(){
+        if(driver.findElements(OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON.getPath()).size() >0){
+            return true;
+        }else return false;
     }
     public int getDiscountFromMessage(String message){
         String[] array = message.split(" ");

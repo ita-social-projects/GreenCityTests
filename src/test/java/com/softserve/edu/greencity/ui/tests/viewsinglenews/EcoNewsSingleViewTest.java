@@ -11,9 +11,8 @@ import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemsContainer;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.EcoNewsUtils;
-import com.softserve.edu.greencity.ui.tools.TagsUtill;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.openqa.selenium.By;
@@ -28,7 +27,7 @@ import java.util.List;
 
 import static com.softserve.edu.greencity.ui.locators.ItemComponentLocators.TAGS_CONTAINER;
 
-public class EcoNewsSingleViewTest extends GreenCityTestRunner {
+public class EcoNewsSingleViewTest extends GreenCityTestRunnerWithLoginLogout {
 
     @DataProvider(name = "data-provider")
     public Object[][] dataProviderMethod() {

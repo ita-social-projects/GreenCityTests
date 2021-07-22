@@ -18,7 +18,7 @@ public class ServicesComponents {
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
     public InputElement getInput() {
-        return new InputElement(driver, SERVICES_INPUT);
+        return new InputElement(servicesItem, SERVICES_INPUT);
     }
     public LabelElement getServiceName(){
         return new LabelElement(driver, SERVICE_NAME);
