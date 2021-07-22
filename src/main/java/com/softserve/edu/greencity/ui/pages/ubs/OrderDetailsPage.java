@@ -129,7 +129,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return name;
     }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
 
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, OrderDetailsPageLocators.NEXT);

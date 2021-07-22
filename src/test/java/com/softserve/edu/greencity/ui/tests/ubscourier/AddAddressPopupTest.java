@@ -1,9 +1,11 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.ubs.AddAddressPopupComponent;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
+import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
@@ -30,17 +32,16 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
     }
 
     @Test(testName = "GC-1925", description = "GC-1925")
-    @Description("Verify that add address pop-up window shall display with the message “At the moment we serve only the city of Kiev”")
+    @Description("GC-1925")
     public void checkCityMessageInfo() {
-        final String originalInfo = "At the moment we serve only the city of Kiev";
-        logger.info("check that AddAddressPopupMenu is active");
+        logger.info("Verify that add address pop-up window shall display with the message “At the moment we serve only the city of Kiev”");
         orderDetailsPage
                 .getServicesComponents()
                 .get(0)
                 .getInput()
                 .sendKeys("10");
 
-        String cityMessageInfo = orderDetailsPage
+        orderDetailsPage
                 .clickOnNextButton()
                 .clickOnAddAddressButton()
                 .getCityMessageInfo()
@@ -48,6 +49,20 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
         addAddressPopupComponent = new AddAddressPopupComponent(driver);
         addAddressPopupComponent.clickOnCancelButton();
 
-        softAssert.assertEquals(cityMessageInfo, originalInfo);
+        String info = addAddressPopupComponent.getCityValidationTextInfo();
+        softAssert.assertEquals(UBSDataStrings.ADDRESS_CITY_INFO_MESSAGE.getMessage(), info, "At the moment we serve only the city of Kiev");
+    }
+
+    @Test(testName = "GC-1925", description = "GC-1925")
+    @Description("GC-1925")
+    public void checkStreetMessageInfo() {
+        logger.info("Verify that the window will be closed and all the data on the pop-up shall be erased, when the user clicks on the button “Відмінити” on address pop-up menu");
+        orderDetailsPage
+                .getServicesComponents()
+                .get(0)
+                .getInput()
+                .sendKeys("10");
+
+
     }
 }
