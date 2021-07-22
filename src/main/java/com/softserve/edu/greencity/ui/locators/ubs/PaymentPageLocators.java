@@ -37,7 +37,7 @@ public enum PaymentPageLocators implements Locator {
     RECIPIENT_LABEL(By.xpath("//div[@class='order-info']/p")),
     FULL_NAME_LABEL(By.xpath("//div[@class='order-info']//ul[@class='order-list']/li[position()=1]")),
     PHONE_LABEL(By.xpath("//div[@class='order-info']//ul[@class='order-list']/li[position()=2]")),
-    GMAIL_LABEL(By.xpath("//div[@class='order-info']//ul[@class='order-list']/li[position()=2]")),
+    GMAIL_LABEL(By.xpath("//div[@class='order-info']//ul[@class='order-list']/li[position()=3]")),
 
 
     ADDRESS_OF_EXPORT_ORDERED_SERVICE_LABEL(By.xpath("//app-ubs-submit-order//div[@class='order-info-container d-flex flex-column']//div[@class='order-info m-0']/p")),

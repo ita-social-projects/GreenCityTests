@@ -27,6 +27,7 @@ public enum OrderDetailsPageLocators implements Locator {
             //xpath("//*[@id='cdk-step-content-0-0']/app-ubs-order-details/div[1]/div/form/div[4]/div[3]/div[2]/input")),
             //("//input[@class='shadow-none form-control border-input p-2 eco-store ng-pristine ng-valid ng-touched']")),
             //cssSelector("div.form-group.ng-pristine.ng-valid.ng-star-inserted.ng-touched> input")),
+
     INCORRECT_ORDER_NUMBER_MESSAGE(By.xpath("//small[@class='text-danger ng-star-inserted']")),
     ADD_ANOTHER_ORDER_BUTTON(By.cssSelector("div.form-group.shop_submit > button")),
     ANOTHER_ORDER_NUMBER(By.cssSelector("div.form-group.shop_submit")),
@@ -44,6 +45,8 @@ public enum OrderDetailsPageLocators implements Locator {
     SERVICE_TOTAL(By.cssSelector(".col-3.bag-name.text-center")),
     SERVICE_VOLUME_COST(By.xpath(".//span[@class='col-2 p-0 m-0 bag-name']")),
     SERVICES(By.xpath("//li[@class='main-list_item d-flex justify-content-between align-items-baseline ng-star-inserted']")),
+    //SERVICE_TOTAL(By.xpath("//span[@class='col-3 bag-name text-center']")),
+   
     SERTIFICATE_LABEL(By.cssSelector("app-ubs-order-details .money-saved")),
     AMOUNT_DUE(By.cssSelector("app-ubs-order-details .total-content:nth-child(3) strong"));
 
