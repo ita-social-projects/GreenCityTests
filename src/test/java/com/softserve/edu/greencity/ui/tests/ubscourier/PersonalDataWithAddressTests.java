@@ -68,7 +68,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
     @Test(testName = "GC-2041", description = "GC-2041")
     @Description("Verify if the system erase all entered user data after interrupt the order")
     public void verifyEraseDataAfterInterrupt() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
+        personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
         personalDataPage.inputName("Lina")
                 .inputSurname("Serhova")
                 .inputPhone("0961111111")
@@ -78,6 +78,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
+        Assert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
     }
 
 }

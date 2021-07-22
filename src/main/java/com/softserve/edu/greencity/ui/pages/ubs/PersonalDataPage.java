@@ -47,10 +47,6 @@ public class PersonalDataPage extends UBSCourierBasePage {
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
-//        errorNameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_NAME);
-//        errorSurnameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_SURNAME);
-//        errorPhoneMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_PHONE);
-//        errorEmailMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_EMAIL);
     }
 
     public PersonalDataPage inputName(String name) {
