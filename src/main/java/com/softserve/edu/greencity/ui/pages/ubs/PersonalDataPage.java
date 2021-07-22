@@ -1,12 +1,10 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
-import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.InputElement;
-import com.softserve.edu.greencity.ui.elements.LabelElement;
-import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +26,11 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private ButtonElement backButton;
     private List<AddressComponent> listOfAddresses;
     private ButtonElement addAddressButton;
+    private IconElement orderDetailsIconDone;
+    private LabelElement errorNameMessage;
+    private LabelElement errorSurnameMessage;
+    private LabelElement errorPhoneMessage;
+    private LabelElement errorEmailMessage;
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
@@ -78,8 +81,25 @@ public class PersonalDataPage extends UBSCourierBasePage {
     public String getPhoneNumber(){
         return phoneField.getValue();
     }
+
     public String getEmailAddress(){
         return emailField.getValue();
+    }
+
+    public String getErrorNameMessage() {
+        return errorNameMessage.getText();
+    }
+
+    public String getErrorSurnameMessage() {
+        return errorSurnameMessage.getText();
+    }
+
+    public String getErrorPhoneMessage() {
+        return errorPhoneMessage.getText();
+    }
+
+    public String getErrorEmailMessage() {
+        return errorEmailMessage.getText();
     }
 
     public PersonalDataPage fullPersonalData(String name,String surname,String phone,String gmail){
@@ -126,7 +146,6 @@ public class PersonalDataPage extends UBSCourierBasePage {
         }
         //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
-
         return new PaymentPage(driver);
     }
 
@@ -234,4 +253,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public IconElement getOrderDetailsIconDone() {
+        if (orderDetailsIconDone == null) {
+            orderDetailsIconDone = new IconElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS_ICON_DONE);
+        }
+        return orderDetailsIconDone;
+    }
 }
