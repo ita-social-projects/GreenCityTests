@@ -7,12 +7,12 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithoutLogin;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class UBSCertificateTest extends GreenCityTestRunner {
+public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     private OrderDetailsPage orderDetailsPage;
     private WelcomePage welcomePage;
     @BeforeClass
@@ -56,7 +56,7 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-  
+
     @Test(testName = "GC-1975", description = "GC-1975")
     @Description("Verify that the user can order services when he applies the certificate, and leaves a comment")
     public void certificateAndComment(){

@@ -7,13 +7,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
-
 /**
  * A class for UI tests.
- * if you need to make login/logout before each method you should extend this one.
+ * if you need to make login/logout only once you should extend this one.
  */
 @Listeners(TestNgListeners.class)
-public abstract class GreenCityTestRunnerWithLoginLogout extends GreenCityBaseTestRunner {
+public abstract class GreenCityTestRunnerWithoutLogin extends GreenCityBaseTestRunner {
 
     @BeforeMethod
     public void setUp() {
@@ -22,17 +21,16 @@ public abstract class GreenCityTestRunnerWithLoginLogout extends GreenCityBaseTe
         softAssert = new SoftAssert();
     }
 
-
     @AfterMethod
     public void tearDown(ITestResult result) {
         if (!result.isSuccess()) {
             logger.warn("Test " + result.getName() + " ERROR");
         }
-        if (isLogInNow()) {
-            signOutByStorage();
-        }
         loggerTest();
     }
 
+
 }
+
+
 

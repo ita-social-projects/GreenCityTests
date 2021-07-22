@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * A base class for UI tests. All test classes should extend this one.
+ * A base class for UI tests.
  */
 @Listeners(TestNgListeners.class)
 public abstract class GreenCityBaseTestRunner {
