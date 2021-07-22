@@ -27,6 +27,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private List<AddressComponent> listOfAddresses;
     private ButtonElement addAddressButton;
     private IconElement orderDetailsIconDone;
+    private LabelElement errorNameMessage;
+    private LabelElement errorSurnameMessage;
+    private LabelElement errorPhoneMessage;
+    private LabelElement errorEmailMessage;
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
@@ -43,7 +47,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
-        orderDetailsIconDone = new IconElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS_ICON_DONE);
+//        errorNameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_NAME);
+//        errorSurnameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_SURNAME);
+//        errorPhoneMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_PHONE);
+//        errorEmailMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_EMAIL);
     }
 
     public PersonalDataPage inputName(String name) {
@@ -70,13 +77,51 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public String getFullName(){
+        String fullName=nameField.getValue()+" "+surnameField.getValue();
+        return fullName;
+
+    }
+    public String getPhoneNumber(){
+        return phoneField.getValue();
+    }
+
+    public String getEmailAddress(){
+        return emailField.getValue();
+    }
+
+    public String getErrorNameMessage() {
+        return errorNameMessage.getText();
+    }
+
+    public String getErrorSurnameMessage() {
+        return errorSurnameMessage.getText();
+    }
+
+    public String getErrorPhoneMessage() {
+        return errorPhoneMessage.getText();
+    }
+
+    public String getErrorEmailMessage() {
+        return errorEmailMessage.getText();
+    }
+
+    public PersonalDataPage fullPersonalData(String name,String surname,String phone,String gmail){
+        logger.info("fill full fields for personal data");
+        return inputName(name)
+                .inputSurname(surname)
+                .inputPhone(phone)
+                .inputEmail(gmail);
+    }
+
+
     public PersonalDataPage inputComment(String comment) {
         commentToAddressField.clearText();
         commentToAddressField.enterText(comment);
         return this;
     }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         }
@@ -97,7 +142,13 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return backButton;
     }
 
-    public PaymentPage clickOnNextButton() {   //return type?
+    public PaymentPage clickOnNextButton() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
         return new PaymentPage(driver);
     }

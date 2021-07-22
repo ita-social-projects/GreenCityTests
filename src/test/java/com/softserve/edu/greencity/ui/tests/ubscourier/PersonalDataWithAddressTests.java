@@ -5,13 +5,13 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.*;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
-import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-public class PersonalDataTests extends GreenCityTestRunner {
+public class PersonalDataWithAddressTests extends GreenCityTestRunner {
 
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
@@ -29,42 +29,20 @@ public class PersonalDataTests extends GreenCityTestRunner {
     }
 
     @AfterMethod
-    public void cancelOrder() {
-        orderDetailsPage.signOut();
-    }
-
-    @Test(testName = "GC-2040", description = "GC-2040")
-    @Description("Verify that second tab 'Personal data' is active, the tab 'Order details' is marked as done and 'Confirmation' tab is disabled")
-    public void verifyActiveOrDisabledTabs() {
-        personalDataPage = orderDetailsPage.clickOnNextButton();
-        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
-        waitsSwitcher.setExplicitWait(5, ExpectedConditions.visibilityOf(personalDataPage.getOrderDetailsIconDone().getInnerElement()));
-
-        softAssert.assertTrue(personalDataPage.getOrderDetailsIconDone().isDisplayed());
-        softAssert.assertTrue(personalDataPage.getPersonalDataButton().isActive(),"Tab 'Personal Data' is not active");
-        softAssert.assertFalse(personalDataPage.getPaymentButton().isActive());
-    }
-
-    @Test(testName = "GC-2044", description = "GC-2044")
-    @Description("Verify if the user is redirected to the next page of the oder form 'Personal data' by clicking on the button 'Next'")
-    public void verifyRedirectToNextPage() {
-        String personalDataButtonText = orderDetailsPage
-                .clickOnNextButton()
-                .getPersonalDataButton()
-                .getText();
-        Assert.assertEquals("2\nPersonal data", personalDataButtonText);
+    public void deleteAddress() {
+        personalDataPage.deleteAddressOfIndex(personalDataPage.getQuantityOfAddresses()-1);
     }
 
     @Test(testName = "GC-2047", description = "GC-2047")
     @Description("Verify ordering when fields from first section on the 'Personal data' page filled with valid data")
     public void verifyOrderingWithValidData() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
+        personalDataPage = orderDetailsPage.clickOnNextButton();
         personalDataPage.inputName("Lina")
                 .inputSurname("Serhova")
                 .inputPhone("0961111111")
                 .inputEmail("dcghkv@gmail.com");
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-                addAddressPopupComponent.fillAllFields(
+        addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
         personalDataPage.clickOnNextButton();
@@ -75,7 +53,7 @@ public class PersonalDataTests extends GreenCityTestRunner {
     @Test(testName = "GC-2042", description = "GC-2042")
     @Description("Verify if the system save the order after interrupt the order")
     public void verifySaveOrderAfterInterrupt() {
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
+        personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
         personalDataPage.inputName("Lina")
                 .inputSurname("Serhova")
                 .inputPhone("0961111111")
@@ -102,9 +80,24 @@ public class PersonalDataTests extends GreenCityTestRunner {
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
     }
 
-    @Test
-    public void deleteAddress() {
-        personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.deleteAddressOfIndex(personalDataPage.getQuantityOfAddresses()-1);
+    @Test(testName = "GC-2046", description = "GC-2046")
+    @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
+    public void verifyErrorMessageShown() {
+        PersonalDataPage personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
+        personalDataPage.clickOnNextButton();
+        String expectedNameMessage = "This field is required";
+        String nameMessage = personalDataPage.getErrorNameMessage();
+        String expectedSurnameMessage = "This field is required";
+        String surnameMessage = personalDataPage.getErrorSurnameMessage();
+        String expectedPhoneMessage = "Enter the full phone number";
+        String phoneMessage = personalDataPage.getErrorPhoneMessage();
+        String expectedEmailMessage = "This field is required";
+        String emailMessage = personalDataPage.getErrorEmailMessage();
+
+        softAssert.assertEquals(nameMessage, expectedNameMessage);
+        softAssert.assertEquals(surnameMessage, expectedSurnameMessage);
+        softAssert.assertEquals(phoneMessage, expectedPhoneMessage);
+        softAssert.assertEquals(emailMessage, expectedEmailMessage);
     }
+
 }
