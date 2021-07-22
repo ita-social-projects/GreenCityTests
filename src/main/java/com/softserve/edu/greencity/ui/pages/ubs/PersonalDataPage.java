@@ -120,11 +120,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     private List<AddressComponent> getListOfAddresses() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitsSwitcher.sleep(2000);
         if (listOfAddresses == null) {
             listOfAddresses = new LinkedList<>();
             List<WebElement> addressesPath = driver.findElements(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath());
