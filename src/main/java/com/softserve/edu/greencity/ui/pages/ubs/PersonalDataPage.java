@@ -2,7 +2,6 @@ package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
-import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
@@ -24,6 +23,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
     private ButtonElement backButton;
+    private LabelElement absenceAddresses;
     private List<AddressComponent> listOfAddresses;
     private ButtonElement addAddressButton;
     private IconElement orderDetailsIconDone;
@@ -159,18 +159,30 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return new OrderDetailsPage(driver);
     }
 
+    private LabelElement getAbsenceAddresses() {
+        if (absenceAddresses == null) {
+            absenceAddresses = new LabelElement(driver, PersonalDataPageLocators.ABSENCE_OF_ADDRESSES);
+        }
+        return absenceAddresses;
+    }
+
     private List<AddressComponent> getListOfAddresses() {
-        waitsSwitcher.setExplicitWait(2, ExpectedConditions.elementToBeClickable(AddressComponentLocators.DELETE.getPath())); //??
+        waitsSwitcher.sleep(2000);
         if (listOfAddresses == null) {
             listOfAddresses = new LinkedList<>();
             List<WebElement> addressesPath = driver.findElements(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath());
-            if (addressesPath.size() != 0) {
+            if (!addressesPath.get(0).getAttribute("class").contains("no-addresses")) {
+                waitsSwitcher.setExplicitWait(2, ExpectedConditions.elementToBeClickable(AddressComponentLocators.DELETE.getPath())); //??
                 for (WebElement addressPath : addressesPath) {
                     listOfAddresses.add(new AddressComponent(driver, addressPath));
                 }
             }
         }
         return listOfAddresses;
+    }
+
+    public String getAbsenceAddressesText() {
+        return getAbsenceAddresses().getText();
     }
 
     public PersonalDataPage selectAddressByIndex(int i) {

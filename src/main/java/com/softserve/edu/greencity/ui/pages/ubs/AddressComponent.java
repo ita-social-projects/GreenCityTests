@@ -3,11 +3,15 @@ package com.softserve.edu.greencity.ui.pages.ubs;
 import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AddressComponent {
     private WebDriver webDriver;
+    private WaitsSwitcher waitsSwitcher;
+
     private ButtonElement selectAddressButton;
     private LabelElement cityName;
     private LabelElement streetName;
@@ -21,6 +25,7 @@ public class AddressComponent {
     }
 
     private void initElements(WebElement root) {
+        waitsSwitcher = new WaitsSwitcher(webDriver);
         selectAddressButton = new ButtonElement(root, AddressComponentLocators.SELECT_ADDRESS);
         cityName = new LabelElement(root, AddressComponentLocators.CITY);
         streetName = new LabelElement(root, AddressComponentLocators.STREET);
@@ -52,6 +57,7 @@ public class AddressComponent {
 
     public PersonalDataPage clickOnDeleteAddressButton() {
         deleteAddressButton.click();
+        waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOf(deleteAddressButton.getInnerElement()));
         return new PersonalDataPage(webDriver);
     }
 }

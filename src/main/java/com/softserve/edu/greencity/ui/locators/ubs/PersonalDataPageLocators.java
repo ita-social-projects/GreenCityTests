@@ -18,6 +18,7 @@ public enum PersonalDataPageLocators implements Locator {
     BACK(By.xpath("//app-ubs-personal-information//button[contains(@class, 'back')]")),
     ADDRESS_TITLE(By.xpath("//div[contains(@class, 'adress-section')]//*[@class = 'address-title']")),
     ADDRESS_NOTIFICATION(By.xpath("//div[contains(@class, 'adress-section')]//*[@class = 'address-title']/following-sibling::p")),
+    ABSENCE_OF_ADDRESSES(By.xpath("//app-ubs-personal-information//div[contains(@class, 'no-address')]/p")),
     LIST_OF_ADDRESSES(By.xpath("//div[contains(@class, 'adress-section')]//div[contains(@class, 'inserted')]")),
     ADD_ADDRESS(By.xpath("//button[contains(@class, 'add-address')]"));
     private By path;
