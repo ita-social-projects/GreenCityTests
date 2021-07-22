@@ -168,7 +168,7 @@ public class AddAddressPopupComponent {
     public PersonalDataPage clickOnAddAddressButton() {
         getAddButton().click();
         waitsSwitcher.setExplicitWait(5, ExpectedConditions.invisibilityOfElementLocated(AddAddressPopupLocators.ADD_ADDRESS_BUTTON.getPath()));
-        waitsSwitcher.setExplicitWait(3,ExpectedConditions.numberOfElementsToBe(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath(), new PersonalDataPage(driver).getQuantityOfAddresses() + 1));
+//        waitsSwitcher.setExplicitWait(3,ExpectedConditions.numberOfElementsToBe(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath(), new PersonalDataPage(driver).getQuantityOfAddresses() + 1));
         return new PersonalDataPage(driver);
     }
 
