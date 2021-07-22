@@ -1,12 +1,9 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
-import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.InputElement;
-import com.softserve.edu.greencity.ui.elements.LabelElement;
-import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
-import com.softserve.edu.greencity.ui.locators.ubs.OrderDetailsPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,8 +23,14 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
     private ButtonElement backButton;
+    private LabelElement absenceAddresses;
     private List<AddressComponent> listOfAddresses;
     private ButtonElement addAddressButton;
+    private IconElement orderDetailsIconDone;
+    private LabelElement errorNameMessage;
+    private LabelElement errorSurnameMessage;
+    private LabelElement errorPhoneMessage;
+    private LabelElement errorEmailMessage;
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
@@ -78,8 +81,25 @@ public class PersonalDataPage extends UBSCourierBasePage {
     public String getPhoneNumber(){
         return phoneField.getValue();
     }
+
     public String getEmailAddress(){
         return emailField.getValue();
+    }
+
+    public String getErrorNameMessage() {
+        return errorNameMessage.getText();
+    }
+
+    public String getErrorSurnameMessage() {
+        return errorSurnameMessage.getText();
+    }
+
+    public String getErrorPhoneMessage() {
+        return errorPhoneMessage.getText();
+    }
+
+    public String getErrorEmailMessage() {
+        return errorEmailMessage.getText();
     }
 
     public PersonalDataPage fullPersonalData(String name,String surname,String phone,String gmail){
@@ -120,13 +140,12 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PaymentPage clickOnNextButton() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
-
         return new PaymentPage(driver);
     }
 
@@ -140,18 +159,30 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return new OrderDetailsPage(driver);
     }
 
+    private LabelElement getAbsenceAddresses() {
+        if (absenceAddresses == null) {
+            absenceAddresses = new LabelElement(driver, PersonalDataPageLocators.ABSENCE_OF_ADDRESSES);
+        }
+        return absenceAddresses;
+    }
+
     private List<AddressComponent> getListOfAddresses() {
-        waitsSwitcher.setExplicitWait(2, ExpectedConditions.elementToBeClickable(AddressComponentLocators.DELETE.getPath())); //??
+        waitsSwitcher.sleep(2000);
         if (listOfAddresses == null) {
             listOfAddresses = new LinkedList<>();
             List<WebElement> addressesPath = driver.findElements(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath());
-            if (addressesPath.size() != 0) {
+            if (!addressesPath.get(0).getAttribute("class").contains("no-addresses")) {
+                waitsSwitcher.setExplicitWait(2, ExpectedConditions.elementToBeClickable(AddressComponentLocators.DELETE.getPath())); //??
                 for (WebElement addressPath : addressesPath) {
                     listOfAddresses.add(new AddressComponent(driver, addressPath));
                 }
             }
         }
         return listOfAddresses;
+    }
+
+    public String getAbsenceAddressesText() {
+        return getAbsenceAddresses().getText();
     }
 
     public PersonalDataPage selectAddressByIndex(int i) {
@@ -234,4 +265,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public IconElement getOrderDetailsIconDone() {
+        if (orderDetailsIconDone == null) {
+            orderDetailsIconDone = new IconElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS_ICON_DONE);
+        }
+        return orderDetailsIconDone;
+    }
 }
