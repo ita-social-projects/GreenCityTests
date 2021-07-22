@@ -90,12 +90,12 @@ public class AddAddressPopupComponent {
                 .inputEntrance(data);
     }
 //TODO method
-    public String getStreetHouseCorp(String street,int house,String corp){
-
-      return  streetInput.getText().concat(String.valueOf(houseInput.getText());
-
-
-    }
+//    public String getStreetHouseCorp(String street,int house,String corp){
+//
+//      //return  streetInput.getText().concat(String.valueOf(houseInput.getText());
+//
+//
+//    }
     //error message
     public LabelElement getStreetAlertMessage() {
         if (streetAlertMessage == null) {
