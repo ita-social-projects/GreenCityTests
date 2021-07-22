@@ -46,8 +46,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
         personalDataPage.clickOnNextButton();
-        String paymentButtonText = paymentPage.getPaymentButton().getText();
-        Assert.assertEquals("3\nConfirmation", paymentButtonText);
+        Assert.assertEquals("3\nConfirmation", paymentPage.getPaymentButton().getText());
     }
 
     @Test(testName = "GC-2042", description = "GC-2042")
@@ -78,6 +77,11 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }//TODO method for wait
         Assert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
     }
 

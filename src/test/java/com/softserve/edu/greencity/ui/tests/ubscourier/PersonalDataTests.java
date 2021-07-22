@@ -42,7 +42,7 @@ public class PersonalDataTests extends GreenCityTestRunner {
 
         softAssert.assertTrue(personalDataPage.getOrderDetailsIconDone().isDisplayed());
         softAssert.assertTrue(personalDataPage.getPersonalDataButton().isActive(),"Tab 'Personal Data' is not active");
-        softAssert.assertFalse(personalDataPage.getPaymentButton().isActive());
+        softAssert.assertFalse(personalDataPage.getPaymentButton().isActive(), "Tab 'Confirmation' is active");
     }
 
     @Test(testName = "GC-2044", description = "GC-2044")
@@ -64,7 +64,7 @@ public class PersonalDataTests extends GreenCityTestRunner {
         String nameMessage = personalDataPage.getErrorNameMessage();
         String expectedSurnameMessage = "This field is required";
         String surnameMessage = personalDataPage.getErrorSurnameMessage();
-        String expectedPhoneMessage = "Enter the full phone number";
+        String expectedPhoneMessage = "This field is required";
         String phoneMessage = personalDataPage.getErrorPhoneMessage();
         String expectedEmailMessage = "This field is required";
         String emailMessage = personalDataPage.getErrorEmailMessage();
