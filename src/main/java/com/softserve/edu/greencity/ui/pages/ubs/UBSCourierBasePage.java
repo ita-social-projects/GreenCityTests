@@ -37,4 +37,26 @@ public abstract class UBSCourierBasePage extends TopPart {
         return new PaymentPage(driver);
     }
 
+    public ButtonElement getPersonalDataButton() {
+        if (personalDataButton == null) {
+            personalDataButton = new ButtonElement(driver, UBSCourierBasePageLocators.PERSONAL_DATA);
+        }
+        return personalDataButton;
+    }
+
+    public ButtonElement getOrderDetailsButton() {
+        if (orderDetailsButton == null) {
+            orderDetailsButton = new ButtonElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS);
+        }
+        return orderDetailsButton;
+    }
+
+    public ButtonElement getPaymentButton() {
+        if (paymentButton == null) {
+            paymentButton = new ButtonElement(driver, UBSCourierBasePageLocators.PAYMENT);
+        }
+        return paymentButton;
+    }
+
+
 }
