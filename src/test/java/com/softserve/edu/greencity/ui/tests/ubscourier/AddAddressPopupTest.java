@@ -32,7 +32,7 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
     }
 
     @Test(testName = "GC-1925", description = "GC-1925")
-    @Description("GC-1925")
+    @Description("#859")
     public void checkCityMessageInfo() {
         logger.info("Verify that add address pop-up window shall display with the message “At the moment we serve only the city of Kiev”");
         orderDetailsPage
@@ -54,7 +54,7 @@ public class AddAddressPopupTest extends GreenCityTestRunner {
     }
 
     @Test(testName = "GC-1925", description = "GC-1925")
-    @Description("GC-1925")
+    @Description("#894")
     public void checkStreetMessageInfo() {
             }
 }
