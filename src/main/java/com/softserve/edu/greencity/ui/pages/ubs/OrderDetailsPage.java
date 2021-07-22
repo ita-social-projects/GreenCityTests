@@ -136,7 +136,6 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return name;
     }
 
-
     public ButtonElement getNextButton() {
 
         if (nextButton == null) {
@@ -181,8 +180,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     public List<WebElement> getServices() {
         try {
             return waitsSwitcher.setExplicitWait(3,
-                    ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.SERVICES.getPath()));
-        } catch (TimeoutException e) {
+                   ExpectedConditions.visibilityOfAllElementsLocatedBy(OrderDetailsPageLocators.SERVICES.getPath()));
+       } catch (TimeoutException e) {
             return new ArrayList<>();
         }
     }

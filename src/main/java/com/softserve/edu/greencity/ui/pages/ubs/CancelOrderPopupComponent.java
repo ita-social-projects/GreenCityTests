@@ -4,10 +4,12 @@ import com.softserve.edu.greencity.ui.elements.ButtonElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static com.softserve.edu.greencity.ui.locators.EditProfileLocators.*;
 
@@ -21,9 +23,11 @@ public class CancelOrderPopupComponent<T, R> {
     private String subTitleOfCancelComponent;
     private T currentClass;
     private R redirectClass;
+    WaitsSwitcher waitsSwitcher;
 
     public CancelOrderPopupComponent(WebDriver driver, T currentClass, R redirectClass) {
         this.driver = driver;
+        waitsSwitcher = new WaitsSwitcher(driver);
         this.currentClass = currentClass;
         this.redirectClass = redirectClass;
     }
@@ -88,6 +92,7 @@ public class CancelOrderPopupComponent<T, R> {
         if (isCancelEditPageButtonIsExists()) {
             getCancelOrderButton().click();
         }
+        waitsSwitcher.setExplicitWait(2, ExpectedConditions.invisibilityOf(getCancelOrderButton().getInnerElement()));
         return redirectClass;
     }
 }

@@ -69,26 +69,16 @@ public class PaymentPage extends UBSCourierBasePage {
     public void initPaymentElements() {
         //yourOrder=new LabelElement(driver,PaymentPageLocators.YOUR_ORDER_LABEL);
         service = new LabelElement(driver, PaymentPageLocators.SERVICE_LABEL);
-        // volume= new LabelElement(driver,PaymentPageLocators.VOLUME_LABEL);
+        volume = new LabelElement(driver, PaymentPageLocators.VOLUME_LABEL);
         cost = new LabelElement(driver, PaymentPageLocators.COST_LABEL);
         numberOfPackages = new LabelElement(driver, PaymentPageLocators.NUMBER_OF_PACKAGES_LABEL);
         total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
 
-        oldClothesCheap = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_LABEL);
-        oldClothesExpensive = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_PRICE_LABEL);
-        recycledMaterials = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_LABEL);
-        cheapPricePackage = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_NUMBER_PACKAGES_LABEL);
-        expensivePricePackage = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_PRICE_NUMBER_PACKAGES_LABEL);
-        recycledMaterialsPackage = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_PACKAGES_LABEL);
-        cheapPriceTotalSum = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_TOTAL_SUM_LABEL);
-        expensivePriceTotalSum = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_TOTAL_SUM_LABEL);
-        recycledMaterialsTotalSum = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_TOTAL_SUM_LABEL);
-
         orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
-        certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
+        // certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
         amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
         // deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
-        orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
+        //orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
         recipient = new LabelElement(driver, PaymentPageLocators.RECIPIENT_LABEL);
         fullName = new LabelElement(driver, PaymentPageLocators.FULL_NAME_LABEL);
         phone = new LabelElement(driver, PaymentPageLocators.PHONE_LABEL);
@@ -97,9 +87,8 @@ public class PaymentPage extends UBSCourierBasePage {
         town = new LabelElement(driver, PaymentPageLocators.TOWN_LABEL);
         street = new LabelElement(driver, PaymentPageLocators.STREET_LABEL);
         district = new LabelElement(driver, PaymentPageLocators.DISTRICT_LABEL);
-        commentToAddress = new LabelElement(driver, PaymentPageLocators.COMMENT_TO_ADDRESS_LABEL);
-        //commentToOrder=new LabelElement(driver,PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
-        payment = new DropDownElement(driver, PaymentPageLocators.PAYMENT_METHOD);
+
+        //  payment = new DropDownElement(driver, PaymentPageLocators.PAYMENT_METHOD);
 
 
     }
@@ -160,39 +149,49 @@ public class PaymentPage extends UBSCourierBasePage {
         return total;
     }
 
+
     public LabelElement getOldClothesCheap() {
+        oldClothesCheap = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_LABEL);
         return oldClothesCheap;
     }
 
     public LabelElement getOldClothesExpensive() {
+        oldClothesExpensive = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_PRICE_LABEL);
         return oldClothesExpensive;
     }
 
     public LabelElement getRecycledMaterials() {
+        recycledMaterials = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_LABEL);
         return recycledMaterials;
     }
 
     public LabelElement getCheapPricePackage() {
+        cheapPricePackage = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_NUMBER_PACKAGES_LABEL);
         return cheapPricePackage;
     }
 
     public LabelElement getExpensivePricePackage() {
+        expensivePricePackage = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_PRICE_NUMBER_PACKAGES_LABEL);
         return expensivePricePackage;
     }
 
     public LabelElement getRecycledMaterialsPackage() {
+        recycledMaterialsPackage = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_PACKAGES_LABEL);
         return recycledMaterialsPackage;
     }
 
     public LabelElement getCheapPriceTotalSum() {
+        cheapPriceTotalSum = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_CHEAP_PRICE_TOTAL_SUM_LABEL);
         return cheapPriceTotalSum;
     }
 
     public LabelElement getExpensivePriceTotalSum() {
+        expensivePriceTotalSum = new LabelElement(driver, PaymentPageLocators.OLD_CLOTHES_EXPENSIVE_TOTAL_SUM_LABEL);
         return expensivePriceTotalSum;
     }
 
     public LabelElement getRecycledMaterialsTotalSum() {
+        recycledMaterialsTotalSum = new LabelElement(driver, PaymentPageLocators.RECYCLED_MATERIALS_NUMBER_TOTAL_SUM_LABEL);
         return recycledMaterialsTotalSum;
     }
 
@@ -201,6 +200,7 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public LabelElement getCertificate() {
+        certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
         return certificate;
     }
 
@@ -208,7 +208,9 @@ public class PaymentPage extends UBSCourierBasePage {
         return amountDue;
     }
 
+
     public LabelElement getOrderNumbers() {
+        orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
         return orderNumber;
     }
 
@@ -224,7 +226,6 @@ public class PaymentPage extends UBSCourierBasePage {
         return gmail;
     }
 
-
     public LabelElement getTown() {
         return town;
     }
@@ -238,14 +239,17 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public LabelElement getCommentToAddress() {
+        commentToAddress = new LabelElement(driver, PaymentPageLocators.COMMENT_TO_ADDRESS_LABEL);
         return commentToAddress;
     }
 
     public LabelElement getCommentToOrder() {
+        commentToOrder = new LabelElement(driver, PaymentPageLocators.COMMENT_TO_ORDER_LABEL);
         return commentToOrder;
     }
 
     public DropDownElement getPaymentField() {
+        payment = new DropDownElement(driver, PaymentPageLocators.PAYMENT_METHOD);
         return payment;
     }
 
@@ -256,9 +260,25 @@ public class PaymentPage extends UBSCourierBasePage {
             s += orders.getText().trim();
         }
         return s;
+    }
 
+    public String getTextFromOrderNumbers() {
+        return orderNumber.getText();
+    }
+
+    public boolean isOrderNumbersDisplayed() {
+        return getOrderNumbers().isDisplayedLabel();
 
     }
 
+    public String getCommentOrderText() {
+        return getCommentToOrder().getText();
+
+    }
+
+    public String getCommentAddressText() {
+        return getCommentToAddress().getText();
+
+    }
 
 }
