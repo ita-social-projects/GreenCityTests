@@ -29,6 +29,7 @@ public class AddAddressPopupComponent {
     private InputElement entranceInput;
 
     private LabelElement cityLabel;
+    private LabelElement cityMessageInfo;
     private LabelElement streetAlertMessage;
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
@@ -111,6 +112,13 @@ public class AddAddressPopupComponent {
         return districtAlertMessage;
     }
 
+    public LabelElement getCityMessageInfo() {
+        if (cityMessageInfo == null) {
+            cityMessageInfo = new LabelElement(driver, AddAddressPopupLocators.CITY_MESSAGE_INFO);
+        }
+        return cityMessageInfo;
+    }
+
     public LabelElement getHouseAlertMessage() {
         if (houseAlertMessage == null) {
             houseAlertMessage = new LabelElement(driver, AddAddressPopupLocators.HOUSE_ALERT_MESSAGE);
@@ -118,13 +126,30 @@ public class AddAddressPopupComponent {
         return houseAlertMessage;
     }
 
+///////////////////////////////////////////////////////////////
+    public String getStreetValidationErrorText() {
+        return getStreetAlertMessage().getText();
+    }
+
+    public String getDistrictValidationErrorText() {
+        return getDistrictAlertMessage().getText();
+    }
+
+    public String getHouseValidationErrorText() {
+        return getHouseAlertMessage().getText();
+    }
+
+    public String getCityValidationTextInfo() {
+        return getCityMessageInfo().getText();
+    }
+
+/////////////////////////////////////////////////////////////
+    public boolean isDisplayedCityMessageInfo() {
+        return getCityMessageInfo().isDisplayedLabel();
+    }
 
     public boolean isDisplayedStreetErrorMessage() {
         return getStreetAlertMessage().isDisplayedLabel();
-    }
-
-    public String getStreetValidationErrorText() {
-        return getStreetAlertMessage().getText();
     }
 
     public boolean isDisplayedDistrictErrorMessage() {
@@ -135,7 +160,8 @@ public class AddAddressPopupComponent {
         return getHouseAlertMessage().isDisplayedLabel();
     }
 
-    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city){
+//////////////////////////////////////////////////////////////////////////////////////////
+    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city) {
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();
         cityInput.choseFromOptions(city.getPath());
@@ -174,7 +200,7 @@ public class AddAddressPopupComponent {
     public PersonalDataPage clickOnAddAddressButton() {
         getAddButton().click();
         waitsSwitcher.setExplicitWait(5, ExpectedConditions.invisibilityOfElementLocated(AddAddressPopupLocators.ADD_ADDRESS_BUTTON.getPath()));
-        waitsSwitcher.setExplicitWait(3,ExpectedConditions.numberOfElementsToBe(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath(), new PersonalDataPage(driver).getQuantityOfAddresses() + 1));
+//        waitsSwitcher.setExplicitWait(3,ExpectedConditions.numberOfElementsToBe(PersonalDataPageLocators.LIST_OF_ADDRESSES.getPath(), new PersonalDataPage(driver).getQuantityOfAddresses() + 1));
         return new PersonalDataPage(driver);
     }
 

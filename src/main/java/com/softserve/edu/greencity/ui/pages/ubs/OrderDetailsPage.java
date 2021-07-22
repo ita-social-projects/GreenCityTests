@@ -46,6 +46,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private ButtonElement addAnotherOrderNumber;
     private List<AnotherOrderNumberComponents> anotherOrderNumber;
     private InputElement anotherOrderNumberInput;
+    private LabelElement minimumOrderErrorMassage;
 
     private List<ServicesComponents> servicesComponents;
     private LabelElement orderAmount;
@@ -76,6 +77,12 @@ public class OrderDetailsPage extends UBSCourierBasePage {
            servicesComponents.get(index).getInput().click();
         return this;
     }
+
+
+       public String getTextNumberOfPackeges(int index){
+        return servicesComponents.get(index).getInput().getText();
+       }
+
 
     public String getTextOrderAmount() {
         String amount = getOrderAmount().getText();
@@ -179,25 +186,9 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
     }
 
-    public List<WebElement> getNumberOfPackeges() {
-        if (numberOfPackeges == null) {
-            numberOfPackeges = new ArrayList<>();
-            numberOfPackeges = driver.findElements(OrderDetailsPageLocators.NUMBER_OF_PACKEGES.getPath());
-        }
-        return numberOfPackeges;
-    }
-
-    public OrderDetailsPage fillAllFieldsForServices(int value) {
-        logger.info("fill all fields for services");
-        for (ServicesComponents servicesComponents : getServicesComponents()) {
-            servicesComponents.getInput().sendKeys(Integer.toString(value));
-        }
-        return this;
-    }
 
     public List<WebElement> getTotalLabels() {
         if (totalLabels == null) {
-            totalLabels = new ArrayList<>();
             totalLabels = driver.findElements(OrderDetailsPageLocators.TOTAL.getPath());
         }
         return totalLabels;
@@ -210,6 +201,33 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return sum;
     }
+
+    public OrderDetailsPage fillAllFieldsForServices(int value) {
+        logger.info("fill all fields for services");
+        for (ServicesComponents servicesComponents : getServicesComponents()) {
+            servicesComponents.getInput().sendKeys(Integer.toString(value));
+        }
+        return this;
+    }
+
+    }
+    public int getTotalSum(){
+        int sum = 0;
+        for (WebElement element:getTotalLabels()) {
+            String[] array = element.getText().split( " ");
+            sum+= Integer.parseInt(array[0]);
+        }
+        return sum;
+    }
+
+    public OrderDetailsPage fillAllFieldsForServices(int value) {
+        logger.info("fill all fields for services");
+        for (ServicesComponents servicesComponents : getServicesComponents()) {
+            servicesComponents.getInput().sendKeys(Integer.toString(value));
+        }
+        return this;
+    }
+
 
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
@@ -342,11 +360,24 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return orderNumberInput;
     }
 
+
     public LabelElement getIncorrectOrderMessage() {
         incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
         return incorrectOrderMessage;
     }
 
+    public String getTextIncorrectOrderMassage(){
+        return getIncorrectOrderMessage().getText();
+    }
+
+    public LabelElement getMinimumErrorMassage(){
+        minimumOrderErrorMassage = new LabelElement(driver,OrderDetailsPageLocators.MINIMUM_ORDER_ERROR_MASSAGE);
+        return minimumOrderErrorMassage;
+    }
+
+    public String getTextOfMinimumErrorMassage(){
+        return getMinimumErrorMassage().getText();
+    }
     public ButtonElement getAddAnotherOrderNumberButton() {
         addAnotherOrderNumber = new ButtonElement(driver, OrderDetailsPageLocators.ADD_ANOTHER_ORDER_BUTTON);
         return addAnotherOrderNumber;
@@ -402,6 +433,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         getOrderNumberSecondInput().sendKeys(orderNumber);
         return this;
     }
+
 
     public OrderDetailsPage clickAnotherOrderNumberButton() {
         getAddAnotherOrderNumberButton().click();
