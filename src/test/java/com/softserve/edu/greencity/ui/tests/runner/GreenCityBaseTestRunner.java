@@ -44,7 +44,7 @@ public abstract class GreenCityBaseTestRunner {
     @BeforeSuite
     public void beforeSuite() {
         new CredentialProperties().checkCredentialsExist();
-        optionsArguments();
+        new DriverSetup().optionsArguments();
         WebDriverManager.chromedriver().setup();
     }
 
