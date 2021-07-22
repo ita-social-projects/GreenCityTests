@@ -95,8 +95,9 @@ personalDataPage.signOut();
         softAssert.assertTrue(personalDataPage.getNextButton().isActive(), "Button from 'Personal Data Page' is not active");
         //TODO method for wait
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
-
+//ToDO for displaying
         softAssert.assertEquals(
+
                 paymentPage.returnAllOrderNumbers(), "1111111111,2222222222", "Order numbers aren't displayed correctly");
         softAssert.assertAll();
 
@@ -107,6 +108,24 @@ personalDataPage.signOut();
     @Description("GC-2061")
     public void allCorrectInformationAboutOrderDisplayedCorrectly() {
         logger.info("Verify that user sees all correct information about the order");
+        orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(2) + 1)
+                .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.getActivateCertificateButton().click();
+        orderDetailsPage.getYesWaitingOrderButton().click();
+        orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
+                .inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
+        personalDataPage.fullPersonalData(NAME, SURNAME, PHONE, GMAIL);
+        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
+        addAddressPopupComponent.fillAllFields(
+                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
+                .getAddButton().click();//ask about another method
+        // personalDataPage.inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
+        //TODO method for wait
+        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        logger.info("Verify all services");
+        softAssert.assertTrue(paymentPage.);
+
 
 
     }
