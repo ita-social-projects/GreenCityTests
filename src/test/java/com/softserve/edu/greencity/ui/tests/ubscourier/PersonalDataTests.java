@@ -60,7 +60,7 @@ public class PersonalDataTests extends GreenCityTestRunner {
     @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
     public void verifyErrorMessageShown() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton().clearPersonalDataFields();
-        //        personalDataPage.clickOnPaymentButton();
+//      personalDataPage.clickOnPaymentButton();
         String expectedNameMessage = "This field is required.";
         String nameMessage = personalDataPage.getErrorNameMessage();
         String expectedSurnameMessage = "This field is required.";
