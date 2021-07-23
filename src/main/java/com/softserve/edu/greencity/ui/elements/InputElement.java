@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.elements;
 
 import com.softserve.edu.greencity.ui.locators.Locator;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -23,6 +24,7 @@ public class InputElement extends BaseElement {
 
     public void clearInput() {
         this.element.clear();
+        this.element.sendKeys("a"+ Keys.BACK_SPACE);
     }
 
     public boolean isEmpty() {
