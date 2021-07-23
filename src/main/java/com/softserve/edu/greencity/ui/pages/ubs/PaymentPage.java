@@ -253,6 +253,7 @@ public class PaymentPage extends UBSCourierBasePage {
         return payment;
     }
 
+
     public String returnAllOrderNumbers() {
         String s = "";
         List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
@@ -260,6 +261,18 @@ public class PaymentPage extends UBSCourierBasePage {
             s += orders.getText().trim();
         }
         return s;
+    }
+
+    public boolean isAllOrderNumbersDisplayed() {
+
+        List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
+        for (WebElement orders : orderPath) {
+            if(orders.isDisplayed()==false){
+                return false;
+            }
+        }
+       return true;
+
     }
 
     public String getTextFromOrderNumbers() {
@@ -271,6 +284,7 @@ public class PaymentPage extends UBSCourierBasePage {
 
     }
 
+
     public String getCommentOrderText() {
         return getCommentToOrder().getText();
 
@@ -280,5 +294,10 @@ public class PaymentPage extends UBSCourierBasePage {
         return getCommentToAddress().getText();
 
     }
+//    public String getStreetHoueCorp(String street,int house,String corp ){
+//         getStreet().getText();
+//         String s=String.valueOf(house);
+//
+//    }
 
 }
