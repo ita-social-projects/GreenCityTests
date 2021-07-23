@@ -246,6 +246,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public List<AnotherOrderNumberComponents> getAnotherOrderNumber() {
+        waitsSwitcher.sleep(1000);
         anotherOrderNumber = new ArrayList<>();
         for (WebElement webElement : getOrderNumber()) {
             anotherOrderNumber.add(new AnotherOrderNumberComponents(driver, webElement));
@@ -396,7 +397,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         getAdditionalCertificates();
         return this;
     }
-
+    public OrderDetailsPage clickAddOrderButton(){
+        getAddAnotherOrderNumberButton().click();
+     //   getAnotherOrderNumber();
+        return this;
+    }
     public OrderDetailsPage clickNoWaitingForAnOrderButton() {
         getNoWaitingOrderButton().click();
         return this;
