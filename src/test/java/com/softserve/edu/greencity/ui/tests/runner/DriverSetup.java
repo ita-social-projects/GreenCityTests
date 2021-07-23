@@ -2,11 +2,10 @@ package com.softserve.edu.greencity.ui.tests.runner;
 
 import com.softserve.edu.greencity.ui.tools.grid.GridHub;
 import com.softserve.edu.greencity.ui.tools.grid.RegisterChrome;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-public class DriverSetup extends GreenCityTestRunner {
+public class DriverSetup extends GreenCityTestRunnerWithLoginLogout {
 
-    void optionsArguments() {
+    public void optionsArguments() {
         if (remote) {
             options.addArguments("--disable-gpu");
             options.addArguments("--disable-popup-blocking");

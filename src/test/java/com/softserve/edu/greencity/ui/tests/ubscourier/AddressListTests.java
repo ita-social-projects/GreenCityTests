@@ -7,14 +7,14 @@ import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
 import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class AddressListTests extends GreenCityTestRunner {
+public class AddressListTests extends GreenCityTestRunnerWithLoginLogout {
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
 

@@ -33,7 +33,7 @@ For example
 #### Run remotely:
 * set in google sheet `remote TRUE`
 
-Value of `remote` credential  transferred to com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner, boolean remote = ValueProvider.remote();
+Value of `remote` credential  transferred to com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout, boolean remote = ValueProvider.remote();
 
 # Credentials 
 ### Existing file
@@ -101,7 +101,7 @@ remote	TRUE
 <p>
 
 ```
-com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner.setUpBeforeClass
+com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout.setUpBeforeClass
 ChromeOptions options = new ChromeOptions();
 * options.addArguments("--disable-gpu");
 * options.addArguments("--disable-popup-blocking");

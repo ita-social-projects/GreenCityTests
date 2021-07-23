@@ -49,7 +49,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
         Assert.assertEquals("3\nConfirmation", paymentPage.getPaymentButton().getText());
     }
 
-    @Test(testName = "GC-2042", description = "GC-2042")
+    @Test(testName = "GC-2042", description = "GC-2042") //Need to connect to the database for check
     @Description("Verify if the system save the order after interrupt the order")
     public void verifySaveOrderAfterInterrupt() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
@@ -65,7 +65,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
     }
 
     @Test(testName = "GC-2041", description = "GC-2041")
-    @Description("Verify if the system erase all entered user data after interrupt the order")
+    @Description("Verify if the system continue making order after clicking by 'Continue' button")
     public void verifyEraseDataAfterInterrupt() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
         personalDataPage.inputName("Lina")
@@ -84,5 +84,4 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunner {
         }//TODO method for wait
         Assert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
     }
-
 }

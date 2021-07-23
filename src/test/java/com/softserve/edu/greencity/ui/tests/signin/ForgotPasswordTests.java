@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.signin;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.ForgotPasswordComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.api.mail.GoogleMailAPI;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
@@ -13,7 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.*;
 
-public class ForgotPasswordTests extends GreenCityTestRunner {
+public class ForgotPasswordTests extends GreenCityTestRunnerWithLoginLogout {
     String cssBorderColorProperty;
     String expectedBorderColorRBG;
 
