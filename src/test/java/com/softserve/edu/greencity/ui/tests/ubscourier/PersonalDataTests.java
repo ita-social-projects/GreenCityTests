@@ -55,8 +55,7 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         Assert.assertEquals("2\nPersonal data", personalDataButtonText);
     }
 
-    //TODO modify after bug fixed/requirements changed
-    @Test(testName = "GC-2046", description = "GC-2046") // bug, error message does not appear automatically
+    @Test(testName = "GC-2046", description = "GC-2046")
     @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
     public void verifyErrorMessageShown() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton().clearPersonalDataFields();
