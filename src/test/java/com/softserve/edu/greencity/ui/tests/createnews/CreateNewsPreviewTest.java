@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
-import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
@@ -8,7 +7,7 @@ import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
@@ -16,7 +15,7 @@ import org.testng.annotations.*;
 import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
-public class CreateNewsPreviewTest extends GreenCityTestRunner {
+public class CreateNewsPreviewTest extends GreenCityTestRunnerWithLoginLogout {
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }

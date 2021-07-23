@@ -7,7 +7,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.DeleteSocialNetworkPopUpComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.SocialNetworkComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EditProfileService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -15,7 +15,7 @@ import org.testng.annotations.*;
 
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 
-public class SocialNetworkLinkTest extends GreenCityTestRunner {
+public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
     private EditProfilePage editProfilePage;
     private User user = UserRepository.get().temporary();
 

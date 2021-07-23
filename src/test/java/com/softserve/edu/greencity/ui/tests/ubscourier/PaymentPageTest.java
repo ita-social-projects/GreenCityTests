@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.*;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-public class PaymentPageTest extends GreenCityTestRunner {
+public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
 
     public final String NAME = "Jack";
     public final String SURNAME = "London";

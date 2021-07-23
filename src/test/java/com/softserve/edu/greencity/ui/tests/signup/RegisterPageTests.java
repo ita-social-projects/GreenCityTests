@@ -7,7 +7,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import io.qameta.allure.Description;
@@ -19,7 +19,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class RegisterPageTests extends GreenCityTestRunner implements StableWebElementSearch {
+public class RegisterPageTests extends GreenCityTestRunnerWithLoginLogout implements StableWebElementSearch {
 
     @DataProvider
     public Object[][] validUserCredentials() {

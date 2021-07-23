@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.editprofile;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -14,7 +14,7 @@ import org.testng.annotations.Test;
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 import static com.softserve.edu.greencity.ui.tools.GenerateString.generateString;
 
-public class EditProfileFieldsWarningsTests extends GreenCityTestRunner {
+public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLoginLogout {
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();

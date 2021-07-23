@@ -7,29 +7,36 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithoutLogin;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.asserts.SoftAssert;
 
-public class UBSCertificateTest extends GreenCityTestRunner {
+public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     private OrderDetailsPage orderDetailsPage;
     private WelcomePage welcomePage;
-    @BeforeMethod
+    @BeforeClass
     public void login(){
         User user = UserRepository.get().temporary();
-        SoftAssert softAssert = new SoftAssert();
-        welcomePage = loadApplication();
-        orderDetailsPage = welcomePage.signIn()
+        welcomePage = loadApplication()
+                .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuUBSCourier();
+                .navigateToWelcomePage();
+
+    }
+    @BeforeMethod
+    public void navigateToUBS(){
+        orderDetailsPage = loadApplication().navigateMenuUBSCourier();
         orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("21");
     }
 
     @AfterMethod
     public void cancelOrder(){
+        orderDetailsPage.clickOnCancelButtonWhenChangesPresent().clickCancelOrderButton();
+    }
+    @AfterClass
+    public void logOut(){
         welcomePage.signOut();
     }
 
@@ -49,10 +56,11 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-  
+
     @Test(testName = "GC-1975", description = "GC-1975")
     @Description("Verify that the user can order services when he applies the certificate, and leaves a comment")
     public void certificateAndComment(){
+
         orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
                 .clickActivateButton()
                 .getCommentTextarea()
@@ -62,8 +70,8 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         personalDataPage.clickOnBackButton();
         softAssert.assertEquals(orderDetailsPage.getCommentTextarea().getText(), UBSDataStrings.ORDER_COMMENT.getMessage(), "comments mismatch");
 
-        softAssert.assertEquals(orderDetailsPage.getCertificateInput().getValue().replace("-",""),Certificates.ACTIVE_1000.getCertificate(), "Certificates do not match");
-        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getValue(),"20", "input quantuty mismatch");
+        softAssert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),Certificates.ACTIVE_1000.getCertificate(), "Certificates do not match");
+        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getValue(),"21", "input quantuty mismatch");
         softAssert.assertAll();
     }
 
@@ -86,7 +94,8 @@ public class UBSCertificateTest extends GreenCityTestRunner {
     @Test(testName = "GC-1990", description = "GC-1990")
     @Description("System counts discount after user enters two or more certificates")
     public void twoCertificatesTest(){
-        orderDetailsPage.getServicesComponents().get(1).getInput().sendKeys("5");
+        orderDetailsPage.getServicesComponents().get(1).getInput().clearInput();
+        orderDetailsPage.getServicesComponents().get(2).getInput().sendKeys("15");
         orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
                 .clickActivateButton()
                 .clickAddCertificateButton()
@@ -128,4 +137,18 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(),"Certificate not found; check that the data is correct.");
         softAssert.assertAll();
     }
+    @Test(testName = "GC-1982", description = "GC-1982")
+    @Description("Verify that system does not show the link addCertificate")
+    public void checkAddCertificateButtonIsAbsent(){
+        orderDetailsPage.getServicesComponents().get(0).getInput().clearInput();
+        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("10");
+        String message = orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
+                .clickActivateButton()
+                .getCertificateMessage().getText();
+        softAssert.assertEquals(message,UBSDataStrings.BONUS_500_CERTIFICATE_MESSAGE_ENG.getMessage(),"Messages mismatch");
+        softAssert.assertFalse(orderDetailsPage.isAddCertificateBtnPresent(),"Check Add certificate button");
+        softAssert.assertEquals("0 UAH",orderDetailsPage.getTextAmountDue(), "Due amounts are different.");
+        softAssert.assertAll();
+    }
+
 }

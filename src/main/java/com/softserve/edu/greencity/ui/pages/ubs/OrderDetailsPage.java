@@ -289,6 +289,11 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         addCertifircateButton = new ButtonElement(driver, OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON);
         return addCertifircateButton;
     }
+    public boolean isAddCertificateBtnPresent(){
+        if(driver.findElements(OrderDetailsPageLocators.ADD_CERTIFICATE_BUTTON.getPath()).size() >0){
+            return true;
+        }else return false;
+    }
     public int getDiscountFromMessage(String message){
         String[] array = message.split(" ");
         return Integer.parseInt(array[2]);
