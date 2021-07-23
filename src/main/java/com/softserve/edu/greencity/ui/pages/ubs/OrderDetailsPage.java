@@ -193,24 +193,24 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return totalLabels;
     }
-    public int getTotalSum(){
-        int sum = 0;
-        for (WebElement element:getTotalLabels()) {
-            String[] array = element.getText().split( " ");
-            sum+= Integer.parseInt(array[0]);
-        }
-        return sum;
-    }
+//    public int getTotalSum(){
+//        int sum = 0;
+//        for (WebElement element:getTotalLabels()) {
+//            String[] array = element.getText().split( " ");
+//            sum+= Integer.parseInt(array[0]);
+//        }
+//        return sum;
+//    }
+//
+//    public OrderDetailsPage fillAllFieldsForServices(int value) {
+//        logger.info("fill all fields for services");
+//        for (ServicesComponents servicesComponents : getServicesComponents()) {
+//            servicesComponents.getInput().sendKeys(Integer.toString(value));
+//        }
+//        return this;
+//    }
 
-    public OrderDetailsPage fillAllFieldsForServices(int value) {
-        logger.info("fill all fields for services");
-        for (ServicesComponents servicesComponents : getServicesComponents()) {
-            servicesComponents.getInput().sendKeys(Integer.toString(value));
-        }
-        return this;
-    }
 
-    }
     public int getTotalSum(){
         int sum = 0;
         for (WebElement element:getTotalLabels()) {

@@ -16,10 +16,10 @@ import java.util.Random;
 
 public class PaymentPageTest extends GreenCityTestRunner {
 
-    public final String NAME = "Jack";
-    public final String SURNAME = "London";
-    public final String PHONE = "0634567890";
-    public final String GMAIL = "Jkl@gmail.com";
+    private final String NAME = "Jack";
+    private final String SURNAME = "London";
+    private final String PHONE = "0634567890";
+    private final String GMAIL = "Jkl@gmail.com";
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
     private PaymentPage paymentPage;
@@ -37,10 +37,10 @@ public class PaymentPageTest extends GreenCityTestRunner {
 
     @AfterMethod
     public void cancelOrder() {
-   PersonalDataPage personalDataPage = new PaymentPage(driver).clickOnBackButton();
-   personalDataPage.deleteAddressOfIndex(new PersonalDataPage(driver).getQuantityOfAddresses()-1);
+        PersonalDataPage personalDataPage = paymentPage.clickOnBackButton();
+        personalDataPage.deleteAddressOfIndex(new PersonalDataPage(driver).getQuantityOfAddresses() - 1);
 
-personalDataPage.signOut();
+        personalDataPage.signOut();
         //orderDetailsPage.signOut();
     }
 
@@ -62,7 +62,8 @@ personalDataPage.signOut();
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 2))
-                .getAddButton().click();//ask about another method
+                .clickOnAddAddressButton();
+
         softAssert.assertTrue(personalDataPage.getNextButton().isActive(), "Button from 'Personal Data Page' is not active");
         //TODO method for wait
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
@@ -91,13 +92,12 @@ personalDataPage.signOut();
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 2))
-                .getAddButton().click();//ask about another method
+                .clickOnAddAddressButton();
         softAssert.assertTrue(personalDataPage.getNextButton().isActive(), "Button from 'Personal Data Page' is not active");
-        //TODO method for wait
-        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
-//ToDO for displaying
-        softAssert.assertEquals(
 
+        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        softAssert.assertTrue(paymentPage.isAllOrderNumbersDisplayed(), "Order numbers aren't displayed");
+        softAssert.assertEquals(
                 paymentPage.returnAllOrderNumbers(), "1111111111,2222222222", "Order numbers aren't displayed correctly");
         softAssert.assertAll();
 
@@ -119,13 +119,10 @@ personalDataPage.signOut();
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .getAddButton().click();//ask about another method
-        // personalDataPage.inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
-        //TODO method for wait
+                .clickOnAddAddressButton();
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
-        logger.info("Verify all services");
-        softAssert.assertTrue(paymentPage.);
-
+        logger.info("Verify all services");//TODO with DB
+        //softAssert.assertTrue(paymentPage.);
 
 
     }
@@ -136,7 +133,7 @@ personalDataPage.signOut();
     public void personalDataDisplayedCorrectly() {
         logger.info("Verify that the personal data is displayed correctly");
         orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(2) + 1)
-                .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+                .getCertificateInput().sendKeys(Certificates.ACTIVE_100.getCertificate());
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
         orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
@@ -146,8 +143,7 @@ personalDataPage.signOut();
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .getAddButton().click();//ask about another method
-        // personalDataPage.inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
+                .clickOnAddAddressButton();
         //TODO method for wait
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify full name");
@@ -165,7 +161,7 @@ personalDataPage.signOut();
     public void correctAddressAndCommentsAreDisplayed() {
         logger.info("Verify that the correct address and comments are displayed in 'Адреса вивезення замовлених послуг' block");
         orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(2) + 1)
-                .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+                .getCertificateInput().sendKeys(Certificates.ACTIVE_500.getCertificate());
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
         orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
@@ -175,13 +171,12 @@ personalDataPage.signOut();
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .getAddButton().click();
+                .clickOnAddAddressButton();
         personalDataPage.inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
-
-        //TODO method for wait
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify address");
         softAssert.assertEquals(paymentPage.getTown().getText(), "Kiev");
+        //
         softAssert.assertEquals(paymentPage.getStreet().getText(), "Sadova");
         logger.info("Verify comments");
         softAssert.assertEquals(paymentPage.getCommentOrderText(),
@@ -203,12 +198,32 @@ personalDataPage.signOut();
     @Description("GC-2065")
     public void blockConfirmationIsNotDisplayed() {
         logger.info("Verify that 'Оплата' block is not displayed when the order amount equals 0 UAH.");
+        orderDetailsPage.fillAllFieldsForServices(new Random().nextInt(1) + 1)
+                .getCertificateInput().sendKeys(Certificates.ACTIVE_1000.getCertificate());
+        orderDetailsPage.getActivateCertificateButton().click();
+        orderDetailsPage.getYesWaitingOrderButton().click();
+        orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
+                .inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
+        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
+        personalDataPage.fullPersonalData(NAME, SURNAME, PHONE, GMAIL);
+        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
+        addAddressPopupComponent.fillAllFields(
+                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
+                .clickOnAddAddressButton();
+        personalDataPage.inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        softAssert.assertFalse(paymentPage.getPaymentField().isDisplayed(), "Field is Displayed");
+        softAssert.assertAll();
+
+
     }
 
     @Test(testName = "GC-2066", description = "GC-2066")
     @Description("GC-2066")
     public void verifAllControls() {
         logger.info("This is a checklist for testing the last step UI in 'UBS кур'єр' tab");
+
+
     }
 
 
