@@ -15,7 +15,6 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
 
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
-    private PaymentPage paymentPage;
 
     @BeforeMethod
     public void login() {
