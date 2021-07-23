@@ -73,6 +73,14 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public PersonalDataPage clearPersonalDataFields() {
+        nameField.clearInput();
+        surnameField.clearInput();
+        phoneField.clearInput();
+        emailField.clearInput();
+        return this;
+    }
+
     public String getFullName(){
         String fullName=nameField.getValue()+" "+surnameField.getValue();
         return fullName;
@@ -87,18 +95,22 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public String getErrorNameMessage() {
+        errorNameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_NAME);
         return errorNameMessage.getText();
     }
 
     public String getErrorSurnameMessage() {
+        errorSurnameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_SURNAME);
         return errorSurnameMessage.getText();
     }
 
     public String getErrorPhoneMessage() {
+        errorPhoneMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_PHONE);
         return errorPhoneMessage.getText();
     }
 
     public String getErrorEmailMessage() {
+        errorEmailMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_EMAIL);
         return errorEmailMessage.getText();
     }
 

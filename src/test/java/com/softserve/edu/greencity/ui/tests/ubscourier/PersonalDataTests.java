@@ -55,18 +55,19 @@ public class PersonalDataTests extends GreenCityTestRunner {
         Assert.assertEquals("2\nPersonal data", personalDataButtonText);
     }
 
-    @Test(testName = "GC-2046", description = "GC-2046")
+    //TODO modify after bug fixed/requirements changed
+    @Test(testName = "GC-2046", description = "GC-2046") // bug, error message does not appear automatically
     @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
     public void verifyErrorMessageShown() {
-        personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.clickOnNextButton();
-        String expectedNameMessage = "This field is required";
+        personalDataPage = orderDetailsPage.clickOnPersonalDataButton().clearPersonalDataFields();
+        //        personalDataPage.clickOnPaymentButton();
+        String expectedNameMessage = "This field is required.";
         String nameMessage = personalDataPage.getErrorNameMessage();
-        String expectedSurnameMessage = "This field is required";
+        String expectedSurnameMessage = "This field is required.";
         String surnameMessage = personalDataPage.getErrorSurnameMessage();
-        String expectedPhoneMessage = "This field is required";
+        String expectedPhoneMessage = "This field is required.";
         String phoneMessage = personalDataPage.getErrorPhoneMessage();
-        String expectedEmailMessage = "This field is required";
+        String expectedEmailMessage = "This field is required.";
         String emailMessage = personalDataPage.getErrorEmailMessage();
 
         softAssert.assertEquals(nameMessage, expectedNameMessage);
