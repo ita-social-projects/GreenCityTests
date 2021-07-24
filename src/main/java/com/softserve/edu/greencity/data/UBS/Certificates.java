@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.data.UBS;
 
 public enum Certificates {
-    ACTIVE_1000("2222-2222"),
+    ACTIVE_1000("4444-4444"),
     ACTIVE_100("5554-3247"),
     ACTIVE_500("3999-0001"),
     ACTIVE_300("5554-3248"),

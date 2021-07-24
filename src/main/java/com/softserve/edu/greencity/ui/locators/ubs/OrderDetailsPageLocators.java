@@ -32,9 +32,9 @@ public enum OrderDetailsPageLocators implements Locator {
 
     INCORRECT_ORDER_NUMBER_MESSAGE(By.xpath("//small[@class='text-danger ng-star-inserted']")),
 
-    ADD_ANOTHER_ORDER_BUTTON(By.cssSelector("div.form-group.shop_submit > button")),
-    ANOTHER_ORDER_NUMBER(By.cssSelector("div.form-group.shop_submit")),
-    ANOTHER_ORDER_NUMBER_INPUT(By.cssSelector("div.form-group.shop_submit > div:nth-child(3) > input")),
+    ADD_ANOTHER_ORDER_BUTTON(By.cssSelector(".shop_submit button")),
+    ANOTHER_ORDER_NUMBER(By.cssSelector("div[formarrayname='additionalOrders']")),
+    ANOTHER_ORDER_NUMBER_INPUT(By.cssSelector("input")),
 
     COMMENT_LABEL(By.cssSelector("app-ubs-order-details .comment h3")),
     COMMENT_TEXTAREA(By.cssSelector("app-ubs-order-details .comment textarea")),

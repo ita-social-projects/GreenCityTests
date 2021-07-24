@@ -55,11 +55,17 @@ public class PersonalDataPage extends UBSCourierBasePage {
         nameField.sendKeys(name);
         return this;
     }
+    public InputElement getNameInput(){
+        return nameField;
+    }
 
     public PersonalDataPage inputSurname(String surname) {
         surnameField.clearInput();
         surnameField.sendKeys(surname);
         return this;
+    }
+    public InputElement getLastNameInput(){
+        return surnameField;
     }
 
     public PersonalDataPage inputPhone(String phone) {
@@ -67,13 +73,17 @@ public class PersonalDataPage extends UBSCourierBasePage {
         phoneField.sendKeys(phone);
         return this;
     }
-
+    public InputElement getPhoneInput(){
+        return phoneField;
+    }
     public PersonalDataPage inputEmail(String email) {
         emailField.clearInput();
         emailField.sendKeys(email);
         return this;
     }
-
+    public InputElement getEmailInput(){
+        return emailField;
+    }
     public PersonalDataPage clearPersonalDataFields() {
         nameField.clearInput();
         surnameField.clearInput();
@@ -116,7 +126,8 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public PersonalDataPage fullPersonalData(String name,String surname,String phone,String gmail){
-        logger.info("fill full fields for personal data");
+        logger.info("" +
+                " full fields for personal data");
         return inputName(name)
                 .inputSurname(surname)
                 .inputPhone(phone)
@@ -128,6 +139,9 @@ public class PersonalDataPage extends UBSCourierBasePage {
         commentToAddressField.clearText();
         commentToAddressField.enterText(comment);
         return this;
+    }
+    public TextAreaElement getCommentInput(){
+        return commentToAddressField;
     }
 
     public ButtonElement getNextButton() {
@@ -250,6 +264,12 @@ public class PersonalDataPage extends UBSCourierBasePage {
             logger.error("The is no element with index #" + i);
         }
         return this;
+    }
+    public PersonalDataPage deleteAllAddresses(){
+        for ( AddressComponent addressComponent:getListOfAddresses()) {
+            addressComponent.clickOnDeleteAddressButton();
+        }
+        return new PersonalDataPage(driver);
     }
 
     public ButtonElement getAddAddressButton() {

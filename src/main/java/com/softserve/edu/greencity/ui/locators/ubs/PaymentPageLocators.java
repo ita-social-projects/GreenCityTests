@@ -27,9 +27,9 @@ public enum PaymentPageLocators implements Locator {
     RECYCLED_MATERIALS_NUMBER_TOTAL_SUM_LABEL(By.xpath("//app-ubs-submit-order//div[@class='services']//li[position()=3]/span[position()=5]")),
 
 
-    ORDER_AMOUNT_LABEL(By.cssSelector("app-ubs-submit-order p.total-content:first-child")),
-    CERTIFICATE_LABEL(By.xpath("//app-ubs-submit-order//div[@class='showTotal']//p[@class='total-content ng-star-inserted']")),
-    AMOUNT_DUE_LABEL(By.cssSelector("app-ubs-submit-order p.total-content:last-child")),
+    ORDER_AMOUNT_LABEL(By.cssSelector("app-ubs-submit-order p.total-content:first-child strong")),
+    CERTIFICATE_LABEL(By.xpath("//app-ubs-submit-order//div[@class='showTotal']//p[@class='total-content ng-star-inserted']//strong")),
+    AMOUNT_DUE_LABEL(By.cssSelector("app-ubs-submit-order p.total-content:last-child strong")),
 
 
     DELIVERY_FROM_ECO_STORE_LABEL(By.xpath("//div[@class='order-info ng-star-inserted']/p")),
