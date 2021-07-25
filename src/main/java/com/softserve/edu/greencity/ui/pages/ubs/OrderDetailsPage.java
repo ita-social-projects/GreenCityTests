@@ -246,16 +246,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
-        //todo remove possible return null!!!
-        AdditionalCertificatesComponents component = null;
-        Iterator<AdditionalCertificatesComponents> iterator = getAdditionalCertificates().iterator();
-        while (iterator.hasNext()) {
-            AdditionalCertificatesComponents next = iterator.next();
-            if (next.getCertificateInput().getText().equalsIgnoreCase(sertificate)) {
-                component = next;
-            }
-        }
-        return component;
+        return getAdditionalCertificates().stream()
+                .filter(component -> component.getCertificateInput().getText().equalsIgnoreCase(sertificate)).findAny().orElse(null);
     }
 
     public List<AnotherOrderNumberComponents> getAnotherOrderNumber() {

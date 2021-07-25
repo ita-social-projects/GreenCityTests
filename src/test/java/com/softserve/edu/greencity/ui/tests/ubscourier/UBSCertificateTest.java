@@ -184,13 +184,8 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         checkPersonalDataAsserts(personalDataPage);
         paymentPage = personalDataPage.clickOnNextButton();
         checkPaymentPageAsserts(dueAmount, orderAmount, certificateAmount, paymentPage);
-
+        paymentPage.clickOnOrderDetailsButton();
         softAssert.assertAll();
-
-
-
-
-
     }
 
     private void checkPaymentPageAsserts(String dueAmount, String orderAmount, String certificateAmount, PaymentPage paymentPage) {

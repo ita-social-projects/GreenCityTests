@@ -266,9 +266,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
     public PersonalDataPage deleteAllAddresses(){
-        for ( AddressComponent addressComponent:getListOfAddresses()) {
-            addressComponent.clickOnDeleteAddressButton();
-        }
+//        for ( AddressComponent addressComponent:getListOfAddresses()) {
+//            addressComponent.clickOnDeleteAddressButton();
+//        }
+        getListOfAddresses().stream().forEach(addressComponent -> addressComponent.clickOnDeleteAddressButton());
         return new PersonalDataPage(driver);
     }
 
