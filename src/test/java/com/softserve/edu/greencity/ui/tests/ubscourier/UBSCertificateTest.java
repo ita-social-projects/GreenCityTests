@@ -4,6 +4,7 @@ import com.softserve.edu.greencity.data.UBS.Certificates;
 import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
+import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
@@ -32,13 +33,15 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     }
     @BeforeMethod
     public void navigateToUBS(){
-        orderDetailsPage = loadApplication().navigateMenuUBSCourier();
-        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("21");
+        orderDetailsPage = loadApplication()
+                .navigateMenuUBSCourier();
+        orderDetailsPage.fillOldClothes20L("21");
     }
 
     @AfterMethod
     public void cancelOrder(){
-        orderDetailsPage.clickOnCancelButtonWhenChangesPresent().clickCancelOrderButton();
+        orderDetailsPage.clickOnCancelButtonWhenChangesPresent()
+                .clickCancelOrderButton();
     }
     @AfterClass
     public void logOut(){
@@ -91,15 +94,13 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     @Description("Verify first four numeric characters of the certificate,system  enters a dash according to the certificate format")
     public void dashTest() {
         orderDetailsPage.inputCertificate(Certificates.FOUR_DIGITS.getCertificate());
-        Assert.assertEquals(orderDetailsPage.getCertificateInput().getValue(), UBSDataStrings.FOUR_DIGITS.getMessage(), "NotEqual");
-        //TODO WRITE DEFECT REPORT???
+        Assert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),UBSDataStrings.FOUR_DIGITS.getMessage(),"NotEqual");
     }
 
     @Test(testName = "GC-1990", description = "GC-1990")
     @Description("System counts discount after user enters two or more certificates")
     public void twoCertificatesTest(){
-        orderDetailsPage.getServicesComponents().get(1).getInput().clearInput();
-        orderDetailsPage.getServicesComponents().get(2).getInput().sendKeys("15");
+        orderDetailsPage.fillOldClothes120L("5");
         orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
                 .clickActivateButton()
                 .clickAddCertificateButton()
@@ -115,7 +116,7 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         softAssert.assertEquals(totalSum - discountFromLabel, due);
         softAssert.assertEquals(String.format(UBSDataStrings.CORRECT_CERTIFICATE_THREE_ACTIVE.getMessage()), message, "messages mismatch");
         softAssert.assertAll();
-        //Todo report bug
+        //Test can fail due to front defect.
     }
 
     @Test(testName = "GC-1965", description = "GC-1965")
@@ -133,8 +134,7 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     public void wrongCertificatesInput() {
         orderDetailsPage.inputCertificate(Certificates.USED_500.getCertificate());
         orderDetailsPage.clickActivateButton();
-        softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(), "Certificate has already been used 2021-11-28");
-        //todo report future dates in certificate
+        softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(),"Certificate has already been used 2021-11-28");
         orderDetailsPage.inputCertificate(Certificates.EXPIRED_1000.getCertificate());
         orderDetailsPage.clickActivateButton();
         softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(), "Certificate is invalid. Certificate validity is up to 2021-06-24");
@@ -196,8 +196,7 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     @Test(testName = "GC-1982", description = "GC-1982")
     @Description("Verify that system does not show the link addCertificate")
     public void checkAddCertificateButtonIsAbsent(){
-        orderDetailsPage.getServicesComponents().get(0).getInput().clearInput();
-        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("10");
+        orderDetailsPage.fillOldClothes20L("10");
         String message = orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
                 .clickActivateButton()
                 .getCertificateMessage().getText();

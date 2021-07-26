@@ -103,6 +103,9 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         String[] array = getCertificateLabel().getText().replace("-", "").split(" ");
         return Integer.parseInt(array[0]);
     }
+    public String getCertificateAmount(){
+        return getCertificateLabel().getText();
+    }
 
     public OrderDetailsPage clickUP() {
         Actions builder = new Actions(driver);
@@ -210,6 +213,16 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         }
         return this;
     }
+    public OrderDetailsPage fillOldClothes20L(String quantity){
+        getServicesComponents().get(0).getInput().clearInput();
+        getServicesComponents().get(0).getInput().sendKeys(quantity);
+        return this;
+    }
+    public OrderDetailsPage fillOldClothes120L(String quantity){
+        getServicesComponents().get(1).getInput().clearInput();
+        getServicesComponents().get(1).getInput().sendKeys(quantity);
+        return this;
+    }
 
     public List<AdditionalCertificatesComponents> getAdditionalCertificates() {
         additionalCertificates = new ArrayList<>();
@@ -235,16 +248,8 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public AdditionalCertificatesComponents findCertificateByNumber(String sertificate) {
-        //todo remove possible return null!!!
-        AdditionalCertificatesComponents component = null;
-        Iterator<AdditionalCertificatesComponents> iterator = getAdditionalCertificates().iterator();
-        while (iterator.hasNext()) {
-            AdditionalCertificatesComponents next = iterator.next();
-            if (next.getCertificateInput().getText().equalsIgnoreCase(sertificate)) {
-                component = next;
-            }
-        }
-        return component;
+        return getAdditionalCertificates().stream()
+                .filter(component -> component.getCertificateInput().getText().equalsIgnoreCase(sertificate)).findAny().orElse(null);
     }
 
     public List<AnotherOrderNumberComponents> getAnotherOrderNumber() {
@@ -350,7 +355,13 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         orderNumberInput = new InputElement(driver, OrderDetailsPageLocators.ORDER_NUMBER_SECOND_INPUT);
         return orderNumberInput;
     }
-
+    public OrderDetailsPage fillOrderByPosition(int position,String orderNumber){
+        getAnotherOrderNumber().get(position).getAnotherOrderInput().sendKeys(orderNumber);
+        return this;
+    }
+    public String getOrderValueByPosition(int position){
+        return getAnotherOrderNumber().get(position).getAnotherOrderInput().getAttribute("value");
+    }
 
     public LabelElement getIncorrectOrderMessage() {
         incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
