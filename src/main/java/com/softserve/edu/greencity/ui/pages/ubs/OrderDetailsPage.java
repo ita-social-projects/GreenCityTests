@@ -448,7 +448,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
 
     public CancelOrderPopupComponent clickOnCancelButtonWhenChangesPresent() {
         getCancelButton().click();
-        return new CancelOrderPopupComponent(driver, this, new WelcomePage(driver));
+        return new Ca ncelOrderPopupComponent(driver, this, new WelcomePage(driver));
     }
 
     public WelcomePage clickOnCancelButtonWhenChangesAbsent() {

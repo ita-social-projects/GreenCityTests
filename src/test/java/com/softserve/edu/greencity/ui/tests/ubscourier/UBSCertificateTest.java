@@ -90,7 +90,6 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     public void dashTest(){
         orderDetailsPage.inputCertificate(Certificates.FOUR_DIGITS.getCertificate());
         Assert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),UBSDataStrings.FOUR_DIGITS.getMessage(),"NotEqual");
-        //TODO WRITE DEFECT REPORT???
     }
 
     @Test(testName = "GC-1990", description = "GC-1990")
@@ -129,7 +128,6 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         orderDetailsPage.inputCertificate(Certificates.USED_500.getCertificate());
         orderDetailsPage.clickActivateButton();
         softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(),"Certificate has already been used 2021-11-28");
-        //todo report future dates in certificate
         orderDetailsPage.inputCertificate(Certificates.EXPIRED_1000.getCertificate());
         orderDetailsPage.clickActivateButton();
         softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(), "Certificate is invalid. Certificate validity is up to 2021-06-24");
@@ -150,78 +148,5 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         softAssert.assertEquals("0 UAH",orderDetailsPage.getTextAmountDue(), "Due amounts are different.");
         softAssert.assertAll();
     }
-    @Test(testName = "GC-2064", description = "GC-2064")
-    @Description("Verify that user can navigate through the pages without loosing previously entered data")
-    public void checkAllEnteredData(){
-        orderDetailsPage.inputCertificate(Certificates.ACTIVE_1000.getCertificate())
-                        .clickActivateButton()
-                        .clickYesWaitingForAnOrderButton()
-                        .fillOrderByPosition(0,"1111111111")
-                        .clickAddOrderButton()
-                        .fillOrderByPosition(1,"2222222222")
-                        .inputComment(UBSDataStrings.ORDER_COMMENT.getMessage());
-        String dueAmount = orderDetailsPage.getTextAmountDue();
-        String orderAmount = orderDetailsPage.getTextOrderAmount();
-        String certificateAmount = orderDetailsPage.getCertificateAmount();
-
-        PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton()
-                        .fullPersonalData(UBSDataStrings.PERSONAL_DATA_NAME.getMessage(),UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage(),
-                                            UBSDataStrings.PERSONAL_DATA_PHONE.getMessage(),UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage())
-                        .deleteAllAddresses()
-                        .clickOnAddAddressButton()
-                        .fillAllFields(
-                                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                        .clickOnAddAddressButton()
-                        .inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
-
-        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
-        checkPaymentPageAsserts(dueAmount, orderAmount, certificateAmount, paymentPage);
-        personalDataPage = paymentPage.clickOnBackButton();
-        checkPersonalDataAsserts(personalDataPage);
-        orderDetailsPage = personalDataPage.clickOnBackButton();
-        checkOrderDetailsAsserts(dueAmount, orderAmount, certificateAmount);
-        personalDataPage = orderDetailsPage.clickOnNextButton();
-        checkPersonalDataAsserts(personalDataPage);
-        paymentPage = personalDataPage.clickOnNextButton();
-        checkPaymentPageAsserts(dueAmount, orderAmount, certificateAmount, paymentPage);
-        paymentPage.clickOnOrderDetailsButton();
-        softAssert.assertAll();
-    }
-
-    private void checkPaymentPageAsserts(String dueAmount, String orderAmount, String certificateAmount, PaymentPage paymentPage) {
-        softAssert.assertEquals(paymentPage.getFullName().getText(), UBSDataStrings.PERSONAL_DATA_NAME_SURNAME.getMessage());
-        softAssert.assertEquals(paymentPage.getPhone().getText(), UBSDataStrings.PERSONAL_DATA_PHONE.getMessage());//TODO BUG with phone
-        softAssert.assertEquals(paymentPage.getGmail().getText(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
-        softAssert.assertEquals(paymentPage.getTown().getText(), "Kiev");
-        softAssert.assertEquals(paymentPage.getStreet().getText(), "Sadova");
-        softAssert.assertEquals(paymentPage.getDistrict().getText(),"Kiev");
-        softAssert.assertEquals(paymentPage.getCommentOrderText(),"Comment to the order: "+ UBSDataStrings.ORDER_COMMENT.getMessage());
-        softAssert.assertEquals(paymentPage.getCommentAddressText(),"Comment to the address: "+UBSDataStrings.ADDRES_COMMENT.getMessage());
-        softAssert.assertEquals(paymentPage.getAmountDue().getText(), dueAmount);
-        softAssert.assertEquals(paymentPage.getOrderAmount().getText(), orderAmount);
-        softAssert.assertEquals(paymentPage.getCertificate().getText(), certificateAmount);
-    }
-
-    private void checkOrderDetailsAsserts(String dueAmount, String orderAmount, String certificateAmount) {
-        softAssert.assertEquals(orderDetailsPage.getAmountDue().getText(), dueAmount);
-        softAssert.assertEquals(orderDetailsPage.getOrderAmount().getText(), orderAmount);
-        softAssert.assertEquals(orderDetailsPage.getCertificateAmount(), certificateAmount);
-        softAssert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),Certificates.ACTIVE_1000.getCertificate());
-        softAssert.assertEquals(orderDetailsPage.getCommentTextarea().getText(),UBSDataStrings.ORDER_COMMENT.getMessage());
-        softAssert.assertEquals(orderDetailsPage.getOrderValueByPosition(0),"1111111111");
-        softAssert.assertEquals(orderDetailsPage.getOrderValueByPosition(1),"2222222222");
-    }
-
-    private void checkPersonalDataAsserts(PersonalDataPage personalDataPage) {
-        softAssert.assertEquals(personalDataPage.getNameInput().getValue(), UBSDataStrings.PERSONAL_DATA_NAME.getMessage());
-        softAssert.assertEquals(personalDataPage.getLastNameInput().getValue(),UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage());
-        softAssert.assertEquals(personalDataPage.getPhoneInput().getValue(),UBSDataStrings.PERSONAL_DATA_PHONE.getMessage());
-        softAssert.assertEquals(personalDataPage.getEmailInput().getValue(),UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
-        softAssert.assertEquals(personalDataPage.getCommentInput().getText(),UBSDataStrings.ADDRES_COMMENT.getMessage());
-        softAssert.assertEquals(personalDataPage.getCityNameOfAddressByIndex(0),"Kiev");
-        softAssert.assertEquals(personalDataPage.getStreetNameOfAddressByIndex(0),"Sadova");
-        softAssert.assertEquals(personalDataPage.getDistinctOfAddressByIndex(0),"Kiev");
-    }
-
 
 }
