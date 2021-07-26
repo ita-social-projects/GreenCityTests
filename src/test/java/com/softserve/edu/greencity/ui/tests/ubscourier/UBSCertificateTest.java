@@ -71,7 +71,7 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
                 .getCommentTextarea()
                 .enterText(UBSDataStrings.ORDER_COMMENT.getMessage());
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
-        softAssert.assertTrue(personalDataPage.getAddAddressButton().isActive(), "crossing to personaldata page failed, or add addres button is not on the page");
+        softAssert.assertTrue(personalDataPage.isNameInputPresent(),"crossing to personaldata page failed, or add addres button is not on the page");
         personalDataPage.clickOnBackButton();
         softAssert.assertEquals(orderDetailsPage.getCommentTextarea().getText(), UBSDataStrings.ORDER_COMMENT.getMessage(), "comments mismatch");
         softAssert.assertEquals(orderDetailsPage.getCertificateInput().getValue(),Certificates.ACTIVE_1000.getCertificate(), "Certificates do not match");
@@ -204,6 +204,25 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         softAssert.assertEquals(message,UBSDataStrings.BONUS_500_CERTIFICATE_MESSAGE_ENG.getMessage(),"Messages mismatch");
         softAssert.assertFalse(orderDetailsPage.isAddCertificateBtnPresent(),"Check Add certificate button");
         softAssert.assertEquals("0 UAH",orderDetailsPage.getTextAmountDue(), "Due amounts are different.");
+        softAssert.assertAll();
+    }
+    @Test(testName = "GC-1948",description = "GC-1948")
+    @Description("Verify user can order services when he attaches the two order numbers")
+    public void twoOrderNumbers(){
+        softAssert.assertTrue(orderDetailsPage.getCertificateInput().isEmpty());
+        softAssert.assertFalse(orderDetailsPage.getActivateCertificateButton().isActive());
+        //todo add bonus section when it will be done
+        orderDetailsPage.clickYesWaitingForAnOrderButton()
+                .getAnotherOrderNumber().get(0).getAnotherOrderInput().sendKeys("1111111111");
+         orderDetailsPage.clickAddOrderButton();
+         orderDetailsPage.getAnotherOrderNumber().get(1).getAnotherOrderInput().sendKeys("2222222222");
+         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
+        softAssert.assertTrue(personalDataPage.isNameInputPresent(),"crossing to personaldata page failed, or add addres button is not on the page");
+        personalDataPage.clickOnBackButton();
+        softAssert.assertEquals(UBSDataStrings.ORDER_NUMBER_ONE.getMessage(),orderDetailsPage.getAnotherOrderNumber().get(0).getAnotherOrderInput().getAttribute("value"),"first order mismatch.");
+        softAssert.assertEquals(UBSDataStrings.ORDER_NUMBER_TWO.getMessage(),
+                orderDetailsPage.getAnotherOrderNumber().get(1).getAnotherOrderInput().getAttribute("value"),"second order mismatch.");
+        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getValue(),"21", "input quantuty mismatch");
         softAssert.assertAll();
     }
 

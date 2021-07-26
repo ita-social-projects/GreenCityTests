@@ -73,7 +73,9 @@ public class PersonalDataPage extends UBSCourierBasePage {
         emailField.sendKeys(email);
         return this;
     }
-
+    public boolean isNameInputPresent(){
+       return nameField.getInnerElement().isDisplayed();
+    }
     public PersonalDataPage clearPersonalDataFields() {
         nameField.clearInput();
         surnameField.clearInput();

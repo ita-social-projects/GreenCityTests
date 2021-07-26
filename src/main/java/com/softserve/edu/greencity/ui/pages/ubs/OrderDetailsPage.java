@@ -402,7 +402,10 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         getAdditionalCertificates();
         return this;
     }
-
+    public OrderDetailsPage clickAddOrderButton(){
+        getAddAnotherOrderNumberButton().click();
+        return this;
+    }
     public OrderDetailsPage clickNoWaitingForAnOrderButton() {
         getNoWaitingOrderButton().click();
         return this;

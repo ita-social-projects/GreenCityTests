@@ -20,7 +20,6 @@ public class AnotherOrderNumberComponents {
     public WebElement getAddAnotherOrderButton() {
         return anotherOrder.findElement(ADD_ANOTHER_ORDER_BUTTON.getPath());
     }
-
     public WebElement getAnotherOrderInput() {
         return anotherOrder.findElement(ANOTHER_ORDER_NUMBER_INPUT.getPath());
     }
