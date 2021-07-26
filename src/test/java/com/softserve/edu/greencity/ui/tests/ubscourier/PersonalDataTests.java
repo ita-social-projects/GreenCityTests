@@ -73,10 +73,4 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(phoneMessage, expectedPhoneMessage);
         softAssert.assertEquals(emailMessage, expectedEmailMessage);
     }
-
-    @Test
-    public void deleteAddress() {
-        personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.deleteAddressOfIndex(personalDataPage.getQuantityOfAddresses()-1);
-    }
 }
