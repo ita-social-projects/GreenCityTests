@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.*;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -15,7 +16,6 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
 
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
-    private PaymentPage paymentPage;
 
     @BeforeMethod
     public void login() {
@@ -46,7 +46,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
         personalDataPage.clickOnNextButton();
-        Assert.assertEquals("3\nConfirmation", paymentPage.getPaymentButton().getText());
+        Assert.assertEquals("3\nConfirmation", personalDataPage.getPaymentButton().getText());
     }
 
     @Test(testName = "GC-2042", description = "GC-2042") //Need to connect to the database for check
@@ -77,11 +77,8 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }//TODO method for wait
+        WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
+        waitsSwitcher.sleep(3000);
         Assert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
     }
 }

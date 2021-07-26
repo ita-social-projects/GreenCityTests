@@ -83,6 +83,9 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
     public InputElement getEmailInput(){
         return emailField;
+    public boolean isNameInputPresent(){
+       return nameField.getInnerElement().isDisplayed();
+
     }
     public PersonalDataPage clearPersonalDataFields() {
         nameField.clearInput();
@@ -158,7 +161,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    private ButtonElement getBackButton() {
+    public ButtonElement getBackButton() {
         if (backButton == null) {
             backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         }
