@@ -9,7 +9,7 @@ public enum MyHabitLocators implements Locator {
     CREDO_LABEL(By.cssSelector(".credo")),
     SOCIAL_MEDIA_ICON(By.cssSelector(".social.ng-star-inserted")),
     SHOPPING_LIST_LABEL(By.xpath("//div[@class = 'header-position shopping-list-content']")),
-
+    LOGO(By.cssSelector(".header_logo")),
     ADD_NEW_HABIT_BUTTON(By.xpath("//*[@id = 'create-button']")),
     EDIT_PROFILE_BUTTON(By.cssSelector(".edit-icon")),
     SOCIAL_NETWORK_CONTAINER(By.cssSelector("div.social.ng-star-inserted > a"));

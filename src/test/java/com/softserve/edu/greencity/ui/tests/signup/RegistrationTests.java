@@ -8,7 +8,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
 import lombok.SneakyThrows;
@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.ADD_NEW_HABIT_BUTTON_TEXT;
 
 //TODO add DB check
-public class RegistrationTests extends GreenCityTestRunner {
+public class RegistrationTests extends GreenCityTestRunnerWithLoginLogout {
     private final String SIGN_IN_TITLE = "Welcome back!";
 
     @DataProvider

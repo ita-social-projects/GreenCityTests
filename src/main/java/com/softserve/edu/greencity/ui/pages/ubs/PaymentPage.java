@@ -74,9 +74,9 @@ public class PaymentPage extends UBSCourierBasePage {
         numberOfPackages = new LabelElement(driver, PaymentPageLocators.NUMBER_OF_PACKAGES_LABEL);
         total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
 
-        orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
+//        orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
         // certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
-        amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
+//        amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
         // deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
         //orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
         recipient = new LabelElement(driver, PaymentPageLocators.RECIPIENT_LABEL);
@@ -196,6 +196,7 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public LabelElement getOrderAmount() {
+        orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
         return orderAmount;
     }
 
@@ -205,6 +206,7 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public LabelElement getAmountDue() {
+        amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
         return amountDue;
     }
 
@@ -253,6 +255,7 @@ public class PaymentPage extends UBSCourierBasePage {
         return payment;
     }
 
+
     public String returnAllOrderNumbers() {
         String s = "";
         List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
@@ -260,6 +263,18 @@ public class PaymentPage extends UBSCourierBasePage {
             s += orders.getText().trim();
         }
         return s;
+    }
+
+    public boolean isAllOrderNumbersDisplayed() {
+
+        List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
+        for (WebElement orders : orderPath) {
+            if(orders.isDisplayed()==false){
+                return false;
+            }
+        }
+       return true;
+
     }
 
     public String getTextFromOrderNumbers() {
@@ -271,6 +286,7 @@ public class PaymentPage extends UBSCourierBasePage {
 
     }
 
+
     public String getCommentOrderText() {
         return getCommentToOrder().getText();
 
@@ -280,5 +296,10 @@ public class PaymentPage extends UBSCourierBasePage {
         return getCommentToAddress().getText();
 
     }
+//    public String getStreetHoueCorp(String street,int house,String corp ){
+//         getStreet().getText();
+//         String s=String.valueOf(house);
+//
+//    }
 
 }

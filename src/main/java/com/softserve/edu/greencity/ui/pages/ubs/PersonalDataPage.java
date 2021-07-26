@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -73,6 +74,14 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public PersonalDataPage clearPersonalDataFields() {
+        nameField.clearInput();
+        surnameField.clearInput();
+        phoneField.clearInput();
+        emailField.clearInput();
+        return this;
+    }
+
     public String getFullName(){
         String fullName=nameField.getValue()+" "+surnameField.getValue();
         return fullName;
@@ -87,18 +96,22 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public String getErrorNameMessage() {
+        errorNameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_NAME);
         return errorNameMessage.getText();
     }
 
     public String getErrorSurnameMessage() {
+        errorSurnameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_SURNAME);
         return errorSurnameMessage.getText();
     }
 
     public String getErrorPhoneMessage() {
+        errorPhoneMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_PHONE);
         return errorPhoneMessage.getText();
     }
 
     public String getErrorEmailMessage() {
+        errorEmailMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_EMAIL);
         return errorEmailMessage.getText();
     }
 
@@ -139,11 +152,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public PaymentPage clickOnNextButton() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitsSwitcher.sleep(5000);
         //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
         return new PaymentPage(driver);

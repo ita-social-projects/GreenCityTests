@@ -4,14 +4,14 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.*;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class PersonalDataTests extends GreenCityTestRunner {
+public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
 
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
@@ -58,15 +58,15 @@ public class PersonalDataTests extends GreenCityTestRunner {
     @Test(testName = "GC-2046", description = "GC-2046")
     @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
     public void verifyErrorMessageShown() {
-        personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.clickOnNextButton();
-        String expectedNameMessage = "This field is required";
+        personalDataPage = orderDetailsPage.clickOnPersonalDataButton().clearPersonalDataFields();
+        personalDataPage.clickOnPaymentButton();
+        String expectedNameMessage = "This field is required.";
         String nameMessage = personalDataPage.getErrorNameMessage();
-        String expectedSurnameMessage = "This field is required";
+        String expectedSurnameMessage = "This field is required.";
         String surnameMessage = personalDataPage.getErrorSurnameMessage();
-        String expectedPhoneMessage = "This field is required";
+        String expectedPhoneMessage = "This field is required.";
         String phoneMessage = personalDataPage.getErrorPhoneMessage();
-        String expectedEmailMessage = "This field is required";
+        String expectedEmailMessage = "This field is required.";
         String emailMessage = personalDataPage.getErrorEmailMessage();
 
         softAssert.assertEquals(nameMessage, expectedNameMessage);

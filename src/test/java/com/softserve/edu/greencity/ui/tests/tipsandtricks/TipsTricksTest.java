@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.tipsandtricks;
 
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
@@ -16,7 +16,7 @@ import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 // There is no "start habit" and other buttons on Tips and tricks page. They all are at the main page.
 // That is why this test class fails.
 @Ignore
-public class TipsTricksTest extends GreenCityTestRunner {
+public class TipsTricksTest extends GreenCityTestRunnerWithLoginLogout {
     @DataProvider
     private Object[] getUser() {
         return new Object[]{

@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.tests.signin;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.TOP_USER_NAME;
 
 //TODO auth in google via api before clickSingInWithGoogleButton()
-public class GoogleSignInTest extends GreenCityTestRunner {
+public class GoogleSignInTest extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-218", description = "GC-218")
     @Description("Verify that Unregistered user can Sign Up with Google account")

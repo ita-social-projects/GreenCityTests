@@ -6,6 +6,8 @@ public enum UBSDataStrings {
     CANCEL_UA("Відмінити"),
     CANCEL_RU("Отменить"),
     CANCEL_ENG("Cancel"),
+    BONUS_500_CERTIFICATE_MESSAGE_ENG("A certificate for 1000 UAH is activated in excess of the amount of your order. The balance of 500 UAH will be credited to your " +
+            "bonus account for the next order. The certificate is valid until 2022-09-17"),
     CORRECT_500_CERTIFICATE_MESSAGE_ENG("Certificate for 500 UAH activated. Certificate validity period is up to 2021-11-27"),
     FOUR_DIGITS("2222-"),
     CORRECT_CERTIFICATE_THREE_ACTIVE("Certificate for 1800 UAH activated. Certificate validity period is up to 2021-11-27"),

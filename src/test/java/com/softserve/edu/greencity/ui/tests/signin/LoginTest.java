@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.LoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.ManualLoginComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.*;
 
-public class LoginTest extends GreenCityTestRunner {
+public class LoginTest extends GreenCityTestRunnerWithLoginLogout {
     String cssBorderColorProperty;
     String expectedBorderColorRBG;
 
