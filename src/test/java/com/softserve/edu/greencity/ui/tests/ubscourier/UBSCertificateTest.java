@@ -165,4 +165,22 @@ public class UBSCertificateTest extends GreenCityTestRunner {
         personalDataPage.clickOnBackButton();
         softAssert.assertTrue(personalDataPage.getBackButton().isActive());//TODO add more asserts
     }
+
+    @Test(testName = "GC-1945", description = "GC-1945")
+    @Description("GC-1945")
+    public void orderServicesWithBonusAndAttachesOrderNumberFromEcoShop() {
+        logger.info("Verify that the user can orders services when he applies the bonus, and attaches the order number from the ‘Eco shop’");
+        orderDetailsPage
+                .getServicesComponents()
+                .get(0)
+                .getInput()
+                .sendKeys("10");
+        //TODO add methods for bonuses
+        orderDetailsPage.getYesWaitingOrderButton().click();
+        orderDetailsPage.getOrderNumberInput().sendKeys("1111111111");
+        orderDetailsPage.getNextButton().click();
+        personalDataPage = new PersonalDataPage(driver);
+        personalDataPage.clickOnBackButton();
+        softAssert.assertTrue(personalDataPage.getBackButton().isActive());
+    }
 }
