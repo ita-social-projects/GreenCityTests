@@ -144,7 +144,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    private ButtonElement getBackButton() {
+    public ButtonElement getBackButton() {
         if (backButton == null) {
             backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         }
