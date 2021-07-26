@@ -17,7 +17,7 @@ public enum UBSDataStrings {
     PERSONAL_DATA_SURNAME("Serhova"),
     PERSONAL_DATA_PHONE("0961111111"),
     PERSONAL_DATA_EMAIL("dcghkv@gmail.com"),
-    PERSONAL_DATA_NAME_SURNAME("Lina Serhova");
+    PERSONAL_DATA_NAME_SURNAME("Lina Serhova"),
     ADDRESS_WARNING_MESSAGE("This field is required."),
     ADDRESS_CITY_INFO_MESSAGE("At the moment we serve only the city of Kiev");
     private final String string;

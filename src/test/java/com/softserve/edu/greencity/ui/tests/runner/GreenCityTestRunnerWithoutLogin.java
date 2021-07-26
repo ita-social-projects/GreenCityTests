@@ -29,11 +29,6 @@ public abstract class GreenCityTestRunnerWithoutLogin extends GreenCityBaseTestR
         }
         loggerTest();
     }
-    @AfterSuite
-    public void end(){
-        driver.close();
-        driver.quit();
-    }
 
 
 }
