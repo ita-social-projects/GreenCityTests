@@ -81,8 +81,9 @@ public class PersonalDataPage extends UBSCourierBasePage {
         emailField.sendKeys(email);
         return this;
     }
-    public InputElement getEmailInput(){
+    public InputElement getEmailInput() {
         return emailField;
+    }
     public boolean isNameInputPresent(){
        return nameField.getInnerElement().isDisplayed();
 

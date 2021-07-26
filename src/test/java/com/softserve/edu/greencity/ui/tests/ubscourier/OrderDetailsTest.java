@@ -3,13 +3,13 @@ package com.softserve.edu.greencity.ui.tests.ubscourier;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class OrderDetailsTest extends GreenCityTestRunner {
+public class OrderDetailsTest extends GreenCityTestRunnerWithLoginLogout {
     private OrderDetailsPage orderDetailsPage;
 
     @BeforeMethod

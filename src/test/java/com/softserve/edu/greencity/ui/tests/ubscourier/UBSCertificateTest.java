@@ -191,7 +191,7 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         personalDataPage.clickOnBackButton();
         softAssert.assertTrue(personalDataPage.getBackButton().isActive());
     }
-}
+
 
     @Test(testName = "GC-1982", description = "GC-1982")
     @Description("Verify that system does not show the link addCertificate")
