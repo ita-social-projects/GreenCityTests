@@ -5,8 +5,6 @@ import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
-import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
-import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
@@ -207,5 +205,9 @@ public class AddAddressPopupComponent {
     public WelcomePage clickOnCancelButton() {
         getCancelButton().click();
         return new WelcomePage(driver);
+    }
+
+    public InputElement getHouseInput() {
+        return houseInput;
     }
 }
