@@ -24,18 +24,18 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
     @BeforeClass
     public void signIn() {
         User user = UserRepository.get().temporary();
-        personalDataPage = loadApplication()
+        loadApplication()
                 .signIn()
                 .getManualLoginComponent()
-                .successfullyLogin(user)
-                .navigateMenuUBSCourier()
-                .fillOldClothes20L("20")
-                .clickOnPersonalDataButton();
+                .successfullyLogin(user);
     }
 
     @BeforeMethod
     public void navigateToPersonalDataPage() {
-        waitsSwitcher.sleep(2000);
+        personalDataPage = loadApplication()
+                .navigateMenuUBSCourier()
+                .fillOldClothes20L("20")
+                .clickOnPersonalDataButton();
         if (personalDataPage.isAddAddressButtonActive()) {
             addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         } else {
@@ -45,7 +45,7 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
 
     @AfterMethod
     public void navigateToWelcomePage() {
-        personalDataPage = addAddressPopupComponent.clickOnCancelButton();
+        addAddressPopupComponent.clickOnCancelButton().clickOnCancelButton().clickCancelOrderButton();
     }
 
     @AfterClass
@@ -65,6 +65,7 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
         softAssert.assertFalse(addAddressPopupComponent.isAddAddressButtonActive());
         addAddressPopupComponent.inputDistrict(userAddress);
         softAssert.assertTrue(addAddressPopupComponent.isAddAddressButtonActive());
+        softAssert.assertAll();
     }
 
 
@@ -85,9 +86,9 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
 
         addAddressPopupComponent.getStreetInput().click();
         addAddressPopupComponent.getDistrictInput().click();
-        addAddressPopupComponent.getStreetInput().click();
         String streetMessage = addAddressPopupComponent.getStreetValidationErrorText();
-        addAddressPopupComponent.getStreetInput().sendKeys("Садова");
+        addAddressPopupComponent.getStreetInput().click();
+        addAddressPopupComponent.getStreetInput().sendKeys("Хоткевича");
         addAddressPopupComponent.getDistrictInput().click();
         addAddressPopupComponent.getHouseInput().click();
         String districtMessage = addAddressPopupComponent.getDistrictValidationErrorText();
@@ -103,46 +104,12 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-2068 Street", description = "GC-2068")
-    @Description("GC-2068")
-    public void checkStreetMessageInfo() {
-        logger.info("Verify that user can see an error message if not fill street data");
-        orderDetailsPage
-                .getServicesComponents()
-                .get(0)
-                .getInput()
-                .sendKeys("10");
-        orderDetailsPage
-                .clickOnNextButton()
-                .clickOnAddAddressButton()
-                .chooseCity(AddAddressPopupLocators.CITY_KIEV)
-                .getStreetInput().click();
-        addAddressPopupComponent = new AddAddressPopupComponent(driver);
-
-        addAddressPopupComponent.getDistrictInput().click();
-        addAddressPopupComponent = new AddAddressPopupComponent(driver);
-        addAddressPopupComponent.clickOnCancelButton();
-
-//        String actualErrorStreetMessage = "This field is required.";
-//        String errorStreetMessage = addAddressPopupComponent.getStreetValidationErrorText();
-//        softAssert.assertEquals(errorStreetMessage, actualErrorStreetMessage);
-        softAssert.assertTrue(addAddressPopupComponent.isDisplayedStreetErrorMessage(), "This field is required.");
-    }
 
     @Test(testName = "GC-1925", description = "GC-1925")
     @Description("GC-1925")
     public void verifyThatDataWillLoseAfterClosingTheWindow() {
         logger.info("Verify that data will lose after closing the window");
-        orderDetailsPage
-                .getServicesComponents()
-                .get(0)
-                .getInput()
-                .sendKeys("10");
-
-        orderDetailsPage
-                .clickOnNextButton()
-                .clickOnAddAddressButton()
-                .fillAllFields(new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 1))
+        addAddressPopupComponent.fillAllFields(new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 1))
                 .clickOnCancelButton();
         //TODO add assert
     }
