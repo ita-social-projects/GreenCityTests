@@ -13,7 +13,12 @@ public enum UBSDataStrings {
     CORRECT_CERTIFICATE_THREE_ACTIVE("Certificate for 1800 UAH activated. Certificate validity period is up to 2021-11-27"),
     ORDER_NUMBER_ONE("1111111111"),
     ORDER_NUMBER_TWO("2222222222"),
-    ADDRESS_STREET_INFO_MESSAGE("This field is required"),
+    PERSONAL_DATA_NAME("Lina"),
+    PERSONAL_DATA_SURNAME("Serhova"),
+    PERSONAL_DATA_PHONE("0961111111"),
+    PERSONAL_DATA_EMAIL("dcghkv@gmail.com"),
+    PERSONAL_DATA_NAME_SURNAME("Lina Serhova"),
+    ADDRESS_WARNING_MESSAGE("This field is required."),
     ADDRESS_CITY_INFO_MESSAGE("At the moment we serve only the city of Kiev");
     private final String string;
 

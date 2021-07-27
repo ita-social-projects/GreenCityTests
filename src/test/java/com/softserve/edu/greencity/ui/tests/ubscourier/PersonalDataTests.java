@@ -15,7 +15,6 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
 
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
-    private PaymentPage paymentPage;
 
     @BeforeMethod
     public void login() {
@@ -25,7 +24,7 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuUBSCourier();
-        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("20");
+        orderDetailsPage.fillOldClothes20L("20");
     }
 
     @AfterMethod
@@ -55,8 +54,7 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         Assert.assertEquals("2\nPersonal data", personalDataButtonText);
     }
 
-    //TODO modify after bug fixed/requirements changed
-    @Test(testName = "GC-2046", description = "GC-2046") // bug, error message does not appear automatically
+    @Test(testName = "GC-2046", description = "GC-2046")
     @Description("Verify the error message is shown when 'Personal data' page with empty mandatory fields")
     public void verifyErrorMessageShown() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton().clearPersonalDataFields();
@@ -74,11 +72,5 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(surnameMessage, expectedSurnameMessage);
         softAssert.assertEquals(phoneMessage, expectedPhoneMessage);
         softAssert.assertEquals(emailMessage, expectedEmailMessage);
-    }
-
-    @Test
-    public void deleteAddress() {
-        personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.deleteAddressOfIndex(personalDataPage.getQuantityOfAddresses()-1);
     }
 }
