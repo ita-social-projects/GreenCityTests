@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
@@ -25,7 +26,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuUBSCourier();
-        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("20");
+        orderDetailsPage.fillOldClothes20L("20");
     }
 
     @AfterMethod
@@ -45,8 +46,11 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
-        personalDataPage.clickOnNextButton();
-        Assert.assertEquals("3\nConfirmation", personalDataPage.getPaymentButton().getText());
+        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        softAssert.assertEquals("3\nConfirmation", personalDataPage.getPaymentButton().getText());
+        softAssert.assertEquals(paymentPage.getFullName().getText(), UBSDataStrings.PERSONAL_DATA_NAME_SURNAME.getMessage());
+        softAssert.assertEquals(paymentPage.getPhone().getText(), UBSDataStrings.PERSONAL_DATA_PHONE.getMessage());
+        softAssert.assertEquals(paymentPage.getGmail().getText(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
     }
 
     @Test(testName = "GC-2042", description = "GC-2042") //Need to connect to the database for check
@@ -66,7 +70,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
 
     @Test(testName = "GC-2041", description = "GC-2041")
     @Description("Verify if the system continue making order after clicking by 'Continue' button")
-    public void verifyEraseDataAfterInterrupt() {
+    public void verifyContinueMakingOrder() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
         personalDataPage.inputName("Lina")
                 .inputSurname("Serhova")
@@ -79,6 +83,6 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         waitsSwitcher.sleep(3000);
-        Assert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
+        softAssert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
     }
 }
