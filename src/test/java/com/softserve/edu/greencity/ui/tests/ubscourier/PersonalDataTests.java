@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
@@ -59,18 +60,14 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
     public void verifyErrorMessageShown() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton().clearPersonalDataFields();
         personalDataPage.clickOnPaymentButton();
-        String expectedNameMessage = "This field is required.";
         String nameMessage = personalDataPage.getErrorNameMessage();
-        String expectedSurnameMessage = "This field is required.";
         String surnameMessage = personalDataPage.getErrorSurnameMessage();
-        String expectedPhoneMessage = "This field is required.";
         String phoneMessage = personalDataPage.getErrorPhoneMessage();
-        String expectedEmailMessage = "This field is required.";
         String emailMessage = personalDataPage.getErrorEmailMessage();
 
-        softAssert.assertEquals(nameMessage, expectedNameMessage);
-        softAssert.assertEquals(surnameMessage, expectedSurnameMessage);
-        softAssert.assertEquals(phoneMessage, expectedPhoneMessage);
-        softAssert.assertEquals(emailMessage, expectedEmailMessage);
+        softAssert.assertEquals(nameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
+        softAssert.assertEquals(surnameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
+        softAssert.assertEquals(phoneMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
+        softAssert.assertEquals(emailMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
     }
 }
