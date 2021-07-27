@@ -4,19 +4,24 @@ import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
-import com.softserve.edu.greencity.ui.pages.ubs.AddAddressPopupComponent;
+
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
 import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
+
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithoutLogin;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
+import com.softserve.edu.greencity.ui.pages.ubs.AddAddressPopupComponent;
+
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
+
 
 
 public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
+
     private AddAddressPopupComponent addAddressPopupComponent;
     private WaitsSwitcher waitsSwitcher;
 
@@ -29,6 +34,7 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
                 .getManualLoginComponent()
                 .successfullyLogin(user);
     }
+
 
     @BeforeMethod
     public void navigateToPersonalDataPage() {
@@ -104,13 +110,11 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
         softAssert.assertAll();
     }
 
-
     @Test(testName = "GC-1925", description = "GC-1925")
     @Description("GC-1925")
     public void verifyThatDataWillLoseAfterClosingTheWindow() {
         logger.info("Verify that data will lose after closing the window");
-        addAddressPopupComponent.fillAllFields(new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 1))
-                .clickOnCancelButton();
+        addAddressPopupComponent.fillAllFields(new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 1)).clickOnCancelButton();
         //TODO add assert
     }
 }

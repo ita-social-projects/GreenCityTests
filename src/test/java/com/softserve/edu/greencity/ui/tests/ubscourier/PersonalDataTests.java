@@ -24,7 +24,7 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
                 .getManualLoginComponent()
                 .successfullyLogin(user)
                 .navigateMenuUBSCourier();
-        orderDetailsPage.getServicesComponents().get(0).getInput().sendKeys("20");
+        orderDetailsPage.fillOldClothes20L("20");
     }
 
     @AfterMethod

@@ -84,6 +84,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     public InputElement getEmailInput() {
         return emailField;
     }
+
     public boolean isNameInputPresent(){
        return nameField.getInnerElement().isDisplayed();
 
@@ -137,7 +138,6 @@ public class PersonalDataPage extends UBSCourierBasePage {
                 .inputPhone(phone)
                 .inputEmail(gmail);
     }
-
 
     public PersonalDataPage inputComment(String comment) {
         commentToAddressField.clearText();
