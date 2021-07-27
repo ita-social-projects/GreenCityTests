@@ -4,11 +4,15 @@ import com.softserve.edu.greencity.ui.locators.Locator;
 import org.openqa.selenium.By;
 
 public enum PersonalDataPageLocators implements Locator {
-    NAME_FIELD(By.cssSelector("input.shadow-none.form-control[5]")),
-    SURNAME_FIELD(By.cssSelector("input.shadow-none.form-control[7]")),
-    PHONE_FIELD(By.cssSelector("input.shadow-none.form-control[6]")),
-    EMAIL_FIELD(By.cssSelector("input.shadow-none.form-control[8]")),
-    COMMENT_ADDRESS_FIELD(By.cssSelector("textarea.form-control.ng-pristine[1]")),
+    NAME_FIELD(By.xpath("//input[contains(@formcontrolname,'firstName')]")),
+    SURNAME_FIELD(By.xpath("//input[contains(@formcontrolname,'lastName')]")),
+    PHONE_FIELD(By.xpath("//input[contains(@formcontrolname,'phoneNumber')]")),
+    EMAIL_FIELD(By.xpath("//input[contains(@formcontrolname,'email')]")),
+    ERROR_MESSAGE_FOR_NAME(By.xpath("//div[contains(@class, 'personal-data')]//input[@formcontrolname = 'firstName']/following-sibling::div/app-ubs-input-error/div")),
+    ERROR_MESSAGE_FOR_SURNAME(By.xpath("//div[contains(@class, 'personal-data')]//input[@formcontrolname = 'lastName']/following-sibling::div/app-ubs-input-error/div")),
+    ERROR_MESSAGE_FOR_PHONE(By.xpath("//div[contains(@class, 'personal-data')]//input[@formcontrolname = 'phoneNumber']/following-sibling::div/app-ubs-input-error/div")),
+    ERROR_MESSAGE_FOR_EMAIL(By.xpath("//div[contains(@class, 'personal-data')]//input[@formcontrolname = 'email']/following-sibling::div/app-ubs-input-error/div")),
+    COMMENT_ADDRESS_FIELD(By.xpath("//textarea[contains(@formcontrolname,'addressComment')]")),
     CANCEL(By.xpath("//app-ubs-personal-information//button[contains(@class, 'cansel')]")),
     NEXT(By.xpath("//app-ubs-personal-information//div[contains(@class, 'content-end')]//button[@type = 'submit']")),
     BACK(By.xpath("//app-ubs-personal-information//button[contains(@class, 'back')]")),

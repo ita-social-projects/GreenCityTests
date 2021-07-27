@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RetryAnalyzerImpl;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class EcoNewsGridViewTest extends GreenCityTestRunner {
+public class EcoNewsGridViewTest extends GreenCityTestRunnerWithLoginLogout {
     List<Integer> screenWidth;
     private final String defaultImagePath = "resources/images/defaultImage.png";
 

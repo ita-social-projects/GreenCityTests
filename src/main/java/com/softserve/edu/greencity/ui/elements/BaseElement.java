@@ -44,6 +44,9 @@ public abstract class BaseElement {
         return this.element.getAttribute("innerText");
     }
 
-    public WebElement getInnerElement() {return element;}
+    public WebElement getInnerElement(){
+        return element;
+    }
+
 }
 

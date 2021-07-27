@@ -1,12 +1,11 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
-import com.softserve.edu.greencity.ui.elements.ButtonElement;
-import com.softserve.edu.greencity.ui.elements.InputElement;
-import com.softserve.edu.greencity.ui.elements.LabelElement;
-import com.softserve.edu.greencity.ui.elements.TextAreaElement;
+import com.softserve.edu.greencity.ui.elements.*;
 import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
 import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.UBSCourierBasePageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -28,6 +27,11 @@ public class PersonalDataPage extends UBSCourierBasePage {
     private LabelElement absenceAddresses;
     private List<AddressComponent> listOfAddresses;
     private ButtonElement addAddressButton;
+    private IconElement orderDetailsIconDone;
+    private LabelElement errorNameMessage;
+    private LabelElement errorSurnameMessage;
+    private LabelElement errorPhoneMessage;
+    private LabelElement errorEmailMessage;
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
@@ -35,48 +39,116 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public void initPersonalDataElements() {
-//        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
-//        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
-//        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
-//        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
-//        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
+        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
+        surnameField = new InputElement(driver, PersonalDataPageLocators.SURNAME_FIELD);
+        phoneField = new InputElement(driver, PersonalDataPageLocators.PHONE_FIELD);
+        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
+        commentToAddressField = new TextAreaElement(driver, PersonalDataPageLocators.COMMENT_ADDRESS_FIELD);
         cancelButton = new ButtonElement(driver, PersonalDataPageLocators.CANCEL);
         nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         addAddressButton = new ButtonElement(driver, PersonalDataPageLocators.ADD_ADDRESS);
     }
 
-    private PersonalDataPage inputName(String name) {
+    public PersonalDataPage inputName(String name) {
         nameField.clearInput();
         nameField.sendKeys(name);
         return this;
     }
+    public InputElement getNameInput(){
+        return nameField;
+    }
 
-    private PersonalDataPage inputSurname(String surname) {
+    public PersonalDataPage inputSurname(String surname) {
         surnameField.clearInput();
         surnameField.sendKeys(surname);
         return this;
     }
+    public InputElement getLastNameInput(){
+        return surnameField;
+    }
 
-    private PersonalDataPage inputPhone(String phone) {
+    public PersonalDataPage inputPhone(String phone) {
         phoneField.clearInput();
         phoneField.sendKeys(phone);
         return this;
     }
-
-    private PersonalDataPage inputEmail(String email) {
+    public InputElement getPhoneInput(){
+        return phoneField;
+    }
+    public PersonalDataPage inputEmail(String email) {
         emailField.clearInput();
         emailField.sendKeys(email);
         return this;
     }
+    public InputElement getEmailInput() {
+        return emailField;
+    }
+    public boolean isNameInputPresent(){
+       return nameField.getInnerElement().isDisplayed();
 
-    private PersonalDataPage inputComment(String comment) {
+    }
+    public PersonalDataPage clearPersonalDataFields() {
+        nameField.clearInput();
+        surnameField.clearInput();
+        phoneField.clearInput();
+        emailField.clearInput();
+        return this;
+    }
+
+    public String getFullName(){
+        String fullName=nameField.getValue()+" "+surnameField.getValue();
+        return fullName;
+
+    }
+    public String getPhoneNumber(){
+        return phoneField.getValue();
+    }
+
+    public String getEmailAddress(){
+        return emailField.getValue();
+    }
+
+    public String getErrorNameMessage() {
+        errorNameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_NAME);
+        return errorNameMessage.getText();
+    }
+
+    public String getErrorSurnameMessage() {
+        errorSurnameMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_SURNAME);
+        return errorSurnameMessage.getText();
+    }
+
+    public String getErrorPhoneMessage() {
+        errorPhoneMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_PHONE);
+        return errorPhoneMessage.getText();
+    }
+
+    public String getErrorEmailMessage() {
+        errorEmailMessage = new LabelElement(driver, PersonalDataPageLocators.ERROR_MESSAGE_FOR_EMAIL);
+        return errorEmailMessage.getText();
+    }
+
+    public PersonalDataPage fullPersonalData(String name,String surname,String phone,String gmail){
+        logger.info("" +
+                " full fields for personal data");
+        return inputName(name)
+                .inputSurname(surname)
+                .inputPhone(phone)
+                .inputEmail(gmail);
+    }
+
+
+    public PersonalDataPage inputComment(String comment) {
         commentToAddressField.clearText();
         commentToAddressField.enterText(comment);
         return this;
     }
+    public TextAreaElement getCommentInput(){
+        return commentToAddressField;
+    }
 
-    private ButtonElement getNextButton() {
+    public ButtonElement getNextButton() {
         if (nextButton == null) {
             nextButton = new ButtonElement(driver, PersonalDataPageLocators.NEXT);
         }
@@ -90,14 +162,16 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return cancelButton;
     }
 
-    private ButtonElement getBackButton() {
+    public ButtonElement getBackButton() {
         if (backButton == null) {
             backButton = new ButtonElement(driver, PersonalDataPageLocators.BACK);
         }
         return backButton;
     }
 
-    public PaymentPage clickOnNextButton() {   //return type?
+    public PaymentPage clickOnNextButton() {
+        waitsSwitcher.sleep(5000);
+        //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
         return new PaymentPage(driver);
     }
@@ -195,6 +269,13 @@ public class PersonalDataPage extends UBSCourierBasePage {
         }
         return this;
     }
+    public PersonalDataPage deleteAllAddresses(){
+//        for ( AddressComponent addressComponent:getListOfAddresses()) {
+//            addressComponent.clickOnDeleteAddressButton();
+//        }
+        getListOfAddresses().stream().forEach(addressComponent -> addressComponent.clickOnDeleteAddressButton());
+        return new PersonalDataPage(driver);
+    }
 
     public ButtonElement getAddAddressButton() {
         if (addAddressButton == null) {
@@ -218,4 +299,10 @@ public class PersonalDataPage extends UBSCourierBasePage {
         return this;
     }
 
+    public IconElement getOrderDetailsIconDone() {
+        if (orderDetailsIconDone == null) {
+            orderDetailsIconDone = new IconElement(driver, UBSCourierBasePageLocators.ORDER_DETAILS_ICON_DONE);
+        }
+        return orderDetailsIconDone;
+    }
 }

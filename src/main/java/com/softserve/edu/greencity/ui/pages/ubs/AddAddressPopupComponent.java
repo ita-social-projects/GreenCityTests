@@ -5,6 +5,8 @@ import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
+import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +29,7 @@ public class AddAddressPopupComponent {
     private InputElement entranceInput;
 
     private LabelElement cityLabel;
+    private LabelElement cityMessageInfo;
     private LabelElement streetAlertMessage;
     private LabelElement districtAlertMessage;
     private LabelElement houseAlertMessage;
@@ -88,7 +91,13 @@ public class AddAddressPopupComponent {
                 .inputCorp(data)
                 .inputEntrance(data);
     }
-
+//TODO method
+//    public String getStreetHouseCorp(String street,int house,String corp){
+//
+//      //return  streetInput.getText().concat(String.valueOf(houseInput.getText());
+//
+//
+//    }
     //error message
     public LabelElement getStreetAlertMessage() {
         if (streetAlertMessage == null) {
@@ -104,6 +113,13 @@ public class AddAddressPopupComponent {
         return districtAlertMessage;
     }
 
+    public LabelElement getCityMessageInfo() {
+        if (cityMessageInfo == null) {
+            cityMessageInfo = new LabelElement(driver, AddAddressPopupLocators.CITY_MESSAGE_INFO);
+        }
+        return cityMessageInfo;
+    }
+
     public LabelElement getHouseAlertMessage() {
         if (houseAlertMessage == null) {
             houseAlertMessage = new LabelElement(driver, AddAddressPopupLocators.HOUSE_ALERT_MESSAGE);
@@ -111,13 +127,30 @@ public class AddAddressPopupComponent {
         return houseAlertMessage;
     }
 
+///////////////////////////////////////////////////////////////
+    public String getStreetValidationErrorText() {
+        return getStreetAlertMessage().getText();
+    }
+
+    public String getDistrictValidationErrorText() {
+        return getDistrictAlertMessage().getText();
+    }
+
+    public String getHouseValidationErrorText() {
+        return getHouseAlertMessage().getText();
+    }
+
+    public String getCityValidationTextInfo() {
+        return getCityMessageInfo().getText();
+    }
+
+/////////////////////////////////////////////////////////////
+    public boolean isDisplayedCityMessageInfo() {
+        return getCityMessageInfo().isDisplayedLabel();
+    }
 
     public boolean isDisplayedStreetErrorMessage() {
         return getStreetAlertMessage().isDisplayedLabel();
-    }
-
-    public String getStreetValidationErrorText() {
-        return getStreetAlertMessage().getText();
     }
 
     public boolean isDisplayedDistrictErrorMessage() {
@@ -128,6 +161,7 @@ public class AddAddressPopupComponent {
         return getHouseAlertMessage().isDisplayedLabel();
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////
     public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city) {
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();
@@ -178,5 +212,9 @@ public class AddAddressPopupComponent {
     public PersonalDataPage clickOnCancelButton() {
         getCancelButton().click();
         return new PersonalDataPage(driver);
+    }
+
+    public InputElement getHouseInput() {
+        return houseInput;
     }
 }

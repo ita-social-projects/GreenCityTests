@@ -3,13 +3,13 @@ package com.softserve.edu.greencity.ui.tests.editprofile;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class EditTextFieldsTest extends GreenCityTestRunner {
+public class EditTextFieldsTest extends GreenCityTestRunnerWithLoginLogout {
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
