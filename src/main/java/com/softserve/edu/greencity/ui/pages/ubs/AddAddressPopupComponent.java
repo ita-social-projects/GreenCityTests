@@ -5,8 +5,6 @@ import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
-import com.softserve.edu.greencity.ui.locators.ubs.AddressComponentLocators;
-import com.softserve.edu.greencity.ui.locators.ubs.PersonalDataPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
@@ -34,6 +32,7 @@ public class AddAddressPopupComponent {
     private LabelElement houseAlertMessage;
 
     private WaitsSwitcher waitsSwitcher;
+
     public AddAddressPopupComponent(WebDriver driver) {
         this.driver = driver;
         initElements();
@@ -129,7 +128,7 @@ public class AddAddressPopupComponent {
         return getHouseAlertMessage().isDisplayedLabel();
     }
 
-    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city){
+    public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city) {
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();
         cityInput.choseFromOptions(city.getPath());
@@ -172,8 +171,12 @@ public class AddAddressPopupComponent {
         return new PersonalDataPage(driver);
     }
 
-    public WelcomePage clickOnCancelButton() {
+    public boolean isAddAddressButtonActive() {
+        return getAddButton().isActive();
+    }
+
+    public PersonalDataPage clickOnCancelButton() {
         getCancelButton().click();
-        return new WelcomePage(driver);
+        return new PersonalDataPage(driver);
     }
 }
