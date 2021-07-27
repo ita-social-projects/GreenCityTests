@@ -294,10 +294,16 @@ public class PaymentPage extends UBSCourierBasePage {
         return getCommentToAddress().getText();
 
     }
-//    public String getStreetHoueCorp(String street,int house,String corp ){
-//         getStreet().getText();
-//         String s=String.valueOf(house);
-//
-//    }
+
+
+    public String getStreetHoueCorp(){
+        String result="";
+        List<WebElement> addressData=driver.findElements(PaymentPageLocators.TOTAL_ADDRESS_OF_EXPORT_LABEL.getPath());
+        for(WebElement addresItem: addressData){
+            result+=addresItem.getText();
+        }
+        return result;
+
+    }
 
 }

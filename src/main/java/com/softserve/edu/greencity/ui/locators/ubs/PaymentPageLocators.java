@@ -47,6 +47,7 @@ public enum PaymentPageLocators implements Locator {
     DISTRICT_LABEL(By.xpath("//div[@class='order-info m-0']//ul/li[position()=3]")),
     COMMENT_TO_ADDRESS_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']//li[position()=4]")),
     COMMENT_TO_ORDER_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']//li[position()=5]")),
+    TOTAL_ADDRESS_OF_EXPORT_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']/li")),
     PAYMENT_METHOD(By.xpath("//app-ubs-submit-order//div[@class='form-group comment']//select"));
 
 

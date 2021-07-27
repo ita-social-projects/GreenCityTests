@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
 import com.softserve.edu.greencity.ui.pages.ubs.*;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithoutLogin;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,7 +15,7 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
+public class PaymentPageTest extends GreenCityTestRunnerWithoutLogin {
 
     private final String NAME = "Jack";
     private final String SURNAME = "London";
@@ -36,12 +37,9 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
 
 
     @AfterMethod
-    public void cancelOrder() {
-        PersonalDataPage personalDataPage = paymentPage.clickOnBackButton();
-        personalDataPage.deleteAddressOfIndex(new PersonalDataPage(driver).getQuantityOfAddresses() - 1);
+    public void signOut() {
 
-        personalDataPage.signOut();
-        //orderDetailsPage.signOut();
+        paymentPage.signOut();
     }
 
 
@@ -59,16 +57,16 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
 
         PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
         personalDataPage.fullPersonalData(NAME, SURNAME, PHONE, GMAIL);
+        if(personalDataPage.getQuantityOfAddresses()==0){
         AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 2))
-                .clickOnAddAddressButton();
+                .clickOnAddAddressButton();}
 
         softAssert.assertTrue(personalDataPage.getNextButton().isActive(), "Button from 'Personal Data Page' is not active");
-        //TODO method for wait
-        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        paymentPage = personalDataPage.clickOnNextButton();
         softAssert.assertTrue(paymentPage.isOrderNumbersDisplayed(), "Order number isn't displayed");
-        softAssert.assertEquals(paymentPage.getTextFromOrderNumbers(), "1111111111", "Order number isn't displayed correctly");
+        softAssert.assertEquals(paymentPage.getTextFromOrderNumbers(), "1111111111", "Order number isn't displayed correctly"); //TODO bug with comma
         softAssert.assertAll();
 
 
@@ -98,7 +96,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
         softAssert.assertTrue(paymentPage.isAllOrderNumbersDisplayed(), "Order numbers aren't displayed");
         softAssert.assertEquals(
-                paymentPage.returnAllOrderNumbers(), "1111111111,2222222222", "Order numbers aren't displayed correctly");
+                paymentPage.returnAllOrderNumbers(), "1111111111,2222222222", "Order numbers aren't displayed correctly");//TODO bug with comma
         softAssert.assertAll();
 
 
@@ -120,7 +118,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
-        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify all services");//TODO with DB
         //softAssert.assertTrue(paymentPage.);
 
@@ -144,8 +142,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         addAddressPopupComponent.fillAllFields(
                 new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton();
-        //TODO method for wait
-        PaymentPage paymentPage = personalDataPage.clickOnNextButton();
+        paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify full name");
         softAssert.assertEquals(paymentPage.getFullName().getText(), "Jack London");
         logger.info("Verify phone number");
@@ -192,6 +189,10 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
     @Description("GC-2064")
     public void previouslyEnteredDataIsSavedAndDisplayed() {
         logger.info("Verify that previously entered data is saved when navigating in steps in 'UBS кур'єр' tab");
+
+
+
+
     }
 
     @Test(testName = "GC-2065", description = "GC-2065")
