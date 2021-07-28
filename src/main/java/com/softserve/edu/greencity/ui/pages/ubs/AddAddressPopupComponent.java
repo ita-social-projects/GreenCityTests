@@ -33,6 +33,7 @@ public class AddAddressPopupComponent {
     private LabelElement houseAlertMessage;
 
     private WaitsSwitcher waitsSwitcher;
+
     public AddAddressPopupComponent(WebDriver driver) {
         this.driver = driver;
         initElements();
@@ -202,9 +203,17 @@ public class AddAddressPopupComponent {
         return new PersonalDataPage(driver);
     }
 
-    public WelcomePage clickOnCancelButton() {
+    public boolean isAddAddressButtonActive() {
+        return getAddButton().isActive();
+    }
+
+    public PersonalDataPage clickOnCancelButton() {
         getCancelButton().click();
-        return new WelcomePage(driver);
+        return new PersonalDataPage(driver);
+    }
+
+    public InputElement getHouseInput() {
+        return houseInput;
     }
 
     public InputElement getHouseInput() {

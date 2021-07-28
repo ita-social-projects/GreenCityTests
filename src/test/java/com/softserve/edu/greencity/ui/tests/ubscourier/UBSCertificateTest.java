@@ -142,8 +142,8 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         orderDetailsPage.clickActivateButton();
         softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(), "Certificate not found; check that the data is correct.");
         softAssert.assertAll();
+        //Test can fail due to front defect.
     }
-
 
     @Test(testName = "GC-1941", description = "GC-1941")
     @Description("GC-1941")

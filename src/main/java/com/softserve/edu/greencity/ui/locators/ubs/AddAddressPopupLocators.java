@@ -19,10 +19,9 @@ public enum AddAddressPopupLocators implements Locator {
     CITY_LABEL(By.cssSelector(".w-100.city-notice")),
     CITY_MESSAGE_INFO(By.cssSelector(".w-100.city-notice")),
 
-    STREET_ALERT_MESSAGE(By.xpath("//*[@id='mat-dialog-4']/app-ubs-add-address-pop-up/form/div[3]/div/app-ubs-input-error/div")),
-    DISTRICT_ALERT_MESSAGE(By.xpath("//*[@id='mat-dialog-1']/app-ubs-add-address-pop-up/form/div[2]/div/app-ubs-input-error/div")),
-    HOUSE_ALERT_MESSAGE(By.xpath("//*[@id='mat-dialog-2']/app-ubs-add-address-pop-up/form/div[4]/div[1]/div/app-ubs-input-error/div")),
-
+    STREET_ALERT_MESSAGE(By.xpath("//input[@formcontrolname = 'street']/following-sibling::div//div")),
+    DISTRICT_ALERT_MESSAGE(By.xpath("//input[@formcontrolname = 'district']/following-sibling::div//div")),
+    HOUSE_ALERT_MESSAGE(By.xpath("//input[@formcontrolname = 'houseNumber']/following-sibling::div//div")),
     ;
 
     private By path;

@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+
 import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
@@ -46,6 +47,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
         softAssert.assertEquals(paymentPage.getFullName().getText(), UBSDataStrings.PERSONAL_DATA_NAME_SURNAME.getMessage());
         softAssert.assertEquals(paymentPage.getPhone().getText(), UBSDataStrings.PERSONAL_DATA_PHONE.getMessage());
         softAssert.assertEquals(paymentPage.getGmail().getText(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
+
     }
 
     @Test(testName = "GC-2042", description = "GC-2042") //Need to connect to the database for check
