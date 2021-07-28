@@ -170,7 +170,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public PaymentPage clickOnNextButton() {
-        waitsSwitcher.sleep(5000);
+        waitsSwitcher.sleep(8000);
         //waitsSwitcher.setExplicitWait(3, ExpectedConditions.invisibilityOfElementLocated(PersonalDataPageLocators.NEXT.getPath()));
         getNextButton().click();
         return new PaymentPage(driver);
