@@ -103,7 +103,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
 
     }
 
-    @Test(testName = "GC-2061", description = "GC-2061", enabled = false)
+    @Test(testName = "GC-2061", description = "GC-2061")
     @Description("GC-2061")
     public void allCorrectInformationAboutOrderDisplayedCorrectly() {
         logger.info("Verify that user sees all correct information about the order");
@@ -122,9 +122,18 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
                     .clickOnAddAddressButton();
         }
         paymentPage = personalDataPage.clickOnNextButton();
-        logger.info("Verify all services");//TODO with DB
-        //softAssert.assertTrue(paymentPage.);
+        logger.info("Verify the summary of the selected services and cost per each service");
+        softAssert.assertTrue(paymentPage.isSelectedServicesDisplayed(), "Selected services aren't displayed");
 
+        logger.info("Verify Order amount");
+        softAssert.assertTrue(paymentPage.getOrderAmount().isDisplayedLabel(), "Order amount isn't displayed");
+        logger.info("Verify Certificate discount");
+        softAssert.assertTrue(paymentPage.getCertificate().isDisplayedLabel(), "Certificate isn't displayed");
+        logger.info("Verify Bonus discount"); //TODO BUG with DB
+
+        logger.info("Verify Amount due");
+        softAssert.assertTrue(paymentPage.getAmountDue().isDisplayedLabel(), "Amount due isn't displayed");
+        softAssert.assertAll();
 
     }
 
@@ -205,7 +214,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         String orderAmount = orderDetailsPage.getTextOrderAmount();
         String certificateAmount = orderDetailsPage.getCertificateAmount();
 
-         personalDataPage = orderDetailsPage.clickOnNextButton()
+        personalDataPage = orderDetailsPage.clickOnNextButton()
                 .fullPersonalData(UBSDataStrings.PERSONAL_DATA_NAME.getMessage(), UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage(),
                         UBSDataStrings.PERSONAL_DATA_PHONE.getMessage(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage())
                 .deleteAllAddresses()

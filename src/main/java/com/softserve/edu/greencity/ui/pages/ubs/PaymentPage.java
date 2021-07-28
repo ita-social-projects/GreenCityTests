@@ -67,18 +67,15 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public void initPaymentElements() {
-        //yourOrder=new LabelElement(driver,PaymentPageLocators.YOUR_ORDER_LABEL);
         service = new LabelElement(driver, PaymentPageLocators.SERVICE_LABEL);
-        //volume = new LabelElement(driver, PaymentPageLocators.VOLUME_LABEL);
+      //  volume = new LabelElement(driver, PaymentPageLocators.VOLUME_LABEL);
         cost = new LabelElement(driver, PaymentPageLocators.COST_LABEL);
         numberOfPackages = new LabelElement(driver, PaymentPageLocators.NUMBER_OF_PACKAGES_LABEL);
-        total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
-
+         total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
 //        orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
-        // certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
+//        certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
 //        amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
-        // deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
-        //orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
+//        deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
         recipient = new LabelElement(driver, PaymentPageLocators.RECIPIENT_LABEL);
         fullName = new LabelElement(driver, PaymentPageLocators.FULL_NAME_LABEL);
         phone = new LabelElement(driver, PaymentPageLocators.PHONE_LABEL);
@@ -114,7 +111,7 @@ public class PaymentPage extends UBSCourierBasePage {
         return backButton;
     }
 
-    public PaymentPage clickOnOrderButton() {   //return type?
+    public PaymentPage clickOnOrderButton() {
         getOrderButton().click();
         return this;
     }
@@ -306,6 +303,19 @@ public class PaymentPage extends UBSCourierBasePage {
         }
         return result.trim();
 
+
+    }
+
+    public boolean isSelectedServicesDisplayed() {
+        return getOldClothesCheap().isDisplayedLabel()
+                && getOldClothesExpensive().isDisplayedLabel()
+                && getRecycledMaterials().isDisplayedLabel()
+                && getCheapPricePackage().isDisplayedLabel()
+                && getExpensivePricePackage().isDisplayedLabel()
+                && getRecycledMaterialsPackage().isDisplayedLabel()
+                && getCheapPriceTotalSum().isDisplayedLabel()
+                && getExpensivePriceTotalSum().isDisplayedLabel()
+                && getRecycledMaterialsPackage().isDisplayedLabel();
 
     }
 
