@@ -11,7 +11,7 @@ public enum PaymentPageLocators implements Locator {
     YOUR_ORDER_LABEL(By.xpath("//div[@class='container ng-star-inserted']//h3[@class='font-bolt order-title']")),
     SERVICE_LABEL(By.xpath("//app-ubs-submit-order//label[@class='col-3 label m-0']")),
     VOLUME_LABEL(By.xpath("//*[@id='cdk-step-content-0-2']/app-ubs-submit-order/div[1]/form/div[1]/label[2]")),
-            //("(//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=2]")),// not so good
+
     COST_LABEL(By.xpath("//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=3]")),//not so good
     NUMBER_OF_PACKAGES_LABEL(By.xpath("//app-ubs-submit-order//div[@class='w-100 d-flex justify-content-between mb-2']//label[position()=4]")),//not so good
     TOTAL_LABEL(By.xpath("//app-ubs-submit-order//label[@class='col-3 label m-0 text-center']")),
@@ -47,7 +47,8 @@ public enum PaymentPageLocators implements Locator {
     DISTRICT_LABEL(By.xpath("//div[@class='order-info m-0']//ul/li[position()=3]")),
     COMMENT_TO_ADDRESS_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']//li[position()=4]")),
     COMMENT_TO_ORDER_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']//li[position()=5]")),
-    TOTAL_ADDRESS_OF_EXPORT_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']/li")),
+    TOTAL_ADDRESS_OF_EXPORT_LABEL(By.xpath("//div[@class='order-info m-0']//ul[@class='order-list']/li[position()=4]/preceding-sibling::li")),
+            //("//div[@class='order-info m-0']//ul[@class='order-list']/li")),
     PAYMENT_METHOD(By.xpath("//app-ubs-submit-order//div[@class='form-group comment']//select"));
 
 

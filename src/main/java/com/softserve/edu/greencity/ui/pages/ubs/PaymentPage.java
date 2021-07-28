@@ -69,7 +69,7 @@ public class PaymentPage extends UBSCourierBasePage {
     public void initPaymentElements() {
         //yourOrder=new LabelElement(driver,PaymentPageLocators.YOUR_ORDER_LABEL);
         service = new LabelElement(driver, PaymentPageLocators.SERVICE_LABEL);
-        volume = new LabelElement(driver, PaymentPageLocators.VOLUME_LABEL);
+        //volume = new LabelElement(driver, PaymentPageLocators.VOLUME_LABEL);
         cost = new LabelElement(driver, PaymentPageLocators.COST_LABEL);
         numberOfPackages = new LabelElement(driver, PaymentPageLocators.NUMBER_OF_PACKAGES_LABEL);
         total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
@@ -269,11 +269,11 @@ public class PaymentPage extends UBSCourierBasePage {
 
         List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
         for (WebElement orders : orderPath) {
-            if(orders.isDisplayed()==false){
+            if (orders.isDisplayed() == false) {
                 return false;
             }
         }
-       return true;
+        return true;
 
     }
 
@@ -298,13 +298,14 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
 
-    public String getStreetHoueCorp(){
-        String result="";
-        List<WebElement> addressData=driver.findElements(PaymentPageLocators.TOTAL_ADDRESS_OF_EXPORT_LABEL.getPath());
-        for(WebElement addresItem: addressData){
-            result+=addresItem.getText();
+    public String getFullAddress() {
+        String result = "";
+        List<WebElement> addressData = driver.findElements(PaymentPageLocators.TOTAL_ADDRESS_OF_EXPORT_LABEL.getPath());
+        for (WebElement addresItem : addressData) {
+            result = result + " " + addresItem.getText();
         }
-        return result;
+        return result.trim();
+
 
     }
 
