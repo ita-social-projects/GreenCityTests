@@ -65,9 +65,9 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         String phoneMessage = personalDataPage.getErrorPhoneMessage();
         String emailMessage = personalDataPage.getErrorEmailMessage();
 
-        softAssert.assertEquals(nameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
-        softAssert.assertEquals(surnameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
-        softAssert.assertEquals(phoneMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
-        softAssert.assertEquals(emailMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE);
+        softAssert.assertEquals(nameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
+        softAssert.assertEquals(surnameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
+        softAssert.assertEquals(phoneMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
+        softAssert.assertEquals(emailMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
     }
 }
