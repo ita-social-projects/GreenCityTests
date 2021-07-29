@@ -4,27 +4,21 @@ import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
-
+import com.softserve.edu.greencity.ui.pages.ubs.AddAddressPopupComponent;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
 import com.softserve.edu.greencity.ui.pages.ubs.PersonalDataPage;
 import com.softserve.edu.greencity.ui.pages.ubs.UserAddress;
-
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithoutLogin;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
-import com.softserve.edu.greencity.ui.pages.ubs.AddAddressPopupComponent;
-
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
-
 
 
 public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
     private OrderDetailsPage orderDetailsPage;
     private PersonalDataPage personalDataPage;
-
     private AddAddressPopupComponent addAddressPopupComponent;
     private WaitsSwitcher waitsSwitcher;
-
 
     @BeforeClass
     public void signIn() {
@@ -34,7 +28,6 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
                 .getManualLoginComponent()
                 .successfullyLogin(user);
     }
-
 
     @BeforeMethod
     public void navigateToPersonalDataPage() {
@@ -86,23 +79,15 @@ public class AddAddressPopupTest extends GreenCityTestRunnerWithoutLogin {
     @Test(testName = "GC-2068", description = "GC-2068")
     @Description("GC-2068")
     public void checkDataMessageInfo() {
-        logger.info("Verify that ");
-
-        addAddressPopupComponent.chooseCity(AddAddressPopupLocators.CITY_KIEV);
-
-        addAddressPopupComponent.getStreetInput().click();
-        addAddressPopupComponent.getDistrictInput().click();
+        logger.info("Verify that the user can see warning message of the fill data near the required fields");
+        addAddressPopupComponent.chooseCity(AddAddressPopupLocators.CITY_KIEV).clickOnStreetInput().clickOnDistrictInput();
         String streetMessage = addAddressPopupComponent.getStreetValidationErrorText();
-        addAddressPopupComponent.getStreetInput().click();
-        addAddressPopupComponent.getStreetInput().sendKeys("Хоткевича");
-        addAddressPopupComponent.getDistrictInput().click();
-        addAddressPopupComponent.getHouseInput().click();
+        addAddressPopupComponent.clickOnStreetInput().getStreetInput().sendKeys("Хоткевича");
+        addAddressPopupComponent.clickOnDistrictInput().clickOnHouseInput();
         String districtMessage = addAddressPopupComponent.getDistrictValidationErrorText();
         addAddressPopupComponent.getDistrictInput().sendKeys("Печерський");
         String houseMessage = addAddressPopupComponent.getHouseValidationErrorText();
-        addAddressPopupComponent.getHouseInput().click();
-        addAddressPopupComponent.getHouseInput().sendKeys("1");
-
+        addAddressPopupComponent.clickOnHouseInput().getHouseInput().sendKeys("1");
 
         softAssert.assertEquals(UBSDataStrings.ADDRESS_WARNING_MESSAGE.getMessage(), streetMessage, "The messages aren't the same!");
         softAssert.assertEquals(UBSDataStrings.ADDRESS_WARNING_MESSAGE.getMessage(), districtMessage, "The messages aren't the same!");
