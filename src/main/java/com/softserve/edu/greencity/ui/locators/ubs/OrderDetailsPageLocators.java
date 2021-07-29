@@ -24,10 +24,8 @@ public enum OrderDetailsPageLocators implements Locator {
     NO_WAITING_ORDER_RADIO_BUTTON(By.cssSelector("div.bottom > div:nth-child(4) > label")),
 
     ORDER_NUMBER_INPUT(By.xpath("//input[@class='shadow-none form-control border-input p-2 eco-store ng-untouched ng-pristine ng-valid']")),
-
-    ORDER_NUMBER_SECOND_INPUT(By.xpath("//div[@class='bottom']//div[@class='form-group ng-touched ng-dirty ng-valid ng-star-inserted']//input")),
-
-
+    ORDER_NUMBER_SECOND_INPUT(By.cssSelector("div.form-group.shop_submit > div:nth-child(3) > input")),
+            //xpath(""))("//div[@class='bottom']//div[@class='form-group ng-dirty ng-star-inserted ng-valid ng-touched']//input")),
     INCORRECT_ORDER_NUMBER_MESSAGE(By.xpath("//small[@class='text-danger ng-star-inserted']")),
 
     ADD_ANOTHER_ORDER_BUTTON(By.cssSelector(".shop_submit button")),
@@ -54,7 +52,7 @@ public enum OrderDetailsPageLocators implements Locator {
     SERTIFICATE_LABEL(By.cssSelector("app-ubs-order-details .money-saved")),
     AMOUNT_DUE(By.cssSelector("app-ubs-order-details .total-content:nth-child(3) strong"));
 
-    private By path;
+    private final By path;
 
     OrderDetailsPageLocators(By path) {
         this.path = path;
