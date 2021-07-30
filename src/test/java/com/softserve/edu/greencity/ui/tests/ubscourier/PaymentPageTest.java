@@ -158,11 +158,11 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         }
         paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify full name");
-        softAssert.assertEquals(paymentPage.getFullName().getText(), "Jack London");
+        softAssert.assertEquals(paymentPage.getFullName().getText(), "Jack London", "Name field is not correct");
         logger.info("Verify phone number");
-        softAssert.assertEquals(paymentPage.getPhone().getText(), "+380 634 56 78 90");//TODO BUG with phone
+        softAssert.assertEquals(paymentPage.getPhone().getText(), "+380 634 56 78 90", "Number phone is not correct");//TODO BUG with phone
         logger.info("Verify gmail address");
-        softAssert.assertEquals(paymentPage.getGmail().getText(), "Jkl@gmail.com");
+        softAssert.assertEquals(paymentPage.getGmail().getText(), "Jkl@gmail.com","Gmail is not correct");
         softAssert.assertAll();
 
     }
@@ -188,17 +188,17 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         personalDataPage.inputComment(UBSDataStrings.ADDRESS_COMMENT.getMessage());
         paymentPage = personalDataPage.clickOnNextButton();
 
-        softAssert.assertEquals(paymentPage.getFullAddress(), "Kiev Sadova, 2, 3, 4 Kiev");//TODO BUG with street
+        softAssert.assertEquals(paymentPage.getFullAddress(), "Kiev Sadova, 2, corp 3, entrance 4 district Kiev", "Address is not displayed correctly");//TODO BUG with street
         softAssert.assertEquals(paymentPage.getCommentOrderText(),
-                "Comment to the order: " +  UBSDataStrings.ORDER_COMMENT.getMessage());
+                "Comment to the order: " +  UBSDataStrings.ORDER_COMMENT.getMessage(), "Comment is not displayed correctly");
         softAssert.assertEquals(paymentPage.getCommentAddressText(),
-                "Comment to the address: " + UBSDataStrings.ADDRESS_COMMENT.getMessage());
+                "Comment to the address: " + UBSDataStrings.ADDRESS_COMMENT.getMessage(),"Comment is not displayed correctly");
         softAssert.assertAll();
 
 
     }
 
-    @Test(testName = "GC-2064", description = "GC-2064")
+    @Test(testName = "GC-2064", description = "GC-2064",enabled = false)
     @Description("GC-2064")
     public void previouslyEnteredDataIsSavedAndDisplayed() {
         logger.info("Verify that previously entered data is saved when navigating in steps in 'UBS кур'єр' tab");
