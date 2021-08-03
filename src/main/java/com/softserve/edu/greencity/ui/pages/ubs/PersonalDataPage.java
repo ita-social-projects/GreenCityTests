@@ -76,6 +76,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     public InputElement getPhoneInput(){
         return phoneField;
     }
+
     public PersonalDataPage inputEmail(String email) {
         emailField.clearInput();
         emailField.sendKeys(email);

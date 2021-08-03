@@ -216,7 +216,4 @@ public class AddAddressPopupComponent {
         return houseInput;
     }
 
-    public InputElement getHouseInput() {
-        return houseInput;
-    }
 }
