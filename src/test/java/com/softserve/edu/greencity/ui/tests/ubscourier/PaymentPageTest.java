@@ -55,7 +55,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
 
         personalDataPage = orderDetailsPage.clickOnNextButton();
         personalDataPage.fullPersonalData(NAME, SURNAME, PHONE, GMAIL);
-        if (personalDataPage.getQuantityOfAddresses() == 0) {
+        if (personalDataPage.getQuantityOfAddresses() == 0) {//TODO bug with message
             AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
             addAddressPopupComponent.fillAllFields(
                     new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 1, "1", 2))
@@ -65,7 +65,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertTrue(personalDataPage.getNextButton().isActive(), "Button from 'Personal Data Page' is not active");
         paymentPage = personalDataPage.clickOnNextButton();
         softAssert.assertTrue(paymentPage.isOrderNumbersDisplayed(), "Order number isn't displayed");
-        softAssert.assertEquals(paymentPage.getTextFromOrderNumbers(), "1111111111", "Order number isn't displayed correctly"); //TODO bug with comma
+        softAssert.assertEquals(paymentPage.getTextFromOrderNumbers(), "1111111111", "Order number isn't displayed correctly");
         softAssert.assertAll();
 
 
@@ -112,7 +112,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
         orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
-                .inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+                .inputComment(UBSDataStrings.ADDRESS_COMMENT.getMessage());
         personalDataPage = orderDetailsPage.clickOnNextButton();
         personalDataPage.fullPersonalData(NAME, SURNAME, PHONE, GMAIL);
         if (personalDataPage.getQuantityOfAddresses() == 0) {
@@ -122,14 +122,14 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
                     .clickOnAddAddressButton();
         }
         paymentPage = personalDataPage.clickOnNextButton();
-        logger.info("Verify the summary of the selected services and cost per each service");
+
         softAssert.assertTrue(paymentPage.isSelectedServicesDisplayed(), "Selected services aren't displayed");
 
         logger.info("Verify Order amount");
         softAssert.assertTrue(paymentPage.getOrderAmount().isDisplayedLabel(), "Order amount isn't displayed");
         logger.info("Verify Certificate discount");
         softAssert.assertTrue(paymentPage.getCertificate().isDisplayedLabel(), "Certificate isn't displayed");
-        logger.info("Verify Bonus discount"); //TODO BUG with DB
+        logger.info("Verify Bonus discount"); //TODO with bonuses
 
         logger.info("Verify Amount due");
         softAssert.assertTrue(paymentPage.getAmountDue().isDisplayedLabel(), "Amount due isn't displayed");
@@ -147,7 +147,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         orderDetailsPage.getActivateCertificateButton().click();
         orderDetailsPage.getYesWaitingOrderButton().click();
         orderDetailsPage.inputOrderNumber(UBSDataStrings.ORDER_NUMBER_ONE.getMessage())
-                .inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+                .inputComment(UBSDataStrings.ADDRESS_COMMENT.getMessage());
         personalDataPage = orderDetailsPage.clickOnNextButton();
         personalDataPage.fullPersonalData(NAME, SURNAME, PHONE, GMAIL);
         if (personalDataPage.getQuantityOfAddresses() == 0) {
@@ -158,11 +158,11 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         }
         paymentPage = personalDataPage.clickOnNextButton();
         logger.info("Verify full name");
-        softAssert.assertEquals(paymentPage.getFullName().getText(), "Jack London");
+        softAssert.assertEquals(paymentPage.getFullName().getText(), "Jack London", "Name field is not correct");
         logger.info("Verify phone number");
-        softAssert.assertEquals(paymentPage.getPhone().getText(), "+380 634 56 78 90");//TODO BUG with phone
+        softAssert.assertEquals(paymentPage.getPhone().getText(), "+380 634 56 78 90", "Number phone is not correct");//TODO BUG with phone
         logger.info("Verify gmail address");
-        softAssert.assertEquals(paymentPage.getGmail().getText(), "Jkl@gmail.com");
+        softAssert.assertEquals(paymentPage.getGmail().getText(), "Jkl@gmail.com","Gmail is not correct");
         softAssert.assertAll();
 
     }
@@ -185,21 +185,20 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
                     new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                     .clickOnAddAddressButton();
         }
-        personalDataPage.inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+        personalDataPage.inputComment(UBSDataStrings.ADDRESS_COMMENT.getMessage());
         paymentPage = personalDataPage.clickOnNextButton();
-        logger.info("Verify address");
-        softAssert.assertEquals(paymentPage.getFullAddress(), "Kiev Sadova, 2, 3 Kiev");//TODO BUG with street
-        logger.info("Verify comments");
+
+        softAssert.assertEquals(paymentPage.getFullAddress(), "Kiev Sadova, 2, corp 3, entrance 4 district Kiev", "Address is not displayed correctly");//TODO BUG with street
         softAssert.assertEquals(paymentPage.getCommentOrderText(),
-                "Comment to the order: Над нами ментори кружили. Спостерігали кожен день, чи з головою ми дружили,чи не творили єрундєнь.");
+                "Comment to the order: " +  UBSDataStrings.ORDER_COMMENT.getMessage(), "Comment is not displayed correctly");
         softAssert.assertEquals(paymentPage.getCommentAddressText(),
-                "Comment to the address: Ремонтується дорога. Під'їзд до будинку доступний зі сторони будинку номер 15");
+                "Comment to the address: " + UBSDataStrings.ADDRESS_COMMENT.getMessage(),"Comment is not displayed correctly");
         softAssert.assertAll();
 
 
     }
 
-    @Test(testName = "GC-2064", description = "GC-2064")
+    @Test(testName = "GC-2064", description = "GC-2064",enabled = false)
     @Description("GC-2064")
     public void previouslyEnteredDataIsSavedAndDisplayed() {
         logger.info("Verify that previously entered data is saved when navigating in steps in 'UBS кур'єр' tab");
@@ -222,7 +221,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
                 .fillAllFields(
                         new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                 .clickOnAddAddressButton()
-                .inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+                .inputComment(UBSDataStrings.ADDRESS_COMMENT.getMessage());
 
         paymentPage = personalDataPage.clickOnNextButton();
         checkPaymentPageAsserts(dueAmount, orderAmount, certificateAmount, paymentPage);
@@ -256,7 +255,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
                     new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
                     .clickOnAddAddressButton();
         }
-        personalDataPage.inputComment(UBSDataStrings.ADDRES_COMMENT.getMessage());
+        personalDataPage.inputComment(UBSDataStrings.ADDRESS_COMMENT.getMessage());
         paymentPage = personalDataPage.clickOnNextButton();
         softAssert.assertFalse(paymentPage.getPaymentField().isDisplayed(), "Field is Displayed");
         softAssert.assertAll();
@@ -280,7 +279,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(paymentPage.getStreet().getText(), "Sadova");
         softAssert.assertEquals(paymentPage.getDistrict().getText(), "Kiev");
         softAssert.assertEquals(paymentPage.getCommentOrderText(), "Comment to the order: " + UBSDataStrings.ORDER_COMMENT.getMessage());
-        softAssert.assertEquals(paymentPage.getCommentAddressText(), "Comment to the address: " + UBSDataStrings.ADDRES_COMMENT.getMessage());
+        softAssert.assertEquals(paymentPage.getCommentAddressText(), "Comment to the address: " + UBSDataStrings.ADDRESS_COMMENT.getMessage());
         softAssert.assertEquals(paymentPage.getAmountDue().getText(), dueAmount);
         softAssert.assertEquals(paymentPage.getOrderAmount().getText(), orderAmount);
         softAssert.assertEquals(paymentPage.getCertificate().getText(), certificateAmount);
@@ -301,7 +300,7 @@ public class PaymentPageTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(personalDataPage.getLastNameInput().getValue(), UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage());
         softAssert.assertEquals(personalDataPage.getPhoneInput().getValue(), UBSDataStrings.PERSONAL_DATA_PHONE.getMessage());
         softAssert.assertEquals(personalDataPage.getEmailInput().getValue(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
-        softAssert.assertEquals(personalDataPage.getCommentInput().getText(), UBSDataStrings.ADDRES_COMMENT.getMessage());
+        softAssert.assertEquals(personalDataPage.getCommentInput().getText(), UBSDataStrings.ADDRESS_COMMENT.getMessage());
         softAssert.assertEquals(personalDataPage.getCityNameOfAddressByIndex(0), "Kiev");
         softAssert.assertEquals(personalDataPage.getStreetNameOfAddressByIndex(0), "Sadova");
         softAssert.assertEquals(personalDataPage.getDistinctOfAddressByIndex(0), "Kiev");
