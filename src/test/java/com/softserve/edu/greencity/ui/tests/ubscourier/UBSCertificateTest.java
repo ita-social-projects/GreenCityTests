@@ -142,18 +142,16 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
         orderDetailsPage.clickActivateButton();
         softAssert.assertEquals(orderDetailsPage.getCertificateMessage().getText(), "Certificate not found; check that the data is correct.");
         softAssert.assertAll();
+        //Test can fail due to front defect.
     }
-
 
     @Test(testName = "GC-1941", description = "GC-1941")
     @Description("GC-1941")
     public void orderServicesWithCertificateAndBonus() {
         orderDetailsPage.inputCertificate(Certificates.ACTIVE_100.getCertificate());
-        orderDetailsPage.clickActivateButton(); //TODO add bonuses methods
-        orderDetailsPage.getYesWaitingOrderButton().click();
+        orderDetailsPage.clickActivateButton().clickYesWaitingForAnOrderButton(); //TODO add bonuses methods
         orderDetailsPage.getOrderNumberInput().sendKeys("1111111111");
-        orderDetailsPage.getNoWaitingOrderButton().click();
-        orderDetailsPage.getTotalSum(); //TODO add checking method for total sum
+        orderDetailsPage.clickNoWaitingForAnOrderButton().getTotalSum(); //TODO add checking method for total sum
         orderDetailsPage.clickOnNextButton();
         personalDataPage = new PersonalDataPage(driver);
         personalDataPage.clickOnBackButton();
@@ -163,12 +161,10 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
     @Test(testName = "GC-1943", description = "GC-1943")
     @Description("GC-1943")
     public void orderServicesWithCertificateAndTwoBonus() {
-        orderDetailsPage.getYesWaitingOrderButton().click(); //TODO add bonuses methods
-        orderDetailsPage.getOrderNumberInput().sendKeys("1111111111");
+        orderDetailsPage.clickYesWaitingForAnOrderButton().getOrderNumberInput().sendKeys("1111111111"); //TODO add bonuses methods
         orderDetailsPage.getAddAnotherOrderNumberButton().sendKeys("2222222222");
-        orderDetailsPage.getNoWaitingOrderButton().click();
-        orderDetailsPage.getTotalSum();//TODO add checking method for total sum
-        orderDetailsPage.getNextButton().click();
+        orderDetailsPage.clickNoWaitingForAnOrderButton().getTotalSum(); //TODO add checking method for total sum
+        orderDetailsPage.clickOnNextButton();
         personalDataPage = new PersonalDataPage(driver);
         personalDataPage.clickOnBackButton();
         softAssert.assertTrue(personalDataPage.getBackButton().isActive());//TODO add more asserts
@@ -184,9 +180,8 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
                 .getInput()
                 .sendKeys("10");
         //TODO add methods for bonuses
-        orderDetailsPage.getYesWaitingOrderButton().click();
-        orderDetailsPage.getOrderNumberInput().sendKeys("1111111111");
-        orderDetailsPage.getNextButton().click();
+        orderDetailsPage.clickYesWaitingForAnOrderButton().getOrderNumberInput().sendKeys("1111111111");
+        orderDetailsPage.clickOnNextButton();
         personalDataPage = new PersonalDataPage(driver);
         personalDataPage.clickOnBackButton();
         softAssert.assertTrue(personalDataPage.getBackButton().isActive());
@@ -215,12 +210,12 @@ public class UBSCertificateTest extends GreenCityTestRunnerWithoutLogin {
          orderDetailsPage.clickAddOrderButton();
          orderDetailsPage.getAnotherOrderNumber().get(1).getAnotherOrderInput().sendKeys("2222222222");
          PersonalDataPage personalDataPage = orderDetailsPage.clickOnNextButton();
-        softAssert.assertTrue(personalDataPage.isNameInputPresent(),"crossing to personaldata page failed, or add addres button is not on the page");
+        softAssert.assertTrue(personalDataPage.isNameInputPresent(),"crossing to personaldata page failed, or add address button is not on the page");
         personalDataPage.clickOnBackButton();
         softAssert.assertEquals(UBSDataStrings.ORDER_NUMBER_ONE.getMessage(),orderDetailsPage.getAnotherOrderNumber().get(0).getAnotherOrderInput().getAttribute("value"),"first order mismatch.");
         softAssert.assertEquals(UBSDataStrings.ORDER_NUMBER_TWO.getMessage(),
                 orderDetailsPage.getAnotherOrderNumber().get(1).getAnotherOrderInput().getAttribute("value"),"second order mismatch.");
-        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getValue(),"21", "input quantuty mismatch");
+        softAssert.assertEquals(orderDetailsPage.getServicesComponents().get(0).getInput().getValue(),"21", "input quantity mismatch");
         softAssert.assertAll();
     }
 

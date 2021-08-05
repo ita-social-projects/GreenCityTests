@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.ubscourier;
 
+
 import com.softserve.edu.greencity.data.UBS.UBSDataStrings;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
@@ -8,7 +9,6 @@ import com.softserve.edu.greencity.ui.pages.ubs.*;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -31,21 +31,17 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
 
     @AfterMethod
     public void deleteAddress() {
-        personalDataPage.deleteAddressOfIndex(personalDataPage.getQuantityOfAddresses()-1);
+        personalDataPage.deleteAddressOfIndex(personalDataPage.getQuantityOfAddresses() - 1);
     }
 
     @Test(testName = "GC-2047", description = "GC-2047")
     @Description("Verify ordering when fields from first section on the 'Personal data' page filled with valid data")
     public void verifyOrderingWithValidData() {
         personalDataPage = orderDetailsPage.clickOnNextButton();
-        personalDataPage.inputName("Lina")
-                .inputSurname("Serhova")
-                .inputPhone("0961111111")
-                .inputEmail("dcghkv@gmail.com");
-        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-        addAddressPopupComponent.fillAllFields(
-                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .clickOnAddAddressButton();
+        personalDataPage.fullPersonalData(UBSDataStrings.PERSONAL_DATA_NAME.getMessage(), UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage(),
+                UBSDataStrings.PERSONAL_DATA_PHONE.getMessage(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
+        UserAddress addressData = new UserAddress(AddAddressPopupLocators.CITY_KIEV).generateRandomAddressValues();
+        personalDataPage = personalDataPage.clickOnAddAddressButton().fillAllFields(addressData).clickOnAddAddressButton();
         PaymentPage paymentPage = personalDataPage.clickOnNextButton();
         softAssert.assertEquals("3\nConfirmation", personalDataPage.getPaymentButton().getText());
         softAssert.assertEquals(paymentPage.getFullName().getText(), UBSDataStrings.PERSONAL_DATA_NAME_SURNAME.getMessage());
@@ -57,14 +53,10 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
     @Description("Verify if the system save the order after interrupt the order")
     public void verifySaveOrderAfterInterrupt() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.inputName("Lina")
-                .inputSurname("Serhova")
-                .inputPhone("0961111111")
-                .inputEmail("dcghkv@gmail.com");
-        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-        addAddressPopupComponent.fillAllFields(
-                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .clickOnAddAddressButton();
+        personalDataPage.fullPersonalData(UBSDataStrings.PERSONAL_DATA_NAME.getMessage(), UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage(),
+                UBSDataStrings.PERSONAL_DATA_PHONE.getMessage(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
+        UserAddress addressData = new UserAddress(AddAddressPopupLocators.CITY_KIEV).generateRandomAddressValues();
+        personalDataPage = personalDataPage.clickOnAddAddressButton().fillAllFields(addressData).clickOnAddAddressButton();
         personalDataPage.clickOnCancelButton().clickCancelOrderButton();
     }
 
@@ -72,14 +64,10 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
     @Description("Verify if the system continue making order after clicking by 'Continue' button")
     public void verifyContinueMakingOrder() {
         personalDataPage = orderDetailsPage.clickOnPersonalDataButton();
-        personalDataPage.inputName("Lina")
-                .inputSurname("Serhova")
-                .inputPhone("0961111111")
-                .inputEmail("dcghkv@gmail.com");
-        AddAddressPopupComponent addAddressPopupComponent = personalDataPage.clickOnAddAddressButton();
-        addAddressPopupComponent.fillAllFields(
-                new UserAddress(AddAddressPopupLocators.CITY_KIEV, "Sadova", "Kiev", 2, "3", 4))
-                .clickOnAddAddressButton();
+        personalDataPage.fullPersonalData(UBSDataStrings.PERSONAL_DATA_NAME.getMessage(), UBSDataStrings.PERSONAL_DATA_SURNAME.getMessage(),
+                UBSDataStrings.PERSONAL_DATA_PHONE.getMessage(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
+        UserAddress addressData = new UserAddress(AddAddressPopupLocators.CITY_KIEV).generateRandomAddressValues();
+        personalDataPage = personalDataPage.clickOnAddAddressButton().fillAllFields(addressData).clickOnAddAddressButton();
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         waitsSwitcher.sleep(3000);

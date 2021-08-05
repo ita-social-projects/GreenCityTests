@@ -5,7 +5,6 @@ import com.softserve.edu.greencity.ui.elements.DropDownElement;
 import com.softserve.edu.greencity.ui.elements.InputElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.locators.ubs.AddAddressPopupLocators;
-import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,6 +32,7 @@ public class AddAddressPopupComponent {
     private LabelElement houseAlertMessage;
 
     private WaitsSwitcher waitsSwitcher;
+
     public AddAddressPopupComponent(WebDriver driver) {
         this.driver = driver;
         initElements();
@@ -50,7 +50,6 @@ public class AddAddressPopupComponent {
         cancelButton = new ButtonElement(driver, AddAddressPopupLocators.CANCEL_BUTTON);
     }
 
-    //input data
     public AddAddressPopupComponent inputStreet(UserAddress userAddress) {
         getStreetInput().sendKeys(userAddress.getStreet());
         return this;
@@ -88,7 +87,8 @@ public class AddAddressPopupComponent {
                 .inputCorp(data)
                 .inputEntrance(data);
     }
-//TODO method
+
+    //TODO method
 //    public String getStreetHouseCorp(String street,int house,String corp){
 //
 //      //return  streetInput.getText().concat(String.valueOf(houseInput.getText());
@@ -124,7 +124,6 @@ public class AddAddressPopupComponent {
         return houseAlertMessage;
     }
 
-///////////////////////////////////////////////////////////////
     public String getStreetValidationErrorText() {
         return getStreetAlertMessage().getText();
     }
@@ -141,7 +140,6 @@ public class AddAddressPopupComponent {
         return getCityMessageInfo().getText();
     }
 
-/////////////////////////////////////////////////////////////
     public boolean isDisplayedCityMessageInfo() {
         return getCityMessageInfo().isDisplayedLabel();
     }
@@ -158,12 +156,36 @@ public class AddAddressPopupComponent {
         return getHouseAlertMessage().isDisplayedLabel();
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////
     public AddAddressPopupComponent chooseCity(AddAddressPopupLocators city) {
         cityInput = new DropDownElement(driver, AddAddressPopupLocators.CITY_INPUT);
         cityInput.click();
         cityInput.choseFromOptions(city.getPath());
         getStreetInput();
+        return this;
+    }
+
+    public AddAddressPopupComponent clickOnStreetInput() {
+        streetInput.click();
+        return this;
+    }
+
+    public AddAddressPopupComponent clickOnDistrictInput() {
+        districtInput.click();
+        return this;
+    }
+
+    public AddAddressPopupComponent clickOnHouseInput() {
+        houseInput.click();
+        return this;
+    }
+
+    public AddAddressPopupComponent clickOnCorpInput() {
+        corpInput.click();
+        return this;
+    }
+
+    public AddAddressPopupComponent clickOnEntranceInput() {
+        entranceInput.click();
         return this;
     }
 
@@ -179,6 +201,10 @@ public class AddAddressPopupComponent {
             districtInput = new InputElement(driver, AddAddressPopupLocators.DISTRICT_INPUT);
         }
         return districtInput;
+    }
+
+    public InputElement getHouseInput() {
+        return houseInput;
     }
 
     public ButtonElement getAddButton() {
@@ -202,12 +228,13 @@ public class AddAddressPopupComponent {
         return new PersonalDataPage(driver);
     }
 
-    public WelcomePage clickOnCancelButton() {
-        getCancelButton().click();
-        return new WelcomePage(driver);
+    public boolean isAddAddressButtonActive() {
+        return getAddButton().isActive();
     }
 
-    public InputElement getHouseInput() {
-        return houseInput;
+    public PersonalDataPage clickOnCancelButton() {
+        getCancelButton().click();
+        return new PersonalDataPage(driver);
     }
+
 }

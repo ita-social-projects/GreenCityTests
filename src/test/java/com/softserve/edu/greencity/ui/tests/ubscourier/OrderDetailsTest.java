@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class OrderDetailsTest extends GreenCityTestRunnerWithLoginLogout {
-
     private OrderDetailsPage orderDetailsPage;
 
     @BeforeMethod
