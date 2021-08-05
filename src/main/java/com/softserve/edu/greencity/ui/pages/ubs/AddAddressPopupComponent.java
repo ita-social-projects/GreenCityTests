@@ -236,4 +236,5 @@ public class AddAddressPopupComponent {
         getCancelButton().click();
         return new PersonalDataPage(driver);
     }
+
 }
