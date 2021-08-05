@@ -19,6 +19,7 @@ public final class ManagerDao {
         registerDriver();
         readProperties();
     }
+
     private Properties property = new Properties();
     private void registerDriver() {
         try {
@@ -41,6 +42,12 @@ public final class ManagerDao {
         url = System.getProperty("JDBC_URL");
         System.getenv().get(property.getProperty("JDBC_URL"));
         */
+    }
+
+    private void readUBSProperties() {
+        username = System.getenv().get("JDBC_USERNAME");
+        password = System.getenv().get("JDBC_PASSWROD");
+        url = System.getenv().get("JDBC_UBS_URL");
     }
 
     public static ManagerDao get() {
