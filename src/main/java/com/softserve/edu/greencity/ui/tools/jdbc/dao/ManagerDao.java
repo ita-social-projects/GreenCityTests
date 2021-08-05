@@ -43,6 +43,8 @@ public final class ManagerDao {
         */
     }
 
+
+
     public static ManagerDao get() {
         if (instance == null) {
             synchronized (ManagerDao.class) {

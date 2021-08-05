@@ -68,14 +68,9 @@ public class PaymentPage extends UBSCourierBasePage {
 
     public void initPaymentElements() {
         service = new LabelElement(driver, PaymentPageLocators.SERVICE_LABEL);
-      //  volume = new LabelElement(driver, PaymentPageLocators.VOLUME_LABEL);
         cost = new LabelElement(driver, PaymentPageLocators.COST_LABEL);
         numberOfPackages = new LabelElement(driver, PaymentPageLocators.NUMBER_OF_PACKAGES_LABEL);
-         total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
-//        orderAmount = new LabelElement(driver, PaymentPageLocators.ORDER_AMOUNT_LABEL);
-//        certificate = new LabelElement(driver, PaymentPageLocators.CERTIFICATE_LABEL);
-//        amountDue = new LabelElement(driver, PaymentPageLocators.AMOUNT_DUE_LABEL);
-//        deliveryFromEcoStore=new LabelElement(driver,PaymentPageLocators.DELIVERY_FROM_ECO_STORE_LABEL);
+        total = new LabelElement(driver, PaymentPageLocators.TOTAL_LABEL);
         recipient = new LabelElement(driver, PaymentPageLocators.RECIPIENT_LABEL);
         fullName = new LabelElement(driver, PaymentPageLocators.FULL_NAME_LABEL);
         phone = new LabelElement(driver, PaymentPageLocators.PHONE_LABEL);
@@ -84,10 +79,6 @@ public class PaymentPage extends UBSCourierBasePage {
         town = new LabelElement(driver, PaymentPageLocators.TOWN_LABEL);
         street = new LabelElement(driver, PaymentPageLocators.STREET_LABEL);
         district = new LabelElement(driver, PaymentPageLocators.DISTRICT_LABEL);
-
-        //  payment = new DropDownElement(driver, PaymentPageLocators.PAYMENT_METHOD);
-
-
     }
 
     private ButtonElement getOrderButton() { //doesn't work
@@ -207,7 +198,6 @@ public class PaymentPage extends UBSCourierBasePage {
         return amountDue;
     }
 
-
     public LabelElement getOrderNumbers() {
         orderNumber = new LabelElement(driver, PaymentPageLocators.ORDER_NUMBERS_LABEL);
         return orderNumber;
@@ -254,6 +244,7 @@ public class PaymentPage extends UBSCourierBasePage {
 
 
     public String returnAllOrderNumbers() {
+        logger.info("return all order numbers");
         String s = "";
         List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
         for (WebElement orders : orderPath) {
@@ -263,7 +254,7 @@ public class PaymentPage extends UBSCourierBasePage {
     }
 
     public boolean isAllOrderNumbersDisplayed() {
-
+        logger.info("Verify  is all order numbers displayed");
         List<WebElement> orderPath = driver.findElements(PaymentPageLocators.ORDER_NUMBERS_LABEL.getPath());
         for (WebElement orders : orderPath) {
             if (orders.isDisplayed() == false) {
@@ -280,11 +271,10 @@ public class PaymentPage extends UBSCourierBasePage {
 
     public boolean isOrderNumbersDisplayed() {
         return getOrderNumbers().isDisplayedLabel();
-
     }
 
-
     public String getCommentOrderText() {
+        logger.info("Verify comments");
         return getCommentToOrder().getText();
 
     }
@@ -294,8 +284,8 @@ public class PaymentPage extends UBSCourierBasePage {
 
     }
 
-
     public String getFullAddress() {
+        logger.info("Verify address");
         String result = "";
         List<WebElement> addressData = driver.findElements(PaymentPageLocators.TOTAL_ADDRESS_OF_EXPORT_LABEL.getPath());
         for (WebElement addresItem : addressData) {
@@ -303,10 +293,10 @@ public class PaymentPage extends UBSCourierBasePage {
         }
         return result.trim();
 
-
     }
 
     public boolean isSelectedServicesDisplayed() {
+        logger.info("Verify the summary of the selected services and cost per each service");
         return getOldClothesCheap().isDisplayedLabel()
                 && getOldClothesExpensive().isDisplayedLabel()
                 && getRecycledMaterials().isDisplayedLabel()
