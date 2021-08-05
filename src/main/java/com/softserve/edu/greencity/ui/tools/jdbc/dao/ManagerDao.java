@@ -20,6 +20,16 @@ public final class ManagerDao {
         readProperties();
     }
 
+    private ManagerDao(String type) {
+        connections = new HashMap<>();
+        registerDriver();
+        if (type.toUpperCase().equals("ubs")){
+            readUBSProperties();
+        } else {
+            readProperties();
+        }
+    }
+
     private Properties property = new Properties();
     private void registerDriver() {
         try {
@@ -45,8 +55,8 @@ public final class ManagerDao {
     }
 
     private void readUBSProperties() {
-        username = System.getenv().get("JDBC_USERNAME");
-        password = System.getenv().get("JDBC_PASSWROD");
+        username = System.getenv().get("JDBC_UBS_USERNAME");
+        password = System.getenv().get("JDBC_UBS_PASSWORD");
         url = System.getenv().get("JDBC_UBS_URL");
     }
 
