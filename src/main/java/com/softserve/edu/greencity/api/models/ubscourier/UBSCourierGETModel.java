@@ -2,7 +2,7 @@ package com.softserve.edu.greencity.api.models.ubscourier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UBSCourierGETDto {
+public class UBSCourierGETModel {
     public String addressComment;
     public String email;
     public String firstName;
@@ -10,7 +10,7 @@ public class UBSCourierGETDto {
     public String lastName;
     public String phoneNumber;
 
-    public UBSCourierGETDto(){
+    public UBSCourierGETModel(){
        addressComment="";
        email="";
        firstName="";
