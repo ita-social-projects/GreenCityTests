@@ -24,12 +24,9 @@ public class UbsTestRunner extends GreenCityAPITestRunner {
         Response signedIn = authorizationClient
                 .signIn(new SignInDto(user.getEmail(), user.getPassword()));
         userData = signedIn.as(OwnSecurityModel.class);
-
         OwnSecurityModel userData = signedIn.as(OwnSecurityModel.class);
         ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
         ubsPersonalDataService = new UBSPersonalDataService();
     }
-
-
 
 }
