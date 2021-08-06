@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.api.tests.ubscourier;
 
 import com.softserve.edu.greencity.api.clients.OwnSecurityClient;
+import com.softserve.edu.greencity.api.clients.UBSCourierClient;
 import com.softserve.edu.greencity.api.models.ownsecurity.OwnSecurityModel;
 import com.softserve.edu.greencity.api.models.ownsecurity.SignInDto;
 import com.softserve.edu.greencity.api.tests.GreenCityAPITestRunner;

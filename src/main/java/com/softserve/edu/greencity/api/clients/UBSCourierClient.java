@@ -43,4 +43,9 @@ public class UBSCourierClient extends BaseClient {
                 .header("Authorization", authToken)//Ask about Authorization
                 .put("/{entity}/update-recipient-data");
     }
+    public Response getCertificateAvailability(String certificate){
+      return  prepareRequest()
+                .header("Authorization", authToken)
+                .get("{entity}/certificate/"+ certificate);
+    }
 }
