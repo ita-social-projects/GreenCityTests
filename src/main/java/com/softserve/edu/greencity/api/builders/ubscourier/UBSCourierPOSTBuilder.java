@@ -40,6 +40,7 @@ public class UBSCourierPOSTBuilder {
         return this;
     }
 
+
     public UBSCourierPOSTModel build() {
         return this.ubsCourier;
     }
