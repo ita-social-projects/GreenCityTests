@@ -1,5 +1,9 @@
 package com.softserve.edu.greencity.data.UBS;
 
+import com.softserve.edu.greencity.data.editprofile.EditProfileData;
+
+import static com.softserve.edu.greencity.data.editprofile.EditProfileDataStrings.*;
+
 public class UBSPersonalData {
 
     private String firstName;
