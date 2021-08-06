@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.tools.jdbc.dao;
 
 import com.softserve.edu.greencity.data.UBS.UBSPersonalData;
-import com.softserve.edu.greencity.ui.tools.jdbc.entity.TipsAndTricksEntity;
 import com.softserve.edu.greencity.ui.tools.jdbc.entity.UBSPersonalDataEntity;
 
 import java.sql.ResultSet;
