@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.api.clients;
 
-import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierPOSTDto;
+import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierPOSTModel;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
@@ -24,7 +24,7 @@ public class UBSCourierClient extends BaseClient {
         this.authToken = "Bearer " + authToken;
     }
 
-    public Response postProcessUserOrder(UBSCourierPOSTDto dto) {
+    public Response postProcessUserOrder(UBSCourierPOSTModel dto) {
         return prepareRequest()
                 .body(dto)
                 .header("Authorization", authToken)
@@ -37,10 +37,15 @@ public class UBSCourierClient extends BaseClient {
                 .get("/{entity}/personal-data");
     }
 
-    public Response putUpdateRecipientInformationInOrder(UBSCourierPOSTDto dto) {
+    public Response putUpdateRecipientInformationInOrder(UBSCourierPOSTModel dto) {
         return prepareRequest()
                 .body(dto)
                 .header("Authorization", authToken)//Ask about Authorization
                 .put("/{entity}/update-recipient-data");
+    }
+    public Response getCertificateAvailability(String certificate){
+      return  prepareRequest()
+                .header("Authorization", authToken)
+                .get("{entity}/certificate/"+ certificate);
     }
 }
