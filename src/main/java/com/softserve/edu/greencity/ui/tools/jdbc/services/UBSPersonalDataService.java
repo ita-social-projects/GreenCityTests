@@ -1,7 +1,7 @@
 package com.softserve.edu.greencity.ui.tools.jdbc.services;
 
 import com.softserve.edu.greencity.data.UBS.UBSPersonalData;
-import com.softserve.edu.greencity.data.editprofile.EditProfileDataRepository;
+import com.softserve.edu.greencity.data.UBS.UBSPersonalDataRepository;
 import com.softserve.edu.greencity.ui.tools.jdbc.dao.UBSPersonalDataDao;
 import com.softserve.edu.greencity.ui.tools.jdbc.entity.UBSPersonalDataEntity;
 
@@ -39,4 +39,9 @@ public class UBSPersonalDataService {
         return ubsPersonalDataDao.selectAll();
     }
 
+    public void updatePhoneNumber(String phoneNumber) {
+        UBSPersonalDataEntity ubsPersonalDataEntity = ubsPersonalDataDao.selectByPhoneNumber(phoneNumber);
+        UBSPersonalData ubsPersonalData = UBSPersonalDataRepository.get().getRequiredDefaultFieldsPersonalData();
+        ubsPersonalDataDao.updatePhoneNumberField(ubsPersonalData, ubsPersonalDataEntity);
+    }
 }
