@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.api.models.ubscourier;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class UBSCourierPOSTModel {
+public class UBSCourierPOSTModeldto {
 
     public String[] additionalOrders;
     public Long addressID;
@@ -13,7 +13,7 @@ public class UBSCourierPOSTModel {
     public PersonalData personalData;
     public Long pointsToUse;
 
-    public UBSCourierPOSTModel() {
+    public UBSCourierPOSTModeldto() {
         additionalOrders = new String[0];
         addressID = 0L;
         bags = new Bag[0];
