@@ -36,11 +36,11 @@ public class UBSPersonalDataDao {
     }
 
     public List<UBSPersonalDataEntity> selectByField(String field, String value) {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         List<List<String>> rows = null;
         try {
             ResultSet resultSet = statement.executeQuery(String.format(UBSPersonalDataEntity.SELECT_BY_FIELD, field, value));
-            rows = ManagerDao.get().parseResultSet(resultSet);
+            rows = ManagerDao.getUBS().parseResultSet(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
@@ -51,11 +51,11 @@ public class UBSPersonalDataDao {
     }
 
     public List<UBSPersonalDataEntity> selectAll() {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         List<List<String>> rows = null;
         try {
             ResultSet resultSet = statement.executeQuery(UBSPersonalDataEntity.SELECT_ALL);
-            rows = ManagerDao.get().parseResultSet(resultSet);
+            rows = ManagerDao.getUBS().parseResultSet(resultSet);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -83,7 +83,7 @@ public class UBSPersonalDataDao {
     }
 
     public void updateFirstNameFieldById(String firstName, long id) {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         try {
             statement.execute(String.format(UBSPersonalDataEntity.UPDATE_FIELD_BY_ID, "first_name", firstName, String.valueOf(id)));
         } catch (SQLException e) {
@@ -96,7 +96,7 @@ public class UBSPersonalDataDao {
     }
 
     public void updateLastNameFieldById(String lastName, long id) {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         try {
             statement.execute(String.format(UBSPersonalDataEntity.UPDATE_FIELD_BY_ID, "last_name", lastName, String.valueOf(id)));
         } catch (SQLException e) {
@@ -109,7 +109,7 @@ public class UBSPersonalDataDao {
     }
 
     public void updateEmailFieldById(String email, long id) {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         try {
             statement.execute(String.format(UBSPersonalDataEntity.UPDATE_FIELD_BY_ID, "email", email, String.valueOf(id)));
         } catch (SQLException e) {
@@ -122,7 +122,7 @@ public class UBSPersonalDataDao {
     }
 
     public void updatePhoneNumberFieldById(String phoneNumber, long id) {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         try {
             statement.execute(String.format(UBSPersonalDataEntity.UPDATE_FIELD_BY_ID, "phone_number", phoneNumber, String.valueOf(id)));
         } catch (SQLException e) {
@@ -139,7 +139,7 @@ public class UBSPersonalDataDao {
     }
 
     public void deleteById(long id) {
-        Statement statement = ManagerDao.get().getStatement();
+        Statement statement = ManagerDao.getUBS().getStatement();
         try {
             statement.execute(String.format(UBSPersonalDataEntity.DELETE_BY_ID, String.valueOf(id)));
         } catch (SQLException e) {

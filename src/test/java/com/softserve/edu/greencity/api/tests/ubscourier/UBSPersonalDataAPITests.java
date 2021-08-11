@@ -11,27 +11,47 @@ import org.testng.annotations.Test;
 
 public class UBSPersonalDataAPITests extends UbsTestRunner {
 
+
+    private UBSPersonalDataDao ubsPersonalDataDao;
     private UBSPersonalDataService ubsPersonalDataService;
 
     @Test(testName = "GC-1855", description = "GC-1855")
     @Description("Verify that the updated data for the ubs_user in the database corresponds to the data in the server response.")
     public void dataInDatabaseCorrespondsToDataInServer() {
-      ubsPersonalDataService.getDataById(3);
-      ubsPersonalDataService.updatePhoneNumberFieldById("060606060",3);
+        UBSPersonalDataService ubsPersonalDataDao = new UBSPersonalDataService();
+        ubsPersonalDataDao.updatePhoneNumber("060606060", 332);
         UBSCourierClient ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
         Response response = ubsClient.getUserPersonalData();
         BaseAssertion correspondsData = new BaseAssertion(response);
-        correspondsData.statusCode(200);
+        correspondsData.statusCode(200)
+                       .bodyValueEquals("email", "343@dfgdf.n")
+                .bodyValueEquals("firstName", "dfgdfgdf")
+                .bodyValueEquals("id", "332")
+                .bodyValueEquals("lastName", "dfgdfgdfg")
+                .bodyValueEquals("phoneNumber", "060606060")
+                .bodyValueEquals("addressComment", "dfgf");
     }
 
-//    @Test(testName = "GC-1855", description = "GC-1855")
-//    @Description("Verify that the updated data for the ubs_user in the database corresponds to the data in the server response.")
-//    public void dataInDatabaseCorrespondsToData() {
-//        UBSCourierClient ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
-//        Response response = ubsClient.postProcessUserOrder(new UBSCourierPOSTDto());
-//        BaseAssertion addComment = new BaseAssertion(response);
-//        addComment.statusCode(400);
-//
-//    }
+    @Test(testName = "GC-1857", description = "GC-1857")
+    @Description("Verify that the deleted data for the ubs_user in the database is null for the data in the server response.")
+    public void deletedDataInDatabaseIsNull() {
+        UBSPersonalDataService ubsPersonalDataDao = new UBSPersonalDataService();
+        ubsPersonalDataDao.deleteUser(312);
+        UBSCourierClient ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
+        Response response = ubsClient.getUserPersonalData();
+        BaseAssertion deletedData = new BaseAssertion(response);
+        deletedData.statusCode(200);
+        ubsPersonalDataService.getDataById(312);
+
+    }
+
+    @Test(testName = "GC-1854", description = "GC-1854")
+    @Description("Verify that the data for the ubs_user in the database corresponds to the data in the server response.")
+    public void dataInDatabaseCorresponds() {
+        UBSCourierClient ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
+        Response response = ubsClient.getUserPersonalData();
+        BaseAssertion deletedData = new BaseAssertion(response);
+        deletedData.statusCode(200);
+    }
 
 }

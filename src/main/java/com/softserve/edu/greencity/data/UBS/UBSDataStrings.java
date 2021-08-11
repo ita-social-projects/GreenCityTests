@@ -30,4 +30,5 @@ public enum UBSDataStrings {
     public String getMessage() {
         return string;
     }
+
 }
