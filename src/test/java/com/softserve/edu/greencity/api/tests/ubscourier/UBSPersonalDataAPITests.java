@@ -18,19 +18,17 @@ public class UBSPersonalDataAPITests extends UbsTestRunner {
     @Description("Verify that the updated data for the ubs_user in the database corresponds to the data in the server response.")
     public void dataInDatabaseCorrespondsToDataInServer() {
         UBSPersonalDataService ubsPersonalDataDao = new UBSPersonalDataService();
-        ubsPersonalDataDao.updatePhoneNumber("060606060", 312);
+        ubsPersonalDataDao.updatePhoneNumber("060606060", 332);
         UBSCourierClient ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
         Response response = ubsClient.getUserPersonalData();
         BaseAssertion correspondsData = new BaseAssertion(response);
-        correspondsData.statusCode(200);
-        ubsPersonalDataService.getDataById(312);
-//                .bodyValueEquals("message", "\"email\": \"343@dfgdf.n\",\n" +
-//                        "    \"firstName\": \"dfgdfgdf\",\n" +
-//                        "    \"id\": 332,\n" +
-//                        "    \"lastName\": \"dfgdfgdfg\",\n" +
-//                        "    \"phoneNumber\": \"999323456\",\n" +
-//                        "    \"addressComment\": \"dfgf\"");
-
+        correspondsData.statusCode(200)
+                       .bodyValueEquals("email", "343@dfgdf.n")
+                .bodyValueEquals("firstName", "dfgdfgdf")
+                .bodyValueEquals("id", "332")
+                .bodyValueEquals("lastName", "dfgdfgdfg")
+                .bodyValueEquals("phoneNumber", "060606060")
+                .bodyValueEquals("addressComment", "dfgf");
     }
 
     @Test(testName = "GC-1857", description = "GC-1857")

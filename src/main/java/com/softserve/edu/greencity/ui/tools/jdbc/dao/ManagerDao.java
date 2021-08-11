@@ -23,7 +23,7 @@ public final class ManagerDao {
     private ManagerDao(String type) {
         connections = new HashMap<>();
         registerDriver();
-        if (type.toUpperCase().equals("ubs")){
+        if (type.equals("ubs")){
             readUBSProperties();
         } else {
             readProperties();
@@ -65,6 +65,17 @@ public final class ManagerDao {
             synchronized (ManagerDao.class) {
                 if (instance == null) {
                     instance = new ManagerDao();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public static ManagerDao getUBS() {
+        if (instance == null) {
+            synchronized (ManagerDao.class) {
+                if (instance == null) {
+                    instance = new ManagerDao("ubs");
                 }
             }
         }
