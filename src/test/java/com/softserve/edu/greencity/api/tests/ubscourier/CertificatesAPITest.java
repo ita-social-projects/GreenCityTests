@@ -37,14 +37,14 @@ public class CertificatesAPITest extends  UbsTestRunner{
     @Test(dataProvider = "Certificates")
     @Description("Checks availability of certificates")
     public void certificateTest(String certificate){
-        response = ubsClient.getCertificateAvailability(certificate);
+        Response response = ubsClient.getCertificateAvailability(certificate);
         BaseAssertion assertion = new BaseAssertion(response);
         assertion.defaultAsserts();
     }
     @Test
     @Description("Checks wrong sertificate")
     public void wrongCertificatesTest(){
-        response = ubsClient.getCertificateAvailability("4444-5555");
+        Response response = ubsClient.getCertificateAvailability("4444-5555");
         BaseAssertion assertion = new BaseAssertion(response);
         assertion.statusCode(404);
     }
