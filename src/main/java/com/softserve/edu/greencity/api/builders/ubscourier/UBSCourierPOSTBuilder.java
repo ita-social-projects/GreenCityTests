@@ -1,12 +1,15 @@
 package com.softserve.edu.greencity.api.builders.ubscourier;
+import com.softserve.edu.greencity.api.builders.econews.EcoNewsBuilder;
+import com.softserve.edu.greencity.api.models.econews.EcoNewsAuthorModel;
 import com.softserve.edu.greencity.api.models.ubscourier.Bag;
-import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierPOSTModel;
+import com.softserve.edu.greencity.api.models.ubscourier.PersonalData;
+import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierPOSTModeldto;
 
 public class UBSCourierPOSTBuilder {
-    private final UBSCourierPOSTModel ubsCourier;
+    private final UBSCourierPOSTModeldto ubsCourier;
 
     public UBSCourierPOSTBuilder() {
-        ubsCourier = new UBSCourierPOSTModel();
+        ubsCourier = new UBSCourierPOSTModeldto();
     }
 
     public static UBSCourierPOSTBuilder ubsCourierWith() {
@@ -35,12 +38,17 @@ public class UBSCourierPOSTBuilder {
         ubsCourier.certificates = certificates ;
         return this;
     }
-    public UBSCourierPOSTBuilder bags  (Bag[] bags  ){ //ASK
+    public UBSCourierPOSTBuilder bags  (Bag[] bags  ){
         ubsCourier.bags = bags  ;
         return this;
     }
 
-    public UBSCourierPOSTModel build() {
+    public UBSCourierPOSTBuilder personalData(PersonalData personalData) {
+        ubsCourier.personalData=personalData;
+        return this;
+    }
+
+    public UBSCourierPOSTModeldto build() {
         return this.ubsCourier;
     }
 

@@ -1,12 +1,12 @@
 package com.softserve.edu.greencity.api.builders.ubscourier;
 
-import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierGETModel;
+import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierGETModeldto;
 
 public class UBSCourierGETBuilder {
-    private final UBSCourierGETModel ubsCourier;
+    private final UBSCourierGETModeldto ubsCourier;
 
     public UBSCourierGETBuilder() {
-        ubsCourier = new UBSCourierGETModel();
+        ubsCourier = new UBSCourierGETModeldto();
     }
 
     public static UBSCourierGETBuilder ubsCourierWith() {
@@ -43,7 +43,7 @@ public class UBSCourierGETBuilder {
         return this;
     }
 
-    public UBSCourierGETModel build() {
+    public UBSCourierGETModeldto build() {
         return this.ubsCourier;
     }
 
