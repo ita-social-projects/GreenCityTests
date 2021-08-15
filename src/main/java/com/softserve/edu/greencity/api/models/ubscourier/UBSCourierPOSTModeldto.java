@@ -19,7 +19,7 @@ public class UBSCourierPOSTModeldto {
         bags = new Bag[0];
         certificates = new String[0];
         orderComment = "";
-        personalData = new PersonalData();
+        personalData = null;
         pointsToUse = 0L;
     }
 

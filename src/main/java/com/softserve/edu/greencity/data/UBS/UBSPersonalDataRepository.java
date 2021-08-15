@@ -27,6 +27,6 @@ public class UBSPersonalDataRepository {
     }
 
     public UBSPersonalData getRequiredDefaultFieldsPersonalData() {
-        return new UBSPersonalData(PERSONAL_DATA_NAME.getMessage(), PERSONAL_DATA_SURNAME.getMessage(), PERSONAL_DATA_EMAIL.getMessage(), PERSONAL_DATA_PHONE.getMessage());
+        return new UBSPersonalData(API_USER_NAME.getMessage(), API_USER_SURNAME.getMessage(), API_USER_EMAIL.getMessage(), API_USER_PHONE.getMessage());
     }
 }

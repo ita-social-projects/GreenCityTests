@@ -30,6 +30,7 @@ public class UBSPersonalDataEntity {
     public static final String SELECT_BY_FIELD = "SELECT * FROM ubs_user WHERE %s='%s';";
     public static final String UPDATE_FIELD_BY_ID = "UPDATE ubs_user SET %s='%s' WHERE id='%s';";
     public static final String DELETE_BY_ID = "DELETE FROM ubs_user WHERE id=%s;";
+    public static final String CREATE_USER = "";
 
     private long id;
     private String email;

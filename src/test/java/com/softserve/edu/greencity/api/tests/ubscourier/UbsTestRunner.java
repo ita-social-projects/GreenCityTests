@@ -11,14 +11,17 @@ import com.softserve.edu.greencity.ui.tools.jdbc.services.UBSPersonalDataService
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.asserts.SoftAssert;
 
 public class UbsTestRunner extends GreenCityAPITestRunner {
     protected UBSCourierClient ubsClient;
     protected OwnSecurityModel userData;
     protected UBSPersonalDataService ubsPersonalDataService;
+    protected SoftAssert softAssert;
 
     @BeforeClass
-    public void setup() {
+    public void setUpClass() {
         OwnSecurityClient authorizationClient = new OwnSecurityClient(ContentType.JSON);
         User user = UserRepository.get().temporary();
         Response signedIn = authorizationClient
@@ -28,5 +31,11 @@ public class UbsTestRunner extends GreenCityAPITestRunner {
         ubsClient = new UBSCourierClient(ContentType.JSON, userData.accessToken);
         ubsPersonalDataService = new UBSPersonalDataService();
     }
+
+    @BeforeMethod
+    public void setUp(){
+        softAssert = new SoftAssert();
+    }
+
 
 }
