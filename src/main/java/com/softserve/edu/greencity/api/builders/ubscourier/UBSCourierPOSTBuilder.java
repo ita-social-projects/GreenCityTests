@@ -25,8 +25,8 @@ public class UBSCourierPOSTBuilder {
         return this;
     }
 
-    public UBSCourierPOSTBuilder addressID(Long addressID) {
-        ubsCourier.addressID = addressID;
+    public UBSCourierPOSTBuilder addressID(Long addressId) {
+        ubsCourier.addressId = addressId;
         return this;
     }
 

@@ -57,7 +57,7 @@ public class UBSPersonalDataAPITests extends UbsTestRunner {
         personalData.firstName = "@###$";
         personalData.lastName = "Serhova";
         personalData.email = "343@dfgdf.n";
-        personalData.phoneNumber = "060606060";
+        personalData.phoneNumber = "963337145";
         personalData.id = 332L;
         personalData.addressComment = "dfgf";
         user.personalData = personalData;
@@ -82,7 +82,7 @@ public class UBSPersonalDataAPITests extends UbsTestRunner {
         personalData.firstName = "333456";
         personalData.lastName = "Serhova";
         personalData.email = "343@dfgdf.n";
-        personalData.phoneNumber = "060606060";
+        personalData.phoneNumber = "963337145";
         personalData.id = 332L;
         personalData.addressComment = "dfgf";
         user.personalData = personalData;
@@ -107,7 +107,7 @@ public class UBSPersonalDataAPITests extends UbsTestRunner {
         personalData.firstName = "WWWW.HHHHHHHTTTTdddddddddddddddd";
         personalData.lastName = "Serhova";
         personalData.email = "343@dfgdf.n";
-        personalData.phoneNumber = "060606060";
+        personalData.phoneNumber = "963337145";
         personalData.id = 332L;
         personalData.addressComment = "dfgf";
         user.personalData = personalData;

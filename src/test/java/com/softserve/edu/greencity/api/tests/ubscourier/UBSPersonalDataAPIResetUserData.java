@@ -6,7 +6,6 @@ import com.softserve.edu.greencity.ui.tools.jdbc.entity.UBSPersonalDataEntity;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.UBSPersonalDataService;
 import io.qameta.allure.Description;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

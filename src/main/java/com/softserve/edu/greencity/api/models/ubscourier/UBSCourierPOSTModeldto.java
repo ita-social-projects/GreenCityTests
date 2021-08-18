@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class UBSCourierPOSTModeldto {
 
     public String[] additionalOrders;
-    public Long addressID;
+    public Long addressId;
     public Bag[] bags;
     public String[] certificates;
     public String orderComment;
@@ -15,7 +15,7 @@ public class UBSCourierPOSTModeldto {
 
     public UBSCourierPOSTModeldto() {
         additionalOrders = new String[0];
-        addressID = 0L;
+        addressId = 0L;
         bags = new Bag[0];
         certificates = new String[0];
         orderComment = "";
