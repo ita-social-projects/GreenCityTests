@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.api.builders.ubscourier;
-import com.softserve.edu.greencity.api.builders.econews.EcoNewsBuilder;
-import com.softserve.edu.greencity.api.models.econews.EcoNewsAuthorModel;
+
 import com.softserve.edu.greencity.api.models.ubscourier.Bag;
 import com.softserve.edu.greencity.api.models.ubscourier.PersonalData;
 import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierPOSTModeldto;
@@ -8,7 +7,7 @@ import com.softserve.edu.greencity.api.models.ubscourier.UBSCourierPOSTModeldto;
 public class UBSCourierPOSTBuilder {
     private final UBSCourierPOSTModeldto ubsCourier;
 
-    public UBSCourierPOSTBuilder() {
+    private UBSCourierPOSTBuilder() {
         ubsCourier = new UBSCourierPOSTModeldto();
     }
 
@@ -26,25 +25,28 @@ public class UBSCourierPOSTBuilder {
         return this;
     }
 
-    public UBSCourierPOSTBuilder addressID(Long addressID) {
-        ubsCourier.addressID = addressID;
+    public UBSCourierPOSTBuilder addressID(Long addressId) {
+        ubsCourier.addressId = addressId;
         return this;
     }
-    public UBSCourierPOSTBuilder additionalOrders (String[] additionalOrders ){
-        ubsCourier.additionalOrders = additionalOrders ;
+
+    public UBSCourierPOSTBuilder additionalOrders(String[] additionalOrders) {
+        ubsCourier.additionalOrders = additionalOrders;
         return this;
     }
-    public UBSCourierPOSTBuilder certificates (String[] certificates ){
-        ubsCourier.certificates = certificates ;
+
+    public UBSCourierPOSTBuilder certificates(String[] certificates) {
+        ubsCourier.certificates = certificates;
         return this;
     }
-    public UBSCourierPOSTBuilder bags  (Bag[] bags  ){
-        ubsCourier.bags = bags  ;
+
+    public UBSCourierPOSTBuilder bags(Bag[] bags) {
+        ubsCourier.bags = bags;
         return this;
     }
 
     public UBSCourierPOSTBuilder personalData(PersonalData personalData) {
-        ubsCourier.personalData=personalData;
+        ubsCourier.personalData = personalData;
         return this;
     }
 

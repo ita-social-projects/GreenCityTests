@@ -150,4 +150,17 @@ public class UBSPersonalDataDao {
         //
         ManagerDao.closeStatement(statement);
     }
+
+    public void createUser(long id, String email, String firstName, String lastName, String phoneNumber, long usersId, long addressId) {
+        Statement statement = ManagerDao.getUBS().getStatement();
+        try {
+            statement.execute(String.format(UBSPersonalDataEntity.CREATE_USER));
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+
+        ManagerDao.closeStatement(statement);
+    }
 }

@@ -9,6 +9,7 @@ import com.softserve.edu.greencity.ui.pages.ubs.*;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -47,6 +48,7 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
         softAssert.assertEquals(paymentPage.getFullName().getText(), UBSDataStrings.PERSONAL_DATA_NAME_SURNAME.getMessage());
         softAssert.assertEquals(paymentPage.getPhone().getText(), UBSDataStrings.PERSONAL_DATA_PHONE.getMessage());
         softAssert.assertEquals(paymentPage.getGmail().getText(), UBSDataStrings.PERSONAL_DATA_EMAIL.getMessage());
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-2042", description = "GC-2042") //Need to connect to the database for check
@@ -71,6 +73,6 @@ public class PersonalDataWithAddressTests extends GreenCityTestRunnerWithLoginLo
         personalDataPage.clickOnCancelButton().clickContinueMakingOrderButton();
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         waitsSwitcher.sleep(3000);
-        softAssert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
+        Assert.assertEquals("2\nPersonal data", personalDataPage.getPersonalDataButton().getText());
     }
 }

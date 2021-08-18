@@ -20,7 +20,13 @@ public enum UBSDataStrings {
     PERSONAL_DATA_NAME_SURNAME("Lina Serhova"),
     PERSONAL_DATA_WARNING_MESSAGE("This field is required."),
     ADDRESS_WARNING_MESSAGE("This field is required."),
-    ADDRESS_CITY_INFO_MESSAGE("At the moment we serve only the city of Kiev");
+    ADDRESS_CITY_INFO_MESSAGE("At the moment we serve only the city of Kiev"),
+    API_USER_EMAIL("343@dfgdf.n"),
+    API_USER_NAME("dfgdfgdf"),
+    API_USER_SURNAME("dfgdfgdfg"),
+    API_USER_PHONE("060606060"),
+    API_ADDRESS_COMMENT("dfgf");
+
     private final String string;
 
     UBSDataStrings(String str) {

@@ -43,6 +43,7 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertTrue(personalDataPage.getOrderDetailsIconDone().isDisplayed());
         softAssert.assertTrue(personalDataPage.getPersonalDataButton().isActive(),"Tab 'Personal Data' is not active");
         softAssert.assertFalse(personalDataPage.getPaymentButton().isActive(), "Tab 'Confirmation' is active");
+        softAssert.assertAll();
     }
 
     @Test(testName = "GC-2044", description = "GC-2044")
@@ -69,5 +70,6 @@ public class PersonalDataTests extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(surnameMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
         softAssert.assertEquals(phoneMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
         softAssert.assertEquals(emailMessage, UBSDataStrings.PERSONAL_DATA_WARNING_MESSAGE, "Message mismatch");
+        softAssert.assertAll();
     }
 }
