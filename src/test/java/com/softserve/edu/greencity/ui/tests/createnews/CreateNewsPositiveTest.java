@@ -1,26 +1,20 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
 import com.softserve.edu.greencity.data.CreateNewsUaExpectedText;
-import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.econews.Tag;
-import com.softserve.edu.greencity.data.users.User;
-import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.locators.CreateNewsPageLocators;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.TagsComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
-import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsDao;
-import com.softserve.edu.greencity.ui.tools.jdbc.dao.EcoNewsTagsDao;
 import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsEntity;
-import com.softserve.edu.greencity.ui.tools.jdbc.entity.EcoNewsTagsEntity;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import io.qameta.allure.Description;
@@ -37,7 +31,7 @@ import java.util.List;
 import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
-public class CreateNewsPositiveTest extends GreenCityTestRunner {
+public class CreateNewsPositiveTest extends GreenCityTestRunnerWithLoginLogout {
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
@@ -71,12 +65,11 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertTrue(createNewsPage.getContentField().isDisplayed());
 
         TagsComponent tagsComponent = createNewsPage.getTagsComponent();
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.NEWS));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.ADS));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.EVENTS));
-        //softAssert.assertTrue(tagsComponent.isTagActive(Tag.Courses));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.INITIATIVES));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.EDUCATION));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.NEWS));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.ADS));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.EVENTS));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.INITIATIVES));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.EDUCATION));
 
         softAssert.assertTrue(createNewsPage.getDropArea().isDisplayed());
         softAssert.assertTrue(createNewsPage.getUploadArea().isDisplayed());
@@ -88,17 +81,17 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertTrue(createNewsPage.getPreviewButton().isDisplayed());
         softAssert.assertTrue(createNewsPage.getPublishButton().isDisplayed());
 
-
         createNewsPage.clickTitleField();
-        softAssert.assertTrue(createNewsPage.getTitleField().isSelected());
+        softAssert.assertTrue(createNewsPage.getTitleField().equals(driver.switchTo().activeElement()));
         createNewsPage.clickSourceField();
-        softAssert.assertTrue(createNewsPage.getSourceField().isSelected());
+        softAssert.assertTrue(createNewsPage.getSourceField().equals(driver.switchTo().activeElement()));
         createNewsPage.clickContentField();
-        softAssert.assertTrue(createNewsPage.getContentField().isSelected());
+        softAssert.assertTrue(createNewsPage.getContentField().equals(driver.switchTo().activeElement()));
 
-        String CreateNewsLabelsFont = "Lato";
-        String CreateNewsLabelsFontSize = "16px";
-        String CreateNewsLabelsFontColor = "64727D";
+        String CreateNewsLabelsFont = "Lato, sans-serif";
+        String CreateNewsLabelsFontSize = "18px";
+        String ContentLabelSize = "12px";
+        String CreateNewsLabelsFontColor = "#494a49";
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getTitleLabel().getFont());
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getTagsLabel().getFont());
         softAssert.assertEquals(CreateNewsLabelsFont, createNewsPage.getSourceLabel().getFont());
@@ -109,7 +102,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertEquals(CreateNewsLabelsFontSize, createNewsPage.getTagsLabel().getSize());
         softAssert.assertEquals(CreateNewsLabelsFontSize, createNewsPage.getSourceLabel().getSize());
         softAssert.assertEquals(CreateNewsLabelsFontSize, createNewsPage.getPictureLabel().getSize());
-        softAssert.assertEquals(CreateNewsLabelsFontSize, createNewsPage.getContentLabel().getSize());
+        softAssert.assertEquals(ContentLabelSize, createNewsPage.getContentLabel().getSize());
 
         softAssert.assertEquals(CreateNewsLabelsFontColor, createNewsPage.getTitleLabel().getColorHex());
         softAssert.assertEquals(CreateNewsLabelsFontColor, createNewsPage.getTagsLabel().getColorHex());
@@ -117,27 +110,22 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertEquals(CreateNewsLabelsFontColor, createNewsPage.getPictureLabel().getColorHex());
         softAssert.assertEquals(CreateNewsLabelsFontColor, createNewsPage.getContentLabel().getColorHex());
 
-        softAssert.assertEquals(CreateNewsLabelsFontColor, createNewsPage.getTitleLabel().getColorHex());
-
         createNewsPage.changeWindowWidth(800);
 
         softAssert.assertTrue(createNewsPage.getTitleField().isDisplayed());
         softAssert.assertTrue(createNewsPage.getSourceField().isDisplayed());
         softAssert.assertTrue(createNewsPage.getContentField().isDisplayed());
 
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.NEWS));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.ADS));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.EVENTS));
-        //softAssert.assertTrue(tagsComponent.isTagActive(Tag.Courses));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.INITIATIVES));
-        softAssert.assertTrue(tagsComponent.isTagActive(Tag.EDUCATION));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.NEWS));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.ADS));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.EVENTS));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.INITIATIVES));
+        softAssert.assertFalse(tagsComponent.isTagActive(Tag.EDUCATION));
 
         softAssert.assertTrue(createNewsPage.getDropArea().isDisplayed());
         softAssert.assertTrue(createNewsPage.getUploadArea().isDisplayed());
-
         softAssert.assertTrue(createNewsPage.getDateField().isDisplayed());
         softAssert.assertTrue(createNewsPage.getAuthorField().isDisplayed());
-
         softAssert.assertTrue(createNewsPage.getCancelButton().isDisplayed());
         softAssert.assertTrue(createNewsPage.getPreviewButton().isDisplayed());
         softAssert.assertTrue(createNewsPage.getPublishButton().isDisplayed());
@@ -156,7 +144,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-@Ignore
+    //@Ignore
     @Test(testName = "GC-583", description = "GC-583")
     @Description("Checking of ukrainian translation of labels On CreateNews page")
     public void checkUkrainianTranslationOfLabelsOnCreateNewsPage() {
@@ -170,7 +158,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         }
     }
 
-    @Ignore
+    //@Ignore
     //This test required Article 1.jpg here: \src\main\java\com\softserve\edu\greencity\data\Article_1.jpg"
     @Test(testName = "GC-405", description = "GC-405", groups = "createNews")
     @Description("Posting news test")
@@ -338,7 +326,7 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
     }
 
     @LocalOnly
-    @Test(testName = "GC-610", description = "GC-610") //TODO JIRA TEST IS NOT CORRECT!!!
+    @Test(testName = "GC-610", description = "GC-610")
     @Description("Verify that news will be created, when user add PNG image less than 10 MB")
     public void verifyNewsCreationWithPNGImage() {
 
@@ -473,8 +461,8 @@ public class CreateNewsPositiveTest extends GreenCityTestRunner {
         logger.info("verifyThatImageIsDisplayedWithoutChangesInSize starts");
         createNewsPage.uploadJPGImage();
 
-        int imageWindowHeight = 212; //Expected window size according to a mockup
-        int imageWindowWidth = 456;
+        int imageWindowHeight = 231; //Expected window size according to a mockup
+        int imageWindowWidth = 426;
 
         softAssert.assertEquals(imageWindowHeight, createNewsPage.getDropArea().getSize().getHeight());
         softAssert.assertEquals(imageWindowWidth, createNewsPage.getDropArea().getSize().getWidth());

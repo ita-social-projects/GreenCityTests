@@ -7,7 +7,7 @@ import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import org.testng.Assert;
@@ -22,7 +22,7 @@ import org.testng.asserts.SoftAssert;
  * @author lv-493
  */
 @Ignore
-public class CreateNewsLegacyTest extends GreenCityTestRunner {
+public class CreateNewsLegacyTest extends GreenCityTestRunnerWithLoginLogout {
     User defaultUser;
 
     @BeforeClass

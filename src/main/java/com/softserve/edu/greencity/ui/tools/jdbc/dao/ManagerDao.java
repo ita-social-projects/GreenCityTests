@@ -19,6 +19,17 @@ public final class ManagerDao {
         registerDriver();
         readProperties();
     }
+
+    private ManagerDao(String type) {
+        connections = new HashMap<>();
+        registerDriver();
+        if (type.equals("ubs")){
+            readUBSProperties();
+        } else {
+            readProperties();
+        }
+    }
+
     private Properties property = new Properties();
     private void registerDriver() {
         try {
@@ -43,11 +54,28 @@ public final class ManagerDao {
         */
     }
 
+    private void readUBSProperties() {
+        username = System.getenv().get("JDBC_UBS_USERNAME");
+        password = System.getenv().get("JDBC_UBS_PASSWORD");
+        url = System.getenv().get("JDBC_UBS_URL");
+    }
+
     public static ManagerDao get() {
         if (instance == null) {
             synchronized (ManagerDao.class) {
                 if (instance == null) {
                     instance = new ManagerDao();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public static ManagerDao getUBS() {
+        if (instance == null) {
+            synchronized (ManagerDao.class) {
+                if (instance == null) {
+                    instance = new ManagerDao("ubs");
                 }
             }
         }

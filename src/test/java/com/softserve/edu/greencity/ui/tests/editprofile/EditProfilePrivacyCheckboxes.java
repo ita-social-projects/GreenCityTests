@@ -3,14 +3,14 @@ package com.softserve.edu.greencity.ui.tests.editprofile;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
-public class EditProfilePrivacyCheckboxes extends GreenCityTestRunner {
+public class EditProfilePrivacyCheckboxes extends GreenCityTestRunnerWithLoginLogout {
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
@@ -89,7 +89,7 @@ public class EditProfilePrivacyCheckboxes extends GreenCityTestRunner {
 
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(twoCheckboxes.getShoppingListLabel().isDisplayedLabel(), true);
-        softAssert.assertEquals(twoCheckboxes.getCityLabelText(), "Lviv");
+        softAssert.assertAll();
     }
 }
 

@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.ItemComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class EcoNewsListViewTests extends GreenCityTestRunner {
+public class EcoNewsListViewTests extends GreenCityTestRunnerWithLoginLogout {
     String cssColorProperty;
     String expectedColorRGBA;
     String expectedHoveredByMouseColorRGBA;
@@ -203,7 +203,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
                 logger.info("tags " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTags());
                 softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle(), "title");
                 logger.info("title " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedTitle());
-                softAssert.assertFalse(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent(), "content");
+                softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent(), "content");
                 logger.info("content " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedContent());
                 softAssert.assertTrue(ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation(), "date");
                 logger.info("date " + ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData).isDisplayedDateOfCreation());
@@ -450,7 +450,7 @@ public class EcoNewsListViewTests extends GreenCityTestRunner {
         ItemComponent firstItemTitle = ecoNewsPage.getItemsContainer().findItemComponentByParameters(newsData);
         softAssert.assertEquals(firstItemTitle.getTitleHeight(), 26);//mock-up not updated yet, but requirements changed (ask Vika and Alex, for sure), so cant open bug. Title should be 26px (1 row, max 4 rows -> 26*4=104. Content 21px (firstly displays all title rows, if there are free place(less then 4 title rows), only then content will be displayed). 26+21*3=89 all, 26 title
         softAssert.assertEquals(firstItemTitle.getTitleNumberRow(), 1);
-        softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 3);
+        softAssert.assertEquals(firstItemTitle.getContentNumberVisibleRow(), 2);
 
         ecoNewsPage.signOut();
         softAssert.assertAll();

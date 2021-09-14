@@ -86,27 +86,32 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Get title label")
     public LabelElement getTitleLabel() {
-        return (LabelElement) searchElementByXpath(TITLE_LABELS.getPath());
+        LabelElement lb = new LabelElement(searchElementByXpath(TITLE_LABELS.getPath()));
+        return lb;
     }
 
     @Step("Get tags label")
     public LabelElement getTagsLabel() {
-        return (LabelElement) searchElementByXpath(TAGS_LABELS.getPath());
+        LabelElement lb = new LabelElement(searchElementByXpath(TAGS_LABELS.getPath()));
+        return lb;
     }
 
     @Step("Get source label")
     public LabelElement getSourceLabel() {
-        return (LabelElement) searchElementByXpath(SOURCE_LABELS.getPath());
+        LabelElement lb = new LabelElement(searchElementByXpath(SOURCE_LABELS.getPath()));
+        return lb;
     }
 
     @Step("Get picture label")
     public LabelElement getPictureLabel() {
-        return (LabelElement) searchElementByXpath(PICTURE_LABELS.getPath());
+        LabelElement lb = new LabelElement(searchElementByXpath(PICTURE_LABELS.getPath()));
+        return lb;
     }
 
     @Step("Get content label")
     public LabelElement getContentLabel() {
-        return (LabelElement) searchElementByXpath(CONTENT_LABELS.getPath());
+        LabelElement lb = new LabelElement(searchElementByXpath(CONTENT_LABELS.getPath()));
+        return lb;
     }
 
     @Step("Get title field")
@@ -290,7 +295,7 @@ public class CreateNewsPage extends TopPart {
     @Step("Get upload area")
     public WebElement getUploadArea() {
         //TODO refactor searchElementByCss
-        return driver.findElement(By.cssSelector("input[id='upload']"));
+        return driver.findElement(By.id("upload"));
     }
 
     @Step("Check if picture is uploaded")
@@ -419,7 +424,7 @@ public class CreateNewsPage extends TopPart {
 
     @Step("Upload PDF file")
     public CreateNewsPage uploadPDFFile() {
-        uploadFile(getUploadArea(), "src/test/resources/images/PDFFile.pdf");
+        uploadFile(getUploadArea(), "src/test/resources/images/pdfFileFormat.pdf");
         return this;
     }
 

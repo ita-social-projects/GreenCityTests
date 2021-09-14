@@ -41,6 +41,7 @@ public class CommentPart implements StableWebElementSearch {
 
     public WebElement getCommentField() {
         return searchElementByCss(ADD_COMMENT_TEXTAREA.getPath());
+
     }
 
     public CommentPart setCommentText(String commentText) {
@@ -57,9 +58,10 @@ public class CommentPart implements StableWebElementSearch {
         getPublishCommentButton().click();
         //Mind pagination! Only 10 comments are displayed
             waitsSwitcher.setExplicitWait(40,
-                    ExpectedConditions.numberOfElementsToBe(COMMENTS_LIST.getPath(), currentCount + 1));
+                    ExpectedConditions.numberOfElementsToBe(COMMENTS_LIST.getPath(), currentCount +1));
         return new CommentPart(driver);
     }
+
 
 
     public boolean isPublishCommentButtonEnable(){
@@ -77,7 +79,7 @@ public class CommentPart implements StableWebElementSearch {
     public List<WebElement> getComments() {
         WaitsSwitcher waitsSwitcher = new WaitsSwitcher(driver);
         try{
-            return waitsSwitcher.setExplicitWait(2,
+            return waitsSwitcher.setExplicitWait(4,
                     ExpectedConditions.visibilityOfAllElementsLocatedBy(COMMENTS_LIST.getPath()));
         }catch (TimeoutException e){
             logger.info("Comments are not present");

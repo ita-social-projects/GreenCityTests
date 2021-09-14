@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import com.softserve.edu.greencity.ui.tools.testng.LocalOnly;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
@@ -23,7 +23,7 @@ import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
 
-public class CreateNewsNegativeTest extends GreenCityTestRunner {
+public class CreateNewsNegativeTest extends GreenCityTestRunnerWithLoginLogout {
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }

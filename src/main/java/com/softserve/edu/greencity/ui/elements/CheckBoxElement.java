@@ -24,4 +24,8 @@ public class CheckBoxElement extends BaseElement{
     public boolean isChecked(){
         return this.element.isSelected();
     }
+
+    public String getAtribute(String atribute){
+        return this.element.getAttribute(atribute);
+    }
 }

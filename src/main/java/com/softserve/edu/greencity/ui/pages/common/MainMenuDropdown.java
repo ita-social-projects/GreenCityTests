@@ -237,6 +237,14 @@ public class MainMenuDropdown implements StableWebElementSearch {
             clickNaviconButton();
         }
     }
+    @Step
+    public void clickMenuUBSCourier(){
+        getMenuUBSCourier().click();
+    }
+    @Step
+    public WebElement getMenuUBSCourier() {
+        return searchElementByCss(MainMenuDropdownLocators.MENU_UBS_COURIER.getPath());
+    }
 
     @Override
     public WebDriver setDriver() {

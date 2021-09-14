@@ -8,7 +8,7 @@ import com.softserve.edu.greencity.ui.pages.cabinet.ManualRegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.RegisterComponent;
 import com.softserve.edu.greencity.ui.pages.cabinet.*;
 import com.softserve.edu.greencity.ui.pages.common.TopGuestComponent;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Description;
 import lombok.SneakyThrows;
@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 import static com.softserve.edu.greencity.ui.tests.signin.SignInTexts.ADD_NEW_HABIT_BUTTON_TEXT;
 
 //TODO add DB check
-public class RegistrationTests extends GreenCityTestRunner {
+public class RegistrationTests extends GreenCityTestRunnerWithLoginLogout {
     private final String SIGN_IN_TITLE = "Welcome back!";
 
     @DataProvider
@@ -138,7 +138,7 @@ public class RegistrationTests extends GreenCityTestRunner {
         manualRegisterComponent.clickSignUpButton();
         softAssert.assertEquals(
                 manualRegisterComponent
-                        .getSignUpErrorsMsg(1),
+                        .getSignUpErrorsMsg(),
                 "The user already exists by this email",
                 "error msg mismatch"
         );
@@ -150,17 +150,21 @@ public class RegistrationTests extends GreenCityTestRunner {
     @Description("Verify that User is redirected to My habits as a Registered User after he has entered valid credentials")
     public void registrationCheckIsUserRedirected(User userLoginCredentials) {
         logger.info("Starting registrationCheckIsUserRedirected");
+        new GoogleMailAPI().clearMail(userLoginCredentials.getEmail(), userLoginCredentials.getPassword());
+        loadApplication();
+        RegisterComponent registerComponent = new TopGuestComponent(driver).clickSignUpLink();
+        ManualRegisterComponent manualRegisterComponent = registerComponent.getManualRegisterComponent();
+        manualRegisterComponent.registrationNewUserVerified(userLoginCredentials);
+
         String newHabitButtonText = loadApplication()
-                .signUp()
-                .getManualRegisterComponent()
-                .registerUser(userLoginCredentials)
-                .getMyCabinetPage()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(userLoginCredentials)
                 .getAddNewHabitButton()
                 .getText();
 
         Assert.assertEquals(newHabitButtonText, ADD_NEW_HABIT_BUTTON_TEXT.getText());
         new MyHabitPage(driver).signOut();
-
 
     }
 }

@@ -26,9 +26,9 @@ public enum EditProfileTexts {
 
     INCORRECT_URL_ERROR_MESSAGE("Your URL seems to be incorrect"),
 
-    NOTIFICATION_FOR_NAME_FIELD_UA("Поле повинне містити до 30 символів"),
-    NOTIFICATION_FOR_NAME_FIELD_EN("Should contain maximum 30 symbols"),
-    NOTIFICATION_FOR_NAME_FIELD_RU("Поле должно содержать не более 30 символов"),
+    NOTIFICATION_FOR_NAME_FIELD_UA("Ім'я повинно містити 6-30 символів і може складатись з літер(a-z), цифр(0-9) та крапки(.), крапка на початку імені, в кінці та послідовність крапок заборонена"),
+    NOTIFICATION_FOR_NAME_FIELD_EN("The name must contain 6-30 characters and can contain letters(a-z), numbers(0-9) and a dot(.), dot at the start, at the end and consecutive dot is forbidden"),
+    NOTIFICATION_FOR_NAME_FIELD_RU("Имя должно содержать 6-30 символов и может состоять из букв(a-z), цифр(0-9) и точки(.), точка в начале имени, в конце, а также последовательность точек запрещена"),
 
     NOTIFICATION_FOR_CITY_FIELD_UA("Поле має містити максимум 85 символів і може містити літери (a-z) та наступні спеціальні символи '()!,-’'"),
     NOTIFICATION_FOR_CITY_FIELD_EN("Should contain maximum 85 symbols and may contain letters(a-z), and next special characters '()!,-’'"),

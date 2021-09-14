@@ -6,7 +6,7 @@ import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.jdbc.services.EcoNewsService;
 import io.qameta.allure.Description;
 import org.testng.Assert;
@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class EcoNewsCommentTests extends GreenCityTestRunner {
+public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
     private NewsData newsData;
 
     private User getExistUser() {

@@ -5,6 +5,7 @@ import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.io.File;
 
@@ -35,7 +36,8 @@ public class SavePicturePopUpComponent {
 
     public EditProfilePage clickSavePhotoButton(){
         getSaveButton().click();
-        waitsSwitcher.setImplicitWait(30);
+        waitsSwitcher.setExplicitWait(10,
+        ExpectedConditions.invisibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
         return new EditProfilePage(driver);
     }
 

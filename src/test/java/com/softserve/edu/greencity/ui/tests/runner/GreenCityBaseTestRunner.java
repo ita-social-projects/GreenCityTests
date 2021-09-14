@@ -1,9 +1,10 @@
 package com.softserve.edu.greencity.ui.tests.runner;
-
 import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import com.softserve.edu.greencity.ui.tools.CredentialProperties;
 import com.softserve.edu.greencity.ui.tools.DateUtil;
+import com.softserve.edu.greencity.ui.tools.grid.GridHub;
+import com.softserve.edu.greencity.ui.tools.grid.RegisterChrome;
 import com.softserve.edu.greencity.ui.tools.testng.TestNgListeners;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Step;
@@ -27,11 +28,11 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * A base class for UI tests. All test classes should extend this one.
+ * A base class for UI tests.
  */
 @Listeners(TestNgListeners.class)
-public abstract class GreenCityTestRunner {
-    private static final String BASE_URL = ValueProvider.getBaseUrl();
+public abstract class GreenCityBaseTestRunner {
+    protected static final String BASE_URL = ValueProvider.getBaseUrl();
     private static int left = 160; //Total amount of UI tests
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected RemoteWebDriver driver;
@@ -97,27 +98,9 @@ public abstract class GreenCityTestRunner {
         }
     }
 
-    @BeforeMethod
-    public void setUp() {
-        driver.manage().window().maximize();
-        driver.get(BASE_URL);
-        softAssert = new SoftAssert();
-    }
-
-
-    @AfterMethod
-    public void tearDown(ITestResult result) {
-        if (!result.isSuccess()) {
-            logger.warn("Test " + result.getName() + " ERROR");
-        }
-        if (isLogInNow()) {
-            signOutByStorage();
-        }
-        loggerTest();
-    }
-
-    /**
+     /**
      * The first method your tests should start with.
+     *
      * @return WelcomePage page object
      */
     protected WelcomePage loadApplication() {
@@ -164,5 +147,36 @@ public abstract class GreenCityTestRunner {
         logger.info("\n----------------------------------------------------------------------------\n");
 
     }
+    public void optionsArguments() {
+        if (remote) {
+            options.addArguments("--disable-gpu");
+            options.addArguments("--disable-popup-blocking");
+            options.addArguments("--allow-failed-policy-fetch-for-test");
+            options.addArguments("--disable-browser-side-navigation");
+            options.addArguments("--incognito");
+            options.addArguments("--disable-notifications");
+            options.addArguments("--window-size=1920,1080", "--no-sandbox", "'--disable-dev-shm-usage");
+            // options.addArguments("--headless");}
+        }
+        else {
+            options.addArguments("--disable-gpu");
+            options.addArguments("--disable-popup-blocking");
+            options.addArguments("--allow-failed-policy-fetch-for-test");
+            options.addArguments("--disable-browser-side-navigation");
+            options.addArguments("--incognito");
+            options.addArguments("--disable-notifications");
+            options.addArguments("--window-size=1920,1080", "--no-sandbox", "'--disable-dev-shm-usage");
+            options.addArguments("--disable-web-security");
+            options.addArguments("--user-data-dir");
+            options.addArguments("--allow-running-insecure-content");
+            GridHub.startLocally(4444);
+            RegisterChrome.startNode(5551);
+            RegisterChrome.startNode(5552);
+            RegisterChrome.startNode(5553);
+            RegisterChrome.startNode(5554);
+        }
+    }
 }
+
+
 

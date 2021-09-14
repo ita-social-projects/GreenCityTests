@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
-import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
@@ -8,7 +7,7 @@ import com.softserve.edu.greencity.data.econews.Tag;
 import com.softserve.edu.greencity.ui.pages.econews.CreateNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.econews.PreviewPage;
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import com.softserve.edu.greencity.ui.tools.testng.RemoteSkipTestAnalyzer;
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
@@ -16,7 +15,7 @@ import org.testng.annotations.*;
 import static com.softserve.edu.greencity.ui.tests.createnews.CreateNewsTexts.*;
 
 @Listeners(value = RemoteSkipTestAnalyzer.class)
-public class CreateNewsPreviewTest extends GreenCityTestRunner {
+public class CreateNewsPreviewTest extends GreenCityTestRunnerWithLoginLogout {
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
@@ -91,7 +90,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         softAssert.assertAll();
 
     }
-@Ignore //TODO activate this test after fixing bug with cancel button
+
+    //@Ignore //TODO activate this test after fixing bug with cancel button
     @Test(testName = "GC-608", description = "GC-608")
     @Description("Verify that pop-up notification interface meets the mock-up specification")
     public void verifyThatPopUpNotificationInterfaceMeetsMockUp() {
@@ -103,19 +103,20 @@ public class CreateNewsPreviewTest extends GreenCityTestRunner {
         //TODO add asserts after fixing bug with cancel button
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
+        softAssert.assertAll();
     }
 
-    @Ignore
     @Test(testName = "GC-614", description = "GC-614")
     @Description("Verify that pop-up notification is displayed in Russian localization after clicking on ‘Выйти’ button")
     public void verifyThatRussianLocalizationIsDisplayedAfterCancel() {
         logger.info("verifyThatUserCanCancelNewsCreation starts");
 
-        CreateNewsPage.CancelFrame cancelFrame = createNewsPage.fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
+        CreateNewsPage.CancelFrame cancelFrame = createNewsPage.changeLanguageTo("Ru").fillFields(NewsDataRepository.get().getAllFieldsNewsRussian())
                 .clickCancelButton();
-        //TODO tu add an assert after fixing bug with cancel button
+        //TODO to add an assert after fixing bug with cancel button
+        softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
+        softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
         softAssert.assertAll();
-
     }
 
     @Test(testName = "GC-403", description = "GC-403")

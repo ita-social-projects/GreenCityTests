@@ -1,6 +1,6 @@
 package com.softserve.edu.greencity.ui.tests;
 
-import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunner;
+import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
@@ -12,7 +12,7 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 
-public class SmokeTest extends GreenCityTestRunner {
+public class SmokeTest extends GreenCityTestRunnerWithLoginLogout {
     @DataProvider
     public Object[][] users() {
         return new Object[][]{
@@ -66,6 +66,6 @@ public class SmokeTest extends GreenCityTestRunner {
 
         myHabitPage.signOut();
 
-        Assert.assertEquals(newHabitButtonText, "Add new habit");
+        Assert.assertEquals(newHabitButtonText, "Add New Habit");
     }
 }
