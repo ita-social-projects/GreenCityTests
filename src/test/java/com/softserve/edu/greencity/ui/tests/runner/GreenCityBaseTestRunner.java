@@ -74,7 +74,7 @@ public abstract class GreenCityBaseTestRunner {
             capabilities.setCapability("logName", logName);
             capabilities.setCapability(ChromeOptions.CAPABILITY, options);
             driver = new RemoteWebDriver(
-                    URI.create("http://35.198.124.146:4444/wd/hub").toURL(),
+                    URI.create("http://localhost:4444/wd/hub").toURL(),
                     capabilities);
             /*<=======================Remote capabilities=======================>*/
 
