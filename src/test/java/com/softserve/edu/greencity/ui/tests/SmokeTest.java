@@ -52,7 +52,7 @@ public class SmokeTest extends GreenCityTestRunnerWithLoginLogout {
 
         myHabitPage.signOut();
 
-        Assert.assertEquals(userName, "temp");
+        Assert.assertEquals(userName, "taqcTestName");
     }
 
     @Test(dataProvider = "users")
