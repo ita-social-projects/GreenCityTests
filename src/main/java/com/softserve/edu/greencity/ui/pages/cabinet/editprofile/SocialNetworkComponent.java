@@ -39,7 +39,7 @@ public class SocialNetworkComponent{
     }
 
     private ButtonElement getCancelButton(){
-        return new ButtonElement(driver, CANCEL_SOCIAL_NETWORK_BUTTON);
+        return new ButtonElement(driver, CANCEL_BUTTON);
     }
 
     private ButtonElement getAddButton(){

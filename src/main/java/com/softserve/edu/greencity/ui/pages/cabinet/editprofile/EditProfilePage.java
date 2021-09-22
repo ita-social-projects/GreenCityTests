@@ -319,7 +319,7 @@ public class EditProfilePage extends TopPart {
     }
 
     @Step("Click 'Yes, Cancel' on popup after clicking 'Cancel' button")
-    public MyHabitPage ClickConfirmationButtonAfterCancelButtonPopup() {
+    public MyHabitPage clickConfirmationButtonAfterCancelButtonPopup() {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

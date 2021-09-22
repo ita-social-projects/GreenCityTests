@@ -55,7 +55,7 @@ public enum EditProfileLocators implements Locator{
 
     //Cancel editing pop up locators
     CONTINUE_EDITING_BUTTON(By.cssSelector("div.buttons-container > button.secondary-global-button")),
-    CANCEL_EDITING(By.cssSelector("div.buttons-container > button.primary-global-button")),
+    CANCEL_EDITING(By.xpath("//button[@type='button' and not(@class)]")),
     CLOSE_EDITING_BUTTON(By.cssSelector(".close")),
     TITLE_CANCEL_POP_UP(By.xpath("//*[contains(@class,'warning-title')]")),
     SUB_TITLE_CANCEL_POP_UP(By.xpath("//*[contains(@class,'warning-subtitle')]")),
@@ -66,7 +66,7 @@ public enum EditProfileLocators implements Locator{
     CANCEL_DELETING_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.secondary-global-button")),
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_DELETING_BUTTON(By.cssSelector(".close")),
-    CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']")),
+    CONFIRM_CANCEL_PROFILE_EDITING(By.cssSelector("div.buttons-container > button.primary-global-button")),
     POP_UP_CANCEL_PROFILE_EDITING(By.xpath("//div[@class='cdk-overlay-container']")),
 
     NOTIFICATION_FOR_NAME_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[1]")),

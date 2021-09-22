@@ -105,7 +105,9 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertFalse(socialNetworkComponent.isAddButtonActive());
         softAssert.assertAll();
 
-        socialNetworkComponent.clickCancelButton().clickCancelButton();
+        socialNetworkComponent
+                .clickCancelButton()
+                .clickConfirmationButtonAfterCancelButtonPopup();
     }
 
     @Test(testName = "GC-1514")
