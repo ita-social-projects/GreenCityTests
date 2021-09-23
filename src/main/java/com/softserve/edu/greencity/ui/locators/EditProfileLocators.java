@@ -22,7 +22,7 @@ public enum EditProfileLocators implements Locator{
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
 
     CHANGE_PHOTO_INPUT(By.cssSelector("label > input[type=file]")),
-    SAVE_PHOTO_BUTTON(By.cssSelector("app-edit-photo-pop-up > div > div > div > div.buttons > button")),
+    SAVE_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
 
     //VerifyDeletingPhotoPopUpComponent
     VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),

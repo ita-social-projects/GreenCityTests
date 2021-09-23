@@ -33,7 +33,7 @@ public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLogin
 
     @AfterMethod
     public void goOutFromEditingPage() {
-        new EditProfilePage(driver).clickCancelButtonWithPopUp().clickCancelButton();
+        editProfilePage.clickCancelButton().clickCancelButtonWithPopUp();
     }
 
     @DataProvider(name = "notificationsTexts")

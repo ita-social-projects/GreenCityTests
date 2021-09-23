@@ -253,6 +253,8 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get 'Save' button")
     public ButtonElement getSaveButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(SAVE_BUTTON.getPath()));
         if (saveButton == null) {
             saveButton = new ButtonElement(driver, SAVE_BUTTON);
         }
@@ -313,23 +315,31 @@ public class EditProfilePage extends TopPart {
 
 
     @Step("Click 'Cancel' button")
-    public MyHabitPage clickCancelButton() {
+    public EditProfilePage clickCancelButton() {
         getCancelButton().click();
-        return new MyHabitPage(driver);
+        return new EditProfilePage(driver);
     }
 
-    @Step("Click 'Yes, Cancel' on popup after clicking 'Cancel' button")
-    public MyHabitPage clickConfirmationButtonAfterCancelButtonPopup() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @Step("Get Confirmation popup button")
+    public ButtonElement getConfirmationButton() {
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions
+                .visibilityOfElementLocated(CONFIRM_CANCEL_PROFILE_EDITING.getPath()));
         if (confirmCancelingButton == null) {
             confirmCancelingButton = new ButtonElement(driver, CONFIRM_CANCEL_PROFILE_EDITING);
         }
-        confirmCancelingButton.click();
+        return confirmCancelingButton;
+    }
+
+    @Step("Click 'Yes, cancel' on popup after clicking 'Cancel' button")
+    public MyHabitPage clickConfirmationButtonAfterCancelButtonPopup() {
+        getConfirmationButton().click();
         return new MyHabitPage(driver);
+    }
+
+    @Step("Click 'Yes' on popup after clicking 'Cancel' button")
+    public EditProfilePage clickConfirmationButtonAfterDeleteButtonPopup() {
+        getConfirmationButton().click();
+        return new EditProfilePage(driver);
     }
 
     public SocialNetworkComponent clickAddSocialNetworksButton() {
@@ -338,7 +348,7 @@ public class EditProfilePage extends TopPart {
                 .elementToBeClickable(ADD_SOCIAL_NETWORKS_BUTTON.getPath()));
         getAddSocialNetworkButton().click();
         logger.info("add social networks icon was clicked");
-        waitsSwitcher.setImplicitWait(5);
+//        waitsSwitcher.setImplicitWait(5);
         return new SocialNetworkComponent(driver);
     }
 

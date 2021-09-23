@@ -107,6 +107,7 @@ public class EditPicturePopUpComponent {
     }
 
     public ButtonElement getClosePopUpEditPhotoButton(){
+        WaitsSwitcher.sleep(2000);
         if(closePopUpEditPhotoButton == null){
             closePopUpEditPhotoButton = new ButtonElement(driver, CLOSE_POP_UP_EDIT_PHOTO_BUTTON);
         }
@@ -154,7 +155,7 @@ public class EditPicturePopUpComponent {
 
     public EditProfilePage clickSavePhotoButton() {
         getSavePhotoButton().click();
-        waitsSwitcher.setExplicitWait(3,ExpectedConditions.invisibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
+        waitsSwitcher.setExplicitWait(5,ExpectedConditions.invisibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
         return new EditProfilePage(driver);
     }
 

@@ -31,7 +31,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
     @AfterMethod
     private void goOutFromEditProfilePage() {
         editProfilePage = editPicturePopUpComponent.clickClosePopUpButton();
-        editProfilePage.clickCancelButtonWithPopUp().clickCancelButton();
+        editProfilePage.clickCancelButton().clickCancelButtonWithPopUp();
     }
 
     @DataProvider(name = "editPhotoPopUpTexts")

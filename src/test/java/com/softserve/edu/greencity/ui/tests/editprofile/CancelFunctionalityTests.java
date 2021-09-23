@@ -57,7 +57,10 @@ public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertEquals(subTitleOfPopUpOnRu, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_RU.getText());
         softAssert.assertEquals(titleOfPopUpOnUa, EditProfileTexts.TITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
         softAssert.assertEquals(subTitleOfPopUpOnUa, EditProfileTexts.SUBTITLE_OF_CANCEL_POP_UP_TEXT_UA.getText());
-        cancelPopUp.signOutFromEditProfile();
+
+        cancelPopUp
+                .clickConfirmCancelEditingButton()
+                .signOut() ;
         softAssert.assertAll();
     }
 
@@ -99,7 +102,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout
                 .loginIn(getTemporaryUser())
                 .clickEditButton()
                 .clearNameField()
-                .fillNameField("New Name For Test")
+                .fillNameField("NewNameForTest")
                 .clickEcoNewsButton()
                 .getTitleOfCancelPopUpComponent();
 

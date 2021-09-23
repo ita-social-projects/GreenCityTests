@@ -29,15 +29,15 @@ public class SavePicturePopUpComponent {
         this.waitsSwitcher = new WaitsSwitcher(driver);
     }
 
-    public ButtonElement getSaveButton(){
+    public ButtonElement getSavePhotoButton(){
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
         saveButton = new ButtonElement(driver, SAVE_PHOTO_BUTTON);
         return saveButton;
     }
 
     public EditProfilePage clickSavePhotoButton(){
-        getSaveButton().click();
-        waitsSwitcher.setExplicitWait(10,
-        ExpectedConditions.invisibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
+        getSavePhotoButton().click();
         return new EditProfilePage(driver);
     }
 
