@@ -11,7 +11,7 @@ import org.testng.annotations.*;
 
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 
-public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
+public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout {
     private EditProfilePage editProfilePage;
     private EditPicturePopUpComponent editPicturePopUpComponent;
 
