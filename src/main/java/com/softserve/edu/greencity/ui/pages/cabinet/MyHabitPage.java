@@ -7,6 +7,7 @@ import com.softserve.edu.greencity.ui.elements.LabelElement;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
+import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -56,6 +57,8 @@ public class MyHabitPage extends TopPart  {
     }
     @Step
     public WebElement getEditButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(EDIT_PROFILE_BUTTON.getPath()));
         return searchElementByCss(EDIT_PROFILE_BUTTON.getPath());
     }
 
@@ -151,14 +154,14 @@ public class MyHabitPage extends TopPart  {
     @Step("Go to edit profile")
     public EditProfilePage clickEditButton(){
         getEditButton().click();
-        waitsSwitcher.setImplicitWait(20);
+        WaitsSwitcher.sleep(5000);
         return new EditProfilePage(driver);
     }
+
     public WelcomePage navigateToWelcomePage(){
         getLogo().click();
         return new WelcomePage(driver);
     }
-
 
     public SocialNetworkItemsContainer getSocialNetworkItemsContainer() {
         try {

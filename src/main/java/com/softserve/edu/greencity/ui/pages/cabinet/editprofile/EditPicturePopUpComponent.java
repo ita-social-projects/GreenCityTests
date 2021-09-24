@@ -72,6 +72,8 @@ public class EditPicturePopUpComponent {
     }
 
     public ButtonElement getDeletePhotoButton(){
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(DELETE_PHOTO_BUTTON.getPath()));
         if(deletePhotoButton == null){
             deletePhotoButton = new ButtonElement(driver, DELETE_PHOTO_BUTTON);
         }

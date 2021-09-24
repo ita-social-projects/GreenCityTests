@@ -76,7 +76,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
 
 //        editProfilePage.clickEditPhotoButton().uploadPNGImage().clickSavePhotoButton();
 
-        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton();
+        editPicturePopUpComponent = editProfilePage.clickEditPictureButton();
 
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpEditPicture(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getCancelButton(), cancel);
@@ -95,10 +95,11 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
                 .changeLanguage(languages);
 
         editPicturePopUpComponent =
-                editProfilePage.clickEditPhotoButton()
+                editProfilePage
+                        .clickEditPictureButton()
                         .uploadJPGImage()
                         .clickSavePhotoButton()
-                        .clickEditPhotoButton()
+                        .clickEditPictureButton()
                         .clickDeletePhotoButton();
 
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpInDeletePhoto(), question);
@@ -159,7 +160,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
                 .clickEditPictureButton()
                 .clickDeletePhotoButton()
                 .clickYesDeleteButtonInDeletePhotoPopUp()
-                .clickEditPhotoButton();
+                .clickEditPictureButton();
 
         Assert.assertFalse(editPicturePopUpComponent.isDeleteButtonClickable());
 

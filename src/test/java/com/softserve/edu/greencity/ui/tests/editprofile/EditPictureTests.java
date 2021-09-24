@@ -38,7 +38,7 @@ public class EditPictureTests extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-1566")
     @Description("User can add photo with valid parameters for the first time.")
-    @Ignore
+//    @Ignore
     public void verifyAddPhotoWithValidParameters(){
         MyHabitPage myHabitPage = editProfilePage
 //                .fillCredoField("credo")

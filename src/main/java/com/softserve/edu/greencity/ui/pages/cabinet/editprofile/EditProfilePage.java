@@ -71,12 +71,13 @@ public class EditProfilePage extends TopPart {
         return editPictureButton;
     }
 
-    @Step("Click 'Edit Photo' button")
+    @Step("Click 'Edit Picture' button")
     public EditPicturePopUpComponent clickEditPictureButton() {
         getEditPictureButton().click();
         return new EditPicturePopUpComponent(driver);
     }
 
+    @Step("Click on Title on EditPage")
     public EditProfilePage clickOnTitleOnEditPage() {
         getTitleOnEditPage().click();
         return this;
@@ -346,13 +347,13 @@ public class EditProfilePage extends TopPart {
         return new EditProfilePage(driver);
     }
 
+    @Step("Click 'add social network' button")
     public SocialNetworkComponent clickAddSocialNetworksButton() {
         logger.info("wait to click add social networks icon");
         waitsSwitcher.setExplicitWait(10, ExpectedConditions
                 .elementToBeClickable(ADD_SOCIAL_NETWORKS_BUTTON.getPath()));
         getAddSocialNetworkButton().click();
         logger.info("add social networks icon was clicked");
-//        waitsSwitcher.setImplicitWait(5);
         return new SocialNetworkComponent(driver);
     }
 
@@ -506,12 +507,6 @@ public class EditProfilePage extends TopPart {
             deletePhotoButton = new ButtonElement(driver, DELETE_PHOTO_BUTTON);
         }
         return deletePhotoButton;
-    }
-
-    @Step("Click 'Edit Photo' button")
-    public EditPicturePopUpComponent clickEditPhotoButton() {
-        getEditPictureButton().click();
-        return new EditPicturePopUpComponent(driver);
     }
 
     @Step("Click 'Delete photo' button")
