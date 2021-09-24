@@ -8,6 +8,7 @@ import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginL
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 //TODO finish tests
@@ -37,13 +38,15 @@ public class EditPictureTests extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-1566")
     @Description("User can add photo with valid parameters for the first time.")
+    @Ignore
     public void verifyAddPhotoWithValidParameters(){
         MyHabitPage myHabitPage = editProfilePage
 //                .fillCredoField("credo")
                 .clickEditPictureButton()
                 .uploadPNGImage()
                 .clickSavePhotoButton()
-                .clickSaveButton();
+                .clickCancelButton()
+                .clickConfirmationButtonAfterCancelButtonPopup();
 
         softAssert.assertFalse(myHabitPage.isUserImageDefault());
         softAssert.assertAll();

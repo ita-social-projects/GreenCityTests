@@ -38,6 +38,9 @@ public class SavePicturePopUpComponent {
 
     public EditProfilePage clickSavePhotoButton(){
         getSavePhotoButton().click();
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.invisibilityOfElementLocated(SAVE_PHOTO_BUTTON.getPath()));
+        WaitsSwitcher.sleep(2000);
         return new EditProfilePage(driver);
     }
 

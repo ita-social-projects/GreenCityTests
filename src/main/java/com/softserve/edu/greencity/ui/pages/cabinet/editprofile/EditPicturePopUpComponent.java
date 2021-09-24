@@ -121,6 +121,8 @@ public class EditPicturePopUpComponent {
 
     public EditPicturePopUpComponent clickDeletePhotoButton() {
         getDeletePhotoButton().click();
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.invisibilityOfElementLocated(DELETE_PHOTO_BUTTON.getPath()));
         return new EditPicturePopUpComponent(driver);
     }
 
@@ -139,9 +141,10 @@ public class EditPicturePopUpComponent {
         return new EditProfilePage(driver);
     }
 
-    public EditPicturePopUpComponent clickYesDeleteButtonInDeletePhotoPopUp() {
+    public EditProfilePage clickYesDeleteButtonInDeletePhotoPopUp() {
         getYesDeleteButtonInDeletePhotoPopUp().click();
-        return new EditPicturePopUpComponent(driver);
+        WaitsSwitcher.sleep(2000);
+        return new EditProfilePage(driver);
     }
 
     //Upload different types of files
@@ -174,31 +177,37 @@ public class EditPicturePopUpComponent {
 //    }
 //
 //
-//    public ButtonElement getErrorTextWhenInvalidImage() {
-//        if (errorTextWhenInvalidImage == null) {
-//            errorTextWhenInvalidImage = new ButtonElement(driver, ERROR_TEXT_WHEN_INVALID_IMAGE);
-//        }
-//        return errorTextWhenInvalidImage;
-//    }
+    @Step("Get 'ErrorTextWhenInvalidImage' element")
+    public ButtonElement getErrorTextWhenInvalidImage() {
+        if (errorTextWhenInvalidImage == null) {
+            errorTextWhenInvalidImage = new ButtonElement(driver, ERROR_TEXT_WHEN_INVALID_IMAGE);
+        }
+        return errorTextWhenInvalidImage;
+    }
+
+    @Step("Get 'ErrorTextWhenInvalidImage' text")
+    public String  getErrorTextWhenInvalidImageText() {
+        return getErrorTextWhenInvalidImage().getText();
+    }
+
+    @Step("Check if Save button in 'Upload new photo' is clickable")
+    public boolean isSaveButtonClickable() {
+        try {
+            return getSavePhotoButton().isActive();
+        } catch (TimeoutException er) {
+            return false;
+        }
+    }
 //
-//    @Step("Check if Save button in 'Upload new photo' is clickable")
-//    public boolean isSaveButtonClickable() {
-//        try {
-//            return getSavePhotoButton().isActive();
-//        } catch (TimeoutException er) {
-//            return false;
-//        }
-//    }
-//
-//    @Step("Check if Delete button is clickable")
-//    public boolean isDeleteButtonClickable() {
-//        try {
-//            return getDeletePhotoButton().isActive();
-//        } catch (TimeoutException er) {
-//            return false;
-//        }
-//
-//    }
+    @Step("Check if Delete button is clickable")
+    public boolean isDeleteButtonClickable() {
+        try {
+            return getDeletePhotoButton().isActive();
+        } catch (TimeoutException er) {
+            return false;
+        }
+
+    }
 //
 //    @Step("Get edit picture button")
 //    public ButtonElement getEditPictureButton(){
@@ -238,15 +247,30 @@ public class EditPicturePopUpComponent {
         return new SavePicturePopUpComponent(driver);
     }
 
-    @Step("Upload PNG image")
-    public EditPicturePopUpComponent uploadJPGImage() {
+    @Step("Upload JPG image")
+    public SavePicturePopUpComponent uploadJPGImage() {
         uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
-        return this;
+        return new SavePicturePopUpComponent(driver);
     }
 
     public EditPicturePopUpComponent uploadFile(WebElement dropArea, String path) {
         String absolutePath = new File(path).getAbsolutePath();
         dropArea.sendKeys(absolutePath);
         return this;
+    }
+
+    public EditPicturePopUpComponent uploadTooLargeJPEGImage() {
+        uploadFile(getUploadArea(), "src/test/resources/images/tooLargeImage.jpg");
+        return new EditPicturePopUpComponent(driver);
+    }
+
+    public EditPicturePopUpComponent uploadGIFImage() {
+        uploadFile(getUploadArea(), "src/test/resources/images/gifImage.gif");
+        return new EditPicturePopUpComponent(driver);
+    }
+
+    public EditPicturePopUpComponent uploadTooLargePNGImage() {
+        uploadFile(getUploadArea(), "src/test/resources/images/tooLargePng.png");
+        return new EditPicturePopUpComponent(driver);
     }
 }

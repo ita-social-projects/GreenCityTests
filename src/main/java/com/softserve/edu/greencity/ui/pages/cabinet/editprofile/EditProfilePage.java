@@ -63,6 +63,8 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get edit picture button")
     public ButtonElement getEditPictureButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.elementToBeClickable(EDIT_AVATAR_BUTTON.getPath()));
         if (editPictureButton == null) {
             editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
         }
@@ -263,6 +265,8 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get 'Cancel' button")
     public ButtonElement getCancelButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.elementToBeClickable(CANCEL_BUTTON.getPath()));
         if (cancelButton == null) {
             cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
         }
