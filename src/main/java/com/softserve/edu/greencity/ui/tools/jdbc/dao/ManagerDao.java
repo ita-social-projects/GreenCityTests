@@ -47,7 +47,7 @@ public final class ManagerDao {
         url = System.getenv().get("JDBC_URL");
         /*-
         username =  System.getenv().get(property.getProperty("JDBC_USERNAME"));
-        password = System.getProperty("JDBC_PASSWROD");
+        password = System.getProperty("JDBC_PASSWORD");
         System.getenv().get(property.getProperty("JDBC_PASSWORD"));
         url = System.getProperty("JDBC_URL");
         System.getenv().get(property.getProperty("JDBC_URL"));
