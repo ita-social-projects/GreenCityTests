@@ -1,12 +1,14 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
+import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UbsAdminCommon;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class 	ProfileDropdown {
 
 	private WebDriver driver;
+	private WebElement ubsAdminButton;
 	private WebElement userSettings;
 	private WebElement signout;
 
@@ -14,6 +16,15 @@ public class 	ProfileDropdown {
 		this.driver = driver;
 	}
 
+	public WebElement getUbsAdminButton(){
+		ubsAdminButton = driver.findElement(MenuElementsLocators.UBS_ADMIN_BUTTON.getPath());
+		return ubsAdminButton;
+
+	}
+	public UbsAdminCommon clickUbsAdminButton(){
+		getUbsAdminButton().click();
+		return new UbsAdminCommon(driver);
+	}
 //	private void initElements() {
 //		// init elements
 //		//favoritePlaces = driver.findElement(By.cssSelector("div#user-avatar-wrapper li.tertiary-global-button + li"));

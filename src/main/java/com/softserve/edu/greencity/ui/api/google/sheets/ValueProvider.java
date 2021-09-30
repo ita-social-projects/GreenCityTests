@@ -95,6 +95,11 @@ public class ValueProvider {
     public static String getComfUnregisterEmailPassword() {return (String) getRow(24).get(1);}
 
     @SneakyThrows
+    public static String getAdminEmail(){return (String) getRow(31).get(1);}
+    @SneakyThrows
+    public static String getAdminPass(){return (String) getRow(32).get(1);}
+
+    @SneakyThrows
     public static String getExistUser() {return (String) getRow(29).get(1);}
 
     @SneakyThrows
