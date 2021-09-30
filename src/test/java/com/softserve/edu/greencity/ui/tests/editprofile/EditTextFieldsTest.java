@@ -75,7 +75,7 @@ public class EditTextFieldsTest extends GreenCityTestRunnerWithLoginLogout {
                 .clearCredoField()
                 .fillCredoField("Some bad credo")
                 .clickCancelButtonWithPopUp()
-                .clickCancelButton();
+                .clickConfirmCancelEditingButton();
 
         String expectedUserName = "No name";
         String actualUserName = goTiMyHabitPage.getUsernameLabelText();

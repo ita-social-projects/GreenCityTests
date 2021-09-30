@@ -63,18 +63,21 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get edit picture button")
     public ButtonElement getEditPictureButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.elementToBeClickable(EDIT_AVATAR_BUTTON.getPath()));
         if (editPictureButton == null) {
             editPictureButton = new ButtonElement(driver, EDIT_AVATAR_BUTTON);
         }
         return editPictureButton;
     }
 
-    @Step("Click 'Edit Photo' button")
+    @Step("Click 'Edit Picture' button")
     public EditPicturePopUpComponent clickEditPictureButton() {
         getEditPictureButton().click();
         return new EditPicturePopUpComponent(driver);
     }
 
+    @Step("Click on Title on EditPage")
     public EditProfilePage clickOnTitleOnEditPage() {
         getTitleOnEditPage().click();
         return this;
@@ -253,6 +256,8 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get 'Save' button")
     public ButtonElement getSaveButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.visibilityOfElementLocated(SAVE_BUTTON.getPath()));
         if (saveButton == null) {
             saveButton = new ButtonElement(driver, SAVE_BUTTON);
         }
@@ -261,6 +266,8 @@ public class EditProfilePage extends TopPart {
 
     @Step("Get 'Cancel' button")
     public ButtonElement getCancelButton() {
+        waitsSwitcher.setExplicitWait(10,
+                ExpectedConditions.elementToBeClickable(CANCEL_BUTTON.getPath()));
         if (cancelButton == null) {
             cancelButton = new ButtonElement(driver, CANCEL_BUTTON);
         }
@@ -313,32 +320,40 @@ public class EditProfilePage extends TopPart {
 
 
     @Step("Click 'Cancel' button")
-    public MyHabitPage clickCancelButton() {
+    public EditProfilePage clickCancelButton() {
         getCancelButton().click();
-        return new MyHabitPage(driver);
+        return new EditProfilePage(driver);
     }
 
-    @Step("Click 'Yes, Cancel' on popup after clicking 'Cancel' button")
-    public MyHabitPage ClickConfirmationButtonAfterCancelButtonPopup() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    @Step("Get Confirmation popup button")
+    public ButtonElement getConfirmationButton() {
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions
+                .visibilityOfElementLocated(CONFIRM_CANCEL_PROFILE_EDITING.getPath()));
         if (confirmCancelingButton == null) {
             confirmCancelingButton = new ButtonElement(driver, CONFIRM_CANCEL_PROFILE_EDITING);
         }
-        confirmCancelingButton.click();
+        return confirmCancelingButton;
+    }
+
+    @Step("Click 'Yes, cancel' on popup after clicking 'Cancel' button")
+    public MyHabitPage clickConfirmationButtonAfterCancelButtonPopup() {
+        getConfirmationButton().click();
         return new MyHabitPage(driver);
     }
 
+    @Step("Click 'Yes' on popup after clicking 'Cancel' button")
+    public EditProfilePage clickConfirmationButtonAfterDeleteButtonPopup() {
+        getConfirmationButton().click();
+        return new EditProfilePage(driver);
+    }
+
+    @Step("Click 'add social network' button")
     public SocialNetworkComponent clickAddSocialNetworksButton() {
         logger.info("wait to click add social networks icon");
         waitsSwitcher.setExplicitWait(10, ExpectedConditions
                 .elementToBeClickable(ADD_SOCIAL_NETWORKS_BUTTON.getPath()));
         getAddSocialNetworkButton().click();
         logger.info("add social networks icon was clicked");
-        waitsSwitcher.setImplicitWait(5);
         return new SocialNetworkComponent(driver);
     }
 
@@ -492,12 +507,6 @@ public class EditProfilePage extends TopPart {
             deletePhotoButton = new ButtonElement(driver, DELETE_PHOTO_BUTTON);
         }
         return deletePhotoButton;
-    }
-
-    @Step("Click 'Edit Photo' button")
-    public EditPicturePopUpComponent clickEditPhotoButton() {
-        getEditPictureButton().click();
-        return new EditPicturePopUpComponent(driver);
     }
 
     @Step("Click 'Delete photo' button")

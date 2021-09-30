@@ -10,7 +10,7 @@ public enum EditProfileLocators implements Locator{
     //    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
     UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//label[@class='secondary-global-button']")),
     //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
-    DELETE_PHOTO_BUTTON(By.xpath("//button[@class=\"primary-global-button delete\"]")),
+    DELETE_PHOTO_BUTTON(By.xpath("//button[@class='primary-global-button delete']")),
    // EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
 
     //EditPictureButtonPopUpComponent locators
@@ -22,13 +22,13 @@ public enum EditProfileLocators implements Locator{
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
 
     CHANGE_PHOTO_INPUT(By.cssSelector("label > input[type=file]")),
-    SAVE_PHOTO_BUTTON(By.cssSelector("app-edit-photo-pop-up > div > div > div > div.buttons > button")),
+    SAVE_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
 
     //VerifyDeletingPhotoPopUpComponent
     VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
     VERIFY_DELETING_CONTINUE_EDITING_BUTTON(By.cssSelector("button.primary-global-button")),
     VERIFY_DELETING_YES_BUTTON(By.cssSelector("button.secondary-global-button")),
-    ERROR_TEXT_WHEN_INVALID_IMAGE(By.cssSelector("")),
+    ERROR_TEXT_WHEN_INVALID_IMAGE(By.cssSelector("p.warning.ng-star-inserted")),
 
     NAME_FIELD(By.cssSelector("#name")),
     CITY_FIELD(By.cssSelector("#city")),
@@ -50,12 +50,12 @@ public enum EditProfileLocators implements Locator{
     SHOW_SHOPPING_LIST_CHECK_BOX(By.cssSelector("li:nth-child(3) > label > span")),
     CHECKBOX_SHOPPING_LIST(By.xpath("//input[@formcontrolname= 'showShoppingList']")),
 
-    CANCEL_BUTTON(By.cssSelector("div.buttons > button:nth-child(1)")),
+    CANCEL_BUTTON(By.xpath("//button[@type='button' and not(@class)]")),
     SAVE_BUTTON(By.xpath("//button[@type='submit']")),
 
     //Cancel editing pop up locators
     CONTINUE_EDITING_BUTTON(By.cssSelector("div.buttons-container > button.secondary-global-button")),
-    CANCEL_EDITING(By.cssSelector("div.buttons-container > button.primary-global-button")),
+    CANCEL_EDITING(By.xpath("//button[@type='button' and not(@class)]")),
     CLOSE_EDITING_BUTTON(By.cssSelector(".close")),
     TITLE_CANCEL_POP_UP(By.xpath("//*[contains(@class,'warning-title')]")),
     SUB_TITLE_CANCEL_POP_UP(By.xpath("//*[contains(@class,'warning-subtitle')]")),
@@ -66,7 +66,7 @@ public enum EditProfileLocators implements Locator{
     CANCEL_DELETING_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.secondary-global-button")),
     YES_DELETE_SOCIAL_NETWORK(By.cssSelector("div.buttons-container > button.primary-global-button")),
     CLOSE_DELETING_BUTTON(By.cssSelector(".close")),
-    CONFIRM_CANCEL_PROFILE_EDITING(By.xpath("//button[@class='primary-global-button']")),
+    CONFIRM_CANCEL_PROFILE_EDITING(By.cssSelector("div.buttons-container > button.primary-global-button")),
     POP_UP_CANCEL_PROFILE_EDITING(By.xpath("//div[@class='cdk-overlay-container']")),
 
     NOTIFICATION_FOR_NAME_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[1]")),

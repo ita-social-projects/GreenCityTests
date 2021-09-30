@@ -33,6 +33,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
     public void clearUp() {
         EditProfileService editProfileService = new EditProfileService();
         editProfileService.updateUserEditProfileToDefaultByEmail(user.getEmail());
+;
     }
 
     @DataProvider(name="popUpTexts")
@@ -67,7 +68,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-1510")
     @Description("User can add to profile up to 5 any social network links")
-    @Ignore
+//    @Ignore
     public void verifyPossibilityToAddUpToFiveNetworks(){
         logger.info("Starting verifyPossibilityToAddUpToFiveNetworks");
         MyHabitPage myHabitPage = editProfilePage
@@ -85,7 +86,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
                 .fillMaximumSocialNetworksFields(EditProfileDataRepository.get().getUpToFiveSocialNetworks());
 
         Assert.assertFalse(newEditProfilePage.isAddSocialNetworkButtonActive(), "'Add social network' button should be disabled");
-        newEditProfilePage.clickCancelButton();
+        editProfilePage.clickCancelButton().clickConfirmationButtonAfterCancelButtonPopup();
     }
 
     @Test(testName = "GC-1513")
@@ -105,7 +106,9 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertFalse(socialNetworkComponent.isAddButtonActive());
         softAssert.assertAll();
 
-        socialNetworkComponent.clickCancelButton().clickCancelButton();
+        socialNetworkComponent
+                .clickCancelButton()
+                .clickConfirmationButtonAfterCancelButtonPopup();
     }
 
     @Test(testName = "GC-1514")
@@ -116,14 +119,15 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
                 .clickAddSocialNetworksButton()
                 .fillSocialNetworkField(EditProfileDataRepository.get().getSocialNetworkFacebook())
                 .clickAddButton()
-                .clickCancelButton();
+                .clickCancelButton()
+                .clickConfirmationButtonAfterCancelButtonPopup();
 
         Assert.assertFalse(myHabitPage.isSocialIconPresent());
     }
 
     @Test(testName = "GC-1515")
     @Description("User can edit social network links")
-    @Ignore
+//    @Ignore
     public void verifyUserCanEditSocialNetworkLinks(){
         logger.info("Starting verifyUserCanEditSocialNetworkLinks");
         MyHabitPage myHabitPage = editProfilePage
@@ -142,6 +146,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-1516", dataProvider = "popUpTexts")
     @Description("L10n deleting confirmation message ")
+    @Ignore
     public void verifyPopUpAppearsWhenDeleteLink(String language, String warning, String cancel, String yes){
         logger.info("Starting verifyPopUpAppearsWhenDeleteLink");
         editProfilePage.createLanguageSwitchComponent()
@@ -160,11 +165,12 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(deleteSocialNetworkPopUpComponent.getCancelButtonText(), cancel);
         softAssert.assertEquals(deleteSocialNetworkPopUpComponent.getYesDeletingButtonText(),yes);
         softAssert.assertAll();
+        editProfilePage.clickConfirmationButtonAfterDeleteButtonPopup();
     }
 
     @Test(testName = "GC-1517")
     @Description("User can remove social media links")
-    @Ignore
+//    @Ignore
     public void verifyThatUserCanRemoveSocialNetworkLink(){
         logger.info("Starting verifyThatUserCanRemoveSocialNetworkLink");
         MyHabitPage myHabitPage = editProfilePage
@@ -211,7 +217,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-1519")
     @Description("The icons of social network on User Profile are clickable and redirect to corresponding link")
-    @Ignore
+//    @Ignore
     public void verifyThatSocialNetworkIconIsClickable(){
         MyHabitPage myHabitPage = editProfilePage
                 .clickAddSocialNetworksButton()
@@ -223,7 +229,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
     }
 
     @Test
-    @Description("Error massage appeared if added invalid social network link")
+    @Description("Error message appeared if added invalid social network link")
     public void verifyThatUserCanNotWriteInvalidLink(){
         SocialNetworkComponent socialNetworkComponent = editProfilePage
                 .clickAddSocialNetworksButton()
@@ -234,7 +240,7 @@ public class SocialNetworkLinkTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertEquals(socialNetworkComponent.getInvalidLinkTextError(), INCORRECT_URL_ERROR_MESSAGE.getText());
         softAssert.assertEquals(socialNetworkComponent.getColorOfInvalidLinkTextError(), INVALID_LINK_ERROR_COLOR.getText());
         softAssert.assertAll();
-        socialNetworkComponent.clickCancelButton().clickCancelButton();
+        editProfilePage.clickCancelButton().clickConfirmationButtonAfterDeleteButtonPopup();
     }
 
 //    @DataProvider(name = "iconsAndLinks")

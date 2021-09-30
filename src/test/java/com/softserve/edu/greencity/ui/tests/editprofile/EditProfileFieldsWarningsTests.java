@@ -33,7 +33,9 @@ public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLogin
 
     @AfterMethod
     public void goOutFromEditingPage() {
-        new EditProfilePage(driver).clickCancelButtonWithPopUp().clickCancelButton();
+        editProfilePage
+                .clickCancelButton()
+                .clickConfirmationButtonAfterCancelButtonPopup();
     }
 
     @DataProvider(name = "notificationsTexts")
@@ -165,9 +167,13 @@ public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLogin
                 .fillCityField(city)
                 .clickOnTitleOnEditPage();
 
+        /*
+            This assert checks if color of the notification changed on invalid city name
+            Color of the text checked in "GC-1550, GC-1551, GC-1552" test
+         */
         String actualColor = editProfilePage.getColorFromCityNotificationLabel();
-        String expectedColor = COLOR_FOR_ERROR_NOTIFICATIONS.getText();
+        String expectedColor = COLOR_FOR_NOTIFICATIONS.getText();
 
-        Assert.assertEquals(actualColor, expectedColor, "actual and expected colors under names notifications do not match");
+        Assert.assertNotEquals(actualColor, expectedColor, "actual and expected colors under names notifications do not match");
     }
 }

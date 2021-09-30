@@ -14,9 +14,9 @@ public class DriverSetup extends GreenCityTestRunnerWithLoginLogout {
             options.addArguments("--incognito");
             options.addArguments("--disable-notifications");
             options.addArguments("--window-size=1920,1080", "--no-sandbox", "'--disable-dev-shm-usage");
-            // options.addArguments("--headless");}
-        }
-        else {
+            options.addArguments("--headless");
+        } else {
+            options.addArguments("--headless");
             options.addArguments("--disable-gpu");
             options.addArguments("--disable-popup-blocking");
             options.addArguments("--allow-failed-policy-fetch-for-test");

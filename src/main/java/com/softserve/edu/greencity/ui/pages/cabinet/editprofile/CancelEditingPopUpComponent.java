@@ -22,23 +22,30 @@ public class CancelEditingPopUpComponent {
 
     private WebDriver driver;
     private ButtonElement continueEditingButton;
-    private ButtonElement cancelEditingButton;
+    private ButtonElement confirmCancelEditingButton;
     private ButtonElement closeButton;
     private String titleOfCancelComponent;
     private String subTitleOfCancelComponent;
 
+    protected WaitsSwitcher waitsSwitcher;
+
     public CancelEditingPopUpComponent(WebDriver driver) {
         this.driver = driver;
+        waitsSwitcher = new WaitsSwitcher(driver, 5);
     }
 
     private ButtonElement getContinueEditingButton() {
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions
+                .visibilityOfElementLocated(CONTINUE_EDITING_BUTTON.getPath()));
         continueEditingButton = new ButtonElement(driver, CONTINUE_EDITING_BUTTON);
         return continueEditingButton;
     }
 
-    private ButtonElement getCancelEditingButton() {
-        cancelEditingButton = new ButtonElement(driver, CANCEL_EDITING);
-        return cancelEditingButton;
+    private ButtonElement getConfirmCancelEditingButton() {
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions
+                .visibilityOfElementLocated(CONFIRM_CANCEL_PROFILE_EDITING.getPath()));
+        confirmCancelEditingButton = new ButtonElement(driver, CONFIRM_CANCEL_PROFILE_EDITING);
+        return confirmCancelEditingButton;
     }
 
     private ButtonElement getCloseButton() {
@@ -48,7 +55,7 @@ public class CancelEditingPopUpComponent {
 
     public boolean isCancelEditPageButtonIsExists() {
         try {
-            getCancelEditingButton();
+            getConfirmCancelEditingButton();
         } catch (NoSuchElementException e) {
             return false;
         }
@@ -60,9 +67,9 @@ public class CancelEditingPopUpComponent {
         return new EditProfilePage(driver);
     }
 
-    public MyHabitPage clickCancelButton() {
+    public MyHabitPage clickConfirmCancelEditingButton() {
         if (isCancelEditPageButtonIsExists()) {
-            getCancelEditingButton().click();
+            getConfirmCancelEditingButton().click();
         }
         return new MyHabitPage(driver);
     }
@@ -101,7 +108,7 @@ public class CancelEditingPopUpComponent {
                 return super.signOut();
             }
         };
-         clickCancelButton();
+         clickConfirmCancelEditingButton();
          return new WelcomePage(driver);
     }
 }
