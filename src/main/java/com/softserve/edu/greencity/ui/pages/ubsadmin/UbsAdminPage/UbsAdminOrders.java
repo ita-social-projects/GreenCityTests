@@ -6,8 +6,8 @@ import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class UbsAdminCommon extends TopPart {
-    private WaitsSwitcher waitsSwitcher;;
+public class UbsAdminOrders extends TopPart {
+    private WaitsSwitcher waitsSwitcher;
 //    private UBSAdminTableComponent ubsAdminTableComponent;
 //    private UBSAdminViewTableComponent ubsAdminViewTableComponent;
 //    private UBSAdminRowTableComponentLocator ubsAdminRowTableComponentLocator;
@@ -19,7 +19,7 @@ public class UbsAdminCommon extends TopPart {
     private WebElement displayCounter10;
     private WebElement displayCounter15;
     private WebElement displayCounter20;
-    public UbsAdminCommon(WebDriver driver) {
+    public UbsAdminOrders(WebDriver driver) {
         super(driver);
     }
     public WebElement getSearchField() {
@@ -60,7 +60,7 @@ public class UbsAdminCommon extends TopPart {
     public WebElement getSortEmailButton(){
         return driver.findElement(UbsAdminCommonLocator.SORT_EMAIL_BUTTON.getPath());
     }
-    public UbsAdminCommon clearSearchField() {
+    public UbsAdminOrders clearSearchField() {
         getSearchField().clear();
         return this;
     }
@@ -77,7 +77,7 @@ public class UbsAdminCommon extends TopPart {
 //        return new UBSAdminMenuComponent(driver);
 //    }
 
-    public UbsAdminCommon setSearchField(String s) {
+    public UbsAdminOrders setSearchField(String s) {
         tableIsLoaded();
         getSearchField().sendKeys(s);
         return this;
@@ -94,43 +94,43 @@ public class UbsAdminCommon extends TopPart {
         waitsSwitcher.setImplicitWait(500);
     }
 
-    public UbsAdminCommon clickDisplayCounterDropdown() {
+    public UbsAdminOrders clickDisplayCounterDropdown() {
         getDisplayCounterDropdown().click();
         return this;
     }
 
 
-    public UbsAdminCommon clickDisplayCounter10() {
+    public UbsAdminOrders clickDisplayCounter10() {
         getDisplayCounter10().click();
         tableIsLoaded();
         return this;
     }
 
-    public UbsAdminCommon clickDisplayCounter15() {
+    public UbsAdminOrders clickDisplayCounter15() {
         getDisplayCounter15().click();
         tableIsLoaded();
         return this;
     }
 
-    public UbsAdminCommon clickDisplayCounter20() {
+    public UbsAdminOrders clickDisplayCounter20() {
         getDisplayCounter20().click();
         tableIsLoaded();
         return this;
     }
 
-    public UbsAdminCommon clickSortDistrictButton(){
+    public UbsAdminOrders clickSortDistrictButton(){
         getSortDistrictButton().click();
         tableIsLoaded();
         return this;
     }
 
 
-    public UbsAdminCommon clickSortOrderNumberButton(){
+    public UbsAdminOrders clickSortOrderNumberButton(){
         getSortOrderNumberButton().click();
         tableIsLoaded();
         return this;
     }
-    public UbsAdminCommon clickSortOrderEmailButton(){
+    public UbsAdminOrders clickSortOrderEmailButton(){
         getSortEmailButton().click();
         tableIsLoaded();
         return this;

@@ -11,7 +11,8 @@ import com.softserve.edu.greencity.ui.pages.econews.EcoNewsPage;
 import com.softserve.edu.greencity.ui.pages.map.MapPage;
 import com.softserve.edu.greencity.ui.pages.tipstricks.TipsTricksPage;
 import com.softserve.edu.greencity.ui.pages.ubs.OrderDetailsPage;
-import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UbsAdminCommon;
+import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UBSAdminMenuCommon;
+import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UbsAdminOrders;
 import com.softserve.edu.greencity.ui.tools.WindowManager;
 import com.softserve.edu.greencity.ui.tools.engine.StableWebElementSearch;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
@@ -234,7 +235,7 @@ public abstract class TopPart implements StableWebElementSearch {
         createTopGuestComponent();
         return new WelcomePage(driver);
     }
-    public UbsAdminCommon ubsAdminCommon(){
+    public UBSAdminMenuCommon ubsAdminCommon(){
         return createTopUserComponent().clickUserNameButton().clickUbsAdminButton();
     }
     @Step("loginIn")
