@@ -6,14 +6,12 @@ import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditPicturePopUp
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
 import io.qameta.allure.Description;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
 import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.*;
 
-public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
+public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout {
     private EditProfilePage editProfilePage;
     private EditPicturePopUpComponent editPicturePopUpComponent;
 
@@ -31,7 +29,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
     @AfterMethod
     private void goOutFromEditProfilePage() {
         editProfilePage = editPicturePopUpComponent.clickClosePopUpButton();
-        editProfilePage.clickCancelButtonWithPopUp().clickCancelButton();
+        editProfilePage.clickCancelButton().clickConfirmationButtonAfterCancelButtonPopup();
     }
 
     @DataProvider(name = "editPhotoPopUpTexts")
@@ -78,7 +76,7 @@ public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
 
 //        editProfilePage.clickEditPhotoButton().uploadPNGImage().clickSavePhotoButton();
 
-        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton();
+        editPicturePopUpComponent = editProfilePage.clickEditPictureButton();
 
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpEditPicture(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getCancelButton(), cancel);
@@ -97,73 +95,74 @@ public class EditProfileEditPhoto extends GreenCityTestRunnerWithLoginLogout {
                 .changeLanguage(languages);
 
         editPicturePopUpComponent =
-                editProfilePage.clickEditPhotoButton()
+                editProfilePage
+                        .clickEditPictureButton()
                         .uploadJPGImage()
                         .clickSavePhotoButton()
-                        .clickEditPhotoButton()
+                        .clickEditPictureButton()
                         .clickDeletePhotoButton();
 
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpInDeletePhoto(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getContinueEditingButtonInDeletePhotoPopUp(), continueEditing);
         softAssert.assertEquals(editPicturePopUpComponent.getYesDeleteButtonInDeletePhotoPopUp().getText(), yes_delete);
 
+
     }
 
     @Test
     @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
+//    @Ignore
     public void verifyImpossibleToAddPNGImageMore10Mb() {
         logger.info("Starting verifyImpossibleToAddPNGImageMore10Mb");
-//        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton()
-//                .clickUploadNewPhotoButton()
-//                .uploadTooLargePNGImage();
-//        Assert.assertFalse(editPicturePopUpComponent.isSaveButtonClickable());
-//        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImage(), UPLOAD_IMAGE_TEXT_ERROR.getText());
-//        editPicturePopUpComponent.clickClosePopUpButton();
-//
+        editPicturePopUpComponent =
+                editProfilePage
+                        .clickEditPictureButton()
+                        .uploadTooLargePNGImage();
+        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
+
     }
 
     @Test
     @Description("Verify that system doesn't allow to add GIF image")
+//    @Ignore
     public void verifyImpossibleToAddGIFImage() {
         logger.info("Starting verifyImpossibleToAddGIFImage");
-//        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton()
-//                .clickUploadNewPhotoButton()
-//                .uploadGIFImage();
-//        Assert.assertFalse(editPicturePopUpComponent.isSaveButtonClickable());
-//        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImage(), UPLOAD_IMAGE_TEXT_ERROR.getText());
-//        editPicturePopUpComponent.clickClosePopUpButton();
-//
+        editPicturePopUpComponent =
+                editProfilePage
+                        .clickEditPictureButton()
+                        .uploadGIFImage();
+        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
+
     }
 
     @Test
     @Description("Verify that system doesn't allow to add JPEG image more than 10 MB")
+//    @Ignore
     public void verifyImpossibleToAddJPEGImageMore10Mb() {
         logger.info("Starting verifyImpossibleToAddJPEGImageMore10Mb");
-//        editPicturePopUpComponent = editProfilePage.clickEditPhotoButton()
-//                .clickUploadNewPhotoButton()
-//                .uploadTooLargeJPEGImage();
-//        Assert.assertFalse(editPicturePopUpComponent.isSaveButtonClickable());
-//        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImage(), UPLOAD_IMAGE_TEXT_ERROR.getText());
-//        editPicturePopUpComponent.clickClosePopUpButton();
-//
+        editPicturePopUpComponent =
+                editProfilePage
+                        .clickEditPictureButton()
+                        .uploadTooLargeJPEGImage();
+        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
+
     }
 
     @Test(testName = "GC-1594")
     @Description("User can delete uploaded photo but can not delete default photo")
+//    @Ignore
     public void userCanNotDeleteDefaultPhoto() {
         logger.info("Starting userCanNotDeleteDefaultPhoto");
 
-//        editProfilePage.clickEditPhotoButton()
-//                .clickUploadNewPhotoButton()
-//                .uploadJPGImage()
-//                .clickSavePhotoButton();
-//        editProfilePage.clickEditPhotoButton()
-//                .clickDeletePhotoButton()
-//                .clickYesDeleteButtonInDeletePhotoPopUp();
-//        editProfilePage.clickEditPhotoButton();
-//
-//        Assert.assertFalse(editPicturePopUpComponent.isDeleteButtonClickable());
-//        editPicturePopUpComponent.clickClosePopUpButton();
+        editPicturePopUpComponent = editProfilePage.clickEditPictureButton()
+                .uploadJPGImage()
+                .clickSavePhotoButton()
+                .clickEditPictureButton()
+                .clickDeletePhotoButton()
+                .clickYesDeleteButtonInDeletePhotoPopUp()
+                .clickEditPictureButton();
+
+        Assert.assertFalse(editPicturePopUpComponent.isDeleteButtonClickable());
 
     }
 

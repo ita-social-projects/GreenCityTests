@@ -38,7 +38,7 @@ public enum EditProfileTexts {
     NOTIFICATION_FOR_CREDO_FIELD_EN("Should contain maximum 170 symbols"),
     NOTIFICATION_FOR_CREDO_FIELD_RU("Поле должно содержать не более 170 символов"),
 
-    COLOR_FOR_ERROR_NOTIFICATIONS("#ff0000"),
+    COLOR_FOR_ERROR_NOTIFICATIONS("#bf140b"),
     COLOR_FOR_NOTIFICATIONS("#878787"),
 
     //Pop up element which appears when user click 'Edit Picture' icon under the profile photo

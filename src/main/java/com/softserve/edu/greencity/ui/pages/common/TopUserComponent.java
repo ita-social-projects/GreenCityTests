@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
+import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UbsAdminCommon;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,7 @@ public class TopUserComponent {
 	private final String TAG_ATTRIBUTE_CLASS = "class";
 
 	private WebDriver driver;
+
 	private WebElement profileButton;
 	private WebElement userNameButton;
 	private ProfileDropdown profileDropdown;

@@ -53,7 +53,12 @@ public final class UserRepository {
                 getdefaultPass(),
                 getdefaultPass());
     }
-
+    public User getAdminUser(){
+        return new User(
+                getAdminEmail(),
+                getAdminPass()
+        );
+    }
     @SneakyThrows
     public User googleUserCredentials() {
         return new User((String) getgoogleEmail(), (String) getgooglePass());

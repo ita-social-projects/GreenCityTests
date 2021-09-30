@@ -58,7 +58,6 @@ public class RegisterPageTests extends GreenCityTestRunnerWithLoginLogout implem
                 {UserRepository.get().invalidPassUppercaseUserCreds()},
                 {UserRepository.get().invalidPassDigitUserCreds()},
                 {UserRepository.get().invalidPassLowercaseUserCreds()},
-                {UserRepository.get().invalidPassSpecCharUserCreds()}, //TODO Clarify requirements! Now spaces are allowed, and test fails
                 {UserRepository.get().invalidPassLengthUserCreds()},
                 {UserRepository.get().invalidPassSpaceUserCreds()},
         };

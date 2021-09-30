@@ -60,9 +60,9 @@ public class CreateNewsPositiveTest extends GreenCityTestRunnerWithLoginLogout {
     public void verifyUiOfCreateNewsPage() {
         logger.info("verifyUiOfCreateNewsPage");
 
-        softAssert.assertTrue(createNewsPage.getTitleField().isDisplayed());
-        softAssert.assertTrue(createNewsPage.getSourceField().isDisplayed());
-        softAssert.assertTrue(createNewsPage.getContentField().isDisplayed());
+        softAssert.assertTrue(createNewsPage.getTitleField().isDisplayed(), "1");
+        softAssert.assertTrue(createNewsPage.getSourceField().isDisplayed(), "2");
+        softAssert.assertTrue(createNewsPage.getContentField().isDisplayed(), "3");
 
         TagsComponent tagsComponent = createNewsPage.getTagsComponent();
         softAssert.assertFalse(tagsComponent.isTagActive(Tag.NEWS));
@@ -71,22 +71,22 @@ public class CreateNewsPositiveTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertFalse(tagsComponent.isTagActive(Tag.INITIATIVES));
         softAssert.assertFalse(tagsComponent.isTagActive(Tag.EDUCATION));
 
-        softAssert.assertTrue(createNewsPage.getDropArea().isDisplayed());
-        softAssert.assertTrue(createNewsPage.getUploadArea().isDisplayed());
+        softAssert.assertTrue(createNewsPage.getDropArea().isDisplayed() ,"4");
+        softAssert.assertTrue(createNewsPage.getUploadArea().isDisplayed(), "5");
 
-        softAssert.assertTrue(createNewsPage.getDateField().isDisplayed());
-        softAssert.assertTrue(createNewsPage.getAuthorField().isDisplayed());
+        softAssert.assertTrue(createNewsPage.getDateField().isDisplayed(), "6");
+        softAssert.assertTrue(createNewsPage.getAuthorField().isDisplayed(), "7");
 
-        softAssert.assertTrue(createNewsPage.getCancelButton().isDisplayed());
-        softAssert.assertTrue(createNewsPage.getPreviewButton().isDisplayed());
-        softAssert.assertTrue(createNewsPage.getPublishButton().isDisplayed());
+        softAssert.assertTrue(createNewsPage.getCancelButton().isDisplayed(), "8");
+        softAssert.assertTrue(createNewsPage.getPreviewButton().isDisplayed(), "9");
+        softAssert.assertTrue(createNewsPage.getPublishButton().isDisplayed(), "10");
 
         createNewsPage.clickTitleField();
-        softAssert.assertTrue(createNewsPage.getTitleField().equals(driver.switchTo().activeElement()));
+        softAssert.assertTrue(createNewsPage.getTitleField().equals(driver.switchTo().activeElement()), "11");
         createNewsPage.clickSourceField();
-        softAssert.assertTrue(createNewsPage.getSourceField().equals(driver.switchTo().activeElement()));
+        softAssert.assertTrue(createNewsPage.getSourceField().equals(driver.switchTo().activeElement()), "12");
         createNewsPage.clickContentField();
-        softAssert.assertTrue(createNewsPage.getContentField().equals(driver.switchTo().activeElement()));
+        softAssert.assertTrue(createNewsPage.getContentField().equals(driver.switchTo().activeElement()), "13");
 
         String CreateNewsLabelsFont = "Lato, sans-serif";
         String CreateNewsLabelsFontSize = "18px";
