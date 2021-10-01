@@ -1,6 +1,7 @@
 package com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage;
 
 import com.softserve.edu.greencity.ui.locators.UbsAdminLocators.UbsAdminCommonLocator;
+import com.softserve.edu.greencity.ui.locators.UbsAdminLocators.UbsAdminTableComponentLocator;
 import com.softserve.edu.greencity.ui.pages.common.TopPart;
 import com.softserve.edu.greencity.ui.tools.engine.WaitsSwitcher;
 import org.openqa.selenium.WebDriver;
@@ -68,10 +69,10 @@ public class UbsAdminOrders extends TopPart {
         return new UbsAdminTableComponent(driver);
     }
 
-//    public UbsAdminRowTableComponent getTableRow() {
-//        tableIsLoaded();
-//        return new UBSAdminRowTableComponent(driver, driver.findElement(UBSAdminTableComponentLocator.ROW.getPath()));
-//    }
+    public UbsAdminRowTableComponent getTableRow() {
+        tableIsLoaded();
+        return new UbsAdminRowTableComponent(driver, driver.findElement(UbsAdminTableComponentLocator.ROW.getPath()));
+    }
 
 //    public UbsAdminMenuComponent getAdminMenu() {
 //        return new UBSAdminMenuComponent(driver);
@@ -83,15 +84,16 @@ public class UbsAdminOrders extends TopPart {
         return this;
     }
 
-//    public UBSAdminViewTableComponent clickViewTable() {
-//        tableIsLoaded();
-//        getViewTable().click();
-//        return new UBSAdminViewTableComponent(driver);
-//    }
+    public UBSAdminViewTableComponent clickViewTable() {
+        tableIsLoaded();
+        getViewTable().click();
+        return new UBSAdminViewTableComponent(driver);
+    }
 
     public void tableIsLoaded() {
         waitsSwitcher = new WaitsSwitcher(driver);
-        waitsSwitcher.setImplicitWait(500);
+        waitsSwitcher.setImplicitWait(7000);
+
     }
 
     public UbsAdminOrders clickDisplayCounterDropdown() {

@@ -31,7 +31,7 @@ public class UBSAdminMenuCommon extends TopPart {
     public UbsAdminOrders getUBSAdminOrders() {
         ordersButton.click();
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
