@@ -7,12 +7,24 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class UbsAdminCommonTest extends GreenCityTestRunnerWithLoginLogout {
     User adminUser;
+    @DataProvider(name = "orderDateDataProvider")
+    static Object[][] orderDateDataProvider() {
+        Object[][] testData = new Object[][]{
+                {"2253", "02/10/2021"},
+                {"2249", "01/10/2021"},
+                {"2245", "01/10/2021"},
+                {"2248", "01/10/2021"},
+                {"1407", "14/08/2021"}
+        };
+        return testData;
+    }
 
     @BeforeClass
     public void readCredentials() {
@@ -62,5 +74,35 @@ public class UbsAdminCommonTest extends GreenCityTestRunnerWithLoginLogout {
                 .getColumnEmail();
 
     }
+    @Test(testName = "TQ-232", description = "TQ-232", dataProvider = "orderDateDataProvider")
+    @Description("[UBS admin]Verify the date format in the 'order_date' column")
+    public void verifyTheDateFormatOfOrderDateColumn(String input, String expected){
+        String orderDate = loadApplication()
+                .ubsAdminCommon()
+                .getUBSAdminOrders()
+                .clickDisplayCounter20()
+                .clearSearchField()
+                .setSearchField(input)
+                .getTableRow()
+                .getOrderDate();
+        Assert.assertEquals(orderDate, expected);
+    }
+    @Test(testName = "TQ-239", description = "TQ-239")
+    @Description("[UBS admin]Verify the length of the client name ")
+    public void verifyTheLengthOfClientName(){
+        boolean result = false;
+        String orderDate = loadApplication()
+                .ubsAdminCommon()
+                .getUBSAdminOrders()
+                .clickDisplayCounter20()
+                .clearSearchField()
+                .setSearchField("2252")
+                .getTableRow()
+                .getClientName();
+        if(orderDate.length() < 30){
+            result = true;
+        }
 
+        Assert.assertEquals(result, true);
+    }
 }
