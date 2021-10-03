@@ -20,7 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class OrderDetailsPage extends UBSCourierBasePage {
-
+    private OrderDetailsPage orderDetailsPage;
     private ButtonElement cancelButton;
     private ButtonElement nextButton;
     //region [Comments]
@@ -32,6 +32,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private ButtonElement addCertifircateButton;
     private InputElement certificateInput;
     private ButtonElement activateCertificateButton;
+
     private LabelElement certificateMessage;
     private List<AdditionalCertificatesComponents> additionalCertificates;
     private InputElement additionalCertificateInput;
@@ -54,17 +55,20 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     private List<WebElement> numberOfPackeges;
     private List<WebElement> totalLabels;
 
+    private WebElement oldClothesNumberOfPackagesField;
+
+    private WebElement firstChooseLocationContinueButton;
 
     public OrderDetailsPage(WebDriver webDriver) {
         super(webDriver);
-        initOrderDetailsElements();
+       // initOrderDetailsElements();
     }
 
     public void initOrderDetailsElements() {
-        commentTextarea = new TextAreaElement(driver, OrderDetailsPageLocators.COMMENT_TEXTAREA);
-        commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         pointsBalanceLabel = new LabelElement(driver, OrderDetailsPageLocators.POINTS_BALANCE_LABEL);
+        commentLabel = new LabelElement(driver, OrderDetailsPageLocators.COMMENT_LABEL);
         certificateInput = new InputElement(driver, OrderDetailsPageLocators.CERTIFICATE_INPUT);
+        commentTextarea = new TextAreaElement(driver, OrderDetailsPageLocators.COMMENT_TEXTAREA);
         servicesComponents = new ArrayList<>();
         servicesComponents = getServicesComponents();
         ecoStoreLabel = new LabelElement(driver, OrderDetailsPageLocators.ECO_STORE_LABEL);
@@ -219,8 +223,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         return this;
     }
     public OrderDetailsPage fillOldClothes120L(String quantity){
-        getServicesComponents().get(1).getInput().clearInput();
-        getServicesComponents().get(1).getInput().sendKeys(quantity);
+        getOldClothesNumberOfPackagesField().sendKeys(quantity);
         return this;
     }
 
@@ -233,6 +236,7 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     }
 
     public OrderDetailsPage activateCertificateByPosition(int number, String certificate) {
+        getAdditionalCertificates().get(number).getCertificateInput().clear();
         getAdditionalCertificates().get(number).getCertificateInput().sendKeys(certificate);
         getAdditionalCertificates().get(number).getActivateCertificateButton().click();
         return this;
@@ -331,7 +335,6 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         activateCertificateButton = new ButtonElement(driver, OrderDetailsPageLocators.ACTIVATE_BUTTON);
         return activateCertificateButton;
     }
-
     public boolean isActicateButtonActive() {
         return getActivateCertificateButton().isActive();
     }
@@ -367,7 +370,13 @@ public class OrderDetailsPage extends UBSCourierBasePage {
         incorrectOrderMessage = new LabelElement(driver, OrderDetailsPageLocators.INCORRECT_ORDER_NUMBER_MESSAGE);
         return incorrectOrderMessage;
     }
-
+    public OrderDetailsPage setOrderDetailsWithTwoCertificates(String oldClothesAmount, String firstCertificate, String secondCertificate){
+        orderDetailsPage.fillOldClothes120L(oldClothesAmount)
+                .activateCertificateByPosition(0,firstCertificate)
+                .clickAddCertificateButton()
+                .activateCertificateByPosition(1,secondCertificate);
+        return this;
+    }
     public String getTextIncorrectOrderMassage() {
         return getIncorrectOrderMessage().getText();
     }
@@ -460,5 +469,12 @@ public class OrderDetailsPage extends UBSCourierBasePage {
     public WelcomePage clickOnCancelButtonWhenChangesAbsent() {
         getCancelButton().click();
         return new WelcomePage(driver);
+    }
+
+    public WebElement getOldClothesNumberOfPackagesField() {
+        if (oldClothesNumberOfPackagesField == null){
+            oldClothesNumberOfPackagesField = driver.findElement(OrderDetailsPageLocators.OLD_CLOTHES_NUMBER_OF_PACKAGE_FIELD.getPath());
+        }
+        return oldClothesNumberOfPackagesField;
     }
 }

@@ -7,11 +7,13 @@ import com.softserve.edu.greencity.ui.locators.ubs.PaymentPageLocators;
 import com.softserve.edu.greencity.ui.pages.common.WelcomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 public class PaymentPage extends UBSCourierBasePage {
-
     private ButtonElement cancelButton;
     private ButtonElement orderButton;
     private ButtonElement backButton;
@@ -63,7 +65,7 @@ public class PaymentPage extends UBSCourierBasePage {
 
     public PaymentPage(WebDriver webDriver) {
         super(webDriver);
-        initPaymentElements();
+        //initPaymentElements();
     }
 
     public void initPaymentElements() {
@@ -115,6 +117,12 @@ public class PaymentPage extends UBSCourierBasePage {
     public PersonalDataPage clickOnBackButton() {
         getBackButton().click();
         return new PersonalDataPage(driver);
+    }
+
+    public FondyPaymentPage acceptAlert(){
+        waitsSwitcher.setExplicitWait(10, ExpectedConditions.alertIsPresent());
+        driver.switchTo().alert().accept();
+        return new FondyPaymentPage(driver);
     }
 
     public LabelElement getService() {

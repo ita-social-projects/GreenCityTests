@@ -7,13 +7,14 @@ public enum OrderDetailsPageLocators implements Locator {
     CANCEL(By.xpath("//app-ubs-order-details//button[contains(@class, 'cansel')]")),
     NEXT(By.xpath("//app-ubs-order-details//button[@type = 'submit']")),
 
-    POINTS_BALANCE_LABEL(By.cssSelector(".points p")),
+    POINTS_BALANCE_LABEL(By.xpath("(//p[@_ngcontent-kuk-c448])[5]")),
     ADDITIONAL_CERTIFICATES(By.cssSelector(".addCertificate")),
     ADDITIONAL_CERTIFICATE_MESSAGE(By.cssSelector(".validMes small")),
     ADDITIONAL_CERTIFICATE_INPUT(By.cssSelector(".addCertificate input")),
     ADDITIONAL_CERTIFICATE_ACTIVATE_BUTTON(By.cssSelector(".addCertificate button")),
     ADD_CERTIFICATE_BUTTON(By.cssSelector(".addCertificateBtn")),
-    CERTIFICATE_INPUT(By.cssSelector(".certificate-container input")),
+    OLD_CLOTHES_NUMBER_OF_PACKAGE_FIELD(By.xpath("(//input[@class='shadow-none form-control input bag-quantity_placeholder ng-untouched ng-pristine ng-valid'])[1]")),
+    CERTIFICATE_INPUT(By.xpath("//input[@class='shadow-none form-control col-12 col-sm-8 my-1 input-border ng-pristine ng-valid ng-touched']")),
     ACTIVATE_BUTTON(By.cssSelector(".certificate-container button")),
     CERTIFICATE_MESSAGE(By.cssSelector(".messages-container small")),
     MINIMUM_ORDER_ERROR_MASSAGE(By.xpath("//small[@class='text-danger']")),
@@ -33,7 +34,7 @@ public enum OrderDetailsPageLocators implements Locator {
     ANOTHER_ORDER_NUMBER_INPUT(By.cssSelector("input")),
 
     COMMENT_LABEL(By.cssSelector("app-ubs-order-details .comment h3")),
-    COMMENT_TEXTAREA(By.cssSelector("app-ubs-order-details .comment textarea")),
+    COMMENT_TEXTAREA(By.xpath("//textarea[@class='shadow-none form-control textarea ng-pristine ng-valid ng-touched']")),
 
     COMMENT_ALERT_LABEL(By.cssSelector("app-ubs-order-details .bottom_comment small")),
     NUMBER_OF_PACKEGES(By.xpath("//div[@class='col-2 form-group count']/input")),

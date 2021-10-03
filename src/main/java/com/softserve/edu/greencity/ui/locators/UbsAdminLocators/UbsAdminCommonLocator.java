@@ -15,6 +15,7 @@ public enum UbsAdminCommonLocator {
     SORT_ORDER_NUMBER_BUTTON(By.xpath("//span[text()='orderid']/following-sibling::span/mat-icon")),
     SORT_DISTRICT_BUTTON(By.xpath("//mat-header-cell[9]/div/span[2]/mat-icon")),
     SORT_EMAIL_BUTTON(By.xpath("//mat-header-cell[7]/div/span[2]/mat-icon")),
+    FIRST_CERTIFICATE_TABLE_CELL(By.xpath("(//mat-cell[contains(@class, 'cdk-column-order_certificate_code')])[1]//span")),
     SLIDER(By.xpath("div[class=\"scrolling\"]"));
     private final By path;
 

@@ -45,13 +45,6 @@ public final class ManagerDao {
         username =  System.getenv().get("JDBC_USERNAME");
         password = System.getenv().get("JDBC_PASSWORD");
         url = System.getenv().get("JDBC_URL");
-        /*-
-        username =  System.getenv().get(property.getProperty("JDBC_USERNAME"));
-        password = System.getProperty("JDBC_PASSWROD");
-        System.getenv().get(property.getProperty("JDBC_PASSWORD"));
-        url = System.getProperty("JDBC_URL");
-        System.getenv().get(property.getProperty("JDBC_URL"));
-        */
     }
 
     private void readUBSProperties() {
