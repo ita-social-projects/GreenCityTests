@@ -1,4 +1,4 @@
-package com.softserve.edu.greencity.ui.locators.ubs;
+package com.softserve.edu.greencity.ui.pages.ubs;
 
 import org.openqa.selenium.WebDriver;
 

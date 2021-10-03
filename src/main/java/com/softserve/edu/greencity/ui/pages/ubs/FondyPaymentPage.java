@@ -1,7 +1,6 @@
 package com.softserve.edu.greencity.ui.pages.ubs;
 
 import com.softserve.edu.greencity.ui.locators.ubs.FondyPaymentPageLocator;
-import com.softserve.edu.greencity.ui.locators.ubs.ResultOfFondyPage;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
