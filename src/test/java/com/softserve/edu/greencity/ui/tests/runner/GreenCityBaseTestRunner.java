@@ -91,12 +91,12 @@ public abstract class GreenCityBaseTestRunner {
         context.setAttribute("driver", driver);
     }
 
-//    @AfterClass(alwaysRun = true)
-//    public void tearDownAfterClass() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
+    @AfterClass(alwaysRun = true)
+    public void tearDownAfterClass() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
      /**
      * The first method your tests should start with.
