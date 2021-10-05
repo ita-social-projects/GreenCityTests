@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UbsAdminTableComponent extends UbsAdminCommon {
+public class UbsAdminTableComponent extends UbsAdminOrders {
     private List<UbsAdminRowTableComponent> rows;
 
 

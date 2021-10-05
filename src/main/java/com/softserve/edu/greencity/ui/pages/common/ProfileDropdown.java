@@ -1,7 +1,8 @@
 package com.softserve.edu.greencity.ui.pages.common;
 
 import com.softserve.edu.greencity.ui.locators.menu.MenuElementsLocators;
-import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UbsAdminCommon;
+import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UBSAdminMenuCommon;
+import com.softserve.edu.greencity.ui.pages.ubsadmin.UbsAdminPage.UbsAdminOrders;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -21,9 +22,9 @@ public class 	ProfileDropdown {
 		return ubsAdminButton;
 
 	}
-	public UbsAdminCommon clickUbsAdminButton(){
+	public UBSAdminMenuCommon clickUbsAdminButton(){
 		getUbsAdminButton().click();
-		return new UbsAdminCommon(driver);
+		return new UBSAdminMenuCommon(driver);
 	}
 //	private void initElements() {
 //		// init elements
