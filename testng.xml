@@ -72,4 +72,16 @@
         </classes>
     </test>
 
+    <test name="Edit_profile" thread-count="4">
+        <classes>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.CancelFunctionalityTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.EditPictureTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.EditProfileEditPhotoTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.EditProfileFieldsWarningsTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.EditProfilePrivacyCheckboxes"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.EditTextFieldsTest"/>
+            <class name="com.softserve.edu.greencity.ui.tests.editprofile.SocialNetworkLinkTest"/>
+        </classes>
+    </test>
 </suite>

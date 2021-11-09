@@ -124,14 +124,6 @@ public class UbsAdminRowTableComponent {
         return item.findElement(By.className("cdk-column-order_certificate_code"));
     }
 
-    public WebElement getOrderCertificatePoints() {
-        return item.findElement(By.className("cdk-column-order_certificate_points"));
-    }
-
-    public WebElement getAmountDue() {
-        return item.findElement(By.className("cdk-column-amount_due"));
-    }
-
     public WebElement getCommentForOrderByClient() {
         return item.findElement(By.className("cdk-column-comment_for_order_by_client"));
     }
@@ -158,5 +150,21 @@ public class UbsAdminRowTableComponent {
 
     public WebElement getResponsibleManager() {
         return item.findElement(By.className("cdk-column-responsible_manager"));
+    }
+
+    public WebElement getOrderCertificatePoints() {
+        return item.findElement(UbsAdminRowTableComponentLocator.ORDER_CERTIFICATE_POINTS.getPath());
+    }
+
+    public Long getOrderCertificatePointsValue() {
+        return Long.parseLong(getOrderCertificatePoints().getText());
+    }
+
+    public WebElement getAmountDue() {
+        return item.findElement(UbsAdminRowTableComponentLocator.AMOUNT_DUE.getPath());
+    }
+
+    public long getTotalOrderSumValue() {
+        return Long.parseLong(getTotalOrderSumText());
     }
 }

@@ -35,7 +35,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
 
     public PersonalDataPage(WebDriver webDriver) {
         super(webDriver);
-        initPersonalDataElements();
+        //initPersonalDataElements();
     }
 
     public void initPersonalDataElements() {
@@ -51,11 +51,13 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public PersonalDataPage inputName(String name) {
+        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
         nameField.clearInput();
         nameField.sendKeys(name);
         return this;
     }
     public InputElement getNameInput(){
+        nameField = new InputElement(driver, PersonalDataPageLocators.NAME_FIELD);
         return nameField;
     }
 
@@ -78,6 +80,7 @@ public class PersonalDataPage extends UBSCourierBasePage {
     }
 
     public PersonalDataPage inputEmail(String email) {
+        emailField = new InputElement(driver, PersonalDataPageLocators.EMAIL_FIELD);
         emailField.clearInput();
         emailField.sendKeys(email);
         return this;

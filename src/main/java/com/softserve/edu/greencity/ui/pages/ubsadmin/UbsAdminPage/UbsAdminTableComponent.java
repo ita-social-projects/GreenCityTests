@@ -48,4 +48,63 @@ public class UbsAdminTableComponent extends UbsAdminOrders {
         }
         return rows;
     }
+
+    public UbsAdminRowTableComponent getRowById(String id){
+        getRows();
+        if(rows.size() == 0)
+            return null;
+        for (UbsAdminRowTableComponent row : rows) {
+            if (row.getOrderIdText().equals(id))
+                return row;
+        }
+        return null;
+    }
+
+    public long[] getActualAndExpectedAmountDue(){
+        UbsAdminRowTableComponent rowTableComponent
+                = this
+                .getRows()
+                .get(0);
+        long totalOrderSum = rowTableComponent.getTotalOrderSumValue();
+        long orderCertificatePoints = rowTableComponent.getOrderCertificatePointsValue();
+        long amountDue = Long.parseLong(rowTableComponent.getAmountDue().getText());
+        if(totalOrderSum <= orderCertificatePoints)
+            return new long[]{amountDue, 0};
+        return new long[] {amountDue, totalOrderSum - orderCertificatePoints};
+    }
+
+    public boolean isAmountDueFloatWithTwoDigits(){
+        UbsAdminRowTableComponent rowTableComponent
+                = this
+                .getRows()
+                .get(0);
+        if(rowTableComponent == null)
+            return false;
+        String amountDue = rowTableComponent.getAmountDue().getText();
+        try {
+            Double.parseDouble(amountDue);
+        }catch (NumberFormatException e){
+            return false;
+        }
+        if (amountDue.charAt(amountDue.length() - 3) != '.')
+            return false;
+        return true;
+    }
+
+    public boolean isOrderCertificatePointsPositiveInteger(){
+        UbsAdminRowTableComponent rowTableComponent
+                = this
+                .getRows()
+                .get(0);
+        if(rowTableComponent == null)
+            return false;
+        String orderCertificatePoints = rowTableComponent.getOrderCertificatePoints().getText();
+        try {
+            if (Integer.parseInt(orderCertificatePoints) < 0)
+                return false;
+        }catch (NumberFormatException e){
+            return false;
+        }
+        return true;
+    }
 }

@@ -13,7 +13,7 @@ public abstract class UBSCourierBasePage extends TopPart {
 
     public UBSCourierBasePage(WebDriver webDriver) {
         super(webDriver);
-        initElements();
+        //initElements();
     }
 
     public void initElements() {

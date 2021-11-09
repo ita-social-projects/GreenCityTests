@@ -20,6 +20,9 @@ public class UbsAdminOrders extends TopPart {
     private WebElement displayCounter10;
     private WebElement displayCounter15;
     private WebElement displayCounter20;
+
+    private WebElement firstCertificateCell;
+
     public UbsAdminOrders(WebDriver driver) {
         super(driver);
     }
@@ -34,6 +37,9 @@ public class UbsAdminOrders extends TopPart {
     public WebElement getViewTable() {
         viewTable = driver.findElement(UbsAdminCommonLocator.VIEW_TABLE_BUTTON.getPath());
         return viewTable;
+    }
+    public WebElement getFirstCertificateCell() {
+        return firstCertificateCell = driver.findElement(UbsAdminCommonLocator.FIRST_CERTIFICATE_TABLE_CELL.getPath());
     }
     public WebElement getDisplayCounterDropdown() {
         displayCounterDropdown = driver.findElement(UbsAdminCommonLocator.DISPLAY_COUNTER_DROPDOWN.getPath());
@@ -82,6 +88,10 @@ public class UbsAdminOrders extends TopPart {
         tableIsLoaded();
         getSearchField().sendKeys(s);
         return this;
+    }
+
+    public String getTextOfCertificateNumber(){
+        return getFirstCertificateCell().getText();
     }
 
     public UBSAdminViewTableComponent clickViewTable() {
