@@ -37,7 +37,7 @@ public class MyHabitPage extends TopPart  {
     public MyHabitPage(WebDriver driver) {
         super(driver);
         //TODO
-        checkElements();
+        //checkElements();
     }
     @Step
     private void checkElements() {

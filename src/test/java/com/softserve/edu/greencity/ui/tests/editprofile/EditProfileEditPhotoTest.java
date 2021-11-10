@@ -97,6 +97,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
         editPicturePopUpComponent =
                 editProfilePage
                         .clickEditPictureButton()
+                        .clickUploadNewPhotoButton()
                         .uploadJPGImage()
                         .clickSavePhotoButton()
                         .clickEditPictureButton()

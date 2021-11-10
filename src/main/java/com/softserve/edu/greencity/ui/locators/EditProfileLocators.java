@@ -8,7 +8,7 @@ public enum EditProfileLocators implements Locator{
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
     EDIT_AVATAR_BUTTON(By.cssSelector("button.edit-image-button")),
     //    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
-    UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//label[@class='secondary-global-button']")),
+    UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
     //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
     DELETE_PHOTO_BUTTON(By.xpath("//button[@class='primary-global-button delete']")),
    // EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
@@ -21,8 +21,8 @@ public enum EditProfileLocators implements Locator{
     CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
 
-    CHANGE_PHOTO_INPUT(By.cssSelector("label > input[type=file]")),
-    SAVE_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
+    CHANGE_PHOTO_INPUT(By.cssSelector("input[id=upload]")),
+    SAVE_PHOTO_BUTTON(By.xpath("//*[@id=\"mat-dialog-4\"]/app-edit-photo-pop-up/div/div/div/div/div[2]/button[2]")),
 
     //VerifyDeletingPhotoPopUpComponent
     VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
