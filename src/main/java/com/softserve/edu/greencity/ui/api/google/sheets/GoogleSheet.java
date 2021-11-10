@@ -31,6 +31,7 @@ public class GoogleSheet {
     private static Sheets sheetsService;
     private static String APPLICATION_NAME = "OAuth client";
     private static String SPREADSHEET_ID = "19U5Ocxx0P5I8opWEWJ6WNqlZMrHFpSbTxyFHSkfzYgU";
+    private static List< List <Object> > values;
 
     private static Credential authorize() throws IOException, GeneralSecurityException{
         java.util.logging.Logger
@@ -62,39 +63,47 @@ public class GoogleSheet {
                 .authorize("user");
         return credential;
     }
- public static Sheets  getSheetsService() throws IOException, GeneralSecurityException {
-        Credential credential = authorize();
-        return new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(),
-                JacksonFactory.getDefaultInstance(),credential)
-                .setApplicationName(APPLICATION_NAME)
-                .build();
+    public static Sheets  getSheetsService() throws IOException, GeneralSecurityException {
+        if (sheetsService == null)
+        {
+            System.out.println("new SheetsService");
+            Credential credential = authorize();
+            sheetsService =  new Sheets.Builder(GoogleNetHttpTransport.newTrustedTransport(),
+                    JacksonFactory.getDefaultInstance(),credential)
+                    .setApplicationName(APPLICATION_NAME)
+                    .build();
+        }
+        return sheetsService;
+
  }
 
-    public static List<List<Object>> values() throws IOException, GeneralSecurityException {
-        sheetsService  = getSheetsService();
-        String range = "A2:B10";
-        ValueRange response = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID,range)
-                .execute();
-        List< List <Object> > values = response.getValues();
-
-        if (values == null || values.isEmpty()){
-
-            System.out.println("empty value");
-        } else {
-            return values;
-        }
-
-        return values;
-    }
+//    public static List<List<Object>> values() throws IOException, GeneralSecurityException {
+//        sheetsService  = getSheetsService();
+//        String range = "A2:B10";
+//        ValueRange response = sheetsService.spreadsheets().values()
+//                .get(SPREADSHEET_ID,range)
+//                .execute();
+//        List< List <Object> > values = response.getValues();
+//
+//        if (values == null || values.isEmpty()){
+//
+//            System.out.println("empty value");
+//        } else {
+//            return values;
+//        }
+//
+//        return values;
+//    }
 
     public static List<Object> getRow(int row) throws IOException, GeneralSecurityException {
-        sheetsService  = getSheetsService();
-        String range = "A1:B33";
-        ValueRange response = sheetsService.spreadsheets().values()
-                .get(SPREADSHEET_ID,range)
-                .execute();
-        List< List <Object> > values = response.getValues();
+        if(values == null){
+            sheetsService  = getSheetsService();
+            String range = "A1:B33";
+            ValueRange response = sheetsService.spreadsheets().values()
+                    .get(SPREADSHEET_ID,range)
+                    .execute();
+            values = response.getValues();
+        }
 
         if (values == null || values.isEmpty()){
 
