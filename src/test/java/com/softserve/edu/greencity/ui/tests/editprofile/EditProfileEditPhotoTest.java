@@ -13,7 +13,7 @@ import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.
 
 public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout {
     private EditProfilePage editProfilePage;
-    private EditPicturePopUpComponent editPicturePopUpComponent;
+    private EditPicturePopUpComponent editPicturePopUpComponent ;
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -90,13 +90,12 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
                                                            String continueEditing, String yes_delete) {
         logger.info("Starting verifyImpossibleToAddPNGImageMore10Mb");
 
-
         editProfilePage.createLanguageSwitchComponent()
                 .changeLanguage(languages);
 
-        editPicturePopUpComponent =
-                editProfilePage
+        editPicturePopUpComponent = editProfilePage
                         .clickEditPictureButton()
+                        .clickUploadNewPhotoButton()
                         .uploadJPGImage()
                         .clickSavePhotoButton()
                         .clickEditPictureButton()
@@ -105,18 +104,16 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertEquals(editPicturePopUpComponent.getTitleInPopUpInDeletePhoto(), question);
         softAssert.assertEquals(editPicturePopUpComponent.getContinueEditingButtonInDeletePhotoPopUp(), continueEditing);
         softAssert.assertEquals(editPicturePopUpComponent.getYesDeleteButtonInDeletePhotoPopUp().getText(), yes_delete);
-
-
     }
 
     @Test
     @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
-//    @Ignore
     public void verifyImpossibleToAddPNGImageMore10Mb() {
         logger.info("Starting verifyImpossibleToAddPNGImageMore10Mb");
         editPicturePopUpComponent =
                 editProfilePage
                         .clickEditPictureButton()
+                        .clickUploadNewPhotoButton()
                         .uploadTooLargePNGImage();
         Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 
@@ -130,6 +127,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
         editPicturePopUpComponent =
                 editProfilePage
                         .clickEditPictureButton()
+                        .clickUploadNewPhotoButton()
                         .uploadGIFImage();
         Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 
@@ -143,6 +141,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
         editPicturePopUpComponent =
                 editProfilePage
                         .clickEditPictureButton()
+                        .clickUploadNewPhotoButton()
                         .uploadTooLargeJPEGImage();
         Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 
@@ -154,7 +153,9 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
     public void userCanNotDeleteDefaultPhoto() {
         logger.info("Starting userCanNotDeleteDefaultPhoto");
 
-        editPicturePopUpComponent = editProfilePage.clickEditPictureButton()
+        editPicturePopUpComponent = editProfilePage
+                .clickEditPictureButton()
+                .clickUploadNewPhotoButton()
                 .uploadJPGImage()
                 .clickSavePhotoButton()
                 .clickEditPictureButton()

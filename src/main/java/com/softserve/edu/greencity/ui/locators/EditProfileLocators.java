@@ -6,9 +6,9 @@ public enum EditProfileLocators implements Locator{
     TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
-    EDIT_AVATAR_BUTTON(By.cssSelector("button.edit-image-button")),
+    EDIT_AVATAR_BUTTON(By.xpath("//button[@class='edit-image-button']")),
     //    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
-    UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//label[@class='secondary-global-button']")),
+    UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
     //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
     DELETE_PHOTO_BUTTON(By.xpath("//button[@class='primary-global-button delete']")),
    // EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
@@ -18,17 +18,17 @@ public enum EditProfileLocators implements Locator{
     //UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
   //  DELETE_PHOTO_BUTTON(By.cssSelector(".delete")),
     CANCEL_ADDING_PHOTO_BUTTON(By.cssSelector(".primary-global-button:nth-child(1)")),
-    CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.cssSelector(".cancel")),
+    CLOSE_POP_UP_EDIT_PHOTO_BUTTON(By.xpath("//button[contains(@class, 'cancel')]")),
     TITLE_POP_UP_IN_EDIT_PICTURE(By.cssSelector("div > div > p")),
 
-    CHANGE_PHOTO_INPUT(By.cssSelector("label > input[type=file]")),
-    SAVE_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
+    CHANGE_PHOTO_INPUT(By.cssSelector("#upload")),
+    SAVE_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button'][2]")),
 
     //VerifyDeletingPhotoPopUpComponent
     VERIFY_DELETING_TEXT(By.cssSelector("app-edit-photo-pop-up > div > div > p")),
     VERIFY_DELETING_CONTINUE_EDITING_BUTTON(By.cssSelector("button.primary-global-button")),
     VERIFY_DELETING_YES_BUTTON(By.cssSelector("button.secondary-global-button")),
-    ERROR_TEXT_WHEN_INVALID_IMAGE(By.cssSelector("p.warning.ng-star-inserted")),
+    ERROR_TEXT_WHEN_INVALID_IMAGE(By.xpath("//*[@class='download-info']")),
 
     NAME_FIELD(By.cssSelector("#name")),
     CITY_FIELD(By.cssSelector("#city")),
@@ -50,7 +50,9 @@ public enum EditProfileLocators implements Locator{
     SHOW_SHOPPING_LIST_CHECK_BOX(By.cssSelector("li:nth-child(3) > label > span")),
     CHECKBOX_SHOPPING_LIST(By.xpath("//input[@formcontrolname= 'showShoppingList']")),
 
-    CANCEL_BUTTON(By.xpath("//button[@type='button' and not(@class)]")),
+    CANCEL_BUTTON(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user-component/app-edit-profile/div/div/div/form/div[4]/button[1]")),
+    //html/body/app-root/app-main/div/div[2]/app-user-component/app-edit-profile/div/div/div/form/div[4]/button[1]
+    ////button[@type='button' and not(@class)]
     SAVE_BUTTON(By.xpath("//button[@type='submit']")),
 
     //Cancel editing pop up locators
