@@ -36,7 +36,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         news = NewsDataRepository.get().getNewsWithValidData("Comment Creation test");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(news)
                 .publishNews()
@@ -49,7 +49,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
 
     @AfterClass
     public void deleteNews() {
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        EcoNewsPage ecoNewsPage = loadApplication().navigateHeaderEcoNews();
         getEcoNewsService().deleteNewsByTitle(news.getTitle());
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(news.getTitle()));
     }
@@ -61,7 +61,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         String commentText = "Test comment";
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment(commentText);
@@ -76,7 +76,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         String commentText = String.join("", Collections.nCopies(8001, "c"));
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
@@ -96,7 +96,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         String commentText = "";
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
@@ -112,7 +112,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
 
         CommentComponent createTestData = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment("Check Delete")
@@ -120,7 +120,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
                 .addReply("Check Delete");
         signOutByStorage();
         CommentComponent commentComponent = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -137,14 +137,14 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         String commentText = "Delete comment";
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .addComment(commentText)
                 .chooseCommentByNumber(0)
                 .clickDeleteCommentButton();
         String lastCommentText = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0).getCommentText();
@@ -160,7 +160,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         String commentText = "Test comment";
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart();
         int numberBeforePublish = commentPart.getNumberOfComment();
@@ -176,7 +176,7 @@ public class CommentCreation extends GreenCityTestRunnerWithLoginLogout {
         logger.info("Verify that logged user can't delete not his comment");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getExistUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);

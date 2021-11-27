@@ -36,19 +36,19 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
                 .publishNews();
 
         SingleNewsPage page = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .refreshPage() //fresh news might not be displayed unless you refresh
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .addComment(comment);
         page.signOut()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
     }
 
@@ -68,7 +68,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .chooseCommentByNumber(0)
@@ -76,7 +76,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
         page.signOut();
 
         SingleNewsPage newpage = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
 
         Assert.assertFalse(newpage.getCommentPart().chooseCommentByNumber(0).openReply()
@@ -93,7 +93,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .chooseCommentByNumber(0)
@@ -112,7 +112,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .addComment(comment);
@@ -128,13 +128,13 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
                 .addComment(comment);
         page.signOut();
         SingleNewsPage newsPage = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         List<CommentComponent> commentComponents = newsPage.getCommentPart().getCommentComponents();
         for (CommentComponent commentComponent : commentComponents) {
@@ -148,7 +148,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
         logger.info("logged user can not edit not him comment on the ‘News’ page");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getExistUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -163,7 +163,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
         logger.info("User who is the author of comment can’t edit reply to her/his comment on the ‘News’ page");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getExistUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -174,7 +174,7 @@ public class EcoNewsCommentTests extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         Assert.assertFalse(page.getCommentPart().chooseCommentByNumber(0).openReply()
                 .chooseReplyByNumber(0).isEditReplyButtonDisplayed());

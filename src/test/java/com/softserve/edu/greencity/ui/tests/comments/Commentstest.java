@@ -28,7 +28,7 @@ public class Commentstest extends GreenCityTestRunnerWithLoginLogout {
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(news)
                 .publishNews()
@@ -36,13 +36,13 @@ public class Commentstest extends GreenCityTestRunnerWithLoginLogout {
         page.getCommentPart()
                 .addComment(comment);
         page.signOut()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news);
     }
 
     @AfterClass
     public void deleteNews() {
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        EcoNewsPage ecoNewsPage = loadApplication().navigateHeaderEcoNews();
         (new EcoNewsService()).deleteNewsByTitle(news.getTitle());
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(news.getTitle()));
         softAssert.assertAll();
@@ -53,7 +53,7 @@ public class Commentstest extends GreenCityTestRunnerWithLoginLogout {
     public void editIsNotAvailableForUnregisteredUsers() {
         logger.info("Verify that ‘Edit’ button is not available for unregistered User");
         SingleNewsPage page = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news);
 
         Assert.assertFalse(page.getCommentPart().chooseCommentByNumber(0).isEditButtonDisplayed());

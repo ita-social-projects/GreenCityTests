@@ -15,7 +15,8 @@ public enum MainMenuDropdownLocators implements Locator {
     FOOTER_TIPS_TRICS(By.cssSelector("app-footer a[href*='/tips']")),
     FOOTER_PLACES(By.cssSelector("app-footer a[href*='/map']")),
     FOOTER_ABOUT(By.cssSelector("app-footer a[href*='/about']")),
-    FOOTER_MY_HABITS(By.cssSelector("app-footer a[href*='/profile']"))
+    FOOTER_MY_HABITS(By.cssSelector("app-footer a[href*='/profile']")),
+    HEADER_ECO_NEWS(By.xpath("//nav/ul/li[@role = 'menuitem']/a[text() = ' Eco news ']"))
     ;
 
     private final By path;

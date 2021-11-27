@@ -19,7 +19,7 @@ public class MainMenuDropdown implements StableWebElementSearch {
     public MainMenuDropdown(WebDriver driver) {
         this.driver = driver;
         // TODO: delete method from constructor
-        checkElements();
+        //checkElements();
     }
 
     @Step
@@ -55,6 +55,10 @@ public class MainMenuDropdown implements StableWebElementSearch {
         return searchElementByCss(MainMenuDropdownLocators.MENU_ECO_NEWS.getPath());
     }
 
+    @Step WebElement getHeaderEcoNews() {
+        return searchElementByXpath(MainMenuDropdownLocators.HEADER_ECO_NEWS.getPath());
+    }
+
     @Step
     public String getMenuEcoNewsText() {
         return getMenuEcoNews().getText();
@@ -62,9 +66,14 @@ public class MainMenuDropdown implements StableWebElementSearch {
 
     @Step
     public void clickMenuEcoNews() {
-        new WebDriverWait(driver, 40)
-                .until(ExpectedConditions.elementToBeClickable(MainMenuDropdownLocators.MENU_ECO_NEWS.getPath()));
         getMenuEcoNews().click();
+    }
+
+    @Step
+    public void clickHeaderEcoNews(){
+        new WebDriverWait(driver, 40)
+                .until(ExpectedConditions.elementToBeClickable(MainMenuDropdownLocators.HEADER_ECO_NEWS.getPath()));
+        getHeaderEcoNews().click();
     }
 
     @Step

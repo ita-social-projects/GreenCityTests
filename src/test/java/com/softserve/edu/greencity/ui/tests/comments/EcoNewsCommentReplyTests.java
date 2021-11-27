@@ -39,13 +39,13 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(newsData)
                 .publishNews();
 
         SingleNewsPage page = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .refreshPage() //fresh news might not be displayed unless you refresh
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
@@ -72,7 +72,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .addComment(commentText)
@@ -97,13 +97,13 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
                 .addReply(reply2);
         SingleNewsPage page = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .refreshPage() //fresh news might not be displayed unless you refresh
                 .switchToSingleNewsPageByParameters(newsData);
         page.getCommentPart()
@@ -125,7 +125,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0).setTextInEditAria(emptyCommentField);
@@ -139,7 +139,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -166,7 +166,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
     @Description("Verify that unlogged user cannot add reply to the comment on News Single Page.")
     public void verifyUnloggedUserCanAddReplyToComment() {
         CommentComponent comment = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -178,7 +178,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         logger.info("Verify that logged user can publish reply starts");
         ReplyComponent replyComponent = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -195,7 +195,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         User user = UserRepository.get().exist();
         boolean canEdit = loadApplication()
                 .loginIn(user)
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -212,7 +212,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         String textToEditTheReply = "reply has been changed";
         SingleNewsPage newsPage = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData);
         logger.info("Set text into reply edit field");
         newsPage.getCommentPart()
@@ -223,7 +223,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .setTextIntoReplyEditField(textToEditTheReply);
         logger.info("leave page and check that changes have not been saved");
         String replyTextAfterRefresh = newsPage
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -259,7 +259,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         logger.info("Verify that logged user cannot reply to other replies on News Single Page starts");
         boolean isReplyButtonDisplayed = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -276,7 +276,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
     public void notLoggedUserCannotReplyToOtherReply() {
         logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
         boolean isReplyButtonDisplayed = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -292,7 +292,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
     public void notLoggedUserCanReviewAndHideReplies() {
         logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
         CommentComponent commentComponent = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -311,7 +311,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         logger.info("Verify that logged users can review and hide all related to the comment replies on News Single Page starts");
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -328,7 +328,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
     @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
     public void verifyUnloggedUserCanDeleteReplyToComment() {
         ReplyComponent comment = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -344,7 +344,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         logger.info("Verify that logged user cannot add reply with empty field on News Single Page starts");
         boolean isReplyButtonActive = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -361,7 +361,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .signIn()
                 .getManualLoginComponent()
                 .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(newsData)
                 .getCommentPart()
                 .chooseCommentByNumber(0)

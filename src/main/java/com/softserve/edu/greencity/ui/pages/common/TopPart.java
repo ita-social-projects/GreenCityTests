@@ -173,6 +173,13 @@ public abstract class TopPart implements StableWebElementSearch {
         driver.navigate().to("https://ita-social-projects.github.io/GreenCityClient/#/news");
         return new EcoNewsPage(driver);
     }
+    @Step("navigate to EcoNewsPage through header")
+    public EcoNewsPage navigateHeaderEcoNews(){
+        logger.debug("go to EcoNews page");
+        logger.trace("click MenuEcoNews link");
+        getMainMenuDropdown().clickHeaderEcoNews();
+        return new EcoNewsPage(driver);
+    }
     @Step("navigate to Menu TipsTricks")
     public TipsTricksPage navigateMenuTipsTricks() {
         logger.debug("go to TipsTricks page");

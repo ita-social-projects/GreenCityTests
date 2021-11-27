@@ -516,7 +516,7 @@ public class CreateNewsPage extends TopPart {
             driver.navigate().refresh();
             navigateMenuEcoNews();
         }
-        return navigateMenuEcoNews();
+        return navigateHeaderEcoNews();
     }
 
     /**

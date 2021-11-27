@@ -32,7 +32,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
 
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .gotoCreateNewsPage()
                 .fillFields(news)
                 .publishNews()
@@ -46,7 +46,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
 
     @AfterClass
     public void deleteNews() {
-        EcoNewsPage ecoNewsPage = loadApplication().navigateMenuEcoNews();
+        EcoNewsPage ecoNewsPage = loadApplication().navigateHeaderEcoNews();
         getEcoNewsService().deleteNewsByTitle(news.getTitle());
         softAssert.assertFalse(ecoNewsPage.refreshPage().isNewsDisplayedByTitle(news.getTitle()));
         softAssert.assertAll();
@@ -58,7 +58,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         logger.info("Verify that not logged in user cannot like the comment/reply on News Single Page starts");
 
         CommentComponent commentComponent = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -75,7 +75,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         logger.info("Verify that not logged in user can review the replies to the comment starts");
 
         boolean isReplyDisplayed = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -91,7 +91,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
 
         boolean isReplyDisplayed = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -106,7 +106,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         logger.info("Verify that not logged in user can see the total likes number related to the comments and/or replies");
 
         CommentComponent commentComponent = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -124,7 +124,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
 
         CommentComponent commentComponent = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -141,7 +141,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         logger.info("Verify that replies to the comment are hidden by default for all users(logged and not logged)");
 
         boolean isReplyComponentPresentNotLoggedUser = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -151,7 +151,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
 
         boolean isReplyComponentPresentLoginUser = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0)
@@ -166,7 +166,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         logger.info("Verify that unregistered user can’t delete comment/reply starts");
 
         CommentComponent commentComponent = loadApplication()
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0);
@@ -183,13 +183,13 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         String commentText = "Test comment";
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
 
         SingleNewsPage singleNewsPage = new SingleNewsPage(driver);
-        String commentAfterLeave = singleNewsPage.navigateMenuEcoNews()
+        String commentAfterLeave = singleNewsPage.navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .chooseCommentByNumber(0).getCommentText();
@@ -205,7 +205,7 @@ public class CheckElementOfCommentTest extends GreenCityTestRunnerWithLoginLogou
         String commentText = "Test comment";
         CommentPart commentPart = loadApplication()
                 .loginIn(getTemporaryUser())
-                .navigateMenuEcoNews()
+                .navigateHeaderEcoNews()
                 .switchToSingleNewsPageByParameters(news)
                 .getCommentPart()
                 .setCommentText(commentText);
