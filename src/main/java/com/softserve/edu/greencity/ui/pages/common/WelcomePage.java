@@ -17,7 +17,7 @@ private By myHabitsUnsignedLink;
 
     }
     public LoginComponent clickMyHabitsUnsignedLink(){
-        myHabitsUnsignedLink = By.cssSelector("header ul > li > a[href*='/profile']");
+        myHabitsUnsignedLink = By.xpath("//nav[@class='header_navigation-menu-left']//li[6]") ;
         logger.info("Unsigned user click My habits ");
         searchElementByCss(myHabitsUnsignedLink).click();
         return new  LoginComponent(driver);

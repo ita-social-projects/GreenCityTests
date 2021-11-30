@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 
 public enum MainMenuDropdownLocators implements Locator {
     NAVICON_BUTTON(By.cssSelector("div.menu-icon")),
-    MENU_ECO_NEWS(By.cssSelector(".header_navigation-menu-left > ul> li > a[href*='#/news']")),
+    MENU_ECO_NEWS(By.xpath ("//nav[@class='header_navigation-menu-left']//li[1]")),
     MENU_TIPS_TRICS(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/tips']")),
     MENU_PLACES(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/map']")), //MENU_MAP
     MENU_ABOUT(By.cssSelector(".header_navigation-menu-left > ul > li > a[href*='/about']")),
