@@ -7,9 +7,7 @@ public enum EditProfileLocators implements Locator{
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
     EDIT_AVATAR_BUTTON(By.xpath("//button[@class='edit-image-button']")),
-    //    UPLOAD_NEW_PHOTO_BUTTON(By.cssSelector(".secondary-global-button")),
     UPLOAD_NEW_PHOTO_BUTTON(By.xpath("//button[@class='secondary-global-button']")),
-    //    DELETE_PHOTO_BUTTON(By.cssSelector("div >div > button:nth-child(2)")),
     DELETE_PHOTO_BUTTON(By.xpath("//button[@class='primary-global-button delete']")),
    // EDIT_AVATAR_BUTTON(By.cssSelector(".edit-image-button")),
 
@@ -51,8 +49,6 @@ public enum EditProfileLocators implements Locator{
     CHECKBOX_SHOPPING_LIST(By.xpath("//input[@formcontrolname= 'showShoppingList']")),
 
     CANCEL_BUTTON(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user-component/app-edit-profile/div/div/div/form/div[4]/button[1]")),
-    //html/body/app-root/app-main/div/div[2]/app-user-component/app-edit-profile/div/div/div/form/div[4]/button[1]
-    ////button[@type='button' and not(@class)]
     SAVE_BUTTON(By.xpath("//button[@type='submit']")),
 
     //Cancel editing pop up locators
