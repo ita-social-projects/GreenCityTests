@@ -61,7 +61,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
-    @Test(testName = "GC-822", description = "GC-822")
+    @Test(priority = 3, testName = "GC-822", description = "GC-822")
     @Description("GC-822")
     public void loggedUserCanDeleteReplyToComment() {
         logger.info("Verify that logged user can delete his own reply on the 'Single News' page");
@@ -88,7 +88,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
     }
 
 
-    @Test(testName = "GC-828", description = "828")
+    @Test(priority =  3, testName = "GC-828", description = "828")
     @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
     public void deleteCommentWithAllReplies() {
         String comment = "different news";
@@ -132,7 +132,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         Assert.assertFalse(comment.getSaveEditButton().isEnabled());
     }
 
-    @Test(testName = "GC-961", description = "GC-961")
+    @Test(priority = 2, testName = "GC-961", description = "GC-961")
     @Description("This test case verifies that logged user cannot add a reply with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
         CommentComponent commentComponent = loadApplication()
@@ -173,7 +173,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         Assert.assertFalse(comment.isAddReplyDisplayed(), "the 'Reply' button should not be displayed, if user is unlogged");
     }
 
-    @Test(testName = "GC-958", description = "GC-958")
+    @Test(priority = 1, testName = "GC-958", description = "GC-958")
     public void loggedUserCanPublishReply() {
         logger.info("Verify that logged user can publish reply starts");
         ReplyComponent replyComponent = loadApplication()
@@ -205,7 +205,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         Assert.assertFalse(canEdit, "Edit button on the reply shouldn't be displayed");
     }
 
-    @Test(testName = "GC-874", description = "GC-874")
+    @Test(priority = 1, testName = "GC-874", description = "GC-874")
     @Description("verify that system saves the changes after click ‘Save’ button on the ‘News’ page")
     public void systemSavesChangesAfterClickReply() {
         logger.info("verify that system saves the changes after click ‘Save’ button on the ‘News’ page");
@@ -287,7 +287,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-995", description = "GC-955")
+    @Test(priority = 1, testName = "GC-995", description = "GC-955")
     @Description("Verify that unlogged user can review and hide all related to the comment replies on News Single Page")
     public void notLoggedUserCanReviewAndHideReplies() {
         logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
@@ -354,7 +354,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertAll();
     }
 
-    @Test(dataProvider = "setStringLength", testName = "GC-1132", description = "GC-1132")
+    @Test(priority = 2, dataProvider = "setStringLength", testName = "GC-1132", description = "GC-1132")
     @Description("Logged user can 'Edit' his reply on 'News' page")
     public void loggedUserCanEditHisReply(int stringLength) {
         ReplyComponent replyComponent = loadApplication()
