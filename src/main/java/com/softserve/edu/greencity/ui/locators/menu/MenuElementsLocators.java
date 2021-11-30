@@ -11,8 +11,7 @@ public enum MenuElementsLocators implements Locator {
     COPYRIGHT(By.cssSelector(".footer_bottom-part")),
 
     SIGN_IN(By.cssSelector(".header_sign-in-link")),
-    SIGN_UP(By.xpath("//div[@class='header_sign-up-btn secondary-global-button']"))
-    ;
+    SIGN_UP(By.xpath("//div[@class='header_sign-up-btn']"));
 
     private final By path;
 
