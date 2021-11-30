@@ -71,10 +71,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
                                                            String delete, String upload) {
         logger.info("Starting localizationVerificationOnEditPicturePopUp");
 
-        editProfilePage.createLanguageSwitchComponent()
-                .changeLanguage(languages);
-
-//        editProfilePage.clickEditPhotoButton().uploadPNGImage().clickSavePhotoButton();
+        editProfilePage.createLanguageSwitchComponent().changeLanguage(languages);
 
         editPicturePopUpComponent = editProfilePage.clickEditPictureButton();
 
@@ -86,8 +83,8 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
 
     @Test(testName = "GC-1597", dataProvider = "deletePhotoPopUpTexts")
     @Description("Localization (En, Uk, Ru) verification on Delete photo pop up")
-    public void localizationVerificationOnDeletePhotoPopUp(String languages, String question,
-                                                           String continueEditing, String yes_delete) {
+    public void localizationVerificationOnDeletePhotoPopUp
+            (String languages, String question, String continueEditing, String yes_delete) {
         logger.info("Starting verifyImpossibleToAddPNGImageMore10Mb");
 
         editProfilePage.createLanguageSwitchComponent()
@@ -121,7 +118,6 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
 
     @Test
     @Description("Verify that system doesn't allow to add GIF image")
-//    @Ignore
     public void verifyImpossibleToAddGIFImage() {
         logger.info("Starting verifyImpossibleToAddGIFImage");
         editPicturePopUpComponent =
@@ -135,7 +131,6 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
 
     @Test
     @Description("Verify that system doesn't allow to add JPEG image more than 10 MB")
-//    @Ignore
     public void verifyImpossibleToAddJPEGImageMore10Mb() {
         logger.info("Starting verifyImpossibleToAddJPEGImageMore10Mb");
         editPicturePopUpComponent =
@@ -149,7 +144,6 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
 
     @Test(testName = "GC-1594")
     @Description("User can delete uploaded photo but can not delete default photo")
-//    @Ignore
     public void userCanNotDeleteDefaultPhoto() {
         logger.info("Starting userCanNotDeleteDefaultPhoto");
 
