@@ -429,12 +429,12 @@ public class ManualRegisterComponent extends RegisterComponent implements Stable
                 .clickSignUpButton();
     }
     private ManualRegisterComponent waitSuccessfulRegistrationPopUp() {
-        new WebDriverWait(driver, 20).until(visibilityOfElementLocated(successfulRegistrationPopUp));
+        new WebDriverWait(driver, 60).until(visibilityOfElementLocated(successfulRegistrationPopUp));
         return this;
     }
 
     private ManualRegisterComponent waitSuccessfulRegistrationPopUpDisappear() {
-        new WebDriverWait(driver, 20).until(invisibilityOfElementLocated(successfulRegistrationPopUp));
+        new WebDriverWait(driver, 60).until(invisibilityOfElementLocated(successfulRegistrationPopUp));
         return this;
     }
 
