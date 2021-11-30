@@ -13,7 +13,7 @@ import static com.softserve.edu.greencity.ui.tests.editprofile.EditProfileTexts.
 
 public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout {
     private EditProfilePage editProfilePage;
-    private EditPicturePopUpComponent editPicturePopUpComponent ;
+    private EditPicturePopUpComponent editPicturePopUpComponent;
 
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
@@ -87,8 +87,7 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
             (String languages, String question, String continueEditing, String yes_delete) {
         logger.info("Starting verifyImpossibleToAddPNGImageMore10Mb");
 
-        editProfilePage.createLanguageSwitchComponent()
-                .changeLanguage(languages);
+        editProfilePage.createLanguageSwitchComponent().changeLanguage(languages);
 
         editPicturePopUpComponent = editProfilePage
                         .clickEditPictureButton()
@@ -107,39 +106,36 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
     @Description("Verify that system doesn't allow to add PNG image more than 10 MB")
     public void verifyImpossibleToAddPNGImageMore10Mb() {
         logger.info("Starting verifyImpossibleToAddPNGImageMore10Mb");
-        editPicturePopUpComponent =
-                editProfilePage
+        editPicturePopUpComponent = editProfilePage
                         .clickEditPictureButton()
                         .clickUploadNewPhotoButton()
                         .uploadTooLargePNGImage();
-        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 
+        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
     }
 
     @Test
     @Description("Verify that system doesn't allow to add GIF image")
     public void verifyImpossibleToAddGIFImage() {
         logger.info("Starting verifyImpossibleToAddGIFImage");
-        editPicturePopUpComponent =
-                editProfilePage
+        editPicturePopUpComponent = editProfilePage
                         .clickEditPictureButton()
                         .clickUploadNewPhotoButton()
                         .uploadGIFImage();
-        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 
+        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
     }
 
     @Test
     @Description("Verify that system doesn't allow to add JPEG image more than 10 MB")
     public void verifyImpossibleToAddJPEGImageMore10Mb() {
         logger.info("Starting verifyImpossibleToAddJPEGImageMore10Mb");
-        editPicturePopUpComponent =
-                editProfilePage
+        editPicturePopUpComponent = editProfilePage
                         .clickEditPictureButton()
                         .clickUploadNewPhotoButton()
                         .uploadTooLargeJPEGImage();
-        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
 
+        Assert.assertEquals(editPicturePopUpComponent.getErrorTextWhenInvalidImageText(), UPLOAD_IMAGE_TEXT_ERROR.getText());
     }
 
     @Test(testName = "GC-1594")
@@ -158,13 +154,5 @@ public class EditProfileEditPhotoTest extends GreenCityTestRunnerWithLoginLogout
                 .clickEditPictureButton();
 
         Assert.assertFalse(editPicturePopUpComponent.isDeleteButtonClickable());
-
     }
-
 }
-
-
-
-
-
-
