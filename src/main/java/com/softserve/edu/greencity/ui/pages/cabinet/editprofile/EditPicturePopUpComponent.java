@@ -251,7 +251,8 @@ public class EditPicturePopUpComponent {
 
     @Step("Upload JPG image")
     public SavePicturePopUpComponent uploadJPGImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/jpgValidImage.jpg");
+        String filePath = "src/test/resources/images/jpgValidImage.jpg";
+        uploadFile(getUploadArea(), filePath);
         return new SavePicturePopUpComponent(driver);
     }
 
@@ -262,17 +263,20 @@ public class EditPicturePopUpComponent {
     }
 
     public EditPicturePopUpComponent uploadTooLargeJPEGImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/tooLargeImage.jpg");
+        String filePath = "src/test/resources/images/tooLargeImage.jpg";
+        uploadFile(getUploadArea(), filePath);
         return new EditPicturePopUpComponent(driver);
     }
 
     public EditPicturePopUpComponent uploadGIFImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/gifImage.gif");
+        String filePath = "src/test/resources/images/gifImage.gif";
+        uploadFile(getUploadArea(), filePath);
         return new EditPicturePopUpComponent(driver);
     }
 
     public EditPicturePopUpComponent uploadTooLargePNGImage() {
-        uploadFile(getUploadArea(), "src/test/resources/images/tooLargePng.png");
+        String filePath = "src/test/resources/images/tooLargePng.png";
+        uploadFile(getUploadArea(), filePath);
         return new EditPicturePopUpComponent(driver);
     }
 }
