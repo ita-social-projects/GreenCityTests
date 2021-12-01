@@ -39,7 +39,8 @@ public class CreateNewsNegativeTest extends GreenCityTestRunnerWithLoginLogout {
         createNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .gotoCreateNewsPage();
+                .gotoCreateNewsPage()
+                .changeLanguageTo("En");
     }
 
     @AfterMethod
@@ -194,6 +195,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunnerWithLoginLogout {
         };
     }
 
+    @Ignore
     @Test(testName = "GC-643", description = "GC-643", dataProvider = "getInvalidTagsList")
     @Description("Verify that user can`t create news with more than 3 tags selected")
     public void verifyPossibilityOfMaxThreeTagsWhenCreateNews(List<Tag> tags) {
@@ -233,6 +235,7 @@ public class CreateNewsNegativeTest extends GreenCityTestRunnerWithLoginLogout {
         };
     }
 
+    @Ignore
     @Test(testName = "GC-654", description = "GC-654", dataProvider = "getTagsListWithSingleTag")
     @Description("Verify that user can`t create news with 2 or more same tags")
     public void verifyImpossibilityToSelectOneTagTwice(ArrayList<Tag> tags) {
