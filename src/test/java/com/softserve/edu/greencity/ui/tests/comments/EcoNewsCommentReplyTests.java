@@ -61,61 +61,61 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
-    @Test(priority = 3, testName = "GC-822", description = "GC-822")
-    @Description("GC-822")
-    public void loggedUserCanDeleteReplyToComment() {
-        logger.info("Verify that logged user can delete his own reply on the 'Single News' page");
-        User user = UserRepository.get().temporary();
-        String commentText = "Test comment";
-        String replyText ="Test reply";
-        ReplyComponent comment = loadApplication()
-                .signIn()
-                .getManualLoginComponent()
-                .successfullyLogin(user)
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(newsData)
-                .getCommentPart()
-                .addComment(commentText)
-                .chooseCommentByNumber(0)
-                .clickReplyButton()
-                .setReplyText(replyText)
-                .clickAddReplyButton()
-                .openReply()
-                .chooseReplyByNumber(0);
-        softAssert.assertTrue(comment.clickDeleteReplyButtonCancel().isReplyPresent());
-        softAssert.assertTrue(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
-        softAssert.assertAll();
-    }
-
-
-    @Test(priority =  3, testName = "GC-828", description = "828")
-    @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
-    public void deleteCommentWithAllReplies() {
-        String comment = "different news";
-        String reply2 = "added second reply";
-        CommentComponent commentComponent = loadApplication()
-                .signIn()
-                .getManualLoginComponent()
-                .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(newsData)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .addReply(reply2);
-        SingleNewsPage page = loadApplication()
-                .navigateMenuEcoNews()
-                .refreshPage() //fresh news might not be displayed unless you refresh
-                .switchToSingleNewsPageByParameters(newsData);
-        page.getCommentPart()
-                .chooseCommentByNumber(0)
-                .clickDeleteCommentButton();
-        ReplyComponent replyComponent = page
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .openReply().chooseReplyByNumber(0);
-        softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
-        softAssert.assertNotEquals(reply2, replyComponent.getReplyComment().getText());
-    }
+//    @Test(priority = 3, testName = "GC-822", description = "GC-822")
+//    @Description("GC-822")
+//    public void loggedUserCanDeleteReplyToComment() {
+//        logger.info("Verify that logged user can delete his own reply on the 'Single News' page");
+//        User user = UserRepository.get().temporary();
+//        String commentText = "Test comment";
+//        String replyText ="Test reply";
+//        ReplyComponent comment = loadApplication()
+//                .signIn()
+//                .getManualLoginComponent()
+//                .successfullyLogin(user)
+//                .navigateMenuEcoNews()
+//                .switchToSingleNewsPageByParameters(newsData)
+//                .getCommentPart()
+//                .addComment(commentText)
+//                .chooseCommentByNumber(0)
+//                .clickReplyButton()
+//                .setReplyText(replyText)
+//                .clickAddReplyButton()
+//                .openReply()
+//                .chooseReplyByNumber(0);
+//        softAssert.assertTrue(comment.clickDeleteReplyButtonCancel().isReplyPresent());
+//        softAssert.assertTrue(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
+//        softAssert.assertAll();
+//    }
+//
+//
+//    @Test(priority =  3, testName = "GC-828", description = "828")
+//    @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
+//    public void deleteCommentWithAllReplies() {
+//        String comment = "different news";
+//        String reply2 = "added second reply";
+//        CommentComponent commentComponent = loadApplication()
+//                .signIn()
+//                .getManualLoginComponent()
+//                .successfullyLogin(getTemporaryUser())
+//                .navigateMenuEcoNews()
+//                .switchToSingleNewsPageByParameters(newsData)
+//                .getCommentPart()
+//                .chooseCommentByNumber(0)
+//                .addReply(reply2);
+//        SingleNewsPage page = loadApplication()
+//                .navigateMenuEcoNews()
+//                .refreshPage() //fresh news might not be displayed unless you refresh
+//                .switchToSingleNewsPageByParameters(newsData);
+//        page.getCommentPart()
+//                .chooseCommentByNumber(0)
+//                .clickDeleteCommentButton();
+//        ReplyComponent replyComponent = page
+//                .getCommentPart()
+//                .chooseCommentByNumber(0)
+//                .openReply().chooseReplyByNumber(0);
+//        softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
+//        softAssert.assertNotEquals(reply2, replyComponent.getReplyComment().getText());
+//    }
 
     @Test(testName = "GC-866", description = "866")
     @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
@@ -324,19 +324,19 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-823", description = "GC-823")
-    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
-    public void verifyUnloggedUserCanDeleteReplyToComment() {
-        ReplyComponent comment = loadApplication()
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(newsData)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .openReply()
-                .chooseReplyByNumber(0);
-        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
-        softAssert.assertAll();
-    }
+//    @Test(testName = "GC-823", description = "GC-823")
+//    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
+//    public void verifyUnloggedUserCanDeleteReplyToComment() {
+//        ReplyComponent comment = loadApplication()
+//                .navigateMenuEcoNews()
+//                .switchToSingleNewsPageByParameters(newsData)
+//                .getCommentPart()
+//                .chooseCommentByNumber(0)
+//                .openReply()
+//                .chooseReplyByNumber(0);
+//        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
+//        softAssert.assertAll();
+//    }
 
     @Test(testName = "GC-963", description = "GC-963")
     @Description("Verify that logged user cannot add reply with empty field on News Single Page")
