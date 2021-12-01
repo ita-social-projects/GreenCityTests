@@ -1,10 +1,9 @@
-package com.softserve.edu.greencity.ui.tests.comments;
+package com.softserve.edu.greencity.ui.tests.comments.replies;
 
 import com.softserve.edu.greencity.data.econews.NewsData;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
-import com.softserve.edu.greencity.ui.pages.cabinet.LanguageComponents;
 import com.softserve.edu.greencity.ui.pages.common.CommentComponent;
 import com.softserve.edu.greencity.ui.pages.common.ReplyComponent;
 import com.softserve.edu.greencity.ui.pages.econews.SingleNewsPage;
@@ -16,14 +15,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Collections;
 
-public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout {
+public class ReplyTests extends GreenCityTestRunnerWithLoginLogout {
     private final String replyText = "Test reply";
     private NewsData newsData;
 
@@ -61,62 +57,6 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
-//    @Test(priority = 3, testName = "GC-822", description = "GC-822")
-//    @Description("GC-822")
-//    public void loggedUserCanDeleteReplyToComment() {
-//        logger.info("Verify that logged user can delete his own reply on the 'Single News' page");
-//        User user = UserRepository.get().temporary();
-//        String commentText = "Test comment";
-//        String replyText ="Test reply";
-//        ReplyComponent comment = loadApplication()
-//                .signIn()
-//                .getManualLoginComponent()
-//                .successfullyLogin(user)
-//                .navigateMenuEcoNews()
-//                .switchToSingleNewsPageByParameters(newsData)
-//                .getCommentPart()
-//                .addComment(commentText)
-//                .chooseCommentByNumber(0)
-//                .clickReplyButton()
-//                .setReplyText(replyText)
-//                .clickAddReplyButton()
-//                .openReply()
-//                .chooseReplyByNumber(0);
-//        softAssert.assertTrue(comment.clickDeleteReplyButtonCancel().isReplyPresent());
-//        softAssert.assertTrue(comment.clickDeleteReplyButtonConfirm().isReplyPresent());
-//        softAssert.assertAll();
-//    }
-//
-//
-//    @Test(priority =  3, testName = "GC-828", description = "828")
-//    @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
-//    public void deleteCommentWithAllReplies() {
-//        String comment = "different news";
-//        String reply2 = "added second reply";
-//        CommentComponent commentComponent = loadApplication()
-//                .signIn()
-//                .getManualLoginComponent()
-//                .successfullyLogin(getTemporaryUser())
-//                .navigateMenuEcoNews()
-//                .switchToSingleNewsPageByParameters(newsData)
-//                .getCommentPart()
-//                .chooseCommentByNumber(0)
-//                .addReply(reply2);
-//        SingleNewsPage page = loadApplication()
-//                .navigateMenuEcoNews()
-//                .refreshPage() //fresh news might not be displayed unless you refresh
-//                .switchToSingleNewsPageByParameters(newsData);
-//        page.getCommentPart()
-//                .chooseCommentByNumber(0)
-//                .clickDeleteCommentButton();
-//        ReplyComponent replyComponent = page
-//                .getCommentPart()
-//                .chooseCommentByNumber(0)
-//                .openReply().chooseReplyByNumber(0);
-//        softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
-//        softAssert.assertNotEquals(reply2, replyComponent.getReplyComment().getText());
-//    }
-
     @Test(testName = "GC-866", description = "866")
     @Description("Verify that ‘Comment’ button is disable, when ‘Add a comment’ field is empty on the ‘News’ page.")
     public void verifyCommentButtonIsDisableWhenFieldIsEmpty() {
@@ -132,7 +72,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         Assert.assertFalse(comment.getSaveEditButton().isEnabled());
     }
 
-    @Test(priority = 2, testName = "GC-961", description = "GC-961")
+    @Test(testName = "GC-961", description = "GC-961")
     @Description("This test case verifies that logged user cannot add a reply with 8001+ characters on News Single Page")
     public void verifyThatLoggedUserAddReplyWithInvalidNumberOfCharacters() {
         CommentComponent commentComponent = loadApplication()
@@ -173,7 +113,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         Assert.assertFalse(comment.isAddReplyDisplayed(), "the 'Reply' button should not be displayed, if user is unlogged");
     }
 
-    @Test(priority = 1, testName = "GC-958", description = "GC-958")
+    @Test(testName = "GC-958", description = "GC-958")
     public void loggedUserCanPublishReply() {
         logger.info("Verify that logged user can publish reply starts");
         ReplyComponent replyComponent = loadApplication()
@@ -188,24 +128,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertAll();
     }
 
-    @Test(testName = "GC-870", description = "GC-870")
-    @Description("verify that logged user can't edit reply of the other user on the 'News' page.")
-    public void loggedUserCanNotEditNoHisReply() {
-        logger.info("verify that logged user can't edit reply of the other user on the 'News' page.");
-        User user = UserRepository.get().exist();
-        boolean canEdit = loadApplication()
-                .loginIn(user)
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(newsData)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .openReply()
-                .chooseReplyByNumber(0)
-                .isEditReplyButtonDisplayed();
-        Assert.assertFalse(canEdit, "Edit button on the reply shouldn't be displayed");
-    }
-
-    @Test(priority = 1, testName = "GC-874", description = "GC-874")
+    @Test(testName = "GC-874", description = "GC-874")
     @Description("verify that system saves the changes after click ‘Save’ button on the ‘News’ page")
     public void systemSavesChangesAfterClickReply() {
         logger.info("verify that system saves the changes after click ‘Save’ button on the ‘News’ page");
@@ -287,7 +210,7 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertAll();
     }
 
-    @Test(priority = 1, testName = "GC-995", description = "GC-955")
+    @Test(testName = "GC-995", description = "GC-955")
     @Description("Verify that unlogged user can review and hide all related to the comment replies on News Single Page")
     public void notLoggedUserCanReviewAndHideReplies() {
         logger.info("Verify that unlogged user cannot reply to other replies on News Single Page starts");
@@ -324,20 +247,6 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertAll();
     }
 
-//    @Test(testName = "GC-823", description = "GC-823")
-//    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
-//    public void verifyUnloggedUserCanDeleteReplyToComment() {
-//        ReplyComponent comment = loadApplication()
-//                .navigateMenuEcoNews()
-//                .switchToSingleNewsPageByParameters(newsData)
-//                .getCommentPart()
-//                .chooseCommentByNumber(0)
-//                .openReply()
-//                .chooseReplyByNumber(0);
-//        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
-//        softAssert.assertAll();
-//    }
-
     @Test(testName = "GC-963", description = "GC-963")
     @Description("Verify that logged user cannot add reply with empty field on News Single Page")
     public void loggedUserCannotReplyWithEmptyFields() {
@@ -352,40 +261,5 @@ public class EcoNewsCommentReplyTests extends GreenCityTestRunnerWithLoginLogout
                 .isAddReplyButtonEnable();
         softAssert.assertFalse(isReplyButtonActive);
         softAssert.assertAll();
-    }
-
-    @Test(priority = 2, dataProvider = "setStringLength", testName = "GC-1132", description = "GC-1132")
-    @Description("Logged user can 'Edit' his reply on 'News' page")
-    public void loggedUserCanEditHisReply(int stringLength) {
-        ReplyComponent replyComponent = loadApplication()
-                .signIn()
-                .getManualLoginComponent()
-                .successfullyLogin(getTemporaryUser())
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(newsData)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .openReply()
-                .chooseReplyByNumber(0);
-
-        String textForReplyEditing = String.join("", Collections.nCopies(stringLength, "a"));
-        replyComponent.editReply(textForReplyEditing);
-        // TODO method for getting local depending on site language
-        String timeStamp = new SimpleDateFormat("MMM d, yyyy",
-                new LanguageComponents(driver).getLanguageLocale())
-                .format(Calendar.getInstance().getTime());
-
-        softAssert.assertEquals(replyComponent.getReplyText(), textForReplyEditing, "Inserted and posted text should be the same");
-        softAssert.assertEquals(replyComponent.getReplyDate(), timeStamp, "Reply should contain date");
-        softAssert.assertTrue(replyComponent.isaAvatarDisplayed(), "Avatar should be displayed");
-        softAssert.assertAll();
-    }
-
-    @DataProvider
-    public Object[][] setStringLength() {
-        Object[][] length = new Object[][]{
-                {1}, {4444}, {8000}
-        };
-        return length;
     }
 }
