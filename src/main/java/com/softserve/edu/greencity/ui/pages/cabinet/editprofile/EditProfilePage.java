@@ -49,6 +49,19 @@ public class EditProfilePage extends TopPart {
 
 
     @Step("Get title label")
+    public LabelElement getPersonalInfoTitleOnEditPage() {
+        if (titleLabel == null) {
+            titleLabel = new LabelElement(driver, PERSONAL_INFO_LABEL);
+        }
+        return titleLabel;
+    }
+
+    @Step("Get title label")
+    public String getTextTitlePersonalInfoOnEditPage() {
+        return getPersonalInfoTitleOnEditPage().getText();
+    }
+
+    @Step("Get title label")
     public LabelElement getTitleOnEditPage() {
         if (titleLabel == null) {
             titleLabel = new LabelElement(driver, TITLE_LABEL);
@@ -78,8 +91,8 @@ public class EditProfilePage extends TopPart {
     }
 
     @Step("Click on Title on EditPage")
-    public EditProfilePage clickOnTitleOnEditPage() {
-        getTitleOnEditPage().click();
+    public EditProfilePage clickOnPersonalInfoTitleOnEditPage() {
+        getPersonalInfoTitleOnEditPage().click();
         return this;
     }
 

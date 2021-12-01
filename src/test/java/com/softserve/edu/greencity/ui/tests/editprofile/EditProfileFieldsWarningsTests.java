@@ -116,7 +116,7 @@ public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLogin
 
         editProfilePage
                 .clearNameFieldWithBackspase()
-                .clickOnTitleOnEditPage();
+                .clickOnPersonalInfoTitleOnEditPage();
 
         boolean saveButtonClickable = editProfilePage.saveButtonClickable();
         String actualColor = editProfilePage.getColorFromNameNotificationLabel();
@@ -134,7 +134,7 @@ public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLogin
         editProfilePage
                 .clearCityField()
                 .fillCityField(generateString(86))
-                .clickOnTitleOnEditPage();
+                .clickOnPersonalInfoTitleOnEditPage();
 
         String actualColor = editProfilePage.getColorFromCityNotificationLabel();
         String expectedColor = COLOR_FOR_ERROR_NOTIFICATIONS.getText();
@@ -165,7 +165,7 @@ public class EditProfileFieldsWarningsTests extends GreenCityTestRunnerWithLogin
         editProfilePage
                 .clearCityField()
                 .fillCityField(city)
-                .clickOnTitleOnEditPage();
+                .clickOnPersonalInfoTitleOnEditPage();
 
         /*
             This assert checks if color of the notification changed on invalid city name
