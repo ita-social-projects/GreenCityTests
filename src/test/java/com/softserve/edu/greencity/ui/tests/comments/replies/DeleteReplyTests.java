@@ -52,6 +52,34 @@ public class DeleteReplyTests extends GreenCityTestRunnerWithLoginLogout {
         ecoNewsService.deleteNewsByTitle(newsData.getTitle());
     }
 
+    @Test(testName = "GC-823", description = "GC-823")
+    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
+    public void verifyUnloggedUserCanDeleteReplyToComment() {
+
+        SingleNewsPage page = loadApplication()
+                .signIn()
+                .getManualLoginComponent()
+                .successfullyLogin(getTemporaryUser())
+                .navigateMenuEcoNews()
+                .refreshPage() //fresh news might not be displayed unless you refresh
+                .switchToSingleNewsPageByParameters(newsData);
+        page.getCommentPart()
+                .addComment("GC-823")
+                .chooseCommentByNumber(0)
+                .addReply(replyText);
+        page.signOut();
+
+        ReplyComponent comment = loadApplication()
+                .navigateMenuEcoNews()
+                .switchToSingleNewsPageByParameters(newsData)
+                .getCommentPart()
+                .chooseCommentByNumber(0)
+                .openReply()
+                .chooseReplyByNumber(0);
+        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
+        softAssert.assertAll();
+    }
+
     @Test(testName = "GC-822", description = "GC-822")
     @Description("GC-822")
     public void loggedUserCanDeleteReplyToComment() {
@@ -106,19 +134,5 @@ public class DeleteReplyTests extends GreenCityTestRunnerWithLoginLogout {
                 .openReply().chooseReplyByNumber(0);
         softAssert.assertNotEquals(comment, page.getCommentPart().chooseCommentByNumber(0).getCommentText());
         softAssert.assertNotEquals(reply2, replyComponent.getReplyComment().getText());
-    }
-
-    @Test(testName = "GC-823", description = "GC-823")
-    @Description("Verify that unlogged user cannot delete not his reply on the 'Single News' page")
-    public void verifyUnloggedUserCanDeleteReplyToComment() {
-        ReplyComponent comment = loadApplication()
-                .navigateMenuEcoNews()
-                .switchToSingleNewsPageByParameters(newsData)
-                .getCommentPart()
-                .chooseCommentByNumber(0)
-                .openReply()
-                .chooseReplyByNumber(0);
-        softAssert.assertFalse(comment.isDeleteReplyButtonDisplayed(), "the 'Delete' button should not be displayed");
-        softAssert.assertAll();
     }
 }
