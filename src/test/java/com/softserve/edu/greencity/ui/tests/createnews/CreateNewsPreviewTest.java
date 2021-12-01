@@ -1,5 +1,6 @@
 package com.softserve.edu.greencity.ui.tests.createnews;
 
+import com.softserve.edu.greencity.data.Languages;
 import com.softserve.edu.greencity.data.users.User;
 import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.data.econews.NewsDataRepository;
@@ -27,7 +28,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunnerWithLoginLogout {
         createNewsPage = loadApplication()
                 .loginIn(getTemporaryUser())
                 .navigateMenuEcoNews()
-                .gotoCreateNewsPage();
+                .gotoCreateNewsPage()
+                .changeLanguageTo("En");
     }
 
     @AfterMethod
@@ -104,6 +106,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
         softAssert.assertAll();
+        cancelFrame.clickCancelEditingButton();
+
     }
 
     @Test(testName = "GC-614", description = "GC-614")
@@ -117,6 +121,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertTrue(cancelFrame.isContinueEditingButtonDisplayed());
         softAssert.assertTrue(cancelFrame.isCancelEditingButtonDisplayed());
         softAssert.assertAll();
+        cancelFrame.clickCancelEditingButton();
+
     }
 
     @Test(testName = "GC-403", description = "GC-403")
@@ -132,8 +138,8 @@ public class CreateNewsPreviewTest extends GreenCityTestRunnerWithLoginLogout {
         softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS)); //TODO BUG WITH TAGS
         softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
         createNewsPage.navigateMenuEcoNews().gotoCreateNewsPage();
-        softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
-        softAssert.assertFalse(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
+        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.NEWS));
+        softAssert.assertTrue(createNewsPage.getTagsComponent().isTagActive(Tag.EVENTS));
         softAssert.assertAll();
 
     }

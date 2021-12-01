@@ -5,8 +5,8 @@ import org.openqa.selenium.By;
 
 public enum MenuElementsLocators implements Locator {
     USER_SETTINGS(By.cssSelector("li.tertiary-global-button > a")),
-    USER_SIGNOUT(By.cssSelector("#header_user-wrp > li:nth-child(3) > a")),
-    USER_NAME_MENU(By.cssSelector("#header_user-wrp")),
+    USER_SIGNOUT(By.cssSelector("li[aria-label='sign-out'] a")),
+    USER_NAME_MENU(By.cssSelector("a[class='header_user-name'] span")),
     UBS_ADMIN_BUTTON(By.cssSelector("#header_user-wrp > li:nth-child(5) > a")),
     COPYRIGHT(By.cssSelector(".footer_bottom-part")),
 
