@@ -107,7 +107,7 @@ public class DeleteReplyTests extends GreenCityTestRunnerWithLoginLogout {
     }
 
 
-    @Test(testName = "GC-828", description = "828")
+    @Test(testName = "GC-828", description = "GC-828")
     @Description("Verify if user delete his own comment then all replies to this comment at the ‘News’ page are deleted too.")
     public void deleteCommentWithAllReplies() {
         String comment = "different news";
