@@ -3,6 +3,7 @@ package com.softserve.edu.greencity.ui.locators;
 import org.openqa.selenium.By;
 
 public enum EditProfileLocators implements Locator{
+    PERSONAL_INFO_LABEL(By.xpath("//app-edit-profile/div/div/div/form/div[1]/p")),
     TITLE_LABEL(By.xpath("//h2[.='Edit Profile']")),
 
     PROFILE_AVATAR(By.cssSelector(".profile-avatar")),
@@ -69,8 +70,7 @@ public enum EditProfileLocators implements Locator{
 
     NOTIFICATION_FOR_NAME_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[1]")),
     NOTIFICATION_FOR_CITY_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[2]")),
-    NOTIFICATION_FOR_CREDO_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[3]"))
-    ;
+    NOTIFICATION_FOR_CREDO_FIELD_TEXT(By.xpath("(//div[@class='input-block']/descendant::span)[3]"));
 
     private final By path;
 

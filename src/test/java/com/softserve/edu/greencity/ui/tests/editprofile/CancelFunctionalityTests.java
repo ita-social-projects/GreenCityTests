@@ -18,6 +18,17 @@ public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout
     private User getTemporaryUser() {
         return UserRepository.get().temporary();
     }
+    private EditProfilePage editProfilePage;
+
+    @AfterMethod
+    public void afterMethod() {
+        driver.manage().deleteAllCookies();
+    }
+
+    @BeforeMethod
+    public void setUp() {
+        softAssert = new SoftAssert();
+    }
 
     @Test(testName = "GC-1636")
     @Description("Verify 'Cancel' pop-up message text on different localizations")
@@ -60,7 +71,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout
 
         cancelPopUp
                 .clickConfirmCancelEditingButton()
-                .signOut() ;
+                .signOut();
         softAssert.assertAll();
     }
 
@@ -113,6 +124,7 @@ public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout
     @Description("Verify clicking on 'Enter' button on the 'Cancel' pop-up window")
     public void checkNameIsNotChangingWhenPressEnterAtCancelPopUp() {
         logger.info("Starting verifyUserCanClickEnterButtonOnCancelPopUpWindow");
+        editProfilePage.createLanguageSwitchComponent().clickEnLanguage();
         String pressEnterAtCancelPopUp = loadApplication()
                 .loginIn(getTemporaryUser())
                 .clickEditButton()
@@ -155,13 +167,5 @@ public class CancelFunctionalityTests extends GreenCityTestRunnerWithLoginLogout
         softAssert.assertEquals(city, CITY);
         softAssert.assertEquals(credo, CREDO);
         softAssert.assertAll();
-    }
-    @AfterMethod
-    public void afterMethod() {
-        driver.manage().deleteAllCookies();
-    }
-    @BeforeMethod
-    public void setUp() {
-        softAssert = new SoftAssert();
     }
 }
