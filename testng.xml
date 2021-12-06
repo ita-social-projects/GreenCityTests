@@ -50,7 +50,9 @@
             <class name="com.softserve.edu.greencity.ui.tests.comments.CommentCreation"/>
             <class name="com.softserve.edu.greencity.ui.tests.comments.Commentstest"/>
             <class name="com.softserve.edu.greencity.ui.tests.comments.EcoNewsCommentTests"/>
-            <class name="com.softserve.edu.greencity.ui.tests.comments.EcoNewsCommentReplyTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.replies.DeleteReplyTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.replies.EditReplyTests"/>
+            <class name="com.softserve.edu.greencity.ui.tests.comments.replies.ReplyTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsListViewTests"/>
             <class name="com.softserve.edu.greencity.ui.tests.viewallnews.EcoNewsGridViewTest">
                 <methods>
