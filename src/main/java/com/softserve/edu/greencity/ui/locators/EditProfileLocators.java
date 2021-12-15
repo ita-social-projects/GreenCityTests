@@ -44,11 +44,10 @@ public enum EditProfileLocators implements Locator{
     INVALID_LINK_TEXT_ERROR(By.cssSelector(".social_network-input-error")),
     SOCIAL_NETWORKS_TEXT(By.cssSelector("div.social_network-add-input-wrp > label")),
 
-    SHOW_LOCATION_CHECK_BOX(By.cssSelector("li:nth-child(1) > label > span")),
-    SHOW_ECO_PLACES_CHECK_BOX(By.cssSelector("li:nth-child(2) > label > span")),
-    SHOW_SHOPPING_LIST_CHECK_BOX(By.cssSelector("li:nth-child(3) > label > span")),
-    CHECKBOX_SHOPPING_LIST(By.xpath("//input[@formcontrolname= 'showShoppingList']")),
-
+    SHOW_LOCATION_CHECK_BOX(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user-component/app-edit-profile/div/div/div/form/div[3]/ul/li[1]/label/input")),
+    SHOW_ECO_PLACES_CHECK_BOX(By.cssSelector("li:nth-child(2) > label > span")), //change
+    SHOW_SHOPPING_LIST_CHECK_BOX(By.cssSelector("li:nth-child(3) > label > span")), //change
+    CHECKBOX_SHOPPING_LIST(By.xpath("//input[@formcontrolname= 'showShoppingList']")), //change
     CANCEL_BUTTON(By.xpath("/html/body/app-root/app-main/div/div[2]/app-user-component/app-edit-profile/div/div/div/form/div[4]/button[1]")),
     SAVE_BUTTON(By.xpath("//button[@type='submit']")),
 
