@@ -17,6 +17,10 @@ public class EditProfileService {
         editProfileSocialNetworksDao = new EditProfileSocialNetworksDao();
     }
 
+    public EditProfileEntity getById(long id) {
+        return editProfileDao.selectById(id);
+    }
+
     public void deleteSocialNetworksByUserId(long userId) {
         for (EditProfileSocialNetworksEntity editProfileSocialNetworksEntity
                 : editProfileSocialNetworksDao.selectAllByUserId(userId)) {

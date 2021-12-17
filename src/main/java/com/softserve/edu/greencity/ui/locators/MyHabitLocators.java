@@ -3,7 +3,7 @@ package com.softserve.edu.greencity.ui.locators;
 import org.openqa.selenium.By;
 
 public enum MyHabitLocators implements Locator {
-    USER_IMAGE(By.cssSelector(".profile-avatar")),
+    USER_IMAGE_DEFAULT(By.xpath("//app-personal-photo/div/app-user-profile-image/div")),
     USERNAME_LABEL(By.cssSelector(".name")),
     CITY_LABEL(By.cssSelector(".location")),
     CREDO_LABEL(By.cssSelector(".credo")),

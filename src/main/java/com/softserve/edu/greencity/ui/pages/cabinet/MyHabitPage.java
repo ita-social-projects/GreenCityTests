@@ -1,6 +1,5 @@
 package com.softserve.edu.greencity.ui.pages.cabinet;
 
-import com.softserve.edu.greencity.ui.api.google.sheets.ValueProvider;
 import com.softserve.edu.greencity.ui.elements.IconElement;
 import com.softserve.edu.greencity.ui.elements.ImageElement;
 import com.softserve.edu.greencity.ui.elements.LabelElement;
@@ -63,7 +62,7 @@ public class MyHabitPage extends TopPart  {
     }
 
     public ImageElement getUserImage(){
-        userImage = new ImageElement(driver, USER_IMAGE);
+        userImage = new ImageElement(driver, USER_IMAGE_DEFAULT);
         return userImage;
     }
     public ImageElement getLogo(){
@@ -173,12 +172,12 @@ public class MyHabitPage extends TopPart  {
         return new SocialNetworkItemsContainer(driver);
     }
 
-    public boolean isUserImageDefault(){
-        try{
+    public boolean isUserImageDefault() {
+        try {
             getUserImage().getAttribute(SRC_ATTRIBUTE);
-            return false;
-        } catch (Exception e){
             return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 }
