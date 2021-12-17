@@ -5,13 +5,13 @@ import com.softserve.edu.greencity.data.users.UserRepository;
 import com.softserve.edu.greencity.ui.pages.cabinet.MyHabitPage;
 import com.softserve.edu.greencity.ui.pages.cabinet.editprofile.EditProfilePage;
 import com.softserve.edu.greencity.ui.tests.runner.GreenCityTestRunnerWithLoginLogout;
+import com.softserve.edu.greencity.ui.tools.jdbc.entity.EditProfileEntity;
+import com.softserve.edu.greencity.ui.tools.jdbc.services.EditProfileService;
 import io.qameta.allure.Description;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
-//TODO finish tests
 public class EditPictureTests extends GreenCityTestRunnerWithLoginLogout {
 
     private EditProfilePage editProfilePage;
@@ -28,7 +28,7 @@ public class EditPictureTests extends GreenCityTestRunnerWithLoginLogout {
     }
 
     @AfterMethod
-    public void deleteImage(){
+    public void deleteImage() {
         new MyHabitPage(driver)
                 .clickEditButton()
                 .clickEditPictureButton()
@@ -38,17 +38,24 @@ public class EditPictureTests extends GreenCityTestRunnerWithLoginLogout {
 
     @Test(testName = "GC-1566")
     @Description("User can add photo with valid parameters for the first time.")
-//    @Ignore
-    public void verifyAddPhotoWithValidParameters(){
+    public void verifyAddPhotoWithValidParameters() {
+        EditProfileService editProfileService = new EditProfileService();
+        EditProfileEntity editProfile = editProfileService.getById(312);
+
+        softAssert.assertNull(editProfile.getProfilePicture(), "ProfilePicture is Null");
+
         MyHabitPage myHabitPage = editProfilePage
-//                .fillCredoField("credo")
                 .clickEditPictureButton()
+                .clickUploadNewPhotoButton()
                 .uploadPNGImage()
                 .clickSavePhotoButton()
                 .clickCancelButton()
                 .clickConfirmationButtonAfterCancelButtonPopup();
 
-        softAssert.assertFalse(myHabitPage.isUserImageDefault());
+        editProfile = editProfileService.getById(312);
+
+        softAssert.assertNotNull(editProfile.getProfilePicture(), "ProfilePicture NotNull");
+        softAssert.assertFalse(myHabitPage.isUserImageDefault(), "Is user picture not default");
         softAssert.assertAll();
     }
 }
